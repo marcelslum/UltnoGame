@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Animation{
 
-    boolean test;
+    boolean test23456;
     Entity targetObject;
     String name;
     String parameterToAnimate;
