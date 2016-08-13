@@ -1,0 +1,532 @@
+ public void UpdateSprite()
+    {
+        // Get new transformed vertices
+        //vertices = sprite.getTransformedVertices();
+
+        // The vertex buffer.
+        ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
+        bb.order(ByteOrder.nativeOrder());
+        vertexBuffer = bb.asFloatBuffer();
+        vertexBuffer.put(vertices);
+        vertexBuffer.position(0);
+    }
+
+ class Sprite
+    {
+        float angle;
+        float scale;
+        RectF base;
+        PointF translation;
+
+        public Sprite()
+        {
+            // Initialise our intital size around the 0,0 point
+            base = new RectF(-50f*ssu,50f*ssu, 50f*ssu, -50f*ssu);
+
+            // Initial translation
+            translation = new PointF(50f*ssu,50f*ssu);
+
+            // We start with our inital size
+            scale = 1f;
+
+            // We start in our inital angle
+            angle = 0f;
+        }
+
+
+        public void translate(float deltax, float deltay)
+        {
+            // Update our location.
+            translation.x += deltax;
+            translation.y += deltay;
+        }
+
+        public void scale(float deltas)
+        {
+            scale += deltas;
+        }
+
+        public void rotate(float deltaa)
+        {
+            angle += deltaa;
+        }
+
+        public float[] getTransformedVertices()
+        {
+            // Start with scaling
+            float x1 = base.left * scale;
+            float x2 = base.right * scale;
+            float y1 = base.bottom * scale;
+            float y2 = base.top * scale;
+
+            // We now detach from our Rect because when rotating,
+            // we need the seperate points, so we do so in opengl order
+            PointF one = new PointF(x1, y2);
+            PointF two = new PointF(x1, y1);
+            PointF three = new PointF(x2, y1);
+            PointF four = new PointF(x2, y2);
+
+            // We create the sin and cos function once,
+            // so we do not have calculate them each time.
+            float s = (float) Math.sin(angle);
+            float c = (float) Math.cos(angle);
+
+            // Then we rotate each point
+            one.x = x1 * c - y2 * s;
+            one.y = x1 * s + y2 * c;
+            two.x = x1 * c - y1 * s;
+            two.y = x1 * s + y1 * c;
+            three.x = x2 * c - y1 * s;
+            three.y = x2 * s + y1 * c;
+            four.x = x2 * c - y2 * s;
+            four.y = x2 * s + y2 * c;
+
+            // Finally we translate the sprite to its correct position.
+            one.x += translation.x;
+            one.y += translation.y;
+            two.x += translation.x;
+            two.y += translation.y;
+            three.x += translation.x;
+            three.y += translation.y;
+            four.x += translation.x;
+            four.y += translation.y;
+
+            // We now return our float array of vertices.
+            return new float[]
+                    {
+                            one.x, one.y, 0.0f,
+                            two.x, two.y, 0.0f,
+                            three.x, three.y, 0.0f,
+                            four.x, four.y, 0.0f,
+                    };
+        }
+    }
+
+public void SetupTriangle()
+{
+    // We will need a randomizer
+    Random rnd = new Random();
+
+    // We have to create the vertices of our triangle.
+    vertices = new float[]
+            {       0.0f, 300f, 0.0f,
+                    120.0f, 300.0f, 0.0f,
+                    120.0f, 340.0f, 0.0f,
+                    0.0f, 340, 0.0f,
+                    125.0f, 300.0f, 0.0f,
+                    245.0f, 300.0f, 0.0f,
+                    245.0f, 340.0f, 0.0f,
+                    125.0f, 340.0f, 0.0f,
+                    250.0f, 300.0f, 0.0f,
+                    370.0f, 300.0f, 0.0f,
+                    370.0f, 340.0f, 0.0f,
+                    250.0f, 340.0f, 0.0f,
+            };
+
+    indices = new short[] {0, 1, 2, 0, 2, 3, 0+4, 1+4, 2+4, 0+4, 2+4, 3+4, 0+8, 1+8, 2+8, 0+8, 2+8, 3+8}; // The order of vertexrendering.
+
+    // The vertex buffer.
+    ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
+    bb.order(ByteOrder.nativeOrder());
+    vertexBuffer = bb.asFloatBuffer();
+    vertexBuffer.put(vertices);
+    vertexBuffer.position(0);
+
+    // initialize byte buffer for the draw list
+    ByteBuffer dlb = ByteBuffer.allocateDirect(indices.length * 2);
+    dlb.order(ByteOrder.nativeOrder());
+    drawListBuffer = dlb.asShortBuffer();
+    drawListBuffer.put(indices);
+    drawListBuffer.position(0);
+}
+
+public void SetupTargets(){
+
+    int totalObjects = this.gi.targets.size() + this.gi.balls.size();
+
+    uvs = new float[totalObjects * 8];
+
+    int i;
+
+    for (i = 0; i < this.gi.targets.size(); i++){
+        this.gi.targets.get(i).insertUvData(uvs, i*8);
+    };
+
+    int offset = i;
+
+    for (i = 0; i < this.gi.balls.size(); i++){
+        this.gi.balls.get(i).insertUvData(uvs, (i+offset)*8);
+    };
+
+    // The texture buffer
+    ByteBuffer bb1 = ByteBuffer.allocateDirect(uvs.length * 4);
+    bb1.order(ByteOrder.nativeOrder());
+    uvBuffer = bb1.asFloatBuffer();
+    uvBuffer.put(uvs);
+    uvBuffer.position(0);
+
+    vertices = new float[totalObjects * 12];
+
+
+    for (i = 0; i < this.gi.targets.size(); i++){
+        this.gi.targets.get(i).insertVerticesData(vertices, i*12);
+    };
+
+    offset = i;
+
+    for (i = 0; i < this.gi.balls.size(); i++){
+        this.gi.balls.get(i).insertVerticesData(vertices, (i+offset)*12);
+    };
+
+    indices = new short[totalObjects * 6];
+
+    for (i = 0; i < this.gi.targets.size(); i++) {
+        this.gi.targets.get(i).insertIndicesData(indices, i*6, i*4);
+    }
+
+    offset = i;
+
+    for (i = 0; i < this.gi.balls.size(); i++){
+        this.gi.balls.get(i).insertIndicesData(indices, (i+offset)*6, (i+offset)*4);
+    };
+
+    // The vertex buffer.
+    ByteBuffer bb2 = ByteBuffer.allocateDirect(vertices.length * 4);
+    bb2.order(ByteOrder.nativeOrder());
+    vertexBuffer = bb2.asFloatBuffer();
+    vertexBuffer.put(vertices);
+    vertexBuffer.position(0);
+
+    // initialize byte buffer for the draw list
+    ByteBuffer bb3 = ByteBuffer.allocateDirect(indices.length * 2);
+    bb3.order(ByteOrder.nativeOrder());
+    drawListBuffer = bb3.asShortBuffer();
+    drawListBuffer.put(indices);
+    drawListBuffer.position(0);
+}
+
+
+
+
+ public void SetupImage()
+    {
+        // Generate Textures, if more needed, alter these numbers.
+        int[] texturenames = new int[2];
+        GLES20.glGenTextures(2, texturenames, 0);
+
+        // Retrieve our image from resources.
+        int id = mContext.getResources().getIdentifier("drawable/texturas3", null, mContext.getPackageName());
+
+        // Temporary create a bitmap
+        Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
+
+        // Bind texture to texturename
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[0]);
+
+        // Set filtering
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+
+        // Load the bitmap into the bound texture.
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
+
+        // We are done using the bitmap so we should recycle it.
+        bmp.recycle();
+
+        // Again for the text texture
+        id = mContext.getResources().getIdentifier("drawable/font", null, mContext.getPackageName());
+        bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + 1);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[1]);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
+        bmp.recycle();
+    }
+
+ public void SetupText()
+    {
+        /*
+        // Create our text manager
+        tm = new TextManager();
+
+        // Tell our text manager to use index 1 of textures loaded
+        tm.setTextureID(1);
+
+        // Create our new textobject
+        //Text txt = new Text("esta é um teste do texto", 0f, 0f, 100.f);
+
+        // Add it to our manager
+        tm.addText(txt);
+
+        // Create our new textobject
+        Text txt2 = new Text("ULTNO", 0, 200f, 400.f);
+
+        // Add it to our manager
+        tm.addText(txt2);
+
+        Log.e("width of ultno", " "+tm.getWidth(txt2));
+
+        // Prepare the text for rendering
+        tm.PrepareDraw();
+        */
+    }
+
+
+     private void UpdatePositions(){
+ /*
+         for (int i = 0; i < this.gi.balls.size(); i++) {
+
+             Ball ball = this.gi.balls.get(i);
+             if (ball.bUp) {
+                 ball.x += 5;
+                 ball.y += 5;
+                 if (ball.x > 400) {
+                     ball.bUp = false;
+                 }
+             } else {
+                 ball.x -= 5;
+                 ball.y -= 5;
+                 if (ball.x < 100) {
+                     ball.bUp = true;
+                 }
+             }
+         }
+
+
+
+         int totalObjects = this.gi.targets.size() + this.gi.balls.size();
+
+         vertices = new float[totalObjects * 12];
+
+         int i;
+
+         for (i = 0; i < this.gi.targets.size(); i++){
+             this.gi.targets.get(i).insertVerticesData(vertices, i*12);
+         };
+
+         int offset = i;
+
+         for (i = 0; i < this.gi.balls.size(); i++){
+             this.gi.balls.get(i).insertVerticesData(vertices, (i+offset)*12);
+         };
+
+         ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
+         bb.order(ByteOrder.nativeOrder());
+         vertexBuffer = bb.asFloatBuffer();
+         vertexBuffer.put(vertices);
+         vertexBuffer.position(0);
+
+         */
+     }
+
+         public void SetupEntities(){
+
+             //this.gi.targets.clear();
+
+             //this.gi.addTarget(new Target("target", this.gi, 0.0f, 400.0f, 480.0f, 30.0f, 10));
+             //this.gi.addTarget(new Target("target", this.gi, 0.0f, 400.0f, effectiveScreenWidth, 30.0f, 10));
+             //this.gi.addTarget(new Target("target", this.gi, 0.0f, 300.0f, effectiveScreenWidth-10, 30.0f, 10));
+
+             //this.gi.addTarget(new Target("target", this.gi, 0.0f, 0.0f, 10f, effectiveScreenHeight-10, 10));
+             /*
+             //Log.e("tag setup entities1", " ");
+
+
+
+             this.gi.addBall(new Ball("ball", this.gi, 100f, 100f, 10f, 8));
+             this.gi.balls.get(0).program = this.imageProgram;
+             this.gi.balls.get(0).textureUnit = 0;
+             this.gi.balls.get(0).vx = 12.1f;
+             this.gi.balls.get(0).vy = 12.1f;
+
+
+
+             this.gi.addBall(new Ball("ball", this.gi, 200f, 200f, 16f, 8));
+             this.gi.balls.get(1).program = this.imageProgram;
+             this.gi.balls.get(1).textureUnit = 0;
+
+             this.gi.balls.get(1).vx = 18.1f;
+             this.gi.balls.get(1).vy = 18.1f;
+
+             this.gi.addBall(new Ball("ball", this.gi, 300f, 300f, 5f, 8));
+             this.gi.balls.get(2).program = this.imageProgram;
+             this.gi.balls.get(2).textureUnit = 0;
+
+             this.gi.balls.get(2).vx = 7.1f;
+             this.gi.balls.get(2).vy = 7.1f;
+
+             this.gi.addBall(new Ball("ball", this.gi, 250f, 110f, 13f, 8));
+             this.gi.balls.get(3).program = this.imageProgram;
+             this.gi.balls.get(3).textureUnit = 0;
+             this.gi.balls.get(3).vx = 6.1f;
+             this.gi.balls.get(3).vy = 6.1f;
+
+             this.gi.addBall(new Ball("ball", this.gi, 250f, 190f, 5f, 8));
+             this.gi.balls.get(4).program = this.imageProgram;
+             this.gi.balls.get(4).textureUnit = 0;
+             this.gi.balls.get(4).vx = 8.1f;
+             this.gi.balls.get(4).vy = 8.1f;
+
+             this.gi.addBall(new Ball("ball", this.gi, 250f, 310f, 15f, 8));
+             this.gi.balls.get(5).program = this.imageProgram;
+             this.gi.balls.get(5).textureUnit = 0;
+             this.gi.balls.get(5).vx = 2.1f;
+             this.gi.balls.get(5).vy = 2.1f;
+             //Log.e("tag setup entities2", " ");
+
+
+
+
+
+             //Log.e("tag setup entities3", " ");
+
+
+
+
+
+             this.gi.bordaE = new Rectangle("bordaE", this.gi, -999, -this.gi.gameAreaResolutionY, 1000, this.gi.gameAreaResolutionY*3, 10, new Color(0,0,0,1));
+             this.gi.bordaE.isMovable = false;
+             this.gi.bordaE.program = this.solidProgram;
+
+             this.gi.bordaD = new Rectangle("bordaD", this.gi, this.gi.gameAreaResolutionX-2, -this.gi.gameAreaResolutionY, 1000, this.gi.gameAreaResolutionY*3, 10, new Color(0,0,0,1));
+             this.gi.bordaD.isMovable = false;
+             this.gi.bordaD.program = this.solidProgram;
+
+             this.gi.bordaC = new Rectangle("bordaC", this.gi, 1, -1000, this.gi.gameAreaResolutionX-4, 1001, 10, new Color(1,0,0,1));
+             this.gi.bordaC.isMovable = false;
+             this.gi.bordaC.program = this.solidProgram;
+
+             this.gi.bordaB = new Rectangle("bordaB", this.gi, 1, this.gi.gameAreaResolutionY-2, this.gi.gameAreaResolutionX, 2, 10, new Color(0,0,0,1));
+             this.gi.bordaB.isMovable = false;
+             this.gi.bordaB.program = this.solidProgram;
+
+             this.gi.quad = new Quadtree(new RectangleM(0,0,this.gi.gameAreaResolutionX,this.gi.gameAreaResolutionY),5,5);
+
+             this.gi.addTarget(new Target("target", this.gi, 1.0f, 1.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 102.0f, 1.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 204.0f, 1.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 308.0f, 1.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 410.0f, 1.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 1.0f, 24.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 102.0f, 24.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 204.0f, 24.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 308.0f, 24.0f, 100.0f, 20.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 410.0f, 24.0f, 100.0f, 20.0f, 10));
+
+
+             for (int i = 0; i < this.gi.targets.size(); i++){
+                 this.gi.targets.get(i).textureUnit = 2;
+                 this.gi.targets.get(i).program = imageProgram;
+             }
+     */
+
+
+
+             //SetupTargets();
+
+             // Create the image information
+             //SetupImage();
+             // Create our texts
+             //SetupText();
+
+             /*
+
+             this.gi.addTarget(new Target("target", this.gi, 100.0f, 300.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 202.0f, 300.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 304.0f, 300.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 406.0f, 300.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 508.0f, 300.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 100.0f, 335.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 202.0f, 335.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 304.0f, 335.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 406.0f, 335.0f, 100.0f, 30.0f, 10));
+             this.gi.addTarget(new Target("target", this.gi, 508.0f, 335.0f, 100.0f, 30.0f, 10));
+
+             for (int i = 0; i < 50; i++) {
+                 this.gi.addBall((new Ball("ball", this.gi, 100.0f + (i*1), 100.0f, 10.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 150.0f + (i*1), 100.0f, 20.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 200.0f, 100.0f + (i*1), 10.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 250.0f, 100.0f + (i*1), 20.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 300.0f, 100.0f + (i*1), 10.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 350.0f + (i*1), 100.0f, 20.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 400.0f + (i*1), 100.0f, 10.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 450.0f + (i*1), 100.0f, 20.0f, 10)));
+
+                 this.gi.addBall((new Ball("ball", this.gi, 100.0f + (i*1), 200.0f, 10.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 150.0f + (i*1), 200.0f, 20.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 200.0f + (i*1), 200.0f, 20.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 250.0f, 200.0f + (i*1), 10.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 300.0f + (i*1), 200.0f, 20.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 350.0f + (i*1), 200.0f, 10.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 400.0f + (i*1), 200.0f, 20.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 450.0f + (i*1), 200.0f, 20.0f, 10)));
+
+                 this.gi.addBall((new Ball("ball", this.gi, 100.0f, 300.0f + (i*1), 1.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 150.0f + (i*1), 300.0f, 2.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 200.0f, 300.0f + (i*1), 2.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 250.0f + (i*1), 300.0f, 1.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 300.0f + (i*1), 300.0f, 2.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 350.0f + (i*1), 300.0f, 1.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 400.0f + (i*1), 300.0f, 2.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 450.0f + (i*1), 300.0f, 2.0f, 10)));
+
+                 this.gi.addBall((new Ball("ball", this.gi, 100.0f - (i*1), 150.0f, 1.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 170.0f + (i*1), 150.0f, 2.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 200.0f - (i*1), 150.0f, 2.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 270.0f - (i*1), 150.0f, 1.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 300.0f - (i*1), 150.0f, 2.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 370.0f + (i*1), 150.0f, 1.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 400.0f - (i*1), 150.0f, 2.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 450.0f + (i*1), 150.0f, 2.0f, 10)));
+
+                 this.gi.addBall((new Ball("ball", this.gi, 120.0f, 450.0f + (i*1), 15.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 150.0f, 450.0f - (i*1), 25.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 220.0f, 450.0f + (i*1), 25.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 250.0f, 450.0f - (i*1), 15.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 320.0f, 450.0f + (i*1), 25.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 350.0f, 450.0f - (i*1), 15.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 420.0f, 450.0f + (i*1), 25.0f, 10)));
+                 this.gi.addBall((new Ball("ball", this.gi, 450.0f, 450.0f - (i*1), 25.0f, 10)));
+             }
+             */
+         }
+
+
+
+           private void Render(float[] m) {
+
+                 GLES20.glUseProgram(this.imageProgram.get());
+
+                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+                 GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+                 // get handle to vertex shader's vPosition member and add vertices
+                 int mPositionHandle = GLES20.glGetAttribLocation(this.imageProgram.get(), "vPosition");
+                 GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false, 0, this.gi.balls.get(0).verticesBuffer);
+                 GLES20.glEnableVertexAttribArray(mPositionHandle);
+
+                 // Get handle to texture coordinates location and load the texture uvs
+                 int mTexCoordLoc = GLES20.glGetAttribLocation(this.imageProgram.get(), "a_texCoord" );
+                 GLES20.glVertexAttribPointer ( mTexCoordLoc, 2, GLES20.GL_FLOAT, false, 0, this.gi.balls.get(0).uvBuffer);
+                 GLES20.glEnableVertexAttribArray ( mTexCoordLoc );
+
+                 // Get handle to shape's transformation matrix and add our matrix
+                 int mtrxhandle = GLES20.glGetUniformLocation(this.imageProgram.get(), "uMVPMatrix");
+                 GLES20.glUniformMatrix4fv(mtrxhandle, 1, false, m, 0);
+
+                 // Get handle to textures locations
+                 // Set the sampler texture unit to 0, where we have saved the texture.
+                 int mSamplerLoc = GLES20.glGetUniformLocation (this.imageProgram.get(), "s_texture" );
+                 GLES20.glUniform1i ( mSamplerLoc, 0);
+
+                 // Draw the triangle
+                 GLES20.glDrawElements(GLES20.GL_TRIANGLES, this.gi.balls.get(0).indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.gi.balls.get(0).indicesBuffer);
+
+                 // Disable vertex array
+                 GLES20.glDisableVertexAttribArray(mPositionHandle);
+                 GLES20.glDisableVertexAttribArray(mTexCoordLoc);
+
+             }
+
