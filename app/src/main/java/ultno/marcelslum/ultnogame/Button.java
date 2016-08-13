@@ -1,4 +1,5 @@
-package ultno.marcelslum.ultno;
+package ultno.marcelslum.ultnogame;
+
 
 /**
  * Created by marcel on 07/08/2016.
@@ -134,15 +135,15 @@ public class Button extends Entity{
     public void setDrawInfo(){
         this.verticesData = new float[12];
         this.insertVerticesData(this.verticesData,0);
-        this.verticesBuffer = this.generateFloatBuffer(this.verticesData);
+        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
 
         this.indicesData = new short[6];
         this.insertIndicesData(this.indicesData, 0, 0);
-        this.indicesBuffer = this.generateShortBuffer(this.indicesData);
+        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
 
         this.uvsData = new float[12];
         this.insertUvData(this.uvsData, 0);
-        this.uvsBuffer = this.generateFloatBuffer(this.uvsData);
+        this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
     }
 
 

@@ -1,4 +1,4 @@
-package ultno.marcelslum.ultno;
+package ultno.marcelslum.ultnogame;
 
 /**
  * Created by marcel on 07/08/2016.
