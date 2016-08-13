@@ -1,11 +1,9 @@
 package ultno.marcelslum.ultnogame;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.SoundPool;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -21,6 +19,7 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
 
 public class GLRenderer implements GLSurfaceView.Renderer {
 
@@ -119,8 +118,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         this.gi.soundDestroyTarget = this.gi.soundPool.load(mContext, R.raw.destroytarget, 1);
         this.gi.soundMusic = this.gi.soundPool.load(mContext, R.raw.music, 1);
         this.gi.soundScore = this.gi.soundPool.load(mContext, R.raw.score, 1);
-
-
 
         // Setup our scaling system
         SetupScaling();
