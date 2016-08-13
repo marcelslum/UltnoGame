@@ -1,4 +1,4 @@
-package ultno.marcelslum.ultno;
+package ultno.marcelslum.ultnogame;
 
 import java.util.ArrayList;
 

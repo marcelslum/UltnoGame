@@ -1,4 +1,5 @@
-package ultno.marcelslum.ultno;
+package ultno.marcelslum.ultnogame;
+
 
 import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;

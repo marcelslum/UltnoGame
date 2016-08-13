@@ -1,4 +1,5 @@
-package ultno.marcelslum.ultno;
+package ultno.marcelslum.ultnogame;
+
 
 import android.graphics.PointF;
 import android.graphics.RectF;

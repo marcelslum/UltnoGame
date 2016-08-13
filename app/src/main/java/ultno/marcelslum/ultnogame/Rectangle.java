@@ -1,4 +1,5 @@
-package ultno.marcelslum.ultno;
+package ultno.marcelslum.ultnogame;
+
 
 import android.graphics.PointF;
 
@@ -23,7 +24,7 @@ public class Rectangle extends PhysicalObject {
         
         initializeData(12, 6, 0, 12);
         
-        Utils.insertRectangleVerticesData(erticesData, 0,  0f, width, 0f, height, 0f);
+        Utils.insertRectangleVerticesData(verticesData, 0,  0f, width, 0f, height, 0f);
        verticesBuffer = Utils.generateFloatBuffer(verticesData);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
