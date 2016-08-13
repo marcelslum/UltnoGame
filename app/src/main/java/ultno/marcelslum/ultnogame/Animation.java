@@ -11,6 +11,8 @@ import java.util.List;
  * Created by marcel on 01/08/2016.
  */
 public class Animation{
+
+    boolean test;
     Entity targetObject;
     String name;
     String parameterToAnimate;
