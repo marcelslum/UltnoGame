@@ -22,7 +22,7 @@ public class Rectangle extends PhysicalObject {
 
     public void setDrawInfo(){
         
-        initializeData(12, 6, 0, 12);
+        initializeData(12, 6, 0, 16);
         
         Utils.insertRectangleVerticesData(verticesData, 0,  0f, width, 0f, height, 0f);
        verticesBuffer = Utils.generateFloatBuffer(verticesData);

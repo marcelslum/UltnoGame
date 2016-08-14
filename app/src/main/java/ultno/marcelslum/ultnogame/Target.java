@@ -99,13 +99,13 @@ public class Target extends Rectangle {
 
         this.posYVariation = 0;
         if (this.showPointsStateAnim != null) {
-            Log.e("target", "showPointsStateAnim ");
+            //Log.e("target", "showPointsStateAnim ");
             this.showPointsStateAnim.start();
         }
 
         //Log.e("target", "3");
         if (this.showPointsAlphaAnim != null) {
-            Log.e("target", "showPointsAlphaAnim ");
+            //Log.e("target", "showPointsAlphaAnim ");
             this.showPointsAlphaAnim.start();
         }
 
@@ -139,7 +139,23 @@ public class Target extends Rectangle {
 
     public void setType(int type){
         this.type = type;
-        Utils.insertRectangleUvData(uvsData, 0, 0.80078125f, 0.4072265625f, 0.60f, 0f);
+
+        //0 - 206
+        // 208 -414
+        // 416 - 622
+        // 624 - 830
+
+
+        if (type == 2){
+            Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 624f/1024f, 830f/1024f);
+        } else if (type == 1){
+            Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 208f/1024f, 414f/1024f);
+        } else if (type == 0){
+            Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
+        }
+
+
+
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
 

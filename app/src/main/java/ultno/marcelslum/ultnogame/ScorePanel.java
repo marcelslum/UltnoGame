@@ -22,6 +22,9 @@ public class ScorePanel extends Entity{
 
     ScorePanel(String name, Game game, float x, float y, float size) {
         super(name, game, x, y);
+
+        this.x -= (size * 0.55294f)*2.5f;
+
         this.size = size;
         isSolid = false;
         isCollidable = false;
@@ -43,7 +46,7 @@ public class ScorePanel extends Entity{
 
         float width = size * 0.55294f;
 
-        float x = 0f;
+        float xOfTriangle = 0f;
 
         for (int i = 0; i < 5;i++){
 
@@ -63,8 +66,8 @@ public class ScorePanel extends Entity{
                 //Log.e("point", "subInteger "+subInteger);
             }
 
-            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), x, x+width, 0f, size, 0f);
-            x += width;
+            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+width, 0f, size, 0f);
+            xOfTriangle += width;
             
             Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
 

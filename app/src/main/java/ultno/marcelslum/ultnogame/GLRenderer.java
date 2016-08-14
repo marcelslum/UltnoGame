@@ -31,18 +31,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     private final float[] matrixView = new float[16];
     private final float[] matrixProjectionAndView = new float[16];
 
-    // Geometric variables
-    public static float vertices[];
-    public static short indices[];
-    public static float uvs[];
-    public FloatBuffer vertexBuffer;
-    public ShortBuffer drawListBuffer;
-    public FloatBuffer uvBuffer;
-    public Sprite sprite;
-    public TextManager tm;
-
-
-    public Point testPoint;
     // Our screenresolution
     float	mScreenWidth;
     float	mScreenHeight;
@@ -58,17 +46,13 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     float testeValue = 10f;
 
-    public Program imageProgram;
-    public Program textProgram;
-    public Program solidProgram;
-
-    public float fps = 30f;
+    public float fps = 60f;
     public float frameDuration = 1000f/fps;
 
     // Misc
     Context mContext;
     long mLastTime;
-    int mProgram;
+
     public float screenOffSetX;
     public float screenOffSetY;
 
@@ -132,6 +116,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         this.gi.textProgram = new Program(GraphicTools.vs_Text, GraphicTools.fs_Text);
         this.gi.solidProgram = new Program(GraphicTools.vs_SolidColor, GraphicTools.fs_SolidColor);
 
+        this.gi.font = new Font(1,this.gi.textProgram);
+
         //GLES20.glUseProgram(imageProgram.get());
     }
 
@@ -192,11 +178,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         // Setup our scaling system
         SetupScaling();
 
-        Font font = new Font();
-
-        this.gi.addText(new Text("titulo", this.gi, 0f, 0f, 300f, "ULTNO", font));
-        this.gi.texts.get(0).program = this.textProgram;
-        this.gi.texts.get(0).textureUnit = 1;
+        //this.gi.addText(new Text("titulo", this.gi, 0f, 0f, 300f, "ULTNO", this.gi.font));
 
         this.gi.gameAreaResolutionX = this.effectiveScreenWidth;
         this.gi.gameAreaResolutionY = this.effectiveScreenHeight * 0.85f;
@@ -373,6 +355,15 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         }
 
         this.gi.scorePanel.render(matrixView, matrixProjection);
+        this.gi.objectivePanel.render(matrixView, matrixProjection);
+
+        for (int i = 0; i < this.gi.menus.size(); i++){
+            this.gi.menus.get(i).render(matrixView, matrixProjection);
+        }
+
+        for (int i = 0; i < this.gi.selectors.size(); i++){
+            this.gi.selectors.get(i).render(matrixView, matrixProjection);
+        }
 
         //Log.e("render test", "3 ");
 
@@ -404,159 +395,14 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     public void SetupTextures()
     {
-
-        // Generate Textures, if more needed, alter these numbers.
-
-        //////Log.e("setup textures ", "1");
-
         texturenames = new int[7];
         GLES20.glGenTextures(7, texturenames, 0);
-
-        //Log.e("setup textures ", "1");
-
-        // Retrieve our image from resources.
-
-
-        // TEXTURA 00: BOLA
-        int id = mContext.getResources().getIdentifier("drawable/texturas4", null, mContext.getPackageName());
-
-        //Log.e("setup textures ", "1");
-
-        // Temporary create a bitmap
-        Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
-
-        //Log.e("setup textures ", "1");
-
-        // Bind texture to texturename
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[0]);
-
-        //Log.e("setup textures ", "1");
-
-        // Set filtering
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-
-        // Load the bitmap into the bound texture.
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-
-        //Log.e("setup textures ", "1");
-
-        // We are done using the bitmap so we should recycle it.
-        bmp.recycle();
-
-        //Log.e("setup textures ", "1");
-
-
-        // TEXTURA 01 : TEXTO
-        id = mContext.getResources().getIdentifier("drawable/jetset", null, mContext.getPackageName());
-
-        //Log.e("setup textures ", "1");
-        bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
-        //Log.e("setup textures ", "1");
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + 1);
-        //Log.e("setup textures ", "1");
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[1]);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-        //Log.e("setup textures ", "1");
-        bmp.recycle();
-
-
-
-        // TEXTURA 02 : ALVOS
-        id = mContext.getResources().getIdentifier("drawable/alvos", null, mContext.getPackageName());
-
-        //Log.e("setup textures ", "1");
-        bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
-        //Log.e("setup textures ", "1");
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + 2);
-        //Log.e("setup textures ", "1");
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[2]);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-        //Log.e("setup textures ", "1");
-        bmp.recycle();
-
-        // TEXTURA 03 : BARRA
-        id = mContext.getResources().getIdentifier("drawable/barras", null, mContext.getPackageName());
-
-        //Log.e("setup textures ", "1");
-        bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
-        //Log.e("setup textures ", "1");
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + 3);
-        //Log.e("setup textures ", "1");
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[3]);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-        //Log.e("setup textures ", "1");
-        bmp.recycle();
-
-        // TEXTURA 04 : BOTÕES
-        id = mContext.getResources().getIdentifier("drawable/botoes", null, mContext.getPackageName());
-
-        //Log.e("setup textures ", "1");
-        bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
-        //Log.e("setup textures ", "1");
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + 4);
-        //Log.e("setup textures ", "1");
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[4]);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-        //Log.e("setup textures ", "1");
-        bmp.recycle();
-
-        // TEXTURA 05 : BACKGROUND
-        id = mContext.getResources().getIdentifier("drawable/background3", null, mContext.getPackageName());
-
-        //Log.e("setup textures ", "1");
-        bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
-        //Log.e("setup textures ", "1");
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + 5);
-        //Log.e("setup textures ", "1");
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[5]);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-        //Log.e("setup textures ", "1");
-        bmp.recycle();
-
-        // TEXTURA 06 : NUMEROS
-        id = mContext.getResources().getIdentifier("drawable/numeros256", null, mContext.getPackageName());
-
-        //Log.e("setup textures ", "1");
-        bmp = BitmapFactory.decodeResource(mContext.getResources(), id);
-        //Log.e("setup textures ", "1");
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + 6);
-        //Log.e("setup textures ", "1");
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texturenames[6]);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
-        //Log.e("setup textures ", "1");
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        //Log.e("setup textures ", "1");
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-        //Log.e("setup textures ", "1");
-        bmp.recycle();
+        Utils.setTexture("drawable/bolas", texturenames, 0, mContext);
+        Utils.setTexture("drawable/jetset", texturenames, 1, mContext);
+        Utils.setTexture("drawable/alvos", texturenames, 2, mContext);
+        Utils.setTexture("drawable/barras", texturenames, 3, mContext);
+        Utils.setTexture("drawable/botoes", texturenames, 4, mContext);
+        Utils.setTexture("drawable/background3", texturenames, 5, mContext);
+        Utils.setTexture("drawable/numeros3", texturenames, 6, mContext);
     }
-
 }

@@ -1,6 +1,8 @@
 package ultno.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -9,12 +11,15 @@ import java.util.ArrayList;
 public class Ball extends Circle{
 
 
-    boolean testeok;
+    public static final int COLOR_BALL_BLACK = 0;
+    public static final int COLOR_BALL_BLUE = 1;
+    public static final int COLOR_BALL_GREEN = 2;
+    public static final int COLOR_BALL_RED = 3;
+    public static final int COLOR_BALL_YELLOW = 4;
+    public static final int COLOR_BALL_ORANGE = 5;
+    public static final int COLOR_BALL_PINK = 6;
+    public static final int COLOR_BALL_PURPLE = 7;
 
-    boolean teste2;
-
-
-    boolean bUp;
     public float angleToRotate;
     public float velocityVariation;
     public float velocityMaxByInitialVelocity;
@@ -25,6 +30,8 @@ public class Ball extends Circle{
     public float initialDesireVelocityY;
     public float rotationAngle = 0;
     boolean isInvencible = false;
+    int colorTextureMap = COLOR_BALL_PURPLE;
+
     Color color;
     boolean isAlive = true;
     boolean listenForExplosion = false;
@@ -37,11 +44,15 @@ public class Ball extends Circle{
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
 
-    Ball(String name, Game game, float x, float y, float radium, int weight){
 
+    private final static float [] columns = new float [] {341.333f,682.666f};
+    private final static float [] lines = new float [] {341.333f,682.666f};
+    private final static float textureSize = 1024f;
+
+
+    Ball(String name, Game game, float x, float y, float radium, int weight){
         super(name, game, x, y, radium, weight);
         setDrawInfo();
-        this.bUp = true;
     }
 
     public void setInvencible() {
@@ -63,14 +74,51 @@ public class Ball extends Circle{
         
         initializeData(12, 6, 8, 0);
 
+        this.verticesData = new float[12];
 
-        Utils.insertRectangleVerticesData(verticesData, 0, 0f-radium, radium, 0f - radium, radium, 0f);
+
+        Log.e("ball", " "+this.verticesData.length);
+
+        Utils.insertRectangleVerticesData(this.verticesData, 0, 0f-radium, radium, 0f - radium, radium, 0f);
         this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
 
         Utils.insertRectangleIndicesData(this.indicesData, 0, 0);
         this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
 
-        Utils.insertRectangleUvData(this.uvsData, 0, 0.58300097765625f, 0.9169990234375f, 0.5f, 1.0f);
+
+        Utils.y1 = 0f;
+        Utils.y2 = 0f;
+
+
+        if (colorTextureMap ==  COLOR_BALL_PINK|| colorTextureMap == COLOR_BALL_PURPLE){
+            Utils.y1 = (0+1f)/textureSize;
+            Utils.y2 = (lines[0]-1f)/textureSize;
+        } else if (colorTextureMap ==  COLOR_BALL_RED|| colorTextureMap == COLOR_BALL_YELLOW || colorTextureMap == COLOR_BALL_ORANGE){
+            Utils.y1 = (lines[0]+1f)/textureSize;
+            Utils.y2 = (lines[1]-1f)/textureSize;
+        } else if (colorTextureMap ==  COLOR_BALL_BLACK || colorTextureMap == COLOR_BALL_BLUE || colorTextureMap == COLOR_BALL_GREEN){
+            Utils.y1 = (lines[1]+1f)/textureSize;
+            Utils.y2 = (textureSize-1f)/textureSize;
+        }
+        
+        
+
+        Utils.x1 = 0;
+        Utils.x2 = 0;
+
+        if (colorTextureMap ==  COLOR_BALL_BLACK|| colorTextureMap == COLOR_BALL_RED || colorTextureMap == COLOR_BALL_PINK){
+            Utils.x1 = (0+1f)/textureSize;
+            Utils.x2 = (columns[0]-1f)/textureSize;
+        } else if (colorTextureMap ==  COLOR_BALL_BLUE|| colorTextureMap == COLOR_BALL_YELLOW || colorTextureMap == COLOR_BALL_PURPLE){
+            Utils.x1 = (columns[0]+1f)/textureSize;
+            Utils.x2 = (columns[1]-1f)/textureSize;
+        } else if (colorTextureMap ==  COLOR_BALL_GREEN|| colorTextureMap == COLOR_BALL_ORANGE){
+            Utils.x1 = (columns[1]+1f)/textureSize;
+            Utils.x2 = (textureSize-1f)/textureSize;
+        } 
+        
+
+        Utils.insertRectangleUvData(this.uvsData, 0);
         uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
     }
     

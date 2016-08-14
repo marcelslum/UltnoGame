@@ -2,6 +2,7 @@ package ultno.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -133,6 +134,7 @@ public class Entity {
         
         if (verticesSize > 0){
             if (this.verticesData == null || this.verticesData.length != verticesSize){
+                //Log.e("entity", "criando vertices data de "+this.name + " com o tamanho "+verticesSize);
                 this.verticesData = new float[verticesSize];                
             }
         }

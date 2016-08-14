@@ -1,12 +1,13 @@
 package ultno.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 public class Text extends Entity{
 
     public String text;
     public float size;
 
-    public TextManager tm;
     public float width;
     public Font font;
 
@@ -23,6 +24,8 @@ public class Text extends Entity{
         this.size = size;
         this.color = color;
         this.font = font;
+        this.program = this.font.program;
+        this.textureUnit = this.font.textureUnit;
 
         this.charData = new float[]{0f, 0f, 0f, 0f,};
         //Log.e("this.color", " teste ");
@@ -36,8 +39,10 @@ public class Text extends Entity{
         this.text = text;
         this.size = size;
 
-        this.color = new Color(1,1,1,1);
+        this.color = new Color(0f,0f,0f,1f);
         this.font = font;
+        this.program = this.font.program;
+        this.textureUnit = this.font.textureUnit;
 
         this.charData = new float[]{0f, 0f, 0f, 0f};
         //Log.e("this.color", " teste ");
@@ -137,16 +142,16 @@ public class Text extends Entity{
 */
             vec[0] = initialX;
             vec[1] = 0 + size;
-            vec[2] = 0.95f;
+            vec[2] = 0f;
             vec[3] = initialX;
             vec[4] = 0;
-            vec[5] = 0.95f;
+            vec[5] = 0f;
             vec[6] = initialX + (size*(charData[2]/charData[3]));
             vec[7] = 0;
-            vec[8] = 0.95f;
+            vec[8] = 0f;
             vec[9] = initialX + (size*(charData[2]/charData[3]));
             vec[10] = 0 + size;
-            vec[11] = 0.95f;
+            vec[11] = 0f;
 
             colors = new float[]
                     {   this.colorData2[0], this.colorData2[1], this.colorData2[2], this.colorData2[3],
@@ -169,36 +174,37 @@ public class Text extends Entity{
             // Add our triangle information to our collection for 1 render call.
 
 
-            for (int i = 0; i < colors.length; i++){
+            //for (int i = 0; i < colors.length; i++){
                 //Log.e("colorsData111 "+i, " "+colors[i]);
-            }
+            //}
 
             addCharRenderInformation(vec, colors, uv, inds);
 
             // Calculate the new position
-            //Log.e("x", " "+x);
             initialX += (size*(charData[2]/charData[3]))+(this.size*0.05);
         }
     }
 
-    public float calculateWidth(Text val){
+    public float calculateWidth(){
         float initialX = 0;
-        String text = val.text;
-        float size = val.size;
 
-        for(int j=0; j<text.length(); j++) {
-            // get ascii value
+        for(int j=0; j<text.length(); j++)
+        {
             char c = text.charAt(j);
-            int c_val = (int) c;
-            float indx = font.getCharToIndex(c_val, charData);
+            int c_val = (int)c;
 
-            if (indx == -1) {
-                // unknown character, we will add a space for it to be save.
-                initialX += (size / 2);
-                continue;
+            if (this.charData == null){
+                this.charData = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
             }
 
-            initialX += charData[2]+(this.size*0.2);
+            float indx = font.getCharToIndex(c_val, this.charData);
+
+            if(indx==-1.0f) {
+                // unknown character, we will add a space for it to be save.
+                initialX += (size);
+                continue;
+            }
+            initialX += (size*(charData[2]/charData[3]))+(this.size*0.05);
         }
         return initialX;
     }
@@ -240,4 +246,8 @@ public class Text extends Entity{
         }
     }
 
+    public void setX(float x) {
+        this.x = x;
+        setDrawInfo();
+    }
 }

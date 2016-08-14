@@ -1,6 +1,8 @@
 package ultno.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -13,11 +15,15 @@ class Menu extends Entity{
     public Audio audioSmall;
     public Audio audioLarge;
     public int selectedOption;
-    public static int optionsIds;
+    public int optionsIds = 0;
+    public final float bottomPad = 0.1f;
+    public Font font;
 
 
-    public Menu(String name, Game game, float x, float y, float size){
+    public Menu(String name, Game game, float x, float y, float size, Font font){
         super(name, game, x, y);
+        this.font = font;
+        this.size = size;
         menuOptions = new ArrayList<MenuOption>();
     }
 
@@ -95,21 +101,30 @@ class Menu extends Entity{
         return null;
     }
 
-    public void addMenuOption(String name, String text){
+    public MenuOption addMenuOption(String name, String text, MenuOption.OnChoice onChoice){
+        float optionY = this.y + (optionsIds * (size *(1+bottomPad)));
         this.optionsIds += 1;
-        this.menuOptions.add(new MenuOption(this.optionsIds, name, text));
+        MenuOption newMenuOption = new MenuOption(this.optionsIds, name, text, game, font, size, x, optionY);
+        newMenuOption.setOnChoice(onChoice);
+        this.menuOptions.add(newMenuOption);
 
-        InteractionListener interactionListener = new InteractionListener(name, 0,0,0,0,500,this, this.game);
+        InteractionListener newListener = new InteractionListener(name,
+                newMenuOption.x - (newMenuOption.width/2),
+                optionY,
+                newMenuOption.width,
+                newMenuOption.size,
+                500, this, game);
 
         final Menu innerMenu = this;
         final String innerName = name;
         final int innerId = this.optionsIds;
-        interactionListener.setPressListener(new InteractionListener.PressListener() {
+        newListener.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
+                //Log.e("Menu", "interaction menu");
                 if (!innerMenu.isBlocked){
                     innerMenu.game.blockAndWaitTouchRelease();
-                    innerMenu.audioLarge.play();
+                    //TODO innerMenu.audioLarge.play();
                     innerMenu.getMenuOptionByName(innerName).fireOnChoice();
 
                     for (int i = 0; i < innerMenu.menuOptions.size(); i++){
@@ -125,7 +140,19 @@ class Menu extends Entity{
 
             }
         });
-        this.addListener(interactionListener);
+
+        this.game.addInteracionListener(newListener);
+
+        return newMenuOption;
+    }
+
+    @Override
+    public void render(float[] matrixView, float[] matrixProjection){
+        //Log.e("menu", "render menu");
+
+        for (int i = 0; i < this.menuOptions.size();i++){
+            this.menuOptions.get(i).textObject.render(matrixView, matrixProjection);
+        }
     }
 
     public void setAudioLarge(Audio audio) {
@@ -137,41 +164,5 @@ class Menu extends Entity{
     }
 
 
-}
-
-class MenuOption{
-    public int id;
-    public String name;
-    public String text;
-    public OnChoice myOnChoice;
-    public float textWidth;
-    public float x;
-    public float y;
-    public boolean isSelected;
-    public float height;
-    public float width;
-
-    public MenuOption(int id, String name, String text){
-        this.id = id;
-        this.name = name;
-        this.text = text;
-        this.isSelected = false;
-        this.x = 0;
-        this.y = 0;
-    }
-
-    public void setOnChoice(OnChoice onChoice){
-        this.myOnChoice = onChoice;
-    }
-
-    public void fireOnChoice(){
-        if (this.myOnChoice != null){
-            this.myOnChoice.onChoice();
-        }
-    }
-
-    interface OnChoice{
-        public void onChoice();
-    }
 }
 

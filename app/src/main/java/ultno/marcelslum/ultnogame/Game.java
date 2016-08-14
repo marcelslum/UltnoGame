@@ -22,6 +22,8 @@ public class Game {
     int soundMusic;
     int soundScore;
 
+    Font font;
+
     public static ScorePanel scorePanel;
 
 
@@ -60,6 +62,8 @@ public class Game {
     public Audio music;
     public Entity gameArea;
     public ArrayList<Bar> bars;
+    public ArrayList<Menu> menus;
+    public ArrayList<Selector> selectors;
     public float [] barsInitialPositionX = new float[10];
     public float [] barsInitialPositionY = new float[10];
     public float [] barsDesiredVelocityX = new float[10];
@@ -78,6 +82,7 @@ public class Game {
     public Program textProgram;
     public Program solidProgram;
     public Background background;
+    public ObjectivePanel objectivePanel;
 
 
     public static Game getInstance() {
@@ -95,6 +100,8 @@ public class Game {
         touchEvents = new ArrayList<TouchEvent>();
         texts = new ArrayList<Text>();
         bars = new ArrayList<Bar>();
+        menus = new ArrayList<>();
+        selectors = new ArrayList<>();
 
         barsInitialPositionX = new float[10];
         barsInitialPositionY = new float[10];

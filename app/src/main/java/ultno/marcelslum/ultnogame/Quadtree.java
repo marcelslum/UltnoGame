@@ -64,14 +64,14 @@ public class Quadtree {
 
         public void insert(Entity item){
 
-            System.out.println("inserindo item "+item.name);
+            ////System.out.println("inserindo item "+item.name);
 
 
             RectangleM itemBounds = item.getQuadtreeData();
             if (this.nodes != null){
                 int index = this.findIndex(itemBounds);
 
-                System.out.println("achado o index "+index +" para o item "+item.name);
+                ////System.out.println("achado o index "+index +" para o item "+item.name);
 
                 Node node = this.nodes[index];
                 if (itemBounds.x >= node.bounds.x &&
@@ -103,7 +103,7 @@ public class Quadtree {
             if (this.nodes != null){
                 int index = this.findIndex(itemBounds);
 
-                System.out.println("index no retrieve do item " + item.name + " index: " + index + " nível: "+ this.depth);
+                ////System.out.println("index no retrieve do item " + item.name + " index: " + index + " nível: "+ this.depth);
                 Node node = this.nodes[index];
                 if (itemBounds.x >= node.bounds.x &&
                         itemBounds.x + itemBounds.width <= node.bounds.x + node.bounds.width &&
@@ -111,11 +111,11 @@ public class Quadtree {
                         itemBounds.y + itemBounds.height <= node.bounds.y + node.bounds.height)
                 {
 
-                    System.out.println("ativando função recursiva");
+                    //System.out.println("ativando função recursiva");
                     node.retrieve(item, outs);
                 } else {
 
-                    System.out.println("item está em mais de um node");
+                    //System.out.println("item está em mais de um node");
 
                     if (itemBounds.x <= this.nodes[TOP_RIGHT].bounds.x){
                         if (itemBounds.y <= this.nodes[BOTTOM_LEFT].bounds.y){
@@ -146,7 +146,7 @@ public class Quadtree {
 
         public void getAllContent(ArrayList<Entity> outs){
 
-            System.out.println("getAllContent");
+            //System.out.println("getAllContent");
 
 
             if (this.nodes != null){
@@ -155,12 +155,12 @@ public class Quadtree {
                 }
             }
 
-            System.out.println("getAllContent2");
+            //System.out.println("getAllContent2");
 
 
             outs.addAll(this.stuckChildren);
 
-            System.out.println("getAllContent3");
+            //System.out.println("getAllContent3");
             outs.addAll(this.children);
         }
 
@@ -182,7 +182,7 @@ public class Quadtree {
 
         public int findIndex(RectangleM bounds){
 
-            //System.out.println("find index bounds.x "+bounds.x +" em relação ao node de bounds x "+this.bounds.x+ " e width" + this.bounds.width);
+            ////System.out.println("find index bounds.x "+bounds.x +" em relação ao node de bounds x "+this.bounds.x+ " e width" + this.bounds.width);
 
             boolean left;
 
@@ -216,7 +216,7 @@ public class Quadtree {
 
         public void subdivide(){
 
-            System.out.println("subdividindo o nível " + this.depth);
+            //System.out.println("subdividindo o nível " + this.depth);
 
             int depth = this.depth + 1;
 

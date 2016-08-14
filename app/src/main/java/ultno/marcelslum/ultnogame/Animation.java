@@ -65,6 +65,7 @@ public class Animation{
     }
 
     public void stopAndConclude(){
+
         this.stop();
         this.targetObject.applyAnimation(this.parameterToAnimate, this.values.get(this.values.size() - 1)[1]);
         fireAnimationEnd();

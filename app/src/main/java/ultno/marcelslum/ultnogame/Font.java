@@ -1,7 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-import android.util.Log;
-
 /**
  * Created by marcel on 06/08/2016.
  */
@@ -35,6 +33,8 @@ public class Font {
     public float textureSize;
     public float[] lSize;
     public float[] fontData;
+    public int textureUnit;
+    public Program program;
 
     public Font(float uvBoxWidth, float textureSize, float[] lSize){
         this.lSize = lSize;
@@ -210,7 +210,10 @@ public class Font {
         };
     }
 
-    public Font(){
+    public Font(int textureUnit, Program program){
+        this.textureUnit = textureUnit;
+        this.program = program;
+
         this.lSize = new float[]{
                 4,	7,	11,	9,	10,	12,	4,	6,	6,	6,	8,	4,	7,	4,	10,	10,	5,	10,	10,	10,	10,	10,	10,	10,	10,	4,	4,	7,	9,	7,	10,	16,	10,	10,	10,	10,	10,	9,	10,	10,	4,	8,	10,	8,	12,	10,	10,	10,	10,	10,	10,	9,	10,	9,	12,	10,	9,	10,	5,	10,	5,	7,	10,	4,	10,	10,	10,	10,	10,	7,	10,	10,	4,	4,	9,	5,	12,	10,	10,	10,	10,	8,	10,	7,	10,	9,	12,	9,	10,	10,	7,	4,	7,	8,	5,	9,	5,	5,	5,	5,	5,	5,	5,	5,	5,	5,	8,	15,	5,	5,	5,	5,	5,	4,	8,	8,	5,	10,	12,	5,	13,	5,	8,	16,	5,	5,	9,	5,	4,	9,	10,	10,	9,	5,	5,	8,	10,	5,	10,	5,	5,	10,	5,	6,	8,	5,	5,	4,	10,	9,	5,	5,	5,	5,	10,	5,	5,	5,	10,	10,	10,	10,	10,	10,	10,	15,	10,	9,	9,	9,	10,	4,	4,	7,	8,	5,	10,	10,	10,	10,	10,	10,	5,	5,	10,	10,	10,	10,	9,	5,	5,	10,	10,	10,	10,	10,	10,	16,	10,	10,	10,	10,	10,	4,	4,	5,	8,	5,	10,	10,	10,	10,	10,	10,	9,	5,	10,	10,	10,	10,	10,	5,	10,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0
         };

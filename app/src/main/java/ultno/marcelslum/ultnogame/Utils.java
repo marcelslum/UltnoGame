@@ -150,7 +150,7 @@ public class Utils {
     }
     
     
-    public void setTexture(String identifier, int [] arrayOfNames, int number, Context context){
+    public static void setTexture(String identifier, int [] arrayOfNames, int number, Context context){
         int id = context.getResources().getIdentifier(identifier, null, context.getPackageName());
         
         // Temporary create a bitmap

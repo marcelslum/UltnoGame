@@ -79,40 +79,40 @@ public class Point extends Entity {
         Utils.y2 = 0f;
 
         if (textureMap < 8){
-            Utils.y1 = 0.001f;
-            Utils.y2 = (lines[0]-1f)/textureSize;
+            Utils.y1 = 2f/textureSize;
+            Utils.y2 = (lines[0]-2f)/textureSize;
         } else if (textureMap < 15){
-            Utils.y1 = (lines[0]+1f)/textureSize;
-            Utils.y2 = (lines[1]-1f)/textureSize;
+            Utils.y1 = (lines[0]+2f)/textureSize;
+            Utils.y2 = (lines[1]-2f)/textureSize;
         } else {
-            Utils.y1 = (lines[1]+1f)/textureSize;
-            Utils.y2 = (lines[2]-1f)/textureSize;
+            Utils.y1 = (lines[1]+2f)/textureSize;
+            Utils.y2 = (lines[2]-2f)/textureSize;
         }
 
         Utils.x1 = 0;
         Utils.x2 = 0;
     
         if (textureMap == 1 || textureMap == 8 || textureMap == 15){
-            Utils.x1 = 0.001f;
-            Utils.x2 = (columns[0]-1f)/textureSize;
+            Utils.x1 = 2f/textureSize;
+            Utils.x2 = (columns[0]-2f)/textureSize;
         } else if (textureMap == 2 || textureMap == 9 || textureMap == 16){
-            Utils.x1 = (columns[0]+1f)/textureSize;
-            Utils.x2 = (columns[1]-1f)/textureSize;
+            Utils.x1 = (columns[0]+2f)/textureSize;
+            Utils.x2 = (columns[1]-2f)/textureSize;
         } else if (textureMap == 3 || textureMap == 10 || textureMap == 17){
-            Utils.x1 = (columns[1]+1f)/textureSize;
-            Utils.x2 = (columns[2]-1f)/textureSize;
+            Utils.x1 = (columns[1]+2f)/textureSize;
+            Utils.x2 = (columns[2]-2f)/textureSize;
         } else if (textureMap == 4 || textureMap == 11 || textureMap == 18){
-            Utils.x1 = (columns[2]+1f)/textureSize;
-            Utils.x2 = (columns[3]-1f)/textureSize;
+            Utils.x1 = (columns[2]+2f)/textureSize;
+            Utils.x2 = (columns[3]-2f)/textureSize;
         } else if (textureMap == 5 || textureMap == 12 || textureMap == 19){
-            Utils.x1 = (columns[3]+1f)/textureSize;
-            Utils.x2 = (columns[4]-1f)/textureSize;
+            Utils.x1 = (columns[3]+2f)/textureSize;
+            Utils.x2 = (columns[4]-2f)/textureSize;
         } else if (textureMap == 6 || textureMap == 13 || textureMap == 20){
-            Utils.x1 = (columns[4]+1f)/textureSize;
-            Utils.x2 = (columns[5]-1f)/textureSize;
+            Utils.x1 = (columns[4]+2f)/textureSize;
+            Utils.x2 = (columns[5]-2f)/textureSize;
         } else if (textureMap == 7 || textureMap == 14){
-            Utils.x1 = (columns[5]+1f)/textureSize;
-            Utils.x2 = (columns[6]-1f)/textureSize;
+            Utils.x1 = (columns[5]+2f)/textureSize;
+            Utils.x2 = (columns[6]-2f)/textureSize;
         }
     }
 
