@@ -47,6 +47,7 @@ public class Animation{
         this.elapsedTime = 0;
         this.percentage = 0;
         this.offSet = 0;
+        this.targetObject.addAnimation(this);
     }
 
     public void start(){

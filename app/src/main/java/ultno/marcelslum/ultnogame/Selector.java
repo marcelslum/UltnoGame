@@ -1,6 +1,8 @@
 package ultno.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -14,7 +16,6 @@ public class Selector extends Entity{
     int selectedValue;
     float size;
     String text;
-    SelectorListener myListener;
     public Audio audioSmall;
     public Audio audioLarge;
     public Text [] textsObjects;
@@ -23,6 +24,7 @@ public class Selector extends Entity{
     Button arrowUp;
     Button arrowDown;
     Button arrowBack;
+    private OnChange onChange;
 
 
     Selector(String name, Game game, float x, float y, float size, String text, String [] values, Font font){
@@ -32,19 +34,29 @@ public class Selector extends Entity{
         this.values = values;
         this.font = font;
 
-        textsObjects = new Text [values.length];
+        isBlocked = true;
+        isVisible = false;
 
-        this.maxWidth = 0f;
+        textsObjects = new Text [values.length];
+        selectedValue = 0;
+    }
+
+    public void setPosition(float x, float y){
+        this.x = x;
+        this.y = y;
+
+        maxWidth = 0f;
 
         if (text != ""){
-            mainTextObject = new Text("selector"+text+"Text", game, this.x, this.y, this.size, text, this.font);
+            mainTextObject = new Text("selector"+text+"Text", game, x, y, size, text, this.font);
             mainTextWidth = (mainTextObject.calculateWidth()) + (size*0.75f);
         } else {
             mainTextWidth = 0f;
         }
 
         for (int i = 0; i < values.length; i++){
-            textsObjects[i] = new Text("selector"+values[i]+"Text", game, 0f, this.y, this.size, values[i], this.font);
+            Log.e("selector", " "+values[i]);
+            textsObjects[i] = new Text("selector"+values[i]+"Text", game, 0f, y, size, values[i], this.font);
             float width = textsObjects[i].calculateWidth();
             textsObjects[i].setX(mainTextWidth + x - (width/2));
             if (width > maxWidth) maxWidth = width;
@@ -58,7 +70,7 @@ public class Selector extends Entity{
         arrowUp.textureMapUnpressed = 16;
         arrowUp.textureMapPressed = 16;
 
-        InteractionListener newListener = new InteractionListener(name,
+        InteractionListener newListener = new InteractionListener(name+"ArrowUp",
                 mainTextWidth + x - (buttonSize/2),
                 y -(buttonSize*1.1f),
                 buttonSize,
@@ -68,6 +80,7 @@ public class Selector extends Entity{
         newListener.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
+                //Log.e("selector", "newListener");
                 if (!innerSelector.isBlocked){
                     innerSelector.levelUp();
                 }
@@ -83,7 +96,7 @@ public class Selector extends Entity{
         arrowDown.textureMapUnpressed = 15;
         arrowDown.textureMapPressed = 15;
 
-        InteractionListener newListener2 = new InteractionListener(name,
+        InteractionListener newListener2 = new InteractionListener(name+"ArrowDown",
                 mainTextWidth + x - (buttonSize/2),
                 y + size + (buttonSize*0.2f),
                 buttonSize,
@@ -93,6 +106,7 @@ public class Selector extends Entity{
         newListener2.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
+                //Log.e("selector", "newListener2");
                 if (!innerSelector.isBlocked){
                     innerSelector.levelDown();
                 }
@@ -104,7 +118,7 @@ public class Selector extends Entity{
         this.game.addInteracionListener(newListener2);
 
         float arrowBackX;
-        if (text != "") {
+        if (text == "") {
             arrowBackX = x - (buttonSize * 1.5f) - (maxWidth/2);
         } else {
             arrowBackX = x - (buttonSize * 1.5f);
@@ -115,7 +129,7 @@ public class Selector extends Entity{
         arrowBack.textureMapUnpressed = 13;
         arrowBack.textureMapPressed = 13;
 
-        InteractionListener newListener3 = new InteractionListener(name,
+        InteractionListener newListener3 = new InteractionListener(name+"ArrowBack",
                 arrowBackX,
                 y + (((size*1.1f)- buttonSize) / 2),
                 buttonSize,
@@ -125,6 +139,7 @@ public class Selector extends Entity{
         newListener3.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
+                //Log.e("selector", "newListener3");
                 if (!innerSelector.isBlocked){
                     innerSelector.backToMenu();
                 }
@@ -134,45 +149,50 @@ public class Selector extends Entity{
             }
         });
         this.game.addInteracionListener(newListener3);
-        
+
     }
 
-    public void setListener(SelectorListener listener){
-        this.myListener = listener;
+    public void setOnChange(OnChange onChange){
+        this.onChange = onChange;
     }
 
-    public void fireOnChoice(){
-        if (this.myListener != null){
-            this.myListener.onChoice();
-        }
-    }
-
-    interface SelectorListener{
-        public void onChoice();
+    interface OnChange{
         public void onChange();
+    }
+
+    public void setSelectedValue(int selectedValue){
+        this.selectedValue = selectedValue;
+    }
+
+    public void setSelectedByString(String selectedValue){
+        for (int i = 0; i < this.values.length; i++) {
+            if (this.values[i] == selectedValue){
+                this.selectedValue = i;
+                return;
+            }
+        }
     }
 
     public void levelDown() {
         if (this.selectedValue != 0){
-            this.audioSmall.play();
+            //this.audioSmall.play();
             this.selectedValue -=1;
-            this.display();
+
             this.verifyOnChangeComplete();
         }
     }
 
     public void levelUp(){
         if (this.selectedValue < (this.values.length-1)){
-            this.audioSmall.play();
+            //this.audioSmall.play();
             this.selectedValue +=1;
-            this.display();
             this.verifyOnChangeComplete();
         }
     }
 
     public void verifyOnChangeComplete(){
-        if (this.myListener != null){
-            myListener.onChange();
+        if (this.onChange != null){
+            onChange.onChange();
         }
     }
 
@@ -184,67 +204,81 @@ public class Selector extends Entity{
         this.audioLarge = audioLarge;
     }
 
-    public void backToMenu(){
-        this.isBlocked = true;
-        final Selector innerSelector = this;
-        ArrayList<float[]> valuesAnimationSelector = new ArrayList<float[]>();
-        valuesAnimationSelector.add(new float[]{0,1});
-        valuesAnimationSelector.add(new float[]{1,0});
-        Animation anim = new Animation(this,"alphaBackToMenu","alpha",300,valuesAnimationSelector,false,true);
-        anim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd() {
-                innerSelector.clearDisplay();
-            }
-        });
-        anim.start();
-        this.game.blockAndWaitTouchRelease();
-        this.menuRelated.fromSelector(this);
-    }
+
 
     @Override
     public void render(float[] matrixView, float[] matrixProjection){
-        //Log.e("menu", "render menu");
 
         if (this.mainTextObject != null){
+            this.mainTextObject.alpha = alpha;
             this.mainTextObject.render(matrixView, matrixProjection);
         }
 
-        this.textsObjects[0].render(matrixView, matrixProjection);
+        this.textsObjects[selectedValue].alpha = alpha;
+        this.textsObjects[selectedValue].render(matrixView, matrixProjection);
 
-        this.arrowDown.render(matrixView, matrixProjection);
-        this.arrowUp.render(matrixView, matrixProjection);
+
+        if (this.selectedValue != (this.values.length-1)){
+            this.arrowUp.alpha = alpha;
+            this.arrowUp.render(matrixView, matrixProjection);
+        }
+        if (this.selectedValue != 0){
+            this.arrowDown.alpha = alpha;
+            this.arrowDown.render(matrixView, matrixProjection);
+        }
+
+        this.arrowBack.alpha = alpha;
         this.arrowBack.render(matrixView, matrixProjection);
     }
 
-    public void updateListenersData(){
-        for (int i = 0; i < this.listeners.size(); i++){
-            InteractionListener listener = this.listeners.get(i);
-            switch (listener.name) {
-                case "arrowBack":
-                    //var menuWidth = this.menuRelated.getSelectedItem().textWidth;
-                    //listener.position.x = this.position.x - menuWidth;
-                    //listener.position.y = this.position.y - this.size;
-                    //listener.size.x = menuWidth + this.textWidth + (this.size * 0.7);
-                    //listener.size.y = this.size;
-                    break;
-                case "arrowUp":
-                    //UTILS.setSizeByPoints(this.arrowUp.points, listener.size);
-                    //listener.size.x *= 2;
-                    //listener.size.y *= 2;
-                    //listener.position.x = this.arrowUp.position.x - (listener.size.x*0.3);
-                    //listener.position.y = this.arrowUp.position.y - (listener.size.y*0.3);
-                    break;
-                case "arrowDown":
-                    //UTILS.setSizeByPoints(this.arrowDown.points, listener.size);
-                    //listener.size.x *= 2;
-                    //listener.size.y *= 2;
-                    //listener.position.x = this.arrowDown.position.x - (listener.size.x*0.5);
-                    //listener.position.y = this.arrowDown.position.y - (listener.size.y*0.4);
-                    break;
-            }
+    public void fromMenu(Menu menu){
+        menuRelated = menu;
+        menu.isBlocked = true;
+        this.alpha = 0f;
+        this.isVisible = true;
 
-        }
+        ArrayList<float[]> valuesAnimation = new ArrayList<>();
+        valuesAnimation.add(new float[]{0f,1f});
+        valuesAnimation.add(new float[]{1f,0.3f});
+        Animation reduceAlphaAnim = new Animation(menuRelated, "reduceAlphaAnim", "alpha", 500, valuesAnimation, false, true);
+        reduceAlphaAnim.start();
+
+        ArrayList<float[]> valuesAnimation2 = new ArrayList<>();
+        valuesAnimation2.add(new float[]{0f,0f});
+        valuesAnimation2.add(new float[]{1f,1f});
+        Animation increaseAlphaAnim = new Animation(this, "increaseAlphaAnim", "alpha", 500, valuesAnimation2, false, true);
+        final Selector innerSelector = this;
+        increaseAlphaAnim .setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                innerSelector.isBlocked = false;
+            }
+        });
+        increaseAlphaAnim.start();
     }
 
+    public void backToMenu(){
+        isBlocked = true;
+
+        ArrayList<float[]> valuesAnimation = new ArrayList<>();
+        valuesAnimation.add(new float[]{0f,0.3f});
+        valuesAnimation.add(new float[]{1f,1f});
+        Animation increaseAlphaAnim = new Animation(menuRelated, "increaseAlphaAnim", "alpha", 500, valuesAnimation, false, true);
+        increaseAlphaAnim.start();
+
+        ArrayList<float[]> valuesAnimation2 = new ArrayList<>();
+        valuesAnimation2.add(new float[]{0f,1f});
+        valuesAnimation2.add(new float[]{1f,0f});
+        Animation reduceAlphaAnim = new Animation(this, "reduceAlphaAnim", "alpha", 500, valuesAnimation2, false, true);
+        final Menu innerMenu = menuRelated;
+        final Selector innerSelector2 = this;
+        reduceAlphaAnim .setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                innerMenu.isBlocked = false;
+                innerSelector2.isVisible = false;
+            }
+        });
+        reduceAlphaAnim.start();
+    }
 }

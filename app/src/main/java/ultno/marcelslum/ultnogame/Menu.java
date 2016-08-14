@@ -24,6 +24,8 @@ class Menu extends Entity{
         super(name, game, x, y);
         this.font = font;
         this.size = size;
+        isBlocked = true;
+        isVisible = false;
         menuOptions = new ArrayList<MenuOption>();
     }
 
@@ -151,6 +153,7 @@ class Menu extends Entity{
         //Log.e("menu", "render menu");
 
         for (int i = 0; i < this.menuOptions.size();i++){
+            this.menuOptions.get(i).textObject.alpha = alpha;
             this.menuOptions.get(i).textObject.render(matrixView, matrixProjection);
         }
     }

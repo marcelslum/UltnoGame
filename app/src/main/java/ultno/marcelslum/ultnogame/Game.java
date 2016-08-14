@@ -1,5 +1,7 @@
 package ultno.marcelslum.ultnogame;
 
+import android.content.Context;
+import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.util.Log;
 
@@ -9,31 +11,29 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Game {
+    private static Game ourInstance = new Game();
+    Context context;
+
+
+    // entities
+
+    public static Menu menuMain;
+    public static Selector selectorLevel;
+    public static Selector selectorVolumn;
 
     public static ArrayList<Target> targets;
     public static ArrayList<Ball> balls;
     public static ArrayList<Text> texts;
     public static ArrayList<TouchEvent> touchEvents;
-    public static Quadtree quad;
-    SoundPool soundPool;
-    int soundBallHit;
-    int soundCounter;
-    int soundDestroyTarget;
-    int soundMusic;
-    int soundScore;
+    public static ArrayList<Bar> bars;
+    public static ArrayList<Menu> menus;
+    public static ArrayList<Selector> selectors;
+    public static ArrayList<InteractionListener> interactionListeners;
 
-    Font font;
+    public Background background;
 
     public static ScorePanel scorePanel;
-
-
-    private static Game ourInstance = new Game();
-    public float gameAreaResolutionX;
-    public float gameAreaResolutionY;
-
-    public float resolutionX;
-    public float resolutionY;
-
+    public ObjectivePanel objectivePanel;
 
     public Rectangle bordaC;
     public Rectangle bordaE;
@@ -47,23 +47,49 @@ public class Game {
     public ButtonOnOff soundButton;
     public ButtonOnOff musicButton;
 
+    public TextImage tittle;
+
+    // quadtree objects
+    public static Quadtree quad;
+
+    // font
+    public static Font font;
+
+    // sounds
+    SoundPool soundPool;
+    int soundBallHit;
+    int soundCounter;
+    int soundDestroyTarget;
+    int soundMusic;
+    int soundScore;
+
+    // scree properties
+    public float gameAreaResolutionX;
+    public float gameAreaResolutionY;
+    public float resolutionX;
+    public float resolutionY;
+
+    // options
     boolean soundOn;
     boolean musicOn;
     boolean isBlocked;
+    public int volumn;
+    public final static int [] possibleVolums = new int []{0,10,20,30,40,50,60,70,80,90,100};
 
+    //  level
     Level levelObject;
+    public final static int quantityOfLevels = 20;
     int levelNumber = 1;
 
+    // game state
+    public int gameState;
+    public final static int GAME_STATE_JOGAR = 10;
+    public final static int GAME_STATE_PREPARAR = 11;
+    public final static int GAME_STATE_MENU =  12;
+    public final static int GAME_STATE_VITORIA =  13;
+    public final static int GAME_STATE_DERROTA =  14;
 
-
-    public ArrayList<InteractionListener> interactionListeners;
-    public int volume;
-    public String gameState;
-    public Audio music;
-    public Entity gameArea;
-    public ArrayList<Bar> bars;
-    public ArrayList<Menu> menus;
-    public ArrayList<Selector> selectors;
+    // bars and balls data
     public float [] barsInitialPositionX = new float[10];
     public float [] barsInitialPositionY = new float[10];
     public float [] barsDesiredVelocityX = new float[10];
@@ -73,32 +99,31 @@ public class Game {
     public float[] ballsDesiredVelocityX = new float[10];
     public float[] ballsDesiredVelocityY = new float[10];
 
+    // sat data
     SatPolygon polygon1;
     SatPolygon polygon2;
     SatCircle circle1;
     SatCircle circle2;
     public boolean ballFall;
+
+    // programs
     public Program imageProgram;
+    public Program imageAlphaProgram;
     public Program textProgram;
     public Program solidProgram;
-    public Background background;
-    public ObjectivePanel objectivePanel;
-
 
     public static Game getInstance() {
-
-        if (targets == null){
-
-        }
-
         return ourInstance;
     }
 
     private Game() {
+
+        // initialize data
         targets = new ArrayList<Target>();
         balls = new ArrayList<Ball>();
         touchEvents = new ArrayList<TouchEvent>();
         texts = new ArrayList<Text>();
+        interactionListeners = new ArrayList<>();
         bars = new ArrayList<Bar>();
         menus = new ArrayList<>();
         selectors = new ArrayList<>();
@@ -108,28 +133,25 @@ public class Game {
         barsDesiredVelocityX = new float[10];
         barsDesiredVelocityY = new float[10];
 
-        ArrayList<Vector> points = new ArrayList<Vector>();
+        ArrayList<Vector> points = new ArrayList<>();
         points.add(new Vector(0, 0));
         points.add(new Vector(0, 0));
         points.add(new Vector(0, 0));
         points.add(new Vector(0, 0));
-        this.polygon1 = new SatPolygon(new Vector(0, 0), points);
+        polygon1 = new SatPolygon(new Vector(0, 0), points);
 
-        ArrayList<Vector> points2 = new ArrayList<Vector>();
+        ArrayList<Vector> points2 = new ArrayList<>();
         points.add(new Vector(0, 0));
         points.add(new Vector(0, 0));
         points.add(new Vector(0, 0));
         points.add(new Vector(0, 0));
-        this.polygon2 = new SatPolygon(new Vector(0, 0), points2);
+        polygon2 = new SatPolygon(new Vector(0, 0), points2);
 
-        this.circle1 = new SatCircle(new Vector(0,0),0);
-        this.circle2 = new SatCircle(new Vector(0,0),0);
-
+        circle1 = new SatCircle(new Vector(0,0),0);
+        circle2 = new SatCircle(new Vector(0,0),0);
    }
 
     public void addTarget(Target target){
-
-        Log.e("game", "adiciona target");
         this.targets.add(target);
     }
 
@@ -145,28 +167,272 @@ public class Game {
         this.bars.add(bar);
     }
 
-    public void blockAndWaitTouchRelease(){
-    }
-
-    public void setGameState(String state){
-    }
-
-    public void clearGameEntities() {
-    }
-
     public void addInteracionListener(InteractionListener listener) {
         if (this.interactionListeners == null){
             this.interactionListeners = new ArrayList<InteractionListener>();
         }
-
         for (int i = 0; i < this.interactionListeners.size(); i++){
             if (this.interactionListeners.get(i).name == listener.name){
                 this.interactionListeners.set(i, listener);
                 return;
             }
         }
-
         this.interactionListeners.add(listener);
+    }
+
+    public void blockAndWaitTouchRelease(){
+    }
+
+    public void setGameState(int state){
+        this.gameState = state;
+        if (state == GAME_STATE_MENU){
+            Log.e("game", "game state GAME_STATE_MENU");
+            menuMain.isBlocked = false;
+            menuMain.isVisible = true;
+            tittle.isVisible = true;
+        }
+    }
+
+    public void clearGameEntities() {
+    }
+
+    public void init(){
+        initSounds();
+        initPrograms();
+        initFont();
+        createMenus();
+        createTexts();
+    }
+
+    public void createTexts(){
+        tittle = new TextImage("tittle", this,
+                gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
+                gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
+                7, 0f, 1f, 0.6328125f, 1f);
+
+        TextBox textBox = new TextBox("textBox", this, 0f, 0f, 200f, 20f, "Atinja o alvo com a bola para destruir o alvo que desaparecerá após ser atingido!!!");
+    }
+
+    public void createMenus(){
+
+
+        // cria o menu principal
+        menuMain = new Menu("menuMain", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
+
+        // adiciona a opção de iniciar o jogo
+        menuMain.addMenuOption("IniciarJogo", "Jogar", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Log.e("level", "teste initicar jogo");
+            }
+        });
+
+        // prepara os valores para o seletor de nível
+        String [] levels = new String [quantityOfLevels-1];
+        for (int i = 0; i < quantityOfLevels-1; i++){
+            levels[i] = Integer.toString(i+1);
+        }
+
+        // cria o seletor de nível
+        selectorLevel = new Selector("selectorLevel", this, 0f,0f, 40f, "", levels, font);
+        final Selector innerSelectorLevel = selectorLevel;
+        final Menu innerMenu = menuMain;
+
+        // adiciona a opção de selecionar nível
+        menuMain.addMenuOption("SelecionarNivel", "Alterar Nível", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                innerSelectorLevel.fromMenu(innerMenu);
+            }
+        });
+
+        final Game innerGame = this;
+
+        // ajusta a posição do seletor de nível
+        MenuOption menuOptionSelectLevel = menuMain.getMenuOptionByName("SelecionarNivel");
+        selectorLevel.setPosition(menuOptionSelectLevel.x + (menuOptionSelectLevel.width), menuOptionSelectLevel.y);
+        selectorLevel.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                innerGame.changeLevel(innerSelectorLevel.selectedValue+1);
+            }
+        });
+
+        // prepara os valores para o seletor de volume
+        String [] volumns = new String [11];
+        for (int i = 0; i < 11; i++){
+            volumns[i] = Integer.toString(possibleVolums[i]) + "%";
+        }
+
+        // cria o seletor de volume
+        selectorVolumn = new Selector("selectorVolumn", this, 0f,0f, 40f, "", volumns, font);
+        final Selector innerSelectorVolumn = selectorVolumn;
+        selectorVolumn.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                innerGame.volumn = innerGame.possibleVolums[innerSelectorVolumn.selectedValue];
+            }
+        });
+
+        // adiciona a opção de alterar volume
+        menuMain.addMenuOption("AlterarVolume", "Alterar Volume", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                innerSelectorVolumn.fromMenu(innerMenu);
+            }
+        });
+
+        // ajusta a posição do seletor de nível
+        MenuOption menuOptionSelectVolumn = menuMain.getMenuOptionByName("AlterarVolume");
+        selectorVolumn.setPosition(menuOptionSelectLevel.x + (menuOptionSelectVolumn.width), menuOptionSelectVolumn.y);
+    }
+
+    private void changeLevel(int level) {
+        this.levelNumber = level;
+        // TODO alterar texto que mostra o level
+        // TODO alterar texto que mostra a pontuação
+    }
+
+    public void initPrograms(){
+        imageProgram = new Program(GraphicTools.vs_Image, GraphicTools.fs_Image);
+        imageAlphaProgram = new Program(GraphicTools.vs_Image, GraphicTools.fs_Image_Alpha);
+        textProgram = new Program(GraphicTools.vs_Text, GraphicTools.fs_Text);
+        solidProgram = new Program(GraphicTools.vs_SolidColor, GraphicTools.fs_SolidColor);
+    }
+
+    public void initFont(){
+        font = new Font(1,textProgram);
+    }
+
+    public void initSounds(){
+        AudioAttributes audioAttrib = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .build();
+        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(5).build();
+        soundBallHit = soundPool.load(context, R.raw.ballhit, 1);
+        soundCounter = soundPool.load(context, R.raw.counter, 1);
+        soundDestroyTarget = soundPool.load(context, R.raw.destroytarget, 1);
+        soundMusic = soundPool.load(context, R.raw.music, 1);
+        soundScore = soundPool.load(context, R.raw.score, 1);
+    }
+    
+    public void simulate(long elapsed, float frameDuration){
+        if (this.gameState == GAME_STATE_JOGAR) {
+
+
+            for (int i = 0; i < balls.size(); i++) {
+                Ball ball = balls.get(i);
+                // TODO this.balls[i].verifyAcceleration();
+                ball.clearCollisionData();
+                ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
+                ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+                ball.translate(ball.vx, ball.vy, true);
+                quad.insert(ball);
+            }
+
+            if (bars != null) {
+                if (bars.size() > 0) {
+                    if (button1Left.isPressed) {
+                        bars.get(0).vx = -(bars.get(0).dvx * (float) elapsed) / frameDuration;
+                    } else if (button1Right.isPressed) {
+                        bars.get(0).vx = (bars.get(0).dvx * (float) elapsed) / frameDuration;
+                    } else {
+                        bars.get(0).vx = 0f;
+                    }
+
+                    bars.get(0).translate(bars.get(0).vx, 0, true);
+
+                    if (bars.size() == 2) {
+                        if (button2Left.isPressed) {
+                            bars.get(1).vx = -(bars.get(1).dvx * (float) elapsed) / frameDuration;
+                        } else if (button2Right.isPressed) {
+                            bars.get(1).vx = (bars.get(1).dvx * (float) elapsed) / frameDuration;
+                        } else {
+                            bars.get(1).vx = 0f;
+                        }
+                        bars.get(0).translate(bars.get(0).vx, 0, true);
+                    }
+                }
+            }
+
+            quad.insert(bordaE);
+            quad.insert(bordaD);
+            quad.insert(bordaC);
+            quad.insert(bordaB);
+
+            for (int i = 0; i < targets.size(); i++) {
+                quad.insert(targets.get(i));
+            }
+
+            for (int i = 0; i < bars.size(); i++) {
+                quad.insert(bars.get(i));
+            }
+
+            //Log.e("gl renderer", "onDrawFrame4");
+
+            boolean isHaveCollision;
+            isHaveCollision = checkCollision(balls, true, true);
+            isHaveCollision = checkCollision(bars, true, true);
+
+            quad.clear();
+
+            //Log.e("gl renderer", "onDrawFrame5");
+
+            for (int i = 0; i < balls.size(); i++) {
+
+                if (balls.get(i).isCollided) {
+                    balls.get(i).onCollision();
+                }
+            }
+
+            //Log.e("render ball", " ");
+
+            background.move(1);
+        }
+    }
+
+    public void render(float[] matrixView, float[] matrixProjection){
+        if (background != null) {
+            background.prepareRender(matrixView, matrixProjection);
+        }
+    
+        for (int i = 0; i < balls.size(); i++){
+            balls.get(i).prepareRender(matrixView, matrixProjection);
+        }
+    
+        for (int i = 0; i < targets.size(); i++){
+            targets.get(i).prepareRender(matrixView, matrixProjection);
+        }
+    
+        for (int i = 0; i < bars.size(); i++){
+            bars.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
+        if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
+        if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
+        if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
+        if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
+
+        if (button1Left != null) button1Left.prepareRender(matrixView, matrixProjection);
+        if (button1Right != null) button1Right.prepareRender(matrixView, matrixProjection);
+        if (button2Left != null) button1Left.prepareRender(matrixView, matrixProjection);
+        if (button2Right != null) button1Right.prepareRender(matrixView, matrixProjection);
+
+        for (int i = 0; i < targets.size(); i++){
+            if (targets.get(i).showPointsState == Entity.SHOW_POINTS_ON){
+                targets.get(i).renderPoints(matrixView, matrixProjection);
+            }
+        }
+
+        if (scorePanel != null) scorePanel.prepareRender(matrixView, matrixProjection);
+        if (objectivePanel != null) objectivePanel.prepareRender(matrixView, matrixProjection);
+
+        if (menuMain != null) menuMain.prepareRender(matrixView, matrixProjection);
+        if (selectorLevel != null) selectorLevel.prepareRender(matrixView, matrixProjection);
+        if (selectorVolumn != null) selectorVolumn.prepareRender(matrixView, matrixProjection);
+        if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
+
     }
 
     public boolean checkCollision(ArrayList<? extends Entity> aEntities, boolean respondToCollision, boolean updateLastCollisionResponse){
@@ -434,7 +700,6 @@ public class Game {
         return isHadCollision;
     }
 
-
     public void createEntities() {
         Log.e("game", "1");
         loadLevel(this.levelNumber);
@@ -529,5 +794,9 @@ public class Game {
                 Log.e("game", "3");
                 break;
         }
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

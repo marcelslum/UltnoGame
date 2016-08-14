@@ -159,7 +159,6 @@ public class Entity {
         }
     }    
 
-
     public RectangleM getQuadtreeData() {
         this.updateQuatreeData();
         return this.quadtreeData;
@@ -307,19 +306,19 @@ public class Entity {
         Matrix.scaleM(this.matrixModel, 0, this.scaleX , this.scaleY, 0);
     }
 
-
+    public void prepareRender(float[] matrixView, float[] matrixProjection){
+        verifyAnimations();
+        if (isVisible){
+            render(matrixView, matrixProjection);
+        }
+    }
 
     public void render(float[] matrixView, float[] matrixProjection) {
 
-        verifyAnimations();
+        //if (this.name == "tittle"){
+            //Log.e("entity", "render tittle");
+        //}
 
-        if (this.name == "background") {
-            //Log.e("render: ", ""+this.name);
-            //Log.e("render: ", "x "+this.x);
-            //Log.e("render: ", "y "+this.y);
-            //Log.e("render: ", "w "+this.game.background.width);
-            //Log.e("render: ", "h "+this.game.background.height);
-        }
 
         setMatrixModel();
 
@@ -403,7 +402,6 @@ public class Entity {
         }
 
     }
-
 
     public void updateListenersData(){
 

@@ -40,19 +40,16 @@ public class Target extends Rectangle {
         valuesAnimationShowPoints.add(new float[]{0f,1f});
         valuesAnimationShowPoints.add(new float[]{1f,0f});
         showPointsStateAnim = new Animation(this, "showPointsState", "showPointsState", 1000, valuesAnimationShowPoints, false, false);
-        this.addAnimation(showPointsStateAnim);
 
         ArrayList<float[]> valuesAnimationShowPointsAlpha = new ArrayList<>();
         valuesAnimationShowPointsAlpha.add(new float[]{0f,1f});
         valuesAnimationShowPointsAlpha.add(new float[]{1f,0f});
         showPointsAlphaAnim = new Animation(this, "pointsAlpha", "pointsAlpha", 1000, valuesAnimationShowPointsAlpha, false, true);
-        this.addAnimation(showPointsAlphaAnim);
 
         ArrayList<float[]> valuesAnimationGhostAlpha = new ArrayList<>();
         valuesAnimationGhostAlpha.add(new float[]{0f,1f});
         valuesAnimationGhostAlpha.add(new float[]{1f,0f});
         ghostAlphaAnim = new Animation(this, "ghostAlpha", "ghostAlpha", 1000, valuesAnimationGhostAlpha, false, true);
-        this.addAnimation(ghostAlphaAnim);
 
         ArrayList<float[]> valuesAnimation = new ArrayList<>();
         valuesAnimation.add(new float[]{0f,1f});
@@ -67,7 +64,6 @@ public class Target extends Rectangle {
                 self.isVisible = false;
             }
         });
-        this.addAnimation(desapearAnim);
     }
 
 

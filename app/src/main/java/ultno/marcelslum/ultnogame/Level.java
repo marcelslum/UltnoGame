@@ -81,7 +81,7 @@ public class Level {
                 this.tutorials.get(this.showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
                     @Override
                     public void onUnshowAfterAnim2() {
-                        self.game.setGameState("preparar");
+                        self.game.setGameState(Game.GAME_STATE_PREPARAR);
                     }
                 });
                 this.tutorials.get(this.showingTutorial).unshow();
@@ -111,38 +111,6 @@ public class Level {
         this.game.objectivePanel = new ObjectivePanel("objectivePanel", this.game,
                 this.game.gameAreaResolutionX * 0.5f, this.game.gameAreaResolutionY * 1.005f, this.game.resolutionY * 0.027f);
         this.game.objectivePanel.alpha = 0.7f;
-
-        Menu menuPrincipal = new Menu("menuPrincipal", this.game, this.game.gameAreaResolutionX/2, this.game.gameAreaResolutionY/2, 40f, this.game.font);
-        menuPrincipal.addMenuOption("IniciarJogo", "Jogar", new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Log.e("level", "teste initicar jogo");
-            }
-        });
-        this.game.menus.add(menuPrincipal);
-
-        menuPrincipal.addMenuOption("SelecionarNivel", "Alterar Nível", new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Log.e("level", "teste SelecionarNivel");
-            }
-        });
-        this.game.menus.add(menuPrincipal);
-
-        menuPrincipal.addMenuOption("AlterarVolume", "Alterar Volume", new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Log.e("level", "teste AlterarVolume");
-            }
-        });
-        this.game.menus.add(menuPrincipal);
-
-
-        Selector selectorNivel = new Selector("selectorNivel", this.game, this.game.gameAreaResolutionX*0.7f,
-                this.game.gameAreaResolutionY/2, 40f, "", new String[]{"teste 1", "teste 2", "teste 3", "teste 4"}, this.game.font);
-        this.game.selectors.add(selectorNivel);
-
-
 
         this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.gameAreaResolutionY);
 
