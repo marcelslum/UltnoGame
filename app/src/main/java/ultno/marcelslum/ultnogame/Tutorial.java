@@ -8,7 +8,6 @@ import java.util.ArrayList;
  */
 public class Tutorial {
 
-
     OnShowBeforeAnim onShowBeforeAnim;
     OnShowAfterAnim onShowAfterAnim;
     OnUnshowBeforeAnim onUnshowBeforeAnim;
@@ -22,51 +21,38 @@ public class Tutorial {
     }
 
     public void show() {
-        this.textBox.isMovable = false;
-        this.isBlocked = true;
-        this.textBox.alpha = 0;
+        isBlocked = true;
+        textBox.alpha = 0;
 
-        if (this.onShowBeforeAnim != null) {
-            this.onShowBeforeAnim.onShowBeforeAnim();
-
-            this.textBox.display();
-
-            ArrayList<float[]> valuesAnimation1 = new ArrayList<float[]>();
-            valuesAnimation1.add(new float[]{0, -500});
-            valuesAnimation1.add(new float[]{1, 0});
-            Animation animationTextBoxTranslate = new Animation(this.textBox, "textBoxTranslateX1", "'translateX'", 300, valuesAnimation1, false, true);
+        if (onShowBeforeAnim != null) {
+            onShowBeforeAnim.onShowBeforeAnim();
+        }
+            textBox.display();
+            
+            Animation anim = Utils.createSimpleAnimation(tb, "textBoxTranslateX1", "translateX", 500, -800f, 0f);
             final Tutorial self = this;
-            animationTextBoxTranslate.setAnimationListener(new Animation.AnimationListener() {
+            anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     self.isBlocked = false;
-                    self.textBox.displayArrow = true;
                     if (self.onShowAfterAnim != null) {
                         self.onShowAfterAnim.onShowAfterAnim();
                     }
                 }
             });
-            animationTextBoxTranslate.start();
+            anim.start();
 
-            ArrayList<float[]> valuesAnimation2 = new ArrayList<float[]>();
-            valuesAnimation2.add(new float[]{0, 0});
-            valuesAnimation2.add(new float[]{1, 1});
-            Animation animationTextBoxAlpha = new Animation(this.textBox, "alpha", "'alpha'", 300, valuesAnimation2, false, true);
-            animationTextBoxAlpha.start();
-        }
+        Utils.createSimpleAnimation(tb, "alpha", "alpha", 500, 0f, 1f).start();
     }
 
     public void unshow(){
-        this.isBlocked = true;
-        if (this.onUnshowBeforeAnim != null)
-            this.onUnshowBeforeAnim.onUnshowBeforeAnim();
+        isBlocked = true;
+        if (onUnshowBeforeAnim != null)
+            onUnshowBeforeAnim.onUnshowBeforeAnim();
 
-        ArrayList<float[]> valuesAnimation = new ArrayList<float[]>();
-        valuesAnimation.add(new float[]{0, 1});
-        valuesAnimation.add(new float[]{1, 0});
-        Animation animationTextBoxAlpha = new Animation(this.textBox, "alpha", "'alpha'", 50, valuesAnimation, false, true);
+        Animation anim = Utils.createSimpleAnimation(tb, "alpha", "alpha", 500, 1f, 0f);
         final Tutorial self = this;
-            animationTextBoxAlpha.setAnimationListener(new Animation.AnimationListener() {
+            anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     self.textBox.clearDisplay();
@@ -79,7 +65,7 @@ public class Tutorial {
                     }
                 }
             });
-        animationTextBoxAlpha.start();
+        anim.start();
     }
 
     public interface OnShowBeforeAnim{
