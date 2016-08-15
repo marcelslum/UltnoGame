@@ -237,16 +237,30 @@ public class Game {
             
         size = resolutionY * 0.07f;
         
+        messageCurrentLevel = new Text("messageCurrentLevel", 
+            this, resolutionX*0.83f, resolutionY*0.90f, size*0.4f, 
+            getResources().getString(R.string.messageCurrentLevel), font, new Color(0f, 0f, 0f, 1f));
+            
+        currentLevel = new Text("currentLevel", 
+            this, resolutionX*0.85f, resolutionY*0.9f, size*0.4f,
+            Integer.toString(levelNumber), font, new Color(0f, 0f, 0f, 1f));
         
+        messageMaxScoreLevel = new Text("messageMaxScoreLevel", 
+            this, resolutionX*0.83f, resolutionY*0.95f, size*0.4f,
+            getResources().getString(R.string.messageMaxScoreLevel), font, new Color(0f, 0f, 0f, 1f));
+            
+        maxScoreLevel = new Text("maxScoreLevel", 
+            this, resolutionX*0.85f, resolutionY*0.9f, size*0.4f,
+            Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f, 1f));
+        
+        messageMaxScoreTotal = new Text("messageMaxScoreTotal", 
+            this, resolutionX*0.06f, resolutionY*0.90f, size*0.4f,
+            getResources().getString(R.string.messageMaxScoreTotal + getMaxScoreTotal()), font, new Color(0f, 0f, 0f, 1f));
         
         TextBox tb = new TextBox("textBox", this, 50f, 50f, 600f, 40f, "Atinja o alvo com a bola para destruir o alvo que desaparecerá após ser atingido!!!");
 
         textBoxes.add(tb);
         Utils.createSimpleAnimation(tb, "translateX", "translateX", 1000, -800f, 0f).start();
-
-
-
-
     }
     
     public void clearAllMenuEntities(){
@@ -254,6 +268,7 @@ public class Game {
         selectorLevel.clearDisplay();
         selectorVolumn.clearDisplay();
     }
+    
 
     public void createMenus(){
         
