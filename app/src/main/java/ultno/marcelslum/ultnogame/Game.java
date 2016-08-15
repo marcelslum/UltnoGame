@@ -170,6 +170,7 @@ public class Game {
     public void addBar(Bar bar){
         this.bars.add(bar);
     }
+    
 
     public void addInteracionListener(InteractionListener listener) {
         if (this.interactionListeners == null){
@@ -245,9 +246,8 @@ public class Game {
                 innerGame.loadLevel(innerGame.levelNumber);
                 innerGame.loadTutorials();
                 if (innerGame.levelObject.tutorials.length > 0){
-                    int tutorialVisto = innerGame.storage.retrieve("UltnoTutorial"+innerGame.levelNumber);
-                    if (tutorialVisto == 0){
-                        innerGame.storage.save("UltnoTutorial"+innerGame.levelNumber, 1);
+                    if (Storage.getLevelTutorialSaw(innerGame.levelNumber)){
+                        Storage.setLevelTutorialSaw(innerGame.levelNumber, true);
                         innerGame.setGameState(GAME_STATE_TUTORIAL);
                         innerGame.levelObject.showFirstTutorial();
                     } else {
