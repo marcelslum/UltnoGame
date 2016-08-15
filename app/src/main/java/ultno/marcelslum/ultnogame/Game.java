@@ -14,9 +14,7 @@ public class Game {
     private static Game ourInstance = new Game();
     Context context;
 
-
     // entities
-
     public static Menu menuMain;
     public static Selector selectorLevel;
     public static Selector selectorVolumn;
@@ -90,6 +88,7 @@ public class Game {
     public final static int GAME_STATE_VITORIA =  13;
     public final static int GAME_STATE_DERROTA =  14;
     public final static int GAME_STATE_TUTORIAL =  15;
+    public final static int GAME_STATE_REINICIAR =  16;
 
     // bars and balls data
     public float [] barsInitialPositionX = new float[10];
@@ -121,7 +120,6 @@ public class Game {
     }
 
     private Game() {
-
         // initialize data
         targets = new ArrayList<Target>();
         balls = new ArrayList<Ball>();
@@ -230,21 +228,14 @@ public class Game {
         menuMain.clearDisplay();
         selectorLevel.clearDisplay();
         selectorVolumn.clearDisplay();
-        
-        
     }
-    
-    
 
     public void createMenus(){
-
-
+        
         // cria o menu principal
         menuMain = new Menu("menuMain", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
 
         // adiciona a opção de iniciar o jogo
-        
-        
         final Game innerGame = this;
         menuMain.addMenuOption("IniciarJogo", "Jogar", new MenuOption.OnChoice() {
             @Override
@@ -328,6 +319,48 @@ public class Game {
         // ajusta a posição do seletor de nível
         MenuOption menuOptionSelectVolumn = menuMain.getMenuOptionByName("AlterarVolume");
         selectorVolumn.setPosition(menuOptionSelectLevel.x + (menuOptionSelectVolumn.width), menuOptionSelectVolumn.y);
+        
+        // cria o menu in game
+        menuInGame = new Menu("menuInGame", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
+
+        // adiciona a opção de iniciar o jogo
+        menuInGame.addMenuOption("Continuar", "Continuar a jogar", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                innerGame.blockAndWaitTouchRelease();
+                
+                        public int gameState;
+                if (innerGame.gameState == GAME_STATE_DERROTA){
+                    innerGame.loadLevel(innerGame.levelNumber);
+                    innerGame.menuInGame.clearDisplay();
+                    innerGame.setGameState(GAME_STATE_PREPARAR);
+                } else if (innerGame.gameState == GAME_STATE_VITORIA){
+                    innerGame.loadLevel(innerGame.levelNumber);
+                    innerGame.menuMain.getMenuOptionByName("iniciar").onChoice();
+                } else if (innerGame.gameState == GAME_STATE_VITORIA){
+                    innerGame.increaseAlphaAndFreeGameEntities();
+                    innerGame.menuInGame.reduceAlpha(500,0, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            innerGame.setGameState(GAME_STATE_REINICIAR);
+                        }
+                    });
+                    innerGame.messageInGame.reduceAlpha(500,0);
+                }
+            }
+        });
+        
+         menuInGame.addMenuOption("Retornar", "Retornar ao menu principal", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                innerGame.blockAndWaitTouchRelease();
+                innerGame.setGameState(GAME_STATE_MENU);
+                
+            }
+        });
+        
+        
+        
     }
 
     private void changeLevel(int level) {
@@ -359,6 +392,9 @@ public class Game {
         soundMusic = soundPool.load(context, R.raw.music, 1);
         soundScore = soundPool.load(context, R.raw.score, 1);
     }
+    
+    
+
     
     public void simulate(long elapsed, float frameDuration){
         if (this.gameState == GAME_STATE_JOGAR) {
