@@ -16,7 +16,25 @@ public class Text extends Entity{
     private int indexUvs;
     private int indexColors;
     public float[] charData;
+    public String align;
     //public float[] colorData2;
+    
+    public Text(String name, Game game, float x, float y, float size, String text, Font font, Color color, String align) {
+        super(name, game, x, y);
+        this.text = text;
+        this.size = size;
+        this.color = color;
+        this.font = font;
+        this.program = this.font.program;
+        this.textureUnit = this.font.textureUnit;
+        this.align = align;
+
+        this.charData = new float[]{0f, 0f, 0f, 0f,};
+        //Log.e("this.color", " teste ");
+        //this.colorData2 = new float[]{0.9f, 0.5f, 0f, 0.2f,};
+        //Log.e("this.color", " "+this.colorData2[1]);
+        this.setDrawInfo();
+    }
 
     public Text(String name, Game game, float x, float y, float size, String text, Font font, Color color) {
         super(name, game, x, y);
@@ -26,6 +44,7 @@ public class Text extends Entity{
         this.font = font;
         this.program = this.font.program;
         this.textureUnit = this.font.textureUnit;
+        this.align = "left";
 
         this.charData = new float[]{0f, 0f, 0f, 0f,};
         //Log.e("this.color", " teste ");
@@ -43,6 +62,7 @@ public class Text extends Entity{
         this.font = font;
         this.program = this.font.program;
         this.textureUnit = this.font.textureUnit;
+        this.align = "left";
 
         this.charData = new float[]{0f, 0f, 0f, 0f};
         //Log.e("this.color", " teste ");
@@ -183,6 +203,11 @@ public class Text extends Entity{
             // Calculate the new position
             initialX += (size*(charData[2]/charData[3]))+(this.size*0.05);
         }
+        
+        if (align = "right"){
+            x -= initialX;
+        }
+        
     }
 
     public float calculateWidth(){
