@@ -89,6 +89,7 @@ public class Game {
     public final static int GAME_STATE_MENU =  12;
     public final static int GAME_STATE_VITORIA =  13;
     public final static int GAME_STATE_DERROTA =  14;
+    public final static int GAME_STATE_TUTORIAL =  15;
 
     // bars and balls data
     public float [] barsInitialPositionX = new float[10];
@@ -224,6 +225,16 @@ public class Game {
 
 
     }
+    
+    public void clearAllMenuEntities(){
+        menuMain.clearDisplay();
+        selectorLevel.clearDisplay();
+        selectorVolumn.clearDisplay();
+        
+        
+    }
+    
+    
 
     public void createMenus(){
 
@@ -232,10 +243,30 @@ public class Game {
         menuMain = new Menu("menuMain", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
 
         // adiciona a opção de iniciar o jogo
+        
+        
+        final Game innerGame = this;
         menuMain.addMenuOption("IniciarJogo", "Jogar", new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                Log.e("level", "teste initicar jogo");
+                innerGame.blockAndWaitTouchRelease();
+                innerGame.clearAllMenuEntities;
+                innerGame.loadLevel(innerGame.levelNumber);
+                innerGame.loadTutorials();
+                if (innerGame.levelObject.tutorials.length > 0){
+                    int tutorialVisto = innerGame.storage.retrieve("UltnoTutorial"+innerGame.levelNumber);
+                    if (tutorialVisto == 0){
+                        innerGame.storage.save("UltnoTutorial"+innerGame.levelNumber, 1);
+                        innerGame.setGameState(GAME_STATE_TUTORIAL);
+                        innerGame.levelObject.showFirstTutorial();
+                    } else {
+                        innerGame.menuTutorial.getMenuOptionByName("exibirTutorial").setText  = L('menuTutorialExibirTutorial') + self.level;
+                        innerGame.menuTutorial.unblock();
+                    }
+                } else {
+                    innerGame.levelObject.loadEntities();
+                    innerGame.setGameState(GAME_STATE_PREPARAR);
+                }
             }
         });
 
