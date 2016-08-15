@@ -55,7 +55,8 @@ public class Level {
     }
     
     
-    Level(
+    Level(  int number,
+            Game game,
             int ballsQuantity,
             int minBallsNotInvencibleAlive,
             float[] ballsRadiusByResolution,
@@ -87,6 +88,7 @@ public class Level {
             float targetsDistanceByXResolution,
             float targetsPaddingByXResolution
         ){
+        
             this.number = number;
             this.game = game;
             this.ballsQuantity = ballsQuantity;
