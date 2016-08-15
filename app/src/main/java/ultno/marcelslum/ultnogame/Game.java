@@ -237,7 +237,7 @@ public class Game {
 
         // adiciona a opção de iniciar o jogo
         final Game innerGame = this;
-        menuMain.addMenuOption("IniciarJogo", "Jogar", new MenuOption.OnChoice() {
+        menuMain.addMenuOption("IniciarJogo", getResources().getString(R.string.menuPrincipalIniciar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerGame.blockAndWaitTouchRelease();
@@ -251,7 +251,7 @@ public class Game {
                         innerGame.setGameState(GAME_STATE_TUTORIAL);
                         innerGame.levelObject.showFirstTutorial();
                     } else {
-                        innerGame.menuTutorial.getMenuOptionByName("exibirTutorial").setText  = L('menuTutorialExibirTutorial') + self.level;
+                        innerGame.menuTutorial.getMenuOptionByName("exibirTutorial").setText  = getResources().getString(R.string.menuTutorialExibirTutorial) + self.level;
                         innerGame.menuTutorial.unblock();
                     }
                 } else {
@@ -273,7 +273,7 @@ public class Game {
         final Menu innerMenu = menuMain;
 
         // adiciona a opção de selecionar nível
-        menuMain.addMenuOption("SelecionarNivel", "Alterar Nível", new MenuOption.OnChoice() {
+        menuMain.addMenuOption("SelecionarNivel", getResources().getString(R.string.menuPrincipalAlterarNivel), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerSelectorLevel.fromMenu(innerMenu);
@@ -309,7 +309,7 @@ public class Game {
         });
 
         // adiciona a opção de alterar volume
-        menuMain.addMenuOption("AlterarVolume", "Alterar Volume", new MenuOption.OnChoice() {
+        menuMain.addMenuOption("AlterarVolume", getResources().getString(R.string.menuPrincipalAlterarVolume), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerSelectorVolumn.fromMenu(innerMenu);
@@ -324,7 +324,7 @@ public class Game {
         menuInGame = new Menu("menuInGame", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
 
         // adiciona a opção continuar
-        menuInGame.addMenuOption("Continuar", "Continuar a jogar", new MenuOption.OnChoice() {
+        menuInGame.addMenuOption("Continuar", getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerGame.blockAndWaitTouchRelease();
@@ -351,7 +351,7 @@ public class Game {
         });
         
         // adiciona a opção de voltar ao menu principal
-        menuInGame.addMenuOption("Retornar", "Retornar ao menu principal", new MenuOption.OnChoice() {
+        menuInGame.addMenuOption("Retornar", getResources().getString(R.string.retornarAoMenu), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerGame.blockAndWaitTouchRelease();
@@ -360,19 +360,13 @@ public class Game {
             }
         });
         
-        
-        
-        
-        
-        
-        
-        
+     
         
         // cria o menu tutorial
         menuTutorial = new Menu("menuTutorial", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
 
         // adiciona a opção exibir tutorial
-        menuInGame.addMenuOption("ExibirTutorial", "Exibir o tutorial", new MenuOption.OnChoice() {
+        menuInGame.addMenuOption("ExibirTutorial", getResources().getString(R.string.menuTutorialExibirTutorial), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                innerGame.blockAndWaitTouchRelease();
@@ -386,7 +380,7 @@ public class Game {
         });
         
         // adiciona a opção pular tutorial
-        menuInGame.addMenuOption("PularTutorial", "Pular o tutorial", new MenuOption.OnChoice() {
+        menuInGame.addMenuOption("PularTutorial", getResources().getString(R.string.menuTutorialPularTutorial), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                innerGame.blockAndWaitTouchRelease();
@@ -398,7 +392,7 @@ public class Game {
         });
         
         // adiciona a opção de voltar ao menu principal
-        menuInGame.addMenuOption("Retornar", "Retornar ao menu principal", new MenuOption.OnChoice() {
+        menuInGame.addMenuOption("Retornar", getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerGame.blockAndWaitTouchRelease();
@@ -406,22 +400,6 @@ public class Game {
                 
             }
         });
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
     }
