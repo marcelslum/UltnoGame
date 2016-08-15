@@ -99,7 +99,6 @@ public class LevelLoader {
                 });
                 break;
                 
-                
             case 2:
                 game.levelObject = new Level(2, game, 
                 1, 1,                                               // quantidade de bolas e minimo de bolas vivas
@@ -136,11 +135,10 @@ public class LevelLoader {
                     @Override
                     public void createTargets() {
                     
-                        int [] map = new[]int {;
-                        new [] int {1,1,1,1,1,1,1,1,1,1,1},
-                        new [] int {0,0,1,1,1,0,1,1,1,0,0}
-                        }
-                    
+                        int [][] map = {
+                            {1,1,1,1,1,1,1,1,1,1,1},
+                            {0,0,1,1,1,0,1,1,1,0,0}
+                        };
                     
                         for (int iY = 0; iY < quantityTargetsY;iY++){
                             for (int iX = 0; iX < quantityTargetsX; iX++) {
