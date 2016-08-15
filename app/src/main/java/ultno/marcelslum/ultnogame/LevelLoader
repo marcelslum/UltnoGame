@@ -1,0 +1,101 @@
+package ultno.marcelslum.ultnogame;
+
+/**
+ * Created by marcel on 02/08/2016.
+ */
+public class LevelLoader {
+    private static LevelLoader ourInstance = new LevelLoader();
+
+    public static LevelLoader getInstance() {
+        return ourInstance;
+    }
+
+    private Utils() {
+    }
+
+    public static loadLevel(Game game, int levelNumber){
+    
+    Level l = new Level(levelNumber, game);
+    game.levelObject = l;
+    
+    switch (levelNumber){
+            case 1:
+                l.ballsQuantity = 1;
+                l.minBallsNotInvencibleAlive = 1;
+                l.ballsRadiusByResolution = new float[]{0.010f, 0.010f};
+                l.ballsInitialXByResolution = new float[]{0.3f, 0.5f};
+                l.ballsInitialYByResolution = new float[]{0.5f, 0.5f};
+                l.ballsDesiredVelocityXByResolution = new float[]{0.003f, 0.003f};
+                l.ballsDesiredVelocityYByResolution = new float[]{0.00529412f, 0.00529412f};
+                l.ballsColor = new Color[] {new Color(1f, 1f, 1f, 1f),new Color(1f, 1f, 1f, 1f)};
+                l.ballsInvencible = new boolean[]{false, false};
+                l.ballsAngleToRotate = new float[]{2f, 2f};
+                l.ballsMaxAngle = new float[]{55f, 55f};
+                l.ballsMinAngle = new float[]{35f, 35f};
+                l.ballsVelocityVariation = new float[]{0.1f, 0.1f};
+                l.ballsVelocityMaxByInitialVelocity = new float[]{1.5f, 1.5f};
+                l.ballsVelocityMinByInitialVelocity = new float[]{0.8f, 0.8f};
+                l.ballsTargetsAppend = (ArrayList<Target>[]) new ArrayList[10];
+                l.ballsFree = new boolean[]{true, true};
+                l.barsQuantity = 1;
+                l.barsSizeXByResolution = new float[]{0.22f};//0.22f};//
+                l.barsSizeYByResolution = new float[]{0.0175f};//0.0125f};//
+                l.barsInitialXByResolution = new float[]{0.3f};//0.3f
+                l.barsInitialYByResolution = new float[]{0.024f};//0.014f};
+                l.barsDesiredVelocityXByResolution = new float[]{0.0045f};
+                l.barsDesiredVelocityYByResolution = new float[]{0f};
+
+                l.quantityTargetsX = 10;//10ocupa 11 espaços
+                l.quantityTargetsY = 2;
+                l.targetSizeXByResolution = 0.0895f;
+                l.targetSizeYByResolution = 0.04f;
+                l.targetsDistanceByXResolution = 0.001f;
+                l.targetsPaddingByXResolution = 0.00225f;
+
+                final float quantityTargetsY = l.quantityTargetsY;
+                final float quantityTargetsX = l.quantityTargetsX;
+                final float targetsDistanceByXResolution = l.targetsDistanceByXResolution;
+                final float targetsPaddingByXResolution = l.targetsPaddingByXResolution;
+                final float targetSizeXByResolution = l.targetSizeXByResolution;
+                final float targetSizeYByResolution = l.targetSizeYByResolution;
+                final float gameAreaResolutionX = game.gameAreaResolutionX;
+                final float gameAreaResolutionY = game.gameAreaResolutionY;
+                final Game innerGame = game;
+                l.setEntitiesCreator(new Level.EntitiesCreator() {
+                    @Override
+                    public void createTargets() {
+                        for (int iY = 0; iY < quantityTargetsY;iY++){
+                            for (int iX = 0; iX < quantityTargetsX; iX++) {
+                                if (!(iY == 0 && iX == 0)){
+
+                                    float xInitial = (gameAreaResolutionX * targetsPaddingByXResolution) + (iX * ((gameAreaResolutionX * targetSizeXByResolution) + (gameAreaResolutionX * targetsDistanceByXResolution)));
+                                    float yInitial = (gameAreaResolutionX * targetsPaddingByXResolution) + (iY * ((gameAreaResolutionY * targetSizeYByResolution) + (gameAreaResolutionX * targetsDistanceByXResolution)));
+
+                                    Target target = new Target("target", innerGame, xInitial, yInitial,
+                                            gameAreaResolutionX * targetSizeXByResolution,
+                                            gameAreaResolutionY * targetSizeYByResolution, 9
+                                            );
+                                    target.isMovable = false;
+                                    target.alpha = 1;
+                                    target.states = new int[]{0,1};
+                                    target.currentState = 1;
+                                    innerGame.addTarget(target);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void createObstacles() {
+
+                    }
+
+                    @Override
+                    public void createWindows() {
+
+                    }
+                });
+                break;
+        }
+    }
+}
