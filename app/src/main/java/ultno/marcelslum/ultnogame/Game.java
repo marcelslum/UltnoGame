@@ -79,6 +79,7 @@ public class Game {
     Level levelObject;
     public final static int quantityOfLevels = 20;
     int levelNumber = 1;
+    int maxLevel = 1;
 
     // game state
     public int gameState;
@@ -202,6 +203,9 @@ public class Game {
     }
 
     public void init(){
+        Storage.initializeStorage();
+            levelNumber = Storage.getActualLevel();
+            maxLevel = Storage.setMaxLevel();
         initSounds();
         initPrograms();
         initFont();
@@ -214,7 +218,27 @@ public class Game {
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
                 7, 0f, 1f, 0.6328125f, 1f);
-
+                
+        messageGameOver = new Text("messageGameOver", 
+            this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.4f, gameAreaResolutionY*0.11f, 
+            getResources().getString(R.string.messageGameOver), font, new Color(0f, 0f, 0f, 1f));
+            
+        messagePreparation = new Text("messagePreparation", 
+            this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, gameAreaResolutionY*0.3f, 
+            getResources().getString(R.string.messagePreparation), font, new Color(0f, 0f, 0f, 1f));
+        
+        messagePreparation = new Text("messageInGame", 
+            this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.4f, gameAreaResolutionY*0.11f, 
+            getResources().getString(R.string.messageInGame), font, new Color(0f, 0f, 0f, 1f));
+            
+        messagePreparation = new Text("messageInGame", 
+            this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.4f, gameAreaResolutionY*0.11f, 
+            getResources().getString(R.string.messageInGame), font, new Color(0f, 0f, 0f, 1f));
+            
+        size = resolutionY * 0.07f;
+        
+        
+        
         TextBox tb = new TextBox("textBox", this, 50f, 50f, 600f, 40f, "Atinja o alvo com a bola para destruir o alvo que desaparecerá após ser atingido!!!");
 
         textBoxes.add(tb);
