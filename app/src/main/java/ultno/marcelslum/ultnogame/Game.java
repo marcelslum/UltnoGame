@@ -29,6 +29,7 @@ public class Game {
     public static ArrayList<Menu> menus;
     public static ArrayList<Selector> selectors;
     public static ArrayList<InteractionListener> interactionListeners;
+    public static ArrayList<TextBox> textBoxes;
 
     public Background background;
 
@@ -47,7 +48,7 @@ public class Game {
     public ButtonOnOff soundButton;
     public ButtonOnOff musicButton;
 
-    public TextImage tittle;
+    public Image tittle;
 
     // quadtree objects
     public static Quadtree quad;
@@ -112,6 +113,8 @@ public class Game {
     public Program textProgram;
     public Program solidProgram;
 
+    public ArrayList<Line> lines;
+
     public static Game getInstance() {
         return ourInstance;
     }
@@ -127,6 +130,8 @@ public class Game {
         bars = new ArrayList<Bar>();
         menus = new ArrayList<>();
         selectors = new ArrayList<>();
+        textBoxes = new ArrayList<>();
+        lines = new ArrayList<>();
 
         barsInitialPositionX = new float[10];
         barsInitialPositionY = new float[10];
@@ -205,12 +210,19 @@ public class Game {
     }
 
     public void createTexts(){
-        tittle = new TextImage("tittle", this,
+        tittle = new Image("tittle", this,
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
                 7, 0f, 1f, 0.6328125f, 1f);
 
-        TextBox textBox = new TextBox("textBox", this, 0f, 0f, 200f, 20f, "Atinja o alvo com a bola para destruir o alvo que desaparecerá após ser atingido!!!");
+        TextBox tb = new TextBox("textBox", this, 50f, 50f, 600f, 40f, "Atinja o alvo com a bola para destruir o alvo que desaparecerá após ser atingido!!!");
+
+        textBoxes.add(tb);
+        Utils.createSimpleAnimation(tb, "translateX", "translateX", 1000, -800f, 0f).start();
+
+
+
+
     }
 
     public void createMenus(){
@@ -432,6 +444,17 @@ public class Game {
         if (selectorLevel != null) selectorLevel.prepareRender(matrixView, matrixProjection);
         if (selectorVolumn != null) selectorVolumn.prepareRender(matrixView, matrixProjection);
         if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
+
+        for (int i = 0; i < textBoxes.size(); i++){
+            textBoxes.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
+        for (int i = 0; i < lines.size(); i++){
+            lines.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
+
+
 
     }
 

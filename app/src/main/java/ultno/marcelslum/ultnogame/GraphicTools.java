@@ -92,9 +92,8 @@ public class GraphicTools {
 
 
 
-String outro =         "       gl_FragColor = vec4(gl_FragColor.rgb,vf_alpha);" +
-    "       vec4 color = texture2D( us_texture, vv2_texCoord);" +
-
+        String outro =         "       gl_FragColor = vec4(gl_FragColor.rgb,vf_alpha);" +
+        "       vec4 color = texture2D( us_texture, vv2_texCoord);" +
 
         "       gl_FragColor = vec4(color.rgb,vf_alpha);" +
 
@@ -135,7 +134,7 @@ String outro =         "       gl_FragColor = vec4(gl_FragColor.rgb,vf_alpha);" 
                     " gl_FragColor = texture2D( us_texture, vv2_texCoord );" +
                     " if (gl_FragColor.rgb == vec3(0.0,0.0,0.0))"+
                     " discard;"+
-                    " gl_FragColor = vec4(vv4_Colors.rgb,vf_alpha);" +
+                    " gl_FragColor = vec4(vv4_Colors.rgb,vf_alpha*vv4_Colors.a);" +
                     "}";
 
 

@@ -10,6 +10,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+import java.util.ArrayList;
 
 
 /**
@@ -98,6 +99,15 @@ public class Utils {
         array[10 + (startIndex)] = y1;
         array[11 + (startIndex)] = z;
     }
+
+    public static void insertLineVerticesData(float[] array, int startIndex, float x1, float y1, float x2, float y2, float z){
+        array[0 + (startIndex)] = x1;
+        array[1 + (startIndex)] = y1;
+        array[2 + (startIndex)] = z;
+        array[3 + (startIndex)] = x2;
+        array[4 + (startIndex)] = y2;
+        array[5 + (startIndex)] = z;
+    }
     
       public static void insertRectangleIndicesData(short[] array, int startIndex, int startValue){
         array[0 + (startIndex)] = (short)(0 + (startValue));
@@ -125,6 +135,17 @@ public class Utils {
         array[13 + (startIndex)] = color.g;
         array[14 + (startIndex)] = color.b;
         array[15 + (startIndex)] = color.a;
+    }
+
+    public static void insertLineColorsData(float[] array, int startIndex, Color color){
+        array[0 + (startIndex)] = color.r;
+        array[1 + (startIndex)] = color.g;
+        array[2 + (startIndex)] = color.b;
+        array[3 + (startIndex)] = color.a;
+        array[4 + (startIndex)] = color.r;
+        array[5 + (startIndex)] = color.g;
+        array[6 + (startIndex)] = color.b;
+        array[7 + (startIndex)] = color.a;
     }
 
     public static void insertRectangleUvData(float[] array, int startIndex){
@@ -176,4 +197,15 @@ public class Utils {
 
         bmp.recycle();
     }
+
+    public static Animation createSimpleAnimation(Entity object, String name, String parameter, int duration, float v1, float v2){
+
+        ArrayList<float[]> values = new ArrayList<>();
+        values.add(new float[]{0f,v1});
+        values.add(new float[]{1f,v2});
+        return new Animation(object, name, parameter, duration, values, false, true);
+
+    }
+
+
 }

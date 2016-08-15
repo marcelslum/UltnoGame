@@ -71,6 +71,9 @@ public class Entity {
     private float[] uvs;
     private short[] indices;
 
+    public boolean isLineGL = false;
+    public int lineWidth = 1;
+
 
     public FloatBuffer verticesBuffer;
     public FloatBuffer uvsBuffer;
@@ -128,6 +131,7 @@ public class Entity {
         this.animTranslateY = 0;
         this.animations = new ArrayList<Animation>();
         this.listeners = new ArrayList<InteractionListener>();
+        this.childs = new ArrayList<>();
     }
     
     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
@@ -165,6 +169,13 @@ public class Entity {
     }
 
     public void applyAnimation(String parameter, float value) {
+
+        if (this.childs != null) {
+            for (int i = 0; i < this.childs.size(); i++) {
+                        this.childs.get(i).applyAnimation(parameter, value);
+            }
+        }
+
         switch (parameter) {
             case "translateX":
                 this.animTranslateX = value;
@@ -199,18 +210,13 @@ public class Entity {
                 //Log.e("entity", "pointsAlpha ");
                 this.pointsAlpha = value;
                 break;
-
-
             default:
                 break;
         }
-        applySpecificAnimation(parameter, value);
 
     }
 
-    // for override
-    private void applySpecificAnimation(String parameter, float value) {
-    }
+
 
     public void resetAnimations() {
         for (int i = 0; i < this.animations.size(); i++) {
@@ -250,7 +256,6 @@ public class Entity {
         for (int i = 0; i < this.animations.size(); i++) {
             //Log.e("entity", "animation started " + this.animations.get(i).started + " na entidade "+this.name);
             if (this.animations.get(i).started) {
-
                 //Log.e("entity", "animation started na entidade "+this.name);
                 this.animations.get(i).doAnimation();
             }
@@ -290,9 +295,9 @@ public class Entity {
     public void setMatrixModel(){
         Matrix.setIdentityM(this.matrixModel, 0); // initialize to identity matrix
 
-        //Log.e("entity", this.name + ": x "+ this.x+" y "+this.y);
+        //if (this.name == "frame")Log.e("entity", " "+animTranslateX);
 
-        Matrix.translateM(this.matrixModel, 0, this.x , this.y, 0);
+        Matrix.translateM(this.matrixModel, 0, this.x + animTranslateX, this.y + animTranslateY, 0);
 
         if (this.rotateAngle != 0) {
             Matrix.translateM(this.matrixModel, 0, getMiddlePointX(), getMiddlePointY(), 0);
@@ -348,9 +353,6 @@ public class Entity {
             GLES20.glEnableVertexAttribArray ( av4_colorsHandle );
         }
 
-        //Log.e("render", " ");
-
-
         int uf_alphaHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_alpha");
         GLES20.glUniform1f(uf_alphaHandle, this.alpha);
         //Log.e("render", " ");
@@ -360,18 +362,15 @@ public class Entity {
         GLES20.glUniformMatrix4fv(um4_projectionHandle, 1, false, matrixProjection, 0);
         //Log.e("render", " ");
 
-
         // Get handle to shape's transformation matrix and add our matrix
         int um4_viewHandle = GLES20.glGetUniformLocation(this.program.get(), "um4_view");
         GLES20.glUniformMatrix4fv(um4_viewHandle, 1, false, matrixView, 0);
         //Log.e("render", " ");
 
-
         // Get handle to shape's transformation matrix and add our matrix
         int um4_modelHandle = GLES20.glGetUniformLocation(this.program.get(), "um4_model");
         GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, this.matrixModel, 0);
         //Log.e("render", " ");
-
 
         if (this.textureUnit != -1) {
             // Get handle to textures locations
@@ -387,10 +386,15 @@ public class Entity {
         //Log.e("entidade "+this.name + " indices len"," "+ this.indicesBuffer.toString());
 
         // No depth testing
-
-
         // Draw the triangle
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
+
+        if (isLineGL) {
+            GLES20.glLineWidth(lineWidth);
+            GLES20.glDrawArrays(GLES20.GL_LINES, 0, 3);
+        } else {
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
+        }
+
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(av4_verticesHandle);

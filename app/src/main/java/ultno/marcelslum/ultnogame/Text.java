@@ -16,7 +16,7 @@ public class Text extends Entity{
     private int indexUvs;
     private int indexColors;
     public float[] charData;
-    public float[] colorData2;
+    //public float[] colorData2;
 
     public Text(String name, Game game, float x, float y, float size, String text, Font font, Color color) {
         super(name, game, x, y);
@@ -29,7 +29,7 @@ public class Text extends Entity{
 
         this.charData = new float[]{0f, 0f, 0f, 0f,};
         //Log.e("this.color", " teste ");
-        this.colorData2 = new float[]{0.9f, 0.5f, 0f, 0.2f,};
+        //this.colorData2 = new float[]{0.9f, 0.5f, 0f, 0.2f,};
         //Log.e("this.color", " "+this.colorData2[1]);
         this.setDrawInfo();
     }
@@ -46,7 +46,7 @@ public class Text extends Entity{
 
         this.charData = new float[]{0f, 0f, 0f, 0f};
         //Log.e("this.color", " teste ");
-        this.colorData2 = new float[]{0f, 0f, 0f, 0.8f,};
+        //this.colorData2 = new float[]{0f, 0f, 0f, 0.8f,};
         //Log.e("this.color", " "+this.colorData2[1]);
         this.setDrawInfo();
     }
@@ -154,10 +154,10 @@ public class Text extends Entity{
             vec[11] = 0f;
 
             colors = new float[]
-                    {   this.colorData2[0], this.colorData2[1], this.colorData2[2], this.colorData2[3],
-                        this.colorData2[0], this.colorData2[1], this.colorData2[2], this.colorData2[3],
-                        this.colorData2[0], this.colorData2[1], this.colorData2[2], this.colorData2[3],
-                        this.colorData2[0], this.colorData2[1], this.colorData2[2], this.colorData2[3]
+                    {   this.color.r, this.color.g, this.color.b, this.color.a,
+                        this.color.r, this.color.g, this.color.b, this.color.a,
+                        this.color.r, this.color.g, this.color.b, this.color.a,
+                        this.color.r, this.color.g, this.color.b, this.color.a
                     };
             // 0.001f = texture bleeding hack/fix
             uv[0] = x+0.001f;

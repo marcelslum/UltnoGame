@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class GLSurf extends GLSurfaceView {
 
+    private MultisampleConfigChooser mConfigChooser;
     private final GLRenderer mRenderer;
 
     public GLSurf(Context context) {
@@ -19,7 +20,10 @@ public class GLSurf extends GLSurfaceView {
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);
 
-        setEGLConfigChooser(8, 8, 8, 8, 0, 0);
+        setEGLConfigChooser(mConfigChooser = new MultisampleConfigChooser());
+
+
+        //setEGLConfigChooser(8, 8, 8, 8, 0, 0);
         getHolder().setFormat(PixelFormat.RGBA_8888);
 
         // Set the Renderer for drawing on the GLSurfaceView

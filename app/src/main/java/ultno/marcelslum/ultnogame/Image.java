@@ -3,13 +3,13 @@ package ultno.marcelslum.ultnogame;
 /**
  * Created by marcel on 14/08/2016.
  */
-public class TextImage extends Entity{
+public class Image extends Entity{
 
     float width;
     float height;
     float x1, x2, y1, y2;
 
-    TextImage(String name, Game game, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2){
+    Image(String name, Game game, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2){
         super(name, game, x, y);
         this.width = width;
         this.height = height;

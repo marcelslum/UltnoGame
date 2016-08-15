@@ -151,7 +151,6 @@ class Menu extends Entity{
     @Override
     public void render(float[] matrixView, float[] matrixProjection){
         //Log.e("menu", "render menu");
-
         for (int i = 0; i < this.menuOptions.size();i++){
             this.menuOptions.get(i).textObject.alpha = alpha;
             this.menuOptions.get(i).textObject.render(matrixView, matrixProjection);
