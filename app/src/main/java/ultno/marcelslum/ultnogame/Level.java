@@ -15,45 +15,112 @@ public class Level {
     int number;
     int maxScore;
     int showingTutorial = -1;
-    int minBallsNotInvencibleAlive;
+    
     int ballsQuantity;
-    float[] ballsInitialXByResolution = new float[10];
-    float[] ballsInitialYByResolution = new float[10];
-    float[] ballsDesiredVelocityXByResolution = new float[10];
-    float[] ballsDesiredVelocityYByResolution = new float[10];
+    int minBallsNotInvencibleAlive;
     float[] ballsRadiusByResolution;
+    float[] ballsInitialXByResolution;
+    float[] ballsInitialYByResolution;
+    float[] ballsDesiredVelocityXByResolution;
+    float[] ballsDesiredVelocityYByResolution];
     Color [] ballsColor;
     boolean[] ballsInvencible;
-    float[] ballsAngleToRotate = new float[10];
-    float[] ballsVelocityVariation = new float[10];
-    float[] ballsVelocityMaxByInitialVelocity = new float[10];
-    float[] ballsVelocityMinByInitialVelocity = new float[10];
+    float[] ballsAngleToRotate;
     float[] ballsMaxAngle;
     float[] ballsMinAngle;
-    ArrayList<Target>[] ballsTargetsAppend = (ArrayList<Target>[]) new ArrayList[10];
-    boolean[] ballsFree = new boolean[10];
-
+    float[] ballsVelocityVariation;
+    float[] ballsVelocityMaxByInitialVelocity;
+    float[] ballsVelocityMinByInitialVelocity;
+    ArrayList<Target>[] ballsTargetsAppend = (ArrayList<Target>[]);
+    boolean[] ballsFree;
     int barsQuantity;
-    float[] barsSizeXByResolution = new float[10];
-    float[] barsSizeYByResolution = new float[10];
-    float[] barsInitialXByResolution = new float[10];
-    float[] barsInitialYByResolution = new float[10];
-    float[] barsDesiredVelocityXByResolution = new float[10];
-    float[] barsDesiredVelocityYByResolution = new float[10];
-
+    float[] barsSizeXByResolution;
+    float[] barsSizeYByResolution;
+    float[] barsInitialXByResolution;
+    float[] barsInitialYByResolution;
+    float[] barsDesiredVelocityXByResolution;
+    float[] barsDesiredVelocityYByResolution;
     int quantityTargetsX;
     int quantityTargetsY;
     float targetSizeXByResolution;
     float targetSizeYByResolution;
     float targetsDistanceByXResolution;
     float targetsPaddingByXResolution;
+    
     EntitiesCreator entitiesCreator;
 
     Level(int number,Game game){
         this.number = number;
         this.game = game;
-
     }
+    
+    
+    Level(
+            int ballsQuantity,
+            int minBallsNotInvencibleAlive,
+            float[] ballsRadiusByResolution,
+            float[] ballsInitialXByResolution,
+            float[] ballsInitialYByResolution,
+            float[] ballsDesiredVelocityXByResolution,
+            float[] ballsDesiredVelocityYByResolution,
+            Color [] ballsColor,
+            boolean[] ballsInvencible,
+            float[] ballsAngleToRotate,
+            float[] ballsMaxAngle,
+            float[] ballsMinAngle,
+            float[] ballsVelocityVariation,
+            float[] ballsVelocityMaxByInitialVelocity,
+            float[] ballsVelocityMinByInitialVelocity,
+            ArrayList<Target>[] ballsTargetsAppend = (ArrayList<Target>[]),
+            boolean[] ballsFree,
+            int barsQuantity,
+            float[] barsSizeXByResolution,
+            float[] barsSizeYByResolution,
+            float[] barsInitialXByResolution,
+            float[] barsInitialYByResolution,
+            float[] barsDesiredVelocityXByResolution,
+            float[] barsDesiredVelocityYByResolution,
+            int quantityTargetsX,
+            int quantityTargetsY,
+            float targetSizeXByResolution,
+            float targetSizeYByResolution,
+            float targetsDistanceByXResolution,
+            float targetsPaddingByXResolution
+        ){
+            this.number = number;
+            this.game = game;
+            this.ballsQuantity = ballsQuantity;
+            this.minBallsNotInvencibleAlive = minBallsNotInvencibleAlive;
+            this.ballsRadiusByResolution = ballsRadiusByResolution;
+            this.ballsInitialXByResolution = ballsInitialXByResolution;
+            this.ballsInitialYByResolution = ballsInitialYByResolution;
+            this.ballsDesiredVelocityXByResolution = allsDesiredVelocityXByResolution;
+            this.ballsDesiredVelocityYByResolution = ballsDesiredVelocityYByResolution;
+            this.ballsColor = ballsColor;
+            this.ballsInvencible = ballsInvencible;
+            this.ballsAngleToRotate = ballsAngleToRotate;
+            this.ballsMaxAngle = ballsMaxAngle;
+            this.ballsMinAngle = ballsMinAngle;
+            this.ballsVelocityVariation = ballsVelocityVariation;
+            this.ballsVelocityMaxByInitialVelocity = ballsVelocityMaxByInitialVelocity;
+            this.ballsVelocityMinByInitialVelocity = ballsVelocityMinByInitialVelocity;
+            this.ballsTargetsAppend = ballsTargetsAppend;
+            this.ballsFree = ballsFree;
+            this.barsQuantity = barsQuantity;
+            this.barsSizeXByResolution = barsSizeXByResolution;
+            this.barsSizeYByResolution = barsSizeYByResolution;
+            this.barsInitialXByResolution = barsInitialXByResolution;
+            this.barsInitialYByResolution = barsInitialYByResolution;
+            this.barsDesiredVelocityXByResolution = barsDesiredVelocityXByResolution;
+            this.barsDesiredVelocityYByResolution = barsDesiredVelocityYByResolution;
+            this.quantityTargetsX = quantityTargetsX;
+            this.quantityTargetsY = quantityTargetsY;
+            this.targetSizeXByResolution = targetSizeXByResolution;
+            this.targetSizeYByResolution = targetSizeYByResolution;
+            this.targetsDistanceByXResolution = targetsDistanceByXResolution;
+            this.targetsPaddingByXResolution = targetsPaddingByXResolution;
+    }
+    
 
     public interface EntitiesCreator{
         public void createTargets();
