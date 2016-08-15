@@ -323,7 +323,7 @@ public class Game {
         // cria o menu in game
         menuInGame = new Menu("menuInGame", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
 
-        // adiciona a opção de iniciar o jogo
+        // adiciona a opção continuar
         menuInGame.addMenuOption("Continuar", "Continuar a jogar", new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -350,7 +350,8 @@ public class Game {
             }
         });
         
-         menuInGame.addMenuOption("Retornar", "Retornar ao menu principal", new MenuOption.OnChoice() {
+        // adiciona a opção de voltar ao menu principal
+        menuInGame.addMenuOption("Retornar", "Retornar ao menu principal", new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerGame.blockAndWaitTouchRelease();
@@ -358,6 +359,68 @@ public class Game {
                 
             }
         });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // cria o menu tutorial
+        menuTutorial = new Menu("menuTutorial", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
+
+        // adiciona a opção exibir tutorial
+        menuInGame.addMenuOption("ExibirTutorial", "Exibir o tutorial", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+               innerGame.blockAndWaitTouchRelease();
+               innerGame.levelObject.loadEntities();
+               innerGame.setGameState(GAME_STATE_TUTORIAL);
+               innerGame.levelObject.showingTutorial = 0;
+               innerGame.levelObject.tutorials.get(0).show();
+               innerGame.menuTutorial.block();
+               innerGame.menuTutorial.clearDisplay();
+            }
+        });
+        
+        // adiciona a opção pular tutorial
+        menuInGame.addMenuOption("PularTutorial", "Pular o tutorial", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+               innerGame.blockAndWaitTouchRelease();
+               innerGame.levelObject.loadEntities();
+               innerGame.setGameState(GAME_STATE_PREPARAR);
+               innerGame.menuTutorial.block();
+               innerGame.menuTutorial.clearDisplay();
+            }
+        });
+        
+        // adiciona a opção de voltar ao menu principal
+        menuInGame.addMenuOption("Retornar", "Retornar ao menu principal", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                innerGame.blockAndWaitTouchRelease();
+                innerGame.setGameState(GAME_STATE_MENU);
+                
+            }
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
