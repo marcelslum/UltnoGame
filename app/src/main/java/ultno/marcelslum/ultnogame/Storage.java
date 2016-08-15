@@ -44,4 +44,54 @@ public class Storage {
         if (storage == null) init();
         return storage.contains(String key);
     }
+    
+    public void initializeStorage(int quantityOfLevels){
+        if (storage == null) init();
+        for (var i = 0; i < quantityOfLevels; i++){
+            int levelToTest = i + 1;
+            if (!Storage.contains("tutorial"+ levelToTest +"visto"))
+                Storage.setBoolean("tutorial"+ levelToTest +"visto", false);
+            if (!Storage.contains("score"+levelToTest))
+                Storage.setInt("score"+levelToTest, 0);
+        }
+        
+        if (!Storage.contains("actualLevel"))
+                Storage.setInt("actualLevel", 1);
+        
+        if (!Storage.contains("maxLevel"))
+                Storage.setInt("maxLevel", 1);
+    }
+    
+    public static int getMaxLevel(){
+        getInt("maxLevel");
+    }
+    
+    public static int setMaxLevel(int value){
+        setInt("maxLevel", value);
+    }
+    
+    public static int getActualLevel(){
+        getInt("actualLevel");
+    }
+    
+    public static int setActualLevel(int value){
+        setInt("actualLevel", value);
+    }
+    
+    public static int getLevelMaxScore(int levelNumber){
+        getInt("score"+levelNumber);
+    }
+    
+    public static int setLevelMaxScore(int levelNumber, int value){
+        setInt("score"+levelNumber, value);
+    }
+    
+    public static boolean getLevelTutorialSaw(int levelNumber){
+        getBoolean("tutorial"+ levelNumber +"visto");
+    }
+    
+    public static boolean setLevelTutorialSaw(int levelNumber, boolean value){
+        Storage.setBoolean("tutorial"+ levelNumber +"visto", false);
+    }
+    
 }
