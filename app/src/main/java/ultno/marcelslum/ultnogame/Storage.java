@@ -63,7 +63,7 @@ public class Storage {
     }
     
     public static int getMaxLevel(){
-        getInt("maxLevel");
+        return getInt("maxLevel");
     }
     
     public static int setMaxLevel(int value){
@@ -71,7 +71,7 @@ public class Storage {
     }
     
     public static int getActualLevel(){
-        getInt("actualLevel");
+        return  getInt("actualLevel");
     }
     
     public static int setActualLevel(int value){
@@ -79,7 +79,7 @@ public class Storage {
     }
     
     public static int getLevelMaxScore(int levelNumber){
-        getInt("score"+levelNumber);
+        return  getInt("score"+levelNumber);
     }
     
     public static int setLevelMaxScore(int levelNumber, int value){
@@ -87,7 +87,7 @@ public class Storage {
     }
     
     public static boolean getLevelTutorialSaw(int levelNumber){
-        getBoolean("tutorial"+ levelNumber +"visto");
+        return  getBoolean("tutorial"+ levelNumber +"visto");
     }
     
     public static boolean setLevelTutorialSaw(int levelNumber, boolean value){
