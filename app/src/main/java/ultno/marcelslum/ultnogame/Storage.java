@@ -16,27 +16,32 @@ public class Storage {
         SharedPreferences storage = getSharedPreferences(STORAGE_FILE_NAME, 0);
     }
     
-    public void setInt(String key, int value){
+    public static void setInt(String key, int value){
         if (storage == null) init();
           SharedPreferences.Editor editor = storage.edit();
           editor.putInt(key, value);
           editor.apply();
     }
     
-    public int getInt(String key){
+    public static int getInt(String key){
         if (storage == null) init();
         return storage.getInt(key, -1);
     }
     
-    public void setBoolean(String key, boolean value){
+    public static void setBoolean(String key, boolean value){
         if (storage == null) init();
           SharedPreferences.Editor editor = storage.edit();
           editor.putBoolean(key, value);
           editor.apply();
     }
     
-    public int getBoolean(String key){
+    public static int getBoolean(String key){
         if (storage == null) init();
         return storage.getBoolean(key, false);
+    }
+    
+    public static boolean contains(String key){
+        if (storage == null) init();
+        return storage.contains(String key);
     }
 }
