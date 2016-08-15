@@ -3,6 +3,8 @@
     <string name="menuTutorialExibirTutorial">Exibir o tutorial do nível</string>
     <string name="menuTutorialIniciarLevel">Pular o tutorial'</string>
     <string name="menuPrincipalIniciar">Iniciar</string>
+    <string name="menuPrincipalAlterarNivel">Alterar nível</string>
+    <string name="menuPrincipalAlterarVolumel">Alterar volume</string>
     <string name="pontuacaoMaximaDesteNivel">Ultno</string>
     <string name="nivel">Nível: </string>
     <string name="pontuacaototal">Pontuação total: </string>
