@@ -31,7 +31,7 @@ public class Level {
     float[] ballsVelocityVariation;
     float[] ballsVelocityMaxByInitialVelocity;
     float[] ballsVelocityMinByInitialVelocity;
-    ArrayList<Target>[] ballsTargetsAppend = (ArrayList<Target>[]);
+    ArrayList<Target>[] ballsTargetsAppend;
     boolean[] ballsFree;
     int barsQuantity;
     float[] barsSizeXByResolution;
@@ -71,7 +71,7 @@ public class Level {
             float[] ballsVelocityVariation,
             float[] ballsVelocityMaxByInitialVelocity,
             float[] ballsVelocityMinByInitialVelocity,
-            ArrayList<Target>[] ballsTargetsAppend = (ArrayList<Target>[]),
+            ArrayList<Target>[] ballsTargetsAppend,
             boolean[] ballsFree,
             int barsQuantity,
             float[] barsSizeXByResolution,
