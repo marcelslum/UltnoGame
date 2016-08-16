@@ -5,6 +5,11 @@ import android.util.Log;
 
 public class Text extends Entity{
 
+    public final static int TEXT_ALIGN_LEFT = 0;
+    public final static int TEXT_ALIGN_CENTER = 1;
+    public final static int TEXT_ALIGN_RIGHT = 2;
+
+
     public String text;
     public float size;
 
@@ -16,10 +21,10 @@ public class Text extends Entity{
     private int indexUvs;
     private int indexColors;
     public float[] charData;
-    public String align;
+    public int align;
     //public float[] colorData2;
     
-    public Text(String name, Game game, float x, float y, float size, String text, Font font, Color color, String align) {
+    public Text(String name, Game game, float x, float y, float size, String text, Font font, Color color, int align) {
         super(name, game, x, y);
         this.text = text;
         this.size = size;
@@ -44,7 +49,7 @@ public class Text extends Entity{
         this.font = font;
         this.program = this.font.program;
         this.textureUnit = this.font.textureUnit;
-        this.align = "left";
+        this.align = TEXT_ALIGN_LEFT;
 
         this.charData = new float[]{0f, 0f, 0f, 0f,};
         //Log.e("this.color", " teste ");
@@ -62,16 +67,35 @@ public class Text extends Entity{
         this.font = font;
         this.program = this.font.program;
         this.textureUnit = this.font.textureUnit;
-        this.align = "left";
+        this.align = TEXT_ALIGN_LEFT;
 
         this.charData = new float[]{0f, 0f, 0f, 0f};
         //Log.e("this.color", " teste ");
         //this.colorData2 = new float[]{0f, 0f, 0f, 0.8f,};
         //Log.e("this.color", " "+this.colorData2[1]);
         this.setDrawInfo();
+
+        float xOffset = 0f;
+        if (align == TEXT_ALIGN_RIGHT){
+            xOffset = -calculateWidth();
+        } else if (align == TEXT_ALIGN_CENTER){
+            xOffset = -(calculateWidth()/2);
+        }
+
+    }
+
+    public void setText(String text){
+        this.text = text;
+        this.setDrawInfo();
     }
 
     public void setDrawInfo(){
+        float xOffset = 0f;
+        if (align == TEXT_ALIGN_RIGHT) {
+            xOffset = -calculateWidth();
+        } else if (align == TEXT_ALIGN_CENTER){
+            xOffset = -(calculateWidth()/2);
+        }
 
         indexVertices = 0;
         indexIndices = 0;
@@ -88,7 +112,7 @@ public class Text extends Entity{
         
         initializeData(charcount * 12, charcount * 6, charcount * 8, charcount * 16);
 
-        convertTextToTriangleInfo();
+        convertTextToTriangleInfo(xOffset);
         
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
@@ -98,7 +122,7 @@ public class Text extends Entity{
         //Log.e("teste1115", " ");
     }
 
-    private void convertTextToTriangleInfo()
+    private void convertTextToTriangleInfo(float xOffset)
     {
         // Get attributes from text object
 
@@ -106,7 +130,7 @@ public class Text extends Entity{
 
         //Log.e("convertTextToTri", "1 ");
 
-        float initialX = 0;
+        float initialX = 0 + xOffset;
 
         // Create
 
@@ -203,11 +227,6 @@ public class Text extends Entity{
             // Calculate the new position
             initialX += (size*(charData[2]/charData[3]))+(this.size*0.05);
         }
-        
-        if (align = "right"){
-            x -= initialX;
-        }
-        
     }
 
     public float calculateWidth(){

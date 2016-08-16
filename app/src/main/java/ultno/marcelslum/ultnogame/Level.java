@@ -22,7 +22,7 @@ public class Level {
     float[] ballsInitialXByResolution;
     float[] ballsInitialYByResolution;
     float[] ballsDesiredVelocityXByResolution;
-    float[] ballsDesiredVelocityYByResolution];
+    float[] ballsDesiredVelocityYByResolution;
     Color [] ballsColor;
     boolean[] ballsInvencible;
     float[] ballsAngleToRotate;
@@ -31,7 +31,7 @@ public class Level {
     float[] ballsVelocityVariation;
     float[] ballsVelocityMaxByInitialVelocity;
     float[] ballsVelocityMinByInitialVelocity;
-    ArrayList<Target>[] ballsTargetsAppend;
+    ArrayList<ArrayList<Target>> ballsTargetsAppend;
     boolean[] ballsFree;
     int barsQuantity;
     float[] barsSizeXByResolution;
@@ -72,7 +72,7 @@ public class Level {
             float[] ballsVelocityVariation,
             float[] ballsVelocityMaxByInitialVelocity,
             float[] ballsVelocityMinByInitialVelocity,
-            ArrayList<Target>[] ballsTargetsAppend,
+            ArrayList<ArrayList<Target>> ballsTargetsAppend,
             boolean[] ballsFree,
             int barsQuantity,
             float[] barsSizeXByResolution,
@@ -96,7 +96,7 @@ public class Level {
             this.ballsRadiusByResolution = ballsRadiusByResolution;
             this.ballsInitialXByResolution = ballsInitialXByResolution;
             this.ballsInitialYByResolution = ballsInitialYByResolution;
-            this.ballsDesiredVelocityXByResolution = allsDesiredVelocityXByResolution;
+            this.ballsDesiredVelocityXByResolution = ballsDesiredVelocityXByResolution;
             this.ballsDesiredVelocityYByResolution = ballsDesiredVelocityYByResolution;
             this.ballsColor = ballsColor;
             this.ballsInvencible = ballsInvencible;
@@ -169,8 +169,7 @@ public class Level {
 
     public void loadEntities() {
 
-        Log.e("Level loadEnt", "1");
-        this.game.clearGameEntities();
+        this.game.eraseAllGameEntities();
         this.game.quad = new Quadtree(new RectangleM(0,0,this.game.gameAreaResolutionX,this.game.gameAreaResolutionY),5,5);
 
 
@@ -321,9 +320,26 @@ public class Level {
             }
         });
 
-        this.game.addInteracionListener(new InteractionListener("gameArea", 0, 0,
-                this.game.gameAreaResolutionX, this.game.gameAreaResolutionY, 0, this.game.gameArea, this.game));
+
          */
+
+        InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea", 0f, 0f,
+                game.gameAreaResolutionX, game.gameAreaResolutionY * 0.8f, 0, game.background, game);
+
+        final Game innerGame = game;
+
+        gameAreaInteractionListener.setPressListener(new InteractionListener.PressListener() {
+            @Override
+            public void onPress() {
+                innerGame.setGameState(game.GAME_STATE_PAUSE);
+            }
+
+            @Override
+            public void onUnpress(){
+            }
+        });
+        this.game.addInteracionListener(gameAreaInteractionListener);
+
 
         for (int i = 0; i < this.barsQuantity; i++){
 
@@ -412,8 +428,8 @@ public class Level {
             ball.dvx = ballVelocityX;
             ball.dvy = ballVelocityY;
 
-            for (int t = 0; t < this.ballsTargetsAppend.length; t++){
-                ball.targetsAppend = this.ballsTargetsAppend[i];
+            for (int t = 0; t < this.ballsTargetsAppend.size(); t++){
+                ball.targetsAppend = this.ballsTargetsAppend.get(i);
             }
             //console.log(ball.targetsAppend);
 

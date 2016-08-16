@@ -29,7 +29,7 @@ public class Tutorial {
         }
             textBox.display();
             
-            Animation anim = Utils.createSimpleAnimation(tb, "textBoxTranslateX1", "translateX", 500, -800f, 0f);
+            Animation anim = Utils.createSimpleAnimation(textBox, "textBoxTranslateX1", "translateX", 500, -800f, 0f);
             final Tutorial self = this;
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -42,7 +42,7 @@ public class Tutorial {
             });
             anim.start();
 
-        Utils.createSimpleAnimation(tb, "alpha", "alpha", 500, 0f, 1f).start();
+        Utils.createSimpleAnimation(textBox, "alpha", "alpha", 500, 0f, 1f).start();
     }
 
     public void unshow(){
@@ -50,7 +50,7 @@ public class Tutorial {
         if (onUnshowBeforeAnim != null)
             onUnshowBeforeAnim.onUnshowBeforeAnim();
 
-        Animation anim = Utils.createSimpleAnimation(tb, "alpha", "alpha", 500, 1f, 0f);
+        Animation anim = Utils.createSimpleAnimation(textBox, "alpha", "alpha", 500, 1f, 0f);
         final Tutorial self = this;
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override

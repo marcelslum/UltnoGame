@@ -1,5 +1,7 @@
 package ultno.marcelslum.ultnogame;
 
+import java.util.ArrayList;
+
 /**
  * Created by marcel on 02/08/2016.
  */
@@ -10,13 +12,14 @@ public class LevelLoader {
         return ourInstance;
     }
 
-    private Utils() {
+    private LevelLoader() {
     }
 
-    public static loadLevel(Game game, int levelNumber){
-    
-    Level l = new Level(levelNumber, game);
-    game.levelObject = l;
+    public static void loadLevel(Game game, int levelNumber){
+
+        final float gameAreaResolutionX = game.gameAreaResolutionX;
+        final float gameAreaResolutionY = game.gameAreaResolutionY;
+        final Game innerGame = game;
     
     switch (levelNumber){
             case 1:
@@ -37,7 +40,7 @@ public class LevelLoader {
                 l.ballsVelocityVariation = new float[]{0.1f, 0.1f};
                 l.ballsVelocityMaxByInitialVelocity = new float[]{1.5f, 1.5f};
                 l.ballsVelocityMinByInitialVelocity = new float[]{0.8f, 0.8f};
-                l.ballsTargetsAppend = (ArrayList<Target>[]) new ArrayList[10];
+                l.ballsTargetsAppend = new ArrayList<ArrayList<Target>>();
                 l.ballsFree = new boolean[]{true, true};
                 l.barsQuantity = 1;
                 l.barsSizeXByResolution = new float[]{0.22f};//0.22f};//
@@ -60,9 +63,7 @@ public class LevelLoader {
                 final float targetsPaddingByXResolution = l.targetsPaddingByXResolution;
                 final float targetSizeXByResolution = l.targetSizeXByResolution;
                 final float targetSizeYByResolution = l.targetSizeYByResolution;
-                final float gameAreaResolutionX = game.gameAreaResolutionX;
-                final float gameAreaResolutionY = game.gameAreaResolutionY;
-                final Game innerGame = game;
+
                 l.setEntitiesCreator(new Level.EntitiesCreator() {
                     @Override
                     public void createTargets() {
@@ -107,30 +108,20 @@ public class LevelLoader {
                 new float[]{0.003f*2},new float[]{0.00529412f*2},   // velocidade
                 new Color[] {new Color(1f, 1f, 1f, 1f)},            // cor
                 new boolean[]{false},                               // invencível
-                new float[]{65f}, new float[]{25f},                 // angulos de rotacao
+                new float[]{5f},new float[]{65f}, new float[]{25f},// angulos de rotacao
                 new float[]{0.25f},                                 // variação de velocidade na rotação
-                new float[]{2.2f}, new float[]{0.7f}                // velocidade máxima e mínima
-                (ArrayList<Target>[]) new ArrayList[10],            // alvos apensados
+                new float[]{2.2f}, new float[]{0.7f},               // velocidade máxima e mínima
+                new ArrayList<ArrayList<Target>>(),                 // alvos apensados
                 new boolean[]{true},                                // bola livre
                 1,                                                  // quantidade de barras
                 new float[]{0.26f}, new float[]{0.0175f},           // tamanho da barra
-                new float[]{0.35f}, new float[]{0.014f},             // posicao da barra
-                new float[]{0.005f}, new float[]{0f},              // velocidade da barra
+                new float[]{0.35f}, new float[]{0.014f},            // posicao da barra
+                new float[]{0.005f}, new float[]{0f},               // velocidade da barra
                 11, 2,                                              // quantidade de alvos
                 0.0895f, 0.04f,                                     // tamanho dos alvos
-                0.001f, 0.00225f,                                   //distancia e padding dos alvos
+                0.001f, 0.00225f                                     //distancia e padding dos alvos
                 );
-            
-                final float quantityTargetsY = game.levelObject.quantityTargetsY;
-                final float quantityTargetsX = game.levelObject.quantityTargetsX;
-                final float targetsDistanceByXResolution = game.levelObject.targetsDistanceByXResolution;
-                final float targetsPaddingByXResolution = game.levelObject.targetsPaddingByXResolution;
-                final float targetSizeXByResolution = game.levelObject.targetSizeXByResolution;
-                final float targetSizeYByResolution = game.levelObject.targetSizeYByResolution;
-                final float gameAreaResolutionX = game.gameAreaResolutionX;
-                final float gameAreaResolutionY = game.gameAreaResolutionY;
-                final Game innerGame = game;
-                
+
                 game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                     @Override
                     public void createTargets() {
@@ -140,16 +131,20 @@ public class LevelLoader {
                             {0,0,1,1,1,0,1,1,1,0,0}
                         };
                     
-                        for (int iY = 0; iY < quantityTargetsY;iY++){
-                            for (int iX = 0; iX < quantityTargetsX; iX++) {
-                                if (map[ix][iy] == 1){
+                        for (int iY = 0; iY < innerGame.levelObject.quantityTargetsY;iY++){
+                            for (int iX = 0; iX < innerGame.levelObject.quantityTargetsX; iX++) {
+                                if (map[iX][iY] == 1){
 
-                                    float xInitial = (gameAreaResolutionX * targetsPaddingByXResolution) + (iX * ((gameAreaResolutionX * targetSizeXByResolution) + (gameAreaResolutionX * targetsDistanceByXResolution)));
-                                    float yInitial = (gameAreaResolutionX * targetsPaddingByXResolution) + (iY * ((gameAreaResolutionY * targetSizeYByResolution) + (gameAreaResolutionX * targetsDistanceByXResolution)));
+                                    float xInitial = (gameAreaResolutionX * innerGame.levelObject.targetsPaddingByXResolution) +
+                                            (iX * ((gameAreaResolutionX * innerGame.levelObject.targetSizeXByResolution) +
+                                            (gameAreaResolutionX * innerGame.levelObject.targetsDistanceByXResolution)));
+                                    float yInitial = (gameAreaResolutionX * innerGame.levelObject.targetsPaddingByXResolution) +
+                                            (iY * ((gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution) +
+                                            (gameAreaResolutionX * innerGame.levelObject.targetsDistanceByXResolution)));
 
                                     Target target = new Target("target", innerGame, xInitial, yInitial,
-                                            gameAreaResolutionX * targetSizeXByResolution,
-                                            gameAreaResolutionY * targetSizeYByResolution, 9
+                                            gameAreaResolutionX * innerGame.levelObject.targetSizeXByResolution,
+                                            gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution, 9
                                             );
                                     target.isMovable = false;
                                     target.alpha = 1;

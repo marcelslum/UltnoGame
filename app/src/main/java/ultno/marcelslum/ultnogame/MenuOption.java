@@ -18,8 +18,11 @@ class MenuOption {
     public Text textObject;
     public Font font;
     public float size;
+    public String setText;
+    public Game game;
 
     public MenuOption(int id, String name, String text, Game game, Font font, float size, float x, float y) {
+        this.game = game;
         this.id = id;
         this.name = name;
         this.text = text;
@@ -29,11 +32,13 @@ class MenuOption {
         this.x = x;
         this.y = y;
 
+        setText(text);
+    }
+
+    public void setText(String text){
         textObject = new Text("menuOptions"+name+"text", game, 0f, this.y, this.size, this.text, this.font);
         this.width = textObject.calculateWidth();
-        //Log.e("MenuOption", "width do texto "+text+": "+width);
         textObject.setX(this.x - (this.width/2));
-
     }
 
     public void setOnChoice(OnChoice onChoice) {

@@ -11,8 +11,6 @@ import java.util.List;
  * Created by marcel on 01/08/2016.
  */
 public class Animation{
-
-    boolean test23456;
     Entity targetObject;
     String name;
     String parameterToAnimate;
@@ -32,6 +30,8 @@ public class Animation{
     float finalTime;
     int lastValue;
     AnimationListener mListener;
+    OnChange onChange;
+    boolean[] isFluidChanged;
 
     public Animation(Entity target, String name, String parameter, int duration, ArrayList<float[]> values, boolean isInfinite, boolean isFluid){
         this.name = name;
@@ -58,6 +58,14 @@ public class Animation{
         this.elapsedTime = 0;
         this.percentage = 0;
         this.setStartTime();
+
+        isFluidChanged = new boolean [values.size()];
+
+        if (!isFluid){
+            for (int i = 0; i < isFluidChanged.length; i++){
+                isFluidChanged[i] = false;
+            }
+        }
         //Log.e("Animation", "animation started "+this.started);
     }
 
@@ -74,6 +82,9 @@ public class Animation{
 
     public void doAnimation(){
         //Log.e("Animation", "do Animation");
+
+
+
         this.elapsedTime = Utils.getTime() - this.startTime;
         this.percentage = this.elapsedTime/(float)this.duration;
 
@@ -126,10 +137,18 @@ public class Animation{
                 for (int v = 0; v < this.values.size(); v++){
                     if (this.percentage >= this.values.get(v)[0])
                     {
-                        if (v > this.positionNotFluid){
-                            this.positionNotFluid = v;
+                        if (isFluidChanged[v] == false) {
+
+                            isFluidChanged[v] = true;
+                            if (v > this.positionNotFluid) {
+                                this.positionNotFluid = v;
+                            }
+                            this.targetObject.applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet);
+                            if (this.onChange != null) {
+                                Log.e("animation", "animation onChange fired");
+                                onChange.onChange();
+                            }
                         }
-                        this.targetObject.applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet);
                     }
                 }
             }
@@ -158,7 +177,15 @@ public class Animation{
         mListener = listener;
     }
 
+    public void setOnChangeNotFluid(OnChange onChange) {
+        this.onChange = onChange;
+    }
+
     public static interface AnimationListener {
         void onAnimationEnd();
+    }
+
+    public static interface OnChange {
+        void onChange();
     }
 }

@@ -35,6 +35,8 @@ public class PhysicalObject extends Entity{
         dvx = 0.0f;
         dvy = 0.0f;
         isCollided = false;
+        isCollidable = true;
+        isSolid = true;
         lastCollisionResponse = new ArrayList<Vector>();
         lastCollisionObjects = new ArrayList<PhysicalObject>();
         accelStarted = false;

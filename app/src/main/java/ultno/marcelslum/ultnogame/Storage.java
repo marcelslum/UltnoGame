@@ -1,53 +1,49 @@
 package ultno.marcelslum.ultnogame;
 
-public class Storage {
-    private static Utils ourInstance = new Utils();
-    SharedPreferences storage;
-    final static String STORAGE_FILE_NAME = "ultno.marcelslum.ultnogame.storage"
+import android.content.Context;
+import android.content.SharedPreferences;
 
-    public static Utils getInstance() {
+public class Storage {
+    private static Storage ourInstance = new Storage();
+    public static SharedPreferences storage;
+    private static Context context;
+    final static String STORAGE_FILE_NAME = "ultno.marcelslum.ultnogame.storage";
+
+    public static Storage getInstance() {
         return ourInstance;
     }
 
-    private Utils() {
+    private Storage() {
     }
-    
-    public void init(){
-        SharedPreferences storage = getSharedPreferences(STORAGE_FILE_NAME, 0);
-    }
+
     
     public static void setInt(String key, int value){
-        if (storage == null) init();
           SharedPreferences.Editor editor = storage.edit();
           editor.putInt(key, value);
           editor.apply();
     }
     
     public static int getInt(String key){
-        if (storage == null) init();
         return storage.getInt(key, -1);
     }
     
     public static void setBoolean(String key, boolean value){
-        if (storage == null) init();
           SharedPreferences.Editor editor = storage.edit();
           editor.putBoolean(key, value);
           editor.apply();
     }
     
-    public static int getBoolean(String key){
-        if (storage == null) init();
+    public static boolean getBoolean(String key){
         return storage.getBoolean(key, false);
     }
     
     public static boolean contains(String key){
-        if (storage == null) init();
-        return storage.contains(String key);
+        return storage.contains(key);
     }
     
-    public void initializeStorage(int quantityOfLevels){
-        if (storage == null) init();
-        for (var i = 0; i < quantityOfLevels; i++){
+    public static void initializeStorage(Context context, int quantityOfLevels){
+        storage = context.getSharedPreferences(STORAGE_FILE_NAME, 0);
+        for (int i = 0; i < quantityOfLevels; i++){
             int levelToTest = i + 1;
             if (!Storage.contains("tutorial"+ levelToTest +"visto"))
                 Storage.setBoolean("tutorial"+ levelToTest +"visto", false);
@@ -66,7 +62,7 @@ public class Storage {
         return getInt("maxLevel");
     }
     
-    public static int setMaxLevel(int value){
+    public static void setMaxLevel(int value){
         setInt("maxLevel", value);
     }
     
@@ -74,7 +70,7 @@ public class Storage {
         return  getInt("actualLevel");
     }
     
-    public static int setActualLevel(int value){
+    public static void setActualLevel(int value){
         setInt("actualLevel", value);
     }
     
@@ -82,7 +78,7 @@ public class Storage {
         return  getInt("score"+levelNumber);
     }
     
-    public static int setLevelMaxScore(int levelNumber, int value){
+    public static void setLevelMaxScore(int levelNumber, int value){
         setInt("score"+levelNumber, value);
     }
     
@@ -90,7 +86,7 @@ public class Storage {
         return  getBoolean("tutorial"+ levelNumber +"visto");
     }
     
-    public static boolean setLevelTutorialSaw(int levelNumber, boolean value){
+    public static void setLevelTutorialSaw(int levelNumber, boolean value){
         Storage.setBoolean("tutorial"+ levelNumber +"visto", false);
     }
     

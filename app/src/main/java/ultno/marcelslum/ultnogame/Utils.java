@@ -207,5 +207,14 @@ public class Utils {
 
     }
 
+    public static Animation createSimpleAnimation(Entity object, String name, String parameter, int duration, float v1, float v2, Animation.AnimationListener animationListener){
+        ArrayList<float[]> values = new ArrayList<>();
+        values.add(new float[]{0f,v1});
+        values.add(new float[]{1f,v2});
+        Animation anim = new Animation(object, name, parameter, duration, values, false, true);
+        anim.setAnimationListener(animationListener);
+        return anim;
+    }
+
 
 }

@@ -172,8 +172,12 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         // Get the amount of time the last frame took.
         long elapsed = now - mLastTime;
 
-        for (int i = 0; i < this.gi.interactionListeners.size(); i++){
-            this.gi.interactionListeners.get(i).verify();
+        this.gi.verifyTouchBlock();
+
+        if (!this.gi.isBlocked) {
+            for (int i = 0; i < this.gi.interactionListeners.size(); i++) {
+                this.gi.interactionListeners.get(i).verify();
+            }
         }
 
         this.gi.simulate(elapsed, frameDuration);

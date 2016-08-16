@@ -26,6 +26,8 @@ public class Entity {
     public float scaleX;
     public float scaleY;
 
+    public float numberForAnimation;
+
     public Color color;
     public float animTranslateX;
     public float animTranslateY;
@@ -105,33 +107,33 @@ public class Entity {
         this.game = game;
         this.x = x;
         this.y = y;
-        this.dX = 0;
-        this.dY = 0;
-        this.previousX = x;
-        this.previousY = y;
-        this.previousDX = 0;
-        this.previousDY = 0;
-        this.scaleX = 1f;
-        this.scaleY = 1f;
-        this.alpha = 1;
-        this.isCollidable = true;
-        this.isVisible = true;
-        this.isSolid = true;
-        this.isMovable = true;
-        this.isBlocked = false;
-        this.isPressed = false;
-        this.isFree = true;
-        this.bounds = new RectangleM(0, 0, 0, 0);
-        this.quadtreeData = new RectangleM(0, 0, 0, 0);
-        this.satData = new RectangleM(0, 0, 0, 0);
-        this.updateBoundsState = 0;
-        this.scaleX = 1;
-        this.scaleY = 1;
-        this.animTranslateX = 0;
-        this.animTranslateY = 0;
-        this.animations = new ArrayList<Animation>();
-        this.listeners = new ArrayList<InteractionListener>();
-        this.childs = new ArrayList<>();
+        dX = 0;
+        dY = 0;
+        previousX = x;
+        previousY = y;
+        previousDX = 0;
+        previousDY = 0;
+        scaleX = 1f;
+        scaleY = 1f;
+        alpha = 1;
+        isCollidable = false;
+        isVisible = true;
+        isSolid = false;
+        isMovable = false;
+        isBlocked = false;
+        isPressed = false;
+        isFree = true;
+        bounds = new RectangleM(0, 0, 0, 0);
+        quadtreeData = new RectangleM(0, 0, 0, 0);
+        satData = new RectangleM(0, 0, 0, 0);
+        updateBoundsState = 0;
+        scaleX = 1;
+        scaleY = 1;
+        animTranslateX = 0;
+        animTranslateY = 0;
+        animations = new ArrayList<Animation>();
+        listeners = new ArrayList<InteractionListener>();
+        childs = new ArrayList<>();
     }
     
     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
@@ -172,7 +174,7 @@ public class Entity {
 
         if (this.childs != null) {
             for (int i = 0; i < this.childs.size(); i++) {
-                        this.childs.get(i).applyAnimation(parameter, value);
+                this.childs.get(i).applyAnimation(parameter, value);
             }
         }
 
@@ -193,10 +195,9 @@ public class Entity {
                 //Log.e("Entity", "ativando animação alpha reduzindo para "+value);
                 this.alpha = value;
                 break;
-
-
+            case "numberForAnimation":
+                this.numberForAnimation = value;
             case "showPointsState":
-
                 if (value == 1f){
                     //Log.e("entity", "showPointsState ON");
                     this.showPointsState = SHOW_POINTS_ON;
@@ -237,6 +238,28 @@ public class Entity {
 
     }
 
+    public void reduceAlpha(int duration, float finalValue){
+        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue);
+        anim.start();
+    }
+
+    public void reduceAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
+        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue);
+        anim.setAnimationListener(animationListener);
+        anim.start();
+    }
+
+    public void increaseAlpha(int duration, float finalValue){
+        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue);
+        anim.start();
+    }
+
+    public void increaseAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
+        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue);
+        anim.setAnimationListener(animationListener);
+        anim.start();
+    }
+
     public void verifyAnimations() {
         if (this.parent != null) {
             return;
@@ -263,13 +286,15 @@ public class Entity {
     }
 
     public void translate(float tx, float ty, boolean updatePrevious) {
-        if (updatePrevious) {
-            this.previousX = this.x;
-            this.previousY = this.y;
-        }
+        if (isMovable && isFree){
+            if (updatePrevious) {
+                this.previousX = this.x;
+                this.previousY = this.y;
+            }
 
-        this.x += tx;
-        this.y += ty;
+            this.x += tx;
+            this.y += ty;
+        }
     }
 
     public void rotate(float angle) {

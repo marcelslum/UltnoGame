@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">Ultno</string>
     <string name="menuTutorialExibirTutorial">Exibir o tutorial do nível </string>
-    <string name="menuTutorialPularTutorial">Pular o tutorial'</string>
+    <string name="menuTutorialPularTutorial">Pular o tutorial</string>
     <string name="menuPrincipalIniciar">Iniciar</string>
     <string name="menuPrincipalAlterarNivel">Alterar nível</string>
     <string name="menuPrincipalAlterarVolume">Alterar volume</string>
-    <string name="pontuacaoMaximaDesteNivel">Ultno</string>
+    <string name="messageMaxScoreLevel">Maior pontução desde nível: </string>
     <string name="nivel">Nível: </string>
-    <string name="pontuacaototal">Pontuação total: </string>
-    <string name="mensagemLevelAtual">Nível </string>
-    <string name="gameOver">GAME OVER</string>
+    <string name="messageMaxScoreTotal">Pontuação total: </string>
+    <string name="messageCurrentLevel">Nível </string>
+    <string name="messageGameOver">GAME OVER</string>
     <string name="score">score</string>
     <string name="pause">PAUSE</string>
     <string name="continuarJogar">Continuar a jogar</string>
@@ -41,5 +41,5 @@
     <string name="l9t13">Portanto, tente manter as bolas extras vivas.</string>
     <string name="l9t14">Mas chega de papo furado. Você quer ação, não é mesmo?</string>
     <string name="l2t1">Apenas um alvo? Que fácil, não é? Nem tanto...</string>
-    <string name="l2t1">Neste nível haverá alguns alvos invisíveis. Destrua todos!</string>
+    <string name="l2t2">Neste nível haverá alguns alvos invisíveis. Destrua todos!</string>
 </resources>

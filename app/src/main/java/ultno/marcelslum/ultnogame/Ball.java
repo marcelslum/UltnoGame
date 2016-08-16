@@ -44,7 +44,6 @@ public class Ball extends Circle{
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
 
-
     private final static float [] columns = new float [] {341.333f,682.666f};
     private final static float [] lines = new float [] {341.333f,682.666f};
     private final static float textureSize = 1024f;
@@ -154,7 +153,7 @@ public class Ball extends Circle{
         }
 
         if ((this.collisionBordaB || (this.collisionBar && Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)))&&!this.isInvencible){
-            // TODO this.setDead();
+            this.setDead();
             this.game.ballFall = true;
         }
 
@@ -299,23 +298,25 @@ public class Ball extends Circle{
     }
 
     private void waitForExplosion() {
+
+
+
+
     }
 
     private void setDead() {
         this.isAlive = false;
-
         ArrayList<float[]> valuesAnimation = new ArrayList<>();
         valuesAnimation.add(new float[]{0,1});
         valuesAnimation.add(new float[]{1,0});
         Animation animation = new Animation(this, "alpha", "alpha", 500, valuesAnimation, false, true);
         final Ball self = this;
-        animation.setAnimationListener(new Animation.AnimationListener() {
+        reduceAlpha(500, 0f,new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
                 self.isVisible = false;
             }
         });
-        animation.start();
         this.isSolid = false;
         this.isCollidable = false;
         this.isMovable = false;

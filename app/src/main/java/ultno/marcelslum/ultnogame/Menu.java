@@ -39,10 +39,20 @@ class Menu extends Entity{
         this.isBlocked = false;
     }
 
-    public void appearAndUnblock(){
-        this.display();
-        this.unblock();
-        this.alpha = 1;
+    public void appearAndUnblock(int duration){
+        display();
+        if (duration == 0) {
+            alpha = 1f;
+            unblock();
+        } else {
+            alpha = 0f;
+            increaseAlpha(duration, 1f, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    unblock();
+                }
+            });
+        }
     }
 
     public void toSelector(Selector selector, String selectedValue){
