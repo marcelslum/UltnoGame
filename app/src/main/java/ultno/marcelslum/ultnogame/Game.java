@@ -272,12 +272,16 @@ public class Game {
             menuInGame.appearAndUnblock(300);
             messageGameOver.display();
         } else if (state == GAME_STATE_PAUSE){
-        //soundPool.stop(soundMusic);
-        soundPool.play(soundMenuSelectBig, 1, 1, 0, 0, 1);
-        stopAllGameEntities();
-        reduceAllGameEntitiesAlpha(300);
-        menuInGame.appearAndUnblock(300);
-        messageGameOver.display();
+            //soundPool.stop(soundMusic);
+            soundPool.play(soundMenuSelectBig, 1, 1, 0, 0, 1);
+            stopAllGameEntities();
+            reduceAllGameEntitiesAlpha(300);
+            menuInGame.appearAndUnblock(300);
+            messageGameOver.display();
+        } else if (state == GAME_STATE_VITORIA){
+            soundPool.play(soundVitoria, 1, 1, 0, 0, 1);
+            stopAllGameEntities();
+            reduceAllGameEntitiesAlpha(300);
         }
     }
 
@@ -609,7 +613,6 @@ public class Game {
                 innerMenuInGame.block();
                 innerGame.blockAndWaitTouchRelease();
                 innerGame.setGameState(GAME_STATE_MENU);
-                
             }
         });
 
