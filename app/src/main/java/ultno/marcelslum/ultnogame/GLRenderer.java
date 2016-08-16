@@ -212,15 +212,16 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     public void SetupTextures()
     {
-        texturenames = new int[8];
-        GLES20.glGenTextures(8, texturenames, 0);
-        Utils.setTexture("drawable/bolas", texturenames, 0, mContext);
-        Utils.setTexture("drawable/jetset", texturenames, 1, mContext);
-        Utils.setTexture("drawable/alvos", texturenames, 2, mContext);
-        Utils.setTexture("drawable/barras", texturenames, 3, mContext);
-        Utils.setTexture("drawable/botoes", texturenames, 4, mContext);
-        Utils.setTexture("drawable/background3", texturenames, 5, mContext);
-        Utils.setTexture("drawable/numeros3", texturenames, 6, mContext);
-        Utils.setTexture("drawable/textos", texturenames, 7, mContext);
+        texturenames = new int[9];
+        GLES20.glGenTextures(9, texturenames, 0);
+        Utils.setTexture("drawable/bolas", texturenames, 0, mContext); // bolas
+        Utils.setTexture("drawable/jetset", texturenames, 1, mContext); // fonte
+        Utils.setTexture("drawable/alvos", texturenames, 2, mContext); // alvos
+        Utils.setTexture("drawable/barras", texturenames, 3, mContext); // barras
+        Utils.setTexture("drawable/botoes5", texturenames, 4, mContext); // botões
+        Utils.setTexture("drawable/background3", texturenames, 5, mContext); // background
+        Utils.setTexture("drawable/numeros3", texturenames, 6, mContext); // numeros
+        Utils.setTexture("drawable/textos", texturenames, 7, mContext); // titulo e caixa de testo
+        Utils.setTexture("drawable/botoes2", texturenames, 8, mContext); // flechas
     }
 }
