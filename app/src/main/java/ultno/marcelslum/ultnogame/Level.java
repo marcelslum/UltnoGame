@@ -331,6 +331,7 @@ public class Level {
         gameAreaInteractionListener.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
+                innerGame.blockAndWaitTouchRelease();
                 innerGame.setGameState(game.GAME_STATE_PAUSE);
             }
 
