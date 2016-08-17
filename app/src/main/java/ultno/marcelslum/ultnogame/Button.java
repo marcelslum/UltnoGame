@@ -14,7 +14,6 @@ public class Button extends Entity{
     int textureMapPressed;
     int textureMapUnpressed;
     int textureMap;
-    float [] columnsAndLines = new float [] {0f, 256f, 512f, 768f, 1024f};
     float textureSize = 1024f;
 
     Button(String name, Game game, float x, float y, float width, float height, int textureUnit) {
@@ -76,54 +75,6 @@ public class Button extends Entity{
         public void onUnpress();
     }
 
-    public void prepareUvData(int textureMap){
-        /*
-        array[0 + (startIndex)] = 0f; x//
-        array[1 + (startIndex)] = 1f; y//
-        array[2 + (startIndex)] = 1f; x//
-        array[3 + (startIndex)] = 1f; y//
-        array[4 + (startIndex)] = 1f; x//
-        array[5 + (startIndex)] = 0f; y//
-        array[6 + (startIndex)] = 0f; x//
-        array[7 + (startIndex)] = 0f; y//
-        */
-        //0,7998046875
-
-        Utils.x1 = 0f;
-        Utils.x2 = 0f;
-        Utils.y1 = 0f;
-        Utils.y2 = 0f;
-
-        if (textureMap < 5){
-            Utils.y1 = (columnsAndLines[0] + 2f)/1024f;
-            Utils.y2 = (columnsAndLines[1] - 2f)/1024f;
-        } else if (textureMap < 9){
-            Utils.y1 = (columnsAndLines[1] + 2f)/1024f;
-            Utils.y2 = (columnsAndLines[2] - 2f)/1024f;
-        } else if (textureMap < 13){
-            Utils.y1 = (columnsAndLines[2] + 2f)/1024f;
-            Utils.y2 = (columnsAndLines[3] - 2f)/1024f;
-        } else if (textureMap < 17){
-            Utils.y1 = (columnsAndLines[3] + 2f)/1024f;
-            Utils.y2 = (columnsAndLines[4] - 2f)/1024f;
-        }
-
-
-        if (textureMap == 1 || textureMap == 5 || textureMap == 9 || textureMap == 13){
-            Utils.x1 = (columnsAndLines[0] + 2f)/1024f;
-            Utils.x2 = (columnsAndLines[1] - 2f)/1024f;
-        } else if (textureMap == 2 || textureMap == 6 || textureMap == 10 || textureMap == 14){
-            Utils.x1 = (columnsAndLines[1] + 2f)/1024f;
-            Utils.x2 = (columnsAndLines[2] - 2f)/1024f;
-        } else if (textureMap == 3 || textureMap == 7 || textureMap == 11 || textureMap == 15){
-            Utils.x1 = (columnsAndLines[2] + 2f)/1024f;
-            Utils.x2 = (columnsAndLines[3] - 2f)/1024f;
-        } else if (textureMap == 4 || textureMap == 8 || textureMap == 12 || textureMap == 16){
-            Utils.x1 = (columnsAndLines[3] + 2f)/1024f;
-            Utils.x2 = (columnsAndLines[4] - 2f)/1024f;
-        }
-    }
-
     public void setDrawInfo(){
         initializeData(12, 6, 12, 0);
 
@@ -133,8 +84,7 @@ public class Button extends Entity{
         Utils.insertRectangleIndicesData(this.indicesData, 0, 0);
         this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
 
-        this.prepareUvData(textureMap);
-        Utils.insertRectangleUvData(this.uvsData, 0);
+        Utils.insertRectangleUvDataButtonsAndBalls(this.uvsData, 0, textureMap);
         this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
     }
 }
