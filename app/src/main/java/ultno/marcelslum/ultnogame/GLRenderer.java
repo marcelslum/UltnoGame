@@ -217,6 +217,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         texturenames = new int[2];
         GLES20.glGenTextures(2, texturenames, 0);
         
+        /*
         Utils.setBitmap("drawable/balls", Game.bmpBalls, mContext); // balls
         Utils.setBitmap("drawable/jetset", Game.bmpFont, mContext); // fonte
         Utils.setBitmap("drawable/targets", Game.bmpTargets, mContext); // targets
@@ -241,19 +242,14 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 	GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
 	GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpFont, 0);
 
-        
-        /*
-        Utils.setTexture("drawable/balls", texturenames, Game.TEXTURE_BALLS, mContext); // balls
+        */
+        Utils.setTexture("drawable/botoesebolas", texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
         Utils.setTexture("drawable/jetset", texturenames, Game.TEXTURE_FONT, mContext); // fonte
         Utils.setTexture("drawable/targets", texturenames, Game.TEXTURE_TARGETS, mContext); // targets
         Utils.setTexture("drawable/bars", texturenames, Game.TEXTURE_BARS, mContext); // bars
-        Utils.setTexture("drawable/buttons", texturenames, Game.TEXTURE_BUTTONS, mContext); // botões
         Utils.setTexture("drawable/background", texturenames, Game.TEXTURE_BACKGROUND, mContext); // background
         Utils.setTexture("drawable/numbers", texturenames, Game.TEXTURE_NUMBERS, mContext); // numeros
         Utils.setTexture("drawable/tittle", texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
-        //Utils.setTexture("drawable/arrows", texturenames, Game.TEXTURE_ARROWS, mContext); // flechas
-        */
-
-
+        
     }
 }
