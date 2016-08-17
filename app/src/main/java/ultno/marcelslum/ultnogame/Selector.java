@@ -63,10 +63,10 @@ public class Selector extends Entity{
         float buttonSize = size*0.75f;
         final Selector innerSelector = this;
 
-        arrowUp = new Button("arrowUp", this.game, mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Game.TEXTURE_ARROWS);
+        arrowUp = new Button("arrowUp", this.game, mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
         arrowUp.setTextureMap(16);
         arrowUp.textureMapUnpressed = 16;
-        arrowUp.textureMapPressed = 12;
+        arrowUp.textureMapPressed = 8;
 
         InteractionListener newListener = new InteractionListener(name+"ArrowUp",
                 mainTextWidth + x - (buttonSize/2),
@@ -92,7 +92,7 @@ public class Selector extends Entity{
         arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_ARROWS);
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
-        arrowDown.textureMapPressed = 11;
+        arrowDown.textureMapPressed = 7;
 
         InteractionListener newListener2 = new InteractionListener(name+"ArrowDown",
                 mainTextWidth + x - (buttonSize/2),
@@ -125,7 +125,7 @@ public class Selector extends Entity{
         arrowBack = new Button("arrowBack", this.game, arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Game.TEXTURE_ARROWS);
         arrowBack.setTextureMap(13);
         arrowBack.textureMapUnpressed = 13;
-        arrowBack.textureMapPressed = 9;
+        arrowBack.textureMapPressed = 5;
 
         InteractionListener newListener3 = new InteractionListener(name+"ArrowBack",
                 arrowBackX,
