@@ -210,35 +210,35 @@ public class Level {
 
         // BOTÃO 1 ESQUERDA
         float x = this.game.resolutionX * 0.01f;
-        this.game.button1Left = new Button("button1Left", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS);
-        this.game.button1Left.setTextureMap(9);
-        this.game.button1Left.textureMapUnpressed = 9;
-        this.game.button1Left.textureMapPressed = 14;
+        this.game.button1Left = new Button("button1Left", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
+        this.game.button1Left.setTextureMap(19);
+        this.game.button1Left.textureMapUnpressed = 18;
+        this.game.button1Left.textureMapPressed = 18;
         this.game.button1Left.alpha = 0.7f;
 
         // BOTÃO 1 DIREITA
         x = this.game.resolutionX * 0.14f;
-        this.game.button1Right = new Button("button1Right", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS);
-        this.game.button1Right.setTextureMap(10);
-        this.game.button1Right.textureMapUnpressed = 10;
-        this.game.button1Right.textureMapPressed = 13;
+        this.game.button1Right = new Button("button1Right", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
+        this.game.button1Right.setTextureMap(20);
+        this.game.button1Right.textureMapUnpressed = 20;
+        this.game.button1Right.textureMapPressed = 17;
         this.game.button1Right.alpha = 0.7f;
 
         Log.e("Level loadEnt", "1");
         if (this.barsQuantity > 1) {
             // BOTÃO 2 ESQUERDA
             x = this.game.resolutionX * 0.66f;
-            this.game.button2Left = new Button("button2Left", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS);
-            this.game.button2Left.setTextureMap(9);
-            this.game.button2Left.textureMapUnpressed = 9;
-            this.game.button2Left.textureMapPressed = 14;
+            this.game.button2Left = new Button("button2Left", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
+            this.game.button2Left.setTextureMap(19);
+            this.game.button2Left.textureMapUnpressed = 19;
+            this.game.button2Left.textureMapPressed = 18;
 
             // BOTÃO 2 DIREITA
             x = this.game.resolutionX * 0.83f;
-            this.game.button2Right = new Button("buttonRight", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS);
-            this.game.button2Right.setTextureMap(10);
-            this.game.button2Right.textureMapUnpressed = 10;
-            this.game.button2Right.textureMapPressed = 13;
+            this.game.button2Right = new Button("buttonRight", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
+            this.game.button2Right.setTextureMap(20);
+            this.game.button2Right.textureMapUnpressed = 20;
+            this.game.button2Right.textureMapPressed = 17;
         }
 
         /*
