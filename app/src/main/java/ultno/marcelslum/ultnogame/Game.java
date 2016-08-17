@@ -394,10 +394,53 @@ public class Game {
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
                 TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
+                
+        ArrayList<float[]> values = new ArrayList<>();
+                values.add(new float[]{0f,1f});
+                values.add(new float[]{0.2f,2f});
+                values.add(new float[]{0.5f,3f});
+                values.add(new float[]{0.7f,4f});
+            final Image innerImage = tittle;
+            Animation animTittle = new Animation(innerImage, "changeTittleColor", "numberForAnimation", 4000, values, true, false);
+            animTittle.setOnChangeNotFluid(new Animation.OnChange() {
+                @Override
+                public void onChange() {
+                    if (innerMessagePreparation.numberForAnimation == 1f){
+                        innerImage.setColor(new Color(0f, 0f, 0f, 1f));
+                    } else if (innerMessagePreparation.numberForAnimation == 2f) {
+                        innerImage.setColor(new Color(1f, 0f, 0f, 1f));
+                    } else if (innerMessagePreparation.numberForAnimation == 3f) {
+                        innerImage.setColor(new Color(0f, 1f, 0f, 1f));
+                    } else if (innerMessagePreparation.numberForAnimation == 4f) {
+                        innerImage.setColor(new Color(0f, 0f, 1f, 1f));
+                    }
+                }
+            });
+            animTittle.start();
+
 
         messageGameOver = new Text("messageGameOver", 
             this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.2f,
             context.getResources().getString(R.string.messageGameOver), font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
+
+            final Text innerMessageGameOver = messageGameOver;
+            Animation animMessageGameOver = new Animation(innerImage, "changeMessageGameOverColor", "numberForAnimation", 4000, values, true, false);
+            animMessageGameOver.setOnChangeNotFluid(new Animation.OnChange() {
+                @Override
+                public void onChange() {
+                    if (innerMessagePreparation.numberForAnimation == 1f){
+                        innerMessageGameOver.setColor(new Color(0f, 0f, 0f, 1f));
+                    } else if (innerMessagePreparation.numberForAnimation == 2f) {
+                        innerMessageGameOver.setColor(new Color(1f, 0f, 0f, 1f));
+                    } else if (innerMessagePreparation.numberForAnimation == 3f) {
+                        innerMessageGameOver.setColor(new Color(0f, 1f, 0f, 1f));
+                    } else if (innerMessagePreparation.numberForAnimation == 4f) {
+                        innerMessageGameOver.setColor(new Color(0f, 0f, 1f, 1f));
+                    }
+                }
+            });
+            animMessageGameOver.start();
+            
             
         messagePreparation = new Text("messagePreparation", 
             this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.3f, gameAreaResolutionY*0.4f,
