@@ -31,7 +31,8 @@ public class Game {
     public static ArrayList<Selector> selectors;
     public static ArrayList<InteractionListener> interactionListeners;
     public static ArrayList<TextBox> textBoxes;
-
+    
+    
     public Background background;
 
     public static ScorePanel scorePanel;
@@ -125,6 +126,8 @@ public class Game {
     public final static int TEXTURE_NUMBERS = 5;
     public final static int TEXTURE_TITTLE = 6;
     
+    public final static float textButtonsAndBallsColumnsAndLines = new float(){0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
+
     // bars and balls data
     public float [] barsInitialPositionX = new float[10];
     public float [] barsInitialPositionY = new float[10];
