@@ -44,11 +44,6 @@ public class Ball extends Circle{
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
 
-    private final static float [] columns = new float [] {341.333f,682.666f};
-    private final static float [] lines = new float [] {341.333f,682.666f};
-    private final static float textureSize = 1024f;
-
-
     Ball(String name, Game game, float x, float y, float radium, int weight){
         super(name, game, x, y, radium, weight);
         setDrawInfo();
