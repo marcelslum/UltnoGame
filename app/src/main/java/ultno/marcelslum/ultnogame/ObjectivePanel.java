@@ -64,9 +64,7 @@ public class ObjectivePanel extends Entity{
             if (ballsInvecibleDraw > 0) {
                 Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+size, 0f, size, 0f);
                 Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
-                prepareUvData(12);
-                Utils.insertRectangleUvData(uvsData, 0 + (i * 8));
-
+                insertRectangleUvDataButtonsAndBalls(uvsData, 0 + (i * 8), 3);
                 ballsInvecibleDraw -= 1;
                 if (ballsInvecibleDraw == 0){
                     xOfTriangle += size*2;
@@ -76,8 +74,7 @@ public class ObjectivePanel extends Entity{
             } else if (ballsBlackDraw > 0){
                 Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+size, 0f, size, 0f);
                 Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
-                prepareUvData(4);
-                Utils.insertRectangleUvData(uvsData, 0 + (i * 8));
+                insertRectangleUvDataButtonsAndBalls(uvsData, 0 + (i * 8), 4);
 
                 ballsBlackDraw -= 1;
                 if (ballsBlackDraw == 0){
@@ -89,8 +86,8 @@ public class ObjectivePanel extends Entity{
 
                 Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+size, 0f, size, 0f);
                 Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
-                prepareUvData(8);
-                Utils.insertRectangleUvData(uvsData, 0 + (i * 8));
+                insertRectangleUvDataButtonsAndBalls(uvsData, 0 + (i * 8), 11);
+                
 
                 ballsBlueDraw -= 1;
                 xOfTriangle += size;
