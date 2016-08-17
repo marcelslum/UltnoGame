@@ -50,38 +50,60 @@ public class Ball extends Circle{
     }
 
     public void setInvencible() {
-    /*TODO
-        if (invencible){
-            ANIM.createAnimation(_ball, "ballInvencible", "color",500, [
-            [0,orange],
-            [0.2,blue],
-            [0.4,red],
-            [0.6,green],
-            [0.8,yellow]
-            ], true, false, 0).start();
-        }
-
-        */
+        
+        
+          ArrayList<float[]> valuesInvencible = new ArrayList<>();
+                values.add(new float[]{0f,1f});
+                values.add(new float[]{0.2f,2f});
+                values.add(new float[]{0.4f,3f});
+                values.add(new float[]{0.6f,4f});
+                values.add(new float[]{0.8f,5f});
+            final Ball innerBall = this;
+            Animation animBallInvencible = new Animation(innerBall, "ballInvencible", "numberForAnimation", 1200, valuesInvencible, true, false);
+            animBallInvencible.setOnChangeNotFluid(new Animation.OnChange() {
+                @Override
+                public void onChange() {
+                    if (innerBall.numberForAnimation == 1f){
+                        setTextureUnitAndUvData(COLOR_BALL_YELLOW);
+                    } else if (innerBall.numberForAnimation == 2f) {
+                        setTextureUnitAndUvData(COLOR_BALL_PINK);
+                    } else if (innerBall.numberForAnimation == 3f) {
+                        setTextureUnitAndUvData(COLOR_BALL_BLUE);
+                    } else if (innerBall.numberForAnimation == 4f) {
+                        setTextureUnitAndUvData(COLOR_BALL_GREEN);
+                    } else if (innerBall.numberForAnimation == 4f) {
+                        setTextureUnitAndUvData(COLOR_BALL_RED);
+                    }
+                }
+            });
+            animBallInvencible.start();
     }
 
     public void setDrawInfo(){
         
         initializeData(12, 6, 8, 0);
 
-        this.verticesData = new float[12];
+        verticesData = new float[12];
 
+        Log.e("ball", " "+verticesData.length);
 
-        Log.e("ball", " "+this.verticesData.length);
+        Utils.insertRectangleVerticesData(verticesData, 0, 0f-radium, radium, 0f - radium, radium, 0f);
+        verticesBuffer = Utils.generateFloatBuffer(verticesData);
 
-        Utils.insertRectangleVerticesData(this.verticesData, 0, 0f-radium, radium, 0f - radium, radium, 0f);
-        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
+        Utils.insertRectangleIndicesData(indicesData, 0, 0);
+        indicesBuffer = Utils.generateShortBuffer(indicesData);
 
-        Utils.insertRectangleIndicesData(this.indicesData, 0, 0);
-        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
-
-        insertRectangleUvDataButtonsAndBalls(this.uvsData, 0, textureUnit);
-        uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureUnit);
+        uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
+    
+    public void setTextureUnitAndUvData(int textureUnit){
+        this.textureUnit = textureUnit;
+        insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureUnit);
+        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+    }
+    
+    
     
     public void onCollision(){
         // EXTRAI OS DADOS NECESSÁRIOS
