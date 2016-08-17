@@ -214,8 +214,35 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     {
 
 
-        texturenames = new int[8];
-        GLES20.glGenTextures(8, texturenames, 0);
+        texturenames = new int[2];
+        GLES20.glGenTextures(2, texturenames, 0);
+        
+        Utils.setBitmap("drawable/balls", Game.bmpBalls, mContext); // balls
+        Utils.setBitmap("drawable/jetset", Game.bmpFont, mContext); // fonte
+        Utils.setBitmap("drawable/targets", Game.bmpTargets, mContext); // targets
+        Utils.setBitmap("drawable/bars", Game.bmpBars, mContext); // bars
+        Utils.setBitmap("drawable/buttons", Game.bmpButtons, mContext); // botões
+        Utils.setBitmap("drawable/background", Game.bmpBackground, mContext); // background
+        Utils.setBitmap("drawable/numbers", Game.bmpNumbers, mContext); // numeros
+        Utils.setBitmap("drawable/tittle", Game.bmpTittle, mContext); // titulo e caixa de testo
+        Utils.setBitmap("drawable/arrows", Game.bmpArrows, mContext); // flechas
+        
+        // texture 1024
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, arrayOfNames[0]);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+	GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+	GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpTittle, 0);
+
+	// texture 512
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE01);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, arrayOfNames[1]);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+	GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+	GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpFont, 0);
+
+        
+        /*
         Utils.setTexture("drawable/balls", texturenames, Game.TEXTURE_BALLS, mContext); // balls
         Utils.setTexture("drawable/jetset", texturenames, Game.TEXTURE_FONT, mContext); // fonte
         Utils.setTexture("drawable/targets", texturenames, Game.TEXTURE_TARGETS, mContext); // targets
@@ -225,6 +252,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Utils.setTexture("drawable/numbers", texturenames, Game.TEXTURE_NUMBERS, mContext); // numeros
         Utils.setTexture("drawable/tittle", texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
         //Utils.setTexture("drawable/arrows", texturenames, Game.TEXTURE_ARROWS, mContext); // flechas
+        */
 
 
     }
