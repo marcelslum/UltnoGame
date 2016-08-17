@@ -117,35 +117,13 @@ public class Game {
     public final static int GAME_STATE_PAUSE =  16;
 
 
-    public final static int TEXTURE_BALLS = 0;
+    public final static int TEXTURE_BUTTONS_AND_BALLS = 0;
     public final static int TEXTURE_FONT = 1;
     public final static int TEXTURE_TARGETS = 2;
     public final static int TEXTURE_BARS = 3;
-    public final static int TEXTURE_BUTTONS = 4;
-    public final static int TEXTURE_BACKGROUND = 5;
-    public final static int TEXTURE_NUMBERS = 6;
-    public final static int TEXTURE_TITTLE = 7;
-    public final static int TEXTURE_ARROWS = 8;
-    
-    public static int TEXTURE_BALLS = 0;
-    public static int TEXTURE_FONT = 1;
-    public static int TEXTURE_TARGETS = 2;
-    public static int TEXTURE_BARS = 3;
-    public static int TEXTURE_BUTTONS = 4;
-    public static int TEXTURE_BACKGROUND = 5;
-    public static int TEXTURE_NUMBERS = 6;
-    public static int TEXTURE_TITTLE = 7;
-    public static int TEXTURE_ARROWS = 8;
-    
-    Bitmap bmpBalls;
-    Bitmap bmpFont;
-    Bitmap bmpTargets;
-    Bitmap bmpBars;
-    Bitmap bmpButtons;
-    Bitmap bmpBackground;
-    Bitmap bmpNumbers;
-    Bitmap bmpTittle;
-    Bitmap bmpArrows;
+    public final static int TEXTURE_BACKGROUND = 4;
+    public final static int TEXTURE_NUMBERS = 5;
+    public final static int TEXTURE_TITTLE = 6;
     
     // bars and balls data
     public float [] barsInitialPositionX = new float[10];
