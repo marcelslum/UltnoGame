@@ -35,6 +35,12 @@ public class Image extends Entity{
         this.program = game.imageColorizedProgram;
         setDrawInfo();
     }
+    
+    public void setColor(Color color){
+        this.color = color;
+        Utils.insertRectangleColorsData(colorsData, 0, color);
+        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+    }
 
     public void setDrawInfo(){
         if (this.color == null) {
