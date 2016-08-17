@@ -159,6 +159,71 @@ public class Utils {
             array[7 + (startIndex)] = 1-y2;
     }
     
+    
+    public static void insertRectangleUvDataButtonsAndBalls(float[] array, int startIndex){
+        
+        if (textureMap < 9){
+            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[0] + 2f)/1024f;
+            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[1] - 2f)/1024f;
+        } else if (textureMap < 17){
+            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[1] + 2f)/1024f;
+            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[2] - 2f)/1024f;
+        } else if (textureMap < 21){
+            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[2] + 2f)/1024f;
+            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[4] - 2f)/1024f;
+        } else if (textureMap < 25){
+            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[4] + 2f)/1024f;
+            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[6] - 2f)/1024f;
+        } else {
+            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[6] + 2f)/1024f;
+            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[8] - 2f)/1024f;
+        } 
+        
+        if (textureMap < 17){
+            if (textureMap == 1 || textureMap == 9){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[0] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[1] - 2f)/1024f;
+            } else if (textureMap == 2 || textureMap == 10){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[1] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[2] - 2f)/1024f;
+            } else if (textureMap == 3 || textureMap == 11){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[2] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[3] - 2f)/1024f;
+            } else if (textureMap == 4 || textureMap == 12){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[3] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[4] - 2f)/1024f;
+            } else if (textureMap == 5 || textureMap == 13){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[4] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[5] - 2f)/1024f;
+            } else if (textureMap == 6 || textureMap == 14){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[5] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[6] - 2f)/1024f;
+            } else if (textureMap == 7 || textureMap == 15){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[6] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[7] - 2f)/1024f;
+            } else if (textureMap == 8 || textureMap == 16){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[7] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[8] - 2f)/1024f;
+            }
+        } else {
+             if (textureMap == 17 || textureMap == 21 || textureMap == 25){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[0] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[2] - 2f)/1024f;
+            } else if (textureMap == 18 || textureMap == 22 || textureMap == 26){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[2] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[4] - 2f)/1024f;
+            } else if (textureMap == 19 || textureMap == 23 || textureMap == 27){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[4] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[6] - 2f)/1024f;
+            } else if (textureMap == 20 || textureMap == 24 || textureMap == 28){
+                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[6] + 2f)/1024f;
+                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[8] - 2f)/1024f;
+            }
+        }
+        insertRectangleUvData(array, startIndex);
+    }
+    
+    
     public static void insertRectangleUvData(float[] array, int startIndex, float x1, float x2, float y1, float y2){
             array[0 + (startIndex)] = x1;
             array[1 + (startIndex)] = 1f-y1;
