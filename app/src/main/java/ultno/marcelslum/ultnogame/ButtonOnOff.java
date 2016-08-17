@@ -8,8 +8,8 @@ public class ButtonOnOff extends Button{
 
     public boolean on;
 
-    ButtonOnOff(String name, Game game, float x, float y, float width, float height){
-        super(name, game, x, y, width, height);
+    ButtonOnOff(String name, Game game, float x, float y, float width, float height, int textureUnit){
+        super(name, game, x, y, width, height, textureUnit);
         this.on = false;
     }
 

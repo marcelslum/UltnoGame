@@ -204,14 +204,14 @@ public class Text extends Entity{
                         this.color.r, this.color.g, this.color.b, this.color.a
                     };
             // 0.001f = texture bleeding hack/fix
-            uv[0] = x+0.001f;
-            uv[1] = y2+0.001f;
-            uv[2] = x+0.001f;
-            uv[3] = y-0.001f;
-            uv[4] = x2-0.001f;
-            uv[5] = y-0.001f;
-            uv[6] = x2-0.001f;
-            uv[7] = y2+0.001f;
+            uv[0] = x+0.002f;
+            uv[1] = y2-0.002f;
+            uv[2] = x+0.002f;
+            uv[3] = y+0.002f;
+            uv[4] = x2-0.002f;
+            uv[5] = y+0.002f;
+            uv[6] = x2-0.002f;
+            uv[7] = y2-0.002f;
 
             short[] inds = {0, 1, 2, 0, 2, 3};
 

@@ -210,35 +210,35 @@ public class Level {
 
         // BOTÃO 1 ESQUERDA
         float x = this.game.resolutionX * 0.01f;
-        this.game.button1Left = new Button("button1Left", this.game, x, y, buttonSize, buttonSize);
+        this.game.button1Left = new Button("button1Left", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS);
         this.game.button1Left.setTextureMap(9);
         this.game.button1Left.textureMapUnpressed = 9;
-        this.game.button1Left.textureMapPressed = 10;
+        this.game.button1Left.textureMapPressed = 14;
         this.game.button1Left.alpha = 0.7f;
 
         // BOTÃO 1 DIREITA
         x = this.game.resolutionX * 0.14f;
-        this.game.button1Right = new Button("button1Right", this.game, x, y, buttonSize, buttonSize);
-        this.game.button1Right.setTextureMap(7);
-        this.game.button1Right.textureMapUnpressed = 7;
-        this.game.button1Right.textureMapPressed = 11;
+        this.game.button1Right = new Button("button1Right", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS);
+        this.game.button1Right.setTextureMap(10);
+        this.game.button1Right.textureMapUnpressed = 10;
+        this.game.button1Right.textureMapPressed = 13;
         this.game.button1Right.alpha = 0.7f;
 
         Log.e("Level loadEnt", "1");
         if (this.barsQuantity > 1) {
             // BOTÃO 2 ESQUERDA
             x = this.game.resolutionX * 0.66f;
-            this.game.button2Left = new Button("button2Left", this.game, x, y, buttonSize, buttonSize);
+            this.game.button2Left = new Button("button2Left", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS);
             this.game.button2Left.setTextureMap(9);
             this.game.button2Left.textureMapUnpressed = 9;
-            this.game.button2Left.textureMapPressed = 10;
+            this.game.button2Left.textureMapPressed = 14;
 
             // BOTÃO 2 DIREITA
             x = this.game.resolutionX * 0.83f;
-            this.game.button2Right = new Button("buttonRight", this.game, x, y, buttonSize, buttonSize);
-            this.game.button2Right.setTextureMap(7);
-            this.game.button2Right.textureMapUnpressed = 7;
-            this.game.button2Right.textureMapPressed = 11;
+            this.game.button2Right = new Button("buttonRight", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS);
+            this.game.button2Right.setTextureMap(10);
+            this.game.button2Right.textureMapUnpressed = 10;
+            this.game.button2Right.textureMapPressed = 13;
         }
 
         /*
@@ -331,9 +331,10 @@ public class Level {
         gameAreaInteractionListener.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
-                if (innerGame.gameState == GAME_STATE_JOGAR){
+                if (innerGame.gameState == Game.GAME_STATE_JOGAR){
+                    Log.e("level", "listener pause ativado");
                     innerGame.blockAndWaitTouchRelease();
-                    innerGame.setGameState(game.GAME_STATE_PAUSE);
+                    innerGame.setGameState(Game.GAME_STATE_PAUSE);
                 }
             }
 

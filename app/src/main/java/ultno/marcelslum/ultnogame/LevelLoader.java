@@ -102,7 +102,7 @@ public class LevelLoader {
                 
             case 2:
                 game.levelObject = new Level(2, game, 
-                1, 1,                                               // quantidade de bolas e minimo de bolas vivas
+                1, 1,                                               // quantidade de balls e minimo de balls vivas
                 new float[]{0.010f},                                // raio da bola
                 new float[]{0.3f}, new float[]{0.72f},              // posicao inicial
                 new float[]{0.003f*2},new float[]{0.00529412f*2},   // velocidade
@@ -111,15 +111,15 @@ public class LevelLoader {
                 new float[]{5f},new float[]{65f}, new float[]{25f},// angulos de rotacao
                 new float[]{0.25f},                                 // variação de velocidade na rotação
                 new float[]{2.2f}, new float[]{0.7f},               // velocidade máxima e mínima
-                new ArrayList<ArrayList<Target>>(),                 // alvos apensados
+                new ArrayList<ArrayList<Target>>(),                 // targets apensados
                 new boolean[]{true},                                // bola livre
-                1,                                                  // quantidade de barras
+                1,                                                  // quantidade de bars
                 new float[]{0.26f}, new float[]{0.0175f},           // tamanho da barra
                 new float[]{0.35f}, new float[]{0.014f},            // posicao da barra
                 new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                11, 2,                                              // quantidade de alvos
-                0.0895f, 0.04f,                                     // tamanho dos alvos
-                0.001f, 0.00225f                                     //distancia e padding dos alvos
+                11, 2,                                              // quantidade de targets
+                0.0895f, 0.04f,                                     // tamanho dos targets
+                0.001f, 0.00225f                                     //distancia e padding dos targets
                 );
 
                 game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {

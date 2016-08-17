@@ -18,12 +18,30 @@ public class Image extends Entity{
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
-        this.program = game.imageAlphaProgram;
+        this.program = game.imageProgram;
+        setDrawInfo();
+    }
+
+    Image(String name, Game game, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2, Color color){
+        super(name, game, x, y);
+        this.width = width;
+        this.height = height;
+        this.textureUnit = textureUnit;
+        this.x1 = x1;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+        this.color = color;
+        this.program = game.imageColorizedProgram;
         setDrawInfo();
     }
 
     public void setDrawInfo(){
-        initializeData(12, 6, 8, 0);
+        if (this.color == null) {
+            initializeData(12, 6, 8, 0);
+        } else {
+            initializeData(12, 6, 8, 16);
+        }
 
         Utils.insertRectangleVerticesData(verticesData, 0,  0f, width, 0f, height, 0f);
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
@@ -33,5 +51,10 @@ public class Image extends Entity{
 
         Utils.insertRectangleUvData(uvsData, 0, x1, x2, y1, y2);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
+
+        if (color != null){
+            Utils.insertRectangleColorsData(colorsData, 0, color);
+            colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        }
     }
 }

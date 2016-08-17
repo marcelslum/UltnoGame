@@ -16,8 +16,6 @@ public class Selector extends Entity{
     int selectedValue;
     float size;
     String text;
-    public Audio audioSmall;
-    public Audio audioLarge;
     public Text [] textsObjects;
     public Text mainTextObject;
     Font font;
@@ -65,10 +63,10 @@ public class Selector extends Entity{
         float buttonSize = size*0.75f;
         final Selector innerSelector = this;
 
-        arrowUp = new Button("arrowUp", this.game, mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize);
+        arrowUp = new Button("arrowUp", this.game, mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Game.TEXTURE_ARROWS);
         arrowUp.setTextureMap(16);
         arrowUp.textureMapUnpressed = 16;
-        arrowUp.textureMapPressed = 16;
+        arrowUp.textureMapPressed = 12;
 
         InteractionListener newListener = new InteractionListener(name+"ArrowUp",
                 mainTextWidth + x - (buttonSize/2),
@@ -91,10 +89,10 @@ public class Selector extends Entity{
         });
         this.game.addInteracionListener(newListener);
 
-        arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize);
+        arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_ARROWS);
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
-        arrowDown.textureMapPressed = 15;
+        arrowDown.textureMapPressed = 11;
 
         InteractionListener newListener2 = new InteractionListener(name+"ArrowDown",
                 mainTextWidth + x - (buttonSize/2),
@@ -124,10 +122,10 @@ public class Selector extends Entity{
             arrowBackX = x - (buttonSize * 1.5f);
         }
 
-        arrowBack = new Button("arrowBack", this.game, arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize);
+        arrowBack = new Button("arrowBack", this.game, arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Game.TEXTURE_ARROWS);
         arrowBack.setTextureMap(13);
         arrowBack.textureMapUnpressed = 13;
-        arrowBack.textureMapPressed = 13;
+        arrowBack.textureMapPressed = 9;
 
         InteractionListener newListener3 = new InteractionListener(name+"ArrowBack",
                 arrowBackX,
@@ -175,7 +173,7 @@ public class Selector extends Entity{
 
     public void levelDown() {
         if (this.selectedValue != 0){
-            //this.audioSmall.play();
+            game.soundPool.play(game.soundMenuSelectSmall, 1, 1, 0, 0, 1);
             this.selectedValue -=1;
 
             this.verifyOnChangeComplete();
@@ -184,6 +182,7 @@ public class Selector extends Entity{
 
     public void levelUp(){
         if (this.selectedValue < (this.values.length-1)){
+            game.soundPool.play(game.soundMenuSelectSmall, 1, 1, 0, 0, 1);
             //this.audioSmall.play();
             this.selectedValue +=1;
             this.verifyOnChangeComplete();
@@ -195,16 +194,6 @@ public class Selector extends Entity{
             onChange.onChange();
         }
     }
-
-    public void setAudioSmall(Audio audioSmall) {
-        this.audioSmall = audioSmall;
-    }
-
-    public void setAudioLarge(Audio audioLarge) {
-        this.audioLarge = audioLarge;
-    }
-
-
 
     @Override
     public void render(float[] matrixView, float[] matrixProjection){
@@ -258,6 +247,7 @@ public class Selector extends Entity{
     }
 
     public void backToMenu(){
+        game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
         isBlocked = true;
 
         ArrayList<float[]> valuesAnimation = new ArrayList<>();

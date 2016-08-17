@@ -12,8 +12,6 @@ import java.util.ArrayList;
 class Menu extends Entity{
     public ArrayList<MenuOption> menuOptions;
     public float size;
-    public Audio audioSmall;
-    public Audio audioLarge;
     public int selectedOption;
     public int optionsIds = 0;
     public final float bottomPad = 0.1f;
@@ -56,6 +54,7 @@ class Menu extends Entity{
     }
 
     public void toSelector(Selector selector, String selectedValue){
+        game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
         this.block();
         this.display();
         selector.menuRelated = this;
@@ -101,7 +100,7 @@ class Menu extends Entity{
                                                }
                                            });
         animationMenu.start();
-        this.audioLarge.play();
+        game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
     }
 
     public MenuOption getMenuOptionByName(String name){
@@ -136,7 +135,7 @@ class Menu extends Entity{
                 //Log.e("Menu", "interaction menu");
                 if (!innerMenu.isBlocked){
                     innerMenu.game.blockAndWaitTouchRelease();
-                    //TODO innerMenu.audioLarge.play();
+                    game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
                     innerMenu.getMenuOptionByName(innerName).fireOnChoice();
 
                     for (int i = 0; i < innerMenu.menuOptions.size(); i++){
@@ -166,15 +165,6 @@ class Menu extends Entity{
             this.menuOptions.get(i).textObject.render(matrixView, matrixProjection);
         }
     }
-
-    public void setAudioLarge(Audio audio) {
-        this.audioLarge = audio;
-    }
-
-    public void setAudioSmall(Audio audio) {
-        this.audioSmall = audio;
-    }
-
 
 }
 

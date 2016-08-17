@@ -212,16 +212,20 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     public void SetupTextures()
     {
-        texturenames = new int[9];
-        GLES20.glGenTextures(9, texturenames, 0);
-        Utils.setTexture("drawable/bolas", texturenames, 0, mContext); // bolas
-        Utils.setTexture("drawable/jetset", texturenames, 1, mContext); // fonte
-        Utils.setTexture("drawable/alvos", texturenames, 2, mContext); // alvos
-        Utils.setTexture("drawable/barras", texturenames, 3, mContext); // barras
-        Utils.setTexture("drawable/botoes5", texturenames, 4, mContext); // botões
-        Utils.setTexture("drawable/background3", texturenames, 5, mContext); // background
-        Utils.setTexture("drawable/numeros3", texturenames, 6, mContext); // numeros
-        Utils.setTexture("drawable/textos", texturenames, 7, mContext); // titulo e caixa de testo
-        Utils.setTexture("drawable/botoes2", texturenames, 8, mContext); // flechas
+
+
+        texturenames = new int[8];
+        GLES20.glGenTextures(8, texturenames, 0);
+        Utils.setTexture("drawable/balls", texturenames, Game.TEXTURE_BALLS, mContext); // balls
+        Utils.setTexture("drawable/jetset", texturenames, Game.TEXTURE_FONT, mContext); // fonte
+        Utils.setTexture("drawable/targets", texturenames, Game.TEXTURE_TARGETS, mContext); // targets
+        Utils.setTexture("drawable/bars", texturenames, Game.TEXTURE_BARS, mContext); // bars
+        Utils.setTexture("drawable/buttons", texturenames, Game.TEXTURE_BUTTONS, mContext); // botões
+        Utils.setTexture("drawable/background", texturenames, Game.TEXTURE_BACKGROUND, mContext); // background
+        Utils.setTexture("drawable/numbers", texturenames, Game.TEXTURE_NUMBERS, mContext); // numeros
+        Utils.setTexture("drawable/tittle", texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
+        //Utils.setTexture("drawable/arrows", texturenames, Game.TEXTURE_ARROWS, mContext); // flechas
+
+
     }
 }

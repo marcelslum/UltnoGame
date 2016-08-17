@@ -2,6 +2,7 @@ package ultno.marcelslum.ultnogame;
 
 import android.content.Context;
 import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
 
@@ -54,9 +55,9 @@ public class Game {
     public Text messagePreparation;
     public Text messageInGame;
     public Text messageCurrentLevel;
-    public Text currentLevel;
+    //public Text currentLevel;
     public Text messageMaxScoreLevel;
-    public Text maxScoreLevel;
+    //public Text maxScoreLevel;
     public Text messageMaxScoreTotal;
 
 
@@ -83,6 +84,7 @@ public class Game {
     int soundMenuSelectBig;
     int soundMenuSelectSmall;
     int soundWin;
+    MediaPlayer music;
 
     // scree properties
     public float gameAreaResolutionX;
@@ -114,6 +116,17 @@ public class Game {
     public final static int GAME_STATE_REINICIAR =  16;
     public final static int GAME_STATE_PAUSE =  16;
 
+
+    public final static int TEXTURE_BALLS = 0;
+    public final static int TEXTURE_FONT = 1;
+    public final static int TEXTURE_TARGETS = 2;
+    public final static int TEXTURE_BARS = 3;
+    public final static int TEXTURE_BUTTONS = 4;
+    public final static int TEXTURE_BACKGROUND = 5;
+    public final static int TEXTURE_NUMBERS = 6;
+    public final static int TEXTURE_TITTLE = 7;
+    public final static int TEXTURE_ARROWS = 8;
+
     // bars and balls data
     public float [] barsInitialPositionX = new float[10];
     public float [] barsInitialPositionY = new float[10];
@@ -133,7 +146,7 @@ public class Game {
 
     // programs
     public Program imageProgram;
-    public Program imageAlphaProgram;
+    public Program imageColorizedProgram;
     public Program textProgram;
     public Program solidProgram;
 
@@ -220,15 +233,20 @@ public class Game {
         clearAllMenuEntities();
         final Game innerGame = this;
         if (state == GAME_STATE_MENU){
+            stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();
             menuMain.isBlocked = false;
-            menuMain.isVisible = true;
-            tittle.isVisible = true;
+            menuMain.display();
+            tittle.display();
+            messageCurrentLevel.display();
+            //currentLevel.display();
+            messageMaxScoreLevel.display();
+            //maxScoreLevel.display();
+            messageMaxScoreTotal.display();
         } else if (state == GAME_STATE_PREPARAR){
-
+            music = MediaPlayer.create(context, R.raw.music);
             // cria a animação de preparação;
-
             ArrayList<float[]> values = new ArrayList<>();
                 values.add(new float[]{0f,3f});
                 values.add(new float[]{0.25f,2f});
@@ -237,13 +255,16 @@ public class Game {
             final Text innerMessagePreparation = messagePreparation;
             messagePreparation.setText("3");
             messagePreparation.display();
+            soundPool.play(soundCounter, 1, 1, 0, 0, 1);
             Animation anim = new Animation(messagePreparation, "messagePreparation", "numberForAnimation", 4000, values, false, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
                     if (innerMessagePreparation.numberForAnimation == 2f){
+                        soundPool.play(soundCounter, 1, 1, 0, 0, 1);
                         innerMessagePreparation.setText("2");
                     } else if (innerMessagePreparation.numberForAnimation == 1f) {
+                        soundPool.play(soundCounter, 1, 1, 0, 0, 1);
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
                         innerMessagePreparation.setText("GO!");
@@ -262,27 +283,44 @@ public class Game {
             anim.start();
 
         } else if (state == GAME_STATE_JOGAR){
+
+            music.start();
+
             freeAllGameEntities();
             //soundPool.play(soundMusic, 1, 1, 0, 0, 1);
         } else if (state == GAME_STATE_DERROTA){
-            //soundPool.stop(soundMusic);
+            stopAndReleaseMusic();
             soundPool.play(soundGameOver, 1, 1, 0, 0, 1);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
             messageGameOver.display();
         } else if (state == GAME_STATE_PAUSE){
+            music.pause();
+            Log.e("game", "ativando game_state_pause");
             //soundPool.stop(soundMusic);
             soundPool.play(soundMenuSelectBig, 1, 1, 0, 0, 1);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
-            messageGameOver.display();
+            messageInGame.setText(context.getResources().getString(R.string.pause));
+            messageInGame.increaseAlpha(100, 1f);
+            messageInGame.display();
         } else if (state == GAME_STATE_VITORIA){
-            soundPool.play(soundVitoria, 1, 1, 0, 0, 1);
+            stopAndReleaseMusic();
+            soundPool.play(soundWin, 1, 1, 0, 0, 1);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
         }
+    }
+
+    public void stopAndReleaseMusic(){
+        if (music != null) {
+            music.stop();
+            music.release();
+            music = null;
+        }
+
     }
 
     private void freeAllGameEntities() {
@@ -354,7 +392,7 @@ public class Game {
         tittle = new Image("tittle", this,
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
-                7, 0f, 1f, 0.6328125f, 1f);
+                TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
 
         messageGameOver = new Text("messageGameOver", 
             this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.2f,
@@ -365,30 +403,34 @@ public class Game {
                 " ", font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
         messageInGame = new Text("messageInGame",
-            this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.4f, gameAreaResolutionY*0.11f,
-                context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f));
+            this, gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.2f,
+                context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
             
         float size = resolutionY * 0.07f;
         
         messageCurrentLevel = new Text("messageCurrentLevel", 
-            this, resolutionX*0.83f, resolutionY*0.90f, size*0.4f,
-                context.getResources().getString(R.string.messageCurrentLevel), font, new Color(0f, 0f, 0f, 1f));
-            
-        currentLevel = new Text("currentLevel", 
-            this, resolutionX*0.85f, resolutionY*0.9f, size*0.4f,
-            Integer.toString(levelNumber), font, new Color(0f, 0f, 0f, 1f));
-        
+            this, resolutionX*0.05f, resolutionY*0.78f, resolutionY*0.05f,
+                context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
+
         messageMaxScoreLevel = new Text("messageMaxScoreLevel", 
-            this, resolutionX*0.83f, resolutionY*0.95f, size*0.4f,
-                context.getResources().getString(R.string.messageMaxScoreLevel), font, new Color(0f, 0f, 0f, 1f));
-            
-        maxScoreLevel = new Text("maxScoreLevel", 
-            this, resolutionX*0.85f, resolutionY*0.9f, size*0.4f,
-            Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f, 1f));
-        
-        messageMaxScoreTotal = new Text("messageMaxScoreTotal", 
-            this, resolutionX*0.06f, resolutionY*0.90f, size*0.4f,
-                context.getResources().getString(R.string.messageMaxScoreTotal + getMaxScoreTotal()), font, new Color(0f, 0f, 0f, 1f));
+            this, resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.05f,
+                context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f,0.5f), Text.TEXT_ALIGN_LEFT);
+
+        messageMaxScoreTotal = new Text("messageMaxScoreTotal",
+                this, resolutionX*0.05f, resolutionY*0.9f, resolutionY*0.05f,
+                context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
+
+
+        /*
+        currentLevel = new Text("currentLevel",
+                this, resolutionX*0.85f, resolutionY*0.9f, resolutionY*0.5f,
+                , font, new Color(0f, 0f, 0f, 1f));
+
+        maxScoreLevel = new Text("maxScoreLevel",
+            this, resolutionX*0.85f, resolutionY*0.9f, resolutionY*0.5f,
+            ), font, new Color(0f, 0f, 0f, 1f));
+
+        */
         
         //TextBox tb = new TextBox("textBox", this, 50f, 50f, 600f, 40f, "Atinja o alvo com a bola para destruir o alvo que desaparecerá após ser atingido!!!");
         //textBoxes.add(tb);
@@ -407,9 +449,9 @@ public class Game {
         list.add(messagePreparation);
         list.add(messageInGame);
         list.add(messageCurrentLevel);
-        list.add(currentLevel);
+        //list.add(currentLevel);
         list.add(messageMaxScoreLevel);
-        list.add(maxScoreLevel);
+        //list.add(maxScoreLevel);
         list.add(messageMaxScoreTotal);
         return list;
     }
@@ -475,11 +517,6 @@ public class Game {
             scoreTotal += Storage.getLevelMaxScore(i+1);
         }
         return scoreTotal;
-    }
-
-    public void increaseAlphaAndFreeGameEntities(){
-        // // TODO: 15/08/2016
-
     }
 
 
@@ -594,14 +631,18 @@ public class Game {
                 } else if (innerGame.gameState == GAME_STATE_VITORIA){
                     innerGame.menuMain.getMenuOptionByName("IniciarJogo").fireOnChoice();
                 } else if (innerGame.gameState == GAME_STATE_PAUSE){
-                    innerGame.increaseAlphaAndFreeGameEntities();
+                    Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
+                    innerGame.increaseAllGameEntitiesAlpha(500);
+                    innerGame.messageInGame.reduceAlpha(500,0f);
                     innerGame.menuInGame.reduceAlpha(500,0f, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
-                            innerGame.setGameState(GAME_STATE_REINICIAR);
+                            Log.e("game", "ativando callback GAME_STATE_JOGAR");
+                            innerGame.setGameState(GAME_STATE_JOGAR);
+
                         }
                     });
-                    innerGame.messageInGame.reduceAlpha(500,0f);
+
                 }
             }
         });
@@ -654,8 +695,6 @@ public class Game {
                 
             }
         });
-        
-        
     }
 
     private void changeLevel(int level) {
@@ -666,7 +705,7 @@ public class Game {
 
     public void initPrograms(){
         imageProgram = new Program(GraphicTools.vs_Image, GraphicTools.fs_Image);
-        imageAlphaProgram = new Program(GraphicTools.vs_Image, GraphicTools.fs_Image_Alpha);
+        imageColorizedProgram = new Program(GraphicTools.vs_Image_Colorized, GraphicTools.fs_Image_Colorized);
         textProgram = new Program(GraphicTools.vs_Text, GraphicTools.fs_Text);
         solidProgram = new Program(GraphicTools.vs_SolidColor, GraphicTools.fs_SolidColor);
     }
@@ -676,6 +715,7 @@ public class Game {
     }
 
     public void initSounds(){
+
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -851,9 +891,9 @@ public class Game {
         messagePreparation.prepareRender(matrixView, matrixProjection);
         messageInGame.prepareRender(matrixView, matrixProjection);
         messageCurrentLevel.prepareRender(matrixView, matrixProjection);
-        currentLevel.prepareRender(matrixView, matrixProjection);
+        //currentLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreLevel.prepareRender(matrixView, matrixProjection);
-        maxScoreLevel.prepareRender(matrixView, matrixProjection);
+        //maxScoreLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
     }
 
@@ -1135,6 +1175,7 @@ public class Game {
         if (isBlocked) {
             if (touchEvents.size() == 0){
                 isBlocked = false;
+                Log.e("game", "desbloqueia game");
             }
         }
     }

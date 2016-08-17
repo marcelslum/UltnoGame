@@ -5,10 +5,10 @@
     <string name="menuPrincipalIniciar">Iniciar</string>
     <string name="menuPrincipalAlterarNivel">Alterar nível</string>
     <string name="menuPrincipalAlterarVolume">Alterar volume</string>
-    <string name="messageMaxScoreLevel">Maior pontução desde nível: </string>
+    <string name="messageMaxScoreLevel">Maior pontução desde nível:</string>
     <string name="nivel">Nível: </string>
     <string name="messageMaxScoreTotal">Pontuação total: </string>
-    <string name="messageCurrentLevel">Nível </string>
+    <string name="messageCurrentLevel">Nível:</string>
     <string name="messageGameOver">GAME OVER</string>
     <string name="score">score</string>
     <string name="pause">PAUSE</string>
