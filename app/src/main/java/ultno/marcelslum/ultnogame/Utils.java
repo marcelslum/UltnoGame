@@ -160,7 +160,7 @@ public class Utils {
     }
     
     
-    public static void insertRectangleUvDataButtonsAndBalls(float[] array, int startIndex){
+    public static void insertRectangleUvDataButtonsAndBalls(float[] array, int startIndex, int textureMap){
         
         if (textureMap < 9){
             Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[0] + 2f)/1024f;
