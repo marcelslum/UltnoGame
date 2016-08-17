@@ -170,6 +170,10 @@ public class Utils {
             array[7 + (startIndex)] = 1-y2;
     }
     
+    public static void setBitmap(String identifier, Bitmap destination, mContext){
+        int id = context.getResources().getIdentifier(identifier, null, context.getPackageName());
+        destination = BitmapFactory.decodeResource(context.getResources(), id);
+    }
     
     public static void setTexture(String identifier, int [] arrayOfNames, int number, Context context){
         int id = context.getResources().getIdentifier(identifier, null, context.getPackageName());
