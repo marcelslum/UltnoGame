@@ -307,27 +307,83 @@ public class Ball extends Circle{
     }
     
     public void explode(){
+        // todo stop alarm
         
+        // todo play explosion sound
         
+        int quantityOfClones = 3;
+        float distance = radius * 3;
         
+        float initialDesiredVelocityLen = new Vector(initialDesireVelocityX, initialDesireVelocityY).len();
+        float desiredVelocityLen = new Vector(dvx, dvy).len();
         
+        float explodeLen = initialDesiredVelocityLen;
+        if (desiredVelocityLen < initialDesiredVelocityLen) explodeLen = desiredVelocityLen;
         
+        dvx = 0f;
+        dvy = 0f;
         
+        Vector rotateVelocity45 = new Vector(explodeLen, 0).rotate(45 *((float)Math.PI/180f));
         
+        float rotateX = rotateVelocity45.x;
+        float rotateY = rotateVelocity45.y;
         
+        accelerate(500, rotateX, rotateY*-1);
         
+        setTextureUnitAndUnData(COLOR_BALL_BLACK);
         
+        float explodeX = 0;
+        float explodeY = 0;
+        int explodeColor = COLOR_BALL_BLACK;
+        float explodeVelocityX = 0;
+        float explodeVelocityY = 0;
+        float explodeRadius = radius;
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        for (int i = 0; i < quantityOfClones; i++){
+            if (i == 0){
+                explodeX = x - distance;
+                explodeY = y;
+                explodeColor = COLOR_BALL_ORANGE;
+                explodeVelocityX = rotateX * -1;
+                explodeVelocity Y = rotateY * -1;
+            } else if (i == 1){
+                explodeX = x - distance;
+                explodeY = y + distance;
+                explodeColor = COLOR_BALL_BLUE;
+                explodeVelocityX = rotateX * -1;
+                explodeVelocity Y = rotateY;
+            } else if (i == 2){
+                explodeX = x;
+                explodeY = y + distance;
+                explodeColor = COLOR_BALL_YELLOW;
+                explodeVelocityX = rotateX;
+                explodeVelocityY = rotateY;
+            }
+            
+            Ball ball = new Ball("ball", this.game, explodeX, explodeY, explodeRadium, 8);
+            ball.program = this.game.imageProgram;
+            ball.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+            ball.textureMap = explodeColor;
+            ball.dx = explodeX;
+            ball.dy = explodeY;
+            ball.dvx = 0f;
+            ball.dvy = 0f;
+            
+            ball.accelerate(500, explodeVelocityX, explodeVelocityY);
+            ball.angleToRotate = angleToRotate;
+            ball.velocityVariation = velocityVariation;
+
+            ball.velocityMaxByInitialVelocity = velocityMaxByInitialVelocity;
+            ball.velocityMinByInitialVelocity = velocityMinByInitialVelocity;
+
+            ball.maxAngle = maxAngle;
+            ball.minAngle = minAngle;
+
+            ball.initialDesireVelocityX = initialDesireVelocityX;
+            ball.initialDesireVelocityY = initialDesireVelocityY;
+
+            this.game.addBall(ball);
+        }
     }
     
     
