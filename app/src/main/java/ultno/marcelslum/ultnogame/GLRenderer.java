@@ -214,8 +214,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     {
 
 
-        texturenames = new int[2];
-        GLES20.glGenTextures(2, texturenames, 0);
+        texturenames = new int[7];
+        GLES20.glGenTextures(7, texturenames, 0);
         
         /*
         Utils.setBitmap("drawable/balls", Game.bmpBalls, mContext); // balls
@@ -248,7 +248,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Utils.setTexture("drawable/targets", texturenames, Game.TEXTURE_TARGETS, mContext); // targets
         Utils.setTexture("drawable/bars", texturenames, Game.TEXTURE_BARS, mContext); // bars
         Utils.setTexture("drawable/background", texturenames, Game.TEXTURE_BACKGROUND, mContext); // background
-        Utils.setTexture("drawable/numbers", texturenames, Game.TEXTURE_NUMBERS, mContext); // numeros
+        Utils.setTexture("drawable/numeros", texturenames, Game.TEXTURE_NUMBERS, mContext); // numeros
         Utils.setTexture("drawable/tittle", texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
         
     }

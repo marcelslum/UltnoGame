@@ -74,14 +74,6 @@ public class Text extends Entity{
         //this.colorData2 = new float[]{0f, 0f, 0f, 0.8f,};
         //Log.e("this.color", " "+this.colorData2[1]);
         this.setDrawInfo();
-
-        float xOffset = 0f;
-        if (align == TEXT_ALIGN_RIGHT){
-            xOffset = -calculateWidth();
-        } else if (align == TEXT_ALIGN_CENTER){
-            xOffset = -(calculateWidth()/2);
-        }
-
     }
 
     public void setText(String text){
@@ -225,7 +217,11 @@ public class Text extends Entity{
             addCharRenderInformation(vec, colors, uv, inds);
 
             // Calculate the new position
+
             initialX += (size*(charData[2]/charData[3]))+(this.size*0.05);
+            if (c_val == 32){
+                initialX += size*0.15f;
+            }
         }
     }
 
@@ -249,6 +245,9 @@ public class Text extends Entity{
                 continue;
             }
             initialX += (size*(charData[2]/charData[3]))+(this.size*0.05);
+            if (c_val == 32){
+                initialX += size*0.15f;
+            }
         }
         return initialX;
     }
@@ -293,5 +292,12 @@ public class Text extends Entity{
     public void setX(float x) {
         this.x = x;
         setDrawInfo();
+    }
+
+    public void setColor(Color color) {
+
+        this.color = color;
+        this.setDrawInfo();
+
     }
 }

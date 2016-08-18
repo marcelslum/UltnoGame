@@ -178,7 +178,7 @@ public class Level {
 
         this.game.objectivePanel = new ObjectivePanel("objectivePanel", this.game,
                 this.game.gameAreaResolutionX * 0.5f, this.game.gameAreaResolutionY * 1.005f, this.game.resolutionY * 0.027f);
-        this.game.objectivePanel.alpha = 0.7f;
+        this.game.objectivePanel.alpha = 0.9f;
 
         this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.gameAreaResolutionY);
 
@@ -212,7 +212,7 @@ public class Level {
         float x = this.game.resolutionX * 0.01f;
         this.game.button1Left = new Button("button1Left", this.game, x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
         this.game.button1Left.setTextureMap(19);
-        this.game.button1Left.textureMapUnpressed = 18;
+        this.game.button1Left.textureMapUnpressed = 19;
         this.game.button1Left.textureMapPressed = 18;
         this.game.button1Left.alpha = 0.7f;
 
@@ -356,6 +356,11 @@ public class Level {
             float barVelocityX = this.game.gameAreaResolutionX * this.barsDesiredVelocityXByResolution[i];
             float barVelocityY = this.game.gameAreaResolutionY * this.barsDesiredVelocityYByResolution[i];
 
+            game.barsDesiredVelocityX[i] = barVelocityX;
+            game.barsDesiredVelocityY[i] = barVelocityY;
+            game.barsInitialPositionX[i] = barX;
+            game.barsInitialPositionY[i] = barY;
+
             Bar bar = new Bar("bar", this.game, barX, barY, barWidth, barHeight, 9);
             this.game.addBar(bar);
             this.game.barsInitialPositionX[i] = barX;
@@ -402,7 +407,12 @@ public class Level {
             float radium = this.game.gameAreaResolutionY * this.ballsRadiusByResolution[i];
 
             float ballVelocityX = this.game.gameAreaResolutionX * this.ballsDesiredVelocityXByResolution[i];
-            float ballVelocityY = this.game.gameAreaResolutionX * this.ballsDesiredVelocityYByResolution[i];
+            float ballVelocityY = this.game.gameAreaResolutionY * this.ballsDesiredVelocityYByResolution[i];
+
+            game.ballsDesiredVelocityX[i] = ballVelocityX;
+            game.ballsDesiredVelocityY[i] = ballVelocityY;
+            game.ballsInitialPositionX[i] = ballX;
+            game.ballsInitialPositionY[i] = ballY;
 
             if (this.ballsInvencible[i]){
                 ballsInvencible += 1;

@@ -89,7 +89,7 @@ public class Selector extends Entity{
         });
         this.game.addInteracionListener(newListener);
 
-        arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_ARROWS);
+        arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
         arrowDown.textureMapPressed = 7;
@@ -122,7 +122,7 @@ public class Selector extends Entity{
             arrowBackX = x - (buttonSize * 1.5f);
         }
 
-        arrowBack = new Button("arrowBack", this.game, arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Game.TEXTURE_ARROWS);
+        arrowBack = new Button("arrowBack", this.game, arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
         arrowBack.setTextureMap(13);
         arrowBack.textureMapUnpressed = 13;
         arrowBack.textureMapPressed = 5;

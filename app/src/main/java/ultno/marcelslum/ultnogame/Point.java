@@ -20,7 +20,7 @@ public class Point extends Entity {
         this.isCollidable = false;
         this.isVisible = true;
         this.alpha = 1;
-        this.textureUnit = 6;
+        this.textureUnit = Game.TEXTURE_NUMBERS;
         this.program = this.game.imageProgram;
     }
 

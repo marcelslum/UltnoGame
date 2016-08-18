@@ -28,7 +28,7 @@ public class Background extends Entity {
         isSolid = false;
         isCollidable = false;
         isVisible = true;
-        textureUnit = 5;
+        textureUnit = Game.TEXTURE_BACKGROUND;
         program = game.imageProgram;
         alpha = 1;
 

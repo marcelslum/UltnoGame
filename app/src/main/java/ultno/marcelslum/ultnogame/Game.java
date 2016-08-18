@@ -126,7 +126,7 @@ public class Game {
     public final static int TEXTURE_NUMBERS = 5;
     public final static int TEXTURE_TITTLE = 6;
     
-    public final static float textButtonsAndBallsColumnsAndLines = new float(){0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
+    public final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
 
     // bars and balls data
     public float [] barsInitialPositionX = new float[10];
@@ -395,24 +395,27 @@ public class Game {
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
                 TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
                 
-        ArrayList<float[]> values = new ArrayList<>();
-                values.add(new float[]{0f,1f});
-                values.add(new float[]{0.2f,2f});
-                values.add(new float[]{0.5f,3f});
-                values.add(new float[]{0.7f,4f});
+        ArrayList<float[]> valuesAnimationTittle = new ArrayList<>();
+        valuesAnimationTittle.add(new float[]{0f,1f});
+        valuesAnimationTittle.add(new float[]{0.15f,2f});
+        valuesAnimationTittle.add(new float[]{0.45f,3f});
+        valuesAnimationTittle.add(new float[]{0.6f,4f});
+        valuesAnimationTittle.add(new float[]{0.85f,5f});
             final Image innerImage = tittle;
-            Animation animTittle = new Animation(innerImage, "changeTittleColor", "numberForAnimation", 4000, values, true, false);
+            Animation animTittle = new Animation(innerImage, "numberForAnimation", "numberForAnimation", 5000, valuesAnimationTittle, true, false);
             animTittle.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
-                    if (innerMessagePreparation.numberForAnimation == 1f){
+                    if (innerImage.numberForAnimation == 1f){
                         innerImage.setColor(new Color(0f, 0f, 0f, 1f));
-                    } else if (innerMessagePreparation.numberForAnimation == 2f) {
+                    } else if (innerImage.numberForAnimation == 2f) {
                         innerImage.setColor(new Color(1f, 0f, 0f, 1f));
-                    } else if (innerMessagePreparation.numberForAnimation == 3f) {
-                        innerImage.setColor(new Color(0f, 1f, 0f, 1f));
-                    } else if (innerMessagePreparation.numberForAnimation == 4f) {
+                    } else if (innerImage.numberForAnimation == 3f) {
                         innerImage.setColor(new Color(0f, 0f, 1f, 1f));
+                    } else if (innerImage.numberForAnimation == 4f) {
+                        innerImage.setColor(new Color(0f, 1f, 0f, 1f));
+                    } else if (innerImage.numberForAnimation == 5f) {
+                        innerImage.setColor(new Color(1f, 1f, 0f, 1f));
                     }
                 }
             });
@@ -424,17 +427,19 @@ public class Game {
             context.getResources().getString(R.string.messageGameOver), font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
             final Text innerMessageGameOver = messageGameOver;
-            Animation animMessageGameOver = new Animation(innerImage, "changeMessageGameOverColor", "numberForAnimation", 4000, values, true, false);
+            ArrayList<float[]> valuesAnimationGameOver = new ArrayList<>();
+                valuesAnimationGameOver.add(new float[]{0f,1f});
+                valuesAnimationGameOver.add(new float[]{0.55f,2f});
+                valuesAnimationGameOver.add(new float[]{0.85f,3f});
+            Animation animMessageGameOver = new Animation(innerMessageGameOver, "numberForAnimation", "numberForAnimation", 4000, valuesAnimationGameOver, true, false);
             animMessageGameOver.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
-                    if (innerMessagePreparation.numberForAnimation == 1f){
+                    if (innerMessageGameOver.numberForAnimation == 1f){
                         innerMessageGameOver.setColor(new Color(0f, 0f, 0f, 1f));
-                    } else if (innerMessagePreparation.numberForAnimation == 2f) {
+                    } else if (innerMessageGameOver.numberForAnimation == 2f) {
                         innerMessageGameOver.setColor(new Color(1f, 0f, 0f, 1f));
-                    } else if (innerMessagePreparation.numberForAnimation == 3f) {
-                        innerMessageGameOver.setColor(new Color(0f, 1f, 0f, 1f));
-                    } else if (innerMessagePreparation.numberForAnimation == 4f) {
+                    } else if (innerMessageGameOver.numberForAnimation == 3f) {
                         innerMessageGameOver.setColor(new Color(0f, 0f, 1f, 1f));
                     }
                 }
@@ -790,11 +795,7 @@ public class Game {
         if (this.gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
                 Ball ball = balls.get(i);
-                // TODO this.balls[i].verifyAcceleration();
                 ball.clearCollisionData();
-                ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
-                ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
-                ball.translate(ball.vx, ball.vy, true);
                 quad.insert(ball);
             }
 
@@ -807,9 +808,6 @@ public class Game {
                     } else {
                         bars.get(0).vx = 0f;
                     }
-
-                    bars.get(0).translate(bars.get(0).vx, 0, true);
-
                     if (bars.size() == 2) {
                         if (button2Left.isPressed) {
                             bars.get(1).vx = -(bars.get(1).dvx * (float) elapsed) / frameDuration;
@@ -818,7 +816,6 @@ public class Game {
                         } else {
                             bars.get(1).vx = 0f;
                         }
-                        bars.get(0).translate(bars.get(0).vx, 0, true);
                     }
                 }
             }
@@ -852,6 +849,20 @@ public class Game {
                     balls.get(i).onCollision();
                 }
             }
+
+            for (int i = 0; i < balls.size(); i++) {
+                Ball ball = balls.get(i);
+                ball.verifyAcceleration();
+                ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
+                ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+                ball.translate(ball.vx, ball.vy, true);
+            }
+
+            for (Bar b : bars){
+                b.translate(b.vx, 0, true);
+            }
+
+
 
 
 

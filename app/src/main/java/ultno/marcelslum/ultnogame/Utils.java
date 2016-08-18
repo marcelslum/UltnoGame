@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -235,12 +236,14 @@ public class Utils {
             array[7 + (startIndex)] = 1-y2;
     }
     
-    public static void setBitmap(String identifier, Bitmap destination, mContext){
+    public static void setBitmap(String identifier, Bitmap destination, Context context){
         int id = context.getResources().getIdentifier(identifier, null, context.getPackageName());
         destination = BitmapFactory.decodeResource(context.getResources(), id);
     }
     
     public static void setTexture(String identifier, int [] arrayOfNames, int number, Context context){
+
+        Log.e("Utils", " setuping "+identifier);
         int id = context.getResources().getIdentifier(identifier, null, context.getPackageName());
         
         // Temporary create a bitmap

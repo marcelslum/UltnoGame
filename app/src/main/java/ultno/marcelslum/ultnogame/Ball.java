@@ -30,7 +30,8 @@ public class Ball extends Circle{
     public float initialDesireVelocityY;
     public float rotationAngle = 0;
     boolean isInvencible = false;
-    int textureUnit = COLOR_BALL_BLACK;
+
+    private int textureMap = COLOR_BALL_BLACK;
 
     Color color;
     boolean isAlive = true;
@@ -41,11 +42,13 @@ public class Ball extends Circle{
     boolean collisionTarget = false;
     int collisionBarNumber = -1;
     boolean verifyAppendsIsFreeBall = false;
+
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
 
     Ball(String name, Game game, float x, float y, float radium, int weight){
         super(name, game, x, y, radium, weight);
+        textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
         setDrawInfo();
     }
 
@@ -53,11 +56,11 @@ public class Ball extends Circle{
         
         
           ArrayList<float[]> valuesInvencible = new ArrayList<>();
-                values.add(new float[]{0f,1f});
-                values.add(new float[]{0.2f,2f});
-                values.add(new float[]{0.4f,3f});
-                values.add(new float[]{0.6f,4f});
-                values.add(new float[]{0.8f,5f});
+                valuesInvencible.add(new float[]{0f,1f});
+                valuesInvencible.add(new float[]{0.2f,2f});
+                valuesInvencible.add(new float[]{0.4f,3f});
+                valuesInvencible.add(new float[]{0.6f,4f});
+                valuesInvencible.add(new float[]{0.8f,5f});
             final Ball innerBall = this;
             Animation animBallInvencible = new Animation(innerBall, "ballInvencible", "numberForAnimation", 1200, valuesInvencible, true, false);
             animBallInvencible.setOnChangeNotFluid(new Animation.OnChange() {
@@ -93,13 +96,13 @@ public class Ball extends Circle{
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
         indicesBuffer = Utils.generateShortBuffer(indicesData);
 
-        insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureUnit);
+        Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
     
-    public void setTextureUnitAndUvData(int textureUnit){
-        this.textureUnit = textureUnit;
-        insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureUnit);
+    public void setTextureUnitAndUvData(int textureMap){
+        this.textureMap = textureMap;
+        Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
     
@@ -124,10 +127,13 @@ public class Ball extends Circle{
         this.collisionBar = false;
         this.collisionBarNumber = 0;
         this.collisionTarget = false;
+        Log.e("ball", "objetos colididos:");
         for (int i = 0; i < lastObjects.size(); i++){
+            Log.e("ball", " "+lastObjects.get(i).name);
             if (lastObjects.get(i).name == "bordaB"){
                 this.collisionBordaB = true;
             } else if (lastObjects.get(i).name == "bar"){
+                Log.e("ball", " vx "+lastObjects.get(i).dvx);
                 this.collisionBar = true;
                 this.collisionBarNumber = i;
             } else if (lastObjects.get(i).name == "target"){
@@ -200,20 +206,24 @@ public class Ball extends Circle{
 
             float angleToRotate = 0;
             boolean velocityAdd = true;
+            //Log.e("ball", "velocity add "+lastObjects.get(this.collisionBarNumber).vx);
             //console.log("this.velocityVariation", this.velocityVariation);
-            if (this.dvx < 0 && lastObjects.get(this.collisionBarNumber).dvx < 0){
+            if (this.dvx < 0 && lastObjects.get(this.collisionBarNumber).vx < 0){
                 velocityAdd = false;
                 angleToRotate = this.angleToRotate;
-            } else if (this.dvx < 0 && lastObjects.get(this.collisionBarNumber).dvx > 0){
+            } else if (this.dvx < 0 && lastObjects.get(this.collisionBarNumber).vx > 0){
                 velocityAdd = true;
                 angleToRotate = -this.angleToRotate;
-            } else if (this.dvx > 0 && lastObjects.get(this.collisionBarNumber).dvx > 0){
+            } else if (this.dvx > 0 && lastObjects.get(this.collisionBarNumber).vx > 0){
                 velocityAdd = false;
                 angleToRotate = -this.angleToRotate;
-            } else if (this.dvx > 0 && lastObjects.get(this.collisionBarNumber).dvx < 0){
+            } else if (this.dvx > 0 && lastObjects.get(this.collisionBarNumber).vx < 0){
                 velocityAdd = true;
                 angleToRotate = this.angleToRotate;
             }
+
+            //Log.e("ball", "velocity add "+velocityAdd);
+            //Log.e("ball", "angleToRotate "+angleToRotate);
 
             //console.log(velocityAdd);
 
@@ -252,6 +262,8 @@ public class Ball extends Circle{
 
                 angle = angle * 180f/(float)Math.PI;
 
+                //Log.e("ball", "angle "+angle);
+
                 if (angle < this.maxAngle && angle > this.minAngle){
                     final_vx =  possibleVelocityRotate.x;
                     final_vy =  possibleVelocityRotate.y;
@@ -284,16 +296,10 @@ public class Ball extends Circle{
     private void waitForExplosion() {
 
 
-
-
     }
 
     private void setDead() {
         this.isAlive = false;
-        ArrayList<float[]> valuesAnimation = new ArrayList<>();
-        valuesAnimation.add(new float[]{0,1});
-        valuesAnimation.add(new float[]{1,0});
-        Animation animation = new Animation(this, "alpha", "alpha", 500, valuesAnimation, false, true);
         final Ball self = this;
         reduceAlpha(500, 0f,new Animation.AnimationListener() {
             @Override

@@ -145,7 +145,7 @@ public class Animation{
                             }
                             this.targetObject.applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet);
                             if (this.onChange != null) {
-                                Log.e("animation", "animation onChange fired");
+                                //Log.e("animation", "animation onChange fired");
                                 onChange.onChange();
                             }
                         }
@@ -158,6 +158,11 @@ public class Animation{
                 this.started = false;
                 this.fireAnimationEnd();
             } else {
+                if (!isFluid){
+                    for (int i = 0; i < isFluidChanged.length; i++){
+                        isFluidChanged[i] = false;
+                    }
+                }
                 this.setStartTime();
             }
         }

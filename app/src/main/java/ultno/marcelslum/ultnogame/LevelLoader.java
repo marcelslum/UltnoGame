@@ -37,9 +37,9 @@ public class LevelLoader {
                 l.ballsAngleToRotate = new float[]{2f, 2f};
                 l.ballsMaxAngle = new float[]{55f, 55f};
                 l.ballsMinAngle = new float[]{35f, 35f};
-                l.ballsVelocityVariation = new float[]{0.1f, 0.1f};
-                l.ballsVelocityMaxByInitialVelocity = new float[]{1.5f, 1.5f};
-                l.ballsVelocityMinByInitialVelocity = new float[]{0.8f, 0.8f};
+                l.ballsVelocityVariation = new float[]{0.3f, 0.1f};
+                l.ballsVelocityMaxByInitialVelocity = new float[]{2.5f, 1.5f};
+                l.ballsVelocityMinByInitialVelocity = new float[]{0.4f, 0.8f};
                 l.ballsTargetsAppend = new ArrayList<ArrayList<Target>>();
                 l.ballsFree = new boolean[]{true, true};
                 l.barsQuantity = 1;
