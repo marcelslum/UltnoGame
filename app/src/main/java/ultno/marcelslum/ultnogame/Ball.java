@@ -53,8 +53,7 @@ public class Ball extends Circle{
     }
 
     public void setInvencible() {
-        
-        
+
           ArrayList<float[]> valuesInvencible = new ArrayList<>();
                 valuesInvencible.add(new float[]{0f,1f});
                 valuesInvencible.add(new float[]{0.2f,2f});
@@ -105,9 +104,7 @@ public class Ball extends Circle{
         Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
-    
-    
-    
+
     public void onCollision(){
         // EXTRAI OS DADOS NECESSÁRIOS
 
@@ -294,9 +291,47 @@ public class Ball extends Circle{
     }
 
     private void waitForExplosion() {
+        listenForExplosion = true;
+        // TODO play alarm sound
+        setTextureUnitAndUnData(COLOR_BALL_RED);
+        
+        
+        ArrayList<float[]> valuesAlphaRedBall = new ArrayList<>();
+                values.add(new float[]{0f,1f});
+                values.add(new float[]{0.5f,0.5f});
+                values.add(new float[]{1f,1f});
 
-
+        Animation anim = new Animation(messagePreparation, "alphaExplode", "alpha", 4000, valuesAlphaRedBall, false, false);
+        anim.start();
+        
     }
+    
+    public void explode(){
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
 
     private void setDead() {
         this.isAlive = false;
