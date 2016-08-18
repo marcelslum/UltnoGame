@@ -384,6 +384,13 @@ public class Ball extends Circle{
 
             this.game.addBall(ball);
         }
+        
+        for (Animation a : animations){
+            if (a.name == "alphaExplode"){
+                a.stop;
+                break;
+            }
+        }
     }
     
     
