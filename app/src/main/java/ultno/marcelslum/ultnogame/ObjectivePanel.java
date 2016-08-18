@@ -40,9 +40,7 @@ public class ObjectivePanel extends Entity{
         this.minBallsAlive = minBallsAlive;
         this.ballsInvencible = ballsInvencible;
         initializeData(12*ballsAlive, 6*ballsAlive, 8*ballsAlive, 0);
-
-
-
+        
         int blackBalls = ballsAlive - ballsInvencible - (ballsAlive - minBallsAlive - ballsInvencible);
         int blueBalls = ballsAlive - minBallsAlive - ballsInvencible;
 
