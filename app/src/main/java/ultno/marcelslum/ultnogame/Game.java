@@ -32,7 +32,6 @@ public class Game {
     public static ArrayList<InteractionListener> interactionListeners;
     public static ArrayList<TextBox> textBoxes;
     
-    
     public Background background;
 
     public static ScorePanel scorePanel;
@@ -155,6 +154,7 @@ public class Game {
 
     int ballsNotInvencibleAlive;
     int ballsInvencible;
+    int ballsAlive;
 
     public static Game getInstance() {
         return ourInstance;
@@ -885,6 +885,9 @@ public class Game {
                 }
             }
         }
+        
+        objectivePanel.setValues(ballsNotInvencibleAlive + ballsInvencible, levelObject.minBallsNotInvencibleAlive, ballsInvencible);
+        
         //Log.e("game", " minBallsNotInvencibleAlive " + levelObject.minBallsNotInvencibleAlive);
         //Log.e("game", " ballsNotInvencibleAlive " + ballsNotInvencibleAlive);
         if (levelObject.minBallsNotInvencibleAlive > ballsNotInvencibleAlive)
@@ -1216,7 +1219,7 @@ public class Game {
         }
         return isHadCollision;
     }
-
+veri
     public void createEntities() {
         LevelLoader.loadLevel(this, this.levelNumber);
         this.levelObject.loadEntities();
