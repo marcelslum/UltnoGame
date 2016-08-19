@@ -130,13 +130,30 @@ public class Game {
     
     
     public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE3 = 3;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE4 = 4;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE5 = 5;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE6 = 6;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE7 = 7;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE8 = 8;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE9 = 9;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE0 = 10;
+    public final static int TEXTURE_MAP_NUMBERS_POINT1 = 11;
+    public final static int TEXTURE_MAP_NUMBERS_POINT2 = 12;
+    public final static int TEXTURE_MAP_NUMBERS_POINT3 = 13;
+    public final static int TEXTURE_MAP_NUMBERS_POINT4 = 14;
+    public final static int TEXTURE_MAP_NUMBERS_POINT5 = 15;
+    public final static int TEXTURE_MAP_NUMBERS_POINT6 = 16;
+    public final static int TEXTURE_MAP_NUMBERS_POINT7 = 17;
+    public final static int TEXTURE_MAP_NUMBERS_POINT8 = 18;
+    public final static int TEXTURE_MAP_NUMBERS_POINT9 = 19;
+    public final static int TEXTURE_MAP_NUMBERS_POINT0 = 20;
+    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1 = 21;
+    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2 = 22;
+    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3 = 23;
+    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4 = 24;
+    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5 = 25;
     
     public final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
 
