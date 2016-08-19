@@ -55,15 +55,43 @@ public class Point extends Entity {
             } else {
                 x += width;
             }
-
+            
             Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
 
-            if (subInteger == 0){
-                subInteger = 10;
+            int textureMap;
+            switch (subInteger){
+                case 1:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT1;
+                    break;
+                case 2:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT2;
+                    break;
+                case 3:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT3;
+                    break;
+                case 4:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT4;
+                    break;
+                case 5:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT5;
+                    break;
+                case 6:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT6;
+                    break;
+                case 7:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT7;
+                    break;
+                case 8:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT8;
+                    break;
+                case 9:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT9;
+                    break;
+                case 0:
+                    textureMap = TEXTURE_MAP_NUMBERS_POINT0;
+                    break;
             }
-
-            prepareUvData(subInteger+10);
-            Utils.insertRectangleUvData(this.uvsData, 0 + (i * 8));
+            Utils.insertRectangleUvDataNumbersAndExplosion(this.uvsData, 0 + (i * 8), textureMap);
         }
         
         this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
@@ -71,58 +99,6 @@ public class Point extends Entity {
         this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
     }
 
-    public void prepareUvData(int textureMap){
-
-
-
-        Utils.y1 = 0f;
-        Utils.y2 = 0f;
-
-        if (textureMap < 8){
-            Utils.y1 = 2f/textureSize;
-            Utils.y2 = (lines[0]-2f)/textureSize;
-        } else if (textureMap < 15){
-            Utils.y1 = (lines[0]+2f)/textureSize;
-            Utils.y2 = (lines[1]-2f)/textureSize;
-        } else {
-            Utils.y1 = (lines[1]+2f)/textureSize;
-            Utils.y2 = (lines[2]-2f)/textureSize;
-        }
-
-        Utils.x1 = 0;
-        Utils.x2 = 0;
-    
-        if (textureMap == 1 || textureMap == 8 || textureMap == 15){
-            Utils.x1 = 2f/textureSize;
-            Utils.x2 = (columns[0]-2f)/textureSize;
-        } else if (textureMap == 2 || textureMap == 9 || textureMap == 16){
-            Utils.x1 = (columns[0]+2f)/textureSize;
-            Utils.x2 = (columns[1]-2f)/textureSize;
-        } else if (textureMap == 3 || textureMap == 10 || textureMap == 17){
-            Utils.x1 = (columns[1]+2f)/textureSize;
-            Utils.x2 = (columns[2]-2f)/textureSize;
-        } else if (textureMap == 4 || textureMap == 11 || textureMap == 18){
-            Utils.x1 = (columns[2]+2f)/textureSize;
-            Utils.x2 = (columns[3]-2f)/textureSize;
-        } else if (textureMap == 5 || textureMap == 12 || textureMap == 19){
-            Utils.x1 = (columns[3]+2f)/textureSize;
-            Utils.x2 = (columns[4]-2f)/textureSize;
-        } else if (textureMap == 6 || textureMap == 13 || textureMap == 20){
-            Utils.x1 = (columns[4]+2f)/textureSize;
-            Utils.x2 = (columns[5]-2f)/textureSize;
-        } else if (textureMap == 7 || textureMap == 14){
-            Utils.x1 = (columns[5]+2f)/textureSize;
-            Utils.x2 = (columns[6]-2f)/textureSize;
-        }
-    }
-
-    public void insertIndicesData(short[] array, int startIndex, int startValue){
-        array[0 + (startIndex)] = (short)(0 + (startValue));
-        array[1 + (startIndex)] = (short)(1 + (startValue));
-        array[2 + (startIndex)] = (short)(2 + (startValue));
-        array[3 + (startIndex)] = (short)(0 + (startValue));
-        array[4 + (startIndex)] = (short)(2 + (startValue));
-        array[5 + (startIndex)] = (short)(3 + (startValue));
-    }
+   
 
 }
