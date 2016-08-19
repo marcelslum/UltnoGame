@@ -68,10 +68,7 @@ public class Entity {
     public short[] indicesData;
     public float[] uvsData;
     public float[] colorsData;
-
-    private float[] vecs;
-    private float[] uvs;
-    private short[] indices;
+    public float[] alphaData;
 
     public boolean isLineGL = false;
     public int lineWidth = 1;
@@ -81,6 +78,7 @@ public class Entity {
     public FloatBuffer uvsBuffer;
     public ShortBuffer indicesBuffer;
     public FloatBuffer colorsBuffer;
+    public FloatBuffer alphaBuffer;
 
     public float[] matrixModel = new float[16];
     public float[] mRotationMatrix = new float[16];
@@ -160,6 +158,41 @@ public class Entity {
             }
         }
     }    
+    
+    
+     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize, int alphaSize){
+        if (verticesSize > 0){
+            if (this.verticesData == null || this.verticesData.length != verticesSize){
+                //Log.e("entity", "criando vertices data de "+this.name + " com o tamanho "+verticesSize);
+                this.verticesData = new float[verticesSize];                
+            }
+        }
+        
+        if (indicesSize > 0){
+            if (this.indicesData == null || this.indicesData.length != indicesSize){
+                this.indicesData = new short[indicesSize];                
+            } 
+            
+        }
+        
+        if (uvsSize > 0){
+            if (this.uvsData == null || this.uvsData.length != uvsSize){
+                this.uvsData = new float[uvsSize];                
+            }
+        }
+        
+        if (colorsSize > 0){
+            if (this.colorsData == null || this.colorsData.length != colorsSize){
+                this.colorsData = new float[colorsSize];                
+            }
+        }
+        
+        if (alphaSize > 0){
+            if (this.alphaData == null || this.alphaData.length != alphaSize){
+                this.alphaData = new float[alphaSize];                
+            }
+        }
+    }   
 
     public RectangleM getQuadtreeData() {
         this.updateQuatreeData();
@@ -167,7 +200,6 @@ public class Entity {
     }
 
     public void applyAnimation(String parameter, float value) {
-
         if (this.childs != null) {
             for (int i = 0; i < this.childs.size(); i++) {
                 this.childs.get(i).applyAnimation(parameter, value);
@@ -212,8 +244,6 @@ public class Entity {
         }
 
     }
-
-
 
     public void resetAnimations() {
         for (int i = 0; i < this.animations.size(); i++) {
@@ -282,15 +312,12 @@ public class Entity {
     }
 
     public void translate(float tx, float ty, boolean updatePrevious) {
-
         //Log.e("entity", "translate "+this.name + " isMovable "+isMovable + " isFree "+isFree);
-
         if (isMovable && isFree){
             if (updatePrevious) {
                 this.previousX = this.x;
                 this.previousY = this.y;
             }
-
             this.x += tx;
             this.y += ty;
         }
@@ -298,7 +325,6 @@ public class Entity {
 
     public void rotate(float angle) {
         this.rotateAngle += angle;
-
     }
 
     public void scale(float sx, float sy) {
@@ -318,11 +344,7 @@ public class Entity {
 
     public void setMatrixModel(){
         Matrix.setIdentityM(this.matrixModel, 0); // initialize to identity matrix
-
-        //if (this.name == "frame")Log.e("entity", " "+animTranslateX);
-
         Matrix.translateM(this.matrixModel, 0, this.x + animTranslateX, this.y + animTranslateY, 0);
-
         if (this.rotateAngle != 0) {
             Matrix.translateM(this.matrixModel, 0, getMiddlePointX(), getMiddlePointY(), 0);
             Matrix.setRotateM(mRotationMatrix, 0, this.rotateAngle, 0f, 0f, 1f);
@@ -330,7 +352,6 @@ public class Entity {
             Matrix.multiplyMM(matrixModel, 0, matrixTemp, 0, mRotationMatrix, 0);
             Matrix.translateM(this.matrixModel, 0, -getMiddlePointX(), -getMiddlePointY(), 0);
         }
-
         if (this.scaleX != 1 || this.scaleX != 1)
         Matrix.scaleM(this.matrixModel, 0, this.scaleX , this.scaleY, 0);
     }
@@ -347,7 +368,6 @@ public class Entity {
         //if (this.name == "tittle"){
             //Log.e("entity", "render tittle");
         //}
-
 
         setMatrixModel();
 
@@ -366,9 +386,15 @@ public class Entity {
             GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, this.uvsBuffer);
             GLES20.glEnableVertexAttribArray(av2_uvHandle);
         }
-
-        //Log.e("render", " ");
-
+        
+        int av1_alphaHandle = -1;
+        if (this.alphaBuffer != -1) {
+            // Get handle to texture coordinates location and load the texture uvs
+            av1_alphaHandle = GLES20.glGetAttribLocation(this.program.get(), "av1_alphaHandle");
+            GLES20.glVertexAttribPointer(av1_alphaHandle, 1, GLES20.GL_FLOAT, false, 0, this.alphaBuffer);
+            GLES20.glEnableVertexAttribArray(av1_alphaHandle);
+        }
+        
         int av4_colorsHandle = -1;
         if (this.colorsBuffer != null){
             //Log.e("tag "+this.name, "tem cor");
@@ -379,8 +405,7 @@ public class Entity {
 
         int uf_alphaHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_alpha");
         GLES20.glUniform1f(uf_alphaHandle, this.alpha);
-        //Log.e("render", " ");
-
+        
         // Get handle to shape's transformation matrix and add our matrix
         int um4_projectionHandle = GLES20.glGetUniformLocation(this.program.get(), "um4_projection");
         GLES20.glUniformMatrix4fv(um4_projectionHandle, 1, false, matrixProjection, 0);
@@ -427,6 +452,9 @@ public class Entity {
         }
         if (av4_colorsHandle != -1){
             GLES20.glDisableVertexAttribArray(av4_colorsHandle);
+        }
+        if (av1_alphaHandle != -1){
+            GLES20.glDisableVertexAttribArray(av1_alphaHandle);
         }
 
     }
