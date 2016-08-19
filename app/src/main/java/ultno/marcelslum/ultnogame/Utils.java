@@ -114,7 +114,7 @@ public class Utils {
         array[5 + (startIndex)] = z;
     }
     
-    public static void insertLineVerticesData(float[] array, int startIndex, float alpha){
+    public static void insertAlphaData(float[] array, int startIndex, float alpha){
         array[0 + (startIndex)] = alpha;
     }
     
