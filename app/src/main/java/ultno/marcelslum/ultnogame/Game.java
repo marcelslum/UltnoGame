@@ -177,6 +177,7 @@ public class Game {
     // programs
     public Program imageProgram;
     public Program imageColorizedProgram;
+    public Program imageAlphaArrayProgram;
     public Program textProgram;
     public Program solidProgram;
 
@@ -836,6 +837,7 @@ public class Game {
     public void initPrograms(){
         imageProgram = new Program(GraphicTools.vs_Image, GraphicTools.fs_Image);
         imageColorizedProgram = new Program(GraphicTools.vs_Image_Colorized, GraphicTools.fs_Image_Colorized);
+        imageAlphaArrayProgram = new Program(GraphicTools.vs_Image_Alpha_Array, GraphicTools.fs_Image_Alpha_Array);
         textProgram = new Program(GraphicTools.vs_Text, GraphicTools.fs_Text);
         solidProgram = new Program(GraphicTools.vs_SolidColor, GraphicTools.fs_SolidColor);
     }
@@ -845,7 +847,6 @@ public class Game {
     }
 
     public void initSounds(){
-
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -867,12 +868,8 @@ public class Game {
         soundScore = soundPool.load(context, R.raw.score, 1);
         soundWin = soundPool.load(context, R.raw.win, 1);
         soundTextBoxAppear = soundPool.load(context, R.raw.textboxappear, 1);
-
     }
-    
-    
 
-    
     public void simulate(long elapsed, float frameDuration){
         if (this.gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
@@ -880,7 +877,6 @@ public class Game {
                 ball.clearCollisionData();
                 quad.insert(ball);
             }
-
             if (bars != null) {
                 if (bars.size() > 0) {
                     if (button1Left.isPressed) {
@@ -901,7 +897,6 @@ public class Game {
                     }
                 }
             }
-
             quad.insert(bordaE);
             quad.insert(bordaD);
             quad.insert(bordaC);
