@@ -124,24 +124,42 @@ public class GraphicTools {
 
                     "   }";
 
+  public static final String vs_Image_Alpha_Array =
+
+        "uniform mat4 um4_projection;" +
+        "uniform mat4 um4_view;" +
+        "uniform mat4 um4_model;" +
+        "uniform float uf_alpha;" +
+        "attribute vec4 av4_vertices;" +
+        "attribute vec1 av1_alpha;" +
+        "attribute vec2 av2_uv;" +
+        "varying vec2 vv2_texCoord;" +
+        "varying vec1 vv1_alpha;" +
+        "varying float vf_alpha;" +
+        "   void main() {" +
+        "       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
+        "       vv2_texCoord = av2_uv;" +
+        "  vf_alpha = uf_alpha;" +
+        "   }";
 
 
 
-        String outro =         "       gl_FragColor = vec4(gl_FragColor.rgb,vf_alpha);" +
+    public static final String fs_Image_Alpha_Array =
+        "precision mediump float;" +
+        "varying vec2 vv2_texCoord;" +
+        "varying vec1 vv1_alpha;" +
+        "varying float vf_alpha;" +
+        "uniform sampler2D us_texture;" +
+        "   void main() {" +
         "       vec4 color = texture2D( us_texture, vv2_texCoord);" +
+        "       if (color.a < 0.01) discard;"+
+        "       gl_FragColor = vec4(color.r, color.g, color.b, vf_alpha*color.a*vv1_alpha.x);"+
 
-        "       gl_FragColor = vec4(color.rgb,vf_alpha);" +
+        "   }";
 
 
-            "       if (color.w < 1) gl_FragColor = vec4(1,0,0,1);" +
-            "       else gl_FragColor = vec4(1,1,0,1);";
-    //texture2D( us_texture, vv2_texCoord );
-    /* SHADER Text
-     *
-     * This shader is for rendering 2D text textures straight from a texture
-     * Color and alpha blended.
-     *
-     */
+
+
     public static final String vs_Text =
         "uniform mat4 um4_projection;" +
         "uniform mat4 um4_view;" +
