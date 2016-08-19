@@ -77,7 +77,7 @@ public class LevelLoader {
                                     int type = Target.TARGET_BLACK;
                                     if (iX == 9){
                                         type = Target.TARGET_RED;
-
+                                    }
 
 
                                     Target target = new Target("target", innerGame, xInitial, yInitial,
@@ -96,7 +96,7 @@ public class LevelLoader {
                                     target.currentState = 1;
 
                                     innerGame.addTarget(target);
-                                    }
+
                                 }
                             }
                         }

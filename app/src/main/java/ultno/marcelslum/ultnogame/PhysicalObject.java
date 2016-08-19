@@ -92,7 +92,7 @@ public class PhysicalObject extends Entity{
                 this.dvx = this.accelInitialVelocityX + ((this.accelFinalVelocityX - this.accelInitialVelocityX) * porcentage);
                 this.dvy = this.accelInitialVelocityY + ((this.accelFinalVelocityY - this.accelInitialVelocityY) * porcentage);
 
-                Log.e("ball", "verify acceleration "+this.name + " dvx "+dvx);
+                //Log.e("ball", "verify acceleration "+this.name + " dvx "+dvx);
 
             }
         }

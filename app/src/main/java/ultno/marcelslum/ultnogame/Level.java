@@ -140,7 +140,8 @@ public class Level {
     public void showFirstTutorial(){
         Log.e("level", "showFirstTutorial");
         this.game.blockAndWaitTouchRelease();
-        this.tutorials.get(0).show();
+
+        this.tutorials.get(0).show(game.soundPool, game.soundTextBoxAppear);
         this.showingTutorial = 0;
     }
 
@@ -148,7 +149,10 @@ public class Level {
         final int nextTutorial = this.showingTutorial + 1;
 
         if (this.tutorials.get(this.showingTutorial).isBlocked == false){
-            //TODO this.game.getObjectByName(this.game.sounds, 'menuSelectBig').play();
+
+
+            game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
+
             final Level self = this;
             if (nextTutorial == this.tutorials.size()){
                 this.tutorials.get(this.showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
@@ -162,7 +166,7 @@ public class Level {
                 this.tutorials.get(this.showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
                     @Override
                     public void onUnshowAfterAnim2() {
-                        self.tutorials.get(nextTutorial).show();
+                        self.tutorials.get(nextTutorial).show(self.game.soundPool, self.game.soundTextBoxAppear);
                     }
                 });
                 this.tutorials.get(this.showingTutorial).unshow();

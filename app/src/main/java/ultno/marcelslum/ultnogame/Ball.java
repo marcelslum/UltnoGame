@@ -292,7 +292,6 @@ public class Ball extends Circle{
 
     private void waitForExplosion() {
         listenForExplosion = true;
-        // TODO play alarm sound
         setTextureUnitAndUvData(COLOR_BALL_RED);
         
         ArrayList<float[]> valuesAlphaRedBall = new ArrayList<>();
@@ -306,9 +305,13 @@ public class Ball extends Circle{
     }
     
     public void explode(){
-        // todo stop alarm
-        
-        // todo play explosion sound
+
+        ParticleGenerator pg = new ParticleGenerator("explode", game, x, y);
+        game.particleGenerator.add(pg);
+        pg.activate();
+
+        this.game.soundPool.play(this.game.soundBlueBallExplosion1, 1, 1, 0, 0, 1);
+        this.game.soundPool.play(this.game.soundBlueBallExplosion2, 1, 1, 0, 0, 1);
 
         listenForExplosion = false;
 

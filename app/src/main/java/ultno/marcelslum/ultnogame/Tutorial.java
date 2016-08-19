@@ -1,6 +1,8 @@
 package ultno.marcelslum.ultnogame;
 
 
+import android.media.SoundPool;
+
 import java.util.ArrayList;
 
 /**
@@ -20,16 +22,20 @@ public class Tutorial {
         this.textBox = textBox;
     }
 
-    public void show() {
+    public void show(SoundPool soundPool, int soundId) {
+
+
+        soundPool.play(soundId, 1, 1, 0, 0, 1);
         isBlocked = true;
         textBox.alpha = 0f;
+
 
         if (onShowBeforeAnim != null) {
             onShowBeforeAnim.onShowBeforeAnim();
         }
             textBox.display();
             
-            Animation anim = Utils.createSimpleAnimation(textBox, "textBoxTranslateX1", "translateX", 500, -textBox.game.resolutionX *2, 0f);
+            Animation anim = Utils.createSimpleAnimation(textBox, "textBoxTranslateX1", "translateX", 300, -textBox.game.resolutionX *2, 0f);
             final Tutorial self = this;
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -42,7 +48,7 @@ public class Tutorial {
             });
             anim.start();
 
-        Utils.createSimpleAnimation(textBox, "alpha", "alpha", 500, 0f, 1f).start();
+        Utils.createSimpleAnimation(textBox, "alpha", "alpha", 300, 0f, 1f).start();
     }
 
     public void unshow(){

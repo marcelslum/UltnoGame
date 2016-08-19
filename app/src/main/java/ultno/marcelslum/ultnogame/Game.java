@@ -31,6 +31,7 @@ public class Game {
     public static ArrayList<Selector> selectors;
     public static ArrayList<InteractionListener> interactionListeners;
     public static ArrayList<TextBox> textBoxes;
+    public static ArrayList<ParticleGenerator> particleGenerator;
     
     public Background background;
 
@@ -84,7 +85,9 @@ public class Game {
     int soundMenuSelectBig;
     int soundMenuSelectSmall;
     int soundWin;
+    int soundTextBoxAppear;
     MediaPlayer music;
+    boolean playingAlarm;
 
     // scree properties
     public float gameAreaResolutionX;
@@ -155,6 +158,7 @@ public class Game {
     int ballsNotInvencibleAlive;
     int ballsInvencible;
     int ballsAlive;
+    private int streamIdSoundAlarm;
 
     public static Game getInstance() {
         return ourInstance;
@@ -167,6 +171,7 @@ public class Game {
         touchEvents = new ArrayList<TouchEvent>();
         texts = new ArrayList<Text>();
         interactionListeners = new ArrayList<>();
+        particleGenerator = new ArrayList<>();
         bars = new ArrayList<Bar>();
         menus = new ArrayList<>();
         selectors = new ArrayList<>();
@@ -766,7 +771,7 @@ public class Game {
                innerGame.levelObject.loadEntities();
                innerGame.setGameState(GAME_STATE_TUTORIAL);
                innerGame.levelObject.showingTutorial = 0;
-               innerGame.levelObject.tutorials.get(0).show();
+               innerGame.levelObject.tutorials.get(0).show(innerGame.soundPool, innerGame.soundTextBoxAppear);
                innerGame.menuTutorial.block();
                innerGame.menuTutorial.clearDisplay();
             }
@@ -818,7 +823,7 @@ public class Game {
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
-        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(5).build();
+        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(8).build();
         soundBallHit = soundPool.load(context, R.raw.ballhit, 1);
         soundCounter = soundPool.load(context, R.raw.counter, 1);
         soundDestroyTarget = soundPool.load(context, R.raw.destroytarget, 1);
@@ -834,6 +839,7 @@ public class Game {
         soundMusic = soundPool.load(context, R.raw.music, 1);
         soundScore = soundPool.load(context, R.raw.score, 1);
         soundWin = soundPool.load(context, R.raw.win, 1);
+        soundTextBoxAppear = soundPool.load(context, R.raw.textboxappear, 1);
 
     }
     
@@ -884,18 +890,40 @@ public class Game {
 
             //Log.e("gl renderer", "onDrawFrame4");
 
+            boolean forPlayAlarm = false;
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
-                    balls.get(i).radius *= 5;
+                    Log.e("game", "listenForExplosion ativado");
+                    forPlayAlarm = true;
+                    balls.get(i).radius *= 10;
                     ArrayList<Entity> ball = new ArrayList<>();
                     ball.add(balls.get(i));
                     boolean collision = checkCollision(ball, true, true);
-                    balls.get(i).radius /= 5;
+                    balls.get(i).radius /= 10;
                     if (!collision) {
+                        Log.e("game", "explode");
                         balls.get(i).explode();
                     }
                 }
             }
+
+
+            Log.e("game", "forPLayAlarm "+forPlayAlarm);
+            
+            if (forPlayAlarm) {
+                if (playingAlarm != true) {
+                    streamIdSoundAlarm = soundPool.play(soundAlarm, 1, 1, 0, -1, 1);
+                    playingAlarm = true;
+                }
+            } else {
+                if (playingAlarm == true) {
+                    Log.e("game", "stopping alarm");
+                    soundPool.stop(streamIdSoundAlarm);
+                    playingAlarm = false;
+                }
+            }
+
+            Log.e("game", "playingAlarm "+playingAlarm);
 
             checkCollision(balls, true, true);
             checkCollision(bars, true, true);
@@ -916,7 +944,7 @@ public class Game {
                 ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
                 ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
 
-                Log.e("ball", "translate "+ball.name + " vx "+ball.vx + " vy "+ball.vy);
+                //Log.e("ball", "translate "+ball.name + " vx "+ball.vx + " vy "+ball.vy);
 
                 ball.translate(ball.vx, ball.vy, true);
             }
@@ -1012,6 +1040,10 @@ public class Game {
         if (selectorVolumn != null) selectorVolumn.prepareRender(matrixView, matrixProjection);
         if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
 
+
+        for (int i = 0; i < particleGenerator.size(); i++){
+            particleGenerator.get(i).prepareRender(matrixView, matrixProjection);
+        }
 
 
         if (this.gameState == GAME_STATE_TUTORIAL){

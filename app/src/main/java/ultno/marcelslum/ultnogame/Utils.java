@@ -40,6 +40,10 @@ public class Utils {
         }
     }
 
+    public static float getRandonFloat(float min, float max){
+        return min + ((float)Math.random() * ((max - min)));
+    }
+
     public static long getTime(){
         return System.currentTimeMillis();
     }
