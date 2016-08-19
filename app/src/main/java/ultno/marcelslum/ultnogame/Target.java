@@ -13,11 +13,16 @@ public class Target extends Rectangle {
 
 
     public int special;
-    public int type; // 0->preto; 1->azul; 2->verde; 3->vermelho;
+    public int type;
     public int [] states;
     public int currentState;
     private int pointsToShow;
     private int posYVariation;
+
+    public static final int TARGET_BLACK = 0;
+    public static final int TARGET_GREEN = 1;
+    public static final int TARGET_BLUE = 2;
+    public static final int TARGET_RED = 3;
 
     Animation showPointsStateAnim;
     Animation showPointsAlphaAnim;
@@ -27,9 +32,9 @@ public class Target extends Rectangle {
 
     Point pointsObject;
 
-    Target(String name, Game game, float x, float y, float width, float height, int weight){
+    Target(String name, Game game, float x, float y, float width, float height, int weight, int type){
         super(name, game, x, y, width, height, weight, new Color(0,0,0,1));
-        this.type = 0;
+        this.type = type;
         this.textureUnit = 2;
         this.program = this.game.imageProgram;
         this.setDrawInfo();
@@ -79,7 +84,6 @@ public class Target extends Rectangle {
             this.pointsObject.alpha = this.pointsAlpha;
             this.pointsObject.render(matrixView, matrixProjection);
         }
-
     }
 
     public void decayState(int points){
@@ -89,6 +93,9 @@ public class Target extends Rectangle {
         this.game.scorePanel.setValue(this.game.scorePanel.value + points,  true, 500, false);
 
         this.currentState -= 1;
+
+        if (states[currentState] != 0) setType(states[currentState]);
+
         this.pointsToShow = points;
         this.pointsObject = new Point("points", this.game, x + (width/2f),y + (height/2f) ,height * 1.5f);
         pointsObject.setValue(points);
@@ -142,11 +149,14 @@ public class Target extends Rectangle {
         // 624 - 830
 
 
-        if (type == 2){
+
+        if (type == TARGET_RED){
+            Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
+        } else if (type == TARGET_BLUE){
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 624f/1024f, 830f/1024f);
-        } else if (type == 1){
+        } else if (type == TARGET_GREEN){
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 208f/1024f, 414f/1024f);
-        } else if (type == 0){
+        } else if (type == TARGET_BLACK){
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
         }
 

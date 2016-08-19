@@ -18,10 +18,8 @@ public class ObjectivePanel extends Entity{
 
     ObjectivePanel(String name, Game game, float x, float y, float size) {
         super(name, game, x, y);
-
-        this.initialX = x;
-        this.initialY = y;
-
+        initialX = x;
+        initialY = y;
         this.size = size;
         isSolid = false;
         isCollidable = false;
@@ -35,12 +33,12 @@ public class ObjectivePanel extends Entity{
         setValues(ballsAlive, minBallsAlive, ballsInvencible);
     }
 
-    public void setValues(int ballsAlive, int minBallsAlive, int ballsInvencible){
+    public void setValues(int ballsAlive, int minBallsAlive, int ballsInvencible) {
         this.ballsAlive = ballsAlive;
         this.minBallsAlive = minBallsAlive;
         this.ballsInvencible = ballsInvencible;
-        initializeData(12*ballsAlive, 6*ballsAlive, 8*ballsAlive, 0);
-        
+        initializeData(12 * ballsAlive, 6 * ballsAlive, 8 * ballsAlive, 0);
+
         int blackBalls = ballsAlive - ballsInvencible - (ballsAlive - minBallsAlive - ballsInvencible);
         int blueBalls = ballsAlive - minBallsAlive - ballsInvencible;
 
@@ -51,7 +49,12 @@ public class ObjectivePanel extends Entity{
             xOfTriangle -= size * 1.5f;
         }
 
-        x = x - xOfTriangle - (size *(ballsInvencible + 1)) - size;
+        x = initialX - xOfTriangle - (size * (ballsInvencible + 1));
+        if (ballsInvencible > 0){
+            x -= size;
+        } else {
+            x += size * 0.5f;
+        }
 
         int ballsInvecibleDraw = ballsInvencible;
         int ballsBlackDraw = blackBalls;
@@ -106,16 +109,16 @@ public class ObjectivePanel extends Entity{
 
         if (textureMap < 5){
             Utils.y1 = 0.005f;
-            Utils.y2 = 0.2495f;
+            Utils.y2 = 0.245f;
         } else if (textureMap < 9){
             Utils.y1 = 0.2505f;
-            Utils.y2 = 0.4995f;
+            Utils.y2 = 0.495f;
         } else if (textureMap < 13){
             Utils.y1 = 0.5005f;
-            Utils.y2 = 0.7495f;
+            Utils.y2 = 0.745f;
         } else if (textureMap < 17){
             Utils.y1 = 0.7505f;
-            Utils.y2 = 0.9995f;
+            Utils.y2 = 0.995f;
         }
 
 

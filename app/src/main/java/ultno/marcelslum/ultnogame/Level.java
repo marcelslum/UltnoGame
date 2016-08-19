@@ -52,6 +52,7 @@ public class Level {
     Level(int number,Game game){
         this.number = number;
         this.game = game;
+        this.tutorials = new ArrayList<>();
     }
     
     
@@ -121,6 +122,8 @@ public class Level {
             this.targetSizeYByResolution = targetSizeYByResolution;
             this.targetsDistanceByXResolution = targetsDistanceByXResolution;
             this.targetsPaddingByXResolution = targetsPaddingByXResolution;
+
+            this.tutorials = new ArrayList<>();
     }
     
 
@@ -135,6 +138,7 @@ public class Level {
     }
 
     public void showFirstTutorial(){
+        Log.e("level", "showFirstTutorial");
         this.game.blockAndWaitTouchRelease();
         this.tutorials.get(0).show();
         this.showingTutorial = 0;
@@ -409,10 +413,10 @@ public class Level {
             float ballVelocityX = this.game.gameAreaResolutionX * this.ballsDesiredVelocityXByResolution[i];
             float ballVelocityY = this.game.gameAreaResolutionY * this.ballsDesiredVelocityYByResolution[i];
 
-            game.ballsDesiredVelocityX[i] = ballVelocityX;
-            game.ballsDesiredVelocityY[i] = ballVelocityY;
-            game.ballsInitialPositionX[i] = ballX;
-            game.ballsInitialPositionY[i] = ballY;
+            //game.ballsDesiredVelocityX[i] = ballVelocityX;
+            //game.ballsDesiredVelocityY[i] = ballVelocityY;
+            //game.ballsInitialPositionX[i] = ballX;
+            //game.ballsInitialPositionY[i] = ballY;
 
             if (this.ballsInvencible[i]){
                 ballsInvencible += 1;

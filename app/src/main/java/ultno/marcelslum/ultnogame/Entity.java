@@ -82,8 +82,6 @@ public class Entity {
     public ShortBuffer indicesBuffer;
     public FloatBuffer colorsBuffer;
 
-    public float[] matrixProjectionAndView = new float[16];
-    public float[] matrixViewModel = new float[16];
     public float[] matrixModel = new float[16];
     public float[] mRotationMatrix = new float[16];
     public float[] matrixTemp = new float[16];
@@ -107,8 +105,6 @@ public class Entity {
         this.game = game;
         this.x = x;
         this.y = y;
-        dX = 0;
-        dY = 0;
         previousX = x;
         previousY = y;
         previousDX = 0;
@@ -286,6 +282,9 @@ public class Entity {
     }
 
     public void translate(float tx, float ty, boolean updatePrevious) {
+
+        //Log.e("entity", "translate "+this.name + " isMovable "+isMovable + " isFree "+isFree);
+
         if (isMovable && isFree){
             if (updatePrevious) {
                 this.previousX = this.x;

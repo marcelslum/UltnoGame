@@ -51,7 +51,7 @@ public class LevelLoader {
                 l.barsDesiredVelocityYByResolution = new float[]{0f};
 
                 l.quantityTargetsX = 10;//10ocupa 11 espaços
-                l.quantityTargetsY = 2;
+                l.quantityTargetsY = 1;
                 l.targetSizeXByResolution = 0.0895f;
                 l.targetSizeYByResolution = 0.04f;
                 l.targetsDistanceByXResolution = 0.001f;
@@ -74,15 +74,29 @@ public class LevelLoader {
                                     float xInitial = (gameAreaResolutionX * targetsPaddingByXResolution) + (iX * ((gameAreaResolutionX * targetSizeXByResolution) + (gameAreaResolutionX * targetsDistanceByXResolution)));
                                     float yInitial = (gameAreaResolutionX * targetsPaddingByXResolution) + (iY * ((gameAreaResolutionY * targetSizeYByResolution) + (gameAreaResolutionX * targetsDistanceByXResolution)));
 
+                                    int type = Target.TARGET_BLACK;
+                                    if (iX == 9){
+                                        type = Target.TARGET_RED;
+
+
+
                                     Target target = new Target("target", innerGame, xInitial, yInitial,
                                             gameAreaResolutionX * targetSizeXByResolution,
-                                            gameAreaResolutionY * targetSizeYByResolution, 9
+                                            gameAreaResolutionY * targetSizeYByResolution, 9,type
                                             );
+
+                                    if (iX == 9){
+                                        target.special = 1;
+                                    }
+
+
                                     target.isMovable = false;
                                     target.alpha = 1;
                                     target.states = new int[]{0,1};
                                     target.currentState = 1;
+
                                     innerGame.addTarget(target);
+                                    }
                                 }
                             }
                         }
@@ -144,7 +158,7 @@ public class LevelLoader {
 
                                     Target target = new Target("target", innerGame, xInitial, yInitial,
                                             gameAreaResolutionX * innerGame.levelObject.targetSizeXByResolution,
-                                            gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution, 9
+                                            gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution, 9, Target.TARGET_BLACK
                                             );
                                     target.isMovable = false;
                                     target.alpha = 1;

@@ -16,20 +16,20 @@ public class Tutorial {
     TextBox textBox;
     boolean isBlocked;
 
-    public Tutorial(){
-
+    public Tutorial(TextBox textBox){
+        this.textBox = textBox;
     }
 
     public void show() {
         isBlocked = true;
-        textBox.alpha = 0;
+        textBox.alpha = 0f;
 
         if (onShowBeforeAnim != null) {
             onShowBeforeAnim.onShowBeforeAnim();
         }
             textBox.display();
             
-            Animation anim = Utils.createSimpleAnimation(textBox, "textBoxTranslateX1", "translateX", 500, -800f, 0f);
+            Animation anim = Utils.createSimpleAnimation(textBox, "textBoxTranslateX1", "translateX", 500, -textBox.game.resolutionX *2, 0f);
             final Tutorial self = this;
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override

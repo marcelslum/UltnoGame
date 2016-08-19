@@ -102,11 +102,39 @@ public class TextBox extends Entity{
             addChild(this.texts.get(i));
         }
 
-        frame = new Image("frame", game, x, y, width + (textPadding*6), textY - y + (textPadding*6), 7, 0f, 1f, 0f, 550f/1024f);
+        frame = new Image("frame", game, x, y, width + (textPadding*6), textY - y + (textPadding*6), Game.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
         addChild(frame);
 
         arrow = new Line("lina", game, 50f, 50f, 300f, 300f, textColor);
         addChild(arrow);
+
+        arrowContinuar = new Button("arrowContinuar", this.game, x + width - size, y + textY - size - (textPadding*8), size, size, Game.TEXTURE_BUTTONS_AND_BALLS);
+        arrowContinuar.setTextureMap(14);
+        arrowContinuar.textureMapUnpressed = 14;
+        arrowContinuar.textureMapPressed = 6;
+        addChild(arrowContinuar);
+
+        InteractionListener newListener = new InteractionListener(name+"arrowContinuar",
+                x + width - size,
+                y + textY - size - (textPadding*6),
+                size,
+                size,
+                500, this, game);
+
+
+        final Game innerGame = game;
+        newListener.setPressListener(new InteractionListener.PressListener() {
+            @Override
+            public void onPress() {
+                innerGame.levelObject.nextTutorial();
+            }
+            @Override
+            public void onUnpress() {
+            }
+        });
+        this.game.addInteracionListener(newListener);
+
+
 
     }
 
@@ -117,6 +145,10 @@ public class TextBox extends Entity{
         }
 
         frame.prepareRender(matrixView, matrixProjection);
+
+        arrowContinuar.alpha = alpha * 0.6f;
+
+        arrowContinuar.prepareRender(matrixView, matrixProjection);
 
         for (int i = 0; i < this.texts.size();i++){
             this.texts.get(i).alpha = alpha;

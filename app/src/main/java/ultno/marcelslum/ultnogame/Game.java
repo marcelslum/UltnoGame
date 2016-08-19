@@ -282,6 +282,7 @@ public class Game {
                 }
             });
             anim.start();
+            verifyDead();
 
         } else if (state == GAME_STATE_JOGAR){
 
@@ -304,6 +305,27 @@ public class Game {
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
+
+            ArrayList<float[]> valuesAnimPause = new ArrayList<>();
+            valuesAnimPause.add(new float[]{0f,1f});
+            valuesAnimPause.add(new float[]{0.25f,2f});
+            valuesAnimPause.add(new float[]{0.7f,3f});
+            final Text innerMessageInGame = messageInGame;
+            Animation anim = new Animation(messageInGame, "messageInGameColor", "numberForAnimation", 4000, valuesAnimPause, true, false);
+            anim.setOnChangeNotFluid(new Animation.OnChange() {
+                @Override
+                public void onChange() {
+                    if (innerMessageInGame.numberForAnimation == 1f){
+                        innerMessageInGame.setColor(new Color(0f, 0f, 1f, 1f));
+                    } else if (innerMessageInGame.numberForAnimation == 2f) {
+                        innerMessageInGame.setColor(new Color(0f, 0f, 0f, 1f));
+                    } else if (innerMessageInGame.numberForAnimation == 3f) {
+                        innerMessageInGame.setColor(new Color(1f, 1f, 0f, 1f));
+                    }
+                }
+            });
+            anim.start();
+
             messageInGame.setText(context.getResources().getString(R.string.pause));
             messageInGame.increaseAlpha(100, 1f);
             messageInGame.display();
@@ -312,6 +334,33 @@ public class Game {
             soundPool.play(soundWin, 1, 1, 0, 0, 1);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
+
+            ArrayList<float[]> valuesAnimVitoria = new ArrayList<>();
+            valuesAnimVitoria.add(new float[]{0f,1f});
+            valuesAnimVitoria.add(new float[]{0.2f,2f});
+            valuesAnimVitoria.add(new float[]{0.5f,3f});
+            valuesAnimVitoria.add(new float[]{0.7f,4f});
+            final Text innerMessageInGame = messageInGame;
+            Animation anim = new Animation(messageInGame, "messageInGameColor", "numberForAnimation", 3000, valuesAnimVitoria, true, false);
+            anim.setOnChangeNotFluid(new Animation.OnChange() {
+                @Override
+                public void onChange() {
+                    if (innerMessageInGame.numberForAnimation == 1f){
+                        innerMessageInGame.setColor(new Color(0f, 0f, 1f, 1f));
+                    } else if (innerMessageInGame.numberForAnimation == 2f) {
+                        innerMessageInGame.setColor(new Color(0f, 0f, 0f, 1f));
+                    } else if (innerMessageInGame.numberForAnimation == 3f) {
+                        innerMessageInGame.setColor(new Color(1f, 1f, 0f, 1f));
+                    } else if (innerMessageInGame.numberForAnimation == 4f) {
+                        innerMessageInGame.setColor(new Color(1f, 0f, 0f, 1f));
+                    }
+                }
+            });
+            anim.start();
+
+            messageInGame.setText(context.getResources().getString(R.string.nivelConcluido1)+ " "+levelNumber+ " "+context.getResources().getString(R.string.nivelConcluido2));
+            messageInGame.increaseAlpha(100, 1f);
+            messageInGame.display();
         }
     }
 
@@ -586,19 +635,19 @@ public class Game {
                 LevelLoader.loadLevel(innerGame, innerGame.levelNumber);
                 TutorialLoader.loadTutorial(innerGame, innerGame.levelNumber);
 
-                if (innerGame.levelObject.tutorials != null) {
-                    if (innerGame.levelObject.tutorials.size() > 0) {
-                        if (Storage.getLevelTutorialSaw(innerGame.levelNumber)) {
-                            Storage.setLevelTutorialSaw(innerGame.levelNumber, true);
-                            innerGame.setGameState(GAME_STATE_TUTORIAL);
-                            innerGame.levelObject.showFirstTutorial();
-                        } else {
-                            innerGame.menuTutorial.getMenuOptionByName("exibirTutorial").setText = context.getResources().getString(R.string.menuTutorialExibirTutorial) + innerGame.levelNumber;
-                            innerGame.menuTutorial.unblock();
-                        }
-                    } else {
+                Log.e("game", "tutorials size: "+ innerGame.levelObject.tutorials.size());
+
+                if (innerGame.levelObject.tutorials.size() > 0) {
+                    if (!Storage.getLevelTutorialSaw(innerGame.levelNumber)) {
+                        Log.e("game", "tutorial ainda não visto");
+                        Storage.setLevelTutorialSaw(innerGame.levelNumber, true);
                         innerGame.levelObject.loadEntities();
-                        innerGame.setGameState(GAME_STATE_PREPARAR);
+                        innerGame.setGameState(GAME_STATE_TUTORIAL);
+                        innerGame.levelObject.showFirstTutorial();
+                    } else {
+                        Log.e("game", "tutorial já visto");
+                        innerGame.menuTutorial.getMenuOptionByName("exibirTutorial").setText = context.getResources().getString(R.string.menuTutorialExibirTutorial) + innerGame.levelNumber;
+                        innerGame.menuTutorial.unblock();
                     }
                 } else {
                     innerGame.levelObject.loadEntities();
@@ -710,7 +759,7 @@ public class Game {
         menuTutorial = new Menu("menuTutorial", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
 
         // adiciona a opção exibir tutorial
-        menuTutorial.addMenuOption("ExibirTutorial", context.getResources().getString(R.string.menuTutorialExibirTutorial), new MenuOption.OnChoice() {
+        menuTutorial.addMenuOption("exibirTutorial", context.getResources().getString(R.string.menuTutorialExibirTutorial), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                innerGame.blockAndWaitTouchRelease();
@@ -835,18 +884,29 @@ public class Game {
 
             //Log.e("gl renderer", "onDrawFrame4");
 
-            boolean isHaveCollision;
-            isHaveCollision = checkCollision(balls, true, true);
-            isHaveCollision = checkCollision(bars, true, true);
+            for (int i = 0; i < balls.size(); i++) {
+                if (balls.get(i).listenForExplosion) {
+                    balls.get(i).radius *= 5;
+                    ArrayList<Entity> ball = new ArrayList<>();
+                    ball.add(balls.get(i));
+                    boolean collision = checkCollision(ball, true, true);
+                    balls.get(i).radius /= 5;
+                    if (!collision) {
+                        balls.get(i).explode();
+                    }
+                }
+            }
+
+            checkCollision(balls, true, true);
+            checkCollision(bars, true, true);
 
             quad.clear();
 
             //Log.e("gl renderer", "onDrawFrame5");
 
-            for (int i = 0; i < balls.size(); i++) {
-
-                if (balls.get(i).isCollided) {
-                    balls.get(i).onCollision();
+            for (Ball b : balls) {
+                if (b.isCollided) {
+                    b.onCollision();
                 }
             }
 
@@ -855,6 +915,9 @@ public class Game {
                 ball.verifyAcceleration();
                 ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
                 ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+
+                Log.e("ball", "translate "+ball.name + " vx "+ball.vx + " vy "+ball.vy);
+
                 ball.translate(ball.vx, ball.vy, true);
             }
 
@@ -862,9 +925,9 @@ public class Game {
                 b.translate(b.vx, 0, true);
             }
 
-
-
-
+            if (gameState == GAME_STATE_JOGAR) {
+                verifyWin();
+            }
 
             if (gameState == GAME_STATE_JOGAR) {
                 background.move(1);
@@ -873,7 +936,19 @@ public class Game {
         }
     }
 
+    public void verifyWin() {
+        boolean win = true;
+        for (Target t : targets){
+            if (t.states[t.currentState] != 0){
+                win = false;
+                break;
+            }
+        }
+        if (win) setGameState(GAME_STATE_VITORIA);
+    }
+
     public void verifyDead() {
+
         ballsNotInvencibleAlive = 0;
         ballsInvencible = 0;
         for (Ball b : balls){
@@ -937,12 +1012,12 @@ public class Game {
         if (selectorVolumn != null) selectorVolumn.prepareRender(matrixView, matrixProjection);
         if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
 
-        for (int i = 0; i < textBoxes.size(); i++){
-            textBoxes.get(i).prepareRender(matrixView, matrixProjection);
-        }
 
-        for (int i = 0; i < lines.size(); i++){
-            lines.get(i).prepareRender(matrixView, matrixProjection);
+
+        if (this.gameState == GAME_STATE_TUTORIAL){
+            if (levelObject.tutorials.size() >  this.levelObject.showingTutorial){
+                levelObject.tutorials.get(this.levelObject.showingTutorial).textBox.prepareRender(matrixView, matrixProjection);
+            }
         }
 
         messageGameOver.prepareRender(matrixView, matrixProjection);
@@ -1020,7 +1095,7 @@ public class Game {
                             boolean aType = false;
                             boolean bType = false;
 
-                            //Log.e("pos bola sat cc", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radium "+ this.balls.get(0).circleData.r);
+                            //Log.e("pos bola sat cc", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
                             if (a.circleData != null){
                                 this.circle1.pos.x = a.circleData.pos.x;
@@ -1047,7 +1122,7 @@ public class Game {
 
                             float [] velocities = new float[4];
 
-                            //Log.e("pos bola sat cc2", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radium "+ this.balls.get(0).circleData.r);
+                            //Log.e("pos bola sat cc2", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
                             velocities[0] = Math.abs(a.vx);
                             velocities[1] = Math.abs(a.vy);
@@ -1086,7 +1161,7 @@ public class Game {
                             //Log.e("Game", " b.previousX 2"+bPreviousX);
                             //Log.e("Game", " b.previousY 2"+bPreviousY);
 
-                            // Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radium "+ this.balls.get(0).circleData.r);
+                            // Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
                             
                             // calcula a diferença entre as posições
                             float aDiferencaPosicaoX = a.x - aPreviousX;
@@ -1104,7 +1179,7 @@ public class Game {
                             float bPosAConsiderarX = -1000f;
                             float bPosAConsiderarY = -1000f;
 
-                            //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radium "+ this.balls.get(0).circleData.r);
+                            //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
                             // itera pelas passagens, chegando se há colisão
 
@@ -1143,7 +1218,7 @@ public class Game {
                                 }
 
 
-                                //Log.e("pos bola sat cc5", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radium "+ this.balls.get(0).circleData.r);
+                                //Log.e("pos bola sat cc5", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
                                 if (aType == false){
                                     if (bType == false) {
@@ -1219,7 +1294,7 @@ public class Game {
         }
         return isHadCollision;
     }
-veri
+
     public void createEntities() {
         LevelLoader.loadLevel(this, this.levelNumber);
         this.levelObject.loadEntities();

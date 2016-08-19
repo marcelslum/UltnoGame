@@ -49,6 +49,7 @@ public class Ball extends Circle{
     Ball(String name, Game game, float x, float y, float radium, int weight){
         super(name, game, x, y, radium, weight);
         textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+        isMovable = true;
         setDrawInfo();
     }
 
@@ -89,7 +90,7 @@ public class Ball extends Circle{
 
         Log.e("ball", " "+verticesData.length);
 
-        Utils.insertRectangleVerticesData(verticesData, 0, 0f-radium, radium, 0f - radium, radium, 0f);
+        Utils.insertRectangleVerticesData(verticesData, 0, 0f- radius, radius, 0f - radius, radius, 0f);
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
@@ -130,7 +131,7 @@ public class Ball extends Circle{
             if (lastObjects.get(i).name == "bordaB"){
                 this.collisionBordaB = true;
             } else if (lastObjects.get(i).name == "bar"){
-                Log.e("ball", " vx "+lastObjects.get(i).dvx);
+                //Log.e("ball", " vx "+lastObjects.get(i).dvx);
                 this.collisionBar = true;
                 this.collisionBarNumber = i;
             } else if (lastObjects.get(i).name == "target"){
@@ -254,9 +255,7 @@ public class Ball extends Circle{
 
                 Vector possibleVelocityRotate = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
 
-
                 float angle = (float)Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x));
-
                 angle = angle * 180f/(float)Math.PI;
 
                 //Log.e("ball", "angle "+angle);
@@ -273,13 +272,14 @@ public class Ball extends Circle{
         }
 
         // AJUSTA O ALVO ATINGIDO
-        for (int i = 0; i < lastObjects.size(); i++){
+        for (Entity e : lastObjects){
             //console.log(lastObjects[i].name, " "); //lastObjects.position.x, " ", lastObjects.position.y);
-            if (lastObjects.get(i).name == "target"){
-                Target target = (Target)lastObjects.get(i);
+            if (e.name == "target"){
+                Target target = (Target)e;
                 target.onBallCollision();
-                if (lastObjects.get(i).special == 1 && !this.listenForExplosion){
-                    this.waitForExplosion();
+                if (target.special == 1 && !listenForExplosion){
+                    //Log.e("ball", " wait for explosion ativado");
+                    waitForExplosion();
                 }
             }
         }
@@ -293,15 +293,14 @@ public class Ball extends Circle{
     private void waitForExplosion() {
         listenForExplosion = true;
         // TODO play alarm sound
-        setTextureUnitAndUnData(COLOR_BALL_RED);
-        
+        setTextureUnitAndUvData(COLOR_BALL_RED);
         
         ArrayList<float[]> valuesAlphaRedBall = new ArrayList<>();
-                values.add(new float[]{0f,1f});
-                values.add(new float[]{0.5f,0.5f});
-                values.add(new float[]{1f,1f});
+        valuesAlphaRedBall.add(new float[]{0f,1f});
+        valuesAlphaRedBall.add(new float[]{0.5f,0.5f});
+        valuesAlphaRedBall.add(new float[]{1f,1f});
 
-        Animation anim = new Animation(messagePreparation, "alphaExplode", "alpha", 4000, valuesAlphaRedBall, false, false);
+        Animation anim = new Animation(this, "alphaExplode", "alpha", 4000, valuesAlphaRedBall, false, false);
         anim.start();
         
     }
@@ -310,7 +309,9 @@ public class Ball extends Circle{
         // todo stop alarm
         
         // todo play explosion sound
-        
+
+        listenForExplosion = false;
+
         int quantityOfClones = 3;
         float distance = radius * 3;
         
@@ -330,7 +331,7 @@ public class Ball extends Circle{
         
         accelerate(500, rotateX, rotateY*-1);
         
-        setTextureUnitAndUnData(COLOR_BALL_BLACK);
+        setTextureUnitAndUvData(COLOR_BALL_BLACK);
         
         float explodeX = 0;
         float explodeY = 0;
@@ -345,13 +346,13 @@ public class Ball extends Circle{
                 explodeY = y;
                 explodeColor = COLOR_BALL_ORANGE;
                 explodeVelocityX = rotateX * -1;
-                explodeVelocity Y = rotateY * -1;
+                explodeVelocityY = rotateY * -1;
             } else if (i == 1){
                 explodeX = x - distance;
                 explodeY = y + distance;
                 explodeColor = COLOR_BALL_BLUE;
                 explodeVelocityX = rotateX * -1;
-                explodeVelocity Y = rotateY;
+                explodeVelocityY = rotateY;
             } else if (i == 2){
                 explodeX = x;
                 explodeY = y + distance;
@@ -360,16 +361,14 @@ public class Ball extends Circle{
                 explodeVelocityY = rotateY;
             }
             
-            Ball ball = new Ball("ball", this.game, explodeX, explodeY, explodeRadium, 8);
+            Ball ball = new Ball("ball"+i, this.game, explodeX, explodeY, explodeRadius, 8);
             ball.program = this.game.imageProgram;
             ball.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-            ball.textureMap = explodeColor;
-            ball.dx = explodeX;
-            ball.dy = explodeY;
+            setTextureUnitAndUvData(explodeColor);
             ball.dvx = 0f;
             ball.dvy = 0f;
             
-            ball.accelerate(500, explodeVelocityX, explodeVelocityY);
+
             ball.angleToRotate = angleToRotate;
             ball.velocityVariation = velocityVariation;
 
@@ -383,18 +382,18 @@ public class Ball extends Circle{
             ball.initialDesireVelocityY = initialDesireVelocityY;
 
             this.game.addBall(ball);
+
+            //Log.e("ball", "explode x: "+explodeVelocityX+" y: "+explodeVelocityX);
+            ball.accelerate(500, explodeVelocityX, explodeVelocityY);
         }
         
         for (Animation a : animations){
             if (a.name == "alphaExplode"){
-                a.stop;
+                a.stop();
                 break;
             }
         }
     }
-    
-    
-    
 
     private void setDead() {
         this.isAlive = false;
