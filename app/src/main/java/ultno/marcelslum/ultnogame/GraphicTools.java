@@ -29,8 +29,6 @@ public class GraphicTools {
                     "       vv4_Colors = av4_colors;" +
                     "       vf_alpha = uf_alpha;" +
                     "   }";
-
-
     public static final String fs_SolidColor =
                     "precision mediump float;" +
                     "varying vec4 vv4_Colors;" +
@@ -39,14 +37,8 @@ public class GraphicTools {
                     "  gl_FragColor = vec4(vv4_Colors.r, vv4_Colors.g, vv4_Colors.b, vf_alpha);" +
                     "}";
 
-    /* SHADER Image
-     *
-     * This shader is for rendering 2D images straight from a texture
-     * No additional effects.
-     *
-     */
-    public static final String vs_Image =
 
+    public static final String vs_Image =
         "uniform mat4 um4_projection;" +
         "uniform mat4 um4_view;" +
         "uniform mat4 um4_model;" +
@@ -60,11 +52,7 @@ public class GraphicTools {
         "       vv2_texCoord = av2_uv;" +
         "  vf_alpha = uf_alpha;" +
         "   }";
-
-
-
     public static final String fs_Image =
-
         "precision mediump float;" +
         "varying vec2 vv2_texCoord;" +
         "varying float vf_alpha;" +
@@ -78,7 +66,6 @@ public class GraphicTools {
 
 
     public static final String vs_Image_Colorized =
-
             "uniform mat4 um4_projection;" +
                     "uniform mat4 um4_view;" +
                     "uniform mat4 um4_model;" +
@@ -95,8 +82,6 @@ public class GraphicTools {
                     "       vv4_Colors = av4_colors;" +
                     "       vf_alpha = uf_alpha;" +
                     "   }";
-
-
     public static final String fs_Image_Colorized =
 
             "precision mediump float;" +
@@ -110,40 +95,25 @@ public class GraphicTools {
                     "       gl_FragColor = vec4(color.r + vv4_Colors.r, color.g + vv4_Colors.g, color.b + vv4_Colors.b, vf_alpha*color.a);"+
 
                     "   }";
-
-    public static final String fs_Image_Alpha =
-
-            "precision mediump float;" +
-                    "varying vec2 vv2_texCoord;" +
-                    "varying float vf_alpha;" +
-                    "uniform sampler2D us_texture;" +
-                    "   void main() {" +
-                    "       vec4 color = texture2D( us_texture, vv2_texCoord);" +
-                    "       if (color.a < 0.01) discard;"+
-                    "       gl_FragColor = vec4(color.rgb,vf_alpha*color.a);"+
-
-                    "   }";
-
-  public static final String vs_Image_Alpha_Array =
-
-        "uniform mat4 um4_projection;" +
-        "uniform mat4 um4_view;" +
-        "uniform mat4 um4_model;" +
-        "uniform float uf_alpha;" +
-        "attribute vec4 av4_vertices;" +
-        "attribute vec1 av1_alpha;" +
-        "attribute vec2 av2_uv;" +
-        "varying vec2 vv2_texCoord;" +
-        "varying vec1 vv1_alpha;" +
-        "varying float vf_alpha;" +
-        "   void main() {" +
-        "       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
-        "       vv2_texCoord = av2_uv;" +
-        "  vf_alpha = uf_alpha;" +
-        "   }";
-
-
-
+                    
+                    
+     public static final String vs_Image_Alpha_Array =
+    
+            "uniform mat4 um4_projection;" +
+            "uniform mat4 um4_view;" +
+            "uniform mat4 um4_model;" +
+            "uniform float uf_alpha;" +
+            "attribute vec4 av4_vertices;" +
+            "attribute vec1 av1_alpha;" +
+            "attribute vec2 av2_uv;" +
+            "varying vec2 vv2_texCoord;" +
+            "varying vec1 vv1_alpha;" +
+            "varying float vf_alpha;" +
+            "   void main() {" +
+            "       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
+            "       vv2_texCoord = av2_uv;" +
+            "  vf_alpha = uf_alpha;" +
+            "   }";
     public static final String fs_Image_Alpha_Array =
         "precision mediump float;" +
         "varying vec2 vv2_texCoord;" +
@@ -156,9 +126,6 @@ public class GraphicTools {
         "       gl_FragColor = vec4(color.r, color.g, color.b, vf_alpha*color.a*vv1_alpha.x);"+
 
         "   }";
-
-
-
 
     public static final String vs_Text =
         "uniform mat4 um4_projection;" +
@@ -191,5 +158,20 @@ public class GraphicTools {
 
 
 
-
+    /*
+     public static final String fs_Image_Alpha =
+    
+                "precision mediump float;" +
+                        "varying vec2 vv2_texCoord;" +
+                        "varying float vf_alpha;" +
+                        "uniform sampler2D us_texture;" +
+                        "   void main() {" +
+                        "       vec4 color = texture2D( us_texture, vv2_texCoord);" +
+                        "       if (color.a < 0.01) discard;"+
+                        "       gl_FragColor = vec4(color.rgb,vf_alpha*color.a);"+
+    
+                        "   }";
+    
+ 
+    */
 }
