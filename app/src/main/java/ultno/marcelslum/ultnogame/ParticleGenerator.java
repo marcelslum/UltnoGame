@@ -17,6 +17,7 @@ public class ParticleGenerator extends Entity {
     ParticleGenerator(String name, Game game, float x, float y) {
         super(name, game, x, y);
         this.program = game.imageAlphaArrayProgram;
+        this.textureUnit = game.TEXTURE_NUMBERS;
         size = 3f;
 
         generate();
