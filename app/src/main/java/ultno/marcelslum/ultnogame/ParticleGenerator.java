@@ -66,20 +66,17 @@ public class ParticleGenerator extends Entity {
 
     @Override
     public void setDrawInfo() {
-
-        initializeData(12, 6, 0, 16);
-        initializeData(12*numberOfParticles, 6*numberOfParticles, 0, 16*numberOfParticles);
+        initializeData(12*numberOfParticles, 6*numberOfParticles, 8*numberOfParticles, 0);
         for (int i = 0; i < numberOfParticles;i++) {
             Utils.insertRectangleVerticesData(this.verticesData, 0 + (i * 12), 0, size, 0f, size, 0f);
             Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
-            Utils.insertRectangleColorsData(colorsData, 0 + (i * 16), new Color(1f, 0f, 0f, 1f));
-            //Utils.insertRectangleUvData(this.uvsData, 0 + (i * 8));
+            Utils.insertRectangleUvDataNumbersAndExplosion(this.uvsData, 0 + (i * 8), textureMap);
         }
 
-        verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
-        indicesBuffer = Utils.generateShortBuffer(this.indicesData);
-        //this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        indicesBuffer = Utils.generateShortBuffer(indicesData);
+        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        
     }
 
     private class Particle{
