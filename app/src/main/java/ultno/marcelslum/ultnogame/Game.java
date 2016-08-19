@@ -128,6 +128,16 @@ public class Game {
     public final static int TEXTURE_NUMBERS = 5;
     public final static int TEXTURE_TITTLE = 6;
     
+    
+    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    
     public final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
 
     // bars and balls data
