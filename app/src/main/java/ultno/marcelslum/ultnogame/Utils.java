@@ -114,7 +114,12 @@ public class Utils {
         array[5 + (startIndex)] = z;
     }
     
-      public static void insertRectangleIndicesData(short[] array, int startIndex, int startValue){
+    public static void insertLineVerticesData(float[] array, int startIndex, float alpha){
+        array[0 + (startIndex)] = alpha;
+    }
+    
+    
+    public static void insertRectangleIndicesData(short[] array, int startIndex, int startValue){
         array[0 + (startIndex)] = (short)(0 + (startValue));
         array[1 + (startIndex)] = (short)(1 + (startValue));
         array[2 + (startIndex)] = (short)(2 + (startValue));
