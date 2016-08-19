@@ -8,13 +8,11 @@ import java.util.ArrayList;
  * Created by marcel on 19/08/2016.
  */
 public class ParticleGenerator extends Entity {
-
-
+    
     int numberOfParticles = 100;
     ArrayList<Particle> particlesArray;
     float size;
     boolean isActive;
-
 
     ParticleGenerator(String name, Game game, float x, float y) {
         super(name, game, x, y);
