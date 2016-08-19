@@ -228,6 +228,134 @@ public class Utils {
         insertRectangleUvData(array, startIndex);
     }
     
+    public static void insertRectangleUvDataNumbersAndExplosion(float[] array, int startIndex, int textureMap){
+        
+        if (textureMap < 8){
+            Utils.y1 = (0f + 2f)/1024f;
+            Utils.y2 = (256f - 2f)/1024f;
+            switch(textureMap){
+                case 1:
+                    Utils.x1 = (0f + 2f)/1024f;
+                    Utils.x2 = (142f - 2f)/1024f;
+                    break;
+                case 2:
+                    Utils.x1 = (142f + 2f)/1024f;
+                    Utils.x2 = (284f - 2f)/1024f;
+                    break;
+                case 3:
+                    Utils.x1 = (284f + 2f)/1024f;
+                    Utils.x2 = (426f - 2f)/1024f;
+                    break;
+                case 4:
+                    Utils.x1 = (426f + 2f)/1024f;
+                    Utils.x2 = (568f - 2f)/1024f;
+                    break;
+                case 5:
+                    Utils.x1 = (568f + 2f)/1024f;
+                    Utils.x2 = (710f - 2f)/1024f;
+                    break;
+                case 6:
+                    Utils.x1 = (710f + 2f)/1024f;
+                    Utils.x2 = (852f - 2f)/1024f;
+                    break;
+                case 7:
+                    Utils.x1 = (852f + 2f)/1024f;
+                    Utils.x2 = (994f - 2f)/1024f;
+                    break;
+            }
+        } else if (textureMap < 11){
+            Utils.y1 = (256f + 2f)/1024f;
+            Utils.y2 = (512f - 2f)/1024f;
+                switch(textureMap){
+                case 8:
+                    Utils.x1 = (0f + 2f)/1024f;
+                    Utils.x2 = (142f - 2f)/1024f;
+                    break;
+                case 9:
+                    Utils.x1 = (142f + 2f)/1024f;
+                    Utils.x2 = (284f - 2f)/1024f;
+                    break;
+                case 10:
+                    Utils.x1 = (284f + 2f)/1024f;
+                    Utils.x2 = (426f - 2f)/1024f;
+                    break;
+            }
+        } else if (textureMap < 21){
+            Utils.y1 = (512f + 2f)/1024f;
+            Utils.y2 = (640f - 2f)/1024f;
+            
+            switch(textureMap){
+                case 11:
+                    Utils.x1 = (0f + 2f)/1024f;
+                    Utils.x2 = (100f - 2f)/1024f;
+                    break;
+                case 12:
+                    Utils.x1 = (100f + 2f)/1024f;
+                    Utils.x2 = (200f - 2f)/1024f;
+                    break;
+                case 13:
+                    Utils.x1 = (200f + 2f)/1024f;
+                    Utils.x2 = (300f - 2f)/1024f;
+                    break;
+                case 14:
+                    Utils.x1 = (300f + 2f)/1024f;
+                    Utils.x2 = (400f - 2f)/1024f;
+                    break;
+                case 15:
+                    Utils.x1 = (400f + 2f)/1024f;
+                    Utils.x2 = (500f - 2f)/1024f;
+                    break;
+                case 16:
+                    Utils.x1 = (500f + 2f)/1024f;
+                    Utils.x2 = (600f - 2f)/1024f;
+                    break;
+                case 17:
+                    Utils.x1 = (600f + 2f)/1024f;
+                    Utils.x2 = (700f - 2f)/1024f;
+                    break;
+                case 18:
+                    Utils.x1 = (700f + 2f)/1024f;
+                    Utils.x2 = (800f - 2f)/1024f;
+                    break;
+                case 19:
+                    Utils.x1 = (800f + 2f)/1024f;
+                    Utils.x2 = (900f - 2f)/1024f;
+                    break;
+                case 20:
+                    Utils.x1 = (900f + 2f)/1024f;
+                    Utils.x2 = (1000f - 2f)/1024f;
+                    break;
+            }
+        } else if (textureMap > 20){
+            Utils.y1 = (640f + 2f)/1024f;
+            Utils.y2 = (768f - 2f)/1024f;
+
+            switch(textureMap){
+                case 21:
+                    Utils.x1 = (0f + 2f)/1024f;
+                    Utils.x2 = (128f - 2f)/1024f;
+                    break;
+                case 22:
+                    Utils.x1 = (128f + 2f)/1024f;
+                    Utils.x2 = (256f - 2f)/1024f;
+                    break;
+                case 23:
+                    Utils.x1 = (256f + 2f)/1024f;
+                    Utils.x2 = (384f - 2f)/1024f;
+                    break;
+                case 24:
+                    Utils.x1 = (384f + 2f)/1024f;
+                    Utils.x2 = (512f - 2f)/1024f;
+                    break;
+                case 25:
+                    Utils.x1 = (512f + 2f)/1024f;
+                    Utils.x2 = (640f - 2f)/1024f;
+                    break;
+            }
+        } 
+        insertRectangleUvData(array, startIndex);
+    }
+    
     
     public static void insertRectangleUvData(float[] array, int startIndex, float x1, float x2, float y1, float y2){
             array[0 + (startIndex)] = x1;
