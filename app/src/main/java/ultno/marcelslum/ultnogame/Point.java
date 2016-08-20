@@ -20,7 +20,7 @@ public class Point extends Entity {
         this.isCollidable = false;
         this.isVisible = true;
         this.alpha = 1;
-        this.textureUnit = Game.TEXTURE_NUMBERS;
+        this.textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION;
         this.program = this.game.imageProgram;
     }
 
@@ -58,40 +58,40 @@ public class Point extends Entity {
             
             Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
 
-            int textureMap;
+            int textureMap = Game.TEXTURE_MAP_NUMBERS_POINT1;
             switch (subInteger){
                 case 1:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT1;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT1;
                     break;
                 case 2:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT2;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT2;
                     break;
                 case 3:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT3;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT3;
                     break;
                 case 4:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT4;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT4;
                     break;
                 case 5:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT5;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT5;
                     break;
                 case 6:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT6;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT6;
                     break;
                 case 7:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT7;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT7;
                     break;
                 case 8:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT8;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT8;
                     break;
                 case 9:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT9;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT9;
                     break;
                 case 0:
-                    textureMap = TEXTURE_MAP_NUMBERS_POINT0;
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_POINT0;
                     break;
             }
-            Utils.insertRectangleUvDataNumbersAndExplosion(this.uvsData, 0 + (i * 8), textureMap);
+            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), textureMap);
         }
         
         this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);

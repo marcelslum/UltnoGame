@@ -26,8 +26,7 @@ public class Ball extends Circle{
     public float velocityMinByInitialVelocity;
     public float maxAngle;
     public float minAngle;
-    public float initialDesireVelocityX;
-    public float initialDesireVelocityY;
+
     public float rotationAngle = 0;
     boolean isInvencible = false;
 

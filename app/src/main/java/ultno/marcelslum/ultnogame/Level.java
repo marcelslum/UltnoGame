@@ -364,6 +364,9 @@ public class Level {
             float barVelocityX = this.game.gameAreaResolutionX * this.barsDesiredVelocityXByResolution[i];
             float barVelocityY = this.game.gameAreaResolutionY * this.barsDesiredVelocityYByResolution[i];
 
+
+
+
             game.barsDesiredVelocityX[i] = barVelocityX;
             game.barsDesiredVelocityY[i] = barVelocityY;
             game.barsInitialPositionX[i] = barX;
@@ -371,10 +374,10 @@ public class Level {
 
             Bar bar = new Bar("bar", this.game, barX, barY, barWidth, barHeight, 9);
             this.game.addBar(bar);
-            this.game.barsInitialPositionX[i] = barX;
-            this.game.barsInitialPositionY[i] = barY;
-            this.game.barsDesiredVelocityX[i] = barVelocityX;
-            this.game.barsDesiredVelocityY[i] = barVelocityY;
+
+            bar.initialX = barX;
+            bar.initialY = barY;
+            bar.initialDesireVelocityX = barVelocityX;
             bar.dvx = barVelocityX;
         }
 
@@ -446,6 +449,10 @@ public class Level {
 
             ball.initialDesireVelocityX = ballVelocityX;
             ball.initialDesireVelocityY = ballVelocityY;
+
+            ball.initialX = ballX;
+            ball.initialY = ballY;
+
 
             ball.dvx = ballVelocityX;
             ball.dvy = ballVelocityY;

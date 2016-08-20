@@ -233,7 +233,7 @@ public class Utils {
         insertRectangleUvData(array, startIndex);
     }
     
-    public static void insertRectangleUvDataNumbersAndExplosion(float[] array, int startIndex, int textureMap){
+    public static void insertRectangleUvDataNumbersExplosion(float[] array, int startIndex, int textureMap){
         
         if (textureMap < 8){
             Utils.y1 = (0f + 2f)/1024f;

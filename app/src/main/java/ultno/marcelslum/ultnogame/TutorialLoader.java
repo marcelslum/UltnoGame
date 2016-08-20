@@ -15,7 +15,7 @@ public class TutorialLoader {
 
     public static void loadTutorial(Game game, int levelNumber){
     
-    Game innerGame = game;
+    final Game innerGame = game;
 
     switch (levelNumber){
             case 1:
@@ -37,15 +37,10 @@ public class TutorialLoader {
                     public void onShowBeforeAnim() {
                         innerGame.balls.get(0).display();
                         innerGame.bars.get(0).isMovable = false;
-                        innerGame.bars.get(0).x = innerGame.levelObject.barsInitialX[0]];
-                        innerGame.bars.get(0).y = innerGame.levelObject.barsInitialY[0]];
+                        innerGame.bars.get(0).returnToInitialPosition();
                     }
                 });
                 game.levelObject.tutorials.add(l1t2);
-                
-                
-                
-                
                 break;
                 
             case 2:

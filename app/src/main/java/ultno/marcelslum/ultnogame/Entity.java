@@ -388,8 +388,7 @@ public class Entity {
         }
         
         int av1_alphaHandle = -1;
-        if (this.alphaBuffer != -1) {
-            // Get handle to texture coordinates location and load the texture uvs
+        if (this.alphaBuffer != null) {
             av1_alphaHandle = GLES20.glGetAttribLocation(this.program.get(), "av1_alphaHandle");
             GLES20.glVertexAttribPointer(av1_alphaHandle, 1, GLES20.GL_FLOAT, false, 0, this.alphaBuffer);
             GLES20.glEnableVertexAttribArray(av1_alphaHandle);

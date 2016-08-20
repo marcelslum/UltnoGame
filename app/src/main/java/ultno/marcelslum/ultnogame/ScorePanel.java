@@ -30,7 +30,7 @@ public class ScorePanel extends Entity{
         isCollidable = false;
         isVisible = true;
         alpha = 1;
-        textureUnit = Game.TEXTURE_NUMBERS;
+        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION;
         program = this.game.imageProgram;
         value = 0;
         setDrawInfo();
@@ -71,40 +71,40 @@ public class ScorePanel extends Entity{
             
             Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
 
-             int textureMap;
+            int textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE1;
                 switch (subInteger){
                     case 1:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE1;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE1;
                         break;
                     case 2:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE2;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE2;
                         break;
                     case 3:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE3;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE3;
                         break;
                     case 4:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE4;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE4;
                         break;
                     case 5:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE5;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE5;
                         break;
                     case 6:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE6;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE6;
                         break;
                     case 7:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE7;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE7;
                         break;
                     case 8:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE8;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE8;
                         break;
                     case 9:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE9;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE9;
                         break;
                     case 0:
-                        textureMap = TEXTURE_MAP_NUMBERS_SCORE0;
+                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE0;
                         break;
                 }
-                Utils.insertRectangleUvDataNumbersAndExplosion(this.uvsData, 0 + (i * 8), textureMap);
+                Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), textureMap);
             
         }
         

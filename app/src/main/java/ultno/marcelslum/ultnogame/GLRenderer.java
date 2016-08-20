@@ -1,10 +1,6 @@
 package ultno.marcelslum.ultnogame;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.AudioAttributes;
-import android.media.SoundPool;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
@@ -248,7 +244,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Utils.setTexture("drawable/targets", texturenames, Game.TEXTURE_TARGETS, mContext); // targets
         Utils.setTexture("drawable/bars", texturenames, Game.TEXTURE_BARS, mContext); // bars
         Utils.setTexture("drawable/background", texturenames, Game.TEXTURE_BACKGROUND, mContext); // background
-        Utils.setTexture("drawable/numbers_explode", texturenames, Game.TEXTURE_NUMBERS, mContext); // numeros
+        Utils.setTexture("drawable/numbers_explosion", texturenames, Game.TEXTURE_NUMBERS_EXPLOSION, mContext); // numeros
         Utils.setTexture("drawable/tittle", texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
         
     }

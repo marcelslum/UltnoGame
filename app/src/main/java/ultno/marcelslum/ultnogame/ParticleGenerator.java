@@ -17,7 +17,7 @@ public class ParticleGenerator extends Entity {
     ParticleGenerator(String name, Game game, float x, float y) {
         super(name, game, x, y);
         this.program = game.imageAlphaArrayProgram;
-        this.textureUnit = game.TEXTURE_NUMBERS;
+        this.textureUnit = game.TEXTURE_NUMBERS_EXPLOSION;
         size = 3f;
 
         generate();
@@ -38,12 +38,11 @@ public class ParticleGenerator extends Entity {
         for (int i = 0; i < numberOfParticles;i++) {
             float vx = Utils.getRandonFloat(-5.1f, 5.1f);
             float vy = Utils.getRandonFloat(-5.1f, 5.1f);
-            float vy = Utils.getRandonFloat(-5.1f, 5.1f);
             float velocity_variation_x = Utils.getRandonFloat(-0.2f, 0.2f);
             float velocity_variation_y = Utils.getRandonFloat(-0.2f, 0.2f);
             float alpha_decay = Utils.getRandonFloat(0.01f, 0.08f);
             float size = Utils.getRandonFloat(2f, 10f);
-            
+            int textureMap;
             float textureMapFilter = Utils.getRandonFloat(0f, 1f);
             if (textureMapFilter < 0.2f) {
                 textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1;   
@@ -53,7 +52,7 @@ public class ParticleGenerator extends Entity {
                 textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3;   
             } else if (textureMapFilter < 0.8f) {
                 textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4;   
-            } else if (textureMapFilter < 1f) {
+            } else {
                 textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5;   
             }
             
@@ -76,11 +75,10 @@ public class ParticleGenerator extends Entity {
             Particle p = particlesArray.get(i);
             p.x += p.vx;
             p.y += p.vy;
-            p.vx += velocity_variation_x;
-            p.vy += velocity_variation_y;
+            p.vx += p.velocity_variation_x;
+            p.vy += p.velocity_variation_y;
             p.alpha -= p.alpha_decay;
-            Utils.insertRectangleVerticesData(this.verticesData, 0 + (i * 12), 0, p.size, 0f, p.size, 0f);
-            Utils.insertAlphaData(this.indicesData, 0 + i);
+            Utils.insertRectangleVerticesData(this.verticesData, 0 + (i * 12), p.x, p.x + p.size, p.y, p.y + p.size, 0f);
             Utils.insertAlphaData(alphaData, 0 + i, p.alpha);
         }
 
@@ -96,14 +94,13 @@ public class ParticleGenerator extends Entity {
             Particle p = particlesArray.get(i);
             Utils.insertRectangleVerticesData(this.verticesData, 0 + (i * 12), 0, p.size, 0f, p.size, 0f);
             Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
-            Utils.insertRectangleUvDataNumbersAndExplosion(this.uvsData, 0 + (i * 8), p.textureMap);
+            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), p.textureMap);
             Utils.insertAlphaData(alphaData, 0 + i, 1f);
         }
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         indicesBuffer = Utils.generateShortBuffer(indicesData);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
         alphaBuffer = Utils.generateFloatBuffer(alphaData);
-        
     }
 
     private class Particle{

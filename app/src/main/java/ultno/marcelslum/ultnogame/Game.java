@@ -125,7 +125,7 @@ public class Game {
     public final static int TEXTURE_TARGETS = 2;
     public final static int TEXTURE_BARS = 3;
     public final static int TEXTURE_BACKGROUND = 4;
-    public final static int TEXTURE_NUMBERS = 5;
+    public final static int TEXTURE_NUMBERS_EXPLOSION = 5;
     public final static int TEXTURE_TITTLE = 6;
     
     

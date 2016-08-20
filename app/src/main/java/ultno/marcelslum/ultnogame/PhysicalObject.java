@@ -25,6 +25,10 @@ public class PhysicalObject extends Entity{
     public float accelFinalVelocityY;
     public int accelDuration;
     public long accelInitialTime;
+    public float initialDesireVelocityX;
+    public float initialDesireVelocityY;
+    public float initialX;
+    public float initialY;
 
     PhysicalObject(String name, Game game, float x, float y, int weight){
         super(name, game, x, y);
@@ -52,6 +56,11 @@ public class PhysicalObject extends Entity{
         this.isCollided = false;
         this.lastCollisionResponse.clear();
         this.lastCollisionObjects.clear();
+    }
+
+    public void returnToInitialPosition(){
+        x = initialX;
+        y = initialY;
     }
 
     public void respondToCollision(PhysicalObject other, float responseX, float responseY, float ax, float ay, float bx, float by) {
