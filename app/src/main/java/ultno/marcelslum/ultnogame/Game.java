@@ -56,11 +56,8 @@ public class Game {
     public Text messagePreparation;
     public Text messageInGame;
     public Text messageCurrentLevel;
-    //public Text currentLevel;
     public Text messageMaxScoreLevel;
-    //public Text maxScoreLevel;
     public Text messageMaxScoreTotal;
-
 
     // quadtree objects
     public static Quadtree quad;
@@ -188,8 +185,6 @@ public class Game {
     int ballsAlive;
     private int streamIdSoundAlarm;
 
-
-
     public static Game getInstance() {
         return ourInstance;
     }
@@ -279,9 +274,7 @@ public class Game {
             menuMain.display();
             tittle.display();
             messageCurrentLevel.display();
-            //currentLevel.display();
             messageMaxScoreLevel.display();
-            //maxScoreLevel.display();
             messageMaxScoreTotal.display();
         } else if (state == GAME_STATE_PREPARAR){
             music = MediaPlayer.create(context, R.raw.musicgroove90);
@@ -325,11 +318,8 @@ public class Game {
             verifyDead();
 
         } else if (state == GAME_STATE_JOGAR){
-
             music.start();
-
             freeAllGameEntities();
-            //soundPool.play(soundMusic, 0.1f* (float)volume, 0.1f* (float)volume, 0, 0, 1);
         } else if (state == GAME_STATE_DERROTA){
             stopAndReleaseMusic();
             soundPool.play(soundGameOver, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
@@ -340,7 +330,6 @@ public class Game {
         } else if (state == GAME_STATE_PAUSE){
             music.pause();
             Log.e("game", "ativando game_state_pause");
-            //soundPool.stop(soundMusic);
             soundPool.play(soundMenuSelectBig, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
@@ -561,22 +550,6 @@ public class Game {
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 this, resolutionX*0.05f, resolutionY*0.9f, resolutionY*0.05f,
                 context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
-
-
-        /*
-        currentLevel = new Text("currentLevel",
-                this, resolutionX*0.85f, resolutionY*0.9f, resolutionY*0.5f,
-                , font, new Color(0f, 0f, 0f, 1f));
-
-        maxScoreLevel = new Text("maxScoreLevel",
-            this, resolutionX*0.85f, resolutionY*0.9f, resolutionY*0.5f,
-            ), font, new Color(0f, 0f, 0f, 1f));
-
-        */
-        
-        //TextBox tb = new TextBox("textBox", this, 50f, 50f, 600f, 40f, "Atinja o alvo com a bola para destruir o alvo que desaparecerá após ser atingido!!!");
-        //textBoxes.add(tb);
-        //Utils.createSimpleAnimation(tb, "translateX", "translateX", 1000, -800f, 0f).start();
     }
 
     public ArrayList<Entity> collectAllMenuEntities(){
@@ -591,9 +564,7 @@ public class Game {
         list.add(messagePreparation);
         list.add(messageInGame);
         list.add(messageCurrentLevel);
-        //list.add(currentLevel);
         list.add(messageMaxScoreLevel);
-        //list.add(maxScoreLevel);
         list.add(messageMaxScoreTotal);
         return list;
     }
@@ -679,17 +650,16 @@ public class Game {
                 LevelLoader.loadLevel(innerGame, innerGame.levelNumber);
                 TutorialLoader.loadTutorial(innerGame, innerGame.levelNumber);
 
-                Log.e("game", "tutorials size: "+ innerGame.levelObject.tutorials.size());
-
+                //Log.e("game", "tutorials size: "+ innerGame.levelObject.tutorials.size());
                 if (innerGame.levelObject.tutorials.size() > 0) {
                     if (!Storage.getLevelTutorialSaw(innerGame.levelNumber)) {
-                        Log.e("game", "tutorial ainda não visto");
+                        //Log.e("game", "tutorial ainda não visto");
                         Storage.setLevelTutorialSaw(innerGame.levelNumber, true);
                         innerGame.levelObject.loadEntities();
                         innerGame.setGameState(GAME_STATE_TUTORIAL);
                         innerGame.levelObject.showFirstTutorial();
                     } else {
-                        Log.e("game", "tutorial já visto");
+                        //Log.e("game", "tutorial já visto");
                         innerGame.menuTutorial.getMenuOptionByName("exibirTutorial").setText = context.getResources().getString(R.string.menuTutorialExibirTutorial) + innerGame.levelNumber;
                         innerGame.menuTutorial.unblock();
                     }
@@ -841,8 +811,16 @@ public class Game {
 
     private void changeLevel(int level) {
         this.levelNumber = level;
-        // TODO alterar texto que mostra o level
-        // TODO alterar texto que mostra a pontuação
+        
+        // alterar texto que mostra o level
+        messageCurrentLevel.setText(
+            context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber)
+        );
+
+        // alterar texto que mostra a pontuação
+        messageMaxScoreLevel.setText(
+            context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Integer.toString(Storage.getLevelMaxScore(levelNumber)))
+        );
     }
 
     public void initPrograms(){
@@ -1093,9 +1071,7 @@ public class Game {
         messagePreparation.prepareRender(matrixView, matrixProjection);
         messageInGame.prepareRender(matrixView, matrixProjection);
         messageCurrentLevel.prepareRender(matrixView, matrixProjection);
-        //currentLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreLevel.prepareRender(matrixView, matrixProjection);
-        //maxScoreLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
     }
 
@@ -1122,16 +1098,10 @@ public class Game {
                     out = this.quad.retrieve(a);
 
                     //Log.e("game ", "quad size "+out.size());
-
-
                     //String texto = " ";
                     //for (int i = 0; i < out.size(); i++){
                     //    texto = texto + out.get(i).name + " - ";
                     //}
-
-
-
-
                     //if (b.name == "bordaB"){
                     //    Log.e("posicao bola x Borda B", " "+ a.y + " - "+ b.y);
                     //}
