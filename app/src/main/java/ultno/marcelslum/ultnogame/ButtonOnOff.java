@@ -7,11 +7,64 @@ package ultno.marcelslum.ultnogame;
 public class ButtonOnOff extends Button{
 
     public boolean on;
+    private OnOffBehavior onOffBehavior;
 
     ButtonOnOff(String name, Game game, float x, float y, float width, float height, int textureUnit){
         super(name, game, x, y, width, height, textureUnit);
         this.on = false;
     }
+
+    public void setOn(){
+        this.on = true;
+        setTextureMap(textureMapPressed);
+        if (onOffBehavior != null){
+            onOffBehavior.onBehavior();
+        }
+    }
+
+    public void setOff(){
+        this.on = false;
+        setTextureMap(textureMapUnpressed);
+        if (onOffBehavior != null){
+            onOffBehavior.offBehavior();
+        }
+    }
+
+
+
+    @Override
+    public void setPressed() {
+        this.isPressed = true;
+        if (this.on){
+            setOff();
+        } else {
+            setOn();
+        }
+
+        if (this.onPress != null){
+            this.onPress.onPress();
+        }
+    }
+
+    @Override
+    public void setUnpressed() {
+        this.isPressed = false;
+        if (this.onUnpress != null){
+            this.onUnpress.onUnpress();
+        }
+    }
+
+    public void setOnOffBehavior(OnOffBehavior onOffBehavior){
+        this.onOffBehavior = onOffBehavior;
+    }
+
+    public interface OnOffBehavior {
+        public void onBehavior();
+        public void offBehavior();
+    }
+
+
+
 
 
 }

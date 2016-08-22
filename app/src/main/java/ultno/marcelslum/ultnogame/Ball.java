@@ -48,6 +48,7 @@ public class Ball extends Circle{
     Ball(String name, Game game, float x, float y, float radium, int weight){
         super(name, game, x, y, radium, weight);
         textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+        textureMap = COLOR_BALL_BLACK;
         isMovable = true;
         setDrawInfo();
     }
@@ -61,7 +62,7 @@ public class Ball extends Circle{
                 valuesInvencible.add(new float[]{0.6f,4f});
                 valuesInvencible.add(new float[]{0.8f,5f});
             final Ball innerBall = this;
-            Animation animBallInvencible = new Animation(innerBall, "ballInvencible", "numberForAnimation", 1200, valuesInvencible, true, false);
+            Animation animBallInvencible = new Animation(innerBall, "ballInvencible", "numberForAnimation", 600, valuesInvencible, true, false);
             animBallInvencible.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
@@ -285,7 +286,7 @@ public class Ball extends Circle{
 
         // TOCA O SOM ADEQUADO
 
-        this.game.soundPool.play(this.game.soundBallHit, 1, 1, 0, 0, 1);
+        this.game.soundPool.play(this.game.soundBallHit, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
 
     }
 
@@ -309,8 +310,8 @@ public class Ball extends Circle{
         game.particleGenerator.add(pg);
         pg.activate();
 
-        this.game.soundPool.play(this.game.soundBlueBallExplosion1, 1, 1, 0, 0, 1);
-        this.game.soundPool.play(this.game.soundBlueBallExplosion2, 1, 1, 0, 0, 1);
+        this.game.soundPool.play(this.game.soundExplosion1, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+        this.game.soundPool.play(this.game.soundExplosion2, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
 
         listenForExplosion = false;
 
@@ -341,32 +342,54 @@ public class Ball extends Circle{
         float explodeVelocityX = 0;
         float explodeVelocityY = 0;
         float explodeRadius = radius;
+
+
+
+
+
+
+        int [] explosionColorsUsed = {-1,-1,-1};
+
         
         for (int i = 0; i < quantityOfClones; i++){
             if (i == 0){
                 explodeX = x - distance;
                 explodeY = y;
-                explodeColor = COLOR_BALL_ORANGE;
                 explodeVelocityX = rotateX * -1;
                 explodeVelocityY = rotateY * -1;
             } else if (i == 1){
                 explodeX = x - distance;
                 explodeY = y + distance;
-                explodeColor = COLOR_BALL_BLUE;
                 explodeVelocityX = rotateX * -1;
                 explodeVelocityY = rotateY;
             } else if (i == 2){
                 explodeX = x;
                 explodeY = y + distance;
-                explodeColor = COLOR_BALL_YELLOW;
                 explodeVelocityX = rotateX;
                 explodeVelocityY = rotateY;
             }
+
+            boolean sameColor;
+            do {
+                sameColor = false;
+                explodeColor = getRandomColor();
+                for (int i2 = 0; i2 < explosionColorsUsed.length; i2++){
+                    if (explodeColor == explosionColorsUsed[i2]){
+                        sameColor = true;
+                        break;
+                    }
+                }
+            } while (sameColor == true);
+
+            explosionColorsUsed[i] = explodeColor;
+
+            //Log.e("ball", "explodeColor "+i+" "+explodeColor);
             
             Ball ball = new Ball("ball"+i, this.game, explodeX, explodeY, explodeRadius, 8);
             ball.program = this.game.imageProgram;
             ball.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-            setTextureUnitAndUvData(explodeColor);
+            ball.setTextureUnitAndUvData(explodeColor);
+
             ball.dvx = 0f;
             ball.dvy = 0f;
             
@@ -387,6 +410,8 @@ public class Ball extends Circle{
 
             //Log.e("ball", "explode x: "+explodeVelocityX+" y: "+explodeVelocityX);
             ball.accelerate(500, explodeVelocityX, explodeVelocityY);
+
+
         }
         
         for (Animation a : animations){
@@ -396,6 +421,30 @@ public class Ball extends Circle{
             }
         }
     }
+
+    public int getRandomColor() {
+        int color;
+        float random = Utils.getRandonFloat(0f, 1f);
+        if (random < (0.125 * 1)) {
+            color = COLOR_BALL_BLUE;
+        } else if (random < (0.125 * 2)) {
+            color = COLOR_BALL_GREEN;
+        } else if (random < (0.125 * 3)) {
+            color = COLOR_BALL_RED;
+        } else if (random < (0.125 * 4)) {
+            color = COLOR_BALL_YELLOW;
+        } else if (random < (0.125 * 5)) {
+            color = COLOR_BALL_ORANGE;
+        } else if (random < (0.125 * 6)) {
+            color = COLOR_BALL_PINK;
+        } else if (random < (0.125 * 7)) {
+            color = COLOR_BALL_BLACK;
+        } else {
+            color = COLOR_BALL_PURPLE;
+        }
+        return color;
+    }
+
 
     private void setDead() {
         this.isAlive = false;

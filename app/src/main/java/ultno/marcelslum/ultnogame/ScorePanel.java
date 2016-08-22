@@ -17,8 +17,7 @@ public class ScorePanel extends Entity{
     
     private final static float textureSize = 1024f;
     private final static float [] columns = new float [] {142f,284f,426f, 568f, 710f, 852f, 994f};
-    private final static float [] lines = new float [] {257f,514f,771f};
-
+    private final static float [] lines = new float [] {256f,512f,779f};
 
     ScorePanel(String name, Game game, float x, float y, float size) {
         super(name, game, x, y);

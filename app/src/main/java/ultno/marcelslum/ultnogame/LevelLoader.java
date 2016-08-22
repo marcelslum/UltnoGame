@@ -33,7 +33,7 @@ public class LevelLoader {
                 l.ballsDesiredVelocityXByResolution = new float[]{0.003f, 0.003f};
                 l.ballsDesiredVelocityYByResolution = new float[]{0.00529412f, 0.00529412f};
                 l.ballsColor = new Color[] {new Color(1f, 1f, 1f, 1f),new Color(1f, 1f, 1f, 1f)};
-                l.ballsInvencible = new boolean[]{false, false};
+                l.ballsInvencible = new boolean[]{true, false};
                 l.ballsAngleToRotate = new float[]{2f, 2f};
                 l.ballsMaxAngle = new float[]{55f, 55f};
                 l.ballsMinAngle = new float[]{35f, 35f};

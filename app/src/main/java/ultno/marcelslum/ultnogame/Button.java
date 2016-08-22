@@ -11,6 +11,7 @@ public class Button extends Entity{
     InteractionListener listener;
     OnPress onPress;
     OnUnpress onUnpress;
+    OnPress2 onPress2;
     int textureMapPressed;
     int textureMapUnpressed;
     int textureMap;
@@ -55,6 +56,9 @@ public class Button extends Entity{
         if (this.onPress != null){
             this.onPress.onPress();
         }
+        if (this.onPress2 != null){
+            this.onPress2.onPress2();
+        }
     }
 
     public void setUnpressed() {
@@ -74,6 +78,15 @@ public class Button extends Entity{
     public interface OnUnpress{
         public void onUnpress();
     }
+
+    public interface OnPress2{
+        public void onPress2();
+    }
+
+    public void setOnPress(OnPress2 onPress2){
+        this.onPress2 = onPress2;
+    }
+
 
     public void setDrawInfo(){
         initializeData(12, 6, 12, 0);

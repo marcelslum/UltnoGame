@@ -46,7 +46,6 @@ public class Entity {
     public boolean isSolid;
     public boolean isBlocked;
     public boolean isPressed;
-    public Layer layer;
     public ArrayList<Animation> animations;
     public ArrayList<InteractionListener> listeners;
     public boolean isFree;
@@ -386,14 +385,7 @@ public class Entity {
             GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, this.uvsBuffer);
             GLES20.glEnableVertexAttribArray(av2_uvHandle);
         }
-        
-        int av1_alphaHandle = -1;
-        if (this.alphaBuffer != null) {
-            av1_alphaHandle = GLES20.glGetAttribLocation(this.program.get(), "av1_alphaHandle");
-            GLES20.glVertexAttribPointer(av1_alphaHandle, 1, GLES20.GL_FLOAT, false, 0, this.alphaBuffer);
-            GLES20.glEnableVertexAttribArray(av1_alphaHandle);
-        }
-        
+
         int av4_colorsHandle = -1;
         if (this.colorsBuffer != null){
             //Log.e("tag "+this.name, "tem cor");
@@ -436,9 +428,11 @@ public class Entity {
         // No depth testing
         // Draw the triangle
 
+
+
         if (isLineGL) {
             GLES20.glLineWidth(lineWidth);
-            GLES20.glDrawArrays(GLES20.GL_LINES, 0, 3);
+            GLES20.glDrawElements(GLES20.GL_LINES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
         } else {
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
         }
@@ -452,9 +446,10 @@ public class Entity {
         if (av4_colorsHandle != -1){
             GLES20.glDisableVertexAttribArray(av4_colorsHandle);
         }
-        if (av1_alphaHandle != -1){
-            GLES20.glDisableVertexAttribArray(av1_alphaHandle);
-        }
+
+        //if (name == "explode")
+            Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
+            //Log.e("entity2", GLES20.glGetProgram(program.get()));
 
     }
 

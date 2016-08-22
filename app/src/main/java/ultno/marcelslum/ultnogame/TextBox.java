@@ -17,14 +17,9 @@ public class TextBox extends Entity{
     float height;
     float size;
     String text;
-    float maxWidth;
     float padding = 0.2f;
-    boolean isHaveArrow;
+    boolean isHaveArrow = false;
     Button arrowContinuar;
-    float arrowStartX;
-    float arrowStartY;
-    float arrowFinishX;
-    float arrowFinishY;
     Image frame;
     Color textColor = new Color(0f, 0f, 0f, 0.9f);
     Line arrow;
@@ -52,12 +47,10 @@ public class TextBox extends Entity{
             int limite = 100;
             int contador = 0;
 
-
             do {
                 do {
                     contador += 1;
                     textForMeasure = new Text("text", game, 0f, 0f, size, stringToTest, game.font, textColor);
-
                     //Log.e("textBox", "testando string "+ stringToTest);
 
                     widthOfText = textForMeasure.calculateWidth();
@@ -105,42 +98,58 @@ public class TextBox extends Entity{
         frame = new Image("frame", game, x, y, width + (textPadding*6), textY - y + (textPadding*6), Game.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
         addChild(frame);
 
-        arrow = new Line("lina", game, 50f, 50f, 300f, 300f, textColor);
-        addChild(arrow);
+        Log.e("texbox", x + " " + y + " " + (width + (textPadding*6)) + " " + (textY - y + (textPadding*6)));
+
 
         arrowContinuar = new Button("arrowContinuar", this.game, x + width - size, y + textY - size - (textPadding*8), size, size, Game.TEXTURE_BUTTONS_AND_BALLS);
         arrowContinuar.setTextureMap(14);
         arrowContinuar.textureMapUnpressed = 14;
         arrowContinuar.textureMapPressed = 6;
-        addChild(arrowContinuar);
-
-        InteractionListener newListener = new InteractionListener(name+"arrowContinuar",
-                x + width - size,
-                y + textY - size - (textPadding*6),
-                size,
-                size,
-                500, this, game);
-
-
-        final Game innerGame = game;
-        newListener.setPressListener(new InteractionListener.PressListener() {
+            final Game innerGame = game;
+        arrowContinuar.setOnPress(new Button.OnPress2() {
             @Override
-            public void onPress() {
+            public void onPress2() {
                 innerGame.levelObject.nextTutorial();
             }
-            @Override
-            public void onUnpress() {
-            }
         });
-        this.game.addInteracionListener(newListener);
+        addChild(arrowContinuar);
+    }
 
+    public void appendArrow(float arrowX, float arrowY){
+        isHaveArrow = true;
 
+        float initialX;
+        float initialY;
+
+        Log.e("textbox appendArrow", " " + frame.x + " " + frame.y + " " + frame.width + " " + frame.height);
+
+        if (arrowY > (frame.y + frame.height)){
+            initialY = frame.y + frame.height;
+            initialX = frame.x + (frame.width/2f);
+        } else if (arrowY < frame.y){
+            initialY = frame.y;
+            initialX = frame.x + (frame.width/2f);
+        } else {
+            initialY = frame.y + (frame.height/2f);
+            if (arrowX < frame.x){
+                initialX = frame.x;
+            } else if (arrowX > (frame.x+frame.width)){
+                initialX = frame.x + frame.width;
+            } else {
+                initialX = frame.x;
+            }
+        }
+
+        Log.e("textbox appendArrow", " initialX " + initialX + " initialY " + initialY);
+
+        arrow = new Line("line", game, initialX, initialY, arrowX, arrowY, textColor);
+        addChild(arrow);
 
     }
 
     public void render(float[] matrixView, float[] matrixProjection){
 
-        if (arrow != null){
+        if (isHaveArrow && arrow != null){
             arrow.prepareRender(matrixView, matrixProjection);
         }
 
@@ -155,6 +164,4 @@ public class TextBox extends Entity{
             this.texts.get(i).prepareRender(matrixView, matrixProjection);
         }
     }
-
-
 }

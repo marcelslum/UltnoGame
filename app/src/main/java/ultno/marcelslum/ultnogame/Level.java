@@ -140,43 +140,46 @@ public class Level {
     public void showFirstTutorial(){
         Log.e("level", "showFirstTutorial");
         this.game.blockAndWaitTouchRelease();
-
-        this.tutorials.get(0).show(game.soundPool, game.soundTextBoxAppear);
         this.showingTutorial = 0;
+        this.tutorials.get(0).show(game.soundPool, game.soundTextBoxAppear);
     }
 
     public void nextTutorial(){
-        final int nextTutorial = this.showingTutorial + 1;
-
+        final Level innerLevel = this;
+        this.game.blockAndWaitTouchRelease();
         if (this.tutorials.get(this.showingTutorial).isBlocked == false){
-
-
             game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
+            if (showingTutorial + 1 == this.tutorials.size()){
 
-            final Level self = this;
-            if (nextTutorial == this.tutorials.size()){
+                Log.e("level", "ultimo tutorail, setando preparar");
+
                 this.tutorials.get(this.showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
                     @Override
                     public void onUnshowAfterAnim2() {
-                        self.game.setGameState(Game.GAME_STATE_PREPARAR);
+                        innerLevel.game.setGameState(Game.GAME_STATE_PREPARAR);
                     }
                 });
                 this.tutorials.get(this.showingTutorial).unshow();
             } else {
-                this.tutorials.get(this.showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
+
+                Log.e("level", "nextTutorial");
+                Log.e("level", "showingTutorial "+showingTutorial);
+                tutorials.get(showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
                     @Override
                     public void onUnshowAfterAnim2() {
-                        self.tutorials.get(nextTutorial).show(self.game.soundPool, self.game.soundTextBoxAppear);
+                        Log.e("level", "onUnshowAfterAnim2");
+                        innerLevel.showingTutorial = innerLevel.showingTutorial + 1;
+                        innerLevel.tutorials.get(innerLevel.showingTutorial).show(innerLevel.game.soundPool, innerLevel.game.soundTextBoxAppear);
                     }
                 });
-                this.tutorials.get(this.showingTutorial).unshow();
-                this.showingTutorial = nextTutorial;
+                tutorials.get(showingTutorial).unshow();
+
+                Log.e("level", "showingTutorial depois"+showingTutorial);
             }
         }
     }
 
     public void loadEntities() {
-
         this.game.eraseAllGameEntities();
         this.game.quad = new Quadtree(new RectangleM(0,0,this.game.gameAreaResolutionX,this.game.gameAreaResolutionY),5,5);
 
@@ -249,92 +252,72 @@ public class Level {
             this.game.button2Right.textureMapPressed = 17;
         }
 
-        /*
-        Log.e("Level loadEnt", "1");
-
         // BOTÃO SOM
-        this.game.soundButton = new ButtonOnOff("buttonSound", this.game, this.game.gameAreaResolutionX * 0.45f,
-                this.game.gameAreaResolutionY * 0.95f, this.game.gameAreaResolutionX * 0.028f, this.game.gameAreaResolutionX * 0.028f);
-
-        //console.log("this.game.soundOn ", this.game.soundOn);
-        if (this.game.soundOn){
-            this.game.soundButton.on = true;
+        this.game.buttonSound = new ButtonOnOff("buttonSound", this.game, this.game.gameAreaResolutionX * 0.35f,
+                this.game.gameAreaResolutionY * 1.04f, this.game.gameAreaResolutionX * 0.05f, this.game.gameAreaResolutionX * 0.05f, Game.TEXTURE_BUTTONS_AND_BALLS);
+        this.game.buttonSound.textureMapUnpressed = 9;
+        this.game.buttonSound.textureMapPressed = 10;
+        this.game.buttonSound.alpha = 0.7f;
+        if (this.game.menuVolume > 0) {
+            this.game.buttonSound.setOn();
+        } else {
+            this.game.buttonSound.setOff();
         }
-
-        // TODO this.game.buttons.buttonSound.imageOn = this.game.icons.soundOn;
-        // TODO this.game.buttons.buttonSound.imageOff = this.game.icons.soundOff;
-
-        Log.e("Level loadEnt", "1");
-        final Level self = this;
-        this.game.soundButton.listener.setPressListener(new InteractionListener.PressListener() {
-            @Override
-            public void onPress() {
-                self.game.soundButton.setPressed();
-                if (self.game.soundOn){
-                    self.game.soundOn = false;
-                } else {
-                    if (self.game.volume == 0){
-                        self.game.volume = 10;
-                    }
-                    self.game.soundOn = true;
-                }
-            }
-            @Override
-            public void onUnpress() {
-                self.game.soundButton.setUnpressed();
-            }
-        });
-
-        // BOTÃO SOM
-        this.game.musicButton = new ButtonOnOff("musicButton", this.game, this.game.gameAreaResolutionX * 0.53f,
-                this.game.gameAreaResolutionY * 0.95f, this.game.gameAreaResolutionX * 0.028f, this.game.gameAreaResolutionX * 0.028f);
-
-        //console.log("this.game.soundOn ", this.game.soundOn);
-        if (this.game.musicOn){
-            this.game.musicButton.on = true;
-        }
-
-        // TODO this.game.musicButton.imageOn = this.game.icons.soundOn;
-        // TODO this.game.musicButton.imageOff = this.game.icons.soundOff;
-
-        this.game.musicButton.listener.setPressListener(new InteractionListener.PressListener() {
-            @Override
-            public void onPress() {
-                if (self.game.isBlocked){
-                    return;
-                }
-
-                self.game.musicButton.setPressed();
-
-                if (self.game.musicOn){
-                    self.game.musicOn = false;
-                } else {
-                    self.game.musicOn = true;
-                    if (self.game.volume == 0){
-                        self.game.volume = 10;
-                    }
-                }
-                if (self.game.gameState == "iniciar"){
-                    if (self.game.musicOn){
-                        self.game.music.play();
-                    } else {
-                        self.game.music.pause();
-                    }
-                }
-            }
-            @Override
-            public void onUnpress() {
-                self.game.soundButton.setUnpressed();
-            }
-        });
-
-
-         */
-
-        InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea", 0f, 0f,
-                game.gameAreaResolutionX, game.gameAreaResolutionY * 0.8f, 0, game.background, game);
 
         final Game innerGame = game;
+        this.game.buttonSound.setOnOffBehavior(new ButtonOnOff.OnOffBehavior() {
+            @Override
+            public void onBehavior() {
+                if (innerGame.menuVolume == 0) {
+                    innerGame.volume = 50;
+                    innerGame.menuVolume = 50;
+                } else {
+                    innerGame.volume = innerGame.menuVolume;
+                }
+            }
+
+            @Override
+            public void offBehavior() {
+                innerGame.volume = 0;
+            }
+        });
+
+        // BOTÃO MUSICA
+        this.game.buttonMusic = new ButtonOnOff("buttonMusic", this.game, this.game.gameAreaResolutionX * 0.7f,
+                this.game.gameAreaResolutionY * 1.04f, this.game.gameAreaResolutionX * 0.05f, this.game.gameAreaResolutionX * 0.05f, Game.TEXTURE_BUTTONS_AND_BALLS);
+        this.game.buttonMusic.textureMapUnpressed = 2;
+        this.game.buttonMusic.textureMapPressed = 1;
+        this.game.buttonMusic.alpha = 0.7f;
+        if (this.game.musicOn) {
+            this.game.buttonMusic.setOn();
+        } else {
+            this.game.buttonMusic.setOff();
+        }
+
+        this.game.buttonMusic.setOnOffBehavior(new ButtonOnOff.OnOffBehavior() {
+            @Override
+            public void onBehavior() {
+                innerGame.musicOn = true;
+                if (innerGame.menuVolume == 0) {
+                    innerGame.volume = 50;
+                    innerGame.menuVolume = 50;
+                }
+                if (innerGame.music != null){
+                    innerGame.music.start();
+                }
+            }
+
+            @Override
+            public void offBehavior() {
+                innerGame.musicOn = false;
+                if (innerGame.music != null){
+                    innerGame.music.pause();
+                }
+            }
+        });
+
+        InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea111", 0f, 0f,
+                game.gameAreaResolutionX, game.gameAreaResolutionY * 0.8f, 0, game.background, game);
 
         gameAreaInteractionListener.setPressListener(new InteractionListener.PressListener() {
             @Override
@@ -409,7 +392,7 @@ public class Level {
 
 
         Log.e("Level loadEnt", "2");
-        int ballsInvencible = 0;
+        int numberOfBallsInvencible = 0;
 
         for (int i = 0; i < this.ballsQuantity; i++){
             float ballX = this.game.gameAreaResolutionX * this.ballsInitialXByResolution[i];
@@ -426,15 +409,14 @@ public class Level {
             //game.ballsInitialPositionY[i] = ballY;
 
             if (this.ballsInvencible[i]){
-                ballsInvencible += 1;
+                numberOfBallsInvencible += 1;
             }
 
             Log.e("Level loadEnt", "3");
 
             Ball ball = new Ball("ball", this.game, ballX, ballY, radium, 8);
             ball.program = this.game.imageProgram;
-            ball.textureUnit = 0;
-            // todo ball.color = this.ballsColor[i];
+            ball.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
 
             ball.angleToRotate = this.ballsAngleToRotate[i];
             ball.velocityVariation = this.ballsVelocityVariation[i];
@@ -467,14 +449,13 @@ public class Level {
             ball.isFree = this.ballsFree[i];
 
             Log.e("Level loadEnt", "5.1");
+
+            if (this.ballsInvencible[i]){
+                ball.setInvencible();
+            }
+
             this.game.addBall(ball);
 
-            Log.e("Level loadEnt", "5.2");
-            this.game.ballsInitialPositionX[i] = ballX;
-            this.game.ballsInitialPositionY[i] = ballY;
-            this.game.ballsDesiredVelocityX[i] = ballVelocityX;
-            this.game.ballsDesiredVelocityY[i] = ballVelocityY;
-            Log.e("Level loadEnt", "5.3");
         }
 
         if (this.entitiesCreator != null){

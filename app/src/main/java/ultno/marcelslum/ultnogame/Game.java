@@ -47,8 +47,8 @@ public class Game {
     public Button button1Right;
     public Button button2Left;
     public Button button2Right;
-    public ButtonOnOff soundButton;
-    public ButtonOnOff musicButton;
+    public ButtonOnOff buttonSound;
+    public ButtonOnOff buttonMusic;
 
     public Image tittle;
 
@@ -73,7 +73,6 @@ public class Game {
     int soundBallHit;
     int soundCounter;
     int soundDestroyTarget;
-    int soundMusic;
     int soundScore;
     int soundAlarm;
     int soundBallFall;
@@ -96,10 +95,11 @@ public class Game {
     public float resolutionY;
 
     // options
-    boolean soundOn;
-    boolean musicOn;
+    boolean soundOn = true;
+    boolean musicOn = true;
     boolean isBlocked;
-    public int volumn;
+    public int menuVolume = 100;
+    public int volume = 100;
     public final static int [] possibleVolums = new int []{0,10,20,30,40,50,60,70,80,90,100};
 
     //  level
@@ -177,7 +177,7 @@ public class Game {
     // programs
     public Program imageProgram;
     public Program imageColorizedProgram;
-    public Program imageAlphaArrayProgram;
+    public Program lineProgram;
     public Program textProgram;
     public Program solidProgram;
 
@@ -187,6 +187,8 @@ public class Game {
     int ballsInvencible;
     int ballsAlive;
     private int streamIdSoundAlarm;
+
+
 
     public static Game getInstance() {
         return ourInstance;
@@ -250,11 +252,14 @@ public class Game {
             this.interactionListeners = new ArrayList<InteractionListener>();
         }
         for (int i = 0; i < this.interactionListeners.size(); i++){
+
             if (this.interactionListeners.get(i).name == listener.name){
+                Log.e("game", " subtituindo listener "+listener.name);
                 this.interactionListeners.set(i, listener);
                 return;
             }
         }
+        Log.e("game", " adicionando listener "+listener.name);
         this.interactionListeners.add(listener);
     }
 
@@ -279,7 +284,9 @@ public class Game {
             //maxScoreLevel.display();
             messageMaxScoreTotal.display();
         } else if (state == GAME_STATE_PREPARAR){
-            music = MediaPlayer.create(context, R.raw.music);
+            music = MediaPlayer.create(context, R.raw.musicgroove90);
+            music.setVolume(0.01f* (float) volume, 0.01f* (float) volume);
+            music.setLooping(true);
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
                 values.add(new float[]{0f,3f});
@@ -289,16 +296,16 @@ public class Game {
             final Text innerMessagePreparation = messagePreparation;
             messagePreparation.setText("3");
             messagePreparation.display();
-            soundPool.play(soundCounter, 1, 1, 0, 0, 1);
+            soundPool.play(soundCounter, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
             Animation anim = new Animation(messagePreparation, "messagePreparation", "numberForAnimation", 4000, values, false, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
                     if (innerMessagePreparation.numberForAnimation == 2f){
-                        soundPool.play(soundCounter, 1, 1, 0, 0, 1);
+                        soundPool.play(soundCounter, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
                         innerMessagePreparation.setText("2");
                     } else if (innerMessagePreparation.numberForAnimation == 1f) {
-                        soundPool.play(soundCounter, 1, 1, 0, 0, 1);
+                        soundPool.play(soundCounter, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
                         innerMessagePreparation.setText("GO!");
@@ -322,10 +329,10 @@ public class Game {
             music.start();
 
             freeAllGameEntities();
-            //soundPool.play(soundMusic, 1, 1, 0, 0, 1);
+            //soundPool.play(soundMusic, 0.1f* (float)volume, 0.1f* (float)volume, 0, 0, 1);
         } else if (state == GAME_STATE_DERROTA){
             stopAndReleaseMusic();
-            soundPool.play(soundGameOver, 1, 1, 0, 0, 1);
+            soundPool.play(soundGameOver, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
@@ -334,7 +341,7 @@ public class Game {
             music.pause();
             Log.e("game", "ativando game_state_pause");
             //soundPool.stop(soundMusic);
-            soundPool.play(soundMenuSelectBig, 1, 1, 0, 0, 1);
+            soundPool.play(soundMenuSelectBig, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
@@ -364,7 +371,7 @@ public class Game {
             messageInGame.display();
         } else if (state == GAME_STATE_VITORIA){
             stopAndReleaseMusic();
-            soundPool.play(soundWin, 1, 1, 0, 0, 1);
+            soundPool.play(soundWin, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
 
@@ -394,7 +401,11 @@ public class Game {
             messageInGame.setText(context.getResources().getString(R.string.nivelConcluido1)+ " "+levelNumber+ " "+context.getResources().getString(R.string.nivelConcluido2));
             messageInGame.increaseAlpha(100, 1f);
             messageInGame.display();
+
+        } else if (state == GAME_STATE_VITORIA) {
+            verifyDead();
         }
+
     }
 
     public void stopAndReleaseMusic(){
@@ -591,10 +602,10 @@ public class Game {
         ArrayList<Entity> list = new ArrayList<>();
         list.add(button1Left);
         list.add(button1Right);
+        list.add(buttonSound);
+        list.add(buttonMusic);
         list.add(button2Left);
         list.add(button2Right);
-        list.add(soundButton);
-        list.add(musicButton);
         list.add(scorePanel);
         list.add(bordaE);
         list.add(bordaD);
@@ -728,7 +739,7 @@ public class Game {
         selectorVolumn.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
-                innerGame.volumn = innerGame.possibleVolums[innerSelectorVolumn.selectedValue];
+                innerGame.volume = innerGame.possibleVolums[innerSelectorVolumn.selectedValue];
             }
         });
 
@@ -837,9 +848,10 @@ public class Game {
     public void initPrograms(){
         imageProgram = new Program(GraphicTools.vs_Image, GraphicTools.fs_Image);
         imageColorizedProgram = new Program(GraphicTools.vs_Image_Colorized, GraphicTools.fs_Image_Colorized);
-        imageAlphaArrayProgram = new Program(GraphicTools.vs_Image_Alpha_Array, GraphicTools.fs_Image_Alpha_Array);
         textProgram = new Program(GraphicTools.vs_Text, GraphicTools.fs_Text);
         solidProgram = new Program(GraphicTools.vs_SolidColor, GraphicTools.fs_SolidColor);
+        lineProgram = new Program(GraphicTools.vs_Line, GraphicTools.fs_Line);
+
     }
 
     public void initFont(){
@@ -860,11 +872,10 @@ public class Game {
         soundBlueBallExplosion1 = soundPool.load(context, R.raw.blueballexplosion1, 1);
         soundBlueBallExplosion2 = soundPool.load(context, R.raw.blueballexplosion2, 1);
         soundExplosion1 = soundPool.load(context, R.raw.explosion1, 1);
-        soundExplosion2 = soundPool.load(context, R.raw.explosion2, 1);
-        soundGameOver = soundPool.load(context, R.raw.gameover, 1);
+        soundExplosion2 = soundPool.load(context, R.raw.explosion21, 1);
+        soundGameOver = soundPool.load(context, R.raw.gameover2, 1);
         soundMenuSelectBig = soundPool.load(context, R.raw.menuselectbig, 1);
         soundMenuSelectSmall = soundPool.load(context, R.raw.menuselectsmall, 1);
-        soundMusic = soundPool.load(context, R.raw.music, 1);
         soundScore = soundPool.load(context, R.raw.score, 1);
         soundWin = soundPool.load(context, R.raw.win, 1);
         soundTextBoxAppear = soundPool.load(context, R.raw.textboxappear, 1);
@@ -930,7 +941,7 @@ public class Game {
             }
 
 
-            Log.e("game", "forPLayAlarm "+forPlayAlarm);
+            //Log.e("game", "forPLayAlarm "+forPlayAlarm);
             
             if (forPlayAlarm) {
                 if (playingAlarm != true) {
@@ -939,13 +950,13 @@ public class Game {
                 }
             } else {
                 if (playingAlarm == true) {
-                    Log.e("game", "stopping alarm");
+                    //Log.e("game", "stopping alarm");
                     soundPool.stop(streamIdSoundAlarm);
                     playingAlarm = false;
                 }
             }
 
-            Log.e("game", "playingAlarm "+playingAlarm);
+            //Log.e("game", "playingAlarm "+playingAlarm);
 
             checkCollision(balls, true, true);
             checkCollision(bars, true, true);
@@ -1045,6 +1056,10 @@ public class Game {
         if (button1Right != null) button1Right.prepareRender(matrixView, matrixProjection);
         if (button2Left != null) button1Left.prepareRender(matrixView, matrixProjection);
         if (button2Right != null) button1Right.prepareRender(matrixView, matrixProjection);
+
+        if (buttonMusic != null) buttonMusic.prepareRender(matrixView, matrixProjection);
+        if (buttonSound != null) buttonSound.prepareRender(matrixView, matrixProjection);
+
 
         for (int i = 0; i < targets.size(); i++){
             if (targets.get(i).showPointsState == Entity.SHOW_POINTS_ON){

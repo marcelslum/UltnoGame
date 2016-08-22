@@ -113,12 +113,13 @@ public class Utils {
         array[4 + (startIndex)] = y2;
         array[5 + (startIndex)] = z;
     }
-    
-    public static void insertAlphaData(float[] array, int startIndex, float alpha){
-        array[0 + (startIndex)] = alpha;
+
+    public static void insertLineIndicesData(short[] array, int startIndex, int startValue){
+        array[0 + (startIndex)] = (short)(0 + (startValue));
+        array[1 + (startIndex)] = (short)(1 + (startValue));
     }
-    
-    
+
+
     public static void insertRectangleIndicesData(short[] array, int startIndex, int startValue){
         array[0 + (startIndex)] = (short)(0 + (startValue));
         array[1 + (startIndex)] = (short)(1 + (startValue));

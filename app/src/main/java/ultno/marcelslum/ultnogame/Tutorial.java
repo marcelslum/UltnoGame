@@ -2,6 +2,7 @@ package ultno.marcelslum.ultnogame;
 
 
 import android.media.SoundPool;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -23,8 +24,7 @@ public class Tutorial {
     }
 
     public void show(SoundPool soundPool, int soundId) {
-
-
+        Log.e("tutorial", "show tutorial "+textBox.name);
         soundPool.play(soundId, 1, 1, 0, 0, 1);
         isBlocked = true;
         textBox.alpha = 0f;
@@ -52,25 +52,28 @@ public class Tutorial {
     }
 
     public void unshow(){
+
+        Log.e("tutorial", "unshow tutorial "+textBox.name);
+
         isBlocked = true;
         if (onUnshowBeforeAnim != null)
             onUnshowBeforeAnim.onUnshowBeforeAnim();
 
-        Animation anim = Utils.createSimpleAnimation(textBox, "alpha", "alpha", 500, 1f, 0f);
         final Tutorial self = this;
-            anim.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    self.textBox.clearDisplay();
-                    self.isBlocked = false;
-                    if (self.onUnshowAfterAnim != null){
-                        self.onUnshowAfterAnim.onUnshowAfterAnim();
-                    }
-                    if (self.onUnshowAfterAnim2 != null){
-                        self.onUnshowAfterAnim2.onUnshowAfterAnim2();
-                    }
+        Animation anim = Utils.createSimpleAnimation(this.textBox, "alpha", "alpha", 500, 1f, 0f, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                Log.e("tutorial", "onAnimationEnd alphaUnshow ");
+                self.textBox.clearDisplay();
+                if (self.onUnshowAfterAnim != null){
+                    self.isBlocked = true;
+                    self.onUnshowAfterAnim.onUnshowAfterAnim();
                 }
-            });
+                if (self.onUnshowAfterAnim2 != null){
+                    self.onUnshowAfterAnim2.onUnshowAfterAnim2();
+                }
+            }
+        });
         anim.start();
     }
 
