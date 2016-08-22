@@ -249,12 +249,12 @@ public class Game {
         for (int i = 0; i < this.interactionListeners.size(); i++){
 
             if (this.interactionListeners.get(i).name == listener.name){
-                Log.e("game", " subtituindo listener "+listener.name);
+                //Log.e("game", " subtituindo listener "+listener.name);
                 this.interactionListeners.set(i, listener);
                 return;
             }
         }
-        Log.e("game", " adicionando listener "+listener.name);
+        //Log.e("game", " adicionando listener "+listener.name);
         this.interactionListeners.add(listener);
     }
 
@@ -391,7 +391,7 @@ public class Game {
             messageInGame.increaseAlpha(100, 1f);
             messageInGame.display();
 
-        } else if (state == GAME_STATE_VITORIA) {
+        } else if (state == GAME_STATE_TUTORIAL) {
             verifyDead();
         }
 
@@ -457,6 +457,8 @@ public class Game {
         button1Right = null;
         button2Left = null;
         button2Right = null;
+        buttonSound = null;
+        buttonMusic = null;
         background = null;
     }
 
