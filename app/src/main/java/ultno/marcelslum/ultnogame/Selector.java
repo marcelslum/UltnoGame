@@ -53,7 +53,7 @@ public class Selector extends Entity{
         }
 
         for (int i = 0; i < values.length; i++){
-            Log.e("selector", " "+values[i]);
+            //Log.e("selector", " "+values[i]);
             textsObjects[i] = new Text("selector"+values[i]+"Text", game, 0f, y, size, values[i], this.font);
             float width = textsObjects[i].calculateWidth();
             textsObjects[i].setX(mainTextWidth + x - (width/2));

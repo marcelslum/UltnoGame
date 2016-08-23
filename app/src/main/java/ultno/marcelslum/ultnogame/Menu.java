@@ -113,9 +113,10 @@ class Menu extends Entity{
     }
 
     public MenuOption addMenuOption(String name, String text, MenuOption.OnChoice onChoice){
-        float optionY = this.y + (optionsIds * (size *(1+bottomPad)));
+        float optionY = this.y + (optionsIds * (size *(1.01f+bottomPad)));
         this.optionsIds += 1;
         MenuOption newMenuOption = new MenuOption(this.optionsIds, name, text, game, font, size, x, optionY);
+        addChild(newMenuOption.textObject);
         newMenuOption.setOnChoice(onChoice);
         this.menuOptions.add(newMenuOption);
 
@@ -128,6 +129,7 @@ class Menu extends Entity{
 
         final Menu innerMenu = this;
         final String innerName = name;
+        final Text innerText = newMenuOption.textObject;
         final int innerId = this.optionsIds;
         newListener.setPressListener(new InteractionListener.PressListener() {
             @Override
@@ -136,7 +138,34 @@ class Menu extends Entity{
                 if (!innerMenu.isBlocked){
                     innerMenu.game.blockAndWaitTouchRelease();
                     game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
-                    innerMenu.getMenuOptionByName(innerName).fireOnChoice();
+
+                    ArrayList<float[]> valuesAnimation = new ArrayList<>();
+                    valuesAnimation.add(new float[]{0f,1f});
+                    valuesAnimation.add(new float[]{0.07f,0.82f});
+                    valuesAnimation.add(new float[]{1f,1f});
+                    Animation animScaleX = new Animation(innerText,
+                            "encolherX", "scaleX", 400, valuesAnimation, false, true);
+                    animScaleX.start();
+
+                    ArrayList<float[]> valuesAnimation2 = new ArrayList<>();
+                    valuesAnimation2.add(new float[]{0f,1f});
+                    valuesAnimation2.add(new float[]{0.07f,0.2f});
+                    valuesAnimation2.add(new float[]{1f,1f});
+
+                    Animation animAlpha = new Animation(innerText,
+                            "encolherAlpha", "alpha", 400, valuesAnimation2, false, true);
+                    animAlpha.start();
+
+
+                    Animation animScaleY = new Animation(innerText,
+                            "encolherY", "scaleY", 400, valuesAnimation, false, true);
+                    animScaleY.setAnimationListener(new Animation.AnimationListener(){
+                        @Override
+                        public void onAnimationEnd() {
+                            innerMenu.getMenuOptionByName(innerName).fireOnChoice();
+                        }
+                    });
+                    animScaleY.start();
 
                     for (int i = 0; i < innerMenu.menuOptions.size(); i++){
                         if (innerMenu.menuOptions.get(i).name == innerName){

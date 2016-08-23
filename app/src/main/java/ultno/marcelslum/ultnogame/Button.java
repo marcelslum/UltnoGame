@@ -8,7 +8,6 @@ public class Button extends Entity{
 
     public float height;
     public float width;
-    InteractionListener listener;
     OnPress onPress;
     OnUnpress onUnpress;
     OnPress2 onPress2;
@@ -16,6 +15,7 @@ public class Button extends Entity{
     int textureMapUnpressed;
     int textureMap;
     float textureSize = 1024f;
+    InteractionListener listener;
 
     Button(String name, Game game, float x, float y, float width, float height, int textureUnit) {
         super(name, game, x, y);

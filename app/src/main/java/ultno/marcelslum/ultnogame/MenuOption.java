@@ -39,6 +39,7 @@ class MenuOption {
         textObject = new Text("menuOptions"+name+"text", game, 0f, this.y, this.size, this.text, this.font);
         this.width = textObject.calculateWidth();
         textObject.setX(this.x - (this.width/2));
+
     }
 
     public void setOnChoice(OnChoice onChoice) {

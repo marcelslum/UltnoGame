@@ -31,8 +31,8 @@ public class Entity {
     public Color color;
     public float animTranslateX;
     public float animTranslateY;
-    public float animScaleX;
-    public float animScaleY;
+    public float animScaleX = 1f;
+    public float animScaleY = 1f;
     public float dX;
     public float dY;
     public float previousX;
@@ -213,10 +213,11 @@ public class Entity {
                 this.animTranslateY = value;
                 break;
             case "scaleX":
-                this.scaleX = value;
+                //Log.e("Entity", "ativando animação scaleX "+value);
+                this.animScaleX = value;
                 break;
             case "scaleY":
-                this.scaleY = value;
+                this.animScaleY = value;
                 break;
             case "alpha":
                 //Log.e("Entity", "ativando animação alpha reduzindo para "+value);
@@ -253,8 +254,8 @@ public class Entity {
 
         this.animTranslateX = 0;
         this.animTranslateY = 0;
-        this.scaleX = 1;
-        this.scaleY = 1;
+        this.animScaleX = 1f;
+        this.animScaleY = 1f;
         this.alpha = 1;
         this.resetSpecificData();
     }
@@ -341,6 +342,16 @@ public class Entity {
         return 0f;
     }
 
+    // mustBeOverrided
+    public float getWidth() {
+        return 0f;
+    }
+
+    // mustBeOverrided
+    public float getHeight() {
+        return 0f;
+    }
+
     public void setMatrixModel(){
         Matrix.setIdentityM(this.matrixModel, 0); // initialize to identity matrix
         Matrix.translateM(this.matrixModel, 0, this.x + animTranslateX, this.y + animTranslateY, 0);
@@ -351,8 +362,20 @@ public class Entity {
             Matrix.multiplyMM(matrixModel, 0, matrixTemp, 0, mRotationMatrix, 0);
             Matrix.translateM(this.matrixModel, 0, -getMiddlePointX(), -getMiddlePointY(), 0);
         }
-        if (this.scaleX != 1 || this.scaleX != 1)
-        Matrix.scaleM(this.matrixModel, 0, this.scaleX , this.scaleY, 0);
+        if (animScaleX != 1 || animScaleY != 1) {
+            float width = getWidth();
+            float height = getHeight();
+
+            Matrix.translateM(this.matrixModel, 0, (width)/2, +(height)/2, 0);
+            Matrix.scaleM(matrixModel, 0, animScaleX, animScaleY, 0);
+            Matrix.translateM(this.matrixModel, 0, -(width)/2, -(height)/2, 0);
+        }
+
+
+
+
+
+
     }
 
     public void prepareRender(float[] matrixView, float[] matrixProjection){

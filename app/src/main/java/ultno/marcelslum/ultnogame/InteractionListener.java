@@ -38,6 +38,11 @@ public class InteractionListener {
         //if(name=="arroContinuartextBox1")
         //Log.e("listener", "verificando listener "+name);
 
+        // verifica se o game estiver bloqueado, caso o listener esteja na mesma passagem do listener que bloqueia o game
+        if (gameObject.isBlocked){
+            return;
+        }
+
         if (objectAppend.isBlocked) {
             return;
         }
@@ -62,7 +67,7 @@ public class InteractionListener {
                 this.startTime = Utils.getTime();
                 //console.log("onPress ", this.name);
                 if (this.myPressListener != null) {
-                    //Log.e("listener", "ativando onpress no listener "+name);
+                    Log.e("listener", "ativando onpress no listener "+name);
                     this.myPressListener.onPress();
                 }
             } else {
@@ -70,7 +75,7 @@ public class InteractionListener {
                 long timeElapsed = actualTime - this.startTime;
                 if (timeElapsed > (long) frequency) {
                     if (this.myPressListener != null) {
-                        //Log.e("listener", "ativando onpress no listener "+name);
+                        Log.e("listener", "ativando onpress no listener "+name);
                         this.myPressListener.onPress();
                     }
                     //console.log("onPress");

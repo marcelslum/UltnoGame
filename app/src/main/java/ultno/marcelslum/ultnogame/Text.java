@@ -39,6 +39,7 @@ public class Text extends Entity{
         //this.colorData2 = new float[]{0.9f, 0.5f, 0f, 0.2f,};
         //Log.e("this.color", " "+this.colorData2[1]);
         this.setDrawInfo();
+
     }
 
     public Text(String name, Game game, float x, float y, float size, String text, Font font, Color color) {
@@ -112,6 +113,8 @@ public class Text extends Entity{
         colorsBuffer = Utils.generateFloatBuffer(colorsData);
 
         //Log.e("teste1115", " ");
+
+        this.width = calculateWidth();
     }
 
     private void convertTextToTriangleInfo(float xOffset)
@@ -299,5 +302,15 @@ public class Text extends Entity{
         this.color = color;
         this.setDrawInfo();
 
+    }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    @Override
+    public float getHeight() {
+        return size*1.5f;
     }
 }

@@ -138,7 +138,7 @@ public class Level {
     }
 
     public void showFirstTutorial(){
-        Log.e("level", "showFirstTutorial");
+        //Log.e("level", "showFirstTutorial");
         this.game.blockAndWaitTouchRelease();
         this.showingTutorial = 0;
         this.tutorials.get(0).show(game.soundPool, game.soundTextBoxAppear);
@@ -151,7 +151,7 @@ public class Level {
             game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
             if (showingTutorial + 1 == this.tutorials.size()){
 
-                Log.e("level", "ultimo tutorail, setando preparar");
+                //Log.e("level", "ultimo tutorail, setando preparar");
 
                 this.tutorials.get(this.showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
                     @Override
@@ -162,19 +162,19 @@ public class Level {
                 this.tutorials.get(this.showingTutorial).unshow();
             } else {
 
-                Log.e("level", "nextTutorial");
-                Log.e("level", "showingTutorial "+showingTutorial);
+                //Log.e("level", "nextTutorial");
+                //Log.e("level", "showingTutorial "+showingTutorial);
                 tutorials.get(showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
                     @Override
                     public void onUnshowAfterAnim2() {
-                        Log.e("level", "onUnshowAfterAnim2");
+                        //Log.e("level", "onUnshowAfterAnim2");
                         innerLevel.showingTutorial = innerLevel.showingTutorial + 1;
                         innerLevel.tutorials.get(innerLevel.showingTutorial).show(innerLevel.game.soundPool, innerLevel.game.soundTextBoxAppear);
                     }
                 });
                 tutorials.get(showingTutorial).unshow();
 
-                Log.e("level", "showingTutorial depois"+showingTutorial);
+                //Log.e("level", "showingTutorial depois"+showingTutorial);
             }
         }
     }
@@ -193,30 +193,30 @@ public class Level {
 
         this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.gameAreaResolutionY);
 
-        Log.e("Level loadEnt", "1");
+        //Log.e("Level loadEnt", "1");
 
         this.game.bordaE = new Rectangle("bordaE", this.game, -999, 0, 1000, this.game.gameAreaResolutionY, 10, new Color(0,0,0,1));
         this.game.bordaE.isMovable = false;
         this.game.bordaE.program = this.game.solidProgram;
 
-        Log.e("Level loadEnt", "1");
+        //Log.e("Level loadEnt", "1");
         this.game.bordaD = new Rectangle("bordaD", this.game, this.game.gameAreaResolutionX-2, 0, 1000, this.game.gameAreaResolutionY, 10, new Color(0,0,0,1));
         this.game.bordaD.isMovable = false;
         this.game.bordaD.program = this.game.solidProgram;
 
-        Log.e("Level loadEnt", "1");
+        //Log.e("Level loadEnt", "1");
         this.game.bordaC = new Rectangle("bordaC", this.game, 1, -1000, this.game.gameAreaResolutionX-4, 1001, 10, new Color(0,0,0,1));
         this.game.bordaC.isMovable = false;
         this.game.bordaC.program = this.game.solidProgram;
 
-        Log.e("Level loadEnt", "1");
+        //Log.e("Level loadEnt", "1");
         this.game.bordaB = new Rectangle("bordaB", this.game, -1000, this.game.gameAreaResolutionY-2, this.game.gameAreaResolutionX*3, 1000, 10, new Color(0,0,0,1));
         this.game.bordaB.isMovable = false;
         this.game.bordaB.program = this.game.solidProgram;
 
-        Log.e("Level loadEnt", "1");
-        float y = this.game.gameAreaResolutionY * 1.015f;
-        float buttonSize = this.game.resolutionY * 0.14f;
+        //Log.e("Level loadEnt", "1");
+        float y = this.game.resolutionY * 0.86f;
+        float buttonSize = this.game.resolutionY * 0.13f;
 
 
         // BOTÃO 1 ESQUERDA
@@ -235,7 +235,7 @@ public class Level {
         this.game.button1Right.textureMapPressed = 17;
         this.game.button1Right.alpha = 0.7f;
 
-        Log.e("Level loadEnt", "1");
+        //Log.e("Level loadEnt", "1");
         if (this.barsQuantity > 1) {
             // BOTÃO 2 ESQUERDA
             x = this.game.resolutionX * 0.66f;
@@ -254,14 +254,19 @@ public class Level {
 
         // BOTÃO SOM
         this.game.buttonSound = new ButtonOnOff("buttonSound", this.game, this.game.gameAreaResolutionX * 0.35f,
-                this.game.gameAreaResolutionY * 1.04f, this.game.gameAreaResolutionX * 0.05f, this.game.gameAreaResolutionX * 0.05f, Game.TEXTURE_BUTTONS_AND_BALLS);
+                this.game.resolutionY * 0.89f, this.game.resolutionY * 0.06f, this.game.resolutionY * 0.06f, Game.TEXTURE_BUTTONS_AND_BALLS);
         this.game.buttonSound.textureMapUnpressed = 9;
         this.game.buttonSound.textureMapPressed = 10;
-        this.game.buttonSound.alpha = 0.7f;
-        if (this.game.menuVolume > 0) {
-            this.game.buttonSound.setOn();
-        } else {
+        this.game.buttonSound.listener.x = this.game.gameAreaResolutionX * 0.32f;
+        this.game.buttonSound.listener.y = this.game.resolutionY * 0.86f;
+        this.game.buttonSound.listener.width = this.game.gameAreaResolutionX * 0.12f;
+        this.game.buttonSound.listener.height = this.game.resolutionY * 0.12f;
+
+        this.game.buttonSound.alpha = 0.5f;
+        if (this.game.menuVolume == 0 || this.game.volume == 0) {
             this.game.buttonSound.setOff();
+        } else {
+            this.game.buttonSound.setOn();
         }
 
         final Game innerGame = game;
@@ -283,11 +288,15 @@ public class Level {
         });
 
         // BOTÃO MUSICA
-        this.game.buttonMusic = new ButtonOnOff("buttonMusic", this.game, this.game.gameAreaResolutionX * 0.7f,
-                this.game.gameAreaResolutionY * 1.04f, this.game.gameAreaResolutionX * 0.05f, this.game.gameAreaResolutionX * 0.05f, Game.TEXTURE_BUTTONS_AND_BALLS);
+        this.game.buttonMusic = new ButtonOnOff("buttonMusic", this.game, this.game.gameAreaResolutionX * 0.61f,
+                this.game.resolutionY * 0.89f, this.game.resolutionY * 0.06f, this.game.resolutionY * 0.06f, Game.TEXTURE_BUTTONS_AND_BALLS);
         this.game.buttonMusic.textureMapUnpressed = 2;
         this.game.buttonMusic.textureMapPressed = 1;
-        this.game.buttonMusic.alpha = 0.7f;
+        this.game.buttonMusic.alpha = 0.5f;
+        this.game.buttonMusic.listener.x = this.game.gameAreaResolutionX * 0.58f;
+        this.game.buttonMusic.listener.y = this.game.resolutionY * 0.86f;
+        this.game.buttonMusic.listener.width = this.game.gameAreaResolutionX * 0.12f;
+        this.game.buttonMusic.listener.height = this.game.resolutionY * 0.12f;
         if (this.game.musicOn) {
             this.game.buttonMusic.setOn();
         } else {
@@ -323,7 +332,7 @@ public class Level {
             @Override
             public void onPress() {
                 if (innerGame.gameState == Game.GAME_STATE_JOGAR){
-                    Log.e("level", "listener pause ativado");
+                    ////Log.e("level", "listener pause ativado");
                     innerGame.blockAndWaitTouchRelease();
                     innerGame.setGameState(Game.GAME_STATE_PAUSE);
                 }
@@ -391,7 +400,7 @@ public class Level {
         */
 
 
-        Log.e("Level loadEnt", "2");
+        //Log.e("Level loadEnt", "2");
         int numberOfBallsInvencible = 0;
 
         for (int i = 0; i < this.ballsQuantity; i++){
@@ -412,7 +421,7 @@ public class Level {
                 numberOfBallsInvencible += 1;
             }
 
-            Log.e("Level loadEnt", "3");
+            //Log.e("Level loadEnt", "3");
 
             Ball ball = new Ball("ball", this.game, ballX, ballY, radium, 8);
             ball.program = this.game.imageProgram;
@@ -424,7 +433,7 @@ public class Level {
             ball.velocityMaxByInitialVelocity = this.ballsVelocityMaxByInitialVelocity[i];
             ball.velocityMinByInitialVelocity = this.ballsVelocityMinByInitialVelocity[i];
 
-            Log.e("Level loadEnt", "4");
+            //Log.e("Level loadEnt", "4");
 
             ball.maxAngle = this.ballsMaxAngle[i];
             ball.minAngle = this.ballsMinAngle[i];
@@ -444,11 +453,11 @@ public class Level {
             }
             //console.log(ball.targetsAppend);
 
-            Log.e("Level loadEnt", "5");
+            //Log.e("Level loadEnt", "5");
 
             ball.isFree = this.ballsFree[i];
 
-            Log.e("Level loadEnt", "5.1");
+            //Log.e("Level loadEnt", "5.1");
 
             if (this.ballsInvencible[i]){
                 ball.setInvencible();
@@ -466,7 +475,7 @@ public class Level {
             this.entitiesCreator.createWindows();
         }
 
-        Log.e("Level loadEnt", "6");
+        //Log.e("Level loadEnt", "6");
 
        //todo this.game.hudEntities.scorePanel.setValue(this.ballsQuantity - ballsInvencible, ballsInvencible, this.minBallsNotInvencibleAlive);
     }

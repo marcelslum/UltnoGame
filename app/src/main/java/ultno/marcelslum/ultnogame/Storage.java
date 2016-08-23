@@ -2,12 +2,13 @@ package ultno.marcelslum.ultnogame;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class Storage {
     private static Storage ourInstance = new Storage();
     public static SharedPreferences storage;
     private static Context context;
-    final static String STORAGE_FILE_NAME = "ultno.marcelslum.ultnogame.storage";
+    final static String STORAGE_FILE_NAME = "ultno.marcelslum.ultnogame.storage2";
 
     public static Storage getInstance() {
         return ourInstance;
@@ -46,8 +47,10 @@ public class Storage {
         for (int i = 0; i < quantityOfLevels; i++){
             int levelToTest = i + 1;
             if (!Storage.contains("tutorial"+ levelToTest +"visto"))
+                Log.e("Storage", "not contains tutorial visto level "+levelToTest);
                 Storage.setBoolean("tutorial"+ levelToTest +"visto", false);
             if (!Storage.contains("score"+levelToTest))
+                Log.e("Storage", "score level "+levelToTest);
                 Storage.setInt("score"+levelToTest, 0);
         }
         
@@ -83,11 +86,12 @@ public class Storage {
     }
     
     public static boolean getLevelTutorialSaw(int levelNumber){
+        Log.e("Storage", "tutorial saw level "+levelNumber+ ": " +(getBoolean("tutorial"+ levelNumber +"visto")));
         return  getBoolean("tutorial"+ levelNumber +"visto");
     }
     
     public static void setLevelTutorialSaw(int levelNumber, boolean value){
-        Storage.setBoolean("tutorial"+ levelNumber +"visto", false);
+        Storage.setBoolean("tutorial"+ levelNumber +"visto", value);
     }
     
 }

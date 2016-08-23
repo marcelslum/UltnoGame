@@ -318,7 +318,11 @@ public class Game {
             verifyDead();
 
         } else if (state == GAME_STATE_JOGAR){
-            music.start();
+
+            if (musicOn) {
+                Log.e("game", "musicOn");
+                music.start();
+            }
             freeAllGameEntities();
         } else if (state == GAME_STATE_DERROTA){
             stopAndReleaseMusic();
@@ -465,7 +469,9 @@ public class Game {
     public void init(){
         Storage.initializeStorage(context, quantityOfLevels);
             levelNumber = Storage.getActualLevel();
+            Log.e("game ", "levelNumber "+levelNumber);
             maxLevel = Storage.getMaxLevel();
+            Log.e("game ", "maxLevel "+maxLevel);
         initSounds();
         initPrograms();
         initFont();
@@ -654,7 +660,10 @@ public class Game {
 
                 //Log.e("game", "tutorials size: "+ innerGame.levelObject.tutorials.size());
                 if (innerGame.levelObject.tutorials.size() > 0) {
-                    if (!Storage.getLevelTutorialSaw(innerGame.levelNumber)) {
+
+                    //Log.e("game ", "Storage.getLevelTutorialSaw(innerGame.levelNumber) "+Storage.getLevelTutorialSaw(innerGame.levelNumber));
+
+                    if (Storage.getLevelTutorialSaw(innerGame.levelNumber) == false) {
                         //Log.e("game", "tutorial ainda não visto");
                         Storage.setLevelTutorialSaw(innerGame.levelNumber, true);
                         innerGame.levelObject.loadEntities();
@@ -662,10 +671,14 @@ public class Game {
                         innerGame.levelObject.showFirstTutorial();
                     } else {
                         //Log.e("game", "tutorial já visto");
+                        //Log.e("game", "game blocked "+isBlocked);
                         innerGame.menuTutorial.getMenuOptionByName("exibirTutorial").setText = context.getResources().getString(R.string.menuTutorialExibirTutorial) + innerGame.levelNumber;
                         innerGame.menuTutorial.unblock();
+                        innerGame.menuTutorial.display();
+                        tittle.display();
                     }
                 } else {
+                    //Log.e("game", "load Entities");
                     innerGame.levelObject.loadEntities();
                     innerGame.setGameState(GAME_STATE_PREPARAR);
                 }
@@ -821,7 +834,7 @@ public class Game {
 
         // alterar texto que mostra a pontuação
         messageMaxScoreLevel.setText(
-            context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Integer.toString(Storage.getLevelMaxScore(levelNumber)))
+            context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber))
         );
     }
 
