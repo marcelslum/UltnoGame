@@ -1040,6 +1040,12 @@ public class Game {
         if (background != null) {
             background.prepareRender(matrixView, matrixProjection);
         }
+        
+        for (int i = 0; i < balls.size(); i++){
+            if (balls.get(i).ballParticleGenerator != null){
+                balls.get(i).ballParticleGenerator.prepareRender(matrixView, matrixProjection);
+            }
+        }
     
         for (int i = 0; i < balls.size(); i++){
             balls.get(i).prepareRender(matrixView, matrixProjection);
