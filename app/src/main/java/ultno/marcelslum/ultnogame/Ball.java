@@ -31,6 +31,9 @@ public class Ball extends Circle{
     boolean isInvencible = false;
 
     private int textureMap = COLOR_BALL_BLACK;
+    
+    public ArrayList<float> historicPositionX;
+    public ArrayList<float> historicPositionY;
 
     Color color;
     boolean isAlive = true;
@@ -50,6 +53,8 @@ public class Ball extends Circle{
         textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
         textureMap = COLOR_BALL_BLACK;
         isMovable = true;
+        historicPositionX = new ArrayList<float>();
+        historicPositionY = new ArrayList<float>();
         setDrawInfo();
     }
 
@@ -104,6 +109,27 @@ public class Ball extends Circle{
         this.textureMap = textureMap;
         Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
+    }
+    
+    @Override
+    public void translate(float tx, float ty, boolean updatePrevious) {
+        if (isMovable && isFree){
+            if (historicPositionX.size() < 10){
+                historicPositionX.add(this.x);
+                historicPositionY.add(this.y);
+            } else {
+                historicPositionX.add(0, this.x);
+                historicPositionX.remove(10);
+                historicPositionY.add(0, this.y);
+                historicPositionY.remove(10);
+            }
+            if (updatePrevious) {
+                this.previousX = this.x;
+                this.previousY = this.y;
+            }
+            this.x += tx;
+            this.y += ty;
+        }
     }
 
     public void onCollision(){
