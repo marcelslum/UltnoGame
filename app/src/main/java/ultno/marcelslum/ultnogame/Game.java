@@ -32,6 +32,7 @@ public class Game {
     public static ArrayList<InteractionListener> interactionListeners;
     public static ArrayList<TextBox> textBoxes;
     public static ArrayList<ParticleGenerator> particleGenerator;
+    public static ArrayList<BallParticleGenerator> ballParticleGenerator;
     
     public Background background;
 
@@ -204,6 +205,7 @@ public class Game {
         texts = new ArrayList<Text>();
         interactionListeners = new ArrayList<>();
         particleGenerator = new ArrayList<>();
+        ballParticleGenerator = new ArrayList<>();
         bars = new ArrayList<Bar>();
         menus = new ArrayList<>();
         selectors = new ArrayList<>();
