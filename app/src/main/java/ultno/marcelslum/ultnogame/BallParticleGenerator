@@ -6,18 +6,16 @@ import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
     
-    int numberOfParticles = 200;
+    int maxNumberOfParticles = 100;
     ArrayList<Particle> particlesArray;
     boolean isActive;
     
-    ParticleGenerator(String name, Game game, float x, float y) {
-    super(name, game, x, y);
-    program = game.imageColorizedProgram;
-    textureUnit = game.TEXTURE_NUMBERS_EXPLOSION;
-
-    generate();
-    
-  }
+    BallParticleGenerator(String name, Game game, float x, float y) {
+        super(name, game, x, y);
+        program = game.imageColorizedProgram;
+        textureUnit = game.TEXTURE_NUMBERS_EXPLOSION;
+        particlesArray= new ArrayList<>();
+    }
 
   public void activate(){
       setDrawInfo();
@@ -29,20 +27,26 @@ public class BallParticleGenerator extends Entity {
         this.isActive = false;
   }
   
-  public void generate(){
-        particlesArray= new ArrayList<>();
-        for (int i = 0; i < numberOfParticles;i++) {
-            float vx = Utils.getRandonFloat(-1.1f, 1.1f);
-            float vy = Utils.getRandonFloat(-1.1f, .1f);
-            float velocity_variation_x = Utils.getRandonFloat(-0.1f, 0.1f);
-            float velocity_variation_y = Utils.getRandonFloat(-0.1f, 0.1f);
+  public void generate(float x, float y, float radius, int quantityOfParticles){
+        
+        for (int i = 0; i < quantityOfParticles;i++) {
+            float vx = Utils.getRandonFloat(-0.2f, 0.2f);
+            float vy = Utils.getRandonFloat(-0.2f, 0.2f);
+            float velocity_variation_x = Utils.getRandonFloat(-0.04f, 0.04f);
+            float velocity_variation_y = Utils.getRandonFloat(-0.04f, 0.04f);
             float alpha_decay = Utils.getRandonFloat(0.01f, 0.05f);
-            float size = Utils.getRandonFloat(2f, 7f);
+            float size = Utils.getRandonFloat(radius/6f, radius/2f);
             int textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_BALL;
             
-            Particle particle = new Particle(0, 0, vx, vy, velocity_variation_x, 
+            float px = Utils.getRandonFloat(x - radius, x + radius);
+            float py = Utils.getRandonFloat(y - radius, y + radius);
+            
+            Particle particle = new Particle(px, py, vx, vy, velocity_variation_x, 
                 velocity_variation_y, alpha_decay, size, textureMap);
             particlesArray.add(particle);
+            
+            if (particlesArray.size > maxNumberOfParticles) 
+                particlesArray.remove(0)
         }
     }
 
@@ -54,32 +58,22 @@ public class BallParticleGenerator extends Entity {
     }
 
     private void updateDrawInfo() {
+        initializeData(12*numberOfParticles, 6*numberOfParticles, 8*numberOfParticles, 16*numberOfParticles);
         for (int i = 0; i < numberOfParticles;i++) {
             //Log.e("particle", "updateDraw da particula "+i);
             Particle p = particlesArray.get(i);
+            
             p.x += p.vx;
             p.y += p.vy;
             p.vx += p.velocity_variation_x;
             p.vy += p.velocity_variation_y;
             p.alpha -= p.alpha_decay;
             if(p.alpha < 0f) p.alpha = 0f;
+            
             Utils.insertRectangleVerticesData(this.verticesData, 0 + (i * 12), p.x, p.x + p.size, p.y, p.y + p.size, 0f);
             Utils.insertRectangleColorsData(colorsData, 0 + (i * 16), new Color(1f, 0f, 0f, p.alpha));
-        }
-        verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
-    }
-
-
-    @Override
-    public void setDrawInfo() {
-        initializeData(12*numberOfParticles, 6*numberOfParticles, 8*numberOfParticles, 16*numberOfParticles);
-        for (int i = 0; i < numberOfParticles;i++) {
-            Particle p = particlesArray.get(i);
-            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), 0, p.size, 0f, p.size, 0f);
             Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
             Utils.insertRectangleUvDataNumbersExplosion(uvsData, 0 + (i * 8), p.textureMap);
-            Utils.insertRectangleColorsData(colorsData, 0 + (i * 16), new Color(0f, 0f, 0f, p.alpha));
         }
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         indicesBuffer = Utils.generateShortBuffer(indicesData);
