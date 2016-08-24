@@ -44,6 +44,7 @@ public class Ball extends Circle{
     boolean collisionTarget = false;
     int collisionBarNumber = -1;
     boolean verifyAppendsIsFreeBall = false;
+    BallParticleGenerator ballParticleGenerator;
 
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
@@ -56,6 +57,8 @@ public class Ball extends Circle{
         historicPositionX = new ArrayList<float>();
         historicPositionY = new ArrayList<float>();
         setDrawInfo();
+        ballParticleGenerator = new BallParticleGenerator(name, game, x, y);
+        game.ballParticleGenerator.add(this.ballParticleGenerator);
     }
 
     public void setInvencible() {
@@ -129,6 +132,34 @@ public class Ball extends Circle{
             }
             this.x += tx;
             this.y += ty;
+            
+            int numberOfParticles;
+            for (int i = 0; i < historicPositionX; i++){
+                if (i == 0){
+                    numberOfParticles = 3;
+                } else if (i == 0){
+                    numberOfParticles = 2;
+                } else if (i == 1){
+                    numberOfParticles = 5;
+                } else if (i == 2){
+                    numberOfParticles = 3;
+                } else if (i == 3){
+                    numberOfParticles = 7;
+                } else if (i == 4){
+                    numberOfParticles = 4;
+                } else if (i == 5){
+                    numberOfParticles = 8;
+                } else if (i == 6){
+                    numberOfParticles = 3;
+                } else if (i == 7){
+                    numberOfParticles = 6;
+                } else if (i == 8){
+                    numberOfParticles = 2;
+                } else (i == 9){
+                    numberOfParticles = 3;
+                }
+                ballParticleGenerator.generate(historicPositionX.get(i), historicPositionY.get(i), radius, numberOfParticles);
+            }
         }
     }
 
