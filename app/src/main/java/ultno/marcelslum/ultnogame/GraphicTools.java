@@ -127,8 +127,8 @@ public class GraphicTools {
                     "varying float vf_alpha;" +
                     "   void main() {" +
                     "       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
-                    "       gl_Position.x += cos(uf_time)/200.0;" +
-                    "       gl_Position.y += cos(uf_time)/200.0;" +
+                    "       gl_Position.x += uf_time;" +
+                    "       gl_Position.y += uf_time;" +
                     "       vv2_texCoord = av2_uv;" +
                     "       vv4_Colors = av4_colors;" +
                     "   }";
@@ -145,11 +145,12 @@ public class GraphicTools {
                     "       if (color.a < 0.01) discard;"+
                     "       float distancePoint = distance(gl_FragCoord.xy, uv2_ballPosition.xy);"+
                     "       if (distancePoint < 50.0){"+
-                    "       vec4 color2 = vec4(color.r + vv4_Colors.r, color.g + vv4_Colors.g, color.b + vv4_Colors.b, uf_alpha * vv4_Colors.a * color.a);"+
-                    "       float invertedValue = distancePoint/50.0;"+
-                    "       gl_FragColor = vec4((color2.r)*invertedValue, (color2.g)*invertedValue, (color2.b)*invertedValue, color2.a);"+
+                    "       vec2 randomSeed = vec2(gl_FragCoord.x/uv2_ballPosition.x, gl_FragCoord.y/uv2_ballPosition.y);"+
+                    "       float invertedValue = fract(sin(dot(randomSeed.xy,vec2(12.9898,78.233))) * 43758.5453);"+
+                    "       vec4 color2 = vec4((color.r + vv4_Colors.r)*invertedValue, color.g + vv4_Colors.g, color.b + vv4_Colors.b, uf_alpha * 0.8);"+
+                    "       gl_FragColor = vec4(color2.r, color2.g, color2.b, color2.a);"+
                     "       } else {"+
-                    "       gl_FragColor = vec4(color.r + vv4_Colors.r, color.g + vv4_Colors.g, color.b + vv4_Colors.b, uf_alpha * vv4_Colors.a * color.a);"+
+                    "       gl_FragColor = vec4(color.r + vv4_Colors.r, color.g + vv4_Colors.g, color.b + vv4_Colors.b, uf_alpha * 0.8);"+
                     "       }"+
                     "   }";
 

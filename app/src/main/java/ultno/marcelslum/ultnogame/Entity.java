@@ -28,7 +28,8 @@ public class Entity {
 
     public float numberForAnimation;
 
-    public float time = 1f;
+    public float time = 0f;
+    public boolean timeVar = true;
 
     public Color color;
     public float animTranslateX;
@@ -442,8 +443,32 @@ public class Entity {
             int uv2_ballPosition = GLES20.glGetUniformLocation(this.program.get(), "uv2_ballPosition");
             GLES20.glUniform2f(uv2_ballPosition, game.balls.get(0).x + game.screenOffSetX, game.resolutionY - (game.balls.get(0).y+game.screenOffSetY));
 
+            float variation;
             if (game.ballCollidedFx > 0) {
-                    time += 73f;
+
+                if (game.ballCollidedFx > 30){
+                    variation = 0.007f;
+                } else if (game.ballCollidedFx > 20){
+                    variation = 0.0055f;
+                } else if (game.ballCollidedFx > 10){
+                    variation = 0.004f;
+                } else{
+                    variation = 0.002f;
+                }
+
+
+
+                if (timeVar == true) {
+                    time += variation;
+                    if (time > 0.001f) {
+                        timeVar = false;
+                    }
+                } else {
+                    time -= variation;
+                    if (time < -0.001f) {
+                        timeVar = true;
+                    }
+                }
             }
 
             int uf_timeHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_time");

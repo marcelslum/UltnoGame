@@ -275,7 +275,7 @@ public class Ball extends Circle{
         for (Entity e : lastObjects){
             //console.log(lastObjects[i].name, " "); //lastObjects.position.x, " ", lastObjects.position.y);
             if (e.name == "target"){
-                game.ballCollidedFx = 10;
+                game.ballCollidedFx = 40;
                 Target target = (Target)e;
                 target.onBallCollision();
                 if (target.special == 1 && !listenForExplosion){

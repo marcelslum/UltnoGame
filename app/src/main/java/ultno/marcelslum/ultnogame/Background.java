@@ -40,8 +40,8 @@ public class Background extends Entity {
         uvyMin = 0.001f;
         uvyMax = 0.585937f;
 
-        uvWidth = 0.3f;
-        uvHeight = 0.2f;
+        uvWidth = 0.5f;
+        uvHeight = 0.4f;
         uvx1 = 0.401f;
         uvx2 = uvx1 + uvWidth;
         uvy1 = 0.2f;
