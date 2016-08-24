@@ -357,6 +357,10 @@ public class Utils {
                     Utils.x1 = (512f + 2f)/1024f;
                     Utils.x2 = (640f - 2f)/1024f;
                     break;
+                case 26:
+                    Utils.x1 = (640f + 2f)/1024f;
+                    Utils.x2 = (768f - 2f)/1024f;
+                    break;
             }
         } 
         insertRectangleUvData(array, startIndex);
