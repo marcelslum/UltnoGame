@@ -112,7 +112,46 @@ public class GraphicTools {
                     "       if (color.a < 0.01) discard;"+
                     "       gl_FragColor = vec4(color.r + vv4_Colors.r, color.g + vv4_Colors.g, color.b + vv4_Colors.b, uf_alpha * vv4_Colors.a * color.a);"+
                     "   }";
-                    
+
+    public static final String vs_Image_Colorized_fx =
+            "uniform mat4 um4_projection;" +
+                    "uniform mat4 um4_view;" +
+                    "uniform mat4 um4_model;" +
+                    "uniform float uf_alpha;" +
+                    "uniform float uf_time;" +
+                    "attribute vec4 av4_vertices;" +
+                    "attribute vec4 av4_colors;" +
+                    "attribute vec2 av2_uv;" +
+                    "varying vec4 vv4_Colors;" +
+                    "varying vec2 vv2_texCoord;" +
+                    "varying float vf_alpha;" +
+                    "   void main() {" +
+                    "       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
+                    "       gl_Position.x += cos(uf_time)/200.0;" +
+                    "       gl_Position.y += cos(uf_time)/200.0;" +
+                    "       vv2_texCoord = av2_uv;" +
+                    "       vv4_Colors = av4_colors;" +
+                    "   }";
+    public static final String fs_Image_Colorized_fx =
+
+            "precision mediump float;" +
+                    "uniform float uf_alpha;" +
+                    "uniform vec2 uv2_ballPosition;"+
+                    "varying vec2 vv2_texCoord;" +
+                    "varying vec4 vv4_Colors;" +
+                    "uniform sampler2D us_texture;" +
+                    "   void main() {" +
+                    "       vec4 color = texture2D( us_texture, vv2_texCoord);" +
+                    "       if (color.a < 0.01) discard;"+
+                    "       float distancePoint = distance(gl_FragCoord.xy, uv2_ballPosition.xy);"+
+                    "       if (distancePoint < 50.0){"+
+                    "       vec4 color2 = vec4(color.r + vv4_Colors.r, color.g + vv4_Colors.g, color.b + vv4_Colors.b, uf_alpha * vv4_Colors.a * color.a);"+
+                    "       float invertedValue = distancePoint/50.0;"+
+                    "       gl_FragColor = vec4((color2.r)*invertedValue, (color2.g)*invertedValue, (color2.b)*invertedValue, color2.a);"+
+                    "       } else {"+
+                    "       gl_FragColor = vec4(color.r + vv4_Colors.r, color.g + vv4_Colors.g, color.b + vv4_Colors.b, uf_alpha * vv4_Colors.a * color.a);"+
+                    "       }"+
+                    "   }";
 
     public static final String vs_Text =
         "uniform mat4 um4_projection;" +

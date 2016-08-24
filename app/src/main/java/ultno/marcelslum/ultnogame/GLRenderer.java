@@ -146,6 +146,9 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         this.gi.resolutionX = this.effectiveScreenWidth;
         this.gi.resolutionY = this.effectiveScreenHeight;
 
+        this.gi.screenOffSetX = screenOffSetX;
+        this.gi.screenOffSetY = screenOffSetY;
+
         this.gi.init();
 
         this.gi.setGameState(Game.GAME_STATE_MENU);

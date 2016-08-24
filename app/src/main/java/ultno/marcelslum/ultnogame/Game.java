@@ -90,6 +90,11 @@ public class Game {
     public float gameAreaResolutionY;
     public float resolutionX;
     public float resolutionY;
+    public float screenOffSetX;
+    public float screenOffSetY;
+
+    int ballCollidedFx = 0;
+
 
     // options
     boolean soundOn = true;
@@ -177,6 +182,7 @@ public class Game {
     public Program lineProgram;
     public Program textProgram;
     public Program solidProgram;
+    public Program imageColorizedFxProgram;
 
     public ArrayList<Line> lines;
 
@@ -184,6 +190,7 @@ public class Game {
     int ballsInvencible;
     int ballsAlive;
     private int streamIdSoundAlarm;
+
 
     public static Game getInstance() {
         return ourInstance;
@@ -841,6 +848,7 @@ public class Game {
     public void initPrograms(){
         imageProgram = new Program(GraphicTools.vs_Image, GraphicTools.fs_Image);
         imageColorizedProgram = new Program(GraphicTools.vs_Image_Colorized, GraphicTools.fs_Image_Colorized);
+        imageColorizedFxProgram = new Program(GraphicTools.vs_Image_Colorized_fx, GraphicTools.fs_Image_Colorized_fx);
         textProgram = new Program(GraphicTools.vs_Text, GraphicTools.fs_Text);
         solidProgram = new Program(GraphicTools.vs_SolidColor, GraphicTools.fs_SolidColor);
         lineProgram = new Program(GraphicTools.vs_Line, GraphicTools.fs_Line);
@@ -875,6 +883,9 @@ public class Game {
     }
 
     public void simulate(long elapsed, float frameDuration){
+
+        ballCollidedFx -= 1;
+
         if (this.gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
                 Ball ball = balls.get(i);

@@ -28,6 +28,8 @@ public class Entity {
 
     public float numberForAnimation;
 
+    public float time = 1f;
+
     public Color color;
     public float animTranslateX;
     public float animTranslateY;
@@ -434,6 +436,22 @@ public class Entity {
         int um4_modelHandle = GLES20.glGetUniformLocation(this.program.get(), "um4_model");
         GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, this.matrixModel, 0);
         //Log.e("render", " ");
+
+
+        if (this.program == game.imageColorizedFxProgram){
+            int uv2_ballPosition = GLES20.glGetUniformLocation(this.program.get(), "uv2_ballPosition");
+            GLES20.glUniform2f(uv2_ballPosition, game.balls.get(0).x + game.screenOffSetX, game.resolutionY - (game.balls.get(0).y+game.screenOffSetY));
+
+            if (game.ballCollidedFx > 0) {
+                    time += 73f;
+            }
+
+            int uf_timeHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
+            GLES20.glUniform1f(uf_timeHandle, time);
+
+        }
+
+        // TODO verificar se a inversão do eixo y considera o offset
 
         if (this.textureUnit != -1) {
             // Get handle to textures locations
