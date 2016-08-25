@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
     
-    int maxNumberOfParticles = 100;
+    int maxNumberOfParticles = 35;
     ArrayList<Particle> particlesArray;
     boolean isActive = true;
     boolean isVisible = true;
@@ -32,18 +32,18 @@ public class BallParticleGenerator extends Entity {
   public void generate(float x, float y, float radius, int quantityOfParticles){
         
         for (int i = 0; i < quantityOfParticles;i++) {
-            float vx = Utils.getRandonFloat(-0.2f, 0.2f);
-            float vy = Utils.getRandonFloat(-0.2f, 0.2f);
-            float velocity_variation_x = Utils.getRandonFloat(-0.04f, 0.04f);
-            float velocity_variation_y = Utils.getRandonFloat(-0.04f, 0.04f);
+            float vx = Utils.getRandonFloat(-0.4f, 0.4f);
+            float vy = Utils.getRandonFloat(-0.4f, 0.4f);
+            float velocity_variation_x = Utils.getRandonFloat(-0.08f, 0.08f);
+            float velocity_variation_y = Utils.getRandonFloat(-0.08f, 0.08f);
             float alpha_decay = Utils.getRandonFloat(0.01f, 0.05f);
-            float size = Utils.getRandonFloat(radius, radius*2f);
+            float size = Utils.getRandonFloat(radius/2f, radius*3f);
             int textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_BALL;
             
             float px = Utils.getRandonFloat(x - radius, x + radius);
             float py = Utils.getRandonFloat(y - radius, y + radius);
             
-            Particle particle = new Particle(px-radius, py-radius, vx, vy, velocity_variation_x,
+            Particle particle = new Particle(px, py, vx, vy, velocity_variation_x,
                 velocity_variation_y, alpha_decay, size, textureMap);
             particlesArray.add(particle);
             
@@ -76,12 +76,12 @@ public class BallParticleGenerator extends Entity {
             p.alpha -= p.alpha_decay;
             if(p.alpha < 0f) p.alpha = 0f;
             
-            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), p.x, p.x + p.size, p.y, p.y + p.size, 0f);
+            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), p.x - p.size/2f, p.x + p.size/2f, p.y- p.size/2f, p.y + p.size/2f, 0f);
 
 
             //Log.e("ballParticleGenerator", " "+p.x+" "+p.y+" "+p.size);
 
-            Utils.insertRectangleColorsData(colorsData, 0 + (i * 16), new Color(1f, 0f, 0f, p.alpha));
+            Utils.insertRectangleColorsData(colorsData, 0 + (i * 16), new Color(0f, 0f, 0f, p.alpha));
             Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
             Utils.insertRectangleUvDataNumbersExplosion(uvsData, 0 + (i * 8), p.textureMap);
         }
@@ -115,7 +115,7 @@ public class BallParticleGenerator extends Entity {
             this.vy = vy;
             this.velocity_variation_x = velocity_variation_x;
             this.velocity_variation_y = velocity_variation_y;
-            this.alpha = 0.3f;
+            this.alpha = 0.2f;
             this.alpha_decay = alpha_decay;
             this.size = size;
             this.textureMap = textureMap;

@@ -288,7 +288,7 @@ public class Game {
             messageMaxScoreTotal.display();
         } else if (state == GAME_STATE_PREPARAR){
             music = MediaPlayer.create(context, R.raw.musicgroove90);
-            music.setVolume(0.01f* (float) volume, 0.01f* (float) volume);
+            music.setVolume(0.006f* (float) volume, 0.006f* (float) volume);
             music.setLooping(true);
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();

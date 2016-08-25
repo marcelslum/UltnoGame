@@ -116,14 +116,14 @@ public class Ball extends Circle{
     @Override
     public void translate(float tx, float ty, boolean updatePrevious) {
         if (isMovable && isFree){
-            if (historicPositionX.size() < 10){
+            if (historicPositionX.size() < 20){
                 historicPositionX.add(this.x);
                 historicPositionY.add(this.y);
             } else {
                 historicPositionX.add(0, this.x);
-                historicPositionX.remove(10);
+                historicPositionX.remove(20);
                 historicPositionY.add(0, this.y);
-                historicPositionY.remove(10);
+                historicPositionY.remove(20);
             }
             if (updatePrevious) {
                 this.previousX = this.x;
@@ -134,30 +134,32 @@ public class Ball extends Circle{
 
             //Log.e("ball", " historicPositionX "+historicPositionX.size());
 
-            int numberOfParticles;
+            int numberOfParticles = 0;
             for (int i = 0; i < historicPositionX.size(); i++){
                 if (i == 0){
-                    numberOfParticles = 3;
+                    numberOfParticles = 1;
                 } else if (i == 0){
                     numberOfParticles = 2;
-                } else if (i == 1){
-                    numberOfParticles = 5;
                 } else if (i == 2){
                     numberOfParticles = 3;
-                } else if (i == 3){
-                    numberOfParticles = 7;
                 } else if (i == 4){
-                    numberOfParticles = 4;
-                } else if (i == 5){
-                    numberOfParticles = 8;
-                } else if (i == 6){
-                    numberOfParticles = 3;
-                } else if (i == 7){
-                    numberOfParticles = 6;
-                } else if (i == 8){
                     numberOfParticles = 2;
-                } else {
+                } else if (i == 6){
+                    numberOfParticles = 5;
+                } else if (i == 8){
                     numberOfParticles = 3;
+                } else if (i == 10){
+                    numberOfParticles = 6;
+                } else if (i == 12){
+                    numberOfParticles = 1;
+                } else if (i == 14){
+                    numberOfParticles = 4;
+                } else if (i == 16){
+                    numberOfParticles = 1;
+                }  else if (i == 18){
+                    numberOfParticles = 2;
+                }else {
+                    numberOfParticles = 0;
                 }
                 ballParticleGenerator.generate(historicPositionX.get(i), historicPositionY.get(i), radius, numberOfParticles);
             }
