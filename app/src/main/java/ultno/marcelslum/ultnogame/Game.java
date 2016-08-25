@@ -353,6 +353,8 @@ public class Game {
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
+            menuInGame.getMenuOptionByName("Continuar").textObject.setText(context.getResources().getString(R.string.continuarJogar));
+
 
             ArrayList<float[]> valuesAnimPause = new ArrayList<>();
             valuesAnimPause.add(new float[]{0f,1f});
