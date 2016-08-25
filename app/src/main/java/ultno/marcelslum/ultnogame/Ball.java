@@ -32,8 +32,8 @@ public class Ball extends Circle{
 
     private int textureMap = COLOR_BALL_BLACK;
     
-    public ArrayList<float> historicPositionX;
-    public ArrayList<float> historicPositionY;
+    public ArrayList<Float> historicPositionX;
+    public ArrayList<Float> historicPositionY;
 
     Color color;
     boolean isAlive = true;
@@ -49,16 +49,15 @@ public class Ball extends Circle{
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
 
-    Ball(String name, Game game, float x, float y, float radium, int weight){
-        super(name, game, x, y, radium, weight);
+    Ball(String name, Game game, float x, float y, float radius, int weight){
+        super(name, game, x, y, radius, weight);
         textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
         textureMap = COLOR_BALL_BLACK;
         isMovable = true;
-        historicPositionX = new ArrayList<float>();
-        historicPositionY = new ArrayList<float>();
+        historicPositionX = new ArrayList<>();
+        historicPositionY = new ArrayList<>();
         setDrawInfo();
-        ballParticleGenerator = new BallParticleGenerator(name, game, x, y);
-        game.ballParticleGenerator.add(this.ballParticleGenerator);
+        ballParticleGenerator = new BallParticleGenerator(name+"pg", game, 0f, 0f);
     }
 
     public void setInvencible() {
@@ -96,9 +95,9 @@ public class Ball extends Circle{
 
         verticesData = new float[12];
 
-        Log.e("ball", " "+verticesData.length);
+        //Log.e("ball", " "+verticesData.length);
 
-        Utils.insertRectangleVerticesData(verticesData, 0, 0f- radius, radius, 0f - radius, radius, 0f);
+        Utils.insertRectangleVerticesData(verticesData, 0, 0f - radius, radius, 0f - radius, radius, 0f);
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
@@ -132,9 +131,11 @@ public class Ball extends Circle{
             }
             this.x += tx;
             this.y += ty;
-            
+
+            //Log.e("ball", " historicPositionX "+historicPositionX.size());
+
             int numberOfParticles;
-            for (int i = 0; i < historicPositionX; i++){
+            for (int i = 0; i < historicPositionX.size(); i++){
                 if (i == 0){
                     numberOfParticles = 3;
                 } else if (i == 0){
@@ -155,11 +156,15 @@ public class Ball extends Circle{
                     numberOfParticles = 6;
                 } else if (i == 8){
                     numberOfParticles = 2;
-                } else (i == 9){
+                } else {
                     numberOfParticles = 3;
                 }
                 ballParticleGenerator.generate(historicPositionX.get(i), historicPositionY.get(i), radius, numberOfParticles);
             }
+
+
+            //Log.e("ball", "ballParticleGenerator.particlesArray.size() "+ballParticleGenerator.particlesArray.size());
+
         }
     }
 

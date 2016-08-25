@@ -390,9 +390,7 @@ public class Entity {
 
     public void render(float[] matrixView, float[] matrixProjection) {
 
-        //if (this.name == "tittle"){
-            //Log.e("entity", "render tittle");
-        //}
+
 
         setMatrixModel();
 

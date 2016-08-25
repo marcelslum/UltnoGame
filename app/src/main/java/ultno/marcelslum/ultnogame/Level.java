@@ -191,7 +191,7 @@ public class Level {
                 this.game.gameAreaResolutionX * 0.5f, this.game.gameAreaResolutionY * 1.005f, this.game.resolutionY * 0.027f);
         this.game.objectivePanel.alpha = 0.9f;
 
-        this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.gameAreaResolutionY);
+        this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.resolutionY);
 
         //Log.e("Level loadEnt", "1");
 

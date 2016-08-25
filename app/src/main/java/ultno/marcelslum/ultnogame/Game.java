@@ -157,6 +157,7 @@ public class Game {
     public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3 = 23;
     public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4 = 24;
     public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5 = 25;
+    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_BALL = 26;
     
     public final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
 

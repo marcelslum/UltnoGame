@@ -231,15 +231,15 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, arrayOfNames[0]);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-	GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-	GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpTittle, 0);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpTittle, 0);
 
-	// texture 512
+	    // texture 512
         GLES20.glActiveTexture(GLES20.GL_TEXTURE01);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, arrayOfNames[1]);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-	GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-	GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpFont, 0);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpFont, 0);
 
         */
         Utils.setTexture("drawable/botoesebolas", texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
@@ -247,7 +247,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Utils.setTexture("drawable/targets", texturenames, Game.TEXTURE_TARGETS, mContext); // targets
         Utils.setTexture("drawable/bars", texturenames, Game.TEXTURE_BARS, mContext); // bars
         Utils.setTexture("drawable/background", texturenames, Game.TEXTURE_BACKGROUND, mContext); // background
-        Utils.setTexture("drawable/numbers_explosion2", texturenames, Game.TEXTURE_NUMBERS_EXPLOSION, mContext); // numeros
+        Utils.setTexture("drawable/numbers_explosion4", texturenames, Game.TEXTURE_NUMBERS_EXPLOSION, mContext); // numeros
         Utils.setTexture("drawable/tittle", texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
         
     }
