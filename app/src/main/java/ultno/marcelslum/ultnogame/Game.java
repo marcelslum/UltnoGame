@@ -5,8 +5,13 @@ import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
-
 import java.util.ArrayList;
+
+
+// TODO erro: jogo trava quando se aperta os dois botões de flecha ao mesmo tempo
+
+
+
 
 /**
  * Created by marcel on 01/08/2016.
@@ -378,6 +383,25 @@ public class Game {
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
 
+            Utils.createSimpleAnimation(bordaB, "translateVitoria", "translateY", 2000, 0f, resolutionY - gameAreaResolutionY).start();
+            if (button1Left != null) {
+                Utils.createSimpleAnimation(button1Left, "alphaVitoria", "alpha", 1000, button1Left.alpha, 0f).start();
+                button1Left.block();
+                Utils.createSimpleAnimation(button1Right, "alphaVitoria", "alpha", 1000, button1Right.alpha, 0f).start();
+                button1Right.block();
+            }
+            if (button2Left != null) {
+                Utils.createSimpleAnimation(button2Left, "alphaVitoria", "alpha", 1000, button2Left.alpha, 0f).start();
+                button2Left.block();
+                Utils.createSimpleAnimation(button2Right, "alphaVitoria", "alpha", 1000, button2Right.alpha, 0f).start();
+                button2Right.block();
+            }
+            Utils.createSimpleAnimation(buttonMusic, "alphaVitoria", "alpha", 1000, buttonMusic.alpha,0f).start();
+            buttonMusic.block();
+
+            Utils.createSimpleAnimation(buttonSound, "alphaVitoria", "alpha", 1000, buttonSound.alpha, 0f).start();
+            buttonSound.block();
+
             ArrayList<float[]> valuesAnimVitoria = new ArrayList<>();
             valuesAnimVitoria.add(new float[]{0f,1f});
             valuesAnimVitoria.add(new float[]{0.2f,2f});
@@ -401,9 +425,57 @@ public class Game {
             });
             anim.start();
 
+            ArrayList<float[]> valuesAnimVitoriaTranslate = new ArrayList<>();
+            valuesAnimVitoriaTranslate.add(new float[]{0f,-gameAreaResolutionY*3});
+            valuesAnimVitoriaTranslate.add(new float[]{0.8f,-gameAreaResolutionY*3});
+            valuesAnimVitoriaTranslate.add(new float[]{1f,0f});
+            new Animation(messageInGame, "messageInGameTranslateX", "translateX", 2000, valuesAnimVitoriaTranslate, false, true).start();
+
+            menuInGame.getMenuOptionByName("Continuar").textObject.setText(context.getResources().getString(R.string.menuInGameNivelConcluido1)+" "+(levelNumber+1));
+            menuInGame.alpha = 0f;
+            messageInGame.increaseAlpha(1600, 1f, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    innerGame.soundPool.play(innerGame.soundTextBoxAppear, 1, 1, 0, 0, 1);
+                    innerGame.menuInGame.appearAndUnblock(800);
+                }
+            });
+
             messageInGame.setText(context.getResources().getString(R.string.nivelConcluido1)+ " "+levelNumber+ " "+context.getResources().getString(R.string.nivelConcluido2));
-            messageInGame.increaseAlpha(100, 1f);
             messageInGame.display();
+
+            Utils.createSimpleAnimation(objectivePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY*0.2f).start();
+            Utils.createSimpleAnimation(objectivePanel, "scaleX", "scaleX", 2000, 1f, 2.5f).start();
+            Utils.createSimpleAnimation(objectivePanel, "scaleY", "scaleY", 2000, 1f, 2.5f).start();
+            Utils.createSimpleAnimation(scorePanel, "scaleX", "scaleX", 2000, 1f, 2f).start();
+            Utils.createSimpleAnimation(scorePanel, "scaleY", "scaleY", 2000, 1f, 2f).start();
+            Utils.createSimpleAnimation(scorePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY * 0.1f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+
+                            float initialTranslateY = - innerGame.gameAreaResolutionY * 0.1f;
+
+                            ArrayList<float[]> valuesAnimScoreTX = new ArrayList<>();
+                            valuesAnimScoreTX.add(new float[]{0f,0f});
+                            valuesAnimScoreTX.add(new float[]{0.3f,-10f});
+                            valuesAnimScoreTX.add(new float[]{0.7f,20f});
+                            valuesAnimScoreTX.add(new float[]{1f,0f});
+                            new Animation(innerGame.scorePanel, "animScoreTX", "translateX", 30000, valuesAnimScoreTX, true, true).start();
+
+                            ArrayList<float[]> valuesAnimScoreTY = new ArrayList<>();
+                            valuesAnimScoreTY.add(new float[]{0f,initialTranslateY});
+                            valuesAnimScoreTY.add(new float[]{0.2f,initialTranslateY + 5f});
+                            valuesAnimScoreTY.add(new float[]{0.7f,initialTranslateY -20f});
+                            valuesAnimScoreTY.add(new float[]{1f,initialTranslateY});
+                            new Animation(innerGame.scorePanel, "animScoreTY", "translateY", 12000, valuesAnimScoreTY, true, true).start();
+                        }
+                    }
+            ).start();
+
+
+
+            // TODO se for o último level
+            levelNumber += 1;
 
         } else if (state == GAME_STATE_TUTORIAL) {
             verifyDead();
@@ -432,6 +504,7 @@ public class Game {
     private void stopAllGameEntities() {
         for (Ball b : balls){
             b.isMovable = false;
+            b.clearParticles();
         }
         for (Bar b : bars){
             b.isMovable = false;
@@ -887,6 +960,8 @@ public class Game {
 
     public void simulate(long elapsed, float frameDuration){
 
+
+
         ballCollidedFx -= 1;
 
         if (this.gameState == GAME_STATE_JOGAR) {
@@ -996,11 +1071,14 @@ public class Game {
             if (gameState == GAME_STATE_JOGAR) {
                 verifyWin();
             }
+        }
 
-            if (gameState == GAME_STATE_JOGAR) {
-                background.move(1);
-                verifyDead();
-            }
+
+        if (gameState == GAME_STATE_JOGAR) {
+            background.move(1);
+            verifyDead();
+        } else if(gameState == GAME_STATE_VITORIA){
+            background.move(3);
         }
     }
 

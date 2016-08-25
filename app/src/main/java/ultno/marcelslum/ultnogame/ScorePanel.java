@@ -35,6 +35,16 @@ public class ScorePanel extends Entity{
         setDrawInfo();
     }
 
+    @Override
+    public float getWidth(){
+        return size * 0.55294f * 5;
+    }
+
+    @Override
+    public float getHeight(){
+        return size;
+    }
+
     public void setDrawInfo(){
         
         String valueString = String.valueOf((int)value);
@@ -66,7 +76,7 @@ public class ScorePanel extends Entity{
             }
 
             Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+width, 0f, size, 0f);
-            xOfTriangle += width;
+            xOfTriangle += width - 1f;
             
             Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
 

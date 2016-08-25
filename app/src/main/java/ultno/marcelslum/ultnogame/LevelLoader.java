@@ -33,7 +33,7 @@ public class LevelLoader {
                 l.ballsDesiredVelocityXByResolution = new float[]{0.003f, 0.003f};
                 l.ballsDesiredVelocityYByResolution = new float[]{0.00529412f, 0.00529412f};
                 l.ballsColor = new Color[] {new Color(1f, 1f, 1f, 1f),new Color(1f, 1f, 1f, 1f)};
-                l.ballsInvencible = new boolean[]{true, false};
+                l.ballsInvencible = new boolean[]{false, false};
                 l.ballsAngleToRotate = new float[]{2f, 2f};
                 l.ballsMaxAngle = new float[]{55f, 55f};
                 l.ballsMinAngle = new float[]{35f, 35f};
@@ -76,9 +76,8 @@ public class LevelLoader {
 
                                     int type = Target.TARGET_BLACK;
                                     if (iX == 9){
-                                        type = Target.TARGET_RED;
+                                        //type = Target.TARGET_RED;
                                     }
-
 
                                     Target target = new Target("target", innerGame, xInitial, yInitial,
                                             gameAreaResolutionX * targetSizeXByResolution,
@@ -86,9 +85,8 @@ public class LevelLoader {
                                             );
 
                                     if (iX == 9){
-                                        target.special = 1;
+                                        //target.special = 1;
                                     }
-
 
                                     target.isMovable = false;
                                     target.alpha = 1;
@@ -96,7 +94,6 @@ public class LevelLoader {
                                     target.currentState = 1;
 
                                     innerGame.addTarget(target);
-
                                 }
                             }
                         }
@@ -118,8 +115,8 @@ public class LevelLoader {
                 game.levelObject = new Level(2, game, 
                 1, 1,                                               // quantidade de balls e minimo de balls vivas
                 new float[]{0.010f},                                // raio da bola
-                new float[]{0.3f}, new float[]{0.72f},              // posicao inicial
-                new float[]{0.003f*2},new float[]{0.00529412f*2},   // velocidade
+                new float[]{0.3f}, new float[]{0.2f},              // posicao inicial
+                new float[]{0.003f*1.2f},new float[]{0.00529412f*1.2f},   // velocidade
                 new Color[] {new Color(1f, 1f, 1f, 1f)},            // cor
                 new boolean[]{false},                               // invencível
                 new float[]{5f},new float[]{65f}, new float[]{25f},// angulos de rotacao
@@ -129,7 +126,7 @@ public class LevelLoader {
                 new boolean[]{true},                                // bola livre
                 1,                                                  // quantidade de bars
                 new float[]{0.26f}, new float[]{0.0175f},           // tamanho da barra
-                new float[]{0.35f}, new float[]{0.014f},            // posicao da barra
+                new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
                 new float[]{0.005f}, new float[]{0f},               // velocidade da barra
                 11, 2,                                              // quantidade de targets
                 0.0895f, 0.04f,                                     // tamanho dos targets
@@ -147,8 +144,7 @@ public class LevelLoader {
                     
                         for (int iY = 0; iY < innerGame.levelObject.quantityTargetsY;iY++){
                             for (int iX = 0; iX < innerGame.levelObject.quantityTargetsX; iX++) {
-                                if (map[iX][iY] == 1){
-
+                                if (map[iY][iX] == 1){
                                     float xInitial = (gameAreaResolutionX * innerGame.levelObject.targetsPaddingByXResolution) +
                                             (iX * ((gameAreaResolutionX * innerGame.levelObject.targetSizeXByResolution) +
                                             (gameAreaResolutionX * innerGame.levelObject.targetsDistanceByXResolution)));
@@ -156,13 +152,55 @@ public class LevelLoader {
                                             (iY * ((gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution) +
                                             (gameAreaResolutionX * innerGame.levelObject.targetsDistanceByXResolution)));
 
+
+
+                                    int type = Target.TARGET_BLACK;
+
+                                    if (iY == 1){
+                                        if (iX == 3){
+                                            type = Target.TARGET_RED;
+                                        }
+
+                                        if (iX == 6){
+                                            type = Target.TARGET_RED;
+                                        }
+                                    } else {
+                                        if (iX == 4){
+                                            type = Target.TARGET_RED;
+                                        }
+
+                                        if (iX == 9){
+                                            type = Target.TARGET_RED;
+                                        }
+                                    }
+
                                     Target target = new Target("target", innerGame, xInitial, yInitial,
                                             gameAreaResolutionX * innerGame.levelObject.targetSizeXByResolution,
-                                            gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution, 9, Target.TARGET_BLACK
+                                            gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution, 9, type
                                             );
                                     target.isMovable = false;
                                     target.alpha = 1;
                                     target.states = new int[]{0,1};
+
+                                    if (iY == 1){
+                                        if (iX == 3){
+                                            target.special = 1;
+                                        }
+
+                                        if (iX == 6){
+                                            target.special = 1;
+                                        }
+                                    } else {
+                                        if (iX == 4){
+                                            target.special = 1;
+                                        }
+
+                                        if (iX == 9){
+                                            target.special = 1;
+                                        }
+                                    }
+
+
                                     target.currentState = 1;
                                     innerGame.addTarget(target);
                                 }

@@ -83,8 +83,6 @@ public class Animation{
     public void doAnimation(){
         //Log.e("Animation", "do Animation");
 
-
-
         this.elapsedTime = Utils.getTime() - this.startTime;
         this.percentage = this.elapsedTime/(float)this.duration;
 
@@ -120,7 +118,6 @@ public class Animation{
                     float delta = this.finalTime - this.initialTime;
                     float stepPercentage = (((this.percentage - this.initialTime)*100)/delta)/100;
                     float value = ((this.finalValue - this.initialValue) * stepPercentage)+this.values.get(0)[1];
-
                     float addValue = 0;
                     if (this.lastValue > 1){
                         for (int i = 1; i< this.lastValue; i++){

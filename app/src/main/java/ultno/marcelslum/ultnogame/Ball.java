@@ -170,6 +170,11 @@ public class Ball extends Circle{
         }
     }
 
+    public void clearParticles(){
+        historicPositionX.clear();
+        historicPositionY.clear();
+    }
+
     public void onCollision(){
         // EXTRAI OS DADOS NECESSÁRIOS
 

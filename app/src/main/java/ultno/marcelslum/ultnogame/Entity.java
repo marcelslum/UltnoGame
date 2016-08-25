@@ -358,6 +358,7 @@ public class Entity {
     public void setMatrixModel(){
         Matrix.setIdentityM(this.matrixModel, 0); // initialize to identity matrix
         Matrix.translateM(this.matrixModel, 0, this.x + animTranslateX, this.y + animTranslateY, 0);
+
         if (this.rotateAngle != 0) {
             Matrix.translateM(this.matrixModel, 0, getMiddlePointX(), getMiddlePointY(), 0);
             Matrix.setRotateM(mRotationMatrix, 0, this.rotateAngle, 0f, 0f, 1f);
@@ -389,8 +390,6 @@ public class Entity {
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {
-
-
 
         setMatrixModel();
 
@@ -512,7 +511,7 @@ public class Entity {
         }
 
         //if (name == "explode")
-            Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
+            //Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
             //Log.e("entity2", GLES20.glGetProgram(program.get()));
 
     }

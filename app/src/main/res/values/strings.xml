@@ -16,6 +16,7 @@
     <string name="retornarAoMenuPrincipal">Retornar ao menu principal</string>
     <string name="nivelConcluido1">NÍVEL </string>
     <string name="nivelConcluido2"> CONCLUÍDO</string>
+    <string name="menuInGameNivelConcluido1">Jogar o nível</string>
     <string name="jogarONivel">Jogar o nível </string>
     <string name="proximaInstrucao">Próxima instrução</string>
     <string name="Jogar">Play</string>

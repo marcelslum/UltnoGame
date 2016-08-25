@@ -195,12 +195,12 @@ public class Level {
 
         //Log.e("Level loadEnt", "1");
 
-        this.game.bordaE = new Rectangle("bordaE", this.game, -999, 0, 1000, this.game.gameAreaResolutionY, 10, new Color(0,0,0,1));
+        this.game.bordaE = new Rectangle("bordaE", this.game, -999, 0, 1000, this.game.gameAreaResolutionY*2, 10, new Color(0,0,0,1));
         this.game.bordaE.isMovable = false;
         this.game.bordaE.program = this.game.solidProgram;
 
         //Log.e("Level loadEnt", "1");
-        this.game.bordaD = new Rectangle("bordaD", this.game, this.game.gameAreaResolutionX-2, 0, 1000, this.game.gameAreaResolutionY, 10, new Color(0,0,0,1));
+        this.game.bordaD = new Rectangle("bordaD", this.game, this.game.gameAreaResolutionX-2, 0, 1000, this.game.gameAreaResolutionY*2, 10, new Color(0,0,0,1));
         this.game.bordaD.isMovable = false;
         this.game.bordaD.program = this.game.solidProgram;
 
@@ -405,7 +405,7 @@ public class Level {
 
         for (int i = 0; i < this.ballsQuantity; i++){
             float ballX = this.game.gameAreaResolutionX * this.ballsInitialXByResolution[i];
-            float ballY = this.game.gameAreaResolutionX * this.ballsInitialYByResolution[i];
+            float ballY = this.game.gameAreaResolutionY * this.ballsInitialYByResolution[i];
 
             float radium = this.game.gameAreaResolutionY * this.ballsRadiusByResolution[i];
 

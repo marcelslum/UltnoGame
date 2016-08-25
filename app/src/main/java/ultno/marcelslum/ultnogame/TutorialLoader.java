@@ -18,7 +18,7 @@ public class TutorialLoader {
     final Game innerGame = game;
 
     switch (levelNumber){
-            case 1:
+            case 1://1
                 TextBox l1tb1 = new TextBox("textBoxl", game, 50f, 50f, game.resolutionX*0.6f, game.resolutionX*0.03f, game.context.getResources().getString(R.string.l1t1));
                 l1tb1.appendArrow(400f, 250f);
                 Tutorial l1t1 = new Tutorial(l1tb1);
