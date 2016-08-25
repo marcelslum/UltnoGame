@@ -57,12 +57,15 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     public void onPause()
     {
+	game.setGameState(Game.GAME_STATE_PAUSE);
+	
 		/* Do stuff to pause the renderer */
     }
 
     public void onResume()
     {
 		/* Do stuff to resume the renderer */
+	
         mLastTime = System.currentTimeMillis();
     }
 
