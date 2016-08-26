@@ -358,6 +358,63 @@ public class TutorialLoader {
                         .build()
                 );
                 break;
+                
+                case 4:
+                // L4T1
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox1", g)
+                                .position(x*0.5f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l4t1))
+                                .withArrow(gX*0.6f, gY*0.48f)
+                                .build()
+                        )
+                        .build()
+                );
+                break;
+                
+                case 7:
+                // L4T7
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox1", g)
+                                .position(x*0.5f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l7t1))
+                                .withArrow(gX*0.6f, gY*0.08f)
+                                .build()
+                        )
+                        .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
+                            @Override
+                            public void onShowBeforeAnim() {
+                                    g.balls.get(0).clearDisplay();
+                                }
+                            }
+                        )
+                        .onShowAfternim(new Tutorial.OnShowAfterAnim() {
+                            @Override
+                            public void onShowAfterAnim() {
+                                createAnimation3v(g.targets.get(4), "alpha", "alpha", 3000, 
+                                    0f, 1f, 0.75f, 0.99f, 1f, 0, true, true).start(); 
+                                    
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                }
+                            }
+                        )
+                        
+                        
+                        .build()
+                );
+                break;
         }
     }
 }
