@@ -429,6 +429,10 @@ public class Utils {
         anim.setAnimationListener(animationListener);
         return anim;
     }
+    
+    public String getStringResource(game, tag){
+        return game.context.getResources().getString(tag);
+    }
 
 
 }
