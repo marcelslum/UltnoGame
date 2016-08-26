@@ -98,8 +98,7 @@ public class TextBox extends Entity{
         frame = new Image("frame", game, x, y, width + (textPadding*6), textY - y + (textPadding*6), Game.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
         addChild(frame);
 
-        Log.e("texbox", x + " " + y + " " + (width + (textPadding*6)) + " " + (textY - y + (textPadding*6)));
-
+        //Log.e("texbox", x + " " + y + " " + (width + (textPadding*6)) + " " + (textY - y + (textPadding*6)));
 
         arrowContinuar = new Button("arrowContinuar", this.game, x + width - size, y + textY - size - (textPadding*8), size, size, Game.TEXTURE_BUTTONS_AND_BALLS);
         arrowContinuar.setTextureMap(14);
