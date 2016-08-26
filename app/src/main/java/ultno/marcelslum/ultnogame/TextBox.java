@@ -113,6 +113,10 @@ public class TextBox extends Entity{
             }
         });
         addChild(arrowContinuar);
+        
+        if (builder.isHaveArrow){
+            appendArrow(builder.arrowX, builder.arrowY);
+        }
     }
 
     public void appendArrow(float arrowX, float arrowY){
@@ -121,7 +125,7 @@ public class TextBox extends Entity{
         float initialX;
         float initialY;
 
-        Log.e("textbox appendArrow", " " + frame.x + " " + frame.y + " " + frame.width + " " + frame.height);
+        //Log.e("textbox appendArrow", " " + frame.x + " " + frame.y + " " + frame.width + " " + frame.height);
 
         if (arrowY > (frame.y + frame.height)){
             initialY = frame.y + frame.height;
@@ -140,11 +144,10 @@ public class TextBox extends Entity{
             }
         }
 
-        Log.e("textbox appendArrow", " initialX " + initialX + " initialY " + initialY);
+        //Log.e("textbox appendArrow", " initialX " + initialX + " initialY " + initialY);
 
         arrow = new Line("line", game, initialX, initialY, arrowX, arrowY, textColor);
         addChild(arrow);
-
     }
 
     public void render(float[] matrixView, float[] matrixProjection){
@@ -167,13 +170,17 @@ public class TextBox extends Entity{
     
     public static class TextBoxBuilder {
 
-        private static float width;
-        private static float size;
-        private static String text;
-        private static x;
-        private static y;
-        private static String name;
+        private static float width = 0f;
+        private static float size = 0f;
+        private static String text = "";
+        private static x = 0f;
+        private static y = 0f;
+        private static String name = "";
         private static Game game;
+        private static isHaveArrow = false;
+        private static arrowX = 0f;
+        private static arrowY = 0f;
+        
         
         public TextBoxBuilder() {
             this.name = name;
@@ -212,10 +219,23 @@ public class TextBox extends Entity{
             return this;
         }
         
-        public TextBoxBuilder width(float width){
+        public static TextBoxBuilder width(float width){
             this.width = width;
             return this;
         }
+        
+        public TextBoxBuilder withArrow(float arrowX, float arrowY){
+            `
+            this.arrowX = x;
+            this.arrowY = y;
+            return this;
+        }
+        
+        public TextoBoxBuilder withoutArrow(){
+            this.isHaveArrow = false;
+            return this;
+        }
+        
         
         public TextBoxBuilder build(){
             return new TextBox(this);
