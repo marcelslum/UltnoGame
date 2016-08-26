@@ -14,25 +14,41 @@ public class TutorialLoader {
     }
 
     public static void loadTutorial(Game game, int levelNumber){
-    
-    final Game innerGame = game;
 
-    switch (levelNumber){
+        final Game g = game;
+        final float gX = game.gameAreaResolutionX;
+        final float gY = game.gameAreaResolutionY;
+        float size = gX*0.03f;
+
+        switch (levelNumber){
             case 1://1
-                TextBox l1tb1 = new TextBox("textBoxl", game, 50f, 50f, game.resolutionX*0.6f, game.resolutionX*0.03f, game.context.getResources().getString(R.string.l1t1));
-                l1tb1.appendArrow(400f, 250f);
-                Tutorial l1t1 = new Tutorial(l1tb1);
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox1", g)
+                                .position(gX*0.2f, gY*0.2f)
+                                .width(gX*0.5f)
+                                .size(gX*0.03f)
+                                .text(Utils.getStringResource(game, R.string.l1t1))
+                                .withArrow(gX *0.5f, gY *0.9f)
+                                .build()
+                        )
+                        .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
+                                     @Override
+                                     public void onShowBeforeAnim() {
+                                         g.balls.get(0).clearDisplay();
+                                         g.bars.get(0).isMovable = true;
+                                    }
+                                     }
+                                )
+                        .build()
+                );
+                break;
 
-                l1t1.setOnShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
-                    @Override
-                    public void onShowBeforeAnim() {
-                        innerGame.balls.get(0).clearDisplay();
-                        innerGame.bars.get(0).isMovable = true;
-                    }
-                });
-                game.levelObject.tutorials.add(l1t1);
-                
-                TextBox l1tb2 = new TextBox("textBox2", game, 50f, 50f, game.resolutionX*0.6f, game.resolutionX*0.03f, game.context.getResources().getString(R.string.l1t2));
+                /*
+                TextBox l1tb2 = new TextBox("textBox2", game,
+                        gX*0.2f, gY*0.2f,
+                        game.resolutionX*0.5f, size,
+                        game.context.getResources().getString(R.string.l1t2));
                 Tutorial l1t2 = new Tutorial(l1tb2);
                 l1t2.setOnShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                     @Override
@@ -44,10 +60,7 @@ public class TutorialLoader {
                 });
                 game.levelObject.tutorials.add(l1t2);
                 break;
-                
-            case 2:
-
-                break;
+                */
                 
         }
     }

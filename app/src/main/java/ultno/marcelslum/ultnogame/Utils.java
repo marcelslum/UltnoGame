@@ -451,7 +451,7 @@ public class Utils {
         return anim;
     }
     
-    public String getStringResource(game, tag){
+    public static String getStringResource(Game game, int tag){
         return game.context.getResources().getString(tag);
     }
 

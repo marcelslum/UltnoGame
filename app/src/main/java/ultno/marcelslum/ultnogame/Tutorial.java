@@ -19,23 +19,23 @@ public class Tutorial {
     TextBox textBox;
     boolean isBlocked;
 
-    private Tutorial(TextBoxBuilder builder){
+    private Tutorial(TutorialBuilder builder){
         this.textBox = builder.textBox;
         
         if (builder.onShowBeforeAnim != null){
-            this.onShowBeforeAnim = v;
+            this.onShowBeforeAnim = builder.onShowBeforeAnim;
         }
         
         if (builder.onShowAfterAnim != null){
-            this.onShowAfterAnim = v;
+            this.onShowAfterAnim = builder.onShowAfterAnim;
         }
         
         if (builder.onUnshowBeforeAnim != null){
-            this.onUnshowBeforeAnim = v;
+            this.onUnshowBeforeAnim = builder.onUnshowBeforeAnim;
         }
         
         if (builder.onUnshowAfterAnim != null){
-            this.onUnshowAfterAnim = v;
+            this.onUnshowAfterAnim = builder.onUnshowAfterAnim;
         }
     }
 
@@ -44,7 +44,6 @@ public class Tutorial {
         soundPool.play(soundId, 1, 1, 0, 0, 1);
         isBlocked = true;
         textBox.alpha = 0f;
-
 
         if (onShowBeforeAnim != null) {
             onShowBeforeAnim.onShowBeforeAnim();
@@ -69,7 +68,7 @@ public class Tutorial {
 
     public void unshow(){
 
-        Log.e("tutorial", "unshow tutorial "+textBox.name);
+        //Log.e("tutorial", "unshow tutorial "+textBox.name);
 
         isBlocked = true;
         if (onUnshowBeforeAnim != null)
@@ -143,32 +142,32 @@ public class Tutorial {
         private OnUnshowBeforeAnim onUnshowBeforeAnim;
         private OnUnshowAfterAnim onUnshowAfterAnim;
         
-        public TextBoxBuilder(TextBox textBox) {
+        public TutorialBuilder(TextBox textBox) {
             this.textBox = textBox;
         }
         
-        public TextBoxBuilder onShowBeforeAnim(OnShowBeforeAnim onShowBeforeAnim){
+        public TutorialBuilder onShowBeforeAnim(OnShowBeforeAnim onShowBeforeAnim){
             this.onShowBeforeAnim = onShowBeforeAnim;
             return this;
         }
         
-        public TextBoxBuilder onShowAfterAnim(OnShowAfterAnim onShowAfterAnim){
+        public TutorialBuilder onShowAfterAnim(OnShowAfterAnim onShowAfterAnim){
             this.onShowAfterAnim = onShowAfterAnim;
             return this;
         }
         
-        public TextBoxBuilder onUnshowBeforeAnim(OnShowBeforeAnim onUnshowBeforeAnim){
+        public TutorialBuilder onUnshowBeforeAnim(OnUnshowBeforeAnim onUnshowBeforeAnim){
             this.onUnshowBeforeAnim = onUnshowBeforeAnim;
             return this;
         }
         
-        public TextBoxBuilder onUnshowAfterAnim(OnShowAfterAnim onUnshowAfterAnim){
+        public TutorialBuilder onUnshowAfterAnim(OnUnshowAfterAnim onUnshowAfterAnim){
             this.onUnshowAfterAnim = onUnshowAfterAnim;
             return this;
         }
 
-        public TextBoxBuilder build(){
-            return new TextBox(this);
+        public Tutorial build(){
+            return new Tutorial(this);
         }
     }
     
