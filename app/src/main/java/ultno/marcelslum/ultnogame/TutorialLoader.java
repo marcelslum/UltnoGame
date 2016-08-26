@@ -72,17 +72,12 @@ public class TutorialLoader {
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                                 @Override
                                 public void onShowAfterAnim() {
-                                    ArrayList<float[]> values = new ArrayList<>();
-                                        values.add(new float[]{0f,0f});
-                                        values.add(new float[]{0.3f,gX * 0.15f});
-                                    new Animation(g.balls.get(0), "translateX", 
-                                        "translateX", 2000, values, true, false).start();
                                     
-                                    ArrayList<float[]> values = new ArrayList<>();
-                                        values.add(new float[]{0f,0f});
-                                        values.add(new float[]{0.3f,gX * 0.14f});
-                                    new Animation(g.balls.get(0), "translateY", 
-                                        "translateY", 2000, values, true, false).start();
+                                    createAnimation2v(g.balls.get(0), "translateX", "translateX", 2000, 
+                                        0f, 0f, 0.3f, gX * 0.15f, true, true);
+                                        
+                                    createAnimation2v(g.balls.get(0), "translateY", "translateY", 2000, 
+                                        0f, 0f, 0.3f, gY * 0.14f, true, true);
                                         
                                     // TODO xVermelho
                                     /*
