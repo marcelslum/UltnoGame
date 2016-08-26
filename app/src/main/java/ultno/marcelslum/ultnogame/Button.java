@@ -17,7 +17,7 @@ public class Button extends Entity{
     float textureSize = 1024f;
     InteractionListener listener;
 
-    Button(String name, Game game, float x, float y, float width, float height, int textureUnit) {
+    Button(String name, Game game, float x, float y, float width, float height, int textureUnit, float listenerScale) {
         super(name, game, x, y);
         this.height = height;
         this.width = width;
@@ -29,7 +29,13 @@ public class Button extends Entity{
         this.textureUnit = textureUnit;
         this.program = this.game.imageProgram;
 
-        listener = new InteractionListener("listenerButton"+this.name, x, y, width, height, 5000, this, game);
+        float lw = width * listenerScale;
+        float lh = height * listenerScale;
+        float lx = lx - (lw - widht);
+        float ly = ly - (ly - height);
+        
+        listener = new InteractionListener("listenerButton"+this.name, lx, ly, lw, lh, 5000, this, game);
+        
         final Button finalButton =  this;
         listener.setPressListener(new InteractionListener.PressListener() {
             @Override
@@ -44,7 +50,7 @@ public class Button extends Entity{
         });
         this.game.addInteracionListener(listener);
     }
-
+    
     public void setTextureMap(int textureMap){
         this.textureMap = textureMap;
         this.setDrawInfo();
