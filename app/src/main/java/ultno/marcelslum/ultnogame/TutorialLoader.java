@@ -313,8 +313,8 @@ public class TutorialLoader {
                         .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                             @Override
                             public void onShowBeforeAnim() {
-                                    g.balls.get(0).clearAnimations();
-                                    g.bars.get(0).clearAnimations();
+                                    g.balls.get(0).resetAnimations();
+                                    g.bars.get(0).resetAnimations();
                                     g.balls.get(0).x = gX * 0.3f;
                                     g.balls.get(0).y = gY * 0.72f;
                                     g.bars.get(0).x = gX * 0.1f;
@@ -336,8 +336,8 @@ public class TutorialLoader {
                         .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
                             @Override
                             public void onUnshowBeforeAnim() {
-                                    g.balls.get(0).clearAnimations();
-                                    g.bars.get(0).clearAnimations();
+                                    g.balls.get(0).resetAnimations();
+                                    g.bars.get(0).resetAnimations();
                                 }
                             }
                         )
@@ -427,7 +427,7 @@ public class TutorialLoader {
                             .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                                 @Override
                                 public void onShowBeforeAnim() {
-                                        g.targets.get(4).clearAnimations();
+                                        g.targets.get(4).resetAnimations();
                                         g.targets.get(4).alpha = 1f;
                                         g.targets.setType(Target.COLOR)
                                     }
@@ -589,18 +589,28 @@ public class TutorialLoader {
                             }
                         )
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
-                                @Override
-                                public void onShowAfterAnim() {
+                                    @Override
+                                    public void onShowAfterAnim() {
+                                    g.balls.get(0).resetAnimations();
+                                    g.balls.get(1).resetAnimations();   
+                                    g.balls.get(2).resetAnimations();   
+                                    g.balls.get(3).resetAnimations();
+                                    g.balls.get(4).resetAnimations();
+                                        
+                                    g.balls.get(0).clearDisplay();
+                                    g.targets.get(35).resetAnimations();
+                                    g.targets.get(35).alpha = 0f;
                                     
-                                    
-                                    
-                                    
+                                    float desloc = g.balls.get(1).radius * 4;
+                                    g.balls.get(1).translate(-desloc, -desloc);
+                                    g.balls.get(2).translate(desloc, -desloc);
+                                    g.balls.get(3).translate(-desloc, desloc);
+                                    g.balls.get(4).translate(desloc, desloc);
                                 }
                             }
                         )
                         .build()
                 );
-                
                 break;
         }
     }
