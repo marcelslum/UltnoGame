@@ -74,10 +74,10 @@ public class TutorialLoader {
                                 public void onShowAfterAnim() {
                                     
                                     createAnimation2v(g.balls.get(0), "translateX", "translateX", 2000, 
-                                        0f, 0f, 0.3f, gX * 0.15f, true, true);
+                                        0f, 0f, 0.3f, gX * 0.15f, true, true).start();
                                         
                                     createAnimation2v(g.balls.get(0), "translateY", "translateY", 2000, 
-                                        0f, 0f, 0.3f, gY * 0.14f, true, true);
+                                        0f, 0f, 0.3f, gY * 0.14f, true, true).start();
                                         
                                     // TODO xVermelho
                                     /*
@@ -127,19 +127,63 @@ public class TutorialLoader {
                                         0f, 0f, 0.3f, gX * 0.15f, true, true).start();
                                     createAnimation2v(g.balls.get(0), "translateY", "translateY", 2000, 
                                         0f, 0f, 0.3f, gY * 0.14f, true, true).start();
-                                }
-                            }
-                        )
-                        .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
-                            @Override
-                            public void onUnshowBeforeAnim() {
-                                    g.resetAllAnimations();
-                                    // TODO xVermelho clearDisplay()
+                                    createAnimation3v(g.balls.get(0), "alpha", "alpha", 2000, 
+                                        0f, 0f, 0.25f, 1f, 0.4f, 0f, true, true).start();   
                                 }
                             }
                         )
                         .build()
-                        
+                );
+                
+                
+                // L1T4
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox4", g)
+                                .position(x, y*2f)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l1t2))
+                                .withArrow(gX *0.5f, gY *0.95f)
+                                .build()
+                        )
+                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
+                                @Override
+                                public void onShowAfterAnim() {
+                                    g.resetAllAnimations();
+                                    g.targets.get(4).clearDisplay();
+                                    g.balls.get(0).x = gX * 0.5f;
+                                    g.balls.get(0).y = gY * 0.05f;
+                                    g.scorePanel.setValue(100, true, 500, false);
+                                }
+                            }
+                        )
+                        .build()
+                );
+                
+                // L1T5
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox4", g)
+                                .position(x, y*2f)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l1t2))
+                                .withArrow(gX *0.5f, gY *0.95f)
+                                .build()
+                        )
+                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
+                                @Override
+                                public void onShowAfterAnim() {
+                                    g.resetAllAnimations();
+                                    g.targets.get(4).clearDisplay();
+                                    g.balls.get(0).x = gX * 0.5f;
+                                    g.balls.get(0).y = gY * 0.05f;
+                                    g.scorePanel.setValue(100, true, 500, false);
+                                }
+                            }
+                        )
+                        .build()
                 );
                 
                 break;
