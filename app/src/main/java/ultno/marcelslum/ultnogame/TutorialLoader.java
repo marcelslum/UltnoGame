@@ -241,25 +241,123 @@ public class TutorialLoader {
                     .build()
                 );
                 break;
-
-                /*
-                TextBox l1tb2 = new TextBox("textBox2", game,
-                        gX*0.2f, gY*0.2f,
-                        game.resolutionX*0.5f, size,
-                        game.context.getResources().getString(R.string.l1t2));
-                Tutorial l1t2 = new Tutorial(l1tb2);
-                l1t2.setOnShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
-                    @Override
-                    public void onShowBeforeAnim() {
-                        innerGame.balls.get(0).display();
-                        innerGame.bars.get(0).isMovable = false;
-                        innerGame.bars.get(0).returnToInitialPosition();
-                    }
-                });
-                game.levelObject.tutorials.add(l1t2);
-                break;
-                */
                 
+                case 2:
+                // L2T1
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox1", g)
+                                .position(x*0.5f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l1t2))
+                                .withoutArrow()
+                                .build()
+                        )
+                        .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
+                            @Override
+                            public void onShowBeforeAnim() {
+                                    g.balls.get(0).x = gX * 0.3f;
+                                    g.balls.get(0).y = gY * 0.72f;
+                                }
+                            }
+                        )
+                        .build()
+                );
+                
+                // L2T2
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox2", g)
+                                .position(x*0.25f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l1t2))
+                                .withoutArrow()
+                                .build()
+                        )
+                        .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
+                            @Override
+                            public void onShowBeforeAnim() {
+                                    g.balls.get(0).x = gX * 0.3f;
+                                    g.balls.get(0).y = gY * 0.72f;
+                                }
+                            }
+                        )
+                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
+                            @Override
+                            public void onShowAfterAnim() {
+                                    createAnimation3v(g.balls.get(0), "translateX", "translateX", 3000, 
+                                        0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.4f, true, true).start();
+                                    createAnimation3v(g.balls.get(0), "translateY", "translateY", 3000, 
+                                        0f, 0f, 0.25f, gY*0.26f, 0.5f, -gY*0.3f, true, true).start();
+                                    createAnimation2v(g.bars.get(0), "translateX", "translateX", 3000, 
+                                        0f, 0f, 0.5f, -gX*0.4f, true, true).start();   
+                                }
+                            }
+                        )
+                        .build()
+                );
+                
+                // L2T3
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox3", g)
+                                .position(x*0.25f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l1t3))
+                                .withoutArrow()
+                                .build()
+                        )
+                        .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
+                            @Override
+                            public void onShowBeforeAnim() {
+                                    g.balls.get(0).clearAnimations();
+                                    g.bars.get(0).clearAnimations();
+                                    g.balls.get(0).x = gX * 0.3f;
+                                    g.balls.get(0).y = gY * 0.72f;
+                                    g.bars.get(0).x = gX * 0.1f;
+                                }
+                            }
+                        )
+                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
+                            @Override
+                            public void onShowAfterAnim() {
+                                    createAnimation3v(g.balls.get(0), "translateX", "translateX", 3000, 
+                                        0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.2f, true, true).start();
+                                    createAnimation3v(g.balls.get(0), "translateY", "translateY", 3000, 
+                                        0f, 0f, 0.25f, gY*0.26f, 0.5f, gY*0.15f, true, true).start();
+                                    createAnimation2v(g.bars.get(0), "translateX", "translateX", 3000, 
+                                        0f, 0f, 0.5f, gX*0.4f, true, true).start();   
+                                }
+                            }
+                        )
+                        .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
+                            @Override
+                            public void onUnshowBeforeAnim() {
+                                    g.balls.get(0).clearAnimations();
+                                    g.bars.get(0).clearAnimations();
+                                }
+                            }
+                        )
+                        .build()
+                );
+                
+                // L2T4
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox4", g)
+                                .position(x*0.25f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l1t4))
+                                .withoutArrow()
+                                .build()
+                        )
+                        .build()
+                );
+                break;
         }
     }
 }
