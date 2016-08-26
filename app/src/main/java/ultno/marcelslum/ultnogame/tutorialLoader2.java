@@ -26,24 +26,26 @@ public class TutorialLoader {
 
     switch (levelNumber){
             case 1://1
-            
-                Tutorial l1t1 = new Tutorial(
-                    TextBox.TextBoxBuilder.
-                        .name("textoBox1")
-                        .position(gX*0.2f, gY*0.2f)
-                        .width(gX*0.5f)
-                        .text(Utils.getStringResource(game, R.string.l1t1))
-                        .withArrow(gX *0.5f, gY *0.9f)
+            game.levelObject.tutorials.add(
+                    new Tutorial.TutorialBuilder(
+                        TextBox.TextBoxBuilder.
+                            .name("textoBox1")
+                            .position(gX*0.2f, gY*0.2f)
+                            .width(gX*0.5f)
+                            .text(Utils.getStringResource(game, R.string.l1t1))
+                            .withArrow(gX *0.5f, gY *0.9f)
+                            .build();
+                        )
+                        .onShowBeforAnim(new Tutorial.OnShowBeforeAnim() {
+                                @Override
+                                public void onShowBeforeAnim() {
+                                    g.balls.get(0).clearDisplay();
+                                    g.bars.get(0).isMovable = true;
+                                }
+                            }
+                        )
                         .build();
-                    );
-                l1t1.setOnShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
-                    @Override
-                    public void onShowBeforeAnim() {
-                        g.balls.get(0).clearDisplay();
-                        g.bars.get(0).isMovable = true;
-                    }
-                });
-                game.levelObject.tutorials.add(l1t1);
+                );
                 
                 TextBox l1tb2 = new TextBox("textBox2", game, 
                     gX*0.2f, gY*0.2f, 
