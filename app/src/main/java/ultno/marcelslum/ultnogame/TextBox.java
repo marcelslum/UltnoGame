@@ -23,12 +23,12 @@ public class TextBox extends Entity{
     Image frame;
     Color textColor = new Color(0f, 0f, 0f, 0.9f);
     Line arrow;
-
-    TextBox(String name, Game game, float x, float y, float width, float size, String text) {
-        super(name, game, x, y);
-        this.width = width;
-        this.size = size;
-        this.text = text;
+    
+    private TextBox(TextBoxBuilder builder) {
+        super(builder.name, builder.game, builder.x, builder.y);
+        this.width = builder.width;
+        this.size = builder.size;
+        this.text = builder.text;
         this.texts = new ArrayList<>();
 
         Text textForMeasure = new Text("text", game, 0f, 0f, size, text, game.font, textColor);
@@ -164,4 +164,62 @@ public class TextBox extends Entity{
             this.texts.get(i).prepareRender(matrixView, matrixProjection);
         }
     }
+    
+    public static class TextBoxBuilder {
+
+        private static float width;
+        private static float size;
+        private static String text;
+        private static x;
+        private static y;
+        private static String name;
+        private static Game game;
+        
+        public TextBoxBuilder() {
+            this.name = name;
+            this.game = game;
+        }
+        
+        public TextBoxBuilder name(String name){
+            this.name = name;
+            return this;
+        }
+        
+        public TextBoxBuilder game(Game game){
+            this.game = game;
+            return this;
+        }
+        
+        public TextBoxBuilder position(float x, float y){
+            this.x = x;
+            this.y = y;
+            return this;
+        }
+        
+        public TextBoxBuilder position(float x, float y){
+            this.x = x;
+            this.y = y;
+            return this;
+        }
+        
+        public TextBoxBuilder size(float size){
+            this.size = size;
+            return this;
+        }
+        
+        public TextBoxBuilder text(float text){
+            this.text = text;
+            return this;
+        }
+        
+        public TextBoxBuilder width(float width){
+            this.width = width;
+            return this;
+        }
+        
+        public TextBoxBuilder build(){
+            return new TextBox(this);
+        }
+    }
+    
 }
