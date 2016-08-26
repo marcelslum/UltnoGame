@@ -451,21 +451,13 @@ public class TutorialLoader {
                                 .withoutArrow()
                                 .build()
                         )
-                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
-                            @Override
-                            public void onShowAfterAnim() {
-                                
-                                
-                                    
-                            }
-                        )
                         .build()
                 );
                 
                 // L9T2
                 game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox1", g)
+                            new TextBox.TextBoxBuilder("textoBox2", g)
                                 .position(x*0.5f, y)
                                 .width(width)
                                 .size(size)
@@ -479,13 +471,54 @@ public class TutorialLoader {
                 // L9T3
                 game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox1", g)
+                            new TextBox.TextBoxBuilder("textoBox3", g)
                                 .position(x*0.5f, y)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l9t2))
+                                .text(Utils.getStringResource(game, R.string.l9t3))
                                 .withoutArrow()
                                 .build()
+                        )
+                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
+                            @Override
+                            public void onShowAfterAnim() {
+                                
+                                
+                                float posX = gX * 0.6f;
+                                float posY = gY * 0.28f;
+                                
+                                g.balls.get(0).x = posX;
+                                g.balls.get(0).y = posY;
+                                
+                                float size = g.balls.get(0).radius;
+                                
+                                Ball ball2 = new Ball("ball2", g, posX - size * 2, posY - size * 2, size, 8);
+                                    ball2.program = this.game.imageProgram;
+                                    ball2.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+                                    ball2.setTextureUnitAndUvData(COLOR_BALL_BLUE);
+                                
+                                Ball ball3 = new Ball("ball2", g, posX + size * 2, posY - size * 2, size, 8);
+                                    ball3.program = this.game.imageProgram;
+                                    ball3.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+                                    ball3.setTextureUnitAndUvData(COLOR_BALL_ORANGE);
+                                
+                                Ball ball4 = new Ball("ball2", g, posX - size * 2, posY + size * 2, size, 8);
+                                    ball4.program = this.game.imageProgram;
+                                    ball4.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+                                    ball4.setTextureUnitAndUvData(COLOR_BALL_RED);
+                                
+                                Ball ball5 = new Ball("ball2", g, posX + size * 2, posY + size * 2, size, 8);
+                                    ball5.program = this.game.imageProgram;
+                                    ball5.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+                                    ball5.setTextureUnitAndUvData(COLOR_BALL_PINK);
+                            
+                                g.addBall(ball2);
+                                g.addBall(ball3);
+                                g.addBall(ball4);
+                                g.addBall(ball5);
+                                
+                                    
+                            }
                         )
                         .build()
                 );
