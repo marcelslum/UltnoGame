@@ -485,13 +485,13 @@ public class TutorialLoader {
                                 float posX = gX * 0.6f;
                                 float posY = gY * 0.28f;
                                 
-                                Ball ball1 = g.balls.get(0);
+                                final Ball ball1 = g.balls.get(0);
                                 ball1.x = posX;
                                 ball1.y = posY;
                                 
                                 float size = ball1.radius;
                                 
-                                Ball ball2 = new Ball("ball2", g, posX - size * 2, posY - size * 2, size, 8);
+                                final Ball ball2 = new Ball("ball2", g, posX - size * 2, posY - size * 2, size, 8);
                                     ball2.program = this.game.imageProgram;
                                     ball2.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
                                     ball2.setTextureUnitAndUvData(Ball.COLOR_BALL_BLUE);
@@ -499,7 +499,7 @@ public class TutorialLoader {
                                     ball2.alpha = 0f;
                                     ball2.display();
                                 
-                                Ball ball3 = new Ball("ball2", g, posX + size * 2, posY - size * 2, size, 8);
+                                final Ball ball3 = new Ball("ball2", g, posX + size * 2, posY - size * 2, size, 8);
                                     ball3.program = this.game.imageProgram;
                                     ball3.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
                                     ball3.setTextureUnitAndUvData(Ball.COLOR_BALL_ORANGE);
@@ -507,7 +507,7 @@ public class TutorialLoader {
                                     ball3.alpha = 0f;
                                     ball3.display();
                                 
-                                Ball ball4 = new Ball("ball2", g, posX - size * 2, posY + size * 2, size, 8);
+                                final Ball ball4 = new Ball("ball2", g, posX - size * 2, posY + size * 2, size, 8);
                                     ball4.program = this.game.imageProgram;
                                     ball4.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
                                     ball4.setTextureUnitAndUvData(Ball.COLOR_BALL_RED);
@@ -515,7 +515,7 @@ public class TutorialLoader {
                                     ball4.alpha = 0f;
                                     ball4.display();
                                 
-                                Ball ball5 = new Ball("ball2", g, posX + size * 2, posY + size * 2, size, 8);
+                                final Ball ball5 = new Ball("ball2", g, posX + size * 2, posY + size * 2, size, 8);
                                     ball5.program = this.game.imageProgram;
                                     ball5.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
                                     ball5.setTextureUnitAndUvData(Ball.COLOR_BALL_PINK);
@@ -553,10 +553,49 @@ public class TutorialLoader {
                                             }
                                         });
                                     animBall1.start();
+                                
+                                createAnimation4v(ball2, "alpha", "alpha", 5000, 
+                                    0f, 0f, 0.23f, 0f, 0.3f, 1f, 1f, 1f, true, true).start();
+                                createAnimation4v(ball3, "alpha", "alpha", 5000, 
+                                    0f, 0f, 0.23f, 0f, 0.3f, 1f, 1f, 1f, true, true).start();
+                                createAnimation4v(ball4, "alpha", "alpha", 5000, 
+                                    0f, 0f, 0.23f, 0f, 0.3f, 1f, 1f, 1f, true, true).start();
+                                createAnimation4v(ball5, "alpha", "alpha", 5000, 
+                                    0f, 0f, 0.23f, 0f, 0.3f, 1f, 1f, 1f, true, true).start();
+                                    
+                                float desloc = ball1.radius * 4f;
+                                
+                                createAnimation3v(ball2, "translateX", "translateX", 5000, 
+                                    0f, 0f, 0.25f, 0f, 0.4f, -desloc, true, true).start();
+                                createAnimation3v(ball3, "translateX", "translateX", 5000, 
+                                    0f, 0f, 0.25f, 0f, 0.4f, desloc, true, true).start();
+                                createAnimation3v(ball4, "translateX", "translateX", 5000, 
+                                    0f, 0f, 0.25f, 0f, 0.4f, -desloc, true, true).start();
+                                createAnimation3v(ball5, "translateX", "translateX", 5000, 
+                                    0f, 0f, 0.25f, 0f, 0.4f, desloc, true, true).start();
+                                
+                                createAnimation3v(ball2, "translateY", "translateY", 5000, 
+                                    0f, 0f, 0.25f, 0f, 0.4f, -desloc, true, true).start();
+                                createAnimation3v(ball3, "translateY", "translateY", 5000, 
+                                    0f, 0f, 0.25f, 0f, 0.4f, -desloc, true, true).start();
+                                createAnimation3v(ball4, "translateY", "translateY", 5000, 
+                                    0f, 0f, 0.25f, 0f, 0.4f, desloc, true, true).start();
+                                createAnimation3v(ball5, "translateY", "translateY", 5000, 
+                                    0f, 0f, 0.25f, 0f, 0.4f, desloc, true, true).start();
+                                
+                                createAnimation4v(g.targets.get(35), "alpha", "alpha", 5000, 
+                                    0f, 1f, 0.1f, 1f, 0.2f, 0ff, 1f, 0f, true, true).start();
+       
+                            }
+                        )
+                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
+                                @Override
+                                public void onShowAfterAnim() {
                                     
                                     
                                     
                                     
+                                }
                             }
                         )
                         .build()
