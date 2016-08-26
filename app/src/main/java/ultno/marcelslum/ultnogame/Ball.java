@@ -27,6 +27,9 @@ public class Ball extends Circle{
     public float maxAngle;
     public float minAngle;
 
+    public final int timeForExplode = 1500;
+    public long initialTimeWaitingExplosion = 0;
+
     public float rotationAngle = 0;
     boolean isInvencible = false;
 
@@ -361,6 +364,7 @@ public class Ball extends Circle{
     }
 
     private void waitForExplosion() {
+        initialTimeWaitingExplosion = Utils.getTime();
         listenForExplosion = true;
         setTextureUnitAndUvData(COLOR_BALL_RED);
         

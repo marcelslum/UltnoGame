@@ -9,12 +9,10 @@ import java.util.ArrayList;
 
 
 // TODO erro: jogo trava quando se aperta os dois botões de flecha ao mesmo tempo
+// TODO pausar a música quando minimiza o aplicativo
 
 
-
-
-/**
- * Created by marcel on 01/08/2016.
+/** * Created by marcel on 01/08/2016.
  */
 public class Game {
     private static Game ourInstance = new Game();
@@ -32,6 +30,8 @@ public class Game {
     public static ArrayList<Text> texts;
     public static ArrayList<TouchEvent> touchEvents;
     public static ArrayList<Bar> bars;
+    public static ArrayList<Obstacle> obstacles;
+    public static ArrayList<WindowGame> windows;
     public static ArrayList<Menu> menus;
     public static ArrayList<Selector> selectors;
     public static ArrayList<InteractionListener> interactionListeners;
@@ -101,7 +101,6 @@ public class Game {
 
     int ballCollidedFx = 0;
 
-
     // options
     boolean soundOn = true;
     boolean musicOn = true;
@@ -133,7 +132,7 @@ public class Game {
     public final static int TEXTURE_TARGETS = 2;
     public final static int TEXTURE_BARS = 3;
     public final static int TEXTURE_BACKGROUND = 4;
-    public final static int TEXTURE_NUMBERS_EXPLOSION = 5;
+    public final static int TEXTURE_NUMBERS_EXPLOSION_OBSTACLE = 5;
     public final static int TEXTURE_TITTLE = 6;
     
     
@@ -207,6 +206,8 @@ public class Game {
         // initialize data
         targets = new ArrayList<Target>();
         balls = new ArrayList<Ball>();
+        obstacles = new ArrayList<Obstacle>();
+        windows = new ArrayList<WindowGame>();
         touchEvents = new ArrayList<TouchEvent>();
         texts = new ArrayList<Text>();
         interactionListeners = new ArrayList<>();
@@ -243,6 +244,10 @@ public class Game {
 
     public void addTarget(Target target){
         this.targets.add(target);
+    }
+
+    public void addObstacle(Obstacle obstacle){
+        this.obstacles.add(obstacle);
     }
 
     public void addBall(Ball ball){
@@ -347,7 +352,7 @@ public class Game {
             menuInGame.appearAndUnblock(300);
             messageGameOver.display();
         } else if (state == GAME_STATE_PAUSE){
-            music.pause();
+
             Log.e("game", "ativando game_state_pause");
             soundPool.play(soundMenuSelectBig, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
             stopAllGameEntities();
@@ -531,8 +536,8 @@ public class Game {
         bars.clear();
         targets.clear();
         //windows.clear();
-        //obstacles.clear();
-        //particles.clear();
+        obstacles.clear();
+
     }
 
     public void eraseAllHudEntities() {
@@ -684,9 +689,9 @@ public class Game {
         list.addAll(balls);
         list.addAll(bars);
         list.addAll(targets);
-        // TODO list.addAll(obstacles);
-        // TODO list.addAll(windows);
-        // TODO list.addAll(particles);
+        list.addAll(obstacles);
+        list.addAll(windows);
+
         return list;
     }
 
@@ -962,8 +967,6 @@ public class Game {
 
     public void simulate(long elapsed, float frameDuration){
 
-
-
         ballCollidedFx -= 1;
 
         if (this.gameState == GAME_STATE_JOGAR) {
@@ -1005,21 +1008,25 @@ public class Game {
                 quad.insert(bars.get(i));
             }
 
+            for (int i = 0; i < obstacles.size(); i++) {
+                quad.insert(obstacles.get(i));
+            }
+
             //Log.e("gl renderer", "onDrawFrame4");
 
             boolean forPlayAlarm = false;
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
-                    Log.e("game", "listenForExplosion ativado");
-                    forPlayAlarm = true;
-                    balls.get(i).radius *= 10;
-                    ArrayList<Entity> ball = new ArrayList<>();
-                    ball.add(balls.get(i));
-                    boolean collision = checkCollision(ball, true, true);
-                    balls.get(i).radius /= 10;
-                    if (!collision) {
-                        Log.e("game", "explode");
-                        balls.get(i).explode();
+
+                    if ((int)(Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode) {
+                        forPlayAlarm = true;
+                        balls.get(i).radius *= 5;
+                        ArrayList<Entity> ball = new ArrayList<>();
+                        ball.add(balls.get(i));
+                        boolean collision = checkCollision(ball, true, true);
+                        balls.get(i).radius /= 5;
+                        if (!collision)
+                            balls.get(i).explode();
                     }
                 }
             }
@@ -1140,19 +1147,9 @@ public class Game {
             bars.get(i).prepareRender(matrixView, matrixProjection);
         }
 
-        if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
-        if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
-        if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
-        if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
-
-        if (button1Left != null) button1Left.prepareRender(matrixView, matrixProjection);
-        if (button1Right != null) button1Right.prepareRender(matrixView, matrixProjection);
-        if (button2Left != null) button1Left.prepareRender(matrixView, matrixProjection);
-        if (button2Right != null) button1Right.prepareRender(matrixView, matrixProjection);
-
-        if (buttonMusic != null) buttonMusic.prepareRender(matrixView, matrixProjection);
-        if (buttonSound != null) buttonSound.prepareRender(matrixView, matrixProjection);
-
+        for (int i = 0; i < obstacles.size(); i++){
+            obstacles.get(i).prepareRender(matrixView, matrixProjection);
+        }
 
         for (int i = 0; i < targets.size(); i++){
             if (targets.get(i).showPointsState == Entity.SHOW_POINTS_ON){
@@ -1160,8 +1157,15 @@ public class Game {
             }
         }
 
-        if (scorePanel != null) scorePanel.prepareRender(matrixView, matrixProjection);
-        if (objectivePanel != null) objectivePanel.prepareRender(matrixView, matrixProjection);
+        for (int i = 0; i < particleGenerator.size(); i++){
+            particleGenerator.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
+        for (int i = 0; i < windows.size(); i++){
+            windows.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
+
 
         if (menuMain != null) menuMain.prepareRender(matrixView, matrixProjection);
         if (menuInGame != null) menuInGame.prepareRender(matrixView, matrixProjection);
@@ -1169,12 +1173,6 @@ public class Game {
         if (selectorLevel != null) selectorLevel.prepareRender(matrixView, matrixProjection);
         if (selectorVolumn != null) selectorVolumn.prepareRender(matrixView, matrixProjection);
         if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
-
-
-        for (int i = 0; i < particleGenerator.size(); i++){
-            particleGenerator.get(i).prepareRender(matrixView, matrixProjection);
-        }
-
 
         if (this.gameState == GAME_STATE_TUTORIAL){
             if (levelObject.tutorials.size() >  this.levelObject.showingTutorial){
@@ -1188,6 +1186,22 @@ public class Game {
         messageCurrentLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
+
+        if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
+        if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
+        if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
+        if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
+
+        if (scorePanel != null) scorePanel.prepareRender(matrixView, matrixProjection);
+        if (objectivePanel != null) objectivePanel.prepareRender(matrixView, matrixProjection);
+
+        if (button1Left != null) button1Left.prepareRender(matrixView, matrixProjection);
+        if (button1Right != null) button1Right.prepareRender(matrixView, matrixProjection);
+        if (button2Left != null) button1Left.prepareRender(matrixView, matrixProjection);
+        if (button2Right != null) button1Right.prepareRender(matrixView, matrixProjection);
+
+        if (buttonMusic != null) buttonMusic.prepareRender(matrixView, matrixProjection);
+        if (buttonSound != null) buttonSound.prepareRender(matrixView, matrixProjection);
     }
 
     public boolean checkCollision(ArrayList<? extends Entity> aEntities, boolean respondToCollision, boolean updateLastCollisionResponse){

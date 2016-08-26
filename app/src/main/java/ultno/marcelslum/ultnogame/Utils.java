@@ -332,7 +332,7 @@ public class Utils {
                     Utils.x2 = (1000f - 2f)/1024f;
                     break;
             }
-        } else if (textureMap > 20){
+        } else if (textureMap < 29){
             Utils.y1 = (640f + 2f)/1024f;
             Utils.y2 = (768f - 2f)/1024f;
 
@@ -361,8 +361,29 @@ public class Utils {
                     Utils.x1 = (640f + 2f)/1024f;
                     Utils.x2 = (768f - 2f)/1024f;
                     break;
+                case 27:
+                    Utils.x1 = (768f + 2f)/1024f;
+                    Utils.x2 = (896f - 2f)/1024f;
+                    break;
+                case 28:
+                    Utils.x1 = (896f + 2f)/1024f;
+                    Utils.x2 = (1024f - 2f)/1024f;
+                    break;
             }
-        } 
+        } else if (textureMap > 28) {
+            Utils.y1 = (768f + 2f)/1024f;
+            Utils.y2 = (1024f - 2f)/1024f;
+            switch(textureMap) {
+                case 29:
+                    Utils.x1 = (0f + 2f) / 1024f;
+                    Utils.x2 = (512f - 2f) / 1024f;
+                    break;
+                case 30:
+                    Utils.x1 = (512f + 2f) / 1024f;
+                    Utils.x2 = (1024f - 2f) / 1024f;
+                    break;
+            }
+        }
         insertRectangleUvData(array, startIndex);
     }
     

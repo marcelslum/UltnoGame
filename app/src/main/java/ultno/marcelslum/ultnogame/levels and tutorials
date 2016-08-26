@@ -1,0 +1,2462 @@
+
+
+Ultno.Game.prototype.loadLevel = function(number){
+    var level = undefined;
+    var self = this;
+    Ultno.myGame.currentLevel = undefined;
+
+    switch (number) {
+        case 1:
+            level = LEVEL.createLevel(1, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.010];
+            level.ballsInitialPositionByResolution = [V(0.3,0.3)];
+            level.ballsDesiredVelocityByResolution = [V(0.003*1,0.00529412*1)];//[V(0.004,0.006)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2];
+            level.ballMaxAngle = [55];
+            level.ballMinAngle = [35];
+            level.ballVelocityVariation = [0.1];//0.15
+            level.ballVelocityMaxByInitialVelocity = [1.5];
+            level.ballVelocityMinByInitialVelocity = [0.8];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.22, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.0045*2,0)];
+
+            level.quantityTargetsX = 2;//10ocupa 11 espaços
+            level.quantityTargetsY = 1;
+            level.targetsSizeByResolution = [V(0.0895, 0.04)];//[V(0.3, 0.1)];
+            level.targetsDistanceByXResolution = 0.001;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    for (var iY = 0; iY < this.quantityTargetsY;iY++){
+                        for (var iX = 0; iX < this.quantityTargetsX; iX++) {
+                            if (!(iY == 0 && iX == 0)){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iX * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iY * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                var target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x * this.targetsSizeByResolution[0].x, self.gameArea.resolution.y * this.targetsSizeByResolution[0].y));
+
+                                    target.isMovable = false;
+                                    target.alpha = 1;
+                                    target.states = [0,1];
+                                    target.currentState = 1;
+
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+
+            };
+        break;
+
+        //CN2
+       case 2:
+            level = LEVEL.createLevel(2, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.010];
+            level.ballsInitialPositionByResolution = [V(0.3,0.72)];
+            level.ballsDesiredVelocityByResolution = [V(0.003*2,0.00529412*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [4];
+            level.ballMaxAngle = [65];
+            level.ballMinAngle = [25];
+            level.ballVelocityVariation = [0.25];
+            level.ballVelocityMaxByInitialVelocity = [2.2];
+            level.ballVelocityMinByInitialVelocity = [0.7];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true,false];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.26, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.35,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 2;
+            level.targetsSizeByResolution = [V(0.0895, 0.04)];
+            level.targetsDistanceByXResolution = 0.001;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [1,1,1,1,1,1,1,1,1,1,1];
+                    map[1] = [0,0,1,1,1,0,1,1,1,0,0];
+
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){//5
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {//8
+                        //console.log(self.resolution);
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2 * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.resolution.x* level.targetsSizeByResolution[0].x, self.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1];
+                                target.currentState = 1;
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+        break;
+
+        //CL3
+        case 3:
+            level = LEVEL.createLevel(3, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0036*2,0.00635294117647059*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2];
+            level.ballMaxAngle = [55];
+            level.ballMinAngle = [35];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.5];
+            level.ballVelocityMinByInitialVelocity = [0.8];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.18, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 9;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [0,1,0,0,0,1,0,1,0,0,0];
+                    map[1] = [0,0,1,1,0,0,0,0,0,0,0];
+                    map[2] = [0,0,1,1,1,0,0,0,0,0,0];
+                    map[3] = [0,0,0,0,1,1,0,0,0,0,0];
+                    map[4] = [1,0,1,0,1,0,0,0,0,0,0];
+                    map[5] = [1,0,1,1,0,0,0,0,0,0,0];
+                    map[6] = [1,0,1,0,0,0,1,0,0,0,0];
+                    map[7] = [1,1,0,1,0,1,0,0,0,0,0];
+                    map[8] = [0,0,0,1,0,0,1,1,0,0,0];
+
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){//5
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {//8
+                        //console.log(self.resolution);
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2 * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,3];
+                                target.currentState = 1;
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+        break;
+
+        //CL4
+        case 4:
+            level = LEVEL.createLevel(4, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            //level.ballsInitialPositionByResolution = [V(0.15,0.6)];
+            level.ballsInitialPositionByResolution = [V(0.1,0.6)];
+            level.ballsDesiredVelocityByResolution = [V(0.0036*2,0.00564705882352941*2)];
+            //level.ballsDesiredVelocityByResolution = [V(0.004,0.006)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [55];
+            level.ballMinAngle = [35];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.5];
+            level.ballVelocityMinByInitialVelocity = [0.8];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.18, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 13;//13
+            level.quantityTargetsY = 3;//3
+            level.targetsSizeByResolution = [V(0.075176, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+
+                //console.log("teste create target");
+                    var target;
+                    var map = [];
+                        map[0] = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0];
+                        map[1] = [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1];
+                        map[2] = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0];
+
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){
+
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {
+
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2* (self.resolution.x * level.targetsSizeByResolution[0].x + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * (self.resolution.y * level.targetsSizeByResolution[0].y +(self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                    V(self.resolution.x* level.targetsSizeByResolution[0].x, self.resolution.y * level.targetsSizeByResolution[0].y));
+                                self.targets.push(target);
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1];
+                                target.currentState = 1;
+
+                                //console.log("teste create states");
+
+                            }
+                        }
+                    }
+
+
+            };
+
+            level.createObstacles = function(){
+                self.obstacles.push(OBSTACLE.createObstacle('obstacle', self, 1,
+                    V(1 + (self.resolution.x*0.6),self.resolution.y*0.4),
+                    V(self.resolution.x*0.15, self.resolution.y * 0.025),self.textureObstacle));
+
+            };
+
+        break;
+
+        // CL5
+        case 5:
+            level = LEVEL.createLevel(5, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0032*2,0.0056470588*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [55];
+            level.ballMinAngle = [35];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.5];
+            level.ballVelocityMinByInitialVelocity = [0.8];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.18, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 9;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [0,1,1,1,0,1,0,1,1,1,0];
+                    map[1] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[2] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[3] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[4] = [0,1,1,1,0,1,0,1,1,1,0];
+                    map[5] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[6] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[7] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[8] = [1,1,1,1,1,1,1,1,1,1,1];
+
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){//5
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {//8
+                        //console.log(self.resolution);
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2 * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1];
+                                target.currentState = 1;
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+            level.createObstacles = function(){
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(1 + (self.resolution.x*0),self.resolution.y*0.06345),
+                        V(self.resolution.x*0.1, self.resolution.y * 0.04),
+                        self.textureObstacle)
+                    );
+
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(1 + (self.resolution.x*0.4),self.resolution.y*0.06345),
+                        V(self.resolution.x*0.2, self.resolution.y * 0.04),
+                        self.textureObstacle)
+                    );
+
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(1 + (self.resolution.x*0.9),self.resolution.y*0.06345),
+                        V(self.resolution.x*0.1, self.resolution.y * 0.04),
+                        self.textureObstacle)
+                    );
+
+            };
+
+
+        break;
+        //
+
+        // CL6
+        case 6:
+            level = LEVEL.createLevel(6, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0034*2,0.006*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [57];
+            level.ballMinAngle = [33];
+            level.ballVelocityVariation = [0.11];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 9;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [0,0,0,0,0,0,0,0,1,1,1];
+                    map[1] = [1,0,0,0,0,0,0,0,0,1,1];
+                    map[2] = [1,0,0,0,0,0,0,0,0,0,1];
+                    map[3] = [0,0,0,0,0,0,0,0,0,1,1];
+                    map[4] = [0,1,0,0,0,0,0,0,1,1,1];
+                    map[5] = [0,1,0,0,0,0,0,1,1,1,1];
+                    map[6] = [0,0,0,0,0,0,1,0,1,0,1];
+                    map[7] = [1,0,0,0,0,0,1,1,1,1,1];
+                    map[8] = [1,0,0,0,0,0,1,1,1,1,1];
+
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){//5
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {//8
+                        //console.log(self.resolution);
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2 * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1];
+                                target.currentState = 1;
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+            level.createObstacles = function(){
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(1 + (self.resolution.x*0.46),self.resolution.y*0.2),
+                        V(self.resolution.x*0.08, self.resolution.y * 0.5),
+                        self.textureObstacle)
+                    );
+            };
+
+
+        break;
+        //
+
+        // CL7
+        case 7:
+            level = LEVEL.createLevel(7, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0034*2,0.006*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [57];
+            level.ballMinAngle = [33];
+            level.ballVelocityVariation = [0.11];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 2;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [0,1,1,1,1,1,1,1,1,1,1];
+                    map[1] = [1,1,0,0,0,0,0,0,0,1,1];
+
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){//5
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {//8
+                        //console.log(self.resolution);
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2 * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+                                target.currentState = 3;
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+
+
+
+        break;
+        //
+
+
+        // CL8
+        case 8:
+            level = LEVEL.createLevel(8, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0035*2,0.0061764706*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [58];
+            level.ballMinAngle = [32];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 3;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [1,1,1,1,1,1,1,1,1,1,1];
+                    map[1] = [1,1,1,1,1,1,1,1,1,1,1];
+                    map[2] = [1,1,1,1,1,1,1,1,1,1,1];
+
+                    var mapState = [];
+                    mapState[0] = [1,1,2,1,3,2,3,1,1,1,1];
+                    mapState[1] = [2,2,1,1,1,3,1,1,2,2,2];
+                    mapState[2] = [1,1,2,1,3,2,3,1,1,1,1];
+
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){//5
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {//8
+                        //console.log(self.resolution);
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2 * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+                                target.currentState = mapState[i1][i2];
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+            level.createObstacles = function(){
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(1 + (self.resolution.x*0.31),self.resolution.y*0.2),
+                        V(self.resolution.x*0.02, self.resolution.y * 0.3),
+                        self.textureObstacle)
+                    );
+
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                    V(1 + (self.resolution.x*0.64),self.resolution.y*0.2),
+                    V(self.resolution.x*0.02, self.resolution.y * 0.3),
+                    self.textureObstacle)
+                );
+            };
+
+        break;
+        //
+
+        // CL9
+        case 9:
+            level = LEVEL.createLevel(9, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0035*2,0.0061764706*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [58];
+            level.ballMinAngle = [32];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 4;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [1,1,1,1,1,0,1,1,1,1,1];
+                    map[1] = [1,1,1,1,1,0,1,1,1,1,1];
+                    map[2] = [1,1,1,1,1,0,1,1,1,1,1];
+                    map[3] = [1,1,1,1,1,1,1,1,1,1,1];
+
+                    var mapState = [];
+                    mapState[0] = [1,1,2,1,3,2,3,1,2,1,1];
+                    mapState[1] = [2,2,1,1,1,3,1,1,1,2,2];
+                    mapState[2] = [1,1,2,1,3,2,3,1,2,1,1];
+                    mapState[3] = [1,1,1,1,1,1,1,1,1,1,1];
+
+                    for (var iy = 0; iy < map.length; iy++){//5
+                        for (var ix = 0; ix < map[0].length; ix++) {//8
+                        //console.log(self.resolution);
+
+                            if (map[iy][ix] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (ix * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iy * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+
+                                if (iy == 3 && ix == 5){
+                                    target.special = 1;
+                                }
+
+                                if (iy == 0 && ix == 3){
+                                    target.special = 1;
+                                }
+
+                                if (iy == 1 && ix == 7){
+                                    target.special = 1;
+                                }
+
+                                target.currentState = mapState[iy][ix];
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+        break;
+
+        // CL10
+        case 10:
+            level = LEVEL.createLevel(10, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0035*2,0.0061764706*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [58];
+            level.ballMinAngle = [32];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 4;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [0,0,0,1,1,0,1,1,0,0,0];
+                    map[1] = [0,0,0,1,1,0,1,1,0,0,0];
+                    map[2] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[3] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[4] = [1,1,1,1,0,0,0,1,1,1,1];
+                    map[5] = [1,1,0,1,1,0,1,1,0,1,1];
+                    map[6] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[7] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[8] = [1,1,0,1,1,0,1,1,0,1,1];
+
+
+                    var mapState = [];
+                    mapState[0] = [0,0,0,1,1,0,1,1,0,0,0];
+                    mapState[1] = [0,0,0,1,1,0,1,1,0,0,0];
+                    mapState[4] = [3,2,1,1,0,0,0,1,1,2,3];
+                    mapState[5] = [2,2,0,1,1,0,1,1,0,2,2];
+                    mapState[8] = [1,1,0,1,1,0,1,1,0,1,1];
+
+                    for (var iy = 0; iy < map.length; iy++){
+                        for (var ix = 0; ix < map[0].length; ix++) {
+                        //console.log(self.resolution);
+
+                            if (map[iy][ix] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (ix * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iy * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+
+                                if (iy == 5 && ix == 4){
+                                    target.special = 1;
+                                }
+
+                                if (iy == 5 && ix == 6){
+                                    target.special = 1;
+                                }
+
+                                target.currentState = mapState[iy][ix];
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+
+            level.createObstacles = function(){
+
+                var posX = 0.1;
+
+                for (var i = 0; i < 5; i++){
+
+                    self.obstacles.push(
+                        OBSTACLE.createObstacle('obstacle', self, 1,
+                            V((self.gameArea.resolution.x*posX) + (self.gameArea.resolution.x*0.005),self.gameArea.resolution.y*0.12),
+                            V(self.gameArea.resolution.x*0.05, self.gameArea.resolution.y * 0.02),
+                            self.textureObstacle)
+                        );
+
+                    self.obstacles.push(
+                        OBSTACLE.createObstacle('obstacle', self, 1,
+                            V(self.gameArea.resolution.x*posX,self.gameArea.resolution.y*0.29),
+                            V(self.gameArea.resolution.x*0.06, self.gameArea.resolution.y * 0.02),
+                            self.textureObstacle)
+                        );
+                    posX += 0.185;
+                }
+            };
+
+
+
+        break;
+
+
+        // CL11
+        case 11:
+            level = LEVEL.createLevel(11, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0035*2,0.0061764706*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [58];
+            level.ballMinAngle = [32];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.0051*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 4;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [0,1,0,1,0,0,0,1,0,1,0];
+                    map[1] = [1,1,0,1,0,0,0,1,0,1,1];
+                    map[2] = [1,1,0,1,0,0,0,1,0,1,1];
+                    map[3] = [1,1,0,0,0,0,0,0,0,1,1];
+                    map[4] = [1,1,1,1,0,0,0,1,1,1,1];
+                    map[5] = [1,1,1,1,0,0,0,1,1,1,1];
+                    map[6] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[7] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[8] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[9] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[10] = [0,1,0,1,0,0,0,1,0,1,0];
+
+                    var mapState = [];
+
+                    mapState[0] = [0,3,0,1,0,0,0,1,0,3,0];
+                    mapState[1] = [1,1,0,1,0,0,0,1,0,1,1];
+                    mapState[2] = [1,3,0,1,0,0,0,1,0,3,1];
+                    mapState[3] = [1,1,0,0,0,0,0,0,0,1,1];
+                    mapState[4] = [1,3,2,1,0,0,0,1,2,3,1];
+                    mapState[5] = [3,2,2,1,0,0,0,1,2,2,3];
+                    mapState[10] = [0,1,0,1,0,0,0,1,0,1,0];
+
+                    for (var iy = 0; iy < map.length; iy++){
+                        for (var ix = 0; ix < map[0].length; ix++) {
+                        //console.log(self.resolution);
+
+                            if (map[iy][ix] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (ix * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iy * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+
+                                if (iy == 10 && ((ix == 1)||(ix == 3)||(ix == 7)||(ix == 9))){
+                                    target.special = 1;
+                                }
+
+                                target.currentState = mapState[iy][ix];
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+            level.createObstacles = function(){
+                /*
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(1,self.gameArea.resolution.y*0.35),
+                        V(self.gameArea.resolution.x*0.4, self.gameArea.resolution.y * 0.03),
+                        self.textureObstacle)
+                    );
+                self.obstacles.push(
+                OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(self.gameArea.resolution.x*0.6,self.gameArea.resolution.y*0.35),
+                        V(self.gameArea.resolution.x*0.4, self.gameArea.resolution.y * 0.03),
+                        self.textureObstacle)
+                    );
+                */
+            };
+        break;
+
+        // CL12
+        case 12:
+            level = LEVEL.createLevel(12, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0035*2,0.0061764706*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [58];
+            level.ballMinAngle = [32];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.0052*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 4;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [0,1,0,1,0,1,0,1,0,1,0];
+                    map[1] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[2] = [1,0,1,0,0,0,0,0,1,0,1];
+                    map[3] = [0,1,0,1,0,0,0,1,0,1,0];
+                    map[4] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[5] = [0,0,0,0,0,0,1,0,0,0,0];
+
+                    var mapState = [];
+
+                    mapState[0] = [0,1,0,1,0,1,0,1,0,1,0];
+                    mapState[1] = [0,0,0,0,0,0,0,0,0,0,0];
+                    mapState[2] = [1,0,1,0,0,0,0,0,1,0,1];
+                    mapState[3] = [0,1,0,1,0,0,0,1,0,1,0];
+                    mapState[4] = [0,0,0,0,0,0,0,0,0,0,0];
+                    mapState[5] = [0,0,0,0,0,0,1,0,0,0,0];
+
+                    for (var iy = 0; iy < map.length; iy++){
+                        for (var ix = 0; ix < map[0].length; ix++) {
+                        //console.log(self.resolution);
+
+                            if (map[iy][ix] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (ix * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iy * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+                                target.isGhost = true;
+
+                                if (iy == 5 && ix == 6){
+                                    target.special = 1;
+                                    target.isGhost = false;
+                                }
+
+                                target.currentState = mapState[iy][ix];
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+        break;
+
+
+        // CL13
+        case 13:
+            level = LEVEL.createLevel(13, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.4)];
+            level.ballsDesiredVelocityByResolution = [V(0.0035*2,0.0061764706*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [58];
+            level.ballMinAngle = [32];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.0052*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 4;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [1,1,1,1,1,1,1,1,1,1,1];
+                    map[1] = [2,0,2,0,2,0,2,0,2,0,2];
+                    map[2] = [1,0,1,0,1,0,1,0,1,0,1];
+                    map[3] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[4] = [0,0,0,0,0,7,0,0,0,0,0];
+                    map[5] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[6] = [0,0,0,0,0,7,0,0,0,0,0];
+                    map[7] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[8] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[9] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[10] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[11] = [7,0,0,0,0,0,0,0,0,0,7];
+                    map[12] = [0,7,0,0,0,7,0,0,0,7,0];
+
+                    for (var iy = 0; iy < map.length; iy++){
+                        for (var ix = 0; ix < map[0].length; ix++) {
+                            if (map[iy][ix] != 0){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (ix * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iy * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+                                target.special = 0;
+                                target.isGhost = false;
+
+                                var type = map[iy][ix];
+                                //console.log(type);
+                                switch (type) {
+                                    case 1:
+                                        target.currentState = 1;
+                                        break;
+                                    case 2:
+                                        target.currentState = 2;
+                                        break;
+                                    case 3:
+                                        target.currentState = 3;
+                                        break;
+                                    case 4:
+                                        target.special = 1;
+                                        break;
+                                    case 5:
+                                        target.currentState = 1;
+                                        target.isGhost = true;
+                                        break;
+                                    case 6:
+                                        target.currentState = 2;
+                                        target.isGhost = true;
+                                        break;
+                                    case 7:
+                                        target.currentState = 3;
+                                        target.isGhost = true;
+                                        break;
+                                }
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+
+
+        break;
+
+        // CL14
+        case 14:
+            level = LEVEL.createLevel(14, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.01];
+            level.ballsInitialPositionByResolution = [V(0.2,0.7)];
+            level.ballsDesiredVelocityByResolution = [V(0.0035*2,0.0061764706*2)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [true];
+
+            level.ballAngleToRotate = [2.2];
+            level.ballMaxAngle = [58];
+            level.ballMinAngle = [32];
+            level.ballVelocityVariation = [0.1];
+            level.ballVelocityMaxByInitialVelocity = [1.6];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.17, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.015)];
+            level.barsDesiredVelocityByResolution = [V(0.0052*2,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 4;
+            level.targetsSizeByResolution = [V(0.0891, 0.04)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    map[0] = [0,0,1,1,1,1,1,1,1,0,0];
+                    map[1] = [1,1,2,2,2,3,2,2,2,1,1];
+                    map[2] = [3,2,1,1,1,1,1,1,1,2,3];
+                    map[3] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[4] = [0,0,0,0,0,7,0,0,0,0,0];
+                    map[5] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[6] = [0,0,0,0,0,7,0,0,0,0,0];
+                    map[7] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[8] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[9] = [0,0,0,0,0,0,0,0,0,0,0];
+                    map[10] = [0,0,0,0,5,5,5,0,0,0,0];
+                    map[11] = [0,0,0,0,6,6,6,0,0,0,0];
+                    map[12] = [0,0,0,0,7,7,7,0,0,0,0];
+
+                    for (var iy = 0; iy < map.length; iy++){
+                        for (var ix = 0; ix < map[0].length; ix++) {
+                            if (map[iy][ix] != 0){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (ix * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iy * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+                                target.special = 0;
+                                target.isGhost = false;
+
+                                var type = map[iy][ix];
+                                //console.log(type);
+                                switch (type) {
+                                    case 1:
+                                        target.currentState = 1;
+                                        break;
+                                    case 2:
+                                        target.currentState = 2;
+                                        break;
+                                    case 3:
+                                        target.currentState = 3;
+                                        break;
+                                    case 4:
+                                        target.special = 1;
+                                        break;
+                                    case 5:
+                                        target.currentState = 1;
+                                        target.isGhost = true;
+                                        break;
+                                    case 6:
+                                        target.currentState = 2;
+                                        target.isGhost = true;
+                                        break;
+                                    case 7:
+                                        target.currentState = 3;
+                                        target.isGhost = true;
+                                        break;
+                                }
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+            level.createObstacles = function(){
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(1,self.gameArea.resolution.y*0.4326470588),
+                        V(self.gameArea.resolution.x*0.36, self.gameArea.resolution.y * 0.1353529412),
+                        self.textureObstacle)
+                    );
+                self.obstacles.push(
+                    OBSTACLE.createObstacle('obstacle', self, 1,
+                        V(self.gameArea.resolution.x*0.6399,self.gameArea.resolution.y*0.4326470588),
+                        V(self.gameArea.resolution.x*0.36, self.gameArea.resolution.y * 0.1353529412),
+                        self.textureObstacle)
+                    );
+            };
+
+
+        break;
+
+
+
+        // CL888 usar com bola invencivel
+        case 888:
+            level = LEVEL.createLevel(8, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.008];
+            level.ballsInitialPositionByResolution = [V(0.2,0.5)];
+            level.ballsDesiredVelocityByResolution = [V(0.0035,0.0061764706)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [2.5];
+            level.ballMaxAngle = [57];
+            level.ballMinAngle = [33];
+            level.ballVelocityVariation = [0.09];
+            level.ballVelocityMaxByInitialVelocity = [1.7];
+            level.ballVelocityMinByInitialVelocity = [0.75];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.16, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.014)];
+            level.barsDesiredVelocityByResolution = [V(0.005,0)];
+
+            level.quantityTargetsX = 16;
+            level.quantityTargetsY = 11;
+            level.targetsSizeByResolution = [V(0.0511, 0.03)];
+            level.targetsDistanceByXResolution = 0.0014;
+            level.targetsPaddingByXResolution = 0.08;
+
+            level.createTargets = function(){
+                    var target;
+                    //console.log("create targets");
+
+                    var map = [];
+                    var mapState = [];
+                    map[0] = [0,0,0,0,0,1,0,1,1,0,1,0,0,0,0,0];
+                    map[1] = [0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0];
+                    map[2] = [0,0,0,1,0,1,0,1,1,0,1,0,1,0,0,0];
+                    map[3] = [0,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0];
+                    map[4] = [0,1,0,1,0,1,1,1,1,1,1,0,1,0,1,0];
+                    map[5] = [1,0,1,0,1,1,1,0,0,1,1,1,0,1,0,1];
+                    map[6] = [0,1,0,1,0,1,1,1,1,1,1,0,1,0,1,0];
+                    map[7] = [0,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0];
+                    map[8] = [0,0,0,1,0,1,0,1,1,0,1,0,1,0,0,0];
+                    map[9] = [0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0];
+                    map[10]= [0,0,0,0,0,1,0,1,1,0,1,0,0,0,0,0];
+
+                    mapState[0] = [0,0,0,0,0,1,1,2,2,1,1,0,0,0,0,0];
+                    mapState[1] = [0,0,0,0,1,1,2,1,1,2,1,1,0,0,0,0];
+                    mapState[2] = [0,0,0,1,1,2,1,1,1,1,2,1,1,0,0,0];
+                    mapState[3] = [0,0,1,1,2,1,1,2,2,1,1,2,1,1,0,0];
+                    mapState[4] = [0,1,1,2,1,1,2,3,3,2,1,1,2,1,1,0];
+                    mapState[5] = [1,1,2,1,1,2,3,3,3,3,2,1,1,2,1,1];
+                    mapState[6] = [0,1,1,2,1,1,2,3,3,2,1,1,2,1,1,0];
+                    mapState[7] = [0,0,1,1,2,1,1,2,2,1,1,2,1,1,0,0];
+                    mapState[8] = [0,0,0,1,1,2,1,1,1,1,2,1,1,0,0,0];
+                    mapState[9] = [0,0,0,0,1,1,2,1,1,2,1,1,0,0,0,0];
+                    mapState[10]= [0,0,0,0,0,1,1,2,2,1,1,0,0,0,0,0];
+
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {
+                        //console.log(self.resolution);
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2 * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x* level.targetsSizeByResolution[0].x, self.gameArea.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+                                //console.log(mapState[i1][i2]);
+                                target.currentState = mapState[i1][i2];
+                                //console.log(target.currentState);
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+            };
+
+        break;
+
+
+        case 555:
+            level = LEVEL.createLevel(5, this);
+            level.ballsQuantity = 4;
+            level.minBallsNotInvencibleAlive = 2;
+            level.ballsRadiusByResolution = [0.010, 0.010, 0.010, 0.010];
+            level.ballsInitialPositionByResolution = [V(0.3,0.3), V(0.3,0.4), V(0.3,0.5), V(0.3,0.6)];
+            level.ballsDesiredVelocityByResolution = [V(0.004,0.006), V(0.004,0.006), V(0.004,0.006), V(0.004,0.006)];
+            level.ballsColor = [black, black, black, black];
+            level.ballsInvencible = [false, false, false, false];
+
+            level.ballAngleToRotate = [4, 4, 4, 4];
+            level.ballMaxAngle = [65, 65,65, 65];
+            level.ballMinAngle = [30, 30,30, 30];
+            level.ballVelocityVariation = [0.15, 0.15,0.15, 0.15];
+            level.ballVelocityMaxByInitialVelocity = [1.6, 1.6,1.6, 1.6];
+            level.ballVelocityMinByInitialVelocity = [0.8, 0.8, 0.8, 0.8];
+
+            level.ballTargetsAppend = [[], [], [], []];
+            level.ballFree = [true, true, true, true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.2, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.03)];
+            level.barsDesiredVelocityByResolution = [V(0.006,0)];
+
+            level.quantityTargetsX = 2;//13
+            level.quantityTargetsY = 1;//2
+            level.targetsSizeByResolution = [V(0.0750, 0.03)];
+            level.targetsDistanceByXResolution = 0.001;
+            level.targetsPaddingByXResolution = 0.0023;
+
+            level.createTargets = function(){
+                    var target;
+                    var map = [];
+                        map[0] = [0,0,0,0,0,0,0,0,0,0,1,1,0];//[1,1,1,1,1,0,0,0,1,1,1,1,1];
+                        map[1] = [1,0,1,0,1,0,1,0,1,0,1,0,1];
+
+                    var counter = 0;
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){
+
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {
+
+
+                            if (map[i1][i2] == 1){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2* (self.resolution.x * level.targetsSizeByResolution[0].x + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * (self.resolution.y * level.targetsSizeByResolution[0].y + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                    V(self.resolution.x* level.targetsSizeByResolution[0].x, self.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,3];
+                                target.currentState = 1;
+
+                                if (counter == 1){//
+                                    target.special = 1;
+                                }
+
+                                self.targets.push(target);
+                                counter += 1;
+                            }
+                        }
+                    }
+            };
+
+            level.createObstacles = function(){
+                var size = V(self.resolution.x*0.07, self.resolution.y * 0.05);
+                    var position = V(1 + (self.resolution.x*0.465),self.resolution.y*0.35);
+                    self.obstacles.push(OBSTACLE.createObstacle('obstacle', self, 1,position,[V(0,0),V(size.x,0),V(size.x,size.y),V(0,size.y)],Ultno.myGame.textureObstacle));
+
+            };
+
+            break;
+
+        case 666:
+            level = LEVEL.createLevel(3, this);
+            level.ballsQuantity = 1;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.010];
+            level.ballsInitialPositionByResolution = [V(0.15,0.3)];
+            level.ballsDesiredVelocityByResolution = [V(0.004,0.006)];//[V(0.004,0.006)];
+            level.ballsColor = [black];
+            level.ballsInvencible = [false];
+
+            level.ballAngleToRotate = [3];
+            level.ballMaxAngle = [60];
+            level.ballMinAngle = [35];
+            level.ballVelocityVariation = [0.15];
+            level.ballVelocityMaxByInitialVelocity = [2];
+            level.ballVelocityMinByInitialVelocity = [0.8];
+
+            level.ballTargetsAppend = [[]];
+            level.ballFree = [true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.2, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.03)];
+            level.barsDesiredVelocityByResolution = [V(0.006,0)];//[V(0.006,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 3;
+            level.targetsSizeByResolution = [V(0.0895, 0.03)];
+            level.targetsDistanceByXResolution = 0.001;
+            level.targetsPaddingByXResolution = 0.0023;
+
+            level.createObstacles = function(){
+                var size = V(self.resolution.x*0.35, self.resolution.y * 0.025);
+                //console.log(size);
+
+                var obstacle = OBSTACLE.createObstacle(
+                    'obstacle', self, 1,V(1,self.resolution.y*0.4),[V(0,0),V(size.x,0),V(size.x,size.y),V(0,size.y)],
+                    Ultno.myGame.textureObstacle);
+                self.obstacles.push(obstacle);
+            };
+
+            level.createTargets = function(){
+                    //console.log("create targets");
+                    var target;
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {
+                            if (i2 > 1 && i2 < 9 && i1 > 1){
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2* (self.resolution.x * level.targetsSizeByResolution[0].x + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * (self.resolution.y * level.targetsSizeByResolution[0].y + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                    V(self.resolution.x* level.targetsSizeByResolution[0].x, self.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1,2,3];
+                                target.currentState = 3;
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+                    //console.log("create targets");
+            };
+
+        break;
+
+        case 777:
+            level = LEVEL.createLevel(3, this);
+            level.ballsQuantity = 2;
+            level.minBallsNotInvencibleAlive = 2;
+            level.ballsRadiusByResolution = [0.010, 0.010];
+            level.ballsInitialPositionByResolution = [V(0.15,0.3), V(0.5,0.3)];
+            level.ballsDesiredVelocityByResolution = [V(0.004,0.006), V(0.002,0.003)];//[V(0.004,0.006)];
+            level.ballsColor = [black, blue];
+            level.ballsInvencible = [false, false];
+
+            level.ballAngleToRotate = [3,3];
+            level.ballMaxAngle = [60,60];
+            level.ballMinAngle = [35,35];
+            level.ballVelocityVariation = [0.15,0.15];
+            level.ballVelocityMaxByInitialVelocity = [2,2];
+            level.ballVelocityMinByInitialVelocity = [0.8,0.8];
+
+            level.ballTargetsAppend = [[],[]];
+            level.ballFree = [true, true];
+
+            level.barsQuantity = 2;
+            level.barSizeByResolution = [V(0.2, 0.0125), V(0.2, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.03), V(0.6,0.03)];
+            level.barsDesiredVelocityByResolution = [V(0.006,0), V(0.006,0)];//[V(0.006,0)];
+
+            level.quantityTargetsX = 11;
+            level.quantityTargetsY = 3;
+            level.targetsSizeByResolution = [V(0.0895, 0.03)];
+            level.targetsDistanceByXResolution = 0.001;
+            level.targetsPaddingByXResolution = 0.0023;
+
+            level.createObstacles = function(){
+                var size = V(self.resolution.x*0.35, self.resolution.y * 0.025);
+                //console.log(size);
+
+                var obstacle = OBSTACLE.createObstacle(
+                    'obstacle', self, 1,V(1,self.resolution.y*0.4),[V(0,0),V(size.x,0),V(size.x,size.y),V(0,size.y)],
+                    Ultno.myGame.textureObstacle);
+                self.obstacles.push(obstacle);
+            };
+
+            level.createTargets = function(){
+                    //console.log("create targets");
+                    var target;
+                    var counter = 0;
+                    for (var i1 = 0; i1 < level.quantityTargetsY;i1++){
+                        for (var i2 = 0; i2 < level.quantityTargetsX; i2++) {
+                            if (i2 > 1 && i2 < 9 && i1 > 1){
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i2* (self.resolution.x * level.targetsSizeByResolution[0].x + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (i1 * (self.resolution.y * level.targetsSizeByResolution[0].y + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                    V(self.resolution.x* level.targetsSizeByResolution[0].x, self.resolution.y * level.targetsSizeByResolution[0].y));
+
+                                target.isMovable = false;
+                                target.alpha = 1;
+                                target.states = [0,1];
+                                target.currentState = 1;
+
+                                if (counter == 2 || counter == 4){
+                                    target.special = 1;
+                                }
+
+                                self.targets.push(target);
+
+                                counter += 1;
+                            }
+                        }
+                    }
+                    //console.log("create targets");
+            };
+
+        break;
+
+
+        case 1111:
+            level = LEVEL.createLevel(1, this);
+            level.ballsQuantity = 3;
+            level.minBallsNotInvencibleAlive = 1;
+            level.ballsRadiusByResolution = [0.010, 0.007, 0.007];
+            level.ballsInitialPositionByResolution = [V(0.3,0.43), V(0.5,0.45), V(0.8,0.47)];
+            level.ballsDesiredVelocityByResolution = [V(0.004,0.006), V(0.006,0.009), V(0.006,0.009)];//[V(0.004,0.006)];
+            level.ballsColor = [black, black, black];
+            level.ballsInvencible = [false, true, true];
+
+            level.ballAngleToRotate = [3, 5, 5];
+            level.ballMaxAngle = [60, 70, 70];
+            level.ballMinAngle = [35, 25, 25];
+            level.ballVelocityVariation = [0.15, 0.20, 0.20];//0.15
+            level.ballVelocityMaxByInitialVelocity = [2, 2, 2];
+            level.ballVelocityMinByInitialVelocity = [0.8, 0.8, 0.8];
+
+            level.ballTargetsAppend = [[], [], []];
+            level.ballFree = [true, true, true];
+
+            level.barsQuantity = 1;
+            level.barSizeByResolution = [V(0.2, 0.0125),V(0.2, 0.0125)];
+            level.barsInitialPositionByResolution = [V(0.3,0.01),V(0.6,0.01)];
+            level.barsDesiredVelocityByResolution = [V(0.006,0),V(0.006,0)];
+
+            level.quantityTargetsX = 10;//10ocupa 11 espaços
+            level.quantityTargetsY = 4;
+            level.targetsSizeByResolution = [V(0.0895, 0.03)];//[V(0.3, 0.1)];
+            level.targetsDistanceByXResolution = 0.001;
+            level.targetsPaddingByXResolution = 0.00225;
+
+            level.createWindows = function(){
+                var size = V(self.resolution.x, self.gameArea.resolution.y * 0.2);
+                self.windows.push(WINDOW.createWindow('window', self, 3,V(0,self.gameArea.resolution.y * 0.2), size, 6, 1, Ultno.myGame.textureWindow, -8, 0.1));
+
+                self.windows.push(WINDOW.createWindow('window', self, 3,V(0,self.gameArea.resolution.y * 0.5), size, 6, 1, Ultno.myGame.textureWindow, 13, 0.1));
+            };
+
+            level.createObstacles = function(){
+                var size = V(self.resolution.x*0.05, self.resolution.y * 0.05);
+                    var position = V(1 + (self.resolution.x*0.465),self.resolution.y*0.35);
+                    self.obstacles.push(OBSTACLE.createObstacle('obstacle', self, 1,position,[V(0,0),V(size.x,0),V(size.x,size.y),V(0,size.y)],Ultno.myGame.textureObstacle));
+            };
+
+            level.createTargets = function(){
+                    for (var iY = 0; iY < this.quantityTargetsY;iY++){//5
+                        for (var iX = 0; iX < this.quantityTargetsX; iX++) {//8
+                        //console.log(self.resolution);
+                            if (!(iY == 0 && iX == 0)){
+
+                                var xInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iX * ((self.gameArea.resolution.x * this.targetsSizeByResolution[0].x) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+                                var yInitial = (self.gameArea.resolution.x * this.targetsPaddingByXResolution) + (iY * ((self.gameArea.resolution.y * this.targetsSizeByResolution[0].y) + (self.gameArea.resolution.x * this.targetsDistanceByXResolution)));
+
+                                var target = TARGET.createTarget(self, V(xInitial,yInitial),
+                                        V(self.gameArea.resolution.x * this.targetsSizeByResolution[0].x, self.gameArea.resolution.y * this.targetsSizeByResolution[0].y));
+
+                                    target.isMovable = false;
+                                    target.alpha = 1;
+                                    target.states = [0,3];
+                                    target.currentState = 1;
+
+                                    if (iY > 0){
+                                        target.isGhost = true;
+                                    }
+
+                                    if (iY == 1 && iX == 5){
+                                        target.special = 1;
+                                    }
+
+                                    if (iY == 2 && iX == 8){
+                                        target.special = 1;
+                                    }
+
+                                    if (iY == 3 && iX == 3){
+                                        target.special = 1;
+                                    }
+
+                                    if (iY == 3 && iX == 5){
+                                        target.special = 1;
+                                    }
+
+                                    if (iY == 3 && iX == 7){
+                                        target.special = 1;
+                                    }
+
+
+                                self.targets.push(target);
+                            }
+                        }
+                    }
+
+            };
+        break;
+
+
+
+    }
+
+    this.currentLevel = level;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ultno.Game.prototype.loadTutorials = function(){
+
+    var self = this;
+
+    var interval;
+    var textBox1;
+    var textBox2;
+    var textBox3;
+    var textBox4;
+    var textBox5;
+    var textBox6;
+    var textBox7;
+    var textBox8;
+    var textBox9;
+    var textBox10;
+    var textBox11;
+    var textBox12;
+    var textBox13;
+    var textBox14;
+
+    this.currentLevel.tutorials = [];
+
+    var size = Math.round(this.gameArea.resolution.y * 0.05);
+
+    switch (this.level) {
+        case 1:
+
+            var xVermelho = this.addOtherHudEntity(ENTITY.createX('xVermelho', this, 3, V(0,0), V(10,10), red, 10));
+                xVermelho.isVisible = false;
+
+            //////////////////////// TUTORIAL 1
+            //
+                //
+            textBox1 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial1", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.2),
+                L('l1t1'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.5));
+                textBox1.appendArrow(V(this.gameArea.resolution.x * 0.4, this.gameArea.resolution.y*0.9));
+
+            var tutorial1 = LEVEL.createTutorial(textBox1);
+                tutorial1.setOnShowBeforeAnim(function(){
+                   self.balls[0].clearDisplay();
+                   self.bars[0].isMovable = true;
+                });
+                this.currentLevel.tutorials.push(tutorial1);
+
+            //////////////////////// TUTORIAL 2
+            //
+                //
+            textBox2 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial2", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.2),
+                 L('l1t2'), L('proximaInstrucao'), 'Jet Set', size,black, this.gameArea.resolution.x * 0.5));
+                textBox2.appendArrow(V(this.gameArea.resolution.x * 0.7, this.gameArea.resolution.y * 0.85));
+
+            var tutorial2 = LEVEL.createTutorial(textBox2);
+                tutorial2.setOnShowBeforeAnim(function(){
+                   self.bars[0].display();
+                   self.bars[0].position.x = self.barsInitialPositionX[0];
+                   self.bars[0].isMovable = false;
+                   self.balls[0].display();
+                   self.balls[0].position = V(self.gameArea.resolution.x * 0.7, self.gameArea.resolution.y * 0.85);
+                });
+                tutorial2.setOnShowAfterAnim(function(){
+                    ANIM.createAnimation(self.balls[0], 'tutorial2translateX', 'translateX', 2000, [[0,0],[0.3, self.gameArea.resolution.x * 0.15]], true, true, 0).start();
+                    ANIM.createAnimation(self.balls[0], 'tutorial2translateY', 'translateY', 2000, [[0,0],[0.3, self.gameArea.resolution.y * 0.14]], true, true, 0).start();
+                    xVermelho.position = V(self.gameArea.resolution.x * 0.75, self.gameArea.resolution.y * 0.85);
+                    xVermelho.size= V(self.gameArea.resolution.x * 0.06, self.gameArea.resolution.y * 0.09);
+                    xVermelho.alpha = 0;
+                    xVermelho.display();
+                    ANIM.createAnimation(xVermelho, 'animXVermelho', 'alpha', 1500, [[0,0],[0.5,0.4],[1,0]], true, true, 0).start();
+                });
+
+                tutorial2.setOnUnshowBeforeAnim(function(){
+                    self.resetAllAnimations();
+                    xVermelho.clearDisplay();
+                });
+
+                this.currentLevel.tutorials.push(tutorial2);
+
+                //////////////////////// TUTORIAL 3
+                //
+                //
+                textBox3 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial3", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.5),
+                    L('l1t3'), L('proximaInstrucao'),
+                    'Jet Set', size,black, this.gameArea.resolution.x * 0.5));
+                    textBox3.appendArrow(V(this.gameArea.resolution.x * 0.5, this.gameArea.resolution.y * 0.1));
+
+                var tutorial3 = LEVEL.createTutorial(textBox3);
+                tutorial3.setOnShowBeforeAnim(function(){
+                    self.balls[0].position = V(self.gameArea.resolution.x * 0.4, self.gameArea.resolution.y * 0.15);
+                });
+                tutorial3.setOnShowAfterAnim(function(){
+                    ANIM.createAnimation(self.balls[0], 'tutorial3Anim1', 'translateX', 2000, [[0,0],[0.25,self.gameArea.resolution.x * 0.10]], true, true, 0).start();
+                    ANIM.createAnimation(self.balls[0], 'tutorial3Anim2', 'translateY', 2000, [[0,0],[0.25,-self.gameArea.resolution.y * 0.10]], true, true, 0).start();
+                    ANIM.createAnimation(self.targets[4],'tutorial3AnimAlpha', 'alpha', 2000, [[0,1],[0.25,1],[0.40,0]], true, true, 0).start();
+                });
+                this.currentLevel.tutorials.push(tutorial3);
+
+
+                //////////////////////// TUTORIAL 4
+                //
+                //
+                textBox4 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial4", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.4),
+                    L('l1t4'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.5));
+                    textBox4.appendArrow(V(this.gameArea.resolution.x * 0.5, this.gameArea.resolution.y * 0.95));
+
+                var tutorial4 = LEVEL.createTutorial(textBox4);
+                tutorial4.setOnShowAfterAnim(function(){
+                        console.log("teste");
+                        self.resetAllAnimations();
+                        self.targets[4].clearDisplay();
+                        self.balls[0].position = V(self.gameArea.resolution.x * 0.5, self.gameArea.resolution.y * 0.05);
+
+                        self.hudEntities.score.setValue(100, true, 500, false);
+                });
+
+                this.currentLevel.tutorials.push(tutorial4);
+
+                //////////////////////// TUTORIAL 5
+                //
+                //
+                textBox5 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial5", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.4),
+                    L('l1t5'), L('proximaInstrucao'), 'Jet Set', size,black, this.gameArea.resolution.x * 0.5));
+                var tutorial5 = LEVEL.createTutorial(textBox5);
+                    tutorial5.setOnShowAfterAnim(function(){
+                        for (var i = 0; i < self.targets.length; i++){
+                            if (i != 4){
+                                ANIM.createAnimation(self.targets[i], 'tutorial3AnimAlpha', 'alpha', 500, [[0,1],[1,0]], false, true, 0).start();
+                            }
+                        }
+                        self.balls[0].position = V(self.gameArea.resolution.x * 0.5, self.gameArea.resolution.y * 0.05);
+                        self.hudEntities.score.setValue(900, true, 500, false);
+                });
+                this.currentLevel.tutorials.push(tutorial5);
+
+                //////////////////////// TUTORIAL 6
+                //
+                //
+                textBox6 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial6", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.4),
+                    L('l1t6'), L('proximaInstrucao'), 'Jet Set', size,black, this.gameArea.resolution.x * 0.5));
+                    textBox6.appendArrow(V(this.gameArea.resolution.x * 0.5, this.gameArea.resolution.y * 0.95));
+                var tutorial6 = LEVEL.createTutorial(textBox6);
+                    tutorial6.setOnShowAfterAnim(function(){
+                    interval = setInterval(function(){
+                            self.hudEntities.score.setValue(self.hudEntities.score.value - 10, false, 1000, false);
+                    }, 1000);
+
+                });
+                this.currentLevel.tutorials.push(tutorial6);
+
+                //////////////////////// TUTORIAL 7
+                //
+                //
+                textBox7 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial7", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.4),
+                    L('l1t7'), L('jogar'), 'Jet Set', size,black, this.gameArea.resolution.x * 0.5));
+
+                var tutorial7 = LEVEL.createTutorial(textBox7);
+                    tutorial7.setOnShowAfterAnim(function(){
+                        clearInterval(interval);
+                    });
+
+                this.currentLevel.tutorials.push(tutorial7);
+
+        break;
+
+        //CTL2
+        case 2:
+            textBox1 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial1", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.2),
+                "Você pode alterar a direção e a velocidade da bola.", L('proximaInstrucao'),
+                'Jet Set', size, black, this.gameArea.resolution.x * 0.7));
+                textBox1.isCollidable = false;
+                textBox1.isVisible = false;
+                textBox1.isMovable = false;
+                textBox1.isSolid =  false;
+
+            tutorial1 = LEVEL.createTutorial(textBox1);
+            tutorial1.setOnShowBeforeAnim(function(){
+                 self.balls[0].position = V(self.gameArea.resolution.x * 0.3, self.gameArea.resolution.y * 0.72);
+            });
+
+            this.currentLevel.tutorials.push(tutorial1);
+
+            textBox2 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial2", this, 3, V(this.gameArea.resolution.x * 0.05,this.gameArea.resolution.y * 0.2),
+                "Atinja a bola com a barra se movimentando na direção contrária. Isso fará com que a velocidade e o deslocamento horizonal da bola aumentem.", L('proximaInstrucao'),
+                'Jet Set', size, black, this.gameArea.resolution.x * 0.5));
+                textBox2.isCollidable = false;
+                textBox2.isVisible = false;
+                textBox2.isMovable = false;
+                textBox2.isSolid =  false;
+
+            tutorial2 = LEVEL.createTutorial(textBox2);
+
+                tutorial2.setOnShowBeforeAnim(function(){
+                    self.balls[0].position = V(self.gameArea.resolution.x * 0.3, self.gameArea.resolution.y * 0.72);
+                });
+
+                tutorial2.setOnShowAfterAnim(function(){
+                    var anim1 = ANIM.createAnimation(self.balls[0], 'tutorial2Anim', 'translateX', 3000, [[0,0],[0.25,self.gameArea.resolution.x * 0.15],[0.50,self.gameArea.resolution.x * 0.40]], true, true, 0);
+                    var anim2 = ANIM.createAnimation(self.balls[0], 'tutorial2Anim2', 'translateY', 3000, [[0,0],[0.25,self.gameArea.resolution.y * 0.26],[0.50,-self.gameArea.resolution.y * 0.30]], true, true, 0);
+                    var anim3 = ANIM.createAnimation(self.bars[0],  'tutorial2Anim3', 'translateX', 3000, [[0,0],[0.50,-self.gameArea.resolution.x * 0.40]], true, true, 0);
+                    anim1.start();
+                    anim2.start();
+                    anim3.start();
+                });
+
+                tutorial2.setOnUnshowAfterAnim(function(){
+
+                });
+
+            this.currentLevel.tutorials.push(tutorial2);
+
+            textBox3 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial3", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.2),
+                "Ao contrário, se a bola for atingida com a barra se movimentando na mesma direção, a velocidade irá diminuir, assim como o deslocamento horizontal.", L('proximaInstrucao'),
+                'Jet Set', size, black, this.gameArea.resolution.x * 0.7));
+                textBox3.isCollidable = false;
+                textBox3.isVisible = false;
+                textBox3.isMovable = false;
+                textBox3.isSolid =  false;
+
+            tutorial3 = LEVEL.createTutorial(textBox3);
+
+            tutorial3.setOnShowBeforeAnim(function(){
+
+                self.balls[0].animations = [];
+                self.balls[0].translateX = 0;
+                self.balls[0].translateY = 0;
+                self.bars[0].animations = [];
+                self.bars[0].translateX = 0;
+                self.bars[0].position.x = self.gameArea.resolution.x * 0.1;
+
+                self.balls[0].position = V(self.gameArea.resolution.x * 0.3, self.gameArea.resolution.y * 0.72);
+
+                //console.log(this.balls[0].animations);
+            });
+
+            tutorial3.setOnShowAfterAnim(function(){
+
+            var anim1 = ANIM.createAnimation(self.balls[0], 'tutorial3Anim1', 'translateX', 3000, [[0,0],[0.25,self.gameArea.resolution.x * 0.15],[0.50,self.gameArea.resolution.x * 0.20]], true, true, 0);
+            var anim2 = ANIM.createAnimation(self.balls[0], 'tutorial3Anim2', 'translateY', 3000, [[0,0],[0.25,self.gameArea.resolution.y * 0.26],[0.50,self.gameArea.resolution.y * 0.15]], true, true, 0);
+            var anim3 = ANIM.createAnimation(self.bars[0], 'tutorial3Anim3', 'translateX', 3000, [[0,0],[0.50,self.gameArea.resolution.x * 0.40]], true, true, 0);
+            anim1.start();
+            anim2.start();
+            anim3.start();
+            });
+
+            tutorial3.setOnUnshowBeforeAnim(function(){
+                self.balls[0].animations = [];
+                self.balls[0].translateX = 0;
+                self.balls[0].translateY = 0;
+                self.bars[0].animations = [];
+                self.bars[0].translateX = 0;
+
+                //self.bars[0].position.x = self.gameArea.resolution.x * 0.5;
+            });
+
+            self.currentLevel.tutorials.push(tutorial3);
+
+            textBox4 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial4", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.2),
+            "Neste nível, vamos exagerar um pouquinho esse comportamento da bola. Tente aplicar o que aprendeu.", L('jogar'),
+            'Jet Set', size, black, this.gameArea.resolution.x * 0.5));
+                textBox4.isCollidable = false;
+                textBox4.isVisible = false;
+                textBox4.isMovable = false;
+                textBox4.isSolid =  false;
+
+            tutorial4 = LEVEL.createTutorial(textBox4);
+                tutorial4.setOnShowBeforeAnim(function(){
+                    self.balls[0].clearDisplay();
+                    self.bars[0].clearDisplay();
+            });
+            this.currentLevel.tutorials.push(tutorial4);
+
+        break;
+
+        // CTL4
+        case 4:
+            textBox1 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial1", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.2),
+                "Neste nível, haverá um obstáculo inquebrável.", L('jogar'),
+                'Jet Set', size, black, this.gameArea.resolution.x * 0.3));
+                textBox1.appendArrow(V(this.gameArea.resolution.x * 0.6,this.gameArea.resolution.y * 0.48));
+
+            tutorial1 = LEVEL.createTutorial(textBox1);
+            this.currentLevel.tutorials.push(tutorial1);
+        break;
+
+        // CTL7
+        case 7:
+            textBox1 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial1", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.4),
+                "Neste nível, será necessário atingir três vezes cada alvo.", L('jogar'),
+                'Jet Set', size, black, this.gameArea.resolution.x * 0.5));
+                textBox1.appendArrow(V(this.gameArea.resolution.x * 0.5,this.gameArea.resolution.y * 0.08));
+
+            tutorial1 = LEVEL.createTutorial(textBox1);
+            tutorial1.setOnShowBeforeAnim(function(){
+                 self.balls[0].clearDisplay();
+                 //this.obstacles[0].clearDisplay();
+            });
+
+            tutorial1.setOnShowAfterAnim(function(){
+                ANIM.createAnimation(self.targets[4], 'tutorial1AnimCurrentState', 'currentState', 3000, [[0,3],[0.25,2],[0.5,1],[0.75,0]], true, false, 0).start();
+                ANIM.createAnimation(self.targets[4], 'tutorial1AnimAlpha', 'alpha', 3000, [[0,1],[0.75,1],[1,0]], true, true, 0).start();
+            });
+
+
+            tutorial1.setOnUnshowBeforeAnim(function(){
+                self.targets[4].animations = [];
+                self.targets[4].alpha = 1;
+                self.targets[4].currentState = 3;
+            });
+
+            this.currentLevel.tutorials.push(tutorial1);
+
+        break;
+
+        //CTL9
+        case 9:
+
+
+            //////////////////////// LEVEL 9 - TUTORIAL 1
+            //
+            //
+            textBox1 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial1", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                L('l9t1'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            tutorial1 = LEVEL.createTutorial(textBox1);
+            tutorial1.setOnShowBeforeAnim(function(){
+                 self.balls[0].clearDisplay();
+            });
+
+            this.currentLevel.tutorials.push(tutorial1);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 2
+            //
+            //
+            textBox2 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial2", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t2'), L('proximaInstrucao'), 'Jet Set', size,black, this.gameArea.resolution.x * 0.6));
+                textBox2.appendArrow(V(this.gameArea.resolution.x * 0.5, this.gameArea.resolution.y * 0.25));
+            tutorial2 = LEVEL.createTutorial(textBox2);
+            this.currentLevel.tutorials.push(tutorial2);
+
+
+            //////////////////////// LEVEL 9 - TUTORIAL 3
+            //
+            //
+            textBox3 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial3", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t3'), L('proximaInstrucao'), 'Jet Set', size,black, this.gameArea.resolution.x * 0.6));
+            tutorial3 = LEVEL.createTutorial(textBox3);
+
+            tutorial3.setOnShowAfterAnim(function(){
+
+
+                var posX = self.gameArea.resolution.x * 0.6;
+                var posY = self.gameArea.resolution.y * 0.28;
+
+                self.balls[0].position = V(posX, posY);
+                var size = self.balls[0].radius;
+                //console.log(size);
+
+                self.balls.push(BALL.createBall("ball2", self, V(posX - size * 2, posY - size * 2), size, false));
+                self.balls.push(BALL.createBall("ball3", self, V(posX + size * 2, posY - size * 2), size, false));
+                self.balls.push(BALL.createBall("ball4", self, V(posX - size * 2, posY + size * 2), size, false));
+                self.balls.push(BALL.createBall("ball5", self, V(posX + size * 2, posY + size * 2), size, false));
+
+                self.balls[1].color = orange;
+                self.balls[2].color = yellow;
+                self.balls[3].color = green;
+                self.balls[4].color = blue;
+
+                self.balls[1].isCollidable = false;
+                self.balls[2].isCollidable = false;
+                self.balls[3].isCollidable = false;
+                self.balls[4].isCollidable = false;
+
+                self.balls[1].alpha = 0;
+                self.balls[2].alpha = 0;
+                self.balls[3].alpha = 0;
+                self.balls[4].alpha = 0;
+
+                self.balls[0].display();
+                self.balls[1].display();
+                self.balls[2].display();
+                self.balls[3].display();
+                self.balls[4].display();
+
+                ANIM.createAnimation(self.balls[0], 'tutorial3Anim1', 'translateX', 5000, [[0,-self.gameArea.resolution.x * 0.15],[0.20,0]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[0], 'tutorial3Anim2', 'translateY', 5000, [[0,0],[0.1,- self.gameArea.resolution.y * 0.1],[0.2,0]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[0], 'tutorial3Anim3', 'alpha', 5000, [[0,1],[0.2,1],[0.25,0],[1,0]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[0], 'tutorial3Anim4', 'color', 5000, [[0, black],[0.1, red]], true, false, 0).start();
+
+                ANIM.createAnimation(self.balls[1], 'tutorial3Anim5', 'alpha', 5000, [[0,0],[0.23,0],[0.3,1],[0.7,1],[1,0]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[2], 'tutorial3Anim6', 'alpha', 5000, [[0,0],[0.23,0],[0.3,1],[0.7,1],[1,0]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[3], 'tutorial3Anim7', 'alpha', 5000, [[0,0],[0.23,0],[0.3,1],[0.7,1],[1,0]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[4], 'tutorial3Anim8', 'alpha', 5000, [[0,0],[0.23,0],[0.3,1],[0.7,1],[1,0]], true, true, 0).start();
+
+
+                var desloc = self.balls[1].radius * 4;
+
+                ANIM.createAnimation(self.balls[1], 'tutorial3Anim9', 'translateX', 5000, [[0,0],[0.25,0],[0.4,-desloc]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[2], 'tutorial3Anim10', 'translateX', 5000, [[0,0],[0.25,0],[0.4,desloc]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[3], 'tutorial3Anim11', 'translateX', 5000, [[0,0],[0.25,0],[0.4,-desloc]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[4], 'tutorial3Anim12', 'translateX', 5000, [[0,0],[0.25,0],[0.4,desloc]], true, true, 0).start();
+
+                ANIM.createAnimation(self.balls[1], 'tutorial3Anim13', 'translateY', 5000, [[0,0],[0.25,0],[0.4,-desloc]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[2], 'tutorial3Anim14', 'translateY', 5000, [[0,0],[0.25,0],[0.4,-desloc]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[3], 'tutorial3Anim15', 'translateY', 5000, [[0,0],[0.25,0],[0.4,desloc]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[4], 'tutorial3Anim16', 'translateY', 5000, [[0,0],[0.25,0],[0.4,desloc]], true, true, 0).start();
+
+                ANIM.createAnimation(self.targets[35], 'tutorial3Anim17', 'alpha', 5000, [[0,1],[0.1,1],[0.2,0],[1,0]], true, true, 0).start();
+
+
+            });
+
+            tutorial3.setOnUnshowAfterAnim(function(){
+
+                self.balls[0].resetAnimations();
+                self.balls[1].resetAnimations();
+                self.balls[2].resetAnimations();
+                self.balls[3].resetAnimations();
+                self.balls[4].resetAnimations();
+
+                self.balls[0].clearDisplay();
+                self.targets[35].resetAnimations();
+                self.targets[35].alpha = 0;
+
+                var desloc = self.balls[1].radius * 4;
+                self.balls[1].translate(V(-desloc, -desloc));
+                self.balls[2].translate(V(desloc, -desloc));
+                self.balls[3].translate(V(-desloc, desloc));
+                self.balls[4].translate(V(desloc, desloc));
+            });
+
+
+            this.currentLevel.tutorials.push(tutorial3);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 4
+            //
+            //
+            textBox4 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial4", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t4'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            tutorial4 = LEVEL.createTutorial(textBox4);
+
+            this.currentLevel.tutorials.push(tutorial4);
+
+
+            //////////////////////// LEVEL 9 - TUTORIAL 5
+            //
+            //
+            textBox5 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial5", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t5'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            textBox5.appendArrow(V(this.gameArea.resolution.x * 0.49, this.gameArea.resolution.y * 1.1));
+
+            tutorial5 = LEVEL.createTutorial(textBox5);
+
+            tutorial5.setOnShowAfterAnim(function(){
+                self.hudEntities.objectivePanel.setValue(4, 0, 1);
+            });
+
+            this.currentLevel.tutorials.push(tutorial5);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 6
+            //
+            //
+            textBox6 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial6", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t6'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            textBox6.appendArrow(V(this.gameArea.resolution.x * 0.49, this.gameArea.resolution.y * 1.1));
+
+            tutorial6 = LEVEL.createTutorial(textBox6);
+
+            tutorial6.setOnShowAfterAnim(function(){
+                self.hudEntities.objectivePanel.setValue(4, 0, 1);
+            });
+
+            this.currentLevel.tutorials.push(tutorial6);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 7
+            //
+            //
+            textBox7 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial7", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t7'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            textBox7.appendArrow(V(this.gameArea.resolution.x * 0.49, this.gameArea.resolution.y * 1.1));
+
+            tutorial7 = LEVEL.createTutorial(textBox7);
+
+            this.currentLevel.tutorials.push(tutorial7);
+
+
+            //////////////////////// LEVEL 9 - TUTORIAL 8
+            //
+            //
+            textBox8 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial8", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t8'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            textBox8.appendArrow(V(this.gameArea.resolution.x * 0.53, this.gameArea.resolution.y * 1.1));
+
+            var tutorial8 = LEVEL.createTutorial(textBox8);
+
+            this.currentLevel.tutorials.push(tutorial8);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 9
+            //
+            //
+            textBox9 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial9", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t9'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            textBox9.appendArrow(V(this.gameArea.resolution.x * 0.53, this.gameArea.resolution.y * 1.1));
+
+            var tutorial9 = LEVEL.createTutorial(textBox9);
+
+            tutorial9.setOnShowAfterAnim(function(){
+                ANIM.createAnimation(self.balls[2], 'tutorial9Anim11', 'translateX', 3000, [[0,0],[0.30, self.gameArea.resolution.x * 0.31],[0.4, self.gameArea.resolution.x * 0.31]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[3], 'tutorial9Anim12', 'translateX', 3000, [[0,0],[0.25, self.gameArea.resolution.x * 0.25],[0.35, self.gameArea.resolution.x * 0.25]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[4], 'tutorial9Anim13', 'translateX', 3000, [[0,0],[0.25, self.gameArea.resolution.x * 0.25],[0.35, self.gameArea.resolution.x * 0.25]], true, true, 0).start();
+
+                ANIM.createAnimation(self.balls[2], 'tutorial9Anim14', 'translateY', 3000, [[0,0],[0.30, self.gameArea.resolution.y * 0.77],[0.4, self.gameArea.resolution.y * 0.77]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[3], 'tutorial9Anim15', 'translateY', 3000, [[0,0],[0.25, self.gameArea.resolution.y * 0.65],[0.35, self.gameArea.resolution.y * 0.65]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[4], 'tutorial9Anim16', 'translateY', 3000, [[0,0],[0.25, self.gameArea.resolution.y * 0.65],[0.35, self.gameArea.resolution.y * 0.65]], true, true, 0).start();
+
+                ANIM.createAnimation(self.balls[2], 'tutorial9Anim17', 'alpha', 3000, [[0,1],[0.30, 1],[0.45, 0],[1, 0]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[3], 'tutorial9Anim18', 'alpha', 3000, [[0,1],[0.25, 1],[0.4, 0],[1, 0]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[4], 'tutorial9Anim19', 'alpha', 3000, [[0,1],[0.25, 1],[0.4, 0],[1, 0]], true, true, 0).start();
+
+                ANIM.createAnimation(self.hudEntities.objectivePanel, 'tutorial9Anim10', 'ballsAlive', 3000, [[0,4],[0.25, 2],[0.3, 1],[1, 1]], true, false, 0).start();
+
+            });
+
+            tutorial9.setOnUnshowAfterAnim(function(){
+                self.balls[2].resetAnimations();
+                self.balls[3].resetAnimations();
+                self.balls[4].resetAnimations();
+                self.hudEntities.objectivePanel.resetAnimations();
+
+                self.balls[1].position = V(self.gameArea.resolution.x * 0.4, self.gameArea.resolution.y * 0.3);
+                self.balls[2].position = V(self.gameArea.resolution.x * 0.5, self.gameArea.resolution.y * 0.3);
+                self.balls[3].position = V(self.gameArea.resolution.x * 0.6, self.gameArea.resolution.y * 0.3);
+                self.balls[4].position = V(self.gameArea.resolution.x * 0.7, self.gameArea.resolution.y * 0.3);
+
+                self.hudEntities.objectivePanel.ballsAlive = 4;
+
+            });
+
+
+            this.currentLevel.tutorials.push(tutorial9);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 10
+            //
+            //
+            textBox10 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial10", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t10'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            var tutorial10 = LEVEL.createTutorial(textBox10);
+
+            this.currentLevel.tutorials.push(tutorial10);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 11
+            //
+            //
+            textBox11 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial11", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t11'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            var tutorial11 = LEVEL.createTutorial(textBox11);
+
+            var interval1;
+
+
+            tutorial11.setOnShowAfterAnim(function(){
+
+                ANIM.createAnimation(self.balls[4], 'tutorial11Anim1', 'translateX', 4000, [[0,0],[0.25, self.gameArea.resolution.x * 0.061]], true, true, 0).start();
+                ANIM.createAnimation(self.balls[4], 'tutorial11Anim2', 'translateY', 4000, [[0,0],[0.25, -self.gameArea.resolution.y * 0.11],[0.30, -self.gameArea.resolution.y * 0.11]], true, true, 0).start();
+                ANIM.createAnimation(self.targets[38], 'tutorial11Anim3', 'alpha', 4000, [[0,1],[0.25, 1],[0.4, 0],[1, 0]], true, true, 0).start();
+
+                var anim = ANIM.createAnimation(self.targets[38], 'tutorial11Anim4', 'alpha', 1000, [[0,1],[0.2,1],[1, 1]], false, true, 0);
+                anim.setOnAnimationEnd(function(){
+                     self.hudEntities.score.setValue(800, true, 1000, false);
+                        self.targets[38].pointsToShow = "100 x 2 x 2 x 2 = 800";
+                        self.targets[38].posYVariation = 0;
+                        ANIM.createAnimation(self.targets[38],'showPoints','showPoints',3000,[[0,true],[1,false]],false,false,0).start();
+                        ANIM.createAnimation(self.targets[38],'showPointsAlpha','alphaPoints',3000,[[0,0.3],[0.2,0.8],[1,0]],false,true,0).start();
+                    interval1 = setInterval(function(){
+                                self.hudEntities.score.setValue(800, true, 1000, false);
+                                self.targets[38].pointsToShow = "100 x 2 x 2 x 2 = 800";
+                                self.targets[38].posYVariation = 0;
+                                ANIM.createAnimation(self.targets[38],'showPoints','showPoints',3000,[[0,true],[1,false]],false,false,0).start();
+                                ANIM.createAnimation(self.targets[38],'showPointsAlpha','alphaPoints',3000,[[0,0.3],[0.2,0.8],[1,0]],false,true,0).start();
+
+                        }, 4000);
+                })
+                anim.start()
+            });
+
+            tutorial11.setOnUnshowBeforeAnim(function(){
+                clearInterval(interval1);
+                self.targets[38].resetAnimations();
+                self.targets[38].alpha = 0;
+                self.balls[4].resetAnimations();
+                self.balls[4].position = V(self.gameArea.resolution.x * 0.7, self.gameArea.resolution.y * 0.3);
+            });
+
+            this.currentLevel.tutorials.push(tutorial11);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 12
+            //
+            //
+            textBox12 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial12", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t12'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            var tutorial12 = LEVEL.createTutorial(textBox12);
+
+
+            var timeout1;
+            var timeout2;
+
+            tutorial12.setOnShowAfterAnim(function(){
+
+                clearInterval(interval1);
+
+                for (var i = 1; i < self.targets.length; i++)
+                {
+                    if (i != 38){
+                        ANIM.createAnimation(self.targets[i], 'tutorial11Anim3', 'alpha', 1000, [[0,1],[1, 0]], false, true, 0).start();
+                    }
+                }
+
+                self.hudEntities.score.setValue(5000, false, 500, false);
+
+                var anim12 = ANIM.createAnimation(self.targets[0], 'tutorial11Anim3', 'alpha', 1000, [[0,1],[1, 0]], false, true, 0);
+                anim12.setOnAnimationEnd(function(){
+
+                    self.hudEntities.score.setValue(7500, true, 1000, false);
+                    self.hudEntities.score.displayMessage("+ 50%", 1000);
+                    self.hudEntities.objectivePanel.ballsAlive = 3;
+                    self.balls[4].clearDisplay();
+
+                    timeout1 = setTimeout(function(){
+                        self.hudEntities.score.setValue(11250, true, 1000, false);
+                        self.hudEntities.score.displayMessage("+ 50%", 1000);
+                        self.hudEntities.objectivePanel.ballsAlive = 2;
+                        self.balls[3].clearDisplay();
+                    }, 2000);
+                    timeout2 = setTimeout(function(){
+                        self.hudEntities.score.setValue(16875, true, 1000, false);
+                        self.hudEntities.score.displayMessage("+ 50%", 1000);
+                        self.hudEntities.objectivePanel.ballsAlive = 1;
+                        self.balls[2].clearDisplay();
+                    }, 4000);
+                });
+                anim12.start();
+            });
+
+            tutorial12.setOnUnshowBeforeAnim(function(){
+                self.targets[0].resetAnimations();
+                clearTimeout(timeout1);
+                clearTimeout(timeout2);
+
+            });
+
+            this.currentLevel.tutorials.push(tutorial12);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 13
+            //
+            //
+            textBox13 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial13", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t13'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+
+
+            var tutorial13 = LEVEL.createTutorial(textBox13);
+
+            tutorial13.setOnShowBeforeAnim(function(){
+                // reseta uma segunda vez, por segurança
+                self.targets[0].resetAnimations();
+                clearTimeout(timeout1);
+                clearTimeout(timeout2);
+            });
+
+            this.currentLevel.tutorials.push(tutorial13);
+
+            //////////////////////// LEVEL 9 - TUTORIAL 14
+            //
+            //
+            textBox14 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial14", this, 3, V(this.gameArea.resolution.x * 0.1,this.gameArea.resolution.y * 0.5),
+                 L('l9t14'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.6));
+
+            var tutorial14 = LEVEL.createTutorial(textBox14);
+
+            this.currentLevel.tutorials.push(tutorial14);
+
+        break;
+
+
+        case 12:
+
+
+        //////////////////////// TUTORIAL 1
+        //
+            //
+        textBox1 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial1", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.6),
+            L('l12t1'), L('proximaInstrucao'), 'Jet Set', size, black, this.gameArea.resolution.x * 0.5));
+
+        tutorial1 = LEVEL.createTutorial(textBox1);
+
+        this.currentLevel.tutorials.push(tutorial1);
+
+        //////////////////////// TUTORIAL 2
+        //
+        //
+        textBox2 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial2", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.5),
+            L('l12t2'), L('jogar'),
+            'Jet Set', size,black, this.gameArea.resolution.x * 0.5));
+            textBox2.appendArrow(V(this.gameArea.resolution.x * 0.35, this.gameArea.resolution.y * 0.2));
+
+        tutorial2 = LEVEL.createTutorial(textBox2);
+        tutorial2.setOnShowBeforeAnim(function(){
+
+        });
+        tutorial2.setOnShowAfterAnim(function(){
+            ANIM.createAnimation(self.balls[0], 'tutorial3Anim1', 'translateX', 3000, [[0,0],[0.25,self.gameArea.resolution.x * 0.10]], true, true, 0).start();
+            ANIM.createAnimation(self.balls[0], 'tutorial3Anim2', 'translateY', 3000, [[0,0],[0.25,-self.gameArea.resolution.y * 0.22]], true, true, 0).start();
+            ANIM.createAnimation(self.targets[10],'tutorial3AnimAlpha', 'ghostAlpha', 3000, [[0,0],[0.24,0],[0.25,1],[0.50,0],[1,0]], true, true, 0).start();
+        });
+        this.currentLevel.tutorials.push(tutorial2);
+
+        break;
+
+        case 333:
+            textBox1 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial1", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.5),
+                "Neste nível, será necessário atingir três vezes cada alvo.", L('jogar'),
+                'Jet Set', size, black, this.gameArea.resolution.x * 0.5));
+                textBox1.appendArrow(V(this.gameArea.resolution.x * 0.5,this.gameArea.resolution.y * 0.15));
+
+            tutorial1 = LEVEL.createTutorial(textBox1);
+            tutorial1.setOnShowBeforeAnim(function(){
+                 this.balls[0].clearDisplay();
+                 //this.obstacles[0].clearDisplay();
+            });
+
+            tutorial1.setOnShowAfterAnim(function(){
+                var targetToAnimate = this.targets[3];
+                ANIM.createAnimation(targetToAnimate, 'tutorial1AnimCurrentState', 'currentState', 2000, [[0,3],[0.25,2],[0.5,1],[0.75,0]], true, false, 0).start();
+                ANIM.createAnimation(targetToAnimate, 'tutorial1AnimAlpha', 'alpha', 2000, [[0,1],[0.75,1],[1,0]], true, true, 0).start();
+            });
+
+
+            tutorial1.setOnUnshowBeforeAnim(function(){
+                var targetToAnimate = self.targets[3];
+                targetToAnimate.animations = [];
+                targetToAnimate.alpha = 1;
+                targetToAnimate.currentState = 3;
+            });
+
+            this.currentLevel.tutorials.push(tutorial1);
+
+            textBox2 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial2", this, 3, V(this.gameArea.resolution.x * 0.6,this.gameArea.resolution.y * 0.5),
+                "Haverá também um obstáculo.", L('jogar'),
+                'Jet Set', size, black, this.gameArea.resolution.x * 0.3));
+                textBox2.appendArrow(V(this.gameArea.resolution.x * 0.40,this.gameArea.resolution.y * 0.42));
+
+            tutorial2 = LEVEL.createTutorial(textBox2);
+
+            tutorial2.setOnShowAfterAnim(function(){
+                self.obstacles[0].display();
+            });
+
+            this.currentLevel.tutorials.push(tutorial2);
+
+        break;
+
+        case 555:
+            textBox1 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial3", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.6),
+                "Neste nível havera um alvo especial, de cor vermelha.", L('proximaInstrucao'),
+                'Jet Set', size, black, this.gameArea.resolution.x * 0.5));
+                textBox1.appendArrow(V(this.gameArea.resolution.x * 0.49,this.gameArea.resolution.y * 0.15));
+
+            tutorial1 = LEVEL.createTutorial(textBox1);
+            tutorial1.setOnShowBeforeAnim(function(){
+                 self.balls[0].isVisible = false;
+                 self.obstacles[0].isVisible = false;
+            });
+
+            this.currentLevel.tutorials.push(tutorial1);
+
+            textBox2 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial4", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.6),
+                "Quando atingir este alvo, a bola também ficará vermelha.", L('proximaInstrucao'),
+                'Jet Set', size,"black", this.gameArea.resolution.x * 0.5));
+                textBox2.appendArrow(V(this.gameArea.resolution.x * 0.49,this.gameArea.resolution.y * 0.15));
+
+            tutorial1 = LEVEL.createTutorial(textBox2);
+            tutorial1.setOnShowBeforeAnim(function(){
+                 self.balls[0].isVisible = true;
+                 self.balls[0].position = V(self.gameArea.resolution.x * 0.49, self.gameArea.resolution.y * 0.12);
+                 self.balls[0].colorStop = ['red','white'];
+                 self.targets[13].alpha = 0.1;
+                 self.obstacles[0].isVisible = false;
+            });
+
+            this.currentLevel.tutorials.push(tutorial1);
+
+            textBox3 = this.addOtherHudEntity(ENTITY.createTextBox("textTutorial5", this, 3, V(this.gameArea.resolution.x * 0.2,this.gameArea.resolution.y * 0.6),
+                "Em seguida a bola explodirá e dará origem a quatro novas bolas.", L('proximaInstrucao'),
+                'Jet Set', size,"black", this.gameArea.resolution.x * 0.5));
+                textBox3.appendArrow(V(this.gameArea.resolution.x * 0.52,this.gameArea.resolution.y * 0.15));
+
+            tutorial1 = LEVEL.createTutorial(textBox3);
+            tutorial1.setOnShowBeforeAnim(function(){
+                 self.balls[0].isVisible = true;
+                 self.balls[0].position = V(self.gameArea.resolution.x * 0.52, self.gameArea.resolution.y * 0.12);
+                 self.balls[0].colorStop = ['red','white'];
+                 self.targets[13].alpha = 0.1;
+                 self.obstacles[0].isVisible = false;
+            });
+
+            this.currentLevel.tutorials.push(tutorial1);
+        default:
+            // code
+    }
+};

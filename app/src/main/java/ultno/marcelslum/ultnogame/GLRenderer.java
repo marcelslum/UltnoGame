@@ -57,15 +57,15 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     public void onPause()
     {
-	game.setGameState(Game.GAME_STATE_PAUSE);
-	
-		/* Do stuff to pause the renderer */
+        if (gi != null) {
+            if (gi.music != null) {
+                gi.setGameState(Game.GAME_STATE_PAUSE);
+            }
+        }
     }
 
     public void onResume()
     {
-		/* Do stuff to resume the renderer */
-	
         mLastTime = System.currentTimeMillis();
     }
 
@@ -81,9 +81,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         //GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
-
         SetupTextures();
-
 
     }
 
@@ -250,7 +248,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Utils.setTexture("drawable/targets", texturenames, Game.TEXTURE_TARGETS, mContext); // targets
         Utils.setTexture("drawable/bars", texturenames, Game.TEXTURE_BARS, mContext); // bars
         Utils.setTexture("drawable/background", texturenames, Game.TEXTURE_BACKGROUND, mContext); // background
-        Utils.setTexture("drawable/numbers_explosion4", texturenames, Game.TEXTURE_NUMBERS_EXPLOSION, mContext); // numeros
+        Utils.setTexture("drawable/numbers_explosion5", texturenames, Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, mContext); // numeros
         Utils.setTexture("drawable/tittle", texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
         
     }

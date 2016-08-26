@@ -29,7 +29,7 @@ public class ScorePanel extends Entity{
         isCollidable = false;
         isVisible = true;
         alpha = 1;
-        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION;
+        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         program = this.game.imageProgram;
         value = 0;
         setDrawInfo();

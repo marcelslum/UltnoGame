@@ -10,12 +10,10 @@ import java.util.ArrayList;
  */
 public class Target extends Rectangle {
 
-
-
-    public int special;
-    public int type;
     public int [] states;
     public int currentState;
+    public int special;
+    public int type;
     private int pointsToShow;
     private int posYVariation;
 
@@ -32,14 +30,20 @@ public class Target extends Rectangle {
 
     Point pointsObject;
 
-    Target(String name, Game game, float x, float y, float width, float height, int weight, int type){
+    Target(String name, Game game, float x, float y, float width, float height, int weight, int [] states, int currentState, int special){
         super(name, game, x, y, width, height, weight, new Color(0,0,0,1));
+        this.states = states;
+        this.currentState = currentState;
+        this.special = special;
+        setType();
+        textureUnit = Game.TEXTURE_TARGETS;
+        program = this.game.imageProgram;
+        isMovable = false;
+
+
         this.type = type;
-        this.textureUnit = 2;
-        this.program = this.game.imageProgram;
+
         this.setDrawInfo();
-        this.isCollidable = true;
-        this.isSolid = true;
 
         ArrayList<float[]> valuesAnimationShowPoints = new ArrayList<>();
         valuesAnimationShowPoints.add(new float[]{0f,1f});
@@ -86,6 +90,8 @@ public class Target extends Rectangle {
         }
     }
 
+
+
     public void decayState(int points){
 
         this.game.soundPool.play(this.game.soundDestroyTarget, 1, 1, 0, 0, 1);
@@ -94,7 +100,7 @@ public class Target extends Rectangle {
 
         this.currentState -= 1;
 
-        if (states[currentState] != 0) setType(states[currentState]);
+        setType();
 
         this.pointsToShow = points;
         this.pointsObject = new Point("points", this.game, x + (width/2f),y + (height/2f) ,height * 1.5f);
@@ -140,15 +146,27 @@ public class Target extends Rectangle {
         }
     }
 
-    public void setType(int type){
-        this.type = type;
+    public void setType(){
+        if (states[currentState] != 0 && special != 0){
+            type = states[currentState];
+        } else if (special == 1){
+            type = TARGET_RED;
+        }
+    }
+
+    public void setDrawInfo(){
+        initializeData(12, 6, 8, 0);
+        
+        Utils.insertRectangleVerticesData(verticesData,0, 0f, width, 0f, height, 0f);
+        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        
+        Utils.insertRectangleIndicesData(indicesData, 0, 0);
+        indicesBuffer = Utils.generateShortBuffer(indicesData);
 
         //0 - 206
         // 208 -414
         // 416 - 622
         // 624 - 830
-
-
 
         if (type == TARGET_RED){
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
@@ -159,22 +177,6 @@ public class Target extends Rectangle {
         } else if (type == TARGET_BLACK){
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
         }
-
-
-
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
-    }
-
-    public void setDrawInfo(){
-        
-        initializeData(12, 6, 8, 0);
-        
-        Utils.insertRectangleVerticesData(verticesData,0, 0f, width, 0f, height, 0f);
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        
-        Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-
-        setType(type);
     }
 }

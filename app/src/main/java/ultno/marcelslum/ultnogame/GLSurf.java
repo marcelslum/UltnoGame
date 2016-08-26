@@ -92,15 +92,22 @@ public class GLSurf extends GLSurfaceView {
                     }
                 }
                 break;
-            case MotionEvent.ACTION_UP:
+
             case MotionEvent.ACTION_POINTER_UP:
-            case MotionEvent.ACTION_CANCEL:
                 //Log.e("GLSurf", "action up"+ event.getPointerId(pointerId));
+
                 for (int i2 = 0; i2 < mRenderer.gi.touchEvents.size();i2++) {
                     if (mRenderer.gi.touchEvents.get(i2).id == event.getPointerId(pointerId)) {
                         mRenderer.gi.touchEvents.remove(i2);
                     }
                 }
+                break;
+
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                //Log.e("GLSurf", "action up"+ event.getPointerId(pointerId));
+
+                mRenderer.gi.touchEvents.clear();
                 break;
             }
         return true;

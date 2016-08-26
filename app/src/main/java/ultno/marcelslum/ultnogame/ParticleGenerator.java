@@ -1,7 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -16,7 +14,7 @@ public class ParticleGenerator extends Entity {
     ParticleGenerator(String name, Game game, float x, float y) {
         super(name, game, x, y);
         program = game.imageColorizedProgram;
-        textureUnit = game.TEXTURE_NUMBERS_EXPLOSION;
+        textureUnit = game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
 
         generate();
     }
