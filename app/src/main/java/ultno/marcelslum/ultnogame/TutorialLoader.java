@@ -376,7 +376,7 @@ public class TutorialLoader {
                 break;
                 
                 case 7:
-                // L4T7
+                // L7T1
                 game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBox.TextBoxBuilder("textoBox1", g)
@@ -394,26 +394,102 @@ public class TutorialLoader {
                                 }
                             }
                         )
-                        .onShowAfternim(new Tutorial.OnShowAfterAnim() {
+                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                createAnimation3v(g.targets.get(4), "alpha", "alpha", 3000, 
-                                    0f, 1f, 0.75f, 0.99f, 1f, 0, true, true).start(); 
-                                    
-                                
-                                
-                                
-                                
-                                
-                                
-                                
+                                    createAnimation3v(g.targets.get(4), "alpha", "alpha", 3000, 
+                                        0f, 1f, 0.75f, 0.99f, 1f, 0, true, true).start(); 
+                                    ArrayList<float[]> valuesAnimTarget = new ArrayList<>();
+                                        valuesAnimTarget.add(new float[]{0f,3f});
+                                        valuesAnimTarget.add(new float[]{0.25f,2f});
+                                        valuesAnimTarget.add(new float[]{0.5f,1f});
+                                        valuesAnimTarget.add(new float[]{0.75f,0f});
+                                    Animation animTarget = new Animation(g.targets.get(4), "animTarget", "numberForAnimation", 3000, 
+                                        valuesAnimTarget, true, false);
+                                        animTarget.setOnChangeNotFluid(new Animation.OnChange() {
+                                            @Override
+                                            public void onChange() {
+                                                if (innerMessageInGame.numberForAnimation == 3f){
+                                                    g.targets.get(4).setType(Target.COLOR);
+                                                } else if (innerMessageInGame.numberForAnimation == 3f) {
+                                                    g.targets.get(4).setType(Target.COLOR);
+                                                } else if (innerMessageInGame.numberForAnimation == 1f) {
+                                                    g.targets.get(4).setType(Target.COLOR); 
+                                                } else if (innerMessageInGame.numberForAnimation == 0f) {
+                                                    g.targets.get(4).setType(Target.COLOR);
+                                                }
+                                            }
+                                        });
+                                        animTarget.start();
+                                    }
                                 }
-                            }
+                            )
+                            .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
+                                @Override
+                                public void onShowBeforeAnim() {
+                                        g.targets.get(4).clearAnimations();
+                                        g.targets.get(4).alpha = 1f;
+                                        g.targets.setType(Target.COLOR)
+                                    }
+                                }
+                            )
+                            
                         )
-                        
-                        
                         .build()
                 );
+                break;
+                
+                case 9:
+                // L9T1
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox1", g)
+                                .position(x*0.5f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l9t1))
+                                .withoutArrow()
+                                .build()
+                        )
+                        .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
+                            @Override
+                            public void onShowAfterAnim() {
+                                
+                                
+                                    
+                            }
+                        )
+                        .build()
+                );
+                
+                // L9T2
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox1", g)
+                                .position(x*0.5f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l9t2))
+                                .withArrow(gX*0.5f, gY*0.25f)
+                                .build()
+                        )
+                        .build()
+                );
+                
+                // L9T3
+                game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBox.TextBoxBuilder("textoBox1", g)
+                                .position(x*0.5f, y)
+                                .width(width)
+                                .size(size)
+                                .text(Utils.getStringResource(game, R.string.l9t2))
+                                .withoutArrow()
+                                .build()
+                        )
+                        .build()
+                );
+                
                 break;
         }
     }
