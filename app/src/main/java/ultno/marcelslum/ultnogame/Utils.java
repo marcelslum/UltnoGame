@@ -434,12 +434,17 @@ public class Utils {
     }
 
     public static Animation createSimpleAnimation(Entity object, String name, String parameter, int duration, float v1, float v2){
-
         ArrayList<float[]> values = new ArrayList<>();
         values.add(new float[]{0f,v1});
         values.add(new float[]{1f,v2});
         return new Animation(object, name, parameter, duration, values, false, true);
-
+    }
+    
+    public static Animation createAnimation2v(Entity object, String name, String parameter, int duration, float t1, float v1, float t2, float v2, boolean isInfitine, boolean isFluid){
+        ArrayList<float[]> values = new ArrayList<>();
+        values.add(new float[]{t1,v1});
+        values.add(new float[]{t2,v2});
+        return new Animation(object, name, parameter, duration, values, isInfinite, isFluid);
     }
 
     public static Animation createSimpleAnimation(Entity object, String name, String parameter, int duration, float v1, float v2, Animation.AnimationListener animationListener){
