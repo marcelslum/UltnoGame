@@ -19,8 +19,24 @@ public class Tutorial {
     TextBox textBox;
     boolean isBlocked;
 
-    public Tutorial(TextBox textBox){
-        this.textBox = textBox;
+    private Tutorial(TextBoxBuilder builder){
+        this.textBox = builder.textBox;
+        
+        if (builder.onShowBeforeAnim != null){
+            this.onShowBeforeAnim = v;
+        }
+        
+        if (builder.onShowAfterAnim != null){
+            this.onShowAfterAnim = v;
+        }
+        
+        if (builder.onUnshowBeforeAnim != null){
+            this.onUnshowBeforeAnim = v;
+        }
+        
+        if (builder.onUnshowAfterAnim != null){
+            this.onUnshowAfterAnim = v;
+        }
     }
 
     public void show(SoundPool soundPool, int soundId) {
@@ -118,5 +134,45 @@ public class Tutorial {
     public void setOnUnshowAfterAnim2(OnUnshowAfterAnim2 v) {
         this.onUnshowAfterAnim2 = v;
     }
+
+    public static class TutorialBuilder {
+
+        private final TextBox textBox;
+        private OnShowBeforeAnim onShowBeforeAnim;
+        private OnShowAfterAnim onShowAfterAnim;
+        private OnUnshowBeforeAnim onUnshowBeforeAnim;
+        private OnUnshowAfterAnim onUnshowAfterAnim;
+        
+        public TextBoxBuilder(TextBox textBox) {
+            this.textBox = textBox;
+        }
+        
+        public TextBoxBuilder onShowBeforeAnim(OnShowBeforeAnim onShowBeforeAnim){
+            this.onShowBeforeAnim = onShowBeforeAnim;
+            return this;
+        }
+        
+        public TextBoxBuilder onShowAfterAnim(OnShowAfterAnim onShowAfterAnim){
+            this.onShowAfterAnim = onShowAfterAnim;
+            return this;
+        }
+        
+        public TextBoxBuilder onUnshowBeforeAnim(OnShowBeforeAnim onUnshowBeforeAnim){
+            this.onUnshowBeforeAnim = onUnshowBeforeAnim;
+            return this;
+        }
+        
+        public TextBoxBuilder onUnshowAfterAnim(OnShowAfterAnim onUnshowAfterAnim){
+            this.onUnshowAfterAnim = onUnshowAfterAnim;
+            return this;
+        }
+
+        public TextBoxBuilder build(){
+            return new TextBox(this);
+        }
+    }
+    
+    
+    
 
 }
