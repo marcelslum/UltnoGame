@@ -482,41 +482,80 @@ public class TutorialLoader {
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                
-                                
                                 float posX = gX * 0.6f;
                                 float posY = gY * 0.28f;
                                 
-                                g.balls.get(0).x = posX;
-                                g.balls.get(0).y = posY;
+                                Ball ball1 = g.balls.get(0);
+                                ball1.x = posX;
+                                ball1.y = posY;
                                 
-                                float size = g.balls.get(0).radius;
+                                float size = ball1.radius;
                                 
                                 Ball ball2 = new Ball("ball2", g, posX - size * 2, posY - size * 2, size, 8);
                                     ball2.program = this.game.imageProgram;
                                     ball2.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-                                    ball2.setTextureUnitAndUvData(COLOR_BALL_BLUE);
+                                    ball2.setTextureUnitAndUvData(Ball.COLOR_BALL_BLUE);
+                                    ball2.isCollidable = false;
+                                    ball2.alpha = 0f;
+                                    ball2.display();
                                 
                                 Ball ball3 = new Ball("ball2", g, posX + size * 2, posY - size * 2, size, 8);
                                     ball3.program = this.game.imageProgram;
                                     ball3.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-                                    ball3.setTextureUnitAndUvData(COLOR_BALL_ORANGE);
+                                    ball3.setTextureUnitAndUvData(Ball.COLOR_BALL_ORANGE);
+                                    ball3.isCollidable = false;
+                                    ball3.alpha = 0f;
+                                    ball3.display();
                                 
                                 Ball ball4 = new Ball("ball2", g, posX - size * 2, posY + size * 2, size, 8);
                                     ball4.program = this.game.imageProgram;
                                     ball4.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-                                    ball4.setTextureUnitAndUvData(COLOR_BALL_RED);
+                                    ball4.setTextureUnitAndUvData(Ball.COLOR_BALL_RED);
+                                    ball4.isCollidable = false;
+                                    ball4.alpha = 0f;
+                                    ball4.display();
                                 
                                 Ball ball5 = new Ball("ball2", g, posX + size * 2, posY + size * 2, size, 8);
                                     ball5.program = this.game.imageProgram;
                                     ball5.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-                                    ball5.setTextureUnitAndUvData(COLOR_BALL_PINK);
+                                    ball5.setTextureUnitAndUvData(Ball.COLOR_BALL_PINK);
+                                    ball5.isCollidable = false;
+                                    ball5.alpha = 0f;
+                                    ball5.display();
                             
                                 g.addBall(ball2);
                                 g.addBall(ball3);
                                 g.addBall(ball4);
                                 g.addBall(ball5);
                                 
+                                createAnimation2v(ball1, "translateX", "translateX", 5000, 
+                                    0f, -gX*0.15f, 0.2f, 0f, true, true).start();
+                                
+                                createAnimation2v(ball1, "translateY", "translateY", 5000, 
+                                    0f, -gY*0.1f, 0.2f, 0f, true, true).start();
+                                
+                                createAnimation4v(ball1, "alpha", "alpha", 5000, 
+                                    0f, 1f, 0.2f, 1f, 0.25f, 0f, 1f, 0f, true, true).start();
+                                
+                                ArrayList<float[]> valuesAnimBall1 = new ArrayList<>();
+                                        valuesAnimBall1.add(new float[]{0f,1f});
+                                        valuesAnimBall1.add(new float[]{0.1f,0f});
+                                    Animation animBall1 = new Animation(ball1, "color", "numberForAnimation", 3000, 
+                                        valuesAnimBall1, true, false);
+                                        animBall1.setOnChangeNotFluid(new Animation.OnChange() {
+                                            @Override
+                                            public void onChange() {
+                                                if (innerMessageInGame.numberForAnimation == 1f) {
+                                                    ball1.setUvData(Ball.COLOR_BALL_BLACK); 
+                                                } else if (innerMessageInGame.numberForAnimation == 0f) {
+                                                    ball1.setUvData(Ball.COLOR_BALL_RED);
+                                                }
+                                            }
+                                        });
+                                    animBall1.start();
+                                    
+                                    
+                                    
                                     
                             }
                         )
