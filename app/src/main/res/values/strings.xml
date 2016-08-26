@@ -23,10 +23,20 @@
     <string name="l1t1">Mova a barra utilizando os botões abaixo. Vamos lá, pode testar!</string>
     <string name="l1t2">Não deixe a bola cair.</string>
     <string name="l1t3">Elimine os alvos acertendo-os com a bola.</string>
-    <string name="l1t4">Neste nível, cada alvo valerá 100 pontos.</string>
+    <string name="l1t4">Cada alvo valerá 100 pontos.</string>
     <string name="l1t5">Elimine todos os alvos para completar o nível.</string>
     <string name="l1t6">Mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
     <string name="l1t7">Pressione "Jogar" para iniciar a contagem regressiva e iniciar o jogo.</string>
+    
+    <string name="l2t1">Você pode alterar a direção e a velocidade da bola.</string>
+    <string name="l2t2">Atinja a bola com a barra se movimentando na direção contrária. Isso fará com que a velocidade e o deslocamento horizonal da bola aumentem.</string>
+    <string name="l2t3">Ao contrário, se a bola for atingida com a barra se movimentando na mesma direção, a velocidade irá diminuir, assim como o deslocamento horizontal.</string>
+    <string name="l2t4">Neste nível, vamos exagerar um pouquinho esse comportamento da bola. Tente aplicar o que aprendeu.</string>
+    
+    <string name="l4t1">Neste nível, haverá um obstáculo inquebrável.</string>
+    
+    <string name="l4t7">Neste nível, será necessário atingir três vezes cada alvo.</string>
+    
     <string name="l9t1">Agora a coisa vai ficar um pouco mais complexa.</string>
     <string name="l9t2">Neste nível, haverá alguns alvos especiais, de cor vermelha.</string>
     <string name="l9t3">A bola que atingir esse alvo explodirá, dando origem a quatro bolas de cores diversas.</string>
@@ -41,6 +51,6 @@
     <string name="l9t12">Além disso, ao final do nível, bolas extras vivas trarão pontos extras.</string>
     <string name="l9t13">Portanto, tente manter as bolas extras vivas.</string>
     <string name="l9t14">Mas chega de papo furado. Você quer ação, não é mesmo?</string>
-    <string name="l2t1">Apenas um alvo? Que fácil, não é? Nem tanto...</string>
-    <string name="l2t2">Neste nível haverá alguns alvos invisíveis. Destrua todos!</string>
+    <string name="l12t1">Apenas um alvo? Que fácil, não é? Nem tanto...</string>
+    <string name="l12t2">Neste nível haverá alguns alvos invisíveis. Destrua todos!</string>
 </resources>
