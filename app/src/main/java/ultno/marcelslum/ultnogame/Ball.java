@@ -52,10 +52,10 @@ public class Ball extends Circle{
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
 
-    Ball(String name, Game game, float x, float y, float radius, int weight){
+    Ball(String name, Game game, float x, float y, float radius, int weight, int textureMap){
         super(name, game, x, y, radius, weight);
         textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-        textureMap = COLOR_BALL_BLACK;
+        this.textureMap = textureMap;
         isMovable = true;
         historicPositionX = new ArrayList<>();
         historicPositionY = new ArrayList<>();
@@ -459,10 +459,9 @@ public class Ball extends Circle{
 
             //Log.e("ball", "explodeColor "+i+" "+explodeColor);
             
-            Ball ball = new Ball("ball"+i, this.game, explodeX, explodeY, explodeRadius, 8);
+            Ball ball = new Ball("ball"+i, this.game, explodeX, explodeY, explodeRadius, 8, explodeColor);
             ball.program = this.game.imageProgram;
             ball.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-            ball.setTextureMapAndUvData(explodeColor);
 
             ball.dvx = 0f;
             ball.dvy = 0f;

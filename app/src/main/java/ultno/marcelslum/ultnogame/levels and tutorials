@@ -788,7 +788,8 @@ Ultno.Game.prototype.loadLevel = function(number){
 
                     self.obstacles.push(
                         OBSTACLE.createObstacle('obstacle', self, 1,
-                            V((self.gameArea.resolution.x*posX) + (self.gameArea.resolution.x*0.005),self.gameArea.resolution.y*0.12),
+                            V((self.gameArea.resolution.x*posX) + (self.gameArea.resolution.x*0.005),
+                            self.gameArea.resolution.y*0.12),
                             V(self.gameArea.resolution.x*0.05, self.gameArea.resolution.y * 0.02),
                             self.textureObstacle)
                         );

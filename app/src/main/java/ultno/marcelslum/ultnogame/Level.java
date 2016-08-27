@@ -23,7 +23,7 @@ public class Level {
     float[] ballsInitialYByResolution;
     float[] ballsDesiredVelocityXByResolution;
     float[] ballsDesiredVelocityYByResolution;
-    Color [] ballsColor;
+    int [] ballsTextureMap;
     boolean[] ballsInvencible;
     float[] ballsAngleToRotate;
     float[] ballsMaxAngle;
@@ -40,8 +40,6 @@ public class Level {
     float[] barsInitialYByResolution;
     float[] barsDesiredVelocityXByResolution;
     float[] barsDesiredVelocityYByResolution;
-    int quantityTargetsX;
-    int quantityTargetsY;
     float targetSizeXByResolution;
     float targetSizeYByResolution;
     float targetsDistanceByXResolution;
@@ -65,7 +63,7 @@ public class Level {
             float[] ballsInitialYByResolution,
             float[] ballsDesiredVelocityXByResolution,
             float[] ballsDesiredVelocityYByResolution,
-            Color [] ballsColor,
+            int [] ballsTextureMap,
             boolean[] ballsInvencible,
             float[] ballsAngleToRotate,
             float[] ballsMaxAngle,
@@ -82,8 +80,6 @@ public class Level {
             float[] barsInitialYByResolution,
             float[] barsDesiredVelocityXByResolution,
             float[] barsDesiredVelocityYByResolution,
-            int quantityTargetsX,
-            int quantityTargetsY,
             float targetSizeXByResolution,
             float targetSizeYByResolution,
             float targetsDistanceByXResolution,
@@ -99,7 +95,7 @@ public class Level {
             this.ballsInitialYByResolution = ballsInitialYByResolution;
             this.ballsDesiredVelocityXByResolution = ballsDesiredVelocityXByResolution;
             this.ballsDesiredVelocityYByResolution = ballsDesiredVelocityYByResolution;
-            this.ballsColor = ballsColor;
+            this.ballsTextureMap = ballsTextureMap;
             this.ballsInvencible = ballsInvencible;
             this.ballsAngleToRotate = ballsAngleToRotate;
             this.ballsMaxAngle = ballsMaxAngle;
@@ -116,13 +112,10 @@ public class Level {
             this.barsInitialYByResolution = barsInitialYByResolution;
             this.barsDesiredVelocityXByResolution = barsDesiredVelocityXByResolution;
             this.barsDesiredVelocityYByResolution = barsDesiredVelocityYByResolution;
-            this.quantityTargetsX = quantityTargetsX;
-            this.quantityTargetsY = quantityTargetsY;
             this.targetSizeXByResolution = targetSizeXByResolution;
             this.targetSizeYByResolution = targetSizeYByResolution;
             this.targetsDistanceByXResolution = targetsDistanceByXResolution;
             this.targetsPaddingByXResolution = targetsPaddingByXResolution;
-
             this.tutorials = new ArrayList<>();
     }
     
@@ -420,9 +413,7 @@ public class Level {
 
             //Log.e("Level loadEnt", "3");
 
-            Ball ball = new Ball("ball", this.game, ballX, ballY, radium, 8);
-            ball.program = this.game.imageProgram;
-            ball.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+            Ball ball = new Ball("ball", this.game, ballX, ballY, radium, 8, this.ballsTextureMap[i]);
 
             ball.angleToRotate = this.ballsAngleToRotate[i];
             ball.velocityVariation = this.ballsVelocityVariation[i];

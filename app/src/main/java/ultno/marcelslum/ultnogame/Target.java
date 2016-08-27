@@ -30,7 +30,7 @@ public class Target extends Rectangle {
 
     Point pointsObject;
 
-    Target(String name, Game game, float x, float y, float width, float height, int weight, int [] states, int currentState, int special){
+    Target(String name, Game game, float x, float y, float width, float height, int weight, int [] states, int currentState, int special, boolean ghost){
         super(name, game, x, y, width, height, weight, new Color(0,0,0,1));
         this.states = states;
         this.currentState = currentState;
@@ -39,6 +39,7 @@ public class Target extends Rectangle {
         textureUnit = Game.TEXTURE_TARGETS;
         program = this.game.imageProgram;
         isMovable = false;
+        isGhost = ghost;
 
         this.setDrawInfo();
 
