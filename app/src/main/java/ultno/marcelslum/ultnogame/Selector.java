@@ -60,60 +60,44 @@ public class Selector extends Entity{
             if (width > maxWidth) maxWidth = width;
         }
 
-        float buttonSize = size*0.75f;
+        float buttonSize = size*0.90f;
         final Selector innerSelector = this;
 
-        arrowUp = new Button("arrowUp", this.game, mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
+        arrowUp = new Button("arrowUp", this.game, mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         arrowUp.setTextureMap(16);
         arrowUp.textureMapUnpressed = 16;
         arrowUp.textureMapPressed = 8;
-
-        InteractionListener newListener = new InteractionListener(name+"ArrowUp",
-                mainTextWidth + x - (buttonSize/2),
-                y -(buttonSize*1.1f),
-                buttonSize,
-                buttonSize,
-                500, this, game);
-
-        newListener.setPressListener(new InteractionListener.PressListener() {
+        arrowUp.listener.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
-                //Log.e("selector", "newListener");
                 if (!innerSelector.isBlocked){
                     innerSelector.levelUp();
                 }
             }
+
             @Override
             public void onUnpress() {
+
             }
         });
-        this.game.addInteracionListener(newListener);
 
-        arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
+        arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
         arrowDown.textureMapPressed = 7;
-
-        InteractionListener newListener2 = new InteractionListener(name+"ArrowDown",
-                mainTextWidth + x - (buttonSize/2),
-                y + size + (buttonSize*0.2f),
-                buttonSize,
-                buttonSize,
-                500, this, game);
-
-        newListener2.setPressListener(new InteractionListener.PressListener() {
+        arrowDown.listener.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
-                //Log.e("selector", "newListener2");
                 if (!innerSelector.isBlocked){
                     innerSelector.levelDown();
                 }
             }
+
             @Override
             public void onUnpress() {
+
             }
         });
-        this.game.addInteracionListener(newListener2);
 
         float arrowBackX;
         if (text == "") {
@@ -122,31 +106,25 @@ public class Selector extends Entity{
             arrowBackX = x - (buttonSize * 1.5f);
         }
 
-        arrowBack = new Button("arrowBack", this.game, arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS);
+        arrowBack = new Button("arrowBack", this.game, arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         arrowBack.setTextureMap(13);
         arrowBack.textureMapUnpressed = 13;
         arrowBack.textureMapPressed = 5;
 
-        InteractionListener newListener3 = new InteractionListener(name+"ArrowBack",
-                arrowBackX,
-                y + (((size*1.1f)- buttonSize) / 2),
-                buttonSize,
-                buttonSize,
-                500, this, game);
 
-        newListener3.setPressListener(new InteractionListener.PressListener() {
+        arrowBack.listener.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
-                //Log.e("selector", "newListener3");
                 if (!innerSelector.isBlocked){
                     innerSelector.backToMenu();
                 }
             }
+
             @Override
             public void onUnpress() {
+
             }
         });
-        this.game.addInteracionListener(newListener3);
 
     }
 

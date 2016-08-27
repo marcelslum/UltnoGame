@@ -77,15 +77,15 @@ public class Ball extends Circle{
                 @Override
                 public void onChange() {
                     if (innerBall.numberForAnimation == 1f){
-                        setTextureUnitAndUvData(COLOR_BALL_YELLOW);
+                        setTextureMapAndUvData(COLOR_BALL_YELLOW);
                     } else if (innerBall.numberForAnimation == 2f) {
-                        setTextureUnitAndUvData(COLOR_BALL_PINK);
+                        setTextureMapAndUvData(COLOR_BALL_PINK);
                     } else if (innerBall.numberForAnimation == 3f) {
-                        setTextureUnitAndUvData(COLOR_BALL_BLUE);
+                        setTextureMapAndUvData(COLOR_BALL_BLUE);
                     } else if (innerBall.numberForAnimation == 4f) {
-                        setTextureUnitAndUvData(COLOR_BALL_GREEN);
+                        setTextureMapAndUvData(COLOR_BALL_GREEN);
                     } else if (innerBall.numberForAnimation == 4f) {
-                        setTextureUnitAndUvData(COLOR_BALL_RED);
+                        setTextureMapAndUvData(COLOR_BALL_RED);
                     }
                 }
             });
@@ -110,7 +110,7 @@ public class Ball extends Circle{
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
     
-    public void setTextureUnitAndUvData(int textureMap){
+    public void setTextureMapAndUvData(int textureMap){
         this.textureMap = textureMap;
         Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
@@ -366,7 +366,7 @@ public class Ball extends Circle{
     private void waitForExplosion() {
         initialTimeWaitingExplosion = Utils.getTime();
         listenForExplosion = true;
-        setTextureUnitAndUvData(COLOR_BALL_RED);
+        setTextureMapAndUvData(COLOR_BALL_RED);
         
         ArrayList<float[]> valuesAlphaRedBall = new ArrayList<>();
         valuesAlphaRedBall.add(new float[]{0f,1f});
@@ -408,7 +408,7 @@ public class Ball extends Circle{
         
         accelerate(500, rotateX, rotateY*-1);
         
-        setTextureUnitAndUvData(COLOR_BALL_BLACK);
+        setTextureMapAndUvData(COLOR_BALL_BLACK);
         
         float explodeX = 0;
         float explodeY = 0;
@@ -462,7 +462,7 @@ public class Ball extends Circle{
             Ball ball = new Ball("ball"+i, this.game, explodeX, explodeY, explodeRadius, 8);
             ball.program = this.game.imageProgram;
             ball.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-            ball.setTextureUnitAndUvData(explodeColor);
+            ball.setTextureMapAndUvData(explodeColor);
 
             ball.dvx = 0f;
             ball.dvy = 0f;

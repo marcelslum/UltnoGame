@@ -43,6 +43,10 @@ public class InteractionListener {
             return;
         }
 
+        if (objectAppend == null){
+            return;
+        }
+
         if (objectAppend.isBlocked) {
             return;
         }

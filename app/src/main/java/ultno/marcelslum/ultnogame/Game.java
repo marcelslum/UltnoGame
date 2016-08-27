@@ -290,6 +290,8 @@ public class Game {
             stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();
+            eraseAllTutorials();
+
             menuMain.isBlocked = false;
             menuMain.display();
             tittle.display();
@@ -297,6 +299,8 @@ public class Game {
             messageMaxScoreLevel.display();
             messageMaxScoreTotal.display();
         } else if (state == GAME_STATE_PREPARAR){
+            eraseAllTutorials();
+            levelObject.loadEntities();
             music = MediaPlayer.create(context, R.raw.musicgroove90);
             music.setVolume(0.006f* (float) volume, 0.006f* (float) volume);
             music.setLooping(true);
@@ -352,7 +356,7 @@ public class Game {
             menuInGame.appearAndUnblock(300);
             messageGameOver.display();
         } else if (state == GAME_STATE_PAUSE){
-
+            music.pause();
             Log.e("game", "ativando game_state_pause");
             soundPool.play(soundMenuSelectBig, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
             stopAllGameEntities();
@@ -485,6 +489,7 @@ public class Game {
             levelNumber += 1;
 
         } else if (state == GAME_STATE_TUTORIAL) {
+            innerGame.levelObject.loadEntities();
             verifyDead();
         }
 
@@ -535,9 +540,8 @@ public class Game {
         balls.clear();
         bars.clear();
         targets.clear();
-        //windows.clear();
+        windows.clear();
         obstacles.clear();
-
     }
 
     public void eraseAllHudEntities() {
@@ -554,6 +558,15 @@ public class Game {
         buttonSound = null;
         buttonMusic = null;
         background = null;
+    }
+
+    public void eraseAllTutorials() {
+        if (this.levelObject != null) {
+            for (int i = 0; i < levelObject.tutorials.size(); i++) {
+                levelObject.tutorials.get(i).textBox = null;
+                levelObject.tutorials.clear();
+            }
+        }
     }
 
     public void init(){
@@ -769,7 +782,6 @@ public class Game {
                     }
                 } else {
                     //Log.e("game", "load Entities");
-                    innerGame.levelObject.loadEntities();
                     innerGame.setGameState(GAME_STATE_PREPARAR);
                 }
             }
@@ -842,7 +854,6 @@ public class Game {
                 innerGame.blockAndWaitTouchRelease();
                 if (innerGame.gameState == GAME_STATE_DERROTA){
                     LevelLoader.loadLevel(innerGame, innerGame.levelNumber);
-                    innerGame.levelObject.loadEntities();
                     innerGame.menuInGame.clearDisplay();
                     innerGame.setGameState(GAME_STATE_PREPARAR);
                 } else if (innerGame.gameState == GAME_STATE_VITORIA){
@@ -882,7 +893,6 @@ public class Game {
             @Override
             public void onChoice() {
                innerGame.blockAndWaitTouchRelease();
-               innerGame.levelObject.loadEntities();
                innerGame.setGameState(GAME_STATE_TUTORIAL);
                innerGame.levelObject.showingTutorial = 0;
                innerGame.levelObject.tutorials.get(0).show(innerGame.soundPool, innerGame.soundTextBoxAppear);
@@ -896,7 +906,6 @@ public class Game {
             @Override
             public void onChoice() {
                innerGame.blockAndWaitTouchRelease();
-               innerGame.levelObject.loadEntities();
                innerGame.setGameState(GAME_STATE_PREPARAR);
                innerGame.menuTutorial.block();
                innerGame.menuTutorial.clearDisplay();
@@ -975,6 +984,10 @@ public class Game {
                 ball.clearCollisionData();
                 quad.insert(ball);
             }
+        }
+
+        if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
+
             if (bars != null) {
                 if (bars.size() > 0) {
                     if (button1Left.isPressed) {
@@ -999,7 +1012,9 @@ public class Game {
             quad.insert(bordaD);
             quad.insert(bordaC);
             quad.insert(bordaB);
+        }
 
+        if (this.gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < targets.size(); i++) {
                 quad.insert(targets.get(i));
             }
@@ -1018,7 +1033,7 @@ public class Game {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
 
-                    if ((int)(Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode) {
+                    if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode) {
                         forPlayAlarm = true;
                         balls.get(i).radius *= 5;
                         ArrayList<Entity> ball = new ArrayList<>();
@@ -1033,7 +1048,7 @@ public class Game {
 
 
             //Log.e("game", "forPLayAlarm "+forPlayAlarm);
-            
+
             if (forPlayAlarm) {
                 if (playingAlarm != true) {
                     streamIdSoundAlarm = soundPool.play(soundAlarm, 1, 1, 0, -1, 1);
@@ -1050,10 +1065,14 @@ public class Game {
             //Log.e("game", "playingAlarm "+playingAlarm);
 
             checkCollision(balls, true, true);
+        }
+
+        if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
             checkCollision(bars, true, true);
-
             quad.clear();
+        }
 
+        if (this.gameState == GAME_STATE_JOGAR) {
             //Log.e("gl renderer", "onDrawFrame5");
 
             for (Ball b : balls) {
@@ -1072,16 +1091,14 @@ public class Game {
 
                 ball.translate(ball.vx, ball.vy, true);
             }
-
-            for (Bar b : bars){
-                b.translate(b.vx, 0, true);
-            }
-
-            if (gameState == GAME_STATE_JOGAR) {
-                verifyWin();
-            }
         }
 
+        if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
+            for (Bar b : bars) {
+                b.translate(b.vx, 0, true);
+            }
+            verifyWin();
+        }
 
         if (gameState == GAME_STATE_JOGAR) {
             background.move(1);
@@ -1461,11 +1478,6 @@ public class Game {
             }
         }
         return isHadCollision;
-    }
-
-    public void createEntities() {
-        LevelLoader.loadLevel(this, this.levelNumber);
-        this.levelObject.loadEntities();
     }
 
     public void setContext(Context context) {

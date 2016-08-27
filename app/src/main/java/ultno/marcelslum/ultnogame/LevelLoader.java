@@ -219,7 +219,7 @@ public class LevelLoader {
                                         xInitial, yInitial, // posicao x e y
                                         gameAreaResolutionX * innerGame.levelObject.targetSizeXByResolution, // width
                                         gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution, 9, // height
-                                        new int[]{0,3}, // states
+                                        new int[]{0,1}, // states
                                         1,// currentState
                                         0 // special
                                 );
@@ -300,10 +300,10 @@ public class LevelLoader {
                 @Override
                 public void createObstacles() {
                     innerGame.addObstacle(new Obstacle("obstacle", innerGame,
-                            1f + innerGame.gameAreaResolutionX*0.6f,
+                            innerGame.gameAreaResolutionX*0.4f,
                             innerGame.gameAreaResolutionY*0.4f,
-                            innerGame.gameAreaResolutionX*0.15f,
-                            innerGame.gameAreaResolutionY*0.025f
+                            innerGame.gameAreaResolutionX*0.2f,
+                            innerGame.gameAreaResolutionY*0.04f
                             ));
                 }
 
@@ -365,7 +365,7 @@ public class LevelLoader {
                                         xInitial, yInitial, // posicao x e y
                                         gameAreaResolutionX * innerGame.levelObject.targetSizeXByResolution, // width
                                         gameAreaResolutionY * innerGame.levelObject.targetSizeYByResolution, 9, // height
-                                        new int[]{0,3}, // states
+                                        new int[]{0,1}, // states
                                         1,// currentState
                                         0 // special
                                 );

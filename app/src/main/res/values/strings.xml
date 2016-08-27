@@ -26,7 +26,7 @@
     <string name="l1t4">Cada alvo valerá 100 pontos.</string>
     <string name="l1t5">Elimine todos os alvos para completar o nível.</string>
     <string name="l1t6">Mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
-    <string name="l1t7">Pressione "Jogar" para iniciar a contagem regressiva e iniciar o jogo.</string>
+    <string name="l1t7">Vamos lá! Pressione a flecha para iniciar a contagem regressiva.</string>
     
     <string name="l2t1">Você pode alterar a direção e a velocidade da bola.</string>
     <string name="l2t2">Atinja a bola com a barra se movimentando na direção contrária. Isso fará com que a velocidade e o deslocamento horizonal da bola aumentem.</string>
@@ -35,7 +35,7 @@
     
     <string name="l4t1">Neste nível, haverá um obstáculo inquebrável.</string>
     
-    <string name="l4t7">Neste nível, será necessário atingir três vezes cada alvo.</string>
+    <string name="l7t1">Neste nível, será necessário atingir três vezes cada alvo.</string>
     
     <string name="l9t1">Agora a coisa vai ficar um pouco mais complexa.</string>
     <string name="l9t2">Neste nível, haverá alguns alvos especiais, de cor vermelha.</string>

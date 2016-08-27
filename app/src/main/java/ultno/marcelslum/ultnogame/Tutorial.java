@@ -71,6 +71,8 @@ public class Tutorial {
         //Log.e("tutorial", "unshow tutorial "+textBox.name);
 
         isBlocked = true;
+        textBox.arrowContinuar.isBlocked = true;
+
         if (onUnshowBeforeAnim != null)
             onUnshowBeforeAnim.onUnshowBeforeAnim();
 

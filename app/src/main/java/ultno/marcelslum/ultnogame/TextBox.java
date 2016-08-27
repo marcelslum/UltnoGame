@@ -55,7 +55,7 @@ public class TextBox extends Entity{
 
                     widthOfText = textForMeasure.calculateWidth();
 
-                    if (widthOfText > width) {
+                    if (widthOfText > (width*0.95f)) {
                         elementToAdd -= 1;
                         stringToTest = splitedString[elementToAdd];
                         elementToAdd += 1;
@@ -71,7 +71,7 @@ public class TextBox extends Entity{
 
                     stringToTest = stringToTest + " " + splitedString[elementToAdd];
                     elementToAdd += 1;
-                } while (widthOfText < width && (splitedString.length+1) > elementToAdd && contador < limite);
+                } while (widthOfText < (width*0.95f) && (splitedString.length+1) > elementToAdd && contador < limite);
 
                 //Log.e("textBox", "adicionando texto: "+lastText.text);
                 texts.add(lastText);
@@ -100,7 +100,7 @@ public class TextBox extends Entity{
 
         //Log.e("texbox", x + " " + y + " " + (width + (textPadding*6)) + " " + (textY - y + (textPadding*6)));
 
-        arrowContinuar = new Button("arrowContinuar", this.game, x + width - size, y + textY - size - (textPadding*8), size, size, Game.TEXTURE_BUTTONS_AND_BALLS);
+        arrowContinuar = new Button("arrowContinuar", this.game, x + width - size*0.5f, textY - textPadding, size, size, Game.TEXTURE_BUTTONS_AND_BALLS, 3f);
         arrowContinuar.setTextureMap(14);
         arrowContinuar.textureMapUnpressed = 14;
         arrowContinuar.textureMapPressed = 6;
@@ -215,9 +215,9 @@ public class TextBox extends Entity{
         }
         
         public TextBoxBuilder withArrow(float arrowX, float arrowY){
-
-            this.arrowX = x;
-            this.arrowY = y;
+            this.isHaveArrow = true;
+            this.arrowX = arrowX;
+            this.arrowY = arrowY;
             return this;
         }
         

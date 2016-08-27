@@ -40,9 +40,6 @@ public class Target extends Rectangle {
         program = this.game.imageProgram;
         isMovable = false;
 
-
-        this.type = type;
-
         this.setDrawInfo();
 
         ArrayList<float[]> valuesAnimationShowPoints = new ArrayList<>();
@@ -147,22 +144,22 @@ public class Target extends Rectangle {
     }
 
     public void setType(){
-        if (states[currentState] != 0 && special != 0){
-            type = states[currentState];
+        if (states[currentState] != 0 && special != 1){
+            if (this.states[currentState] == 3){
+                type = TARGET_GREEN;
+            } else if (this.states[currentState] == 2){
+                type = TARGET_BLUE;
+            } else if (this.states[currentState] == 1){
+                type = TARGET_BLACK;
+            }
         } else if (special == 1){
             type = TARGET_RED;
         }
+
+        setUvInfo(type);
     }
 
-    public void setDrawInfo(){
-        initializeData(12, 6, 8, 0);
-        
-        Utils.insertRectangleVerticesData(verticesData,0, 0f, width, 0f, height, 0f);
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        
-        Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-
+    public void setUvInfo(int type){
         //0 - 206
         // 208 -414
         // 416 - 622
@@ -178,5 +175,19 @@ public class Target extends Rectangle {
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
         }
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
+
+    }
+
+    public void setDrawInfo(){
+        initializeData(12, 6, 8, 0);
+        
+        Utils.insertRectangleVerticesData(verticesData,0, 0f, width, 0f, height, 0f);
+        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        
+        Utils.insertRectangleIndicesData(indicesData, 0, 0);
+        indicesBuffer = Utils.generateShortBuffer(indicesData);
+
+        setUvInfo(type);
+
     }
 }
