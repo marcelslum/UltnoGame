@@ -173,15 +173,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         long elapsed = now - mLastTime;
 
         this.gi.verifyTouchBlock();
-
-        if (!this.gi.isBlocked) {
-            for (int i = 0; i < this.gi.interactionListeners.size(); i++) {
-                this.gi.interactionListeners.get(i).verify();
-            }
-        }
-
+        this.gi.verifyListeners();
         this.gi.simulate(elapsed, frameDuration);
-
         this.gi.render(matrixView, matrixProjection);
 
         // Save the current time to see how long it took :).

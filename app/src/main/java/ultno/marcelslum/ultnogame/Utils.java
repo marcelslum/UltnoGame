@@ -25,10 +25,6 @@ public class Utils {
     public static float y2;
     public static float z = 0f;
 
-    public static Utils getInstance() {
-        return ourInstance;
-    }
-
     private Utils() {
     }
 

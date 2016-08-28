@@ -2,7 +2,6 @@ package ultno.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -17,7 +16,6 @@ public class Entity {
     final public static int SHOW_POINTS_ON = 1;
     final public static int SHOW_POINTS_OFF = 0;
 
-    int testeValue = 0;
     public String name;
     public Game game;
     public float x;
@@ -50,21 +48,17 @@ public class Entity {
     public boolean isBlocked;
     public boolean isPressed;
     public ArrayList<Animation> animations;
-    public ArrayList<InteractionListener> listeners;
+    private InteractionListener listener;
     public boolean isFree;
     public ArrayList<Entity> childs;
     public Entity parent;
-    public RectangleM bounds;
-    public RectangleM quadtreeData;
-    public int updateBoundsState;
-    public RectangleM satData;
+
 
     public float pointsAlpha;
     public int showPointsState = SHOW_POINTS_OFF;
 
     public SatCircle circleData;
     public SatPolygon polygonData;
-
 
     public float[] verticesData;
     public short[] indicesData;
@@ -119,16 +113,12 @@ public class Entity {
         isBlocked = false;
         isPressed = false;
         isFree = true;
-        bounds = new RectangleM(0, 0, 0, 0);
-        quadtreeData = new RectangleM(0, 0, 0, 0);
-        satData = new RectangleM(0, 0, 0, 0);
-        updateBoundsState = 0;
+
         scaleX = 1;
         scaleY = 1;
         animTranslateX = 0;
         animTranslateY = 0;
         animations = new ArrayList<Animation>();
-        listeners = new ArrayList<InteractionListener>();
         childs = new ArrayList<>();
     }
     
@@ -194,11 +184,6 @@ public class Entity {
                 this.alphaData = new float[alphaSize];                
             }
         }
-    }   
-
-    public RectangleM getQuadtreeData() {
-        this.updateQuatreeData();
-        return this.quadtreeData;
     }
 
     public void applyAnimation(String parameter, float value) {
@@ -207,7 +192,6 @@ public class Entity {
                 this.childs.get(i).applyAnimation(parameter, value);
             }
         }
-
         switch (parameter) {
             case "translateX":
                 this.animTranslateX = value;
@@ -216,30 +200,24 @@ public class Entity {
                 this.animTranslateY = value;
                 break;
             case "scaleX":
-                //Log.e("Entity", "ativando animação scaleX "+value);
                 this.animScaleX = value;
                 break;
             case "scaleY":
                 this.animScaleY = value;
                 break;
             case "alpha":
-                //Log.e("Entity", "ativando animação alpha reduzindo para "+value);
                 this.alpha = value;
                 break;
             case "numberForAnimation":
                 this.numberForAnimation = value;
             case "showPointsState":
                 if (value == 1f){
-                    //Log.e("entity", "showPointsState ON");
                     this.showPointsState = SHOW_POINTS_ON;
                 } else {
-
-                    //Log.e("entity", "showPointsState OFF");
                     this.showPointsState = SHOW_POINTS_OFF;
                 }
                 break;
             case "pointsAlpha":
-                //Log.e("entity", "pointsAlpha ");
                 this.pointsAlpha = value;
                 break;
             default:
@@ -374,12 +352,6 @@ public class Entity {
             Matrix.scaleM(matrixModel, 0, animScaleX, animScaleY, 0);
             Matrix.translateM(this.matrixModel, 0, -(width)/2, -(height)/2, 0);
         }
-
-
-
-
-
-
     }
 
     public void prepareRender(float[] matrixView, float[] matrixProjection){
@@ -453,8 +425,6 @@ public class Entity {
                     variation = 0.002f;
                 }
 
-
-
                 if (timeVar == true) {
                     time += variation;
                     if (time > 0.001f) {
@@ -467,12 +437,9 @@ public class Entity {
                     }
                 }
             }
-
             int uf_timeHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
             GLES20.glUniform1f(uf_timeHandle, time);
-
         }
-
         // TODO verificar se a inversão do eixo y considera o offset
 
         if (this.textureUnit != -1) {
@@ -491,15 +458,12 @@ public class Entity {
         // No depth testing
         // Draw the triangle
 
-
-
         if (isLineGL) {
             GLES20.glLineWidth(lineWidth);
             GLES20.glDrawElements(GLES20.GL_LINES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
         } else {
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
         }
-
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(av4_verticesHandle);
@@ -516,22 +480,17 @@ public class Entity {
 
     }
 
-    public void updateListenersData(){
-
-
-    }
-
     public void display(){
         this.isVisible = true;
     }
 
-    public void verifyListeners(){
-        this.updateListenersData();
-        for (int i = 0; i < this.listeners.size(); i++){
-            this.listeners.get(i).verify();
+    public void verifyListener(){
+        if (isBlocked){
+            return;
         }
+        this.getListener().verify();
         for (int i = 0; i < this.childs.size(); i++){
-            this.childs.get(i).verifyListeners();
+            this.childs.get(i).verifyListener();
         }
     }
 
@@ -567,13 +526,17 @@ public class Entity {
         this.animations.add(animation);
     }
 
-    public void addListener(InteractionListener interactionListenerListener){
-        this.listeners.add(interactionListenerListener);
+    public void setListener(InteractionListener interactionListenerListener){
+        listener = interactionListenerListener;
     }
 
     public void updateQuatreeData() {
     }
 
     public void setSatData() {
+    }
+
+    public InteractionListener getListener() {
+        return listener;
     }
 }

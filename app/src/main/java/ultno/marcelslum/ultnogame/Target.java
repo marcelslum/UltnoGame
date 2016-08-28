@@ -16,22 +16,19 @@ public class Target extends Rectangle {
     public int type;
     private int pointsToShow;
     private int posYVariation;
-
     public static final int TARGET_BLACK = 0;
     public static final int TARGET_GREEN = 1;
     public static final int TARGET_BLUE = 2;
     public static final int TARGET_RED = 3;
-
     Animation showPointsStateAnim;
     Animation showPointsAlphaAnim;
     Animation ghostAlphaAnim;
     Animation desapearAnim;
     private boolean isGhost;
-
     Point pointsObject;
 
-    Target(String name, Game game, float x, float y, float width, float height, int weight, int [] states, int currentState, int special, boolean ghost){
-        super(name, game, x, y, width, height, weight, new Color(0,0,0,1));
+    Target(String name, Game game, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
+        super(name, game, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(0,0,0,1));
         this.states = states;
         this.currentState = currentState;
         this.special = special;

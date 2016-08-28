@@ -1,3 +1,46 @@
+ Target(String name, Game game, float x, float y, float width, float height, int weight, int [] states, int currentState, int special, boolean ghost){
+        super(name, game, x, y, width, height, weight, new Color(0,0,0,1));
+        this.states = states;
+        this.currentState = currentState;
+        this.special = special;
+        setType();
+        textureUnit = Game.TEXTURE_TARGETS;
+        program = this.game.imageProgram;
+        isMovable = false;
+        isGhost = ghost;
+
+        this.setDrawInfo();
+
+        ArrayList<float[]> valuesAnimationShowPoints = new ArrayList<>();
+        valuesAnimationShowPoints.add(new float[]{0f,1f});
+        valuesAnimationShowPoints.add(new float[]{1f,0f});
+        showPointsStateAnim = new Animation(this, "showPointsState", "showPointsState", 1000, valuesAnimationShowPoints, false, false);
+
+        ArrayList<float[]> valuesAnimationShowPointsAlpha = new ArrayList<>();
+        valuesAnimationShowPointsAlpha.add(new float[]{0f,1f});
+        valuesAnimationShowPointsAlpha.add(new float[]{1f,0f});
+        showPointsAlphaAnim = new Animation(this, "pointsAlpha", "pointsAlpha", 1000, valuesAnimationShowPointsAlpha, false, true);
+
+        ArrayList<float[]> valuesAnimationGhostAlpha = new ArrayList<>();
+        valuesAnimationGhostAlpha.add(new float[]{0f,1f});
+        valuesAnimationGhostAlpha.add(new float[]{1f,0f});
+        ghostAlphaAnim = new Animation(this, "ghostAlpha", "ghostAlpha", 1000, valuesAnimationGhostAlpha, false, true);
+
+        ArrayList<float[]> valuesAnimation = new ArrayList<>();
+        valuesAnimation.add(new float[]{0f,1f});
+        valuesAnimation.add(new float[]{0.3f,0.10f});
+        valuesAnimation.add(new float[]{0.4f,0f});
+        valuesAnimation.add(new float[]{1f,0f});
+        desapearAnim = new Animation(this, "desapear", "alpha", 1000, valuesAnimation, false, true);
+        final Target self = this;
+        desapearAnim .setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                self.isVisible = false;
+            }
+        });
+    }
+
  public void UpdateSprite()
     {
         // Get new transformed vertices

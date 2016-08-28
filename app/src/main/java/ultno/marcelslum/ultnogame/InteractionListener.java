@@ -14,7 +14,7 @@ public class InteractionListener {
     public float height;
     public int frequency;
     public Entity objectAppend;
-    public Game gameObject;
+    public Game game;
     public boolean pressedOnVerify;
     public boolean active;
     public boolean onPress;
@@ -29,9 +29,23 @@ public class InteractionListener {
         this.height = height;
         this.frequency = frequency;
         this.objectAppend = objectAppend;
-        this.gameObject = gameObject;
+        this.game = gameObject;
         this.pressedOnVerify = false;
         this.active = false;
+    }
+
+    InteractionListener(String name, float x, float y, float width, float height, int frequency, Entity objectAppend, Game game, PressListener pressListener){
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.frequency = frequency;
+        this.objectAppend = objectAppend;
+        this.game = game;
+        this.pressedOnVerify = false;
+        this.active = false;
+        this.myPressListener = pressListener;
     }
 
     public void verify() {
@@ -39,7 +53,7 @@ public class InteractionListener {
         //Log.e("listener", "verificando listener "+name);
 
         // verifica se o game estiver bloqueado, caso o listener esteja na mesma passagem do listener que bloqueia o game
-        if (gameObject.isBlocked){
+        if (game.isBlocked){
             return;
         }
 
@@ -53,10 +67,10 @@ public class InteractionListener {
 
         this.pressedOnVerify = false;
 
-        for (int i = 0; i < this.gameObject.touchEvents.size(); i++) {
+        for (int i = 0; i < this.game.touchEvents.size(); i++) {
             this.pressedOnVerify = Utils.isInsideBounds(
-                    this.gameObject.touchEvents.get(i).x,
-                    this.gameObject.touchEvents.get(i).y,
+                    this.game.touchEvents.get(i).x,
+                    this.game.touchEvents.get(i).y,
                     x, y, width, height);
             if (this.pressedOnVerify) {
                 //Log.e("interaction", " pressed "+ this.name);

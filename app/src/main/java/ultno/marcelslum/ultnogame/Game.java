@@ -15,6 +15,11 @@ import java.util.ArrayList;
 /** * Created by marcel on 01/08/2016.
  */
 public class Game {
+    public static final int BALL_WEIGHT = 1;
+    public static final int BORDA_WEIGHT = 10;
+    public static final int OBSTACLES_WEIGHT = 9;
+    public static final int TARGET_WEIGHT = 8;
+    public static final int BAR_WEIGHT = 2;
     private static Game ourInstance = new Game();
     Context context;
 
@@ -1133,11 +1138,11 @@ public class Game {
             }
         }
         
-        objectivePanel.setValues(ballsNotInvencibleAlive + ballsInvencible, levelObject.minBallsNotInvencibleAlive, ballsInvencible);
+        objectivePanel.setValues(ballsNotInvencibleAlive + ballsInvencible, levelObject.minBallsAlive, ballsInvencible);
         
         //Log.e("game", " minBallsNotInvencibleAlive " + levelObject.minBallsNotInvencibleAlive);
         //Log.e("game", " ballsNotInvencibleAlive " + ballsNotInvencibleAlive);
-        if (levelObject.minBallsNotInvencibleAlive > ballsNotInvencibleAlive)
+        if (levelObject.minBallsAlive > ballsNotInvencibleAlive)
             setGameState(GAME_STATE_DERROTA);
     }
 
@@ -1491,5 +1496,36 @@ public class Game {
                 Log.e("game", "desbloqueia game");
             }
         }
+    }
+
+    public void verifyListeners() {
+        if (!isBlocked) {
+            for (int i = 0; i < interactionListeners.size(); i++) {
+                interactionListeners.get(i).verify();
+            }
+        }
+
+        if (menuMain != null) menuMain.verifyListener();
+        if (menuInGame != null) menuInGame.verifyListener();
+        if (menuTutorial != null) menuTutorial.verifyListener();
+        if (selectorLevel != null) selectorLevel.verifyListener();
+        if (selectorVolumn != null) selectorVolumn.verifyListener();
+
+        if (this.gameState == GAME_STATE_TUTORIAL){
+
+
+
+            if (levelObject.tutorials.size() >  this.levelObject.showingTutorial){
+                levelObject.tutorials.get(this.levelObject.showingTutorial).textBox.verifyListener();
+            }
+        }
+
+        if (button1Left != null) button1Left.verifyListener();;
+        if (button1Right != null) button1Right.verifyListener();
+        if (button2Left != null) button1Left.verifyListener();
+        if (button2Right != null) button1Right.verifyListener();
+        if (buttonMusic != null) buttonMusic.verifyListener();
+        if (buttonSound != null) buttonSound.verifyListener();
+
     }
 }

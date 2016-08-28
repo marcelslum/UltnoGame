@@ -1,8 +1,6 @@
 package ultno.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -67,7 +65,7 @@ public class Selector extends Entity{
         arrowUp.setTextureMap(16);
         arrowUp.textureMapUnpressed = 16;
         arrowUp.textureMapPressed = 8;
-        arrowUp.listener.setPressListener(new InteractionListener.PressListener() {
+        arrowUp.getListener().setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){
@@ -85,7 +83,7 @@ public class Selector extends Entity{
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
         arrowDown.textureMapPressed = 7;
-        arrowDown.listener.setPressListener(new InteractionListener.PressListener() {
+        arrowDown.getListener().setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){
@@ -112,7 +110,7 @@ public class Selector extends Entity{
         arrowBack.textureMapPressed = 5;
 
 
-        arrowBack.listener.setPressListener(new InteractionListener.PressListener() {
+        arrowBack.getListener().setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){

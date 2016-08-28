@@ -38,6 +38,7 @@ public class Circle extends PhysicalObject {
     @Override
     public float getMiddlePointX() {
         return this.radius;
+
     }
 
     @Override

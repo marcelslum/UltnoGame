@@ -71,7 +71,7 @@ public class TutorialLoader {
                                 g.balls.get(0).x = gX * 0.7f;
                                 g.balls.get(0).y = gY * 0.7f;
                                 g.bars.get(0).isMovable = false;
-                                g.bars.get(0).x = g.levelObject.barsInitialXByResolution[0];
+                                g.bars.get(0).x = g.levelObject.barsX_BR[0];
                             }
                         }
                     )
@@ -496,34 +496,22 @@ public class TutorialLoader {
 
                                      float size = ball1.radius;
 
-                                     final Ball ball2 = new Ball("ball2", g, posX - size * 2, posY - size * 2, size, 8);
-                                     ball2.program = g.imageProgram;
-                                     ball2.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-                                     ball2.setTextureMapAndUvData(Ball.COLOR_BALL_BLUE);
+                                     final Ball ball2 = new Ball("ball2", g, posX - size * 2, posY - size * 2, size, Ball.COLOR_BALL_BLUE);
                                      ball2.isCollidable = false;
                                      ball2.alpha = 0f;
                                      ball2.display();
 
-                                     final Ball ball3 = new Ball("ball2", g, posX + size * 2, posY - size * 2, size, 8);
-                                     ball3.program = g.imageProgram;
-                                     ball3.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-                                     ball3.setTextureMapAndUvData(Ball.COLOR_BALL_ORANGE);
+                                     final Ball ball3 = new Ball("ball2", g, posX + size * 2, posY - size * 2, size, Ball.COLOR_BALL_ORANGE);
                                      ball3.isCollidable = false;
                                      ball3.alpha = 0f;
                                      ball3.display();
 
-                                     final Ball ball4 = new Ball("ball2", g, posX - size * 2, posY + size * 2, size, 8);
-                                     ball4.program = g.imageProgram;
-                                     ball4.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-                                     ball4.setTextureMapAndUvData(Ball.COLOR_BALL_RED);
+                                     final Ball ball4 = new Ball("ball2", g, posX - size * 2, posY + size * 2, size, Ball.COLOR_BALL_RED);
                                      ball4.isCollidable = false;
                                      ball4.alpha = 0f;
                                      ball4.display();
 
-                                     final Ball ball5 = new Ball("ball2", g, posX + size * 2, posY + size * 2, size, 8);
-                                     ball5.program = g.imageProgram;
-                                     ball5.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-                                     ball5.setTextureMapAndUvData(Ball.COLOR_BALL_PINK);
+                                     final Ball ball5 = new Ball("ball2", g, posX + size * 2, posY + size * 2, size, Ball.COLOR_BALL_PINK);
                                      ball5.isCollidable = false;
                                      ball5.alpha = 0f;
                                      ball5.display();

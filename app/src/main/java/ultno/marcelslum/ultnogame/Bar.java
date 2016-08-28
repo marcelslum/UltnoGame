@@ -6,9 +6,8 @@ package ultno.marcelslum.ultnogame;
  */
 public class Bar extends Rectangle{
 
-    Bar(String name, Game game, float x, float y, float width, float height, int weight){
-        super(name, game, x, y, width, height, weight, new Color(0,0,0,1));
-
+    Bar(String name, Game game, float x, float y, float width, float height){
+        super(name, game, x, y, width, height, Game.BAR_WEIGHT, new Color(0,0,0,1));
 
         this.program = game.imageProgram;
         this.textureUnit = 3;

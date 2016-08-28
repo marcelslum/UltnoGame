@@ -6,7 +6,7 @@ package ultno.marcelslum.ultnogame;
 public class Obstacle extends Rectangle{
 
     Obstacle(String name, Game game, float x, float y, float width, float height) {
-        super(name, game, x, y, width, height, 10, new Color(1.0f, 1.0f, 1.0f, 1.0f));
+        super(name, game, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(1.0f, 1.0f, 1.0f, 1.0f));
         this.textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         this.program = this.game.imageProgram;
         this.setDrawInfo();

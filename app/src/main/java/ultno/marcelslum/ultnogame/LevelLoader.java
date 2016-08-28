@@ -1,196 +1,136 @@
 package ultno.marcelslum.ultnogame;
 
-import java.util.ArrayList;
-
 /**
  * Created by marcel on 02/08/2016.
  */
 public class LevelLoader {
+    public static void loadLevel(Game game, int levelNumber) {
+        Level.LevelBuilder levelBuilder;
+        levelBuilder = new Level.LevelBuilder()
+                .game(game)
+                .setBallsQuantity(1)
+                .setBallsAlive(1)
+                .setBallsRadius_BD_0_01(1f)
+                .setBallsX_B1(0.3f)
+                .setBallsY_B1(0.3f)
+                .setBallsVX_BD_0_003(1f)
+                .setBallsVY_BD_0_005294(1f)
+                .setBallsTextureMap(Ball.COLOR_BALL_BLACK)
+                .setBallsInvencible(false)
+                .setBallsAngleToRotate_BD_2_2(0.90f)
+                .setBallsMaxAngle_BD_58(0.95f)
+                .setBallsMinAngle_BD_32(1.09f)
+                .setBallsVelocityVariation_BD_0_11(0.91f)
+                .setBallsVelocityMax_BD_1_6(0.9375f)
+                .setBallsVelocityMin_BD_0_75(1.0667f)
+                .setBallsFree(true)
+                .setBarsQuantity(1)
+                .setBarsWidth_BD_0_22(1f)
+                .setBarsHeight_BD_0_0175(1f)
+                .setBarsX_B1(0.3f)
+                .setBarsY_BD_0_024(1f)
+                .setBarsVX_BD_0_0045(1f)
+                .setBarsVY(new float[]{0f})
+                .setTargetsWidth(0.0895f)
+                .setTargetsHeight(0.04f)
+                .setTargetsDistance(0.001f)
+                .setTargetsPadding(0.00225f)
+                .setTargetsMap(
+                        new int[][]{
+                                {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                        })
+                .setTargetsStates(new int[]{0, 1})
+                .setObstaclesQuantity(0);
 
-    private static int state;
-    private static int special;
-    private static boolean isGhost;
-    private static float gX;
-    private static float gY;
-    private static float targetX;
-    private static float targetY;
-    private static Game g;
-    private static float targetWidth;
-    private static float targetHeight;
 
-    private static LevelLoader ourInstance = new LevelLoader();
+        if (levelNumber >= 2) {
+            levelBuilder = new Level.LevelBuilder()
+                    .setBallsAngleToRotate_BD_2_2(2.27f)
+                    .setBallsMaxAngle_BD_58(1.12f)
+                    .setBallsMinAngle_BD_32(0.78125f)
+                    .setBallsVelocityVariation_BD_0_11(2.27f)
+                    .setBallsVelocityMax_BD_1_6(1.375f)
+                    .setBallsVelocityMin_BD_0_75(0.95f)
+                    .setBarsWidth_BD_0_22(1.08f)
+                    .setBarsX_B1(0.35f)
+                    .setBarsVX_BD_0_0045(1f)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0}
+                            })
+                    .setTargetsStates(new int[]{0, 1})
+                    .setObstaclesQuantity(0);
+        }
 
-    public static LevelLoader getInstance() {
-        return ourInstance;
+        if (levelNumber >= 3) {
+            levelBuilder = new Level.LevelBuilder()
+                    .setBallsVX_BD_0_003(1.05f)
+                    .setBallsVY_BD_0_005294(1.05f)
+                    .setBallsAngleToRotate_BD_2_2(0.9f)
+                    .setBallsMaxAngle_BD_58(0.9f)
+                    .setBallsMinAngle_BD_32(1.1f)
+                    .setBallsVelocityVariation_BD_0_11(0.95f)
+                    .setBallsVelocityMax_BD_1_6(0.95f)
+                    .setBallsVelocityMin_BD_0_75(1.05f)
+                    .setBarsWidth_BD_0_22(0.95f)
+                    .setBarsX_B1(0.35f)
+                    .setBarsVX_BD_0_0045(1.05f)
+                    .setTargetsWidth(0.0891f)
+                    .setTargetsDistance(0.0014f)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
+                                    {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                                    {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+                                    {1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0}
+                            })
+                    .setTargetsStates(new int[]{0, 1})
+                    .setObstaclesQuantity(0);
+        }
+
+        if (levelNumber >= 4) {
+            levelBuilder = new Level.LevelBuilder()
+                    .setBallsVX_BD_0_003(1.05f)
+                    .setBallsVY_BD_0_005294(1.05f)
+                    .setBallsAngleToRotate_BD_2_2(0.9f)
+                    .setBallsMaxAngle_BD_58(0.9f)
+                    .setBallsMinAngle_BD_32(1.1f)
+                    .setBallsVelocityVariation_BD_0_11(0.95f)
+                    .setBallsVelocityMax_BD_1_6(0.95f)
+                    .setBallsVelocityMin_BD_0_75(1.05f)
+                    .setBarsWidth_BD_0_22(0.95f)
+                    .setBarsX_B1(0.35f)
+                    .setBarsVX_BD_0_0045(1.05f)
+                    .setTargetsWidth(0.0891f)
+                    .setTargetsDistance(0.0014f)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
+                                    {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                                    {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+                                    {1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0}
+                            })
+                    .setTargetsStates(new int[]{0, 1})
+                    .setObstaclesQuantity(0);
+
+        }
+        game.levelObject = levelBuilder.build();
     }
+}
 
-    private LevelLoader() {
-    }
-
-    public static void loadLevel(Game game, int levelNumber){
-
-        gX = game.gameAreaResolutionX;
-        gY = game.gameAreaResolutionY;
-        g = game;
-        final Game innerGame = game;
-
-    switch (levelNumber){
-            case 1:
-                game.levelObject = new Level(2, game,
-                        1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                        new float[]{0.010f},                                // raio da bola
-                        new float[]{0.3f}, new float[]{0.3f},              // posicao inicial
-                        new float[]{0.003f},new float[]{0.00529412f},   // velocidade
-                        new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                        new boolean[]{false},                               // invencível
-                        new float[]{2f},new float[]{55f}, new float[]{35f},// angulos de rotacao
-                        new float[]{0.1f},                                 // variação de velocidade na rotação
-                        new float[]{1.5f}, new float[]{0.8f},               // velocidade máxima e mínima
-                        new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                        new boolean[]{true},                                // bola livre
-                        1,                                                  // quantidade de bars
-                        new float[]{0.22f}, new float[]{0.0175f},           // tamanho da barra
-                        new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                        new float[]{0.0045f}, new float[]{0f},               // velocidade da barra
-                        0.0895f, 0.04f,                                     // tamanho dos targets
-                        0.001f, 0.00225f                                     //distancia e padding dos targets
-                );
-
-
-                game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
-                    @Override
-                    public void createTargets() {
-                        createLevelTargets(new int[]{0, 1},
-                            new int [][]{
-                                    {0,1,1,1,1,1,1,1,1,1,0},
-                            }
-                        );
-                    }
-
-                    @Override
-                    public void createObstacles() {
-                    }
-
-                    @Override
-                    public void createWindows() {
-
-                    }
-                });
-                break;
-                
-            case 2:
-                game.levelObject = new Level(2, game, 
-                1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                new float[]{0.010f},                                // raio da bola
-                new float[]{0.3f}, new float[]{0.72f},              // posicao inicial
-                new float[]{0.003f},new float[]{0.00529412f},   // velocidade
-                new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                new boolean[]{false},                               // invencível
-                new float[]{5f},new float[]{65f}, new float[]{25f},// angulos de rotacao
-                new float[]{0.25f},                                 // variação de velocidade na rotação
-                new float[]{2.2f}, new float[]{0.7f},               // velocidade máxima e mínima
-                new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                new boolean[]{true},                                // bola livre
-                1,                                                  // quantidade de bars
-                new float[]{0.26f}, new float[]{0.0175f},           // tamanho da barra
-                new float[]{0.35f}, new float[]{0.024f},            // posicao da barra
-                new float[]{0.005f*1.5f}, new float[]{0f},               // velocidade da barra
-                0.0895f, 0.04f,                                     // tamanho dos targets
-                0.001f, 0.00225f                                     //distancia e padding dos targets
-                );
-
-                game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
-                    @Override
-                    public void createTargets() {
-                        createLevelTargets(new int[]{0, 1},
-                            new int [][]{
-                                {1,1,1,1,1,1,1,1,1,1,1},
-                                {0,0,1,1,1,0,1,1,1,0,0}
-                            }
-                        );
-                    }
-
-                    @Override
-                    public void createObstacles() {
-                    }
-
-                    @Override
-                    public void createWindows() {
-
-                    }
-                });
-                break;
-
-        case 3:
-            game.levelObject = new Level(2, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.010f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0036f},new float[]{0.00635294117647059f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2f},new float[]{55f}, new float[]{35f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.5f}, new float[]{0.8f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.18f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
-
-            game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
-                @Override
-                public void createTargets() {
-                    createLevelTargets(new int[]{0, 1},
-                            new int [][]{
-                                    {0,1,0,0,0,1,0,1,0,0,0},
-                                    {0,0,1,1,0,0,0,0,0,0,0},
-                                    {0,0,1,1,1,0,0,0,0,0,0},
-                                    {0,0,0,0,1,1,0,0,0,0,0},
-                                    {1,0,1,0,1,0,0,0,0,0,0},
-                                    {1,0,1,1,0,0,0,0,0,0,0},
-                                    {1,0,1,0,0,0,1,0,0,0,0},
-                                    {1,1,0,1,0,1,0,0,0,0,0},
-                                    {0,0,0,1,0,0,1,1,0,0,0},
-                            }
-                    );
-                }
-
-                @Override
-                public void createObstacles() {
-                }
-
-                @Override
-                public void createWindows() {
-
-                }
-            });
-            break;
-
-        case 4:
-            game.levelObject = new Level(4, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.010f},                                // raio da bola
-                    new float[]{0.15f}, new float[]{0.6f},              // posicao inicial
-                    new float[]{0.0036f},new float[]{0.00564705882352941f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{55f}, new float[]{35f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.5f}, new float[]{0.8f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.18f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                    0.075176f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+/*
+ballsInitialX(new float[]{0.15f}).ballsInitialY(new float[]{0.6f}).ballsDesiredVelocityX(new float[]{0.0036f}).ballsDesiredVelocityY(new float[]{0.00564705882352941f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{55f}).ballsMinAngle(new float[]{35f}).ballsVelocityVariation(new float[]{0.1f}).ballsVelocityMaxByInitialVelocity(new float[]{1.5f}).ballsVelocityMinByInitialVelocity(new float[]{0.8f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.18f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.005f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.075176f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -220,25 +160,7 @@ public class LevelLoader {
             break;
 
         case 5:
-            game.levelObject = new Level(5, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.010f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0032f},new float[]{0.0056470588f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{55f}, new float[]{35f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.5f}, new float[]{0.8f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.18f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(5).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.010f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0032f}).ballsDesiredVelocityY(new float[]{0.0056470588f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{55f}).ballsMinAngle(new float[]{35f}).ballsVelocityVariation(new float[]{0.1f}).ballsVelocityMaxByInitialVelocity(new float[]{1.5f}).ballsVelocityMinByInitialVelocity(new float[]{0.8f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.18f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.005f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -271,25 +193,7 @@ public class LevelLoader {
             break;
 
         case 6:
-            game.levelObject = new Level(6, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.010f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0034f},new float[]{0.006f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{57f}, new float[]{33f},// angulos de rotacao
-                    new float[]{0.11f},                                 // variação de velocidade na rotação
-                    new float[]{1.6f}, new float[]{0.75f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.17f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(6).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.010f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0034f}).ballsDesiredVelocityY(new float[]{0.006f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{57f}).ballsMinAngle(new float[]{33f}).ballsVelocityVariation(new float[]{0.11f}).ballsVelocityMaxByInitialVelocity(new float[]{1.6f}).ballsVelocityMinByInitialVelocity(new float[]{0.75f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.17f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.005f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -326,25 +230,7 @@ public class LevelLoader {
             break;
 
         case 7:
-            game.levelObject = new Level(7, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.010f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0034f},new float[]{0.006f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{57f}, new float[]{33f},// angulos de rotacao
-                    new float[]{0.11f},                                 // variação de velocidade na rotação
-                    new float[]{1.6f}, new float[]{0.75f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.17f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(7).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.010f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0034f}).ballsDesiredVelocityY(new float[]{0.006f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{57f}).ballsMinAngle(new float[]{33f}).ballsVelocityVariation(new float[]{0.11f}).ballsVelocityMaxByInitialVelocity(new float[]{1.6f}).ballsVelocityMinByInitialVelocity(new float[]{0.75f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.17f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.005f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -365,25 +251,7 @@ public class LevelLoader {
             break;
 
         case 8:
-            game.levelObject = new Level(8, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.010f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0035f},new float[]{0.0061764706f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{58f}, new float[]{32f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.6f}, new float[]{0.75f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.17f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(8).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.010f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0035f}).ballsDesiredVelocityY(new float[]{0.0061764706f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{58f}).ballsMinAngle(new float[]{32f}).ballsVelocityVariation(new float[]{0.1f}).ballsVelocityMaxByInitialVelocity(new float[]{1.6f}).ballsVelocityMinByInitialVelocity(new float[]{0.75f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.17f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.005f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -419,25 +287,7 @@ public class LevelLoader {
             break;
 
         case 9:
-            game.levelObject = new Level(9, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.010f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0035f},new float[]{0.0061764706f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{58f}, new float[]{32f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.6f}, new float[]{0.75f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.17f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(9).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.010f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0035f}).ballsDesiredVelocityY(new float[]{0.0061764706f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{58f}).ballsMinAngle(new float[]{32f}).ballsVelocityVariation(new float[]{0.1f}).ballsVelocityMaxByInitialVelocity(new float[]{1.6f}).ballsVelocityMinByInitialVelocity(new float[]{0.75f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.17f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.005f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -461,25 +311,7 @@ public class LevelLoader {
             break;
 
         case 10:
-            game.levelObject = new Level(10, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.01f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0035f},new float[]{0.0061764706f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{58f}, new float[]{32f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.6f}, new float[]{0.75f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.17f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.005f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(10).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.01f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0035f}).ballsDesiredVelocityY(new float[]{0.0061764706f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{58f}).ballsMinAngle(new float[]{32f}).ballsVelocityVariation(new float[]{0.1f}).ballsVelocityMaxByInitialVelocity(new float[]{1.6f}).ballsVelocityMinByInitialVelocity(new float[]{0.75f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.17f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.005f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -526,25 +358,7 @@ public class LevelLoader {
             break;
 
         case 11:
-            game.levelObject = new Level(11, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.01f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0035f},new float[]{0.0061764706f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{58f}, new float[]{32f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.6f}, new float[]{0.75f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.17f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.0051f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(11).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.01f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0035f}).ballsDesiredVelocityY(new float[]{0.0061764706f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{58f}).ballsMinAngle(new float[]{32f}).ballsVelocityVariation(new float[]{0.1f}).ballsVelocityMaxByInitialVelocity(new float[]{1.6f}).ballsVelocityMinByInitialVelocity(new float[]{0.75f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.17f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.0051f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -575,25 +389,7 @@ public class LevelLoader {
             break;
 
         case 12:
-            game.levelObject = new Level(12, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.01f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0035f},new float[]{0.0061764706f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{58f}, new float[]{32f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.6f}, new float[]{0.75f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.17f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.0051f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(12).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.01f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0035f}).ballsDesiredVelocityY(new float[]{0.0061764706f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{58f}).ballsMinAngle(new float[]{32f}).ballsVelocityVariation(new float[]{0.1f}).ballsVelocityMaxByInitialVelocity(new float[]{1.6f}).ballsVelocityMinByInitialVelocity(new float[]{0.75f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.17f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.0051f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -619,25 +415,7 @@ public class LevelLoader {
             break;
 
         case 13:
-            game.levelObject = new Level(12, game,
-                    1, 1,                                               // quantidade de bolas e minimo de bolas vivas
-                    new float[]{0.01f},                                // raio da bola
-                    new float[]{0.2f}, new float[]{0.4f},              // posicao inicial
-                    new float[]{0.0035f},new float[]{0.0061764706f},   // velocidade
-                    new int[] {Ball.COLOR_BALL_BLACK},            // cor
-                    new boolean[]{false},                               // invencível
-                    new float[]{2.2f},new float[]{58f}, new float[]{32f},// angulos de rotacao
-                    new float[]{0.1f},                                 // variação de velocidade na rotação
-                    new float[]{1.6f}, new float[]{0.75f},               // velocidade máxima e mínima
-                    new ArrayList<ArrayList<Target>>(),                 // targets apensados
-                    new boolean[]{true},                                // bola livre
-                    1,                                                  // quantidade de bars
-                    new float[]{0.17f}, new float[]{0.0175f},           // tamanho da barra
-                    new float[]{0.3f}, new float[]{0.024f},            // posicao da barra
-                    new float[]{0.0052f}, new float[]{0f},               // velocidade da barra
-                    0.0891f, 0.04f,                                     // tamanho dos targets
-                    0.0014f, 0.00225f                                     //distancia e padding dos targets
-            );
+            game.levelObject = new LevelBuilder().number(12).game(game).ballsQuantity(1).minBallsNotInvencibleAlive(1).ballsRadius(new float[]{0.01f}).ballsInitialX(new float[]{0.2f}).ballsInitialY(new float[]{0.4f}).ballsDesiredVelocityX(new float[]{0.0035f}).ballsDesiredVelocityY(new float[]{0.0061764706f}).ballsTextureMap(new int[]{Ball.COLOR_BALL_BLACK}).ballsIsInvencible(new boolean[]{false}).ballsAngleToRotate(new float[]{2.2f}).ballsMaxAngle(new float[]{58f}).ballsMinAngle(new float[]{32f}).ballsVelocityVariation(new float[]{0.1f}).ballsVelocityMaxByInitialVelocity(new float[]{1.6f}).ballsVelocityMinByInitialVelocity(new float[]{0.75f}).ballsTargetsAppend(new ArrayList<ArrayList<Target>>()).ballsFree(new boolean[]{true}).barsQuantity(1).barsSizeX(new float[]{0.17f}).barsSizeY(new float[]{0.0175f}).barsInitialX(new float[]{0.3f}).barsInitialY(new float[]{0.024f}).barsDesiredVelocityX(new float[]{0.0052f}).barsDesiredVelocityY(new float[]{0f}).targetWidth(0.0891f).targetHeight(0.04f).setTargetsDistanceByXResolution(0.0014f).setTargetsPaddingByXResolution(0.00225f).createLevel();
 
             game.levelObject.setEntitiesCreator(new Level.EntitiesCreator() {
                 @Override
@@ -670,83 +448,18 @@ public class LevelLoader {
         }
     }
 
-    public static void setTargetData(int iX, int iY, int type){
-        setTargetPosition(iX, iY);
-        setTargetSize();
-        setTargetType(type);
-    }
-
-    public static void setTargetPosition(int iX, int iY){
-        targetX = (gX * g.levelObject.targetsPaddingByXResolution) +
-                (iX * ((gX * g.levelObject.targetSizeXByResolution) +
-                        (gX * g.levelObject.targetsDistanceByXResolution)));
-        targetY = (gX * g.levelObject.targetsPaddingByXResolution) +
-                (iY * ((gY * g.levelObject.targetSizeYByResolution) +
-                        (gX * g.levelObject.targetsDistanceByXResolution)));
-    }
-
-    public static void setTargetSize(){
-        targetWidth = gX * g.levelObject.targetSizeXByResolution;
-        targetHeight = gY * g.levelObject.targetSizeYByResolution;
-    }
-
-    public static void setTargetType(int type){
-        special = 0;
-        isGhost = false;
-        state = 0;
-        switch (type) {
-            case 1:
-                state = 1;
-                break;
-            case 2:
-                state = 2;
-                break;
-            case 3:
-                state = 3;
-                break;
-            case 4:
-                special = 1;
-                break;
-            case 5:
-                state = 1;
-                isGhost = true;
-                break;
-            case 6:
-                state = 2;
-                isGhost = true;
-                break;
-            case 7:
-                state = 3;
-                isGhost = true;
-                break;
-        }
-    }
 
     public static void  createTarget(int iX, int iY, int type, int[] states){
         if (type == 0){
             return;
         }
-        setTargetData(iX, iY, type);
-        g.addTarget(new Target("target", g,
-                targetX, targetY, // posicao x e y
-                targetWidth, // width
-                targetHeight, 9, // height
-                states, // states
-                state,// currentState
-                special, // special
-                isGhost
-            )
-        );
+
     }
 
     public static void createLevelTargets(int [] states, int [][] map){
-        for (int iY = 0; iY < map.length;iY++){
-            for (int iX = 0; iX < map[iY].length; iX++) {
-                if (map[iY][iX] == 1){
-                    createTarget(iX, iY, map[iY][iX], states);
-                }
-            }
-        }
+
+
     }
 
-}
+    */
+

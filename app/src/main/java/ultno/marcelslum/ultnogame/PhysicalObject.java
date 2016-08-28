@@ -30,6 +30,11 @@ public class PhysicalObject extends Entity{
     public float initialX;
     public float initialY;
 
+    public RectangleM bounds;
+    public RectangleM quadtreeData;
+    public int updateBoundsState;
+    public RectangleM satData;
+
     PhysicalObject(String name, Game game, float x, float y, int weight){
         super(name, game, x, y);
         this.weight = weight;
@@ -50,12 +55,22 @@ public class PhysicalObject extends Entity{
         accelFinalVelocityY = 0.0f;
         accelDuration = 0;
         accelInitialTime = 0;
+
+        bounds = new RectangleM(0, 0, 0, 0);
+        quadtreeData = new RectangleM(0, 0, 0, 0);
+        satData = new RectangleM(0, 0, 0, 0);
+        updateBoundsState = 0;
     }
 
     public void cleanCollisionData(){
         this.isCollided = false;
         this.lastCollisionResponse.clear();
         this.lastCollisionObjects.clear();
+    }
+
+    public RectangleM getQuadtreeData() {
+        this.updateQuatreeData();
+        return this.quadtreeData;
     }
 
     public void returnToInitialPosition(){

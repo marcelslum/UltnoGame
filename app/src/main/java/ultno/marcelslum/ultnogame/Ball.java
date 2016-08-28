@@ -22,8 +22,8 @@ public class Ball extends Circle{
 
     public float angleToRotate;
     public float velocityVariation;
-    public float velocityMaxByInitialVelocity;
-    public float velocityMinByInitialVelocity;
+    public float velocityMax_BI;
+    public float velocityMin_BI;
     public float maxAngle;
     public float minAngle;
 
@@ -52,10 +52,12 @@ public class Ball extends Circle{
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
 
-    Ball(String name, Game game, float x, float y, float radius, int weight, int textureMap){
-        super(name, game, x, y, radius, weight);
+    Ball(String name, Game game, float x, float y, float radius, int textureMap){
+        super(name, game, x, y, radius, Game.BALL_WEIGHT);
         textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+        program = game.imageProgram;
         this.textureMap = textureMap;
+
         isMovable = true;
         historicPositionX = new ArrayList<>();
         historicPositionY = new ArrayList<>();
@@ -302,8 +304,8 @@ public class Ball extends Circle{
             vy = this.dvy;
 
             float initialLen = new Vector(this.initialDesireVelocityX, this.initialDesireVelocityY).len();
-            float maxLen = initialLen * this.velocityMaxByInitialVelocity;
-            float minLen = initialLen * this.velocityMinByInitialVelocity;
+            float maxLen = initialLen * this.velocityMax_BI;
+            float minLen = initialLen * this.velocityMin_BI;
             float scalePorcentage = 1f;
 
             float final_vx  = vx;
@@ -459,7 +461,7 @@ public class Ball extends Circle{
 
             //Log.e("ball", "explodeColor "+i+" "+explodeColor);
             
-            Ball ball = new Ball("ball"+i, this.game, explodeX, explodeY, explodeRadius, 8, explodeColor);
+            Ball ball = new Ball("ball"+i, this.game, explodeX, explodeY, explodeRadius, explodeColor);
             ball.program = this.game.imageProgram;
             ball.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
 
@@ -470,8 +472,8 @@ public class Ball extends Circle{
             ball.angleToRotate = angleToRotate;
             ball.velocityVariation = velocityVariation;
 
-            ball.velocityMaxByInitialVelocity = velocityMaxByInitialVelocity;
-            ball.velocityMinByInitialVelocity = velocityMinByInitialVelocity;
+            ball.velocityMax_BI = velocityMax_BI;
+            ball.velocityMin_BI = velocityMin_BI;
 
             ball.maxAngle = maxAngle;
             ball.minAngle = minAngle;
