@@ -6,6 +6,14 @@ package ultno.marcelslum.ultnogame;
  */
 public class Background extends Entity {
 
+    //cor chanel painting 0,21 0,71 -1,87 -2,05 3,79 3e3e3eff
+    // air spray
+
+    public static final Color BACKGROUND_COLOR_GREEN = new Color(141f/255f, 209f/255f, 211f/255f, 1f);
+    public static final Color BACKGROUND_COLOR_RED = new Color(193f/255f, 173f/255f, 170f/255f, 1f);
+    public static final Color BACKGROUND_COLOR_YELLOW = new Color(235f/255f, 229f/255f, 66f/255f, 1f);
+    public static final Color BACKGROUND_COLOR_BLUE = new Color(201f/255f, 136f/255f, 255f/255f, 1f);
+
     float width;
     float height;
     float uvx1;
@@ -20,8 +28,9 @@ public class Background extends Entity {
     float uvHeight;
     boolean uvXUp;
     boolean uvYUp;
+    Rectangle rectangle;
 
-    Background(String name, Game game, float x, float y, float width, float height) {
+    Background(String name, Game game, float x, float y, float width, float height, Color color) {
         super(name, game, x, y);
         this.width = width;
         this.height = height;
@@ -30,7 +39,7 @@ public class Background extends Entity {
         isVisible = true;
         textureUnit = Game.TEXTURE_BACKGROUND;
         program = game.imageColorizedFxProgram;
-        alpha = 1;
+        this.alpha = 0.6f;
 
         uvXUp = true;
         uvYUp = true;
@@ -46,6 +55,10 @@ public class Background extends Entity {
         uvx2 = uvx1 + uvWidth;
         uvy1 = 0.2f;
         uvy2 = uvy1 + uvHeight;
+
+        rectangle = new Rectangle("rectangleBack", game, -10f, -10f, width + 20f, height + 20f, -0.7f, 0, color);
+        rectangle.isMovable = false;
+        rectangle.isCollidable = false;
 
         setDrawInfo();
     }
@@ -99,7 +112,7 @@ public class Background extends Entity {
         
         initializeData(12, 6, 8, 0);
 
-        Utils.insertRectangleVerticesData(this.verticesData, 0, 0f, width, 0f, height, -0.5f);
+        Utils.insertRectangleVerticesData(this.verticesData, 0, -10f, width+20, -10f, height+20, -0.5f);
         this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
 
         Utils.insertRectangleIndicesData(this.indicesData, 0, 0);
@@ -108,5 +121,11 @@ public class Background extends Entity {
         Utils.insertRectangleUvData(this.uvsData, 0, uvx1, uvx2, uvy1, uvy2);
         this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
 
+    }
+
+    @Override
+    public void render(float[] matrixView, float[] matrixProjection) {
+        rectangle.render(matrixView, matrixProjection);
+        super.render(matrixView, matrixProjection);
     }
 }

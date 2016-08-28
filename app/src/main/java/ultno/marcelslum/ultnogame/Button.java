@@ -10,7 +10,6 @@ public class Button extends Entity{
     public float width;
     OnPress onPress;
     OnUnpress onUnpress;
-    OnPress2 onPress2;
     int textureMapPressed;
     int textureMapUnpressed;
     int textureMap;
@@ -38,11 +37,17 @@ public class Button extends Entity{
                 @Override
                 public void onPress() {
                     finalButton.setPressed();
+                    if (finalButton.onPress != null){
+                        finalButton.onPress.onPress();
+                    }
                 }
 
                 @Override
                 public void onUnpress() {
                     finalButton.setUnpressed();
+                    if (finalButton.onUnpress != null){
+                        finalButton.onUnpress.onUnpress();
+                    }
                 }
             }
         ));
@@ -56,23 +61,20 @@ public class Button extends Entity{
     public void setPressed() {
         this.isPressed = true;
         setTextureMap(textureMapPressed);
-        if (this.onPress != null){
-            this.onPress.onPress();
-        }
-        if (this.onPress2 != null){
-            this.onPress2.onPress2();
-        }
     }
 
     public void setUnpressed() {
         this.isPressed = false;
         setTextureMap(textureMapUnpressed);
-        if (this.onUnpress != null){
-            this.onUnpress.onUnpress();
-        }
     }
 
+    public void setOnPress(OnPress onPress){
+        this.onPress = onPress;
+    }
 
+    public void setOnUnpress(OnUnpress onUnpress){
+        this.onUnpress = onUnpress;
+    }
 
     public interface OnPress{
         public void onPress();
@@ -81,15 +83,6 @@ public class Button extends Entity{
     public interface OnUnpress{
         public void onUnpress();
     }
-
-    public interface OnPress2{
-        public void onPress2();
-    }
-
-    public void setOnPress(OnPress2 onPress2){
-        this.onPress2 = onPress2;
-    }
-
 
     public void setDrawInfo(){
         initializeData(12, 6, 12, 0);

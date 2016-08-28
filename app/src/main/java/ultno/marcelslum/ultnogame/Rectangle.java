@@ -11,21 +11,31 @@ import java.util.ArrayList;
 public class Rectangle extends PhysicalObject {
     float width;
     float height;
+    float z = 0f;
 
     Rectangle(String name, Game game, float x, float y, float width, float height, int weight, Color color){
         super(name, game, x, y, weight);
+        this.program = game.solidProgram;
         this.color = color;
         this.width = width;
         this.height = height;
         setDrawInfo();
     }
 
+    Rectangle(String name, Game game, float x, float y, float width, float height, float z, int weight, Color color){
+        super(name, game, x, y, weight);
+        this.program = game.solidProgram;
+        this.color = color;
+        this.width = width;
+        this.height = height;
+        this.z = z;
+        setDrawInfo();
+    }
+
     public void setDrawInfo(){
-
-
         initializeData(12, 6, 0, 16);
         
-        Utils.insertRectangleVerticesData(verticesData, 0,  0f, width, 0f, height, 0f);
+        Utils.insertRectangleVerticesData(verticesData, 0,  0f, width, 0f, height, z);
        verticesBuffer = Utils.generateFloatBuffer(verticesData);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
@@ -67,5 +77,4 @@ public class Rectangle extends PhysicalObject {
         this.quadtreeData.setWidth(width);
         this.quadtreeData.setHeight(height);
     }
-
 }

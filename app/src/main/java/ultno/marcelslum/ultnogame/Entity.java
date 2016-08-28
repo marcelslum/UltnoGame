@@ -488,7 +488,8 @@ public class Entity {
         if (isBlocked){
             return;
         }
-        this.getListener().verify();
+        if (this.getListener() != null)
+            this.getListener().verify();
         for (int i = 0; i < this.childs.size(); i++){
             this.childs.get(i).verifyListener();
         }
@@ -539,4 +540,5 @@ public class Entity {
     public InteractionListener getListener() {
         return listener;
     }
+
 }

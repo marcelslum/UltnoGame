@@ -65,17 +65,12 @@ public class Selector extends Entity{
         arrowUp.setTextureMap(16);
         arrowUp.textureMapUnpressed = 16;
         arrowUp.textureMapPressed = 8;
-        arrowUp.getListener().setPressListener(new InteractionListener.PressListener() {
+        arrowUp.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){
                     innerSelector.levelUp();
                 }
-            }
-
-            @Override
-            public void onUnpress() {
-
             }
         });
 
@@ -83,17 +78,12 @@ public class Selector extends Entity{
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
         arrowDown.textureMapPressed = 7;
-        arrowDown.getListener().setPressListener(new InteractionListener.PressListener() {
+        arrowDown.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){
                     innerSelector.levelDown();
                 }
-            }
-
-            @Override
-            public void onUnpress() {
-
             }
         });
 
@@ -110,17 +100,12 @@ public class Selector extends Entity{
         arrowBack.textureMapPressed = 5;
 
 
-        arrowBack.getListener().setPressListener(new InteractionListener.PressListener() {
+        arrowBack.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){
                     innerSelector.backToMenu();
                 }
-            }
-
-            @Override
-            public void onUnpress() {
-
             }
         });
 
@@ -169,6 +154,14 @@ public class Selector extends Entity{
         if (this.onChange != null){
             onChange.onChange();
         }
+    }
+
+    @Override
+    public void verifyListener() {
+        super.verifyListener();
+        arrowDown.verifyListener();
+        arrowUp.verifyListener();
+        arrowBack.verifyListener();
     }
 
     @Override
@@ -221,6 +214,8 @@ public class Selector extends Entity{
         });
         increaseAlphaAnim.start();
     }
+
+
 
     public void backToMenu(){
         game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);

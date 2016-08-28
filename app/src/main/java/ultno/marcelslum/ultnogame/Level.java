@@ -143,7 +143,8 @@ public class Level {
                 this.game.gameAreaResolutionX * 0.5f, this.game.gameAreaResolutionY * 1.005f, this.game.resolutionY * 0.027f);
         this.game.objectivePanel.alpha = 0.9f;
 
-        this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.resolutionY);
+        Utils.setTexture("drawable/backp9", game.texturenames, Game.TEXTURE_BACKGROUND, game.context); // background
+        this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.resolutionY, Background.BACKGROUND_COLOR_GREEN);
 
         //Log.e("Level loadEnt", "1");
 
@@ -357,7 +358,7 @@ public class Level {
         // adiciona os obstáculos
         for (int i = 0; i < this.obstaclesQuantity; i++){
             float obstacleX = game.gameAreaResolutionX * obstaclesX_BR[i];
-            float obstacleY = game.gameAreaResolutionY - (game.gameAreaResolutionY * this.obstaclesY_BR[i]);
+            float obstacleY = game.gameAreaResolutionY * this.obstaclesY_BR[i];
             float obstacleWidth = game.gameAreaResolutionX * obstaclesWidth_BR[i];
             float obstacleHeight = game.gameAreaResolutionY * obstaclesHeight_BR[i];
             game.addObstacle(new Obstacle("obstacle", game, obstacleX, obstacleY, obstacleWidth, obstacleHeight));
@@ -453,22 +454,21 @@ public class Level {
     static public class LevelBuilder {
         private final static int default_ballsQuantity = 1;
         private final static int default_minBallAlive = 1;
-        private final static float default_ballsRadius_BR = 0.01f;
+        private final static float default_ballsRadius_BR = 0.012f;
         private final static float default_ballsX_BR = 1f;
         private final static float default_ballsY_BR = 1f;
-        private final static float default_ballsVX_BR = 0.003f;
-        private final static float default_ballsVY_BR = 0.0052941176470588235294117647058824f;
+        private final static float default_ballsVX_BR = 0.0028f;
+        private final static float default_ballsVY_BR = 0.004941176f;
         private final static int default_ballTextureMap = Ball.COLOR_BALL_BLACK;
-        private final static float default_ballsAngleToRotate = 2.2f;
-        private final static float default_ballsMaxAngle = 58f;
-        private final static float default_ballsMinAngle = 32f;
-        private final static float default_ballsVelocityVariation = 0.11f;
-        private final static float default_ballsVelocityMax_BI = 1.6f;
-        private final static float default_ballsVelocityMin_BI = 0.75f;
+        private final static float default_ballsAngleToRotate = 2f;
+        private final static float default_ballsMaxAngle = 55f;
+        private final static float default_ballsMinAngle = 35f;
+        private final static float default_ballsVelocityVariation = 0.1f;
+        private final static float default_ballsVelocityMax_BI = 1.5f;
+        private final static float default_ballsVelocityMin_BI = 0.8f;
         private final static int default_barsQuantity = 1;
-        private final static float default_barsSizeX_BR = 0.22f;
-        private final static float default_barsSizeY_BR = 0.0175f;
-        private final static float default_barsX_BR = 1f;
+        private final static float default_barsWidth_BR = 0.22f;
+        private final static float default_barsHeight_BR = 0.0175f;
         private final static float default_barsY_BR = 0.024f;
         private final static float default_barsVX_BR = 0.0045f;
 
@@ -491,12 +491,12 @@ public class Level {
         private static ArrayList<ArrayList<Target>> ballsTargetsAppend = new ArrayList<ArrayList<Target>>();
         private static boolean[] ballsFree = new boolean[]{true};
         private static int barsQuantity = default_barsQuantity;
-        private static float[] barsWidth_BR = new float[]{default_ballsRadius_BR};
-        private static float[] barsHeight_BR = new float[]{default_ballsRadius_BR};
-        private static float[] barsX_BR = new float[]{default_ballsRadius_BR};
-        private static float[] barsY_BR = new float[]{default_ballsRadius_BR};
-        private static float[] barsVX_BR = new float[]{default_ballsRadius_BR};
-        private static float[] barsVY_BR = new float[]{default_ballsRadius_BR};
+        private static float[] barsWidth_BR = new float[]{default_barsWidth_BR};
+        private static float[] barsHeight_BR = new float[]{default_barsHeight_BR};
+        private static float[] barsX_BR = new float[]{0.3f};
+        private static float[] barsY_BR = new float[]{default_barsY_BR};
+        private static float[] barsVX_BR = new float[]{default_barsVX_BR};
+        private static float[] barsVY_BR = new float[]{0f};
         private static float targetsWidht_BR = 0.1f;
         private static float targetsHeight_BR = 0.1f;
         private static float targetsDistance_BXR = 0.01f;
@@ -550,7 +550,7 @@ public class Level {
         }
 
 
-        public LevelBuilder setBallsVX_BD_0_003(float... ballsDesiredVelocityX_BR) {
+        public LevelBuilder setBallsVX(float... ballsDesiredVelocityX_BR) {
             this.ballsVX_BR = new float[ballsDesiredVelocityX_BR.length];
             for (int i = 0; i < ballsDesiredVelocityX_BR.length; i++){
                 this.ballsVX_BR[i] = ballsDesiredVelocityX_BR[i] * this.default_ballsVX_BR;
@@ -558,7 +558,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsVY_BD_0_005294(float... ballsDesiredVelocityY_BR) {
+        public LevelBuilder setBallsVY(float... ballsDesiredVelocityY_BR) {
             this.ballsVY_BR = new float[ballsDesiredVelocityY_BR.length];
             for (int i = 0; i < ballsDesiredVelocityY_BR.length; i++){
                 this.ballsVY_BR[i] = ballsDesiredVelocityY_BR[i] * this.default_ballsVY_BR;
@@ -582,7 +582,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsAngleToRotate_BD_2_2(float... ballsAngleToRotate) {
+        public LevelBuilder setBallsAngleToRotate_BD_2(float... ballsAngleToRotate) {
             this.ballsAngleToRotate = new float[ballsAngleToRotate.length];
             for (int i = 0; i < ballsAngleToRotate.length; i++){
                 this.ballsAngleToRotate[i] = ballsAngleToRotate[i] * this.default_ballsAngleToRotate;
@@ -590,7 +590,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsMaxAngle_BD_58(float... ballsMaxAngle) {
+        public LevelBuilder setBallsMaxAngle_BD_55(float... ballsMaxAngle) {
             this.ballsMaxAngle = new float[ballsMaxAngle.length];
             for (int i = 0; i < ballsMaxAngle.length; i++){
                 this.ballsMaxAngle[i] = ballsMaxAngle[i] * this.default_ballsMaxAngle;
@@ -598,7 +598,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsMinAngle_BD_32(float... ballsMinAngle) {
+        public LevelBuilder setBallsMinAngle_BD_35(float... ballsMinAngle) {
             this.ballsMinAngle = new float[ballsMinAngle.length];
             for (int i = 0; i < ballsMinAngle.length; i++){
                 this.ballsMinAngle[i] = ballsMinAngle[i] * this.default_ballsMinAngle;
@@ -606,7 +606,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsVelocityVariation_BD_0_11(float... ballsVelocityVariation) {
+        public LevelBuilder setBallsVelocityVariation_BD_0_1(float... ballsVelocityVariation) {
             this.ballsVelocityVariation = new float[ballsVelocityVariation.length];
             for (int i = 0; i < ballsVelocityVariation.length; i++){
                 this.ballsVelocityVariation[i] = ballsVelocityVariation[i] * this.default_ballsVelocityVariation;
@@ -614,7 +614,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsVelocityMax_BD_1_6(float... ballsVelocityMax_BI) {
+        public LevelBuilder setBallsVelocityMax_BD_1_5(float... ballsVelocityMax_BI) {
             this.ballsVelocityMax_BI = new float[ballsVelocityMax_BI.length];
             for (int i = 0; i < ballsVelocityMax_BI.length; i++){
                 this.ballsVelocityMax_BI[i] = ballsVelocityMax_BI[i] * this.default_ballsVelocityMax_BI;
@@ -622,7 +622,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsVelocityMin_BD_0_75(float... ballsVelocityMin_BI) {
+        public LevelBuilder setBallsVelocityMin_BD_0_8(float... ballsVelocityMin_BI) {
             this.ballsVelocityMin_BI = new float[ballsVelocityMin_BI.length];
             for (int i = 0; i < ballsVelocityMin_BI.length; i++){
                 this.ballsVelocityMin_BI[i] = ballsVelocityMin_BI[i] * this.default_ballsVelocityMin_BI;
@@ -650,7 +650,7 @@ public class Level {
 
         public LevelBuilder setBarsWidth_BD_0_22(float... barsSizeX_BR) {
             for (int i = 0; i < barsSizeX_BR.length; i++){
-                this.barsWidth_BR[i] = barsSizeX_BR[i] * default_barsSizeX_BR;
+                this.barsWidth_BR[i] = barsSizeX_BR[i] * default_barsWidth_BR;
             }
             return this;
         }
@@ -658,7 +658,7 @@ public class Level {
         public LevelBuilder setBarsHeight_BD_0_0175(float... barsSizeY_BR) {
             this.barsHeight_BR = new float[barsSizeY_BR.length];
             for (int i = 0; i < barsSizeY_BR.length; i++){
-                this.barsHeight_BR[i] = barsSizeY_BR[i] * default_barsSizeY_BR;
+                this.barsHeight_BR[i] = barsSizeY_BR[i] * default_barsHeight_BR;
             }
             return this;
         }
@@ -666,7 +666,7 @@ public class Level {
         public LevelBuilder setBarsX_B1(float... barsX_BR) {
             this.barsX_BR = new float[barsX_BR.length];
             for (int i = 0; i < barsX_BR.length; i++){
-                this.barsX_BR[i] = barsX_BR[i] * default_barsX_BR;
+                this.barsX_BR[i] = barsX_BR[i];
             }
             return this;
         }
@@ -735,17 +735,18 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setObstaclesWidth(float... obstaclesSizeX_BR) {
-            for (int i = 0; i < obstaclesSizeX_BR.length; i++){
-                this.obstaclesWidth_BR[i] = obstaclesSizeX_BR[i];
+        public LevelBuilder setObstaclesWidth(float... obstaclesWidth_BR) {
+            this.obstaclesWidth_BR = new float[obstaclesWidth_BR.length];
+            for (int i = 0; i < obstaclesWidth_BR.length; i++){
+                this.obstaclesWidth_BR[i] = obstaclesWidth_BR[i];
             }
             return this;
         }
 
-        public LevelBuilder setObstaclesHeight(float... obstaclesSizeY_BR) {
-            this.obstaclesHeight_BR = new float[obstaclesSizeY_BR.length];
-            for (int i = 0; i < obstaclesSizeY_BR.length; i++){
-                this.obstaclesHeight_BR[i] = obstaclesSizeY_BR[i];
+        public LevelBuilder setObstaclesHeight(float... obstaclesHeight_BR) {
+            this.obstaclesHeight_BR = new float[obstaclesHeight_BR.length];
+            for (int i = 0; i < obstaclesHeight_BR.length; i++){
+                this.obstaclesHeight_BR[i] = obstaclesHeight_BR[i];
             }
             return this;
         }

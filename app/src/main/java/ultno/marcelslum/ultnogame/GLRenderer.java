@@ -14,7 +14,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class GLRenderer implements GLSurfaceView.Renderer {
 
     public Game gi;
-    int[] texturenames;
+
 
     // Our matrices
     private final float[] matrixProjection = new float[16];
@@ -207,8 +207,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     {
 
 
-        texturenames = new int[7];
-        GLES20.glGenTextures(7, texturenames, 0);
+        gi.texturenames = new int[7];
+        GLES20.glGenTextures(7, gi.texturenames, 0);
         
         /*
         Utils.setBitmap("drawable/balls", Game.bmpBalls, mContext); // balls
@@ -236,13 +236,12 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpFont, 0);
 
         */
-        Utils.setTexture("drawable/botoesebolas", texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
-        Utils.setTexture("drawable/jetset", texturenames, Game.TEXTURE_FONT, mContext); // fonte
-        Utils.setTexture("drawable/targets", texturenames, Game.TEXTURE_TARGETS, mContext); // targets
-        Utils.setTexture("drawable/bars", texturenames, Game.TEXTURE_BARS, mContext); // bars
-        Utils.setTexture("drawable/background", texturenames, Game.TEXTURE_BACKGROUND, mContext); // background
-        Utils.setTexture("drawable/numbers_explosion5", texturenames, Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, mContext); // numeros
-        Utils.setTexture("drawable/tittle", texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
+        Utils.setTexture("drawable/botoesebolas", gi.texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
+        Utils.setTexture("drawable/jetset", gi.texturenames, Game.TEXTURE_FONT, mContext); // fonte
+        Utils.setTexture("drawable/targets", gi.texturenames, Game.TEXTURE_TARGETS, mContext); // targets
+        Utils.setTexture("drawable/bars", gi.texturenames, Game.TEXTURE_BARS, mContext); // bars
+        Utils.setTexture("drawable/numbers_explosion5", gi.texturenames, Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, mContext); // numeros
+        Utils.setTexture("drawable/tittle", gi.texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
         
     }
 }

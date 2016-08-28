@@ -123,7 +123,7 @@ class Menu extends Entity{
         final Text innerText = newMenuOption.textObject;
         final int innerId = this.optionsIds;
 
-        setListener(new InteractionListener(name,
+        newMenuOption.textObject.setListener(new InteractionListener(name,
                 newMenuOption.x - (newMenuOption.width/2),
                 optionY,
                 newMenuOption.width,

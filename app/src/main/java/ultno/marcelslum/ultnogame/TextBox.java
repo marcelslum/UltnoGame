@@ -105,9 +105,9 @@ public class TextBox extends Entity{
         arrowContinuar.textureMapUnpressed = 14;
         arrowContinuar.textureMapPressed = 6;
             final Game innerGame = game;
-        arrowContinuar.setOnPress(new Button.OnPress2() {
+        arrowContinuar.setOnPress(new Button.OnPress() {
             @Override
-            public void onPress2() {
+            public void onPress() {
                 innerGame.levelObject.nextTutorial();
             }
         });

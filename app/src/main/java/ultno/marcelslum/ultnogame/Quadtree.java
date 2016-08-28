@@ -67,7 +67,8 @@ public class Quadtree {
             ////System.out.println("inserindo item "+item.name);
 
 
-            RectangleM itemBounds = item.getQuadtreeData();
+            PhysicalObject pItem = (PhysicalObject)item;
+            RectangleM itemBounds = pItem.getQuadtreeData();
             if (this.nodes != null){
                 int index = this.findIndex(itemBounds);
 
@@ -98,7 +99,10 @@ public class Quadtree {
         }
 
         public ArrayList<Entity> retrieve(Entity item, ArrayList<Entity> outs){
-            RectangleM itemBounds = item.getQuadtreeData();
+
+
+            PhysicalObject pItem = (PhysicalObject)item;
+            RectangleM itemBounds = pItem.getQuadtreeData();
 
             if (this.nodes != null){
                 int index = this.findIndex(itemBounds);

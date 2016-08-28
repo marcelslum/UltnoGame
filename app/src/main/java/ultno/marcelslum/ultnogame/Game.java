@@ -15,6 +15,9 @@ import java.util.ArrayList;
 /** * Created by marcel on 01/08/2016.
  */
 public class Game {
+
+    int[] texturenames;
+
     public static final int BALL_WEIGHT = 1;
     public static final int BORDA_WEIGHT = 10;
     public static final int OBSTACLES_WEIGHT = 9;
@@ -1115,8 +1118,9 @@ public class Game {
 
     public void verifyWin() {
         boolean win = true;
-        for (Target t : targets){
-            if (t.states[t.currentState] != 0){
+
+        for (int i = 0; i < targets.size(); i++) {
+            if (targets.get(i).states[targets.get(i).currentState] != 0){
                 win = false;
                 break;
             }
@@ -1478,7 +1482,6 @@ public class Game {
                             }
                         }
                     }
-
                 }
             }
         }
@@ -1512,9 +1515,6 @@ public class Game {
         if (selectorVolumn != null) selectorVolumn.verifyListener();
 
         if (this.gameState == GAME_STATE_TUTORIAL){
-
-
-
             if (levelObject.tutorials.size() >  this.levelObject.showingTutorial){
                 levelObject.tutorials.get(this.levelObject.showingTutorial).textBox.verifyListener();
             }
