@@ -110,7 +110,7 @@ public class LevelLoader {
             if (levelNumber == 5) {
                 levelBuilder
                         .setBallsX_B1(0.2f)
-                        .setBallsY_B1(0.4f)
+                        .setBallsY_B1(0.45f)   // ALTERAR NA PLANILHA
                         .setBallsVX(1.143f)
                         .setBallsVY(1.143f)
                         .setTargetsMap(

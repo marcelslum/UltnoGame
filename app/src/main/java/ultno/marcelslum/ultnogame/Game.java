@@ -142,8 +142,7 @@ public class Game {
     public final static int TEXTURE_BACKGROUND = 4;
     public final static int TEXTURE_NUMBERS_EXPLOSION_OBSTACLE = 5;
     public final static int TEXTURE_TITTLE = 6;
-    
-    
+
     public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
     public final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
     public final static int TEXTURE_MAP_NUMBERS_SCORE3 = 3;
@@ -204,6 +203,10 @@ public class Game {
     int ballsInvencible;
     int ballsAlive;
     private int streamIdSoundAlarm;
+
+    long initialTimePointsDecay;
+    static final long TIME_FOR_POINTS_DECAY = 3000l;
+    static final int POINTS_DECAY = 10;
 
 
     public static Game getInstance() {
@@ -355,6 +358,8 @@ public class Game {
                 Log.e("game", "musicOn");
                 music.start();
             }
+            resetTimeForPointsDecay();
+
             freeAllGameEntities();
         } else if (state == GAME_STATE_DERROTA){
             stopAndReleaseMusic();
@@ -983,9 +988,7 @@ public class Game {
     }
 
     public void simulate(long elapsed, float frameDuration){
-
         ballCollidedFx -= 1;
-
         if (this.gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
                 Ball ball = balls.get(i);
@@ -1111,9 +1114,27 @@ public class Game {
         if (gameState == GAME_STATE_JOGAR) {
             background.move(1);
             verifyDead();
+            verifyPointsDecay();
         } else if(gameState == GAME_STATE_VITORIA){
             background.move(3);
         }
+    }
+
+    public void verifyPointsDecay(){
+        long time = Utils.getTime();
+        if ((time - initialTimePointsDecay)>TIME_FOR_POINTS_DECAY){
+            if (scorePanel.value > POINTS_DECAY) {
+                initialTimePointsDecay = time;
+                int value = scorePanel.value - POINTS_DECAY;
+                Log.e("game", " value " + value);
+                scorePanel.setValue(value, false, 0, false);
+                //scorePanel.showMessage("-10", 2000);
+            }
+        }
+    }
+
+    public void resetTimeForPointsDecay(){
+        initialTimePointsDecay = Utils.getTime();
     }
 
     public void verifyWin() {

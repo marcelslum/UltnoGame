@@ -6,7 +6,7 @@ import android.util.Log;
 /**
  * Created by marcel on 12/08/2016.
  */
-public class ScorePanel extends Entity{
+public class ScorePanel extends Entity {
 
     public float size;
     public int value;
@@ -14,15 +14,17 @@ public class ScorePanel extends Entity{
     public int animLastValue;
     public long animStartTime;
     private boolean animStarted;
-    
+
     private final static float textureSize = 1024f;
-    private final static float [] columns = new float [] {142f,284f,426f, 568f, 710f, 852f, 994f};
-    private final static float [] lines = new float [] {256f,512f,779f};
+    private final static float[] columns = new float[]{142f, 284f, 426f, 568f, 710f, 852f, 994f};
+    private final static float[] lines = new float[]{256f, 512f, 779f};
+    private boolean displayMessage;
+    private Text messageText;
 
     ScorePanel(String name, Game game, float x, float y, float size) {
         super(name, game, x, y);
 
-        this.x -= (size * 0.55294f)*2.5f;
+        this.x -= (size * 0.55294f) * 2.5f;
 
         this.size = size;
         isSolid = false;
@@ -36,37 +38,37 @@ public class ScorePanel extends Entity{
     }
 
     @Override
-    public float getWidth(){
+    public float getWidth() {
         return size * 0.55294f * 5;
     }
 
     @Override
-    public float getHeight(){
+    public float getHeight() {
         return size;
     }
 
-    public void setDrawInfo(){
-        
-        String valueString = String.valueOf((int)value);
-        
+    public void setDrawInfo() {
+
+        String valueString = String.valueOf((int) value);
+
         int valueLength = valueString.length();
 
-        initializeData(12*5, 6*5, 8*5, 0);
+        initializeData(12 * 5, 6 * 5, 8 * 5, 0);
 
         float width = size * 0.55294f;
 
         float xOfTriangle = 0f;
 
-        for (int i = 0; i < 5;i++){
+        for (int i = 0; i < 5; i++) {
 
             int subInteger;
 
-            if (i < (5-valueLength)) {
+            if (i < (5 - valueLength)) {
                 subInteger = 0;
             } else {
 
 
-                String subString = valueString.substring(i - (5 - valueLength), i + 1- (5 - valueLength));
+                String subString = valueString.substring(i - (5 - valueLength), i + 1 - (5 - valueLength));
 
                 //Log.e("point", "subString "+subString);
 
@@ -75,52 +77,69 @@ public class ScorePanel extends Entity{
                 //Log.e("point", "subInteger "+subInteger);
             }
 
-            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+width, 0f, size, 0f);
+            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle + width, 0f, size, 0f);
             xOfTriangle += width - 1f;
-            
+
             Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
 
             int textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE1;
-                switch (subInteger){
-                    case 1:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE1;
-                        break;
-                    case 2:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE2;
-                        break;
-                    case 3:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE3;
-                        break;
-                    case 4:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE4;
-                        break;
-                    case 5:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE5;
-                        break;
-                    case 6:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE6;
-                        break;
-                    case 7:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE7;
-                        break;
-                    case 8:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE8;
-                        break;
-                    case 9:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE9;
-                        break;
-                    case 0:
-                        textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE0;
-                        break;
-                }
-                Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), textureMap);
-            
+            switch (subInteger) {
+                case 1:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE1;
+                    break;
+                case 2:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE2;
+                    break;
+                case 3:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE3;
+                    break;
+                case 4:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE4;
+                    break;
+                case 5:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE5;
+                    break;
+                case 6:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE6;
+                    break;
+                case 7:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE7;
+                    break;
+                case 8:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE8;
+                    break;
+                case 9:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE9;
+                    break;
+                case 0:
+                    textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE0;
+                    break;
+            }
+            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), textureMap);
+
         }
-        
+
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         indicesBuffer = Utils.generateShortBuffer(indicesData);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
+    }
 
+    public void showMessage(String message, int duration) {
+        displayMessage = true;
+        messageText = new Text("text", game, x + (getWidth()*0.7f), y - size*0.3f, size*1.5f, message, game.font, new Color(1.0f, 0f, 0f, 1f));
+
+        final ScorePanel innerScorePanel = this;
+        Utils.createSimpleAnimation(messageText, "translateX", "translateX", duration, 0f, game.gameAreaResolutionX*0.05f).start();
+        Utils.createSimpleAnimation(messageText, "translateY", "translateY", duration, 0f, -game.gameAreaResolutionX*0.05f).start();
+
+        messageText.reduceAlpha(duration, 0f, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                innerScorePanel.displayMessage = false;
+                innerScorePanel.messageText = null;
+            }
+        });
+        addChild(messageText);
     }
 
     public void render(float[] matrixView, float[] matrixProjection){
@@ -140,10 +159,12 @@ public class ScorePanel extends Entity{
                 animStarted = false;
                 changeDisplayValue(this.value);
             }
-
         }
-
         super.render(matrixView, matrixProjection);
+
+        if (displayMessage && messageText != null){
+            messageText.render(matrixView, matrixProjection);
+        }
     }
 
     public void changeDisplayValue(int valueToDisplay){

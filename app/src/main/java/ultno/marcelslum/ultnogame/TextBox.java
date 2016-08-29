@@ -50,7 +50,7 @@ public class TextBox extends Entity{
             do {
                 do {
                     contador += 1;
-                    textForMeasure = new Text("text", game, 0f, 0f, size, stringToTest, game.font, textColor);
+                    textForMeasure = new Text("text"+contador, game, 0f, 0f, size, stringToTest, game.font, textColor);
                     //Log.e("textBox", "testando string "+ stringToTest);
 
                     widthOfText = textForMeasure.calculateWidth();

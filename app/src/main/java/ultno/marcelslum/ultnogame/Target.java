@@ -26,6 +26,7 @@ public class Target extends Rectangle {
     Animation desapearAnim;
     private boolean isGhost;
     Point pointsObject;
+    public final static int POINTS_DURATION = 1000;
 
     Target(String name, Game game, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
         super(name, game, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(0,0,0,1));
@@ -43,12 +44,12 @@ public class Target extends Rectangle {
         ArrayList<float[]> valuesAnimationShowPoints = new ArrayList<>();
         valuesAnimationShowPoints.add(new float[]{0f,1f});
         valuesAnimationShowPoints.add(new float[]{1f,0f});
-        showPointsStateAnim = new Animation(this, "showPointsState", "showPointsState", 1000, valuesAnimationShowPoints, false, false);
+        showPointsStateAnim = new Animation(this, "showPointsState", "showPointsState", POINTS_DURATION, valuesAnimationShowPoints, false, false);
 
         ArrayList<float[]> valuesAnimationShowPointsAlpha = new ArrayList<>();
         valuesAnimationShowPointsAlpha.add(new float[]{0f,1f});
         valuesAnimationShowPointsAlpha.add(new float[]{1f,0f});
-        showPointsAlphaAnim = new Animation(this, "pointsAlpha", "pointsAlpha", 1000, valuesAnimationShowPointsAlpha, false, true);
+        showPointsAlphaAnim = new Animation(this, "pointsAlpha", "pointsAlpha", POINTS_DURATION, valuesAnimationShowPointsAlpha, false, true);
 
         ArrayList<float[]> valuesAnimationGhostAlpha = new ArrayList<>();
         valuesAnimationGhostAlpha.add(new float[]{0f,1f});
@@ -78,6 +79,8 @@ public class Target extends Rectangle {
 
     public void renderPoints(float[] matrixView, float[] matrixProjection){
 
+
+
         //Log.e("target", "render points ");
         if (this.pointsObject != null) {
             this.pointsObject.alpha = this.pointsAlpha;
@@ -99,6 +102,7 @@ public class Target extends Rectangle {
 
         this.pointsToShow = points;
         this.pointsObject = new Point("points", this.game, x + (width/2f),y + (height/2f) ,height * 1.5f);
+        addChild(pointsObject);
         pointsObject.setValue(points);
 
         this.posYVariation = 0;
@@ -111,7 +115,11 @@ public class Target extends Rectangle {
         if (this.showPointsAlphaAnim != null) {
             //Log.e("target", "showPointsAlphaAnim ");
             this.showPointsAlphaAnim.start();
+            Utils.createSimpleAnimation(pointsObject, "translateX", "translateX", POINTS_DURATION, 0f, game.gameAreaResolutionX*0.025f).start();
+            Utils.createSimpleAnimation(pointsObject, "translateY", "translateY", POINTS_DURATION, 0f, -game.gameAreaResolutionX*0.02f).start();
         }
+
+
 
         // O alvo especial não tem estado, uma vez atingido ele ativa sua habilidade especial.
         if (this.special != 0){

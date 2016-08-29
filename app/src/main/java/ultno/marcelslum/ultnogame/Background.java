@@ -9,10 +9,10 @@ public class Background extends Entity {
     //cor chanel painting 0,21 0,71 -1,87 -2,05 3,79 3e3e3eff
     // air spray
 
-    public static final Color BACKGROUND_COLOR_GREEN = new Color(141f/255f, 209f/255f, 211f/255f, 1f);
-    public static final Color BACKGROUND_COLOR_RED = new Color(193f/255f, 173f/255f, 170f/255f, 1f);
-    public static final Color BACKGROUND_COLOR_YELLOW = new Color(235f/255f, 229f/255f, 66f/255f, 1f);
-    public static final Color BACKGROUND_COLOR_BLUE = new Color(201f/255f, 136f/255f, 255f/255f, 1f);
+    public static final Color BACKGROUND_COLOR_GREEN = new Color(141f/255f, 209f/255f, 211f/255f, 0.6f);
+    public static final Color BACKGROUND_COLOR_RED = new Color(193f/255f, 173f/255f, 170f/255f, 0.6f);
+    public static final Color BACKGROUND_COLOR_YELLOW = new Color(235f/255f, 229f/255f, 66f/255f, 0.6f);
+    public static final Color BACKGROUND_COLOR_BLUE = new Color(201f/255f, 136f/255f, 255f/255f, 0.6f);
 
     float width;
     float height;

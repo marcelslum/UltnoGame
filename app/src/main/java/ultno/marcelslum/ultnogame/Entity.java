@@ -496,6 +496,12 @@ public class Entity {
     }
 
     public void addChild(Entity child){
+        for (int i = 0; i < childs.size(); i++) {
+            if(this.childs.get(i).name == child.name){
+                this.childs.set(i, child);
+                return;
+            }
+        }
         this.childs.add(child);
         child.parent = this;
     }

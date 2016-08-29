@@ -352,6 +352,7 @@ public class Ball extends Circle{
                 game.ballCollidedFx = 40;
                 Target target = (Target)e;
                 target.onBallCollision();
+                game.resetTimeForPointsDecay();
                 if (target.special == 1 && !listenForExplosion){
                     //Log.e("ball", " wait for explosion ativado");
                     waitForExplosion();

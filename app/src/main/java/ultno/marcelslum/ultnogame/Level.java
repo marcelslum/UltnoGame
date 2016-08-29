@@ -93,6 +93,7 @@ public class Level {
     public void showFirstTutorial(){
         this.game.blockAndWaitTouchRelease();
         this.showingTutorial = 0;
+        this.tutorials.get(0).textBox.alpha = 0f;
         this.tutorials.get(0).show(game.soundPool, game.soundTextBoxAppear);
     }
 
