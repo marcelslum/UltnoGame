@@ -42,12 +42,12 @@
     <string name="l9t3">A bola que atingir esse alvo explodirá, dando origem a quatro bolas de cores diversas.</string>
     <string name="l9t4">Mas atenção, você NÃO precisa manter todas elas vivas.</string>
     <string name="l9t5">Para saber quantas bolas salvar, verifique o painel abaixo.</string>
-    <string name="l9t6">No centro, é representada, através de bolas brancas, a quantidade mínima de bolas que deverão permanecer vivas</string>
+    <string name="l9t6">No centro, é representada, através de bolas pretas, a quantidade mínima de bolas que deverão permanecer vivas</string>
     <string name="l9t7">Neste level, portanto, você deverá manter viva pelo menos uma bola.</string>
     <string name="l9t8">A quantidade de bolas que poderão ser perdidas é representada no painel por bolas azuis.</string>
     <string name="l9t9">Na situação atual, portanto, você poderá perder até três bolas.</string>
     <string name="l9t10">No entanto, a manutenção de bolas extras traz algumas vantagens.</string>
-    <string name="l9t11">A cada alvo atingido, a pontuação dobra para cada bola extra viva.</string>
+    <string name="l9t11">A cada alvo atingido, a pontuação dobra para cada bola extra viva. Neste caso, a pontuação será 100 x 2 x 2 x 2, o que resulta em 800 pontos.</string>
     <string name="l9t12">Além disso, ao final do nível, bolas extras vivas trarão pontos extras.</string>
     <string name="l9t13">Portanto, tente manter as bolas extras vivas.</string>
     <string name="l9t14">Mas chega de papo furado. Você quer ação, não é mesmo?</string>

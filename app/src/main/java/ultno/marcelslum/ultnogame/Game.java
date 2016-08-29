@@ -120,7 +120,7 @@ public class Game {
     //  level
     Level levelObject;
     public final static int quantityOfLevels = 20;
-    int levelNumber = 1;
+    int levelNumber = 9;
     int maxLevel = 1;
 
     // game state

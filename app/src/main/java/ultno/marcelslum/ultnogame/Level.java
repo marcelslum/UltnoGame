@@ -144,7 +144,16 @@ public class Level {
                 this.game.gameAreaResolutionX * 0.5f, this.game.gameAreaResolutionY * 1.005f, this.game.resolutionY * 0.027f);
         this.game.objectivePanel.alpha = 0.9f;
 
-        Utils.setTexture("drawable/backp9", game.texturenames, Game.TEXTURE_BACKGROUND, game.context); // background
+
+
+        // escolhe o background de acordo com o número do nível
+        int back;
+        if (game.levelNumber < 10) {
+            back = game.levelNumber;
+        } else {
+            back = game.levelNumber % 10;
+        }
+        Utils.setTexture("drawable/backp"+Integer.toString(back), game.texturenames, Game.TEXTURE_BACKGROUND, game.context); // background
         this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.resolutionY, Background.BACKGROUND_COLOR_GREEN);
 
         //Log.e("Level loadEnt", "1");

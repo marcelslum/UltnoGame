@@ -88,7 +88,25 @@ public class Target extends Rectangle {
         }
     }
 
+    public void showPoints(int points){
 
+        this.pointsToShow = points;
+        this.pointsObject = new Point("points", this.game, x + (width/2f),y + (height/2f) ,height * 1.5f);
+        addChild(pointsObject);
+        pointsObject.setValue(points);
+
+        this.posYVariation = 0;
+        if (this.showPointsStateAnim != null) {
+            this.showPointsStateAnim.start();
+        }
+
+        //Log.e("target", "3");
+        if (this.showPointsAlphaAnim != null) {
+            this.showPointsAlphaAnim.start();
+            Utils.createSimpleAnimation(pointsObject, "translateX", "translateX", POINTS_DURATION, 0f, game.gameAreaResolutionX*0.025f).start();
+            Utils.createSimpleAnimation(pointsObject, "translateY", "translateY", POINTS_DURATION, 0f, -game.gameAreaResolutionX*0.02f).start();
+        }
+    }
 
     public void decayState(int points){
 
@@ -100,26 +118,7 @@ public class Target extends Rectangle {
 
         setType();
 
-        this.pointsToShow = points;
-        this.pointsObject = new Point("points", this.game, x + (width/2f),y + (height/2f) ,height * 1.5f);
-        addChild(pointsObject);
-        pointsObject.setValue(points);
-
-        this.posYVariation = 0;
-        if (this.showPointsStateAnim != null) {
-            //Log.e("target", "showPointsStateAnim ");
-            this.showPointsStateAnim.start();
-        }
-
-        //Log.e("target", "3");
-        if (this.showPointsAlphaAnim != null) {
-            //Log.e("target", "showPointsAlphaAnim ");
-            this.showPointsAlphaAnim.start();
-            Utils.createSimpleAnimation(pointsObject, "translateX", "translateX", POINTS_DURATION, 0f, game.gameAreaResolutionX*0.025f).start();
-            Utils.createSimpleAnimation(pointsObject, "translateY", "translateY", POINTS_DURATION, 0f, -game.gameAreaResolutionX*0.02f).start();
-        }
-
-
+        showPoints(points);
 
         // O alvo especial não tem estado, uma vez atingido ele ativa sua habilidade especial.
         if (this.special != 0){

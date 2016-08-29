@@ -107,12 +107,14 @@ public class LevelLoader {
 
 
         if (levelNumber >= 5) {
-            if (levelNumber == 5) {
-                levelBuilder
+            levelBuilder
+                        .setTargetsWidth(0.0891f)
                         .setBallsX_B1(0.2f)
                         .setBallsY_B1(0.45f)   // ALTERAR NA PLANILHA
                         .setBallsVX(1.143f)
-                        .setBallsVY(1.143f)
+                        .setBallsVY(1.143f);
+            if (levelNumber == 5) {
+                levelBuilder
                         .setTargetsMap(
                                 new int[][]{
                                         {0,1,1,1,0,1,0,1,1,1,0},
@@ -126,7 +128,6 @@ public class LevelLoader {
                                         {1,1,1,1,1,1,1,1,1,1,1}
                                 })
                 .setTargetsStates(new int[]{0, 1})
-                .setTargetsWidth(0.0891f)
                 .setObstaclesQuantity(0);
             }
         }
