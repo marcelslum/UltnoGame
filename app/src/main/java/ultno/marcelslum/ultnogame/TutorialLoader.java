@@ -525,7 +525,7 @@ public class TutorialLoader {
                                              0f, -gX * 0.15f, 0.2f, 0f, 1f, 0f, true, true).start();
 
                                      Utils.createAnimation4v(ball1, "translateY", "translateY", 5000,
-                                             0f, -gY * 0.3f, 0.1f, -gY * 0.08f, 0.2f, 0f, 1f, 0f, true, true).start();
+                                             0f, -gY * 0.03f, 0.1f, -gY * 0.08f, 0.2f, 0f, 1f, 0f, true, true).start();
 
                                      Utils.createAnimation4v(ball1, "alpha", "alpha", 5000,
                                              0f, 1f, 0.2f, 1f, 0.25f, 0f, 1f, 0f, true, true).start();
@@ -799,7 +799,7 @@ public class TutorialLoader {
                                             public void onChange() {
                                                 if (g.balls.get(4).numberForAnimation == 1f){
                                                     g.scorePanel.setValue(800, false, 1000, false);
-                                                    g.targets.get(38).showPoints(800);
+                                                    g.targets.get(37).showPoints(800);
                                                 }
                                             }
                                         });
@@ -810,7 +810,8 @@ public class TutorialLoader {
                                     @Override
                                     public void onUnshowBeforeAnim() {
                                         g.balls.get(4).resetAnimations();
-                                        g.targets.get(38).resetAnimations();
+                                        g.targets.get(37).resetAnimations();
+                                        g.targets.get(37).reduceAlpha(100, 0f);
                                     }
                                 })
 
@@ -865,8 +866,7 @@ public class TutorialLoader {
                                                 g.scorePanel.setValue(16875, true, 1000, false);
                                                 g.scorePanel.showMessage("+ 50%", 1000);
                                                 g.objectivePanel.setValues(1, 1, 0);
-                                            } else if (g.balls.get(4).numberForAnimation == 1f){
-
+                                                g.balls.get(1).clearDisplay();
                                             }
                                         }
                                     });
