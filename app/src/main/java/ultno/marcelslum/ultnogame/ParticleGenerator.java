@@ -10,12 +10,13 @@ public class ParticleGenerator extends Entity {
     int numberOfParticles = 300;
     ArrayList<Particle> particlesArray;
     boolean isActive;
+    int textureMaps;
 
-    ParticleGenerator(String name, Game game, float x, float y) {
+    ParticleGenerator(String name, Game game, float x, float y, int textureMap1, int textureMap2, int textureMap3) {
         super(name, game, x, y);
         program = game.imageColorizedProgram;
         textureUnit = game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
-
+        this.textureMaps = new int []{textureMap1, textureMap2, textureMap3},
         generate();
     }
 
@@ -40,16 +41,12 @@ public class ParticleGenerator extends Entity {
             float size = Utils.getRandonFloat(1f, 7f);
             int textureMap;
             float textureMapFilter = Utils.getRandonFloat(0f, 1f);
-            if (textureMapFilter < 0.2f) {
-                textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1;
-            } else if (textureMapFilter < 0.4f) {
-                textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2;
-            } else if (textureMapFilter < 0.6f) {
-                textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3;
-            } else if (textureMapFilter < 0.8f) {
-                textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4;
+            if (textureMapFilter < 0.33f) {
+                textureMap = texturesMap[0];
+            } else if (textureMapFilter < 0.33f) {
+                textureMap = texturesMap[0];
             } else {
-                textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5;
+                textureMap = texturesMap[0];
             }
             
             Particle particle = new Particle(0, 0, vx, vy, velocity_variation_x, 
