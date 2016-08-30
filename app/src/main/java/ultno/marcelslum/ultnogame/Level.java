@@ -49,6 +49,11 @@ public class Level {
     public float[] obstaclesX_BR;
     public float[] obstaclesY_BR;
     public int windowsQuantity;
+    public float[] windowsY;
+    public float[] windowsHeight;
+    public int[] windowsQuantityOfLines;
+    public float[] windowsDistance;
+    public float[] windowsVelocity;
 
     private Level(){
         this.game = LevelBuilder.game;
@@ -87,6 +92,12 @@ public class Level {
         this.obstaclesHeight_BR = LevelBuilder.obstaclesHeight_BR;
         this.obstaclesX_BR = LevelBuilder.obstaclesX_BR;
         this.obstaclesY_BR = LevelBuilder.obstaclesY_BR;
+        this.windowsQuantity = LevelBuilder.windowsQuantity;
+        this.windowsY = LevelBuilder.windowsY;
+        this.windowsHeight = LevelBuilder.windowsHeight;
+        this.windowsQuantityOfLines = LevelBuilder.windowsQuantityOfLines;
+        this.windowsDistance = LevelBuilder.windowsDistance;
+        this.windowsVelocity = LevelBuilder.windowsVelocity;
         this.tutorials = new ArrayList<>();
     }
     
@@ -519,6 +530,12 @@ public class Level {
         private static float[] obstaclesX_BR;
         private static float[] obstaclesY_BR;
         private int windowsQuantity;
+        public static float[] windowsY;
+        public static float[] windowsHeight;
+        public static int[] windowsQuantityOfLines;
+        public static float[] windowsDistance;
+        public static float[] windowsVelocity;
+        
 
         public LevelBuilder game(Game game) {
             this.game = game;
@@ -740,11 +757,6 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setWindowsQuantity(int windowsQuantity) {
-            this.windowsQuantity = windowsQuantity;
-            return this;
-        }
-
         public LevelBuilder setObstaclesWidth(float... obstaclesWidth_BR) {
             this.obstaclesWidth_BR = new float[obstaclesWidth_BR.length];
             for (int i = 0; i < obstaclesWidth_BR.length; i++){
@@ -773,6 +785,51 @@ public class Level {
             this.obstaclesY_BR = new float[obstaclesY_BR.length];
             for (int i = 0; i < obstaclesY_BR.length; i++){
                 this.obstaclesY_BR[i] = obstaclesY_BR[i];
+            }
+            return this;
+        }
+        
+        public LevelBuilder setWindowsQuantity(int windowsQuantity) {
+            this.windowsQuantity = windowsQuantity;
+            return this;
+        }
+        
+        public LevelBuilder setWindowsY(float... windowsY) {
+            this.windowsY = new float[windowsY.length];
+            for (int i = 0; i < windowsY.length; i++){
+                this.windowsY[i] = windowsY[i];
+            }
+            return this;
+        }
+        
+        public LevelBuilder setWindowsHeight(float... windowsHeight) {
+            this.windowsHeight = new float[windowsHeight.length];
+            for (int i = 0; i < windowsHeight.length; i++){
+                this.windowsHeight[i] = windowsHeight[i];
+            }
+            return this;
+        }
+        
+        public LevelBuilder setWindowsQuantityOfLines(int... windowsQuantityOfLines) {
+            this.windowsQuantityOfLines = new int[windowsQuantityOfLines.length];
+            for (int i = 0; i < windowsQuantityOfLines.length; i++){
+                this.windowsQuantityOfLines[i] = windowsQuantityOfLines[i];
+            }
+            return this;
+        }
+
+        public LevelBuilder setWindowsDistance(float... windowsDistance) {
+            this.windowsDistance = new float[windowsDistance.length];
+            for (int i = 0; i < windowsDistance.length; i++){
+                this.windowsDistance[i] = windowsDistance[i];
+            }
+            return this;
+        }
+        
+        public LevelBuilder setWindowsVelocity(float... windowsVelocity) {
+            this.windowsVelocity = new float[windowsVelocity.length];
+            for (int i = 0; i < windowsVelocity.length; i++){
+                this.windowsVelocity[i] = windowsVelocity[i];
             }
             return this;
         }
