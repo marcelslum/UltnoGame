@@ -14,8 +14,8 @@ public class WindowGame extends PhysicalObject{
     float maxDistance;
     
     
-    public WindowGame(String name, Game game, float x, float y, int quantityOfLines, float height, float distance, float velocity) {
-        super(name, game, x, y, 0);
+    public WindowGame(String name, Game game, float y, int quantityOfLines, float height, float distance, float velocity) {
+        super(name, game, 0f, y, 0);
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
         
