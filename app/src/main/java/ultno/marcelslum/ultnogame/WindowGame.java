@@ -12,11 +12,13 @@ public class WindowGame extends Entity{
     float [] linesY;
     int quantityX;
     
-    public WindowGame(String name, Game game, float x, float y, int quantityOfLines, float height, float distance, ) {
+    
+    public WindowGame(String name, Game game, float x, float y, int quantityOfLines, float height, float distance, float velocity) {
         super(name, game, x, y);
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
         this.height = height;
+        this.dV = velocity;
         
         size = height/(quantityOfLines - (distance * quantityOfLines) + distance);
         linesY = new float[quantityOfLines];
@@ -26,20 +28,17 @@ public class WindowGame extends Entity{
         for (int i = 0; i < quantityOfLines; i++){
             linesY[i] = i * (size * (1 - distance)); 
         }
-        
         setDrawInfo();
     }
     
     public void setDrawInfo(){
-        
         int quantityOfSquares = quantityX * quantityOfLines;
         initializeData(12*quantityOfSquares, 6*quantityOfSquares, 8*quantityOfSquares, 0);
         
         float xPosition = 0f;
-        float yPosition = 0f
+        float yPosition = 0f;
 
         float distanceToDraw = size * (1-distance);
-        
         
         for (int iX = 0; iX < quantityX, iX++){
             for (int iY = 0; iY < quantityOfLines, iY++){
@@ -59,7 +58,6 @@ public class WindowGame extends Entity{
             }
         }
         
-
         for (int iX = 0; iX < quantityX, iX++){
             for (int iY = 0; iY < quantityOfLines, iY++){
                 xPosition = iX * distanceToDraw;
@@ -88,5 +86,22 @@ public class WindowGame extends Entity{
             }
         }
         
+        for (int i = 0; i < quantityOfSquares; i++){
+            Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
+            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), 30);
+        }
+        
+        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
+        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
+        this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
     }
+    
+    public void move(){
+        
+        
+        
+        
+    }
+    
+    
 }
