@@ -22,6 +22,7 @@ public class LevelLoader {
                     })
                     .setTargetsStates(new int[]{0, 1})
                     .setObstaclesQuantity(0);
+                    .setWindowsQuantity(0);
         }
 
         if (levelNumber >= 2) {
@@ -43,6 +44,7 @@ public class LevelLoader {
                         })
                         .setTargetsStates(new int[]{0, 1})
                         .setObstaclesQuantity(0);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -70,6 +72,7 @@ public class LevelLoader {
                         })
                         .setTargetsStates(new int[]{0, 1})
                         .setObstaclesQuantity(0);
+                        .setWindowsQuantity(0);
 
                 /*{0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
                 {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
@@ -105,6 +108,7 @@ public class LevelLoader {
                         .setObstaclesY(0.4f)
                         .setObstaclesWidth(0.2f)
                         .setObstaclesHeight(0.04f);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -132,6 +136,7 @@ public class LevelLoader {
                                 })
                 .setTargetsStates(new int[]{0, 1})
                 .setObstaclesQuantity(0);
+                .setWindowsQuantity(0);
             }
         }
 
@@ -163,6 +168,7 @@ public class LevelLoader {
                         .setObstaclesY(0.2f)
                         .setObstaclesWidth(0.08f)
                         .setObstaclesHeight(0.6f);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -176,6 +182,7 @@ public class LevelLoader {
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -199,6 +206,7 @@ public class LevelLoader {
                         .setObstaclesY(0.2f, 0.2f)
                         .setObstaclesWidth(0.02f, 0.02f)
                         .setObstaclesHeight(0.3f, 0.3f);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -214,6 +222,7 @@ public class LevelLoader {
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -243,6 +252,7 @@ public class LevelLoader {
                         .setObstaclesY(0.12f, 0.29f, 0.12f, 0.29f, 0.12f, 0.29f, 0.12f, 0.29f)
                         .setObstaclesWidth(0.05f, 0.06f, 0.05f, 0.06f, 0.05f, 0.06f, 0.05f, 0.06f)
                         .setObstaclesHeight(0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -266,6 +276,7 @@ public class LevelLoader {
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -284,6 +295,7 @@ public class LevelLoader {
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -308,6 +320,7 @@ public class LevelLoader {
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0);
+                        .setWindowsQuantity(0);
             }
         }
 
@@ -320,6 +333,7 @@ public class LevelLoader {
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0);
+                        .setWindowsQuantity(0);
             }
         }
 
