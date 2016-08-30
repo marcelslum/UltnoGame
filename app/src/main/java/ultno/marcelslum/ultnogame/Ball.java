@@ -27,7 +27,7 @@ public class Ball extends Circle{
     public float maxAngle;
     public float minAngle;
 
-    public final int timeForExplode = 1500;
+    public final int timeForExplode = 750;
     public long initialTimeWaitingExplosion = 0;
 
     public float rotationAngle = 0;
@@ -48,6 +48,7 @@ public class Ball extends Circle{
     int collisionBarNumber = -1;
     boolean verifyAppendsIsFreeBall = false;
     BallParticleGenerator ballParticleGenerator;
+    private int alarmId;
 
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
@@ -215,8 +216,10 @@ public class Ball extends Circle{
         }
 
         if ((this.collisionBordaB || (this.collisionBar && Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)))&&!this.isInvencible){
-            this.setDead();
-            this.game.ballFall = true;
+            if (!listenForExplosion) {
+                this.setDead();
+                this.game.ballFall = true;
+            }
         }
 
         if (this.lastCollisionResponse.size() == 1){
@@ -367,6 +370,8 @@ public class Ball extends Circle{
     }
 
     private void waitForExplosion() {
+
+        alarmId = game.soundPool.play(game.soundAlarm, 1, 1, 0, 10, 1);
         initialTimeWaitingExplosion = Utils.getTime();
         listenForExplosion = true;
         setTextureMapAndUvData(COLOR_BALL_RED);
@@ -376,16 +381,20 @@ public class Ball extends Circle{
         valuesAlphaRedBall.add(new float[]{0.5f,0.5f});
         valuesAlphaRedBall.add(new float[]{1f,1f});
 
-        Animation anim = new Animation(this, "alphaExplode", "alpha", 4000, valuesAlphaRedBall, false, false);
+        Animation anim = new Animation(this, "alphaExplode", "alpha", 3000, valuesAlphaRedBall, true, true);
         anim.start();
         
     }
     
     public void explode(){
 
+
+        resetAnimations();
         ParticleGenerator pg = new ParticleGenerator("explode", game, x, y);
         game.particleGenerator.add(pg);
         pg.activate();
+
+        this.game.soundPool.stop(alarmId);
 
         this.game.soundPool.play(this.game.soundExplosion1, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
         this.game.soundPool.play(this.game.soundExplosion2, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
@@ -419,11 +428,6 @@ public class Ball extends Circle{
         float explodeVelocityX = 0;
         float explodeVelocityY = 0;
         float explodeRadius = radius;
-
-
-
-
-
 
         int [] explosionColorsUsed = {-1,-1,-1};
 

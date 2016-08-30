@@ -188,9 +188,14 @@ public class ScorePanel extends Entity {
     }
 
     public void setValue(int newValue, boolean animatePanel, int duration, boolean playSound){
-        Log.e("setValue", "animate "+animatePanel );
+
+        if (playSound){
+            game.soundPool.play(game.soundScore, 1, 1, 0, 0, 1);
+        }
+
+        //Log.e("setValue", "animate "+animatePanel );
         if (animatePanel){
-            Log.e("setValue", "animate2 "+animatePanel );
+            //Log.e("setValue", "animate2 "+animatePanel );
             this.animStartTime = System.currentTimeMillis();
             this.animStarted = true;
             this.animLastValue = this.value;

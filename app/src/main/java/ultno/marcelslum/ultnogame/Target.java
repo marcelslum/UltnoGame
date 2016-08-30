@@ -27,6 +27,7 @@ public class Target extends Rectangle {
     private boolean isGhost;
     Point pointsObject;
     public final static int POINTS_DURATION = 1000;
+    boolean alive = true;
 
     Target(String name, Game game, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
         super(name, game, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(0,0,0,1));
@@ -73,14 +74,17 @@ public class Target extends Rectangle {
 
 
     public void onBallCollision(){
-        this.decayState(100);
+
+        int points = 100;
+        for (int i = 0; i < game.objectivePanel.blueBalls+1; i++){
+            points *= 2;
+        }
+
+        this.decayState(points);
 
     };
 
     public void renderPoints(float[] matrixView, float[] matrixProjection){
-
-
-
         //Log.e("target", "render points ");
         if (this.pointsObject != null) {
             this.pointsObject.alpha = this.pointsAlpha;
@@ -116,14 +120,20 @@ public class Target extends Rectangle {
 
         this.currentState -= 1;
 
-        setType();
-
-        showPoints(points);
-
         // O alvo especial não tem estado, uma vez atingido ele ativa sua habilidade especial.
         if (this.special != 0){
             this.currentState = 0;
         }
+
+        if (currentState == 0){
+            alive = false;
+        }
+
+        setType();
+
+        showPoints(points);
+
+
         //Log.e("target", "4");
         if (this.isGhost){
             if (this.ghostAlphaAnim != null) {
@@ -149,7 +159,13 @@ public class Target extends Rectangle {
     }
 
     public void setType(){
-        if (states[currentState] != 0 && special != 1){
+        if (currentState == -1){
+            return;
+        }
+
+        if (special == 1){
+            type = TARGET_RED;
+        } else if (states[currentState] != 0){
             if (this.states[currentState] == 3){
                 type = TARGET_GREEN;
             } else if (this.states[currentState] == 2){
@@ -157,8 +173,6 @@ public class Target extends Rectangle {
             } else if (this.states[currentState] == 1){
                 type = TARGET_BLACK;
             }
-        } else if (special == 1){
-            type = TARGET_RED;
         }
 
         setUvInfo(type);

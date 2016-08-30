@@ -153,8 +153,8 @@ public class Level {
         } else {
             back = game.levelNumber % 10;
         }
-        Utils.setTexture("drawable/backp"+Integer.toString(back), game.texturenames, Game.TEXTURE_BACKGROUND, game.context); // background
-        this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.resolutionY, Background.BACKGROUND_COLOR_GREEN);
+        Utils.setTexture("drawable/backclaro", game.texturenames, Game.TEXTURE_BACKGROUND, game.context); // background
+        this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.resolutionY);
 
         //Log.e("Level loadEnt", "1");
 

@@ -15,6 +15,8 @@ public class ObjectivePanel extends Entity{
     public int ballsInvencible;
     public float initialX;
     public float initialY;
+    public int blackBalls;
+    public int blueBalls;
 
     ObjectivePanel(String name, Game game, float x, float y, float size) {
         super(name, game, x, y);
@@ -39,8 +41,8 @@ public class ObjectivePanel extends Entity{
         this.ballsInvencible = ballsInvencible;
         initializeData(12 * ballsAlive, 6 * ballsAlive, 8 * ballsAlive, 0);
 
-        int blackBalls = ballsAlive - ballsInvencible - (ballsAlive - minBallsAlive - ballsInvencible);
-        int blueBalls = ballsAlive - minBallsAlive - ballsInvencible;
+        blackBalls = ballsAlive - ballsInvencible - (ballsAlive - minBallsAlive - ballsInvencible);
+        blueBalls = ballsAlive - minBallsAlive - ballsInvencible;
 
         float xOfTriangle = 0f;
         if (blackBalls == 1) {

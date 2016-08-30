@@ -9,10 +9,10 @@ public class Background extends Entity {
     //cor chanel painting 0,21 0,71 -1,87 -2,05 3,79 3e3e3eff
     // air spray
 
-    public static final Color BACKGROUND_COLOR_GREEN = new Color(141f/255f, 209f/255f, 211f/255f, 0.6f);
-    public static final Color BACKGROUND_COLOR_RED = new Color(193f/255f, 173f/255f, 170f/255f, 0.6f);
-    public static final Color BACKGROUND_COLOR_YELLOW = new Color(235f/255f, 229f/255f, 66f/255f, 0.6f);
-    public static final Color BACKGROUND_COLOR_BLUE = new Color(201f/255f, 136f/255f, 255f/255f, 0.6f);
+//    public static final Color BACKGROUND_COLOR_GREEN = new Color(141f/255f, 209f/255f, 211f/255f, 0.6f);
+//    public static final Color BACKGROUND_COLOR_RED = new Color(193f/255f, 173f/255f, 170f/255f, 0.6f);
+//    public static final Color BACKGROUND_COLOR_YELLOW = new Color(235f/255f, 229f/255f, 66f/255f, 0.6f);
+//    public static final Color BACKGROUND_COLOR_BLUE = new Color(201f/255f, 136f/255f, 255f/255f, 0.6f);
 
     float width;
     float height;
@@ -28,9 +28,9 @@ public class Background extends Entity {
     float uvHeight;
     boolean uvXUp;
     boolean uvYUp;
-    Rectangle rectangle;
+    //Rectangle rectangle;
 
-    Background(String name, Game game, float x, float y, float width, float height, Color color) {
+    Background(String name, Game game, float x, float y, float width, float height) {
         super(name, game, x, y);
         this.width = width;
         this.height = height;
@@ -39,7 +39,7 @@ public class Background extends Entity {
         isVisible = true;
         textureUnit = Game.TEXTURE_BACKGROUND;
         program = game.imageColorizedFxProgram;
-        this.alpha = 0.6f;
+        this.alpha = 1f;
 
         uvXUp = true;
         uvYUp = true;
@@ -56,9 +56,9 @@ public class Background extends Entity {
         uvy1 = 0.2f;
         uvy2 = uvy1 + uvHeight;
 
-        rectangle = new Rectangle("rectangleBack", game, -10f, -10f, width + 20f, height + 20f, -0.7f, 0, color);
-        rectangle.isMovable = false;
-        rectangle.isCollidable = false;
+        //rectangle = new Rectangle("rectangleBack", game, -10f, -10f, width + 20f, height + 20f, -0.7f, 0, color);
+        //rectangle.isMovable = false;
+        //rectangle.isCollidable = false;
 
         setDrawInfo();
     }
@@ -125,7 +125,7 @@ public class Background extends Entity {
 
     @Override
     public void render(float[] matrixView, float[] matrixProjection) {
-        rectangle.render(matrixView, matrixProjection);
+        //rectangle.render(matrixView, matrixProjection);
         super.render(matrixView, matrixProjection);
     }
 }

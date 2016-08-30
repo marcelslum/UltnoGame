@@ -46,12 +46,14 @@ public class Storage {
         storage = context.getSharedPreferences(STORAGE_FILE_NAME, 0);
         for (int i = 0; i < quantityOfLevels; i++){
             int levelToTest = i + 1;
-            if (!Storage.contains("tutorial"+ levelToTest +"visto"))
-                Log.e("Storage", "not contains tutorial visto level "+levelToTest);
-                Storage.setBoolean("tutorial"+ levelToTest +"visto", false);
-            if (!Storage.contains("score"+levelToTest))
-                Log.e("Storage", "score level "+levelToTest);
-                Storage.setInt("score"+levelToTest, 0);
+            if (!Storage.contains("tutorial"+ levelToTest +"visto")) {
+                Log.e("Storage", "not contains tutorial visto level " + levelToTest);
+                Storage.setBoolean("tutorial" + levelToTest + "visto", false);
+            }
+            if (!Storage.contains("score"+levelToTest)) {
+                Log.e("Storage", "score level " + levelToTest);
+                Storage.setInt("score" + levelToTest, 0);
+            }
         }
         
         if (!Storage.contains("actualLevel"))

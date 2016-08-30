@@ -6,10 +6,16 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-// TODO erro: jogo trava quando se aperta os dois botões de flecha ao mesmo tempo
-// TODO pausar a música quando minimiza o aplicativo
+// TODO erro: jogo trava quando se aperta os dois botões de flecha ao mesmo tempo: resolvido
+// TODO pausar a música quando minimiza o aplicativo: resolvido?
+// TODO verificar arquivo targets.png se está atualizado
+// TODO pausar todos os sons do sound pool quando o jogo fecha
+// TODO voltar ao estado anterior quando o jogo fecha
+
 
 
 /** * Created by marcel on 01/08/2016.
@@ -302,13 +308,21 @@ public class Game {
             eraseAllGameEntities();
             eraseAllHudEntities();
             eraseAllTutorials();
-
             menuMain.isBlocked = false;
             menuMain.display();
             tittle.display();
             messageCurrentLevel.display();
             messageMaxScoreLevel.display();
             messageMaxScoreTotal.display();
+
+            messageMaxScoreLevel.setText(
+                    context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+
+                            Integer.toString(Storage.getLevelMaxScore(levelNumber))
+            );
+
+            messageMaxScoreTotal.setText(
+                    context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
+
         } else if (state == GAME_STATE_PREPARAR){
             eraseAllTutorials();
             levelObject.loadEntities();
@@ -368,6 +382,16 @@ public class Game {
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
             messageGameOver.display();
+
+            if (scorePanel.value > 0) {
+                scorePanel.showMessage("-50%", 1000);
+                int points = scorePanel.value / 2;
+                scorePanel.setValue(points, true, 1000, true);
+                if (Storage.getLevelMaxScore(innerGame.levelNumber) < points) {
+                    Storage.setLevelMaxScore(innerGame.levelNumber, points);
+                }
+            }
+
         } else if (state == GAME_STATE_PAUSE){
             music.pause();
             Log.e("game", "ativando game_state_pause");
@@ -376,7 +400,6 @@ public class Game {
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
             menuInGame.getMenuOptionByName("Continuar").textObject.setText(context.getResources().getString(R.string.continuarJogar));
-
 
             ArrayList<float[]> valuesAnimPause = new ArrayList<>();
             valuesAnimPause.add(new float[]{0f,1f});
@@ -449,6 +472,32 @@ public class Game {
             });
             anim.start();
 
+
+            // verifica a quantidade de bolas azuis, e atualiza a pontuação
+            final Timer timer = new Timer();
+            final TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    if (innerGame.objectivePanel.blueBalls > 0){
+                        innerGame.objectivePanel.setValues(
+                                innerGame.objectivePanel.ballsAlive - 1,
+                                innerGame.objectivePanel.minBallsAlive,
+                                innerGame.objectivePanel.ballsInvencible);
+                        int points = (int)((float)innerGame.scorePanel.value * 1.5f);
+                        innerGame.scorePanel.setValue(points, true, 1000, true);
+                        innerGame.scorePanel.showMessage("x2", 500);
+                    } else {
+                        if (Storage.getLevelMaxScore(innerGame.levelNumber) < innerGame.scorePanel.value){
+                            Storage.setLevelMaxScore(innerGame.levelNumber, innerGame.scorePanel.value);
+                        }
+                        cancel();
+                    }
+                };
+            };
+
+            timer.scheduleAtFixedRate(timerTask, 2000, 2000);
+
+
             ArrayList<float[]> valuesAnimVitoriaTranslate = new ArrayList<>();
             valuesAnimVitoriaTranslate.add(new float[]{0f,-gameAreaResolutionY*3});
             valuesAnimVitoriaTranslate.add(new float[]{0.8f,-gameAreaResolutionY*3});
@@ -514,7 +563,6 @@ public class Game {
             music.release();
             music = null;
         }
-
     }
 
     private void freeAllGameEntities() {
@@ -1040,12 +1088,13 @@ public class Game {
 
             //Log.e("gl renderer", "onDrawFrame4");
 
-            boolean forPlayAlarm = false;
+
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
 
-                    if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode) {
-                        forPlayAlarm = true;
+                    if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode
+                            && balls.get(i).y < gameAreaResolutionY * 0.8f) {
+
                         balls.get(i).radius *= 5;
                         ArrayList<Entity> ball = new ArrayList<>();
                         ball.add(balls.get(i));
@@ -1060,18 +1109,7 @@ public class Game {
 
             //Log.e("game", "forPLayAlarm "+forPlayAlarm);
 
-            if (forPlayAlarm) {
-                if (playingAlarm != true) {
-                    streamIdSoundAlarm = soundPool.play(soundAlarm, 1, 1, 0, -1, 1);
-                    playingAlarm = true;
-                }
-            } else {
-                if (playingAlarm == true) {
-                    //Log.e("game", "stopping alarm");
-                    soundPool.stop(streamIdSoundAlarm);
-                    playingAlarm = false;
-                }
-            }
+
 
             //Log.e("game", "playingAlarm "+playingAlarm);
 
@@ -1108,7 +1146,6 @@ public class Game {
             for (Bar b : bars) {
                 b.translate(b.vx, 0, true);
             }
-            verifyWin();
         }
 
         if (gameState == GAME_STATE_JOGAR) {
@@ -1118,6 +1155,10 @@ public class Game {
         } else if(gameState == GAME_STATE_VITORIA){
             background.move(3);
         }
+        if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
+            verifyWin();
+        }
+
     }
 
     public void verifyPointsDecay(){
@@ -1141,16 +1182,24 @@ public class Game {
         boolean win = true;
 
         for (int i = 0; i < targets.size(); i++) {
-            if (targets.get(i).states[targets.get(i).currentState] != 0){
+            if (targets.get(i).alive){
                 win = false;
                 break;
+            }
+        }
+
+        if (win) {
+            for (int i = 0; i < balls.size(); i++) {
+                if (balls.get(i).listenForExplosion) {
+                    win = false;
+                    break;
+                }
             }
         }
         if (win) setGameState(GAME_STATE_VITORIA);
     }
 
     public void verifyDead() {
-
         ballsNotInvencibleAlive = 0;
         ballsInvencible = 0;
         for (Ball b : balls){
@@ -1162,7 +1211,6 @@ public class Game {
                 }
             }
         }
-        
         objectivePanel.setValues(ballsNotInvencibleAlive + ballsInvencible, levelObject.minBallsAlive, ballsInvencible);
         
         //Log.e("game", " minBallsNotInvencibleAlive " + levelObject.minBallsNotInvencibleAlive);
