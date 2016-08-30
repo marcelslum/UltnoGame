@@ -384,7 +384,15 @@ public class Level {
             float obstacleHeight = game.gameAreaResolutionY * obstaclesHeight_BR[i];
             game.addObstacle(new Obstacle("obstacle", game, obstacleX, obstacleY, obstacleWidth, obstacleHeight));
         }
-
+        
+        for (int i = 0; i < this.windowsQuantity; i++){
+            float wY = game.gameAreaResolutionY * windowsY[i];
+            float wHeight = game.gameAreaResolutionY * windowsHeight[i];
+            float wVelocity = game.gameAreaResolutionX * windowsVelocity[i];
+            
+            game.addWindows(new Windows("windows", game, wY, windowsQuantityOfLines[i], wHeight, windowsDistance[i], windowsVelocity));
+        }
+        
         int quantityOfSpecialTargets = 0;
         for (int i = 0; i < this.game.targets.size(); i++){
             if (this.game.targets.get(i).special == 1)
