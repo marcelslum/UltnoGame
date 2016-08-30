@@ -18,6 +18,15 @@ public class WindowGame extends PhysicalObject{
         super(name, game, x, y, 0);
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
+        
+        if (distance > 0.49f){
+            distance = 0.49f;
+        }
+        
+        if (distance < 0f){
+            distance = 0f;
+        }
+        
         this.height = height;
         this.dvx = velocity;
         this.vx = velocity;
