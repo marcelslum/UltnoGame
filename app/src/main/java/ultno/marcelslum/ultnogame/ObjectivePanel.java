@@ -17,6 +17,7 @@ public class ObjectivePanel extends Entity{
     public float initialY;
     public int blackBalls;
     public int blueBalls;
+    public int lastXBall;
 
     ObjectivePanel(String name, Game game, float x, float y, float size) {
         super(name, game, x, y);
@@ -61,6 +62,9 @@ public class ObjectivePanel extends Entity{
         int ballsInvecibleDraw = ballsInvencible;
         int ballsBlackDraw = blackBalls;
         int ballsBlueDraw = blueBalls;
+        
+        blueBallPositionX = new float[blueBalls];
+        blueBallPositionY = new float[blueBalls];
 
         for (int i = 0; i < ballsAlive;i++){
 
@@ -91,6 +95,10 @@ public class ObjectivePanel extends Entity{
                 Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
                 Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0 + (i * 8), 11);
                 
+                if (ballsBlueDraw == 1){
+                    lastXBall = xOfTriangle + (size*0.5f);
+                }
+                
 
                 ballsBlueDraw -= 1;
                 xOfTriangle += size;
@@ -101,6 +109,19 @@ public class ObjectivePanel extends Entity{
         indicesBuffer = Utils.generateShortBuffer(indicesData);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
 
+    }
+    
+    public void explodeBlueBall(){
+        if (blueBalls > 0){
+            setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
+            ParticleGenerator pg = new ParticleGenerator("explode", game, 
+                                x + translateX + (lastXBall*scaleX), y + translateY + (size*scaleY), 
+                                Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4, 
+                                Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5, 
+                                Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6);
+                            game.particleGenerator.add(pg);
+                            pg.activate();
+        }
     }
 
     public void prepareUvData(int textureMap){
