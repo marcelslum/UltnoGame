@@ -1045,7 +1045,6 @@ public class Game {
         }
 
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
-
             if (bars != null) {
                 if (bars.size() > 0) {
                     if (button1Left.isPressed) {
@@ -1066,6 +1065,16 @@ public class Game {
                     }
                 }
             }
+            
+            
+            for (int i = 0; i < windows.size(); i++){
+                if (windows.get(i).isMovable){
+                    windows.get(i).vx = windows.get(i).dvx * (float) elapsed) / frameDuration;
+                    windows.move();
+                }
+            }
+            
+            
             quad.insert(bordaE);
             quad.insert(bordaD);
             quad.insert(bordaC);
