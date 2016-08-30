@@ -479,13 +479,11 @@ public class Game {
                 @Override
                 public void run() {
                     if (innerGame.objectivePanel.blueBalls > 0){
-                        innerGame.objectivePanel.setValues(
-                                innerGame.objectivePanel.ballsAlive - 1,
-                                innerGame.objectivePanel.minBallsAlive,
-                                innerGame.objectivePanel.ballsInvencible);
                         int points = (int)((float)innerGame.scorePanel.value * 1.5f);
                         innerGame.scorePanel.setValue(points, true, 1000, true);
                         innerGame.scorePanel.showMessage("x2", 500);
+                        innerGame.objectivePanel.explodeBlueBall()
+
                     } else {
                         if (Storage.getLevelMaxScore(innerGame.levelNumber) < innerGame.scorePanel.value){
                             Storage.setLevelMaxScore(innerGame.levelNumber, innerGame.scorePanel.value);
