@@ -387,10 +387,8 @@ public class Ball extends Circle{
     }
     
     public void explode(){
-
-
         resetAnimations();
-        ParticleGenerator pg = new ParticleGenerator("explode", game, x, y);
+        ParticleGenerator pg = new ParticleGenerator("explode", game, x, y, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3);
         game.particleGenerator.add(pg);
         pg.activate();
 
