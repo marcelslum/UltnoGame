@@ -10,25 +10,26 @@ public class WindowGame extends Entity{
     float height;
     float size;
     float [] linesY;
+    int quantityX;
     
-    
-    
-
     public WindowGame(String name, Game game, float x, float y, int quantityOfLines, float height, float distance, ) {
         super(name, game, x, y);
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
         this.height = height;
         
-        
-        this.size = height/(quantityOfLines - (distance * quantityOfLines) + distance);
-        
+        size = height/(quantityOfLines - (distance * quantityOfLines) + distance);
         linesY = new float[quantityOfLines];
+        
+        quantityX = Math.floor(game.gameAreaResolutionX / (size * (1 - distance))) + 1;
+        
+        
+        
+        
+        
+        
         for (int i = 0; i < quantityOfLines; i++){
             linesY[i] = i * (size * (1 - distance)); 
-            
-            
         }
-        
     }
 }
