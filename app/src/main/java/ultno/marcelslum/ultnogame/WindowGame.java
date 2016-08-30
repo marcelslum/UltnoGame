@@ -3,7 +3,7 @@ package ultno.marcelslum.ultnogame;
 /**
  * Created by marcel on 26/08/2016.
  */
-public class WindowGame extends Entity{
+public class WindowGame extends PhysicalObject{
     
     int quantityOfLines;
     float distance;
@@ -11,14 +11,20 @@ public class WindowGame extends Entity{
     float size;
     float [] linesY;
     int quantityX;
+    float maxDistance;
     
     
     public WindowGame(String name, Game game, float x, float y, int quantityOfLines, float height, float distance, float velocity) {
-        super(name, game, x, y);
+        super(name, game, x, y, 0);
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
         this.height = height;
-        this.dV = velocity;
+        this.dvx = velocity;
+        this.vx = velocity;
+        isCollidable = false;
+        isSolid = false;
+        isMovable = true;
+        
         
         size = height/(quantityOfLines - (distance * quantityOfLines) + distance);
         linesY = new float[quantityOfLines];
@@ -28,6 +34,15 @@ public class WindowGame extends Entity{
         for (int i = 0; i < quantityOfLines; i++){
             linesY[i] = i * (size * (1 - distance)); 
         }
+        
+        maxDistance = (size * (1f-distance))*4f);
+        
+        if (velocity >= 0){
+            x = -maxDistance;
+        } else {
+            x = 0f;
+        }
+        
         setDrawInfo();
     }
     
@@ -97,11 +112,18 @@ public class WindowGame extends Entity{
     }
     
     public void move(){
-        
-        
-        
-        
+        if (isMovable){
+            x += vx;
+            
+            if (vx > 0){
+                if (x > 0){
+                    x = x - maxDistance;
+                }
+            } else {
+                if (x < maxDistance){
+                    x = 0 - x + maxDistance;
+                }
+            }
+        }
     }
-    
-    
 }
