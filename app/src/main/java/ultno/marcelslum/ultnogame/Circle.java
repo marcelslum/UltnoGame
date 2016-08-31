@@ -18,8 +18,8 @@ public class Circle extends PhysicalObject {
         float size = getTransformedWidht();
         this.quadtreeData.setX(positionX - size/2f);
         this.quadtreeData.setY(positionY - size/2f);
-        this.quadtreeData.setWidth(size);
-        this.quadtreeData.setHeight(size);
+        this.quadtreeData.setWidth(getTransformedRadius()*2f);
+        this.quadtreeData.setHeight(getTransformedRadius()*2f);
     }
 
     @Override
@@ -31,28 +31,13 @@ public class Circle extends PhysicalObject {
         } else {
             circleData.pos.x = positionX;
             circleData.pos.y = positionY;
-            circleData.r = radius;
+            circleData.r = getTransformedRadius();
         }
     }
 
-    @Override
-    public float getWidth() {
-        return radius*2f;
+    public float getTransformedRadius() {
+        return radius * accumulatedScaleX * accumulatedScaleY;
     }
 
-    @Override
-    public float getHeight() {
-        return radius*2f;
-    }
-    
-    @Override
-    public float getTransformedWidth() {
-        return (radius*2f)*accumulatedScaleX;
-    }
-
-    @Override
-    public float getTransformedHeight() {
-        return (radius*2f)*accumulatedScaleX;
-    }
 
 }
