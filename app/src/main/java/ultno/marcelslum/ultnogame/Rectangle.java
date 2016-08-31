@@ -47,13 +47,13 @@ public class Rectangle extends PhysicalObject {
     @Override
     public void setSatData(){
         if(this.polygonData == null) {
-            float width = getTransformedWidth();
-            float height = getTransformedHeight();
+            float transformedWidth = getTransformedWidth();
+            float transformedHeight = getTransformedHeight();
             ArrayList<Vector> points = new ArrayList<Vector>();
             points.add(new Vector(0, 0));
-            points.add(new Vector(width, 0));
-            points.add(new Vector(width, height));
-            points.add(new Vector(0, height));
+            points.add(new Vector(transformedWidth, 0));
+            points.add(new Vector(transformedWidth, transformedHeight));
+            points.add(new Vector(0, transformedHeight));
             polygonData = new SatPolygon(new Vector(positionX, positionY), points);
             
         } else {
