@@ -242,6 +242,7 @@ public class Entity {
 
     public void translate(float translateX, float translateY, boolean updatePrevious) {
         //Log.e("entity", "translate "+this.name + " isMovable "+isMovable + " isFree "+isFree);
+        updatePreviouse = updatePrevious;
         this.translateX = translateX;
         this.translateY = translateY;
     }
@@ -251,7 +252,8 @@ public class Entity {
         
     }
 
-    public void scale(float scaleX, float scaleY) {
+    public void scale(float scaleX, float scaleY, boolean updatePrevious) {
+        updatePreviouse = updatePrevious;
         this.scaleX = scaleX;
         this.scaleY = scaleY;
     }
@@ -264,7 +266,6 @@ public class Entity {
             accumulatedRotate += rotateAngle;    
             accumulatedScaleX += scaleX;
             accumulatedScaleY += scaleY;
-            
             translateX = 0f;
             translateY = 0f;
             rotateAngle = 0f;
@@ -280,13 +281,13 @@ public class Entity {
         
         // TODO considerar rotação?
         if (accumulatedScaleX != 1f){
-            positionX = x + accumulatedTranslateX - ((accumulatedScaleX * getWidth())-getWidth())/2;
+            positionX = x + accumulatedTranslateX - getTransformedWidth()/2;
         } else {
             positionX = x + accumulatedTranslateX;
         }
         
         if (accumulatedScaleY != 1f){
-            positionY = y + accumulatedTranslateY - ((accumulatedScaleY * getHeight())-getHeight())/2;
+            positionY = y + accumulatedTranslateY - getTransformedHeight()/2;
         } else {
             positionY = y + accumulatedTranslateY;
         }
