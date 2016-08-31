@@ -2,6 +2,7 @@ package ultno.marcelslum.ultnogame;
 
 
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -50,10 +51,20 @@ public class Rectangle extends PhysicalObject {
         if(this.polygonData == null) {
             ArrayList<Vector> points = new ArrayList<Vector>();
             points.add(new Vector(0, 0));
-            points.add(new Vector(width, 0));
-            points.add(new Vector(width, height));
-            points.add(new Vector(0, height));
-            this.polygonData = new SatPolygon(new Vector(x, y), points);
+            points.add(new Vector(width*scaleX, 0));
+            points.add(new Vector(width*scaleX, height*scaleY));
+            points.add(new Vector(0, height*scaleY));
+
+            float difWidth = ((width*scaleX) - width)/2f;
+            float difHeight = ((height*scaleY) - height)/2f;
+
+            //Log.e("rectangle", "setSatData" + " difWidth "+difWidth + " difHeight "+difHeight);
+
+            if (this.name == "obstacle") {
+                Log.e("rectangle ", "setSatData " + (x - difWidth));
+            }
+
+            this.polygonData = new SatPolygon(new Vector(x - difWidth, y - difHeight), points);
         } else {
             this.polygonData.pos.x = x;
             this.polygonData.pos.y = y;
@@ -62,19 +73,41 @@ public class Rectangle extends PhysicalObject {
 
     @Override
     public float getMiddlePointX() {
-        return this.width/2;
+        return width/2;
     }
 
     @Override
     public float getMiddlePointY() {
-        return this.height/2;
+        return height/2;
+    }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    @Override
+    public float getHeight() {
+        return height;
+    }
+
+    public void setScale(float sx, float sy){
+        scaleX = sx;
+        scaleY = sy;
+        polygonData = null;
     }
 
     @Override
     public void updateQuatreeData() {
-        this.quadtreeData.setX(x);
-        this.quadtreeData.setY(y);
-        this.quadtreeData.setWidth(width);
-        this.quadtreeData.setHeight(height);
+
+        float difWidth = (width*scaleX) - width;
+        float difHeight = (height*scaleY) - height;
+
+
+
+        this.quadtreeData.setX(x - difWidth/2f);
+        this.quadtreeData.setY(y - difWidth/2f);
+        this.quadtreeData.setWidth(width*scaleX);
+        this.quadtreeData.setHeight(height*scaleY);
     }
 }

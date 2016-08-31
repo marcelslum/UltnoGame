@@ -39,9 +39,9 @@ public class Tutorial {
         }
     }
 
-    public void show(SoundPool soundPool, int soundId) {
+    public void show(SoundPool soundPool, int soundId, float volume) {
         Log.e("tutorial", "show tutorial "+textBox.name);
-        soundPool.play(soundId, 1, 1, 0, 0, 1);
+        soundPool.play(soundId, volume, volume, 0, 0, 1);
         isBlocked = true;
         textBox.alpha = 0f;
 

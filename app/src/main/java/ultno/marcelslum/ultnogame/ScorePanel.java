@@ -35,6 +35,9 @@ public class ScorePanel extends Entity {
         program = this.game.imageProgram;
         value = 0;
         setDrawInfo();
+
+        messageText = new Text("text", game, x + (getWidth()*0.7f), y - size*0.3f, size*1.5f, "message", game.font, new Color(1.0f, 0f, 0f, 1f));
+        addChild(messageText);
     }
 
     @Override
@@ -126,7 +129,7 @@ public class ScorePanel extends Entity {
 
     public void showMessage(String message, int duration) {
         displayMessage = true;
-        messageText = new Text("text", game, x + (getWidth()*0.7f), y - size*0.3f, size*1.5f, message, game.font, new Color(1.0f, 0f, 0f, 1f));
+        messageText.setText(message);
 
         final ScorePanel innerScorePanel = this;
         Utils.createSimpleAnimation(messageText, "translateX", "translateX", duration, 0f, game.gameAreaResolutionX*0.05f).start();
@@ -136,10 +139,10 @@ public class ScorePanel extends Entity {
             @Override
             public void onAnimationEnd() {
                 innerScorePanel.displayMessage = false;
-                innerScorePanel.messageText = null;
+                innerScorePanel.messageText.resetAnimations();
             }
         });
-        addChild(messageText);
+
     }
 
     public void render(float[] matrixView, float[] matrixProjection){
@@ -190,7 +193,7 @@ public class ScorePanel extends Entity {
     public void setValue(int newValue, boolean animatePanel, int duration, boolean playSound){
 
         if (playSound){
-            game.soundPool.play(game.soundScore, 1, 1, 0, 0, 1);
+            game.soundPool.play(game.soundScore, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
         }
 
         //Log.e("setValue", "animate "+animatePanel );

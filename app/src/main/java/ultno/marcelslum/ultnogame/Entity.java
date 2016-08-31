@@ -2,6 +2,7 @@ package ultno.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -114,11 +115,12 @@ public class Entity {
         isPressed = false;
         isFree = true;
 
-        scaleX = 1;
-        scaleY = 1;
+        animScaleY = 1;
+        animScaleX = 1;
         animTranslateX = 0;
         animTranslateY = 0;
         animations = new ArrayList<Animation>();
+
         childs = new ArrayList<>();
     }
     
@@ -309,8 +311,8 @@ public class Entity {
     }
 
     public void scale(float sx, float sy) {
-        this.scaleX += sx;
-        this.scaleY += sy;
+        this.scaleX = sx;
+        this.scaleY = sy;
     }
 
     // mustBeOverrided
@@ -344,12 +346,19 @@ public class Entity {
             Matrix.multiplyMM(matrixModel, 0, matrixTemp, 0, mRotationMatrix, 0);
             Matrix.translateM(this.matrixModel, 0, -getMiddlePointX(), -getMiddlePointY(), 0);
         }
-        if (animScaleX != 1 || animScaleY != 1) {
+        if (animScaleX != 1f || animScaleY != 1f || scaleX != 1f || scaleY != 1f) {
+
+
             float width = getWidth();
             float height = getHeight();
 
+            //Log.e("entity", "name "+name);
+            //Log.e("entity", " w "+width + " h "+height);
+            //Log.e("entity", " animScaleX "+animScaleX + " animScaleY "+animScaleY);
+            //Log.e("entity", " scaleX "+scaleX + " scaleY "+scaleY);
+
             Matrix.translateM(this.matrixModel, 0, (width)/2, +(height)/2, 0);
-            Matrix.scaleM(matrixModel, 0, animScaleX, animScaleY, 0);
+            Matrix.scaleM(matrixModel, 0, scaleX * animScaleX, scaleY * animScaleY, 0);
             Matrix.translateM(this.matrixModel, 0, -(width)/2, -(height)/2, 0);
         }
     }

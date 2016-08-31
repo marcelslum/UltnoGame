@@ -371,7 +371,7 @@ public class Utils {
             Utils.y2 = (1024f - 2f)/1024f;
             switch(textureMap) {
                 case 29:
-                    Utils.x1 = (0f + 2f) / 1024f;
+                    Utils.x1 = (256f + 2f) / 1024f;
                     Utils.x2 = (512f - 2f) / 1024f;
                     break;
                 case 30:

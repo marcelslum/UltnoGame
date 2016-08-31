@@ -17,7 +17,7 @@ public class ObjectivePanel extends Entity{
     public float initialY;
     public int blackBalls;
     public int blueBalls;
-    public int lastXBall;
+    public float lastXBall;
 
     ObjectivePanel(String name, Game game, float x, float y, float size) {
         super(name, game, x, y);
@@ -62,9 +62,6 @@ public class ObjectivePanel extends Entity{
         int ballsInvecibleDraw = ballsInvencible;
         int ballsBlackDraw = blackBalls;
         int ballsBlueDraw = blueBalls;
-        
-        blueBallPositionX = new float[blueBalls];
-        blueBallPositionY = new float[blueBalls];
 
         for (int i = 0; i < ballsAlive;i++){
 
@@ -95,15 +92,16 @@ public class ObjectivePanel extends Entity{
                 Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
                 Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0 + (i * 8), 11);
                 
-                if (ballsBlueDraw == 1){
-                    lastXBall = xOfTriangle + (size*0.5f);
-                }
+
                 
 
                 ballsBlueDraw -= 1;
                 xOfTriangle += size;
             }
         }
+
+        lastXBall = xOfTriangle + size/2f;
+
 
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         indicesBuffer = Utils.generateShortBuffer(indicesData);
@@ -113,9 +111,15 @@ public class ObjectivePanel extends Entity{
     
     public void explodeBlueBall(){
         if (blueBalls > 0){
+
+            game.soundPool.play(game.soundBlueBallExplosion1, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+            game.soundPool.play(game.soundBlueBallExplosion2, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+
             setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
-            ParticleGenerator pg = new ParticleGenerator("explode", game, 
-                                x + translateX + (lastXBall*scaleX), y + translateY + (size*scaleY), 
+
+
+            ParticleGenerator pg = new ParticleGenerator("explode", game,
+                                initialX + animTranslateX + ((lastXBall)*animScaleX), y + animTranslateY + ((size/2f)*animScaleY),
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4, 
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5, 
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6);

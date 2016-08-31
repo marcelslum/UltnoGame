@@ -78,8 +78,10 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         //SetupScaling();
 
         GLES20.glEnable(GLES20.GL_BLEND);
-        //GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         SetupTextures();
 
@@ -128,10 +130,10 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         }
 
         // Setup our screen width and height for normal sprite translation.
-        Matrix.orthoM(matrixProjection, 0, 0f, mScreenWidth, mScreenHeight, 0.0f, 0.1f, 50f);
+        Matrix.orthoM(matrixProjection, 0, 0f, mScreenWidth, mScreenHeight, 0.0f, 0f, 100f);
 
         // Set the camera position (View matrix)
-        Matrix.setLookAtM(matrixView, 0, -screenOffSetX, 0f, 1f, -screenOffSetX, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.setLookAtM(matrixView, 0, -screenOffSetX, 0f, 100f, -screenOffSetX, 0f, 0f, 0f, 1.0f, 0.0f);
 
         // Calculate the projection and view transformation
         //Matrix.multiplyMM(matrixProjectionAndView, 0, matrixProjection, 0, matrixView, 0);

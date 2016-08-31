@@ -61,6 +61,9 @@ public class Storage {
         
         if (!Storage.contains("maxLevel"))
                 Storage.setInt("maxLevel", 1);
+
+        if (!Storage.contains("volume"))
+            Storage.setInt("volume", 100);
     }
     
     public static int getMaxLevel(){
@@ -85,6 +88,14 @@ public class Storage {
     
     public static void setLevelMaxScore(int levelNumber, int value){
         setInt("score"+levelNumber, value);
+    }
+
+    public static int getVolume(){
+        return  getInt("volume");
+    }
+
+    public static void setVolume(int volume){
+        setInt("volume", volume);
     }
     
     public static boolean getLevelTutorialSaw(int levelNumber){

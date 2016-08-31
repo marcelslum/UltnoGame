@@ -76,8 +76,10 @@ public class Target extends Rectangle {
     public void onBallCollision(){
 
         int points = 100;
-        for (int i = 0; i < game.objectivePanel.blueBalls+1; i++){
-            points *= 2;
+        if (game.objectivePanel.blueBalls > 0) {
+            for (int i = 0; i < game.objectivePanel.blueBalls; i++) {
+                points *= 2;
+            }
         }
 
         this.decayState(points);
@@ -114,7 +116,7 @@ public class Target extends Rectangle {
 
     public void decayState(int points){
 
-        this.game.soundPool.play(this.game.soundDestroyTarget, 1, 1, 0, 0, 1);
+        this.game.soundPool.play(this.game.soundDestroyTarget, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
 
         this.game.scorePanel.setValue(this.game.scorePanel.value + points,  true, 500, false);
 

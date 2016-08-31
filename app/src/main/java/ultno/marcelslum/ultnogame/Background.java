@@ -112,7 +112,7 @@ public class Background extends Entity {
         
         initializeData(12, 6, 8, 0);
 
-        Utils.insertRectangleVerticesData(this.verticesData, 0, -10f, width+20, -10f, height+20, -0.5f);
+        Utils.insertRectangleVerticesData(this.verticesData, 0, -10f, width+20, -10f, height+20, 0f);
         this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
 
         Utils.insertRectangleIndicesData(this.indicesData, 0, 0);

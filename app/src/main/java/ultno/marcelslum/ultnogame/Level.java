@@ -105,7 +105,7 @@ public class Level {
         this.game.blockAndWaitTouchRelease();
         this.showingTutorial = 0;
         this.tutorials.get(0).textBox.alpha = 0f;
-        this.tutorials.get(0).show(game.soundPool, game.soundTextBoxAppear);
+        this.tutorials.get(0).show(game.soundPool, game.soundTextBoxAppear, game.volume);
     }
 
     public void nextTutorial(){
@@ -114,7 +114,7 @@ public class Level {
         final Level innerLevel = this;
         this.game.blockAndWaitTouchRelease();
         if (this.tutorials.get(this.showingTutorial).isBlocked == false){
-            game.soundPool.play(game.soundMenuSelectBig, 1, 1, 0, 0, 1);
+            game.soundPool.play(game.soundMenuSelectBig, 0.01f*(float)game.volume, 0.01f*(float)game.volume, 0, 0, 1);
             if (showingTutorial + 1 == this.tutorials.size()){
 
                 Log.e("level", "ultimo tutorail, setando preparar");
@@ -133,7 +133,7 @@ public class Level {
                     public void onUnshowAfterAnim2() {
                         //Log.e("level", "onUnshowAfterAnim2");
                         innerLevel.showingTutorial = innerLevel.showingTutorial + 1;
-                        innerLevel.tutorials.get(innerLevel.showingTutorial).show(innerLevel.game.soundPool, innerLevel.game.soundTextBoxAppear);
+                        innerLevel.tutorials.get(innerLevel.showingTutorial).show(innerLevel.game.soundPool, innerLevel.game.soundTextBoxAppear, game.volume);
                     }
                 });
                 tutorials.get(showingTutorial).unshow();
@@ -271,10 +271,10 @@ public class Level {
         this.game.buttonMusic.getListener().y = this.game.resolutionY * 0.86f;
         this.game.buttonMusic.getListener().width = this.game.gameAreaResolutionX * 0.12f;
         this.game.buttonMusic.getListener().height = this.game.resolutionY * 0.12f;
-        if (this.game.musicOn) {
-            this.game.buttonMusic.setOn();
-        } else {
+        if (!this.game.musicOn || game.menuVolume == 0) {
             this.game.buttonMusic.setOff();
+        } else {
+            this.game.buttonMusic.setOn();
         }
 
         this.game.buttonMusic.setOnOffBehavior(new ButtonOnOff.OnOffBehavior() {
@@ -286,6 +286,7 @@ public class Level {
                     innerGame.menuVolume = 50;
                 }
                 if (innerGame.music != null){
+                    innerGame.music.setVolume(0.006f* (float) 50, 0.006f* (float) 50);
                     innerGame.music.start();
                 }
             }
@@ -390,7 +391,7 @@ public class Level {
             float wHeight = game.gameAreaResolutionY * windowsHeight[i];
             float wVelocity = game.gameAreaResolutionX * windowsVelocity[i];
             
-            game.addWindows(new Windows("windows", game, wY, windowsQuantityOfLines[i], wHeight, windowsDistance[i], windowsVelocity));
+            game.addWindow(new WindowGame("windows", game, wY, windowsQuantityOfLines[i], wHeight, windowsDistance[i], wVelocity));
         }
         
         int quantityOfSpecialTargets = 0;
@@ -537,12 +538,12 @@ public class Level {
         private static float[] obstaclesHeight_BR;
         private static float[] obstaclesX_BR;
         private static float[] obstaclesY_BR;
-        private int windowsQuantity;
-        public static float[] windowsY;
-        public static float[] windowsHeight;
-        public static int[] windowsQuantityOfLines;
-        public static float[] windowsDistance;
-        public static float[] windowsVelocity;
+        private static int windowsQuantity;
+        private static float[] windowsY;
+        private static float[] windowsHeight;
+        private static int[] windowsQuantityOfLines;
+        private static float[] windowsDistance;
+        private static float[] windowsVelocity;
         
 
         public LevelBuilder game(Game game) {

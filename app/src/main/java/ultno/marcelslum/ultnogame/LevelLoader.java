@@ -21,7 +21,7 @@ public class LevelLoader {
                             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                     })
                     .setTargetsStates(new int[]{0, 1})
-                    .setObstaclesQuantity(0);
+                    .setObstaclesQuantity(0)
                     .setWindowsQuantity(0);
         }
 
@@ -43,7 +43,7 @@ public class LevelLoader {
                                 {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0}
                         })
                         .setTargetsStates(new int[]{0, 1})
-                        .setObstaclesQuantity(0);
+                        .setObstaclesQuantity(0)
                         .setWindowsQuantity(0);
             }
         }
@@ -68,11 +68,16 @@ public class LevelLoader {
             if (levelNumber == 3) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
-                                {0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+                                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
                         })
                         .setTargetsStates(new int[]{0, 1})
-                        .setObstaclesQuantity(0);
-                        .setWindowsQuantity(0);
+                        .setObstaclesQuantity(0)
+                        .setWindowsQuantity(1)
+                        .setWindowsHeight(0.5f)
+                        .setWindowsY(0.4f)
+                        .setWindowsDistance(0.2f)
+                        .setWindowsQuantityOfLines(6)
+                        .setWindowsVelocity(-0.003f);
 
                 /*{0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
                 {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
@@ -107,7 +112,7 @@ public class LevelLoader {
                         .setObstaclesX(0.4f)
                         .setObstaclesY(0.4f)
                         .setObstaclesWidth(0.2f)
-                        .setObstaclesHeight(0.04f);
+                        .setObstaclesHeight(0.04f)
                         .setWindowsQuantity(0);
             }
         }
@@ -135,7 +140,7 @@ public class LevelLoader {
                                         {1,1,1,1,1,1,1,1,1,1,1}
                                 })
                 .setTargetsStates(new int[]{0, 1})
-                .setObstaclesQuantity(0);
+                .setObstaclesQuantity(0)
                 .setWindowsQuantity(0);
             }
         }
@@ -167,7 +172,7 @@ public class LevelLoader {
                         .setObstaclesX(0.46f)
                         .setObstaclesY(0.2f)
                         .setObstaclesWidth(0.08f)
-                        .setObstaclesHeight(0.6f);
+                        .setObstaclesHeight(0.6f)
                         .setWindowsQuantity(0);
             }
         }
@@ -181,7 +186,7 @@ public class LevelLoader {
                                         {3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 3}
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(0);
+                        .setObstaclesQuantity(0)
                         .setWindowsQuantity(0);
             }
         }
@@ -205,7 +210,7 @@ public class LevelLoader {
                         .setObstaclesX(0.31f, 0.64f)
                         .setObstaclesY(0.2f, 0.2f)
                         .setObstaclesWidth(0.02f, 0.02f)
-                        .setObstaclesHeight(0.3f, 0.3f);
+                        .setObstaclesHeight(0.3f, 0.3f)
                         .setWindowsQuantity(0);
             }
         }
@@ -221,7 +226,7 @@ public class LevelLoader {
                                         {1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1}
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(0);
+                        .setObstaclesQuantity(0)
                         .setWindowsQuantity(0);
             }
         }
@@ -248,10 +253,10 @@ public class LevelLoader {
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(5)
-                        .setObstaclesX(opa[0], opa[0], opa[1], opa[1], opa[2], opa[2], opa[3], opa[3])
-                        .setObstaclesY(0.12f, 0.29f, 0.12f, 0.29f, 0.12f, 0.29f, 0.12f, 0.29f)
-                        .setObstaclesWidth(0.05f, 0.06f, 0.05f, 0.06f, 0.05f, 0.06f, 0.05f, 0.06f)
-                        .setObstaclesHeight(0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f);
+                        .setObstaclesX(     opa[0],     opa[0],     opa[1],     opa[1],     opa[2],     opa[2],     opa[3],     opa[3])
+                        .setObstaclesY(     0.12f,      0.29f,      0.12f,      0.29f,      0.12f,      0.29f,      0.12f,      0.29f)
+                        .setObstaclesHeight(0.05f,      0.06f,      0.05f,      0.06f,      0.05f,      0.06f,      0.05f,      0.06f)
+                        .setObstaclesWidth( 0.02f,      0.2f,       0.2f,       0.2f,       0.2f,       0.2f,       0.2f,       0.2f)
                         .setWindowsQuantity(0);
             }
         }
@@ -275,7 +280,7 @@ public class LevelLoader {
                                         {0, 4, 0, 4, 0, 0, 0, 4, 0, 4, 0}
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(0);
+                        .setObstaclesQuantity(0)
                         .setWindowsQuantity(0);
             }
         }
@@ -294,7 +299,7 @@ public class LevelLoader {
                                         {0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0},
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(0);
+                        .setObstaclesQuantity(0)
                         .setWindowsQuantity(0);
             }
         }
@@ -319,7 +324,7 @@ public class LevelLoader {
                                         {0, 7, 0, 0, 0, 7, 0, 0, 0, 7, 0},
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(0);
+                        .setObstaclesQuantity(0)
                         .setWindowsQuantity(0);
             }
         }
@@ -332,7 +337,7 @@ public class LevelLoader {
                                  // TODO
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(0);
+                        .setObstaclesQuantity(0)
                         .setWindowsQuantity(0);
             }
         }

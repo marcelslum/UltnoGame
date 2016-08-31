@@ -52,6 +52,7 @@ public class Game {
     public static ArrayList<TextBox> textBoxes;
     public static ArrayList<ParticleGenerator> particleGenerator;
     public static ArrayList<BallParticleGenerator> ballParticleGenerator;
+    public static ArrayList<Message> messages ;
     
     public Background background;
 
@@ -103,7 +104,6 @@ public class Game {
     int soundWin;
     int soundTextBoxAppear;
     MediaPlayer music;
-    boolean playingAlarm;
 
     // scree properties
     public float gameAreaResolutionX;
@@ -116,7 +116,6 @@ public class Game {
     int ballCollidedFx = 0;
 
     // options
-    boolean soundOn = true;
     boolean musicOn = true;
     boolean isBlocked;
     public int menuVolume = 100;
@@ -235,6 +234,7 @@ public class Game {
         menus = new ArrayList<>();
         selectors = new ArrayList<>();
         textBoxes = new ArrayList<>();
+        messages = new ArrayList<>();
         lines = new ArrayList<>();
 
         barsInitialPositionX = new float[10];
@@ -268,12 +268,20 @@ public class Game {
         this.obstacles.add(obstacle);
     }
 
+    public void addWindow(WindowGame window){
+        this.windows.add(window);
+    }
+
     public void addBall(Ball ball){
         this.balls.add(ball);
     }
 
     public void addText(Text text){
         this.texts.add(text);
+    }
+
+    public void addMessage(Message message){
+        this.messages.add(message);
     }
 
     public void addBar(Bar bar){
@@ -482,8 +490,8 @@ public class Game {
                     if (innerGame.objectivePanel.blueBalls > 0){
                         int points = (int)((float)innerGame.scorePanel.value * 1.5f);
                         innerGame.scorePanel.setValue(points, true, 1000, true);
-                        innerGame.scorePanel.showMessage("x2", 500);
-                        innerGame.objectivePanel.explodeBlueBall()
+                        innerGame.scorePanel.showMessage("x2", 800);
+                        innerGame.objectivePanel.explodeBlueBall();
 
                     } else {
                         if (Storage.getLevelMaxScore(innerGame.levelNumber) < innerGame.scorePanel.value){
@@ -591,7 +599,7 @@ public class Game {
 
     private void reduceAllGameEntitiesAlpha(int duration){
         for (Entity e : collectAllGameEntities()){
-            e.reduceAlpha(duration, 0.4f);
+            e.reduceAlpha(duration, 0.2f);
         }
     }
 
@@ -635,14 +643,17 @@ public class Game {
             Log.e("game ", "levelNumber "+levelNumber);
             maxLevel = Storage.getMaxLevel();
             Log.e("game ", "maxLevel "+maxLevel);
+
+        levelNumber = Storage.getActualLevel();
+
         initSounds();
         initPrograms();
         initFont();
-        createMenus();
-        createTexts();
+        initMenus();
+        initTexts();
     }
 
-    public void createTexts(){
+    public void initTexts(){
         tittle = new Image("tittle", this,
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
@@ -804,7 +815,7 @@ public class Game {
     }
 
 
-    public void createMenus(){
+    public void initMenus(){
         
         // cria o menu principal
         menuMain = new Menu("menuMain", this, gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
@@ -887,6 +898,7 @@ public class Game {
             @Override
             public void onChange() {
                 innerGame.volume = innerGame.possibleVolums[innerSelectorVolumn.selectedValue];
+                Storage.setVolume(innerGame.volume);
             }
         });
 
@@ -895,6 +907,8 @@ public class Game {
             @Override
             public void onChoice() {
                 innerSelectorVolumn.fromMenu(innerMenu);
+                int volumeToSelector = volume / 10;
+                innerSelectorVolumn.setSelectedValue(volumeToSelector);
             }
         });
 
@@ -955,7 +969,7 @@ public class Game {
                innerGame.blockAndWaitTouchRelease();
                innerGame.setGameState(GAME_STATE_TUTORIAL);
                innerGame.levelObject.showingTutorial = 0;
-               innerGame.levelObject.tutorials.get(0).show(innerGame.soundPool, innerGame.soundTextBoxAppear);
+               innerGame.levelObject.tutorials.get(0).show(innerGame.soundPool, innerGame.soundTextBoxAppear, 0.01f* (float) volume);
                innerGame.menuTutorial.block();
                innerGame.menuTutorial.clearDisplay();
             }
@@ -995,6 +1009,8 @@ public class Game {
         messageMaxScoreLevel.setText(
             context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber))
         );
+
+        Storage.setActualLevel(level);
     }
 
     public void initPrograms(){
@@ -1012,6 +1028,9 @@ public class Game {
     }
 
     public void initSounds(){
+
+        volume = Storage.getVolume();
+
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -1069,16 +1088,19 @@ public class Game {
             
             for (int i = 0; i < windows.size(); i++){
                 if (windows.get(i).isMovable){
-                    windows.get(i).vx = windows.get(i).dvx * (float) elapsed) / frameDuration;
-                    windows.move();
+                    windows.get(i).vx = (windows.get(i).dvx * (float) elapsed) / frameDuration;
+                    windows.get(i).move();
                 }
             }
-            
-            
+
             quad.insert(bordaE);
             quad.insert(bordaD);
             quad.insert(bordaC);
             quad.insert(bordaB);
+
+            if (levelNumber == 4){
+                obstacles.get(0).setScale(obstacles.get(0).scaleX + 0.01f, 1f);
+            }
         }
 
         if (this.gameState == GAME_STATE_JOGAR) {
@@ -1120,11 +1142,12 @@ public class Game {
 
 
             //Log.e("game", "playingAlarm "+playingAlarm);
-
+            Log.e("game", "checkCollisionBall");
             checkCollision(balls, true, true);
         }
 
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
+            Log.e("game", "checkCollisionBar");
             checkCollision(bars, true, true);
             quad.clear();
         }
@@ -1305,6 +1328,12 @@ public class Game {
 
         if (buttonMusic != null) buttonMusic.prepareRender(matrixView, matrixProjection);
         if (buttonSound != null) buttonSound.prepareRender(matrixView, matrixProjection);
+
+        for (int i = 0; i < messages.size(); i++){
+            messages.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
+
     }
 
     public boolean checkCollision(ArrayList<? extends Entity> aEntities, boolean respondToCollision, boolean updateLastCollisionResponse){
@@ -1314,7 +1343,7 @@ public class Game {
         ArrayList<Entity> out;
         SatResponse response = new SatResponse();
 
-        for (int iLoop = 0; iLoop < 1; iLoop++){
+        for (int iLoop = 0; iLoop < 2; iLoop++){
 
             // entidades a
             for (int aCount = 0; aCount < aEntities.size(); aCount++){
@@ -1391,6 +1420,12 @@ public class Game {
 
                             }
 
+                            if (b.name == "obstacle"){
+                                Log.e("game", " x"+ this.polygon2.pos.x);
+                            }
+
+
+
                             float [] velocities = new float[4];
 
                             //Log.e("pos bola sat cc2", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
@@ -1411,6 +1446,10 @@ public class Game {
 
                             int quantityPassagens;
 
+                            if (b.name == "obstacle"){
+                                Log.e("game", " x"+ this.polygon2.pos.x);
+                            }
+
                             // defina quantas passagens serão realidades, com base na maior velocidade
                             quantityPassagens = Math.round(velocities[maxIndex]/2) ;
                             if (quantityPassagens == 0){
@@ -1426,6 +1465,10 @@ public class Game {
                             float aPreviousY = a.previousY;
                             float bPreviousX = b.previousX;
                             float bPreviousY = b.previousY;
+
+                            if (b.name == "obstacle"){
+                                Log.e("game", " x"+ this.polygon2.pos.x);
+                            }
 
                             //Log.e("Game", " a.previousX 2"+aPreviousX);
                             //Log.e("Game", " a.previousY 2"+aPreviousY);
@@ -1449,6 +1492,10 @@ public class Game {
                             float aPosAConsiderarY = -1000f;
                             float bPosAConsiderarX = -1000f;
                             float bPosAConsiderarY = -1000f;
+
+                            if (b.name == "obstacle"){
+                                Log.e("game", " x"+ this.polygon2.pos.x);
+                            }
 
                             //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
@@ -1516,6 +1563,10 @@ public class Game {
                                 }
                             }
 
+                            if (b.name == "obstacle"){
+                                Log.e("game", " x"+ this.polygon2.pos.x);
+                            }
+
                             if (collided && !(response.overlapV.x == 0 && response.overlapV.y == 0)){
 
                                 isHadCollision = true;
@@ -1556,6 +1607,10 @@ public class Game {
                                         b.lastCollisionObjects.add(a);
                                     }
                                 }
+                            }
+
+                            if (b.name == "obstacle"){
+                                Log.e("game", " x"+ this.polygon2.pos.x);
                             }
                         }
                     }

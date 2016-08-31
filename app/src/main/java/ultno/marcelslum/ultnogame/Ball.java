@@ -371,7 +371,7 @@ public class Ball extends Circle{
 
     private void waitForExplosion() {
 
-        alarmId = game.soundPool.play(game.soundAlarm, 1, 1, 0, 10, 1);
+        alarmId = game.soundPool.play(game.soundAlarm, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 100, 1);
         initialTimeWaitingExplosion = Utils.getTime();
         listenForExplosion = true;
         setTextureMapAndUvData(COLOR_BALL_RED);

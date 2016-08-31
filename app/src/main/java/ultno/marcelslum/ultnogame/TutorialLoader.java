@@ -373,7 +373,7 @@ public class TutorialLoader {
                         new Tutorial.TutorialBuilder(
                             new TextBox.TextBoxBuilder("textBox1", g)
                                 .position(x*0.1f, y*0.1f)
-                                .width(width*1.3f)
+                                .width(width)
                                 .size(size)
                                     .text(Utils.getStringResource(game, R.string.l4t1))
                                 .withArrow(gX*0.5f, gY*0.35f)
