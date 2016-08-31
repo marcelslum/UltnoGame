@@ -603,7 +603,6 @@ public class Game {
         }
     }
 
-
     public void eraseAllGameEntities() {
         balls.clear();
         bars.clear();
@@ -640,12 +639,11 @@ public class Game {
     public void init(){
         Storage.initializeStorage(context, quantityOfLevels);
             levelNumber = Storage.getActualLevel();
-            Log.e("game ", "levelNumber "+levelNumber);
+            //Log.e("game ", "levelNumber "+levelNumber);
             maxLevel = Storage.getMaxLevel();
-            Log.e("game ", "maxLevel "+maxLevel);
+            //Log.e("game ", "maxLevel "+maxLevel);
 
         levelNumber = Storage.getActualLevel();
-
         initSounds();
         initPrograms();
         initFont();
@@ -1054,15 +1052,22 @@ public class Game {
     }
 
     public void simulate(long elapsed, float frameDuration){
+        
         ballCollidedFx -= 1;
+        
+        // atualiza posição da bola
         if (this.gameState == GAME_STATE_JOGAR) {
-            for (int i = 0; i < balls.size(); i++) {
+             for (int i = 0; i < balls.size(); i++) {
                 Ball ball = balls.get(i);
+                ball.verifyAcceleration();
+                ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
+                ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+                ball.translate(ball.vx, ball.vy, true);
                 ball.clearCollisionData();
-                quad.insert(ball);
             }
         }
 
+        // atualiza posição da barra e insere no quadtree
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
             if (bars != null) {
                 if (bars.size() > 0) {
@@ -1073,6 +1078,9 @@ public class Game {
                     } else {
                         bars.get(0).vx = 0f;
                     }
+                    
+                    bars.get(0).translate(bars.get(0).vx, 0, true);
+                    
                     if (bars.size() == 2) {
                         if (button2Left.isPressed) {
                             bars.get(1).vx = -(bars.get(1).dvx * (float) elapsed) / frameDuration;
@@ -1081,11 +1089,34 @@ public class Game {
                         } else {
                             bars.get(1).vx = 0f;
                         }
+                        
+                        bars.get(1).translate(bars.get(1).vx, 0, true);
                     }
                 }
             }
+
+            // atualiza posição e tamanho dos obstáculos e insere no quadtree
+            if (levelNumber == 4){
+                obstacles.get(0).scale(0.01f, 1f);
+            }
             
+            for (int i = 0; i < balls.size(); i++) {
+                balls.get(i).checkTransformations();
+            }
             
+            for (int i = 0; i < bars.size(); i++) {
+                bars.get(i).checkTransformations();
+            }
+            
+             for (int i = 0; i < targets.size(); i++) {
+                targets.get(i).checkTransformations();
+            }
+
+            for (int i = 0; i < obstacles.size(); i++) {
+                obstacles.get(i).checkTransformations();
+            }
+            
+            // atualiza posição das windows
             for (int i = 0; i < windows.size(); i++){
                 if (windows.get(i).isMovable){
                     windows.get(i).vx = (windows.get(i).dvx * (float) elapsed) / frameDuration;
@@ -1093,32 +1124,31 @@ public class Game {
                 }
             }
 
-            quad.insert(bordaE);
-            quad.insert(bordaD);
-            quad.insert(bordaC);
-            quad.insert(bordaB);
-
-            if (levelNumber == 4){
-                obstacles.get(0).setScale(obstacles.get(0).scaleX + 0.01f, 1f);
+            // insere as entidades no quadtree
+            for (int i = 0; i < balls.size(); i++) {
+                quad.insert(balls.get(i));
             }
-        }
-
-        if (this.gameState == GAME_STATE_JOGAR) {
-            for (int i = 0; i < targets.size(); i++) {
-                quad.insert(targets.get(i));
-            }
-
+            
             for (int i = 0; i < bars.size(); i++) {
                 quad.insert(bars.get(i));
+            }
+            
+            for (int i = 0; i < targets.size(); i++) {
+                quad.insert(targets.get(i));
             }
 
             for (int i = 0; i < obstacles.size(); i++) {
                 quad.insert(obstacles.get(i));
             }
+            
+            quad.insert(bordaE);
+            quad.insert(bordaD);
+            quad.insert(bordaC);
+            quad.insert(bordaB);
+        }
 
-            //Log.e("gl renderer", "onDrawFrame4");
-
-
+        // verifica a colisão da bola
+        if (this.gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
 
@@ -1135,48 +1165,29 @@ public class Game {
                     }
                 }
             }
-
-
-            //Log.e("game", "forPLayAlarm "+forPlayAlarm);
-
-
-
-            //Log.e("game", "playingAlarm "+playingAlarm);
             checkCollision(balls, true, true);
         }
-
+        
+        // verifica a colisão da barra
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
             checkCollision(bars, true, true);
             quad.clear();
         }
 
+        // se a bola colidiu, faz o necessário
         if (this.gameState == GAME_STATE_JOGAR) {
-            //Log.e("gl renderer", "onDrawFrame5");
-
             for (Ball b : balls) {
                 if (b.isCollided) {
                     b.onCollision();
                 }
             }
-
-            for (int i = 0; i < balls.size(); i++) {
-                Ball ball = balls.get(i);
-                ball.verifyAcceleration();
-                ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
-                ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
-
-                //Log.e("ball", "translate "+ball.name + " vx "+ball.vx + " vy "+ball.vy);
-
-                ball.translate(ball.vx, ball.vy, true);
-            }
         }
 
-        if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
-            for (Bar b : bars) {
-                b.translate(b.vx, 0, true);
-            }
-        }
-
+        // toma as medidas finais
+        // move o back
+        // verifica se morreu
+        // verifica se está vivo
+        // verifica se o score deve ser reduzido
         if (gameState == GAME_STATE_JOGAR) {
             background.move(1);
             verifyDead();
@@ -1187,7 +1198,6 @@ public class Game {
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
             verifyWin();
         }
-
     }
 
     public void verifyPointsDecay(){
@@ -1196,9 +1206,7 @@ public class Game {
             if (scorePanel.value > POINTS_DECAY) {
                 initialTimePointsDecay = time;
                 int value = scorePanel.value - POINTS_DECAY;
-                Log.e("game", " value " + value);
                 scorePanel.setValue(value, false, 0, false);
-                //scorePanel.showMessage("-10", 2000);
             }
         }
     }
@@ -1209,14 +1217,12 @@ public class Game {
 
     public void verifyWin() {
         boolean win = true;
-
         for (int i = 0; i < targets.size(); i++) {
             if (targets.get(i).alive){
                 win = false;
                 break;
             }
         }
-
         if (win) {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
@@ -1241,11 +1247,9 @@ public class Game {
             }
         }
         objectivePanel.setValues(ballsNotInvencibleAlive + ballsInvencible, levelObject.minBallsAlive, ballsInvencible);
-        
-        //Log.e("game", " minBallsNotInvencibleAlive " + levelObject.minBallsNotInvencibleAlive);
-        //Log.e("game", " ballsNotInvencibleAlive " + ballsNotInvencibleAlive);
-        if (levelObject.minBallsAlive > ballsNotInvencibleAlive)
+        if (levelObject.minBallsAlive > ballsNotInvencibleAlive){
             setGameState(GAME_STATE_DERROTA);
+        }
     }
 
     public void render(float[] matrixView, float[] matrixProjection){
@@ -1288,9 +1292,7 @@ public class Game {
         for (int i = 0; i < windows.size(); i++){
             windows.get(i).prepareRender(matrixView, matrixProjection);
         }
-
-
-
+        
         if (menuMain != null) menuMain.prepareRender(matrixView, matrixProjection);
         if (menuInGame != null) menuInGame.prepareRender(matrixView, matrixProjection);
         if (menuTutorial != null) menuTutorial.prepareRender(matrixView, matrixProjection);
@@ -1330,8 +1332,6 @@ public class Game {
         for (int i = 0; i < messages.size(); i++){
             messages.get(i).prepareRender(matrixView, matrixProjection);
         }
-
-
     }
 
     public boolean checkCollision(ArrayList<? extends Entity> aEntities, boolean respondToCollision, boolean updateLastCollisionResponse){
@@ -1346,36 +1346,14 @@ public class Game {
             // entidades a
             for (int aCount = 0; aCount < aEntities.size(); aCount++){
                 PhysicalObject a =  (PhysicalObject) aEntities.get(aCount);
-
-                //Log.e("game ", "começando a verficiar  "+a.isMovable);
-
-
                 if (a.isMovable) {
                     out = null;
                     collided = false;
-
                     out = this.quad.retrieve(a);
-
-                    //Log.e("game ", "quad size "+out.size());
-                    //String texto = " ";
-                    //for (int i = 0; i < out.size(); i++){
-                    //    texto = texto + out.get(i).name + " - ";
-                    //}
-                    //if (b.name == "bordaB"){
-                    //    Log.e("posicao bola x Borda B", " "+ a.y + " - "+ b.y);
-                    //}
-                    //Log.e("quantity of outs", " "+ out.size());
 
                     // roda pelas entidades extraidas e verifica a colisão
                     for (int bCount = 0; bCount < out.size(); bCount++){
                         PhysicalObject b = (PhysicalObject)out.get(bCount);
-
-                        if (b.name == "bordaB"){
-                        //    Log.e("posicao bola x Borda B", " "+ a.y + " - "+ b.y);
-                        }
-
-
-                        //Log.e("game ", "testando "+b.name);
 
                         // verifica se a entidade não é a mesma e se elas são colidíveis
                         if ((a.isSolid && b.isSolid) && (a.isMovable || b.isMovable) && (b != a)){
@@ -1385,15 +1363,11 @@ public class Game {
                             b.setSatData();
 
                             // zera os dados a serem usados nesta passagem
-
                             // transfere os dados da entidade para o objeto do game
-
 
                             //type false: polygon true: circle
                             boolean aType = false;
                             boolean bType = false;
-
-                            //Log.e("pos bola sat cc", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
                             if (a.circleData != null){
                                 this.circle1.pos.x = a.circleData.pos.x;
@@ -1415,14 +1389,7 @@ public class Game {
                                 this.polygon2.pos.x = b.polygonData.pos.x;
                                 this.polygon2.pos.y = b.polygonData.pos.y;
                                 this.polygon2.setPoints(b.polygonData.points);
-
                             }
-
-                            //if (b.name == "obstacle"){
-                            //    Log.e("game", " x"+ this.polygon2.pos.x);
-                            //}
-
-
 
                             float [] velocities = new float[4];
 
@@ -1443,10 +1410,6 @@ public class Game {
                             }
 
                             int quantityPassagens;
-
-                            if (b.name == "obstacle"){
-                                Log.e("game", " x"+ this.polygon2.pos.x);
-                            }
 
                             // defina quantas passagens serão realidades, com base na maior velocidade
                             quantityPassagens = Math.round(velocities[maxIndex]/2) ;
@@ -1476,11 +1439,11 @@ public class Game {
                             // Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
                             
                             // calcula a diferença entre as posições
-                            float aDiferencaPosicaoX = a.x - aPreviousX;
-                            float aDiferencaPosicaoY = a.y - aPreviousY;
+                            float aDiferencaPosicaoX = a.positionX - aPreviousX;
+                            float aDiferencaPosicaoY = a.positionY - aPreviousY;
 
-                            float bDiferencaPosicaoX = b.x - bPreviousX;
-                            float bDiferencaPosicaoY = b.y - bPreviousY;
+                            float bDiferencaPosicaoX = b.positionX - bPreviousX;
+                            float bDiferencaPosicaoY = b.positionY - bPreviousY;
 
                             // calcula a porcentagem de cada passada;
                             float porcentagem = (100f/quantityPassagens)/100f;
@@ -1606,10 +1569,6 @@ public class Game {
                                     }
                                 }
                             }
-
-                            if (b.name == "obstacle"){
-                                Log.e("game", " x"+ this.polygon2.pos.x);
-                            }
                         }
                     }
                 }
@@ -1628,7 +1587,7 @@ public class Game {
                 isBlocked = false;
                 Log.e("game", "desbloqueia game");
             }
-        }
+ t       }
     }
 
     public void verifyListeners() {
@@ -1656,6 +1615,5 @@ public class Game {
         if (button2Right != null) button1Right.verifyListener();
         if (buttonMusic != null) buttonMusic.verifyListener();
         if (buttonSound != null) buttonSound.verifyListener();
-
     }
 }
