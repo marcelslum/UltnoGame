@@ -90,17 +90,21 @@ public class PhysicalObject extends Entity{
             if (this.weight > other.weight) {// Move the other object out of us
                 other.accumulatedTranslateX += -responseX;
                 other.accumulatedTranslateY += -responseY;
+                other.checkTransformations();
             } else if (other.weight > this.weight) {        // Move us out of the other object
                 //Log.e("PhysicalObject", "outro "+other.name+" mais pesado "+responseX+ " "+responseY );
                 this.accumulatedTranslateX += responseX;
                 this.accumulatedTranslateY += responseY;
+                this.checkTransformations();
             } else if (this.weight == other.weight){        // Move equally out of each other
                 responseX *= 0.5;
                 responseY *= 0.5;
                 this.accumulatedTranslateX += responseX;
                 this.accumulatedTranslateY += responseY;
+                this.checkTransformations();
                 other.accumulatedTranslateX += -responseX;
                 other.accumulatedTranslateY += -responseY;
+                other.checkTransformations();
             }
         }
     }
