@@ -52,7 +52,8 @@ public class Game {
     public static ArrayList<TextBox> textBoxes;
     public static ArrayList<ParticleGenerator> particleGenerator;
     public static ArrayList<BallParticleGenerator> ballParticleGenerator;
-    public static ArrayList<Message> messages ;
+    public static ArrayList<Message> messages;
+    public ArrayList<Line> lines;
     
     public Background background;
 
@@ -203,17 +204,15 @@ public class Game {
     public Program solidProgram;
     public Program imageColorizedFxProgram;
 
-    public ArrayList<Line> lines;
-
     int ballsNotInvencibleAlive;
     int ballsInvencible;
     int ballsAlive;
+    
     private int streamIdSoundAlarm;
-
+    
     long initialTimePointsDecay;
     static final long TIME_FOR_POINTS_DECAY = 3000l;
     static final int POINTS_DECAY = 10;
-
 
     public static Game getInstance() {
         return ourInstance;
@@ -259,6 +258,14 @@ public class Game {
         circle1 = new SatCircle(new Vector(0,0),0);
         circle2 = new SatCircle(new Vector(0,0),0);
    }
+   
+      public void addBall(Ball ball){
+        this.balls.add(ball);
+    }
+    
+    public void addBar(Bar bar){
+        this.bars.add(bar);
+    }
 
     public void addTarget(Target target){
         this.targets.add(target);
@@ -272,20 +279,12 @@ public class Game {
         this.windows.add(window);
     }
 
-    public void addBall(Ball ball){
-        this.balls.add(ball);
-    }
-
     public void addText(Text text){
         this.texts.add(text);
     }
 
     public void addMessage(Message message){
         this.messages.add(message);
-    }
-
-    public void addBar(Bar bar){
-        this.bars.add(bar);
     }
 
     public void addInteracionListener(InteractionListener listener) {
@@ -1062,12 +1061,12 @@ public class Game {
                 ball.verifyAcceleration();
                 ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
                 ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
-                ball.translate(ball.vx, ball.vy, true);
+                ball.translate(ball.vx, ball.vy);
                 ball.clearCollisionData();
             }
         }
 
-        // atualiza posição da barra e insere no quadtree
+        // atualiza posição da barra
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
             if (bars != null) {
                 if (bars.size() > 0) {
@@ -1095,11 +1094,13 @@ public class Game {
                 }
             }
 
-            // atualiza posição e tamanho dos obstáculos e insere no quadtree
+            // atualiza posição e tamanho dos obstáculos
             if (levelNumber == 4){
                 obstacles.get(0).scale(0.01f, 1f);
             }
             
+            
+            // atualiza os dados da entidade, aplicando todas as transformações setadas
             for (int i = 0; i < balls.size(); i++) {
                 balls.get(i).checkTransformations();
             }
@@ -1151,17 +1152,17 @@ public class Game {
         if (this.gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
-
                     if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode
                             && balls.get(i).y < gameAreaResolutionY * 0.8f) {
 
                         balls.get(i).radius *= 5;
                         ArrayList<Entity> ball = new ArrayList<>();
                         ball.add(balls.get(i));
-                        boolean collision = checkCollision(ball, true, true);
+                        boolean collision = checkCollision(ball, false, false);
                         balls.get(i).radius /= 5;
-                        if (!collision)
+                        if (!collision){
                             balls.get(i).explode();
+                        }
                     }
                 }
             }
@@ -1173,12 +1174,17 @@ public class Game {
             checkCollision(bars, true, true);
             quad.clear();
         }
+        
+        // limpa o quadtree, preparando o próximo frame
+        if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
+            quad.clear();
+        }
 
         // se a bola colidiu, faz o necessário
         if (this.gameState == GAME_STATE_JOGAR) {
-            for (Ball b : balls) {
-                if (b.isCollided) {
-                    b.onCollision();
+            for (int i = 0; i < balls.size(); i++) {
+                if (balls.get(i).isCollided) {
+                    balls.get(i).onCollision();
                 }
             }
         }
