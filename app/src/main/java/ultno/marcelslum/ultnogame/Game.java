@@ -1591,9 +1591,8 @@ public class Game {
         if (isBlocked) {
             if (touchEvents.size() == 0){
                 isBlocked = false;
-                Log.e("game", "desbloqueia game");
             }
- t       }
+       }
     }
 
     public void verifyListeners() {
