@@ -49,21 +49,16 @@ public class Rectangle extends PhysicalObject {
         if(this.polygonData == null) {
             float width = getTransformedWidth();
             float height = getTransformedHeight();
-            
             ArrayList<Vector> points = new ArrayList<Vector>();
             points.add(new Vector(0, 0));
             points.add(new Vector(width, 0));
             points.add(new Vector(width, height));
             points.add(new Vector(0, height));
-
-            float difWidth = getTransformedWidth - width;
-            float difHeight = getTransformedHeight - height;
-
-            this.polygonData = new SatPolygon(new Vector(positionX, positionY), points);
+            polygonData = new SatPolygon(new Vector(positionX, positionY), points);
             
         } else {
-            this.polygonData.pos.x = positionX;
-            this.polygonData.pos.y = positionY;
+            polygonData.pos.x = positionX;
+            polygonData.pos.y = positionY;
         }
     }
 
@@ -79,9 +74,9 @@ public class Rectangle extends PhysicalObject {
 
     @Override
     public void updateQuatreeData() {
-        this.quadtreeData.setX(positionX);
-        this.quadtreeData.setY(positionY);
-        this.quadtreeData.setWidth(getTransformedWidth());
-        this.quadtreeData.setHeight(getTransformedHeight());
+        quadtreeData.setX(positionX);
+        quadtreeData.setY(positionY);
+        quadtreeData.setWidth(getTransformedWidth());
+        quadtreeData.setHeight(getTransformedHeight());
     }
 }
