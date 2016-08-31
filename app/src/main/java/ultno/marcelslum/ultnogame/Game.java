@@ -1142,12 +1142,10 @@ public class Game {
 
 
             //Log.e("game", "playingAlarm "+playingAlarm);
-            Log.e("game", "checkCollisionBall");
             checkCollision(balls, true, true);
         }
 
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
-            Log.e("game", "checkCollisionBar");
             checkCollision(bars, true, true);
             quad.clear();
         }
@@ -1420,9 +1418,9 @@ public class Game {
 
                             }
 
-                            if (b.name == "obstacle"){
-                                Log.e("game", " x"+ this.polygon2.pos.x);
-                            }
+                            //if (b.name == "obstacle"){
+                            //    Log.e("game", " x"+ this.polygon2.pos.x);
+                            //}
 
 
 
@@ -1466,9 +1464,9 @@ public class Game {
                             float bPreviousX = b.previousX;
                             float bPreviousY = b.previousY;
 
-                            if (b.name == "obstacle"){
-                                Log.e("game", " x"+ this.polygon2.pos.x);
-                            }
+                            //if (b.name == "obstacle"){
+                            //    Log.e("game", " x"+ this.polygon2.pos.x);
+                            //}
 
                             //Log.e("Game", " a.previousX 2"+aPreviousX);
                             //Log.e("Game", " a.previousY 2"+aPreviousY);
@@ -1493,9 +1491,9 @@ public class Game {
                             float bPosAConsiderarX = -1000f;
                             float bPosAConsiderarY = -1000f;
 
-                            if (b.name == "obstacle"){
-                                Log.e("game", " x"+ this.polygon2.pos.x);
-                            }
+                            //if (b.name == "obstacle"){
+                            //    Log.e("game", " x"+ this.polygon2.pos.x);
+                            //}
 
                             //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
@@ -1563,9 +1561,9 @@ public class Game {
                                 }
                             }
 
-                            if (b.name == "obstacle"){
-                                Log.e("game", " x"+ this.polygon2.pos.x);
-                            }
+                            //if (b.name == "obstacle"){
+                            //    Log.e("game", " x"+ this.polygon2.pos.x);
+                            //}
 
                             if (collided && !(response.overlapV.x == 0 && response.overlapV.y == 0)){
 
