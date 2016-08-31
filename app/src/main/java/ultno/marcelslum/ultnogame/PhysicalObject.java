@@ -81,24 +81,26 @@ public class PhysicalObject extends Entity{
     public void respondToCollision(PhysicalObject other, float responseX, float responseY, float ax, float ay, float bx, float by) {
         //console.log("response dentro de respondColission ", vector_response.x,", ", vector_response.y);
 
-        this.x = ax;
-        this.y = ay;
-        other.x = bx;
-        other.y = by;
-
+        this.accumulatedTranslateX += ax - positionX;
+        this.accumulatedTranslateY += ay - positionY;
+        other.accumulatedTranslateX += bx - positionX;
+        other.accumulatedTranslateY += by - positionY;
+        
         if (this.isSolid && other.isSolid) {
             if (this.weight > other.weight) {// Move the other object out of us
-                other.translate(-responseX, -responseY, false);
+                other.accumulatedTranslateX += -responseX;
+                other.accumulatedTranslateY += -responseY;
             } else if (other.weight > this.weight) {        // Move us out of the other object
-
                 //Log.e("PhysicalObject", "outro "+other.name+" mais pesado "+responseX+ " "+responseY );
-
-                this.translate(responseX, responseY, false);
+                this.accumulatedTranslateX += responseX;
+                this.accumulatedTranslateY += responseY;
             } else if (this.weight == other.weight){        // Move equally out of each other
                 responseX *= 0.5;
                 responseY *= 0.5;
-                this.translate(responseX, responseY, false);
-                other.translate(-responseX, -responseY, false);
+                this.accumulatedTranslateX += responseX;
+                this.accumulatedTranslateY += responseY;
+                other.accumulatedTranslateX += -responseX;
+                other.accumulatedTranslateY += -responseY;
             }
         }
     }
