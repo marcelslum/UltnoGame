@@ -157,8 +157,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         this.gi.setGameState(Game.GAME_STATE_MENU);
     }
 
-
-
     @Override
     public void onDrawFrame(GL10 unused) {
 
@@ -183,62 +181,12 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         mLastTime = now;
     }
 
-    public void SetupScaling()
-    {
-        // The screen resolutions
-        swp = (int) (mContext.getResources().getDisplayMetrics().widthPixels);
-        Log.e("swp", " "+swp);
-
-        shp = (int) (mContext.getResources().getDisplayMetrics().heightPixels);
-        Log.e("shp", " "+shp);
-
-        // Orientation is assumed portrait
-        ssx = swp / 480.0f;
-        ssy = shp / 320.0f;
-
-        // Get our uniform scaler
-        if(ssx > ssy)
-            ssu = ssy;
-        else
-            ssu = ssx;
-        Log.e("ssu", " "+ssu);
-    }
-
-
+    
     public void SetupTextures()
     {
-
-
-        gi.texturenames = new int[7];
+    	gi.texturenames = new int[7];
         GLES20.glGenTextures(7, gi.texturenames, 0);
-        
-        /*
-        Utils.setBitmap("drawable/balls", Game.bmpBalls, mContext); // balls
-        Utils.setBitmap("drawable/jetset", Game.bmpFont, mContext); // fonte
-        Utils.setBitmap("drawable/targets", Game.bmpTargets, mContext); // targets
-        Utils.setBitmap("drawable/bars", Game.bmpBars, mContext); // bars
-        Utils.setBitmap("drawable/buttons", Game.bmpButtons, mContext); // botões
-        Utils.setBitmap("drawable/background", Game.bmpBackground, mContext); // background
-        Utils.setBitmap("drawable/numbers", Game.bmpNumbers, mContext); // numeros
-        Utils.setBitmap("drawable/tittle", Game.bmpTittle, mContext); // titulo e caixa de testo
-        Utils.setBitmap("drawable/arrows", Game.bmpArrows, mContext); // flechas
-        
-        // texture 1024
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, arrayOfNames[0]);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpTittle, 0);
-
-	    // texture 512
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE01);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, arrayOfNames[1]);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, Game.bmpFont, 0);
-
-        */
-        Utils.setTexture("drawable/botoesebolas", gi.texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
+                Utils.setTexture("drawable/botoesebolas", gi.texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
         Utils.setTexture("drawable/jetset", gi.texturenames, Game.TEXTURE_FONT, mContext); // fonte
         Utils.setTexture("drawable/targets", gi.texturenames, Game.TEXTURE_TARGETS, mContext); // targets
         Utils.setTexture("drawable/bars", gi.texturenames, Game.TEXTURE_BARS, mContext); // bars
