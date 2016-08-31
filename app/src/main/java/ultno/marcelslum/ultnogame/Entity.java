@@ -292,6 +292,14 @@ public class Entity {
         }
     }
 
+    public float getTransformedWidth() {
+        return 0f;
+    }
+
+    public float getTransformedHeight() {
+        return 0f;
+    }
+    
     public float getWidth() {
         return 0f;
     }
@@ -315,7 +323,7 @@ public class Entity {
         if (animScaleX != 1f || animScaleY != 1f || accumulatedScaleX != 1f || accumulatedScaleX != 1f) {
             float width = getWidth();
             float height = getHeight();
-            Matrix.translateM(this.matrixModel, 0, (width)/2, +(height)/2, 0);
+            Matrix.translateM(this.matrixModel, 0, (width)/2, (height)/2, 0);
             Matrix.scaleM(matrixModel, 0, accumulatedScaleX * animScaleX, accumulatedScaleX * animScaleY, 0);
             Matrix.translateM(this.matrixModel, 0, -(width)/2, -(height)/2, 0);
         }
