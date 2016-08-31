@@ -12,8 +12,6 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Entity {
-
-
     final public static int SHOW_POINTS_ON = 1;
     final public static int SHOW_POINTS_OFF = 0;
 
@@ -21,9 +19,18 @@ public class Entity {
     public Game game;
     public float x;
     public float y;
-    public float rotateAngle;
-    public float scaleX;
-    public float scaleY;
+    public float previousX;
+    public float previousY;
+    public float rotateAngle = 0f;
+    public float translateX = 0f;
+    public float translateY = 0f;
+    public float scaleX = 1f;
+    public float scaleY = 1f;
+    public float accumulatedRotate = 0f;
+    public float accumulatedTranslateX = 0f;
+    public float accumulatedTranslateY = 0f;
+    public float accumulatedScaleX = 1f;
+    public float accumulatedScaleY = 1f;
 
     public float numberForAnimation;
 
@@ -31,29 +38,33 @@ public class Entity {
     public boolean timeVar = true;
 
     public Color color;
-    public float animTranslateX;
-    public float animTranslateY;
+    
+    public float animTranslateX = 0f;
+    public float animTranslateY = 0f;
     public float animScaleX = 1f;
     public float animScaleY = 1f;
+    public float animRotateAngle = 0f;
+    public boolean updatePrevious = false;
+    
     public float dX;
     public float dY;
-    public float previousX;
-    public float previousY;
     public float previousDX;
     public float previousDY;
-    public float alpha = 1;
-    public boolean isCollidable;
-    public boolean isVisible;
-    public boolean isMovable;
-    public boolean isSolid;
-    public boolean isBlocked;
-    public boolean isPressed;
+    
+    public float alpha = 1f;
+    
+    public boolean isCollidable = false;
+    public boolean isVisible = true;
+    public boolean isMovable = false;
+    public boolean isSolid = false;
+    public boolean isBlocked = false;
+    public boolean isPressed = false;
+    public boolean isFree = true;
+    
+    public Entity parent;
+    public ArrayList<Entity> childs;
     public ArrayList<Animation> animations;
     private InteractionListener listener;
-    public boolean isFree;
-    public ArrayList<Entity> childs;
-    public Entity parent;
-
 
     public float pointsAlpha;
     public int showPointsState = SHOW_POINTS_OFF;
@@ -70,22 +81,18 @@ public class Entity {
     public boolean isLineGL = false;
     public int lineWidth = 1;
 
-
     public FloatBuffer verticesBuffer;
     public FloatBuffer uvsBuffer;
     public ShortBuffer indicesBuffer;
     public FloatBuffer colorsBuffer;
-    public FloatBuffer alphaBuffer;
 
     public float[] matrixModel = new float[16];
     public float[] mRotationMatrix = new float[16];
     public float[] matrixTemp = new float[16];
 
-
     public Program program;
     public int textureUnit = -1;
     public int special;
-
 
     public void setProgram(Program program){
         this.program = program;
@@ -102,50 +109,28 @@ public class Entity {
         this.y = y;
         previousX = x;
         previousY = y;
-        previousDX = 0;
-        previousDY = 0;
-        scaleX = 1f;
-        scaleY = 1f;
-        alpha = 1;
-        isCollidable = false;
-        isVisible = true;
-        isSolid = false;
-        isMovable = false;
-        isBlocked = false;
-        isPressed = false;
-        isFree = true;
-
-        animScaleY = 1;
-        animScaleX = 1;
-        animTranslateX = 0;
-        animTranslateY = 0;
         animations = new ArrayList<Animation>();
-
         childs = new ArrayList<>();
     }
     
     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
-        
         if (verticesSize > 0){
             if (this.verticesData == null || this.verticesData.length != verticesSize){
                 //Log.e("entity", "criando vertices data de "+this.name + " com o tamanho "+verticesSize);
                 this.verticesData = new float[verticesSize];                
             }
         }
-        
         if (indicesSize > 0){
             if (this.indicesData == null || this.indicesData.length != indicesSize){
                 this.indicesData = new short[indicesSize];                
             } 
             
         }
-        
         if (uvsSize > 0){
             if (this.uvsData == null || this.uvsData.length != uvsSize){
                 this.uvsData = new float[uvsSize];                
             }
         }
-        
         if (colorsSize > 0){
             if (this.colorsData == null || this.colorsData.length != colorsSize){
                 this.colorsData = new float[colorsSize];                
@@ -154,40 +139,7 @@ public class Entity {
     }    
     
     
-     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize, int alphaSize){
-        if (verticesSize > 0){
-            if (this.verticesData == null || this.verticesData.length != verticesSize){
-                //Log.e("entity", "criando vertices data de "+this.name + " com o tamanho "+verticesSize);
-                this.verticesData = new float[verticesSize];                
-            }
-        }
-        
-        if (indicesSize > 0){
-            if (this.indicesData == null || this.indicesData.length != indicesSize){
-                this.indicesData = new short[indicesSize];                
-            } 
-            
-        }
-        
-        if (uvsSize > 0){
-            if (this.uvsData == null || this.uvsData.length != uvsSize){
-                this.uvsData = new float[uvsSize];                
-            }
-        }
-        
-        if (colorsSize > 0){
-            if (this.colorsData == null || this.colorsData.length != colorsSize){
-                this.colorsData = new float[colorsSize];                
-            }
-        }
-        
-        if (alphaSize > 0){
-            if (this.alphaData == null || this.alphaData.length != alphaSize){
-                this.alphaData = new float[alphaSize];                
-            }
-        }
-    }
-
+    
     public void applyAnimation(String parameter, float value) {
         if (this.childs != null) {
             for (int i = 0; i < this.childs.size(); i++) {
@@ -225,50 +177,44 @@ public class Entity {
             default:
                 break;
         }
-
     }
 
+    // TODO renomear para clearAnimations();
     public void resetAnimations() {
         for (int i = 0; i < this.animations.size(); i++) {
             if (this.animations.get(i).started && this.animations.get(i).name != "ballInvencible") {
                 this.animations.get(i).stopAndConclude();
             }
         }
-
         this.animTranslateX = 0;
         this.animTranslateY = 0;
         this.animScaleX = 1f;
         this.animScaleY = 1f;
         this.alpha = 1;
-        this.resetSpecificData();
+        //this.resetSpecificData();
     }
-
-    public void resetSpecificData() {
-
-    }
+    //public void resetSpecificData() {}
 
     public void reduceAlpha(int duration, float finalValue){
-        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue);
-        anim.start();
+        Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue).start();
     }
 
     public void reduceAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
-        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue);
-        anim.setAnimationListener(animationListener);
-        anim.start();
+        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue, 
+            animationListener).start();
     }
 
     public void increaseAlpha(int duration, float finalValue){
-        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue);
-        anim.start();
+        Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue).start();
     }
 
     public void increaseAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
-        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue);
-        anim.setAnimationListener(animationListener);
-        anim.start();
+        Animation anim = Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue, 
+            animationListener).start();
     }
 
+
+    // TODO renomear para checkAnimations()
     public void verifyAnimations() {
         if (this.parent != null) {
             return;
@@ -294,71 +240,83 @@ public class Entity {
         }
     }
 
-    public void translate(float tx, float ty, boolean updatePrevious) {
+    public void translate(float translateX, float translateY, boolean updatePrevious) {
         //Log.e("entity", "translate "+this.name + " isMovable "+isMovable + " isFree "+isFree);
+        this.translateX = translateX;
+        this.translateY = translateY;
+    }
+    
+    public void rotate(float rotateAngle) {
+        this.rotateAngle = rotateAngle;
+        
+    }
+
+    public void scale(float scaleX, float scaleY) {
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+    }
+    
+    
+    public void checkTransformations(){
         if (isMovable && isFree){
-            if (updatePrevious) {
-                this.previousX = this.x;
-                this.previousY = this.y;
-            }
-            this.x += tx;
-            this.y += ty;
+            accumulatedTranslateX += translateX;
+            accumulatedTranslateY += translateY;
+            accumulatedRotate += rotateAngle;    
+            accumulatedScaleX += scaleX;
+            accumulatedScaleY += scaleY;
+            
+            translateX = 0f;
+            translateY = 0f;
+            rotateAngle = 0f;
+            scaleX = 0f;
+            scaleY = 0f;
+        }
+        
+        if (updatePrevious) {
+            // TODO renomear para previousPositionX;
+            previousX = positionX;
+            previousY = positionY;
+        }
+        
+        // TODO considerar rotação?
+        if (accumulatedScaleX != 1f){
+            positionX = x + accumulatedTranslateX - ((accumulatedScaleX * getWidth())-getWidth())/2;
+        } else {
+            positionX = x + accumulatedTranslateX;
+        }
+        
+        if (accumulatedScaleY != 1f){
+            positionY = y + accumulatedTranslateY - ((accumulatedScaleY * getHeight())-getHeight())/2;
+        } else {
+            positionY = y + accumulatedTranslateY;
         }
     }
 
-    public void rotate(float angle) {
-        this.rotateAngle += angle;
-    }
-
-    public void scale(float sx, float sy) {
-        this.scaleX = sx;
-        this.scaleY = sy;
-    }
-
-    // mustBeOverrided
-    public float getMiddlePointX() {
-        return 0f;
-    }
-
-    // mustBeOverrided
-    public float getMiddlePointY() {
-        return 0f;
-    }
-
-    // mustBeOverrided
     public float getWidth() {
         return 0f;
     }
 
-    // mustBeOverrided
     public float getHeight() {
         return 0f;
     }
 
     public void setMatrixModel(){
-        Matrix.setIdentityM(this.matrixModel, 0); // initialize to identity matrix
-        Matrix.translateM(this.matrixModel, 0, this.x + animTranslateX, this.y + animTranslateY, 0);
-
-        if (this.rotateAngle != 0) {
-            Matrix.translateM(this.matrixModel, 0, getMiddlePointX(), getMiddlePointY(), 0);
-            Matrix.setRotateM(mRotationMatrix, 0, this.rotateAngle, 0f, 0f, 1f);
-            matrixTemp = matrixModel.clone();
-            Matrix.multiplyMM(matrixModel, 0, matrixTemp, 0, mRotationMatrix, 0);
-            Matrix.translateM(this.matrixModel, 0, -getMiddlePointX(), -getMiddlePointY(), 0);
-        }
-        if (animScaleX != 1f || animScaleY != 1f || scaleX != 1f || scaleY != 1f) {
-
-
+        Matrix.setIdentityM(matrixModel, 0);
+        Matrix.translateM(matrixModel, 0, positionX + animTranslateX, positionY + animTranslateY, 0);
+        if (accumulatedRotate != 0) {
             float width = getWidth();
             float height = getHeight();
-
-            //Log.e("entity", "name "+name);
-            //Log.e("entity", " w "+width + " h "+height);
-            //Log.e("entity", " animScaleX "+animScaleX + " animScaleY "+animScaleY);
-            //Log.e("entity", " scaleX "+scaleX + " scaleY "+scaleY);
-
+            Matrix.translateM(matrixModel, 0, width/2f, height/2f, 0);
+            Matrix.setRotateM(mRotationMatrix, 0, accumulatedRotate, 0f, 0f, 1f);
+            matrixTemp = matrixModel.clone();
+            Matrix.multiplyMM(matrixModel, 0, matrixTemp, 0, mRotationMatrix, 0);
+            Matrix.translateM(matrixModel, 0, -width/2f, -height/2f, 0);
+        }
+        if (animScaleX != 1f || animScaleY != 1f || accumulatedScaleX != 1f || accumulatedScaleX != 1f) {
+            float width = getWidth();
+            float height = getHeight();
             Matrix.translateM(this.matrixModel, 0, (width)/2, +(height)/2, 0);
-            Matrix.scaleM(matrixModel, 0, scaleX * animScaleX, scaleY * animScaleY, 0);
+            Matrix.scaleM(matrixModel, 0, accumulatedScaleX * animScaleX, accumulatedScaleX * animScaleY, 0);
             Matrix.translateM(this.matrixModel, 0, -(width)/2, -(height)/2, 0);
         }
     }
