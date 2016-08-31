@@ -240,9 +240,8 @@ public class Entity {
         }
     }
 
-    public void translate(float translateX, float translateY, boolean updatePrevious) {
+    public void translate(float translateX, float translateY) {
         //Log.e("entity", "translate "+this.name + " isMovable "+isMovable + " isFree "+isFree);
-        updatePreviouse = updatePrevious;
         this.translateX = translateX;
         this.translateY = translateY;
     }
@@ -261,6 +260,13 @@ public class Entity {
     
     public void checkTransformations(){
         if (isMovable && isFree){
+            
+            if (scaleX != 0 || scaleY != 0){
+                if (polygonData != null){
+                    polygonData = null;
+                }
+            }
+            
             accumulatedTranslateX += translateX;
             accumulatedTranslateY += translateY;
             accumulatedRotate += rotateAngle;    
