@@ -15,11 +15,11 @@ public class Circle extends PhysicalObject {
 
     @Override
     public void updateQuatreeData() {
-        float size = getTransformedWidht();
+        float size = getTransformedRadius();
         this.quadtreeData.setX(positionX - size/2f);
         this.quadtreeData.setY(positionY - size/2f);
-        this.quadtreeData.setWidth(getTransformedRadius()*2f);
-        this.quadtreeData.setHeight(getTransformedRadius()*2f);
+        this.quadtreeData.setWidth(size*2f);
+        this.quadtreeData.setHeight(size*2f);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Circle extends PhysicalObject {
         if(circleData == null) {
             //Log.e("setSatData", "setando data no circle");
             //Log.e("setSatData", "radius "+this.radius);
-            circleData = new SatCircle(new Vector(positionX, positionY), radius);
+            circleData = new SatCircle(new Vector(positionX, positionY), getTransformedRadius());
         } else {
             circleData.pos.x = positionX;
             circleData.pos.y = positionY;
