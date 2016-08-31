@@ -1102,19 +1102,19 @@ public class Game {
             
             // atualiza os dados da entidade, aplicando todas as transformações setadas
             for (int i = 0; i < balls.size(); i++) {
-                balls.get(i).checkTransformations();
+                balls.get(i).checkTransformations(true);
             }
             
             for (int i = 0; i < bars.size(); i++) {
-                bars.get(i).checkTransformations();
+                bars.get(i).checkTransformations(true);
             }
             
              for (int i = 0; i < targets.size(); i++) {
-                targets.get(i).checkTransformations();
+                targets.get(i).checkTransformations(true);
             }
 
             for (int i = 0; i < obstacles.size(); i++) {
-                obstacles.get(i).checkTransformations();
+                obstacles.get(i).checkTransformations(true);
             }
             
             // atualiza posição das windows
