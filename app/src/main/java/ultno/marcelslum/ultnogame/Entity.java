@@ -44,7 +44,6 @@ public class Entity {
     public float animScaleX = 1f;
     public float animScaleY = 1f;
     public float animRotateAngle = 0f;
-    public boolean updatePrevious = false;
     
     public float dX;
     public float dY;
@@ -241,32 +240,27 @@ public class Entity {
     }
 
     public void translate(float translateX, float translateY) {
-        //Log.e("entity", "translate "+this.name + " isMovable "+isMovable + " isFree "+isFree);
         this.translateX = translateX;
         this.translateY = translateY;
     }
     
     public void rotate(float rotateAngle) {
         this.rotateAngle = rotateAngle;
-        
     }
 
-    public void scale(float scaleX, float scaleY, boolean updatePrevious) {
-        updatePreviouse = updatePrevious;
+    public void scale(float scaleX, float scaleY) {
         this.scaleX = scaleX;
         this.scaleY = scaleY;
     }
     
     
-    public void checkTransformations(){
+    public void checkTransformations(boolean updatePrevious){
         if (isMovable && isFree){
-            
             if (scaleX != 0 || scaleY != 0){
                 if (polygonData != null){
                     polygonData = null;
                 }
             }
-            
             accumulatedTranslateX += translateX;
             accumulatedTranslateY += translateY;
             accumulatedRotate += rotateAngle;    
