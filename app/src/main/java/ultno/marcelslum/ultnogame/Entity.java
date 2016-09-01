@@ -19,13 +19,15 @@ public class Entity {
     public Game game;
     public float x;
     public float y;
+    public float positionX;
+    public float positionY;
     public float previousX;
     public float previousY;
     public float rotateAngle = 0f;
     public float translateX = 0f;
     public float translateY = 0f;
-    public float scaleX = 1f;
-    public float scaleY = 1f;
+    public float scaleX = 0f;
+    public float scaleY = 0f;
     public float accumulatedRotate = 0f;
     public float accumulatedTranslateX = 0f;
     public float accumulatedTranslateY = 0f;
@@ -110,6 +112,7 @@ public class Entity {
         previousY = y;
         animations = new ArrayList<Animation>();
         childs = new ArrayList<>();
+        checkTransformations(false);
     }
     
     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
@@ -178,8 +181,7 @@ public class Entity {
         }
     }
 
-    // TODO renomear para clearAnimations();
-    public void resetAnimations() {
+    public void clearAnimations() {
         for (int i = 0; i < this.animations.size(); i++) {
             if (this.animations.get(i).started && this.animations.get(i).name != "ballInvencible") {
                 this.animations.get(i).stopAndConclude();
@@ -199,8 +201,7 @@ public class Entity {
     }
 
     public void reduceAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
-        Animation anim = Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue, 
-            animationListener).start();
+        Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue, animationListener).start();
     }
 
     public void increaseAlpha(int duration, float finalValue){
@@ -208,8 +209,7 @@ public class Entity {
     }
 
     public void increaseAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
-        Animation anim = Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue, 
-            animationListener).start();
+        Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue, animationListener).start();
     }
 
 
@@ -255,6 +255,11 @@ public class Entity {
     
     
     public void checkTransformations(boolean updatePrevious){
+
+        for (int i = 0; i < childs.size(); i++) {
+            childs.get(i).checkTransformations(updatePrevious);
+        }
+
         if (isMovable && isFree){
             if (scaleX != 0 || scaleY != 0){
                 if (polygonData != null){
@@ -281,13 +286,13 @@ public class Entity {
         
         // TODO considerar rotação?
         if (accumulatedScaleX != 1f){
-            positionX = x + accumulatedTranslateX - getTransformedWidth()/2;
+            positionX = x + accumulatedTranslateX - (getTransformedWidth()-getWidth())/2f;
         } else {
             positionX = x + accumulatedTranslateX;
         }
         
         if (accumulatedScaleY != 1f){
-            positionY = y + accumulatedTranslateY - getTransformedHeight()/2;
+            positionY = y + accumulatedTranslateY - (getTransformedHeight()-getHeight())/2f;
         } else {
             positionY = y + accumulatedTranslateY;
         }
@@ -311,7 +316,14 @@ public class Entity {
 
     public void setMatrixModel(){
         Matrix.setIdentityM(matrixModel, 0);
-        Matrix.translateM(matrixModel, 0, positionX + animTranslateX, positionY + animTranslateY, 0);
+
+        if (accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
+            Matrix.translateM(matrixModel, 0, positionX + animTranslateX + (getTransformedWidth() - getWidth()) / 2f,
+                    positionY + animTranslateY, 0);
+        } else {
+            Matrix.translateM(matrixModel, 0, positionX + animTranslateX,
+                    positionY + animTranslateY, 0);
+        }
         if (accumulatedRotate != 0) {
             float width = getWidth();
             float height = getHeight();
@@ -321,11 +333,11 @@ public class Entity {
             Matrix.multiplyMM(matrixModel, 0, matrixTemp, 0, mRotationMatrix, 0);
             Matrix.translateM(matrixModel, 0, -width/2f, -height/2f, 0);
         }
-        if (animScaleX != 1f || animScaleY != 1f || accumulatedScaleX != 1f || accumulatedScaleX != 1f) {
+        if (animScaleX != 1f || animScaleY != 1f || accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
             float width = getWidth();
             float height = getHeight();
             Matrix.translateM(this.matrixModel, 0, (width)/2, (height)/2, 0);
-            Matrix.scaleM(matrixModel, 0, accumulatedScaleX * animScaleX, accumulatedScaleX * animScaleY, 0);
+            Matrix.scaleM(matrixModel, 0, accumulatedScaleX * animScaleX, accumulatedScaleY * animScaleY, 0);
             Matrix.translateM(this.matrixModel, 0, -(width)/2, -(height)/2, 0);
         }
     }

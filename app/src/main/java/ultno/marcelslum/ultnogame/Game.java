@@ -380,6 +380,14 @@ public class Game {
                 Log.e("game", "musicOn");
                 music.start();
             }
+
+            for (int i = 0; i < bars.size(); i++) {
+                if (bars.get(i).changeSize){
+                    bars.get(i).initSizeVariation();
+                }
+
+            }
+
             resetTimeForPointsDecay();
 
             freeAllGameEntities();
@@ -1077,9 +1085,9 @@ public class Game {
                     } else {
                         bars.get(0).vx = 0f;
                     }
-                    
-                    bars.get(0).translate(bars.get(0).vx, 0, true);
-                    
+
+                    bars.get(0).translate(bars.get(0).vx, 0);
+
                     if (bars.size() == 2) {
                         if (button2Left.isPressed) {
                             bars.get(1).vx = -(bars.get(1).dvx * (float) elapsed) / frameDuration;
@@ -1088,35 +1096,19 @@ public class Game {
                         } else {
                             bars.get(1).vx = 0f;
                         }
-                        
-                        bars.get(1).translate(bars.get(1).vx, 0, true);
+
+                        bars.get(1).translate(bars.get(1).vx, 0);
                     }
                 }
             }
 
             // atualiza posição e tamanho dos obstáculos
-            if (levelNumber == 4){
-                obstacles.get(0).scale(0.01f, 1f);
-            }
-            
-            
-            // atualiza os dados da entidade, aplicando todas as transformações setadas
-            for (int i = 0; i < balls.size(); i++) {
-                balls.get(i).checkTransformations(true);
-            }
-            
-            for (int i = 0; i < bars.size(); i++) {
-                bars.get(i).checkTransformations(true);
-            }
-            
-             for (int i = 0; i < targets.size(); i++) {
-                targets.get(i).checkTransformations(true);
-            }
+        }
 
-            for (int i = 0; i < obstacles.size(); i++) {
-                obstacles.get(i).checkTransformations(true);
-            }
-            
+        // atualiza os dados da entidade, aplicando todas as transformações setadas
+        checkTransformations();
+
+        if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
             // atualiza posição das windows
             for (int i = 0; i < windows.size(); i++){
                 if (windows.get(i).isMovable){
@@ -1255,6 +1247,85 @@ public class Game {
         objectivePanel.setValues(ballsNotInvencibleAlive + ballsInvencible, levelObject.minBallsAlive, ballsInvencible);
         if (levelObject.minBallsAlive > ballsNotInvencibleAlive){
             setGameState(GAME_STATE_DERROTA);
+        }
+    }
+    
+    public void checkTransformations(){
+
+        for (int i = 0; i < balls.size(); i++){
+            if (balls.get(i).ballParticleGenerator != null){
+                balls.get(i).ballParticleGenerator.checkTransformations(true);
+            }
+        }
+
+        for (int i = 0; i < balls.size(); i++){
+            balls.get(i).checkTransformations(true);
+        }
+
+        for (int i = 0; i < targets.size(); i++){
+            targets.get(i).checkTransformations(true);
+        }
+
+        for (int i = 0; i < bars.size(); i++){
+            bars.get(i).checkTransformations(true);
+        }
+
+        for (int i = 0; i < obstacles.size(); i++){
+            obstacles.get(i).checkTransformations(true);
+        }
+
+        for (int i = 0; i < targets.size(); i++){
+            if (targets.get(i).showPointsState == Entity.SHOW_POINTS_ON){
+                targets.get(i).checkTransformations(true);
+            }
+        }
+
+        for (int i = 0; i < particleGenerator.size(); i++){
+            particleGenerator.get(i).checkTransformations(true);
+        }
+
+        for (int i = 0; i < windows.size(); i++){
+            windows.get(i).checkTransformations(true);
+        }
+
+        if (menuMain != null) menuMain.checkTransformations(true);
+        if (menuInGame != null) menuInGame.checkTransformations(true);
+        if (menuTutorial != null) menuTutorial.checkTransformations(true);
+        if (selectorLevel != null) selectorLevel.checkTransformations(true);
+        if (selectorVolumn != null) selectorVolumn.checkTransformations(true);
+        if (tittle != null) tittle.checkTransformations(true);
+
+        if (this.gameState == GAME_STATE_TUTORIAL){
+            if (levelObject.tutorials.size() >  this.levelObject.showingTutorial){
+                levelObject.tutorials.get(this.levelObject.showingTutorial).textBox.checkTransformations(true);
+            }
+        }
+
+        messageGameOver.checkTransformations(true);
+        messagePreparation.checkTransformations(true);
+        messageInGame.checkTransformations(true);
+        messageCurrentLevel.checkTransformations(true);
+        messageMaxScoreLevel.checkTransformations(true);
+        messageMaxScoreTotal.checkTransformations(true);
+
+        if (bordaE != null)bordaE.checkTransformations(true);
+        if (bordaD != null)bordaD.checkTransformations(true);
+        if (bordaC != null)bordaC.checkTransformations(true);
+        if (bordaB != null)bordaB.checkTransformations(true);
+
+        if (scorePanel != null) scorePanel.checkTransformations(true);
+        if (objectivePanel != null) objectivePanel.checkTransformations(true);
+
+        if (button1Left != null) button1Left.checkTransformations(true);
+        if (button1Right != null) button1Right.checkTransformations(true);
+        if (button2Left != null) button1Left.checkTransformations(true);
+        if (button2Right != null) button1Right.checkTransformations(true);
+
+        if (buttonMusic != null) buttonMusic.checkTransformations(true);
+        if (buttonSound != null) buttonSound.checkTransformations(true);
+
+        for (int i = 0; i < messages.size(); i++){
+            messages.get(i).checkTransformations(true);
         }
     }
 

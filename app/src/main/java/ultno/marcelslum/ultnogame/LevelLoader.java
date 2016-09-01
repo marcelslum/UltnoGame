@@ -68,16 +68,23 @@ public class LevelLoader {
             if (levelNumber == 3) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
-                                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+                                {0, 1, 0, 4, 0, 1, 2, 0, 0, 0, 4},
                         })
-                        .setTargetsStates(new int[]{0, 1})
+                        .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0)
                         .setWindowsQuantity(1)
                         .setWindowsHeight(0.5f)
                         .setWindowsY(0.4f)
                         .setWindowsDistance(0.2f)
                         .setWindowsQuantityOfLines(6)
-                        .setWindowsVelocity(-0.003f);
+                        .setWindowsVelocity(-0.003f)
+
+                        .setBarsChangeSize(true)
+                        .setBarsIncreaseSizeX(true)
+                        .setBarsSizeVariationVelocityX(0.008f)
+                        .setBarsMaxSizeByInitial(2f)
+                        .setBarsMinSizeByInitial(0.5f);
+
 
                 /*{0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
                 {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},

@@ -12,6 +12,14 @@ import java.util.ArrayList;
 public class Rectangle extends PhysicalObject {
     float width;
     float height;
+    boolean changeSize = false;
+    boolean changeSizeStarted = false;
+    boolean increaseSizeX;
+    boolean increaseSizeY;
+    float maxSizeByInitial;
+    float minSizeByInitial;
+    private float sizeVariationVelocityX;
+    private float sizeVariationVelocityY;
 
     Rectangle(String name, Game game, float x, float y, float width, float height, int weight, Color color){
         super(name, game, x, y, weight);
@@ -70,6 +78,73 @@ public class Rectangle extends PhysicalObject {
     @Override
     public float getTransformedHeight() {
         return height * accumulatedScaleY;
+    }
+
+    public float getWidth(){
+        return width;
+    }
+
+    public float getHeight(){
+        return height;
+    }
+    
+    
+    public void setSizeVariation(float sizeVariationVelocityX, float sizeVariationVelocityY, boolean increaseSizeX, boolean increaseSizeY, float minSizeByInitial, float maxSizeByInitial){
+        changeSize = true;
+        changeSizeStarted = false;
+        this.sizeVariationVelocityX = sizeVariationVelocityX;
+        this.sizeVariationVelocityY = sizeVariationVelocityY;
+        this.increaseSizeX = increaseSizeX;
+        this.increaseSizeY = increaseSizeY;
+        this.minSizeByInitial = minSizeByInitial;
+        this.maxSizeByInitial = maxSizeByInitial;
+    }
+    
+    public void stopSizeVariation(){
+        changeSizeStarted = false;
+    }
+    public void initSizeVariation(){
+        changeSizeStarted = true;
+    }
+    
+
+    @Override
+    public void checkTransformations(boolean updatePrevious) {
+        if (changeSize == true && changeSizeStarted){
+            if (sizeVariationVelocityX > 0f){
+                if (increaseSizeX){
+                    scaleX += sizeVariationVelocityX;
+                    if (accumulatedScaleX + scaleX > ((width*maxSizeByInitial)/width)){
+                        scaleX -= sizeVariationVelocityX*2;
+                        increaseSizeX = false;
+                    }
+                } else {
+                    scaleX -= sizeVariationVelocityX;
+                    if (accumulatedScaleX + scaleX < ((width*minSizeByInitial)/width)){
+                        scaleX += sizeVariationVelocityX*2;
+                        increaseSizeX = true;
+                    }
+                }
+            }
+
+            if (sizeVariationVelocityY > 0f){
+                if (increaseSizeY){
+                    scaleY += sizeVariationVelocityY;
+                    if (accumulatedScaleY + scaleY > ((height*maxSizeByInitial)/height)){
+                        scaleY -= sizeVariationVelocityY*2;
+                        increaseSizeY = false;
+                    }
+                } else {
+                    scaleY -= sizeVariationVelocityY;
+                    if (accumulatedScaleY + scaleY > ((height*minSizeByInitial)/height)){
+                        scaleY += sizeVariationVelocityY*2;
+                        increaseSizeY = true;
+                    }
+                }
+            }
+
+        }
+        super.checkTransformations(updatePrevious);
     }
 
     @Override

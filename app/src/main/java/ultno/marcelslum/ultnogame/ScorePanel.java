@@ -1,8 +1,6 @@
 package ultno.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 /**
  * Created by marcel on 12/08/2016.
  */
@@ -139,7 +137,7 @@ public class ScorePanel extends Entity {
             @Override
             public void onAnimationEnd() {
                 innerScorePanel.displayMessage = false;
-                innerScorePanel.messageText.resetAnimations();
+                innerScorePanel.messageText.clearAnimations();
             }
         });
 

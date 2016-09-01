@@ -37,6 +37,11 @@ public class Level {
     public float[] barsY_BR;
     public float[] barsVX_BR;
     public float[] barsVY_BR;
+    public boolean [] barsChangeSize;
+    public boolean [] barsIncreaseSizeX;
+    public float [] barsMinSizeByInitial;
+    public float [] barsMaxSizeByInitial;
+    public float [] barsSizeVariationVelocityX;
     public float targetWidth_BR;
     public float targetHeight_BR;
     public float targetsDistance_BR;
@@ -81,6 +86,11 @@ public class Level {
         this.barsY_BR = LevelBuilder.barsY_BR;
         this.barsVX_BR = LevelBuilder.barsVX_BR;
         this.barsVY_BR = LevelBuilder.barsVY_BR;
+        this.barsChangeSize = LevelBuilder.barsChangeSize;
+        this.barsIncreaseSizeX = LevelBuilder.barsIncreaseSizeX;
+        this.barsMinSizeByInitial = LevelBuilder.barsMinSizeByInitial;
+        this.barsMaxSizeByInitial = LevelBuilder.barsMaxSizeByInitial;
+        this.barsSizeVariationVelocityX = LevelBuilder.barsSizeVariationVelocityX;
         this.targetWidth_BR = LevelBuilder.targetsWidht_BR;
         this.targetHeight_BR = LevelBuilder.targetsHeight_BR;
         this.targetsDistance_BR = LevelBuilder.targetsDistance_BXR;
@@ -164,7 +174,7 @@ public class Level {
         } else {
             back = game.levelNumber % 10;
         }
-        Utils.setTexture("drawable/backclaro", game.texturenames, Game.TEXTURE_BACKGROUND, game.context); // background
+        Utils.setTexture("drawable/finalback1", game.texturenames, Game.TEXTURE_BACKGROUND, game.context); // background
         this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.resolutionY);
 
         //Log.e("Level loadEnt", "1");
@@ -342,6 +352,9 @@ public class Level {
             bar.initialY = barY;
             bar.initialDesireVelocityX = barVelocityX;
             bar.dvx = barVelocityX;
+            if (barsChangeSize[i]) {
+                bar.setSizeVariation(barsSizeVariationVelocityX[i], 0f, true, true, barsMinSizeByInitial[i], barsMaxSizeByInitial[i]);
+            }
         }
 
         float targetWidth = game.gameAreaResolutionX * game.levelObject.targetWidth_BR;
@@ -527,6 +540,12 @@ public class Level {
         private static float[] barsY_BR = new float[]{default_barsY_BR};
         private static float[] barsVX_BR = new float[]{default_barsVX_BR};
         private static float[] barsVY_BR = new float[]{0f};
+        private static boolean[] barsChangeSize = new boolean[]{false};
+        private static boolean[] barsIncreaseSizeX = new boolean[]{true};
+        private static float[] barsMinSizeByInitial = new float[]{0f};
+        private static float[] barsMaxSizeByInitial = new float[]{0f};
+        private static float[] barsSizeVariationVelocityX = new float[]{0f};
+
         private static float targetsWidht_BR = 0.1f;
         private static float targetsHeight_BR = 0.1f;
         private static float targetsDistance_BXR = 0.01f;
@@ -727,6 +746,46 @@ public class Level {
             this.barsVY_BR = new float[barsVY_BR.length];
             for (int i = 0; i < barsVY_BR.length; i++){
                 this.barsVY_BR[i] = barsVY_BR[i];
+            }
+            return this;
+        }
+
+        public LevelBuilder setBarsChangeSize(boolean... barsChangeSize) {
+            this.barsChangeSize = new boolean[barsChangeSize.length];
+            for (int i = 0; i < barsChangeSize.length; i++){
+                this.barsChangeSize[i] = barsChangeSize[i];
+            }
+            return this;
+        }
+
+        public LevelBuilder setBarsIncreaseSizeX(boolean... barsIncreaseSizeX) {
+            this.barsIncreaseSizeX = new boolean[barsIncreaseSizeX.length];
+            for (int i = 0; i < barsIncreaseSizeX.length; i++){
+                this.barsIncreaseSizeX[i] = barsIncreaseSizeX[i];
+            }
+            return this;
+        }
+
+        public LevelBuilder setBarsMinSizeByInitial(float... barsMinSizeByInitial) {
+            this.barsMinSizeByInitial = new float[barsMinSizeByInitial.length];
+            for (int i = 0; i < barsMinSizeByInitial.length; i++){
+                this.barsMinSizeByInitial[i] = barsMinSizeByInitial[i];
+            }
+            return this;
+        }
+
+        public LevelBuilder setBarsMaxSizeByInitial(float... barsMaxSizeByInitial) {
+            this.barsMaxSizeByInitial = new float[barsMaxSizeByInitial.length];
+            for (int i = 0; i < barsMaxSizeByInitial.length; i++){
+                this.barsMaxSizeByInitial[i] = barsMaxSizeByInitial[i];
+            }
+            return this;
+        }
+
+        public LevelBuilder setBarsSizeVariationVelocityX(float... barsSizeVariationVelocityX) {
+            this.barsSizeVariationVelocityX = new float[barsSizeVariationVelocityX.length];
+            for (int i = 0; i < barsSizeVariationVelocityX.length; i++){
+                this.barsSizeVariationVelocityX[i] = barsSizeVariationVelocityX[i];
             }
             return this;
         }

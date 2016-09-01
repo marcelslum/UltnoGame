@@ -120,25 +120,19 @@ public class Ball extends Circle{
     }
     
     @Override
-    public void translate(float tx, float ty, boolean updatePrevious) {
+    public void translate(float tx, float ty) {
+        super.translate(tx, ty);
         if (isMovable && isFree){
             if (historicPositionX.size() < 20){
-                historicPositionX.add(this.x);
-                historicPositionY.add(this.y);
+                historicPositionX.add(x + accumulatedTranslateX + tx);
+                historicPositionY.add(y + accumulatedTranslateY + ty);
             } else {
-                historicPositionX.add(0, this.x);
+                historicPositionX.add(0, x + accumulatedTranslateX + tx);
                 historicPositionX.remove(20);
-                historicPositionY.add(0, this.y);
+                historicPositionY.add(0, y + accumulatedTranslateY + ty);
                 historicPositionY.remove(20);
             }
-            if (updatePrevious) {
-                this.previousX = this.x;
-                this.previousY = this.y;
-            }
-            this.x += tx;
-            this.y += ty;
 
-            //Log.e("ball", " historicPositionX "+historicPositionX.size());
 
             int numberOfParticles = 0;
             for (int i = 0; i < historicPositionX.size(); i++){
@@ -169,10 +163,6 @@ public class Ball extends Circle{
                 }
                 ballParticleGenerator.generate(historicPositionX.get(i), historicPositionY.get(i), radius, numberOfParticles);
             }
-
-
-            //Log.e("ball", "ballParticleGenerator.particlesArray.size() "+ballParticleGenerator.particlesArray.size());
-
         }
     }
 
@@ -387,8 +377,9 @@ public class Ball extends Circle{
     }
     
     public void explode(){
-        resetAnimations();
-        ParticleGenerator pg = new ParticleGenerator("explode", game, x, y, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3);
+        clearAnimations();
+        ParticleGenerator pg = new ParticleGenerator("explode", game, x + accumulatedTranslateX, y + accumulatedTranslateY,
+                Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3);
         game.particleGenerator.add(pg);
         pg.activate();
 
@@ -432,18 +423,18 @@ public class Ball extends Circle{
         
         for (int i = 0; i < quantityOfClones; i++){
             if (i == 0){
-                explodeX = x - distance;
-                explodeY = y;
+                explodeX = x - distance + accumulatedTranslateX;
+                explodeY = y + accumulatedTranslateY;
                 explodeVelocityX = rotateX * -1;
                 explodeVelocityY = rotateY * -1;
             } else if (i == 1){
-                explodeX = x - distance;
-                explodeY = y + distance;
+                explodeX = x - distance + accumulatedTranslateX;
+                explodeY = y + distance + accumulatedTranslateY;
                 explodeVelocityX = rotateX * -1;
                 explodeVelocityY = rotateY;
             } else if (i == 2){
-                explodeX = x;
-                explodeY = y + distance;
+                explodeX = x + accumulatedTranslateX;
+                explodeY = y + distance + accumulatedTranslateY;
                 explodeVelocityX = rotateX;
                 explodeVelocityY = rotateY;
             }

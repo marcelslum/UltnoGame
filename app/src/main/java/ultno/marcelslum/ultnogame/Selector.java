@@ -46,9 +46,12 @@ public class Selector extends Entity{
         if (text != ""){
             mainTextObject = new Text("selector"+text+"Text", game, x, y, size, text, this.font);
             mainTextWidth = (mainTextObject.calculateWidth()) + (size*0.75f);
+            addChild(mainTextObject);
         } else {
             mainTextWidth = 0f;
         }
+
+
 
         for (int i = 0; i < values.length; i++){
             //Log.e("selector", " "+values[i]);
@@ -56,6 +59,9 @@ public class Selector extends Entity{
             float width = textsObjects[i].calculateWidth();
             textsObjects[i].setX(mainTextWidth + x - (width/2));
             if (width > maxWidth) maxWidth = width;
+
+            addChild(textsObjects[i]);
+
         }
 
         float buttonSize = size*0.90f;
@@ -73,6 +79,7 @@ public class Selector extends Entity{
                 }
             }
         });
+        addChild(arrowUp);
 
         arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         arrowDown.setTextureMap(15);
@@ -86,6 +93,7 @@ public class Selector extends Entity{
                 }
             }
         });
+        addChild(arrowDown);
 
         float arrowBackX;
         if (text == "") {
@@ -98,6 +106,7 @@ public class Selector extends Entity{
         arrowBack.setTextureMap(13);
         arrowBack.textureMapUnpressed = 13;
         arrowBack.textureMapPressed = 5;
+        addChild(arrowBack);
 
 
         arrowBack.setOnPress(new Button.OnPress() {

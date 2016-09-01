@@ -39,7 +39,7 @@ public class Background extends Entity {
         isVisible = true;
         textureUnit = Game.TEXTURE_BACKGROUND;
         program = game.imageColorizedFxProgram;
-        this.alpha = 1f;
+        this.alpha = 0.8f;
 
         uvXUp = true;
         uvYUp = true;
