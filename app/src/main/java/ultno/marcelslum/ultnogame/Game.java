@@ -544,9 +544,7 @@ public class Game {
             Utils.createSimpleAnimation(scorePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY * 0.1f, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
-
                             float initialTranslateY = - innerGame.gameAreaResolutionY * 0.1f;
-
                             ArrayList<float[]> valuesAnimScoreTX = new ArrayList<>();
                             valuesAnimScoreTX.add(new float[]{0f,0f});
                             valuesAnimScoreTX.add(new float[]{0.3f,-10f});
@@ -573,7 +571,6 @@ public class Game {
             innerGame.levelObject.loadEntities();
             verifyDead();
         }
-
     }
 
     public void stopAndReleaseMusic(){
@@ -1167,6 +1164,8 @@ public class Game {
                     }
                 }
             }
+            
+            
             checkCollision(balls, true, true);
         }
         
@@ -1421,8 +1420,7 @@ public class Game {
         }
     }
 
-    public boolean checkCollision(ArrayList<? extends Entity> aEntities, boolean respondToCollision, boolean updateLastCollisionResponse){
-
+    public boolean checkCollision(ArrayList<? extends Entity> aEntities, boolean respondToCollision, boolean updateCollisionsData){
         boolean collided = false;
         boolean isHadCollision = false;
         ArrayList<Entity> out;
@@ -1443,7 +1441,7 @@ public class Game {
                         PhysicalObject b = (PhysicalObject)out.get(bCount);
 
                         // verifica se a entidade não é a mesma e se elas são colidíveis
-                        if ((a.isSolid && b.isSolid) && (a.isMovable || b.isMovable) && (b != a)){
+                        if ((a.isSolid && b.isSolid) && (b != a)){
 
                             // seta os dados da entidade 'a' e da entidade 'b'
                             a.setSatData();
@@ -1566,7 +1564,6 @@ public class Game {
 
                                 //Log.e("test posicoes", "a.y"+aPosAConsiderarY + " b.y"+bPosAConsiderarY);
 
-
                                 if (aType == false){
                                     this.polygon1.pos.x = aPosAConsiderarX;
                                     this.polygon1.pos.y = aPosAConsiderarY;
@@ -1624,36 +1621,10 @@ public class Game {
                                     b.isCollided = true;
                                     a.respondToCollision(b, -response.overlapV.x, -response.overlapV.y, aPosAConsiderarX, aPosAConsiderarY, bPosAConsiderarX, bPosAConsiderarY);
                                 }
-
-                                if (updateLastCollisionResponse){
-                                    a.lastCollisionResponse.add(new Vector(-response.overlapV.x,-response.overlapV.y));
-
-                                    boolean exists = false;
-                                    for (int i = 0; i < a.lastCollisionObjects.size(); i++){
-                                        if (a.lastCollisionObjects.get(i) == b){
-                                            exists = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!exists){
-                                        //console.log("inserindo entidade ", b.name, " na entidade ", a.name);
-                                        a.lastCollisionObjects.add(b);
-                                    }
-
-                                    b.lastCollisionResponse.add(new Vector(response.overlapV.x,response.overlapV.y));
-
-                                    exists = false;
-                                    for (int i = 0; i < b.lastCollisionObjects.size(); i++){
-                                        if (b.lastCollisionObjects.get(i) == a){
-                                            exists = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!exists){
-                                        b.lastCollisionObjects.add(a);
-                                    }
+                                
+                                if (updateCollisionsData){
+                                    a.collisionsData.add(new CollisionsData(b, -response.overlapV.x, -response.overlapV.y, b.weight));
+                                    b.collisionsData.add(new CollisionsData(a, response.overlapV.x, response.overlapV.y, a.weight));
                                 }
                             }
                         }
