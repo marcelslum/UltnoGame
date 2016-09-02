@@ -1164,8 +1164,6 @@ public class Game {
                     }
                 }
             }
-            
-            
             checkCollision(balls, true, true);
         }
         
