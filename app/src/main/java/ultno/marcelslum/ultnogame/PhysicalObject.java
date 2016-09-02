@@ -16,8 +16,7 @@ public class PhysicalObject extends Entity{
     public float dvx;
     public float dvy;
     public boolean isCollided;
-    public ArrayList<Vector> lastCollisionResponse;
-    public ArrayList<PhysicalObject> lastCollisionObjects;
+    public ArrayList<CollisionData> collisionsData;
     public boolean accelStarted;
     public float accelInitialVelocityX;
     public float accelInitialVelocityY;
@@ -46,8 +45,7 @@ public class PhysicalObject extends Entity{
         isCollided = false;
         isCollidable = true;
         isSolid = true;
-        lastCollisionResponse = new ArrayList<Vector>();
-        lastCollisionObjects = new ArrayList<PhysicalObject>();
+        collisionsData = new ArrayList<CollisionData>();
         accelStarted = false;
         accelInitialVelocityX = 0.0f;
         accelInitialVelocityY = 0.0f;
@@ -69,7 +67,6 @@ public class PhysicalObject extends Entity{
     }
 
     public void respondToCollision(PhysicalObject other, float responseX, float responseY, float ax, float ay, float bx, float by) {
-        //console.log("response dentro de respondColission ", vector_response.x,", ", vector_response.y);
 
         this.accumulatedTranslateX += ax - this.positionX;
         this.accumulatedTranslateY += ay - this.positionY;
@@ -147,8 +144,7 @@ public class PhysicalObject extends Entity{
     }
 
     public void clearCollisionData() {
-        this.lastCollisionResponse.clear();
-        this.lastCollisionObjects.clear();
+        this.collisionsData.clear()
         this.isCollided = false;
     }
 }
