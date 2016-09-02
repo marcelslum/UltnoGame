@@ -1,7 +1,6 @@
 package ultno.marcelslum.ultnogame;
 
 
-import android.graphics.PointF;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,14 +11,7 @@ import java.util.ArrayList;
 public class Rectangle extends PhysicalObject {
     float width;
     float height;
-    boolean changeSize = false;
-    boolean changeSizeStarted = false;
-    boolean increaseSizeX;
-    boolean increaseSizeY;
-    float maxSizeByInitial;
-    float minSizeByInitial;
-    private float sizeVariationVelocityX;
-    private float sizeVariationVelocityY;
+    ScaleVariationData scaleVariationData;
 
     Rectangle(String name, Game game, float x, float y, float width, float height, int weight, Color color){
         super(name, game, x, y, weight);
@@ -89,60 +81,61 @@ public class Rectangle extends PhysicalObject {
     }
     
     
-    public void setSizeVariation(float sizeVariationVelocityX, float sizeVariationVelocityY, boolean increaseSizeX, boolean increaseSizeY, float minSizeByInitial, float maxSizeByInitial){
-        changeSize = true;
-        changeSizeStarted = false;
-        this.sizeVariationVelocityX = sizeVariationVelocityX;
-        this.sizeVariationVelocityY = sizeVariationVelocityY;
-        this.increaseSizeX = increaseSizeX;
-        this.increaseSizeY = increaseSizeY;
-        this.minSizeByInitial = minSizeByInitial;
-        this.maxSizeByInitial = maxSizeByInitial;
+    public void setScaleVariation(ScaleVariationDataBuilder builder){
+        scaleVariationData = builder.build();
     }
     
-    public void stopSizeVariation(){
-        changeSizeStarted = false;
+    public void stopScaleVariation(){
+        if (scaleVariationData != null) {
+            scaleVariationData.isActive = false;
+        }
     }
-    public void initSizeVariation(){
-        changeSizeStarted = true;
+
+    public void initScaleVariation(){
+        if (scaleVariationData != null) {
+            scaleVariationData.isActive = true;
+        }
     }
     
 
     @Override
     public void checkTransformations(boolean updatePrevious) {
-        if (changeSize == true && changeSizeStarted){
-            if (sizeVariationVelocityX > 0f){
-                if (increaseSizeX){
-                    scaleX += sizeVariationVelocityX;
-                    if (accumulatedScaleX + scaleX > ((width*maxSizeByInitial)/width)){
-                        scaleX -= sizeVariationVelocityX*2;
-                        increaseSizeX = false;
+
+        if (scaleVariationData != null){
+            ScaleVariationData s = scaleVariationData;
+            if (s.isActive){
+                if (s.widthVelocity > 0f){
+                    if (s.increaseWidth){
+                        scaleX += s.widthVelocity;
+                        if (accumulatedScaleX + scaleX > ((width*s.maxWidth_BI)/width)){
+                            scaleX -= s.widthVelocity*2;
+                            s.increaseWidth = false;
+                        }
+                    } else {
+                        scaleX -= s.widthVelocity;
+                        if (accumulatedScaleX + scaleX < ((width*s.minWidth_BI)/width)){
+                            scaleX += s.widthVelocity*2;
+                            s.increaseWidth = true;
+                        }
                     }
-                } else {
-                    scaleX -= sizeVariationVelocityX;
-                    if (accumulatedScaleX + scaleX < ((width*minSizeByInitial)/width)){
-                        scaleX += sizeVariationVelocityX*2;
-                        increaseSizeX = true;
+                }
+
+                if (s.heightVelocity > 0f){
+                    if (s.increaseHeight){
+                        scaleY += s.heightVelocity;
+                        if (accumulatedScaleY + scaleY > ((height*s.maxHeight_BI)/height)){
+                            scaleY -= s.heightVelocity*2;
+                            s.increaseHeight = false;
+                        }
+                    } else {
+                        scaleY -= s.heightVelocity;
+                        if (accumulatedScaleY + scaleY > ((height*s.minHeight_BI)/height)){
+                            scaleY += s.heightVelocity*2;
+                            s.increaseHeight = true;
+                        }
                     }
                 }
             }
-
-            if (sizeVariationVelocityY > 0f){
-                if (increaseSizeY){
-                    scaleY += sizeVariationVelocityY;
-                    if (accumulatedScaleY + scaleY > ((height*maxSizeByInitial)/height)){
-                        scaleY -= sizeVariationVelocityY*2;
-                        increaseSizeY = false;
-                    }
-                } else {
-                    scaleY -= sizeVariationVelocityY;
-                    if (accumulatedScaleY + scaleY > ((height*minSizeByInitial)/height)){
-                        scaleY += sizeVariationVelocityY*2;
-                        increaseSizeY = true;
-                    }
-                }
-            }
-
         }
         super.checkTransformations(updatePrevious);
     }

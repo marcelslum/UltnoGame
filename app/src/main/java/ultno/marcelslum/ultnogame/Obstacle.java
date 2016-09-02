@@ -24,5 +24,4 @@ public class Obstacle extends Rectangle{
         Utils.insertRectangleUvDataNumbersExplosion(uvsData, 0, 30);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
-
 }

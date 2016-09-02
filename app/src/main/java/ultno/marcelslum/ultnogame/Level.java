@@ -37,11 +37,7 @@ public class Level {
     public float[] barsY_BR;
     public float[] barsVX_BR;
     public float[] barsVY_BR;
-    public boolean [] barsChangeSize;
-    public boolean [] barsIncreaseSizeX;
-    public float [] barsMinSizeByInitial;
-    public float [] barsMaxSizeByInitial;
-    public float [] barsSizeVariationVelocityX;
+    public ScaleVariationDataBuilder[] barsScaleVariationData;
     public float targetWidth_BR;
     public float targetHeight_BR;
     public float targetsDistance_BR;
@@ -53,6 +49,7 @@ public class Level {
     public float[] obstaclesHeight_BR;
     public float[] obstaclesX_BR;
     public float[] obstaclesY_BR;
+    public ScaleVariationDataBuilder[] obstaclesScaleVariationData;
     public int windowsQuantity;
     public float[] windowsY;
     public float[] windowsHeight;
@@ -86,11 +83,7 @@ public class Level {
         this.barsY_BR = LevelBuilder.barsY_BR;
         this.barsVX_BR = LevelBuilder.barsVX_BR;
         this.barsVY_BR = LevelBuilder.barsVY_BR;
-        this.barsChangeSize = LevelBuilder.barsChangeSize;
-        this.barsIncreaseSizeX = LevelBuilder.barsIncreaseSizeX;
-        this.barsMinSizeByInitial = LevelBuilder.barsMinSizeByInitial;
-        this.barsMaxSizeByInitial = LevelBuilder.barsMaxSizeByInitial;
-        this.barsSizeVariationVelocityX = LevelBuilder.barsSizeVariationVelocityX;
+        this.barsScaleVariationData = LevelBuilder.barsScaleVariationData;
         this.targetWidth_BR = LevelBuilder.targetsWidht_BR;
         this.targetHeight_BR = LevelBuilder.targetsHeight_BR;
         this.targetsDistance_BR = LevelBuilder.targetsDistance_BXR;
@@ -102,6 +95,7 @@ public class Level {
         this.obstaclesHeight_BR = LevelBuilder.obstaclesHeight_BR;
         this.obstaclesX_BR = LevelBuilder.obstaclesX_BR;
         this.obstaclesY_BR = LevelBuilder.obstaclesY_BR;
+        this.obstaclesScaleVariationData = LevelBuilder.obstaclesScaleVariationData;
         this.windowsQuantity = LevelBuilder.windowsQuantity;
         this.windowsY = LevelBuilder.windowsY;
         this.windowsHeight = LevelBuilder.windowsHeight;
@@ -352,8 +346,8 @@ public class Level {
             bar.initialY = barY;
             bar.initialDesireVelocityX = barVelocityX;
             bar.dvx = barVelocityX;
-            if (barsChangeSize[i]) {
-                bar.setSizeVariation(barsSizeVariationVelocityX[i], 0f, true, true, barsMinSizeByInitial[i], barsMaxSizeByInitial[i]);
+            if (barsScaleVariationData != null) {
+                bar.setScaleVariation(barsScaleVariationData[i]);
             }
         }
 
@@ -396,7 +390,13 @@ public class Level {
             float obstacleY = game.gameAreaResolutionY * this.obstaclesY_BR[i];
             float obstacleWidth = game.gameAreaResolutionX * obstaclesWidth_BR[i];
             float obstacleHeight = game.gameAreaResolutionY * obstaclesHeight_BR[i];
-            game.addObstacle(new Obstacle("obstacle", game, obstacleX, obstacleY, obstacleWidth, obstacleHeight));
+            Obstacle obstacle = new Obstacle("obstacle", game, obstacleX, obstacleY, obstacleWidth, obstacleHeight);
+            if (obstaclesScaleVariationData != null) {
+                Log.e("level", "setting obstacle scale variation data");
+
+                obstacle.setScaleVariation(obstaclesScaleVariationData[i]);
+            }
+            game.addObstacle(obstacle);
         }
         
         for (int i = 0; i < this.windowsQuantity; i++){
@@ -540,12 +540,7 @@ public class Level {
         private static float[] barsY_BR = new float[]{default_barsY_BR};
         private static float[] barsVX_BR = new float[]{default_barsVX_BR};
         private static float[] barsVY_BR = new float[]{0f};
-        private static boolean[] barsChangeSize = new boolean[]{false};
-        private static boolean[] barsIncreaseSizeX = new boolean[]{true};
-        private static float[] barsMinSizeByInitial = new float[]{0f};
-        private static float[] barsMaxSizeByInitial = new float[]{0f};
-        private static float[] barsSizeVariationVelocityX = new float[]{0f};
-
+        private static ScaleVariationDataBuilder[] barsScaleVariationData;
         private static float targetsWidht_BR = 0.1f;
         private static float targetsHeight_BR = 0.1f;
         private static float targetsDistance_BXR = 0.01f;
@@ -557,13 +552,13 @@ public class Level {
         private static float[] obstaclesHeight_BR;
         private static float[] obstaclesX_BR;
         private static float[] obstaclesY_BR;
+        private static ScaleVariationDataBuilder[] obstaclesScaleVariationData;
         private static int windowsQuantity;
         private static float[] windowsY;
         private static float[] windowsHeight;
         private static int[] windowsQuantityOfLines;
         private static float[] windowsDistance;
         private static float[] windowsVelocity;
-        
 
         public LevelBuilder game(Game game) {
             this.game = game;
@@ -750,43 +745,16 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBarsChangeSize(boolean... barsChangeSize) {
-            this.barsChangeSize = new boolean[barsChangeSize.length];
-            for (int i = 0; i < barsChangeSize.length; i++){
-                this.barsChangeSize[i] = barsChangeSize[i];
+        public LevelBuilder setBarsScaleVariation(ScaleVariationDataBuilder... data){
+            this.barsScaleVariationData = new ScaleVariationDataBuilder[data.length];
+            for (int i = 0; i < data.length; i++){
+                this.barsScaleVariationData[i] = data[i];
             }
             return this;
         }
 
-        public LevelBuilder setBarsIncreaseSizeX(boolean... barsIncreaseSizeX) {
-            this.barsIncreaseSizeX = new boolean[barsIncreaseSizeX.length];
-            for (int i = 0; i < barsIncreaseSizeX.length; i++){
-                this.barsIncreaseSizeX[i] = barsIncreaseSizeX[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBarsMinSizeByInitial(float... barsMinSizeByInitial) {
-            this.barsMinSizeByInitial = new float[barsMinSizeByInitial.length];
-            for (int i = 0; i < barsMinSizeByInitial.length; i++){
-                this.barsMinSizeByInitial[i] = barsMinSizeByInitial[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBarsMaxSizeByInitial(float... barsMaxSizeByInitial) {
-            this.barsMaxSizeByInitial = new float[barsMaxSizeByInitial.length];
-            for (int i = 0; i < barsMaxSizeByInitial.length; i++){
-                this.barsMaxSizeByInitial[i] = barsMaxSizeByInitial[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBarsSizeVariationVelocityX(float... barsSizeVariationVelocityX) {
-            this.barsSizeVariationVelocityX = new float[barsSizeVariationVelocityX.length];
-            for (int i = 0; i < barsSizeVariationVelocityX.length; i++){
-                this.barsSizeVariationVelocityX[i] = barsSizeVariationVelocityX[i];
-            }
+        public LevelBuilder setBarsScaleVariationOff(){
+            this.barsScaleVariationData = null;
             return this;
         }
 
@@ -854,6 +822,19 @@ public class Level {
             for (int i = 0; i < obstaclesY_BR.length; i++){
                 this.obstaclesY_BR[i] = obstaclesY_BR[i];
             }
+            return this;
+        }
+
+        public LevelBuilder setObstaclesScaleVariation(ScaleVariationDataBuilder... data){
+            this.obstaclesScaleVariationData = new ScaleVariationDataBuilder[data.length];
+            for (int i = 0; i < data.length; i++){
+                this.obstaclesScaleVariationData[i] = data[i];
+            }
+            return this;
+        }
+
+        public LevelBuilder setObstaclesScaleVariationOff(){
+            this.obstaclesScaleVariationData = null;
             return this;
         }
         

@@ -14,7 +14,9 @@ public class LevelLoader {
                 .setTargetsWidth(0.0895f)
                 .setTargetsHeight(0.04f)
                 .setTargetsDistance(0.001f)
-                .setTargetsPadding(0.00225f);
+                .setTargetsPadding(0.00225f)
+                .setBarsScaleVariationOff()
+                .setObstaclesScaleVariationOff();
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(
                     new int[][]{
@@ -78,13 +80,11 @@ public class LevelLoader {
                         .setWindowsDistance(0.2f)
                         .setWindowsQuantityOfLines(6)
                         .setWindowsVelocity(-0.003f)
-
-                        .setBarsChangeSize(true)
-                        .setBarsIncreaseSizeX(true)
-                        .setBarsSizeVariationVelocityX(0.008f)
-                        .setBarsMaxSizeByInitial(2f)
-                        .setBarsMinSizeByInitial(0.5f);
-
+                        .setBarsScaleVariation(new ScaleVariationDataBuilder()
+                                .setIsActive(false)
+                                .setWidthVelocity(0.01f)
+                                .setMinWidth_BI(2f)
+                                .setMaxWidth_BI(0.5f));
 
                 /*{0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
                 {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
@@ -101,12 +101,24 @@ public class LevelLoader {
 
         if (levelNumber >= 4) {
             levelBuilder
+                    .setBallsQuantity(1)
                     .setBallsX_B1(0.1f)
                     .setBallsY_B1(0.6f)
+
+                    // deletar após teste
+                    .setBallsX_B1(0.1f)
+                    .setBallsY_B1(0.5f)
+                    .setBallsVX(0f)
+                    .setBallsVY(0f)
+
+                    //
+
                     .setBallsAngleToRotate_BD_2(1.1f)
                     .setBarsWidth_BD_0_22(0.818f)
                     .setBarsVX_BD_0_0045(1.111f)
-                    .setTargetsWidth(0.075176f);
+                    .setTargetsWidth(0.075176f)
+                    .setBarsScaleVariationOff()
+                    .setObstaclesScaleVariationOff();
             if (levelNumber == 4) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
@@ -116,10 +128,21 @@ public class LevelLoader {
                         })
                         .setTargetsStates(new int[]{0, 1})
                         .setObstaclesQuantity(1)
-                        .setObstaclesX(0.4f)
+                        .setObstaclesX(0.2f)
                         .setObstaclesY(0.4f)
                         .setObstaclesWidth(0.2f)
-                        .setObstaclesHeight(0.04f)
+                        //.setObstaclesHeight(0.02f)
+                        .setObstaclesHeight(0.3f)
+
+                        .setObstaclesScaleVariation(
+                            new ScaleVariationDataBuilder()
+                            .setIsActive(false)
+                            .setIncreaseWidth(true)
+                            .setWidthVelocity(0.01f)
+                            .setMinWidth_BI(0.5f)
+                            .setMaxWidth_BI(3)
+                        )
+
                         .setWindowsQuantity(0);
             }
         }

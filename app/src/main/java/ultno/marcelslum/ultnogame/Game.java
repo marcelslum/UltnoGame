@@ -382,10 +382,15 @@ public class Game {
             }
 
             for (int i = 0; i < bars.size(); i++) {
-                if (bars.get(i).changeSize){
-                    bars.get(i).initSizeVariation();
+                if (bars.get(i).scaleVariationData != null){
+                    bars.get(i).initScaleVariation();
                 }
+            }
 
+            for (int i = 0; i < obstacles.size(); i++) {
+                if (obstacles.get(i).scaleVariationData != null){
+                    obstacles.get(i).initScaleVariation();
+                }
             }
 
             resetTimeForPointsDecay();
@@ -1070,7 +1075,6 @@ public class Game {
                 ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
                 ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
                 ball.translate(ball.vx, ball.vy);
-                ball.clearCollisionData();
             }
         }
 
@@ -1120,18 +1124,22 @@ public class Game {
             // insere as entidades no quadtree
             for (int i = 0; i < balls.size(); i++) {
                 quad.insert(balls.get(i));
+                balls.get(i).clearCollisionData();
             }
             
             for (int i = 0; i < bars.size(); i++) {
                 quad.insert(bars.get(i));
+                bars.get(i).clearCollisionData();
             }
             
             for (int i = 0; i < targets.size(); i++) {
                 quad.insert(targets.get(i));
+                targets.get(i).clearCollisionData();
             }
 
             for (int i = 0; i < obstacles.size(); i++) {
                 quad.insert(obstacles.get(i));
+                obstacles.get(i).clearCollisionData();
             }
             
             quad.insert(bordaE);
@@ -1155,6 +1163,7 @@ public class Game {
                         if (!collision){
                             balls.get(i).explode();
                         }
+                        balls.get(i).clearCollisionData();
                     }
                 }
             }
@@ -1164,6 +1173,7 @@ public class Game {
         // verifica a colisão da barra
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
             checkCollision(bars, true, true);
+            checkCollision(obstacles, true, true);
             quad.clear();
         }
         

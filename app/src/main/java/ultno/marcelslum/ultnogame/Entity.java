@@ -260,7 +260,7 @@ public class Entity {
             childs.get(i).checkTransformations(updatePrevious);
         }
 
-        if (isMovable && isFree){
+        if (isFree){
             if (scaleX != 0 || scaleY != 0){
                 if (polygonData != null){
                     polygonData = null;

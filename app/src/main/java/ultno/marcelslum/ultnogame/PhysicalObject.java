@@ -62,11 +62,6 @@ public class PhysicalObject extends Entity{
         updateBoundsState = 0;
     }
 
-    public void cleanCollisionData(){
-        this.isCollided = false;
-        this.lastCollisionResponse.clear();
-        this.lastCollisionObjects.clear();
-    }
 
     public RectangleM getQuadtreeData() {
         this.updateQuatreeData();
@@ -80,6 +75,20 @@ public class PhysicalObject extends Entity{
         this.accumulatedTranslateY += ay - this.positionY;
         other.accumulatedTranslateX += bx - other.positionX;
         other.accumulatedTranslateY += by - other.positionY;
+
+        if (name == "ball"){
+            if (other.name == "obstacle"){
+                Log.e("physicalObject", "objetos colididos com a bola que colide com o obstaculo");
+                Log.e("physicalObject", "responseX "+responseX);
+                Log.e("physicalObject", "responseY "+responseY);
+                for (int i = 0; i < other.lastCollisionObjects.size(); i++){
+                    Log.e("physicalObject", other.lastCollisionObjects.get(i).name);
+                    Log.e("physicalObject", "response objeto x"+other.lastCollisionResponse.get(i).x);
+                    Log.e("physicalObject", "response objeto y"+other.lastCollisionResponse.get(i).y);
+                }
+            }
+        }
+
         
         if (this.isSolid && other.isSolid) {
             if (this.weight > other.weight) {// Move the other object out of us
