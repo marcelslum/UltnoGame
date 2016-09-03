@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by marcel on 01/08/2016.
  */
-public class Entity {
+public class Entity{
     final public static int SHOW_POINTS_ON = 1;
     final public static int SHOW_POINTS_OFF = 0;
 
@@ -317,9 +317,13 @@ public class Entity {
     public void setMatrixModel(){
         Matrix.setIdentityM(matrixModel, 0);
 
+        if (name == "ball"){
+            //Log.e("entity", " "+positionX);
+        }
+
         if (accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
             Matrix.translateM(matrixModel, 0, positionX + animTranslateX + (getTransformedWidth() - getWidth()) / 2f,
-                    positionY + animTranslateY, 0);
+                    positionY + animTranslateY  + (getTransformedHeight() - getHeight()) / 2f, 0);
         } else {
             Matrix.translateM(matrixModel, 0, positionX + animTranslateX,
                     positionY + animTranslateY, 0);

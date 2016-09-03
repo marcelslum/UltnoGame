@@ -129,7 +129,7 @@ public class Rectangle extends PhysicalObject {
                         }
                     } else {
                         scaleY -= s.heightVelocity;
-                        if (accumulatedScaleY + scaleY > ((height*s.minHeight_BI)/height)){
+                        if (accumulatedScaleY + scaleY < ((height*s.minHeight_BI)/height)){
                             scaleY += s.heightVelocity*2;
                             s.increaseHeight = true;
                         }

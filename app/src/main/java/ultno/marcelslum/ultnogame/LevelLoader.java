@@ -102,16 +102,11 @@ public class LevelLoader {
         if (levelNumber >= 4) {
             levelBuilder
                     .setBallsQuantity(1)
-                    .setBallsX_B1(0.1f)
-                    .setBallsY_B1(0.6f)
+                    .setBallsX_B1(0.55f, 0.6f, 0.4f, 0.2f, 0.1f)
+                    .setBallsY_B1(0.1f, 0.2f, 0.2f, 0.2f, 0.8f)
 
-                    // deletar após teste
-                    .setBallsX_B1(0.1f)
-                    .setBallsY_B1(0.5f)
-                    .setBallsVX(0f)
-                    .setBallsVY(0f)
-
-                    //
+                    .setBallsVX(1.501f, 0.301f, -1.501f, -0.901f, -0.601f)
+                    .setBallsVY(-1.301f, 1.301f, -0.501f, 1.001f, -0.801f)
 
                     .setBallsAngleToRotate_BD_2(1.1f)
                     .setBarsWidth_BD_0_22(0.818f)
@@ -128,8 +123,8 @@ public class LevelLoader {
                         })
                         .setTargetsStates(new int[]{0, 1})
                         .setObstaclesQuantity(1)
-                        .setObstaclesX(0.2f)
-                        .setObstaclesY(0.4f)
+                        .setObstaclesX(0.5f)
+                        .setObstaclesY(0.3f)
                         .setObstaclesWidth(0.2f)
                         //.setObstaclesHeight(0.02f)
                         .setObstaclesHeight(0.3f)
@@ -138,9 +133,13 @@ public class LevelLoader {
                             new ScaleVariationDataBuilder()
                             .setIsActive(false)
                             .setIncreaseWidth(true)
-                            .setWidthVelocity(0.01f)
+                            .setIncreaseHeight(true)
+                            .setWidthVelocity(0f)
+                            .setHeightVelocity(0.01f)
                             .setMinWidth_BI(0.5f)
-                            .setMaxWidth_BI(3)
+                            .setMaxWidth_BI(4.5f)
+                            .setMinHeight_BI(0.5f)
+                            .setMaxHeight_BI(4.5f)
                         )
 
                         .setWindowsQuantity(0);

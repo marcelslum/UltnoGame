@@ -28,7 +28,7 @@ public class ScaleVariationDataBuilder {
         return this;
     }
 
-    public ScaleVariationDataBuilder setIncraseHeight(boolean incraseHeight) {
+    public ScaleVariationDataBuilder setIncreaseHeight(boolean incraseHeight) {
         this.incraseHeight = incraseHeight;
         return this;
     }

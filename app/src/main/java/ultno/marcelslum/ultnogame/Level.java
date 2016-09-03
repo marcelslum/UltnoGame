@@ -431,37 +431,51 @@ public class Level {
         int numberOfBallsInvencible = 0;
 
         for (int i = 0; i < this.ballsQuantity; i++){
-            float ballX = this.game.gameAreaResolutionX * this.ballsX_BR[i];
-            float ballY = this.game.gameAreaResolutionY * this.ballsY_BR[i];
 
-            float radium = this.game.gameAreaResolutionY * this.ballsRadius_BR[i];
+            int ic = i; if (i > this.ballsX_BR.length - 1) {ic = 0;}
+            float ballX = this.game.gameAreaResolutionX * this.ballsX_BR[ic];
+            ic = i; if (i > this.ballsY_BR.length - 1) {ic = 0;}
+            float ballY = this.game.gameAreaResolutionY * this.ballsY_BR[ic];
 
-            float ballVelocityX = this.game.gameAreaResolutionX * this.ballsVX_BR[i];
-            float ballVelocityY = this.game.gameAreaResolutionY * this.ballsVY_BR[i];
+            ic = i; if (i > this.ballsRadius_BR.length - 1) {ic = 0;}
+            float radium = this.game.gameAreaResolutionY * this.ballsRadius_BR[ic];
+
+            ic = i; if (i > this.ballsVX_BR.length - 1) {ic = 0;}
+            float ballVelocityX = this.game.gameAreaResolutionX * this.ballsVX_BR[ic];
+            ic = i; if (i > this.ballsVY_BR.length - 1) {ic = 0;}
+            float ballVelocityY = this.game.gameAreaResolutionY * this.ballsVY_BR[ic];
 
             //game.ballsDesiredVelocityX[i] = ballVelocityX;
             //game.ballsDesiredVelocityY[i] = ballVelocityY;
             //game.ballsInitialPositionX[i] = ballX;
             //game.ballsInitialPositionY[i] = ballY;
 
-            if (this.ballsInvencible[i]){
+            ic = i; if (i > this.ballsInvencible.length - 1) {ic = 0;}
+            if (this.ballsInvencible[ic]){
                 numberOfBallsInvencible += 1;
             }
 
             //Log.e("Level loadEnt", "3");
 
-            Ball ball = new Ball("ball", this.game, ballX, ballY, radium, this.ballsTextureMap[i]);
+            ic = i; if (i > this.ballsTextureMap.length - 1) {ic = 0;}
+            Ball ball = new Ball("ball", this.game, ballX, ballY, radium, this.ballsTextureMap[ic]);
 
-            ball.angleToRotate = this.ballsAngleToRotate[i];
-            ball.velocityVariation = this.ballsVelocityVariation[i];
+            ic = i; if (i > this.ballsAngleToRotate.length - 1) {ic = 0;}
+            ball.angleToRotate = this.ballsAngleToRotate[ic];
+            ic = i; if (i > this.ballsVelocityVariation.length - 1) {ic = 0;}
+            ball.velocityVariation = this.ballsVelocityVariation[ic];
 
-            ball.velocityMax_BI = ballsVelocityMax_BI[i];
-            ball.velocityMin_BI = ballsVelocityMin_BI[i];
+            ic = i; if (i > this.ballsVelocityMax_BI.length - 1) {ic = 0;}
+            ball.velocityMax_BI = ballsVelocityMax_BI[ic];
+            ic = i; if (i > this.ballsVelocityMin_BI.length - 1) {ic = 0;}
+            ball.velocityMin_BI = ballsVelocityMin_BI[ic];
 
             //Log.e("Level loadEnt", "4");
 
-            ball.maxAngle = this.ballsMaxAngle[i];
-            ball.minAngle = this.ballsMinAngle[i];
+            ic = i; if (i > this.ballsMaxAngle.length - 1) {ic = 0;}
+            ball.maxAngle = this.ballsMaxAngle[ic];
+            ic = i; if (i > this.ballsMinAngle.length - 1) {ic = 0;}
+            ball.minAngle = this.ballsMinAngle[ic];
 
             ball.initialDesireVelocityX = ballVelocityX;
             ball.initialDesireVelocityY = ballVelocityY;
@@ -469,22 +483,24 @@ public class Level {
             ball.initialX = ballX;
             ball.initialY = ballY;
 
-
             ball.dvx = ballVelocityX;
             ball.dvy = ballVelocityY;
 
+            ic = i; if (i > this.ballsTargetsAppend.size() - 1) {ic = 0;}
             for (int t = 0; t < this.ballsTargetsAppend.size(); t++){
-                ball.targetsAppend = this.ballsTargetsAppend.get(i);
+                ball.targetsAppend = this.ballsTargetsAppend.get(ic);
             }
             //console.log(ball.targetsAppend);
 
             //Log.e("Level loadEnt", "5");
 
-            ball.isFree = this.ballsFree[i];
+            ic = i; if (i > this.ballsFree.length - 1) {ic = 0;}
+            ball.isFree = this.ballsFree[ic];
 
             //Log.e("Level loadEnt", "5.1");
 
-            if (this.ballsInvencible[i]){
+            ic = i; if (i > this.ballsInvencible.length - 1) {ic = 0;}
+            if (this.ballsInvencible[ic]){
                 ball.setInvencible();
             }
 

@@ -176,13 +176,33 @@ public class Ball extends Circle{
 
         float lastResponseBallX = 0;
         float lastResponseBallY = 0;
-        for (int i = 0; i < this.lastCollisionResponse.size(); i++){
-            lastResponseBallX += this.lastCollisionResponse.get(i).x;
-            lastResponseBallY += this.lastCollisionResponse.get(i).y;
+
+        ArrayList<PhysicalObject> lastObjects = new ArrayList<>();
+        boolean includeObject = true;
+
+        for (int i = 0; i < collisionsData.size(); i++){
+            lastResponseBallX += collisionsData.get(i).responseX;
+            lastResponseBallY += collisionsData.get(i).responseY;
+
+            Log.e("ball", collisionsData.get(i).object.name +
+                    " rX "+ collisionsData.get(i).responseX +
+                    " rY "+ collisionsData.get(i).responseY +
+                    " nX "+ collisionsData.get(i).normalX +
+                    " nY "+ collisionsData.get(i).normalY
+            );
+
+            for (int i2 = 0; i2 < lastObjects.size(); i2++){
+                if (lastObjects.get(i2) == collisionsData.get(i).object)
+                {
+                    includeObject = false;
+                }
+            }
+            if (includeObject == true){
+                lastObjects.add(collisionsData.get(i).object);
+            } else {
+                includeObject = true;
+            }
         }
-
-
-        ArrayList<PhysicalObject> lastObjects = this.lastCollisionObjects;
 
         // AJUSTA O CASO DE GAMEOVER
 
@@ -190,9 +210,9 @@ public class Ball extends Circle{
         this.collisionBar = false;
         this.collisionBarNumber = 0;
         this.collisionTarget = false;
-        Log.e("ball", "objetos colididos:");
+        //Log.e("ball", "objetos colididos:");
         for (int i = 0; i < lastObjects.size(); i++){
-            Log.e("ball", " "+lastObjects.get(i).name);
+            //Log.e("ball", " "+lastObjects.get(i).name);
             if (lastObjects.get(i).name == "bordaB"){
                 this.collisionBordaB = true;
             } else if (lastObjects.get(i).name == "bar"){
@@ -207,12 +227,12 @@ public class Ball extends Circle{
 
         if ((this.collisionBordaB || (this.collisionBar && Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)))&&!this.isInvencible){
             if (!listenForExplosion) {
-                this.setDead();
-                this.game.ballFall = true;
+                //this.setDead();
+                //this.game.ballFall = true;
             }
         }
 
-        if (this.lastCollisionResponse.size() == 1){
+        if (this.collisionsData.size() == 1){
             if (Math.abs(lastResponseBallX) != 0 && Math.abs(lastResponseBallY) != 0){
                 if (Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)){
                     lastResponseBallY = 0;

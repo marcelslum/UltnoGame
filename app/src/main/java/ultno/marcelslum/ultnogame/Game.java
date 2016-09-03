@@ -189,11 +189,7 @@ public class Game {
     public float[] ballsDesiredVelocityX = new float[10];
     public float[] ballsDesiredVelocityY = new float[10];
 
-    // sat data
-    SatPolygon polygon1;
-    SatPolygon polygon2;
-    SatCircle circle1;
-    SatCircle circle2;
+
     public boolean ballFall;
 
     // programs
@@ -240,23 +236,6 @@ public class Game {
         barsInitialPositionY = new float[10];
         barsDesiredVelocityX = new float[10];
         barsDesiredVelocityY = new float[10];
-
-        ArrayList<Vector> points = new ArrayList<>();
-        points.add(new Vector(0, 0));
-        points.add(new Vector(0, 0));
-        points.add(new Vector(0, 0));
-        points.add(new Vector(0, 0));
-        polygon1 = new SatPolygon(new Vector(0, 0), points);
-
-        ArrayList<Vector> points2 = new ArrayList<>();
-        points.add(new Vector(0, 0));
-        points.add(new Vector(0, 0));
-        points.add(new Vector(0, 0));
-        points.add(new Vector(0, 0));
-        polygon2 = new SatPolygon(new Vector(0, 0), points2);
-
-        circle1 = new SatCircle(new Vector(0,0),0);
-        circle2 = new SatCircle(new Vector(0,0),0);
    }
    
       public void addBall(Ball ball){
@@ -544,7 +523,9 @@ public class Game {
             Utils.createSimpleAnimation(scorePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY * 0.1f, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
+
                             float initialTranslateY = - innerGame.gameAreaResolutionY * 0.1f;
+
                             ArrayList<float[]> valuesAnimScoreTX = new ArrayList<>();
                             valuesAnimScoreTX.add(new float[]{0f,0f});
                             valuesAnimScoreTX.add(new float[]{0.3f,-10f});
@@ -571,6 +552,7 @@ public class Game {
             innerGame.levelObject.loadEntities();
             verifyDead();
         }
+
     }
 
     public void stopAndReleaseMusic(){
@@ -1071,6 +1053,8 @@ public class Game {
                 ball.verifyAcceleration();
                 ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
                 ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+
+                 //Log.e("game", "ballv "+ ball.vx+" "+ball.vy);
                 ball.translate(ball.vx, ball.vy);
             }
         }
@@ -1102,7 +1086,6 @@ public class Game {
                     }
                 }
             }
-
             // atualiza posição e tamanho dos obstáculos
         }
 
@@ -1153,9 +1136,9 @@ public class Game {
                             && balls.get(i).y < gameAreaResolutionY * 0.8f) {
 
                         balls.get(i).radius *= 5;
-                        ArrayList<Entity> ball = new ArrayList<>();
+                        ArrayList<PhysicalObject> ball = new ArrayList<>();
                         ball.add(balls.get(i));
-                        boolean collision = checkCollision(ball, false, false);
+                        boolean collision = Collision.checkCollision(ball, quad, 0, false, false);
                         balls.get(i).radius /= 5;
                         if (!collision){
                             balls.get(i).explode();
@@ -1164,13 +1147,16 @@ public class Game {
                     }
                 }
             }
-            checkCollision(balls, true, true);
+
+            Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true);
+            Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true);
+            Collision.checkCollision(obstacles, quad, 0, true, true);
         }
         
         // verifica a colisão da barra
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
-            checkCollision(bars, true, true);
-            checkCollision(obstacles, true, true);
+            //Collision.checkCollision(bars, quad, 0, true, true);
+            //Collision.checkCollision(obstacles, quad, 0, true, true);
             quad.clear();
         }
         
@@ -1418,220 +1404,7 @@ public class Game {
         }
     }
 
-    public boolean checkCollision(ArrayList<? extends Entity> aEntities, boolean respondToCollision, boolean updateCollisionsData){
-        boolean collided = false;
-        boolean isHadCollision = false;
-        ArrayList<Entity> out;
-        SatResponse response = new SatResponse();
 
-        for (int iLoop = 0; iLoop < 2; iLoop++){
-
-            // entidades a
-            for (int aCount = 0; aCount < aEntities.size(); aCount++){
-                PhysicalObject a =  (PhysicalObject) aEntities.get(aCount);
-                if (a.isMovable) {
-                    out = null;
-                    collided = false;
-                    out = this.quad.retrieve(a);
-
-                    // roda pelas entidades extraidas e verifica a colisão
-                    for (int bCount = 0; bCount < out.size(); bCount++){
-                        PhysicalObject b = (PhysicalObject)out.get(bCount);
-
-                        // verifica se a entidade não é a mesma e se elas são colidíveis
-                        if ((a.isSolid && b.isSolid) && (b != a)){
-
-                            // seta os dados da entidade 'a' e da entidade 'b'
-                            a.setSatData();
-                            b.setSatData();
-
-                            // zera os dados a serem usados nesta passagem
-                            // transfere os dados da entidade para o objeto do game
-
-                            //type false: polygon true: circle
-                            boolean aType = false;
-                            boolean bType = false;
-
-                            if (a.circleData != null){
-                                this.circle1.pos.x = a.circleData.pos.x;
-                                this.circle1.pos.y = a.circleData.pos.y;
-                                this.circle1.r = a.circleData.r;
-                                aType = true;
-                            } else {
-                                this.polygon1.pos.x = a.polygonData.pos.x;
-                                this.polygon1.pos.y = a.polygonData.pos.y;
-                                this.polygon1.setPoints(a.polygonData.points);
-                            }
-
-                            if (b.circleData != null){
-                                this.circle2.pos.x = b.circleData.pos.x;
-                                this.circle2.pos.y = b.circleData.pos.y;
-                                this.circle2.r = b.circleData.r;
-                                bType = true;
-                            } else {
-                                this.polygon2.pos.x = b.polygonData.pos.x;
-                                this.polygon2.pos.y = b.polygonData.pos.y;
-                                this.polygon2.setPoints(b.polygonData.points);
-                            }
-
-                            float [] velocities = new float[4];
-
-                            //Log.e("pos bola sat cc2", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
-
-                            velocities[0] = Math.abs(a.vx);
-                            velocities[1] = Math.abs(a.vy);
-                            velocities[2] = Math.abs(b.vx);
-                            velocities[3] = Math.abs(b.vy);
-
-                            float max = -100000;
-                            int maxIndex = -1;
-                            for (int n = 0; n < 4; n++){
-                                if (velocities[n] > max){
-                                    maxIndex = n;
-                                    max = velocities[n];
-                                }
-                            }
-
-                            int quantityPassagens;
-
-                            // defina quantas passagens serão realidades, com base na maior velocidade
-                            quantityPassagens = Math.round(velocities[maxIndex]/2) ;
-                            if (quantityPassagens == 0){
-                                quantityPassagens = 1;
-                            }
-
-                            //Log.e("Game", " a.previousX "+a.previousX);
-                            //Log.e("Game", " a.previousY "+a.previousY);
-                            //Log.e("Game", " b.previousX "+b.previousX);
-                            //Log.e("Game", " b.previousY "+b.previousY);
-
-                            float aPreviousX = a.previousX;
-                            float aPreviousY = a.previousY;
-                            float bPreviousX = b.previousX;
-                            float bPreviousY = b.previousY;
-
-                            //if (b.name == "obstacle"){
-                            //    Log.e("game", " x"+ this.polygon2.pos.x);
-                            //}
-
-                            //Log.e("Game", " a.previousX 2"+aPreviousX);
-                            //Log.e("Game", " a.previousY 2"+aPreviousY);
-                            //Log.e("Game", " b.previousX 2"+bPreviousX);
-                            //Log.e("Game", " b.previousY 2"+bPreviousY);
-
-                            // Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
-                            
-                            // calcula a diferença entre as posições
-                            float aDiferencaPosicaoX = a.positionX - aPreviousX;
-                            float aDiferencaPosicaoY = a.positionY - aPreviousY;
-
-                            float bDiferencaPosicaoX = b.positionX - bPreviousX;
-                            float bDiferencaPosicaoY = b.positionY - bPreviousY;
-
-                            // calcula a porcentagem de cada passada;
-                            float porcentagem = (100f/quantityPassagens)/100f;
-                            //Log.e("Game", " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
-                            float porcentagemAplicadaNaPassagem;
-                            float aPosAConsiderarX = -1000f;
-                            float aPosAConsiderarY = -1000f;
-                            float bPosAConsiderarX = -1000f;
-                            float bPosAConsiderarY = -1000f;
-
-                            //if (b.name == "obstacle"){
-                            //    Log.e("game", " x"+ this.polygon2.pos.x);
-                            //}
-
-                            //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
-
-                            // itera pelas passagens, chegando se há colisão
-
-                            for (int ip = 0; ip < quantityPassagens; ip++){
-
-                                response.clear();
-                                porcentagemAplicadaNaPassagem = porcentagem * (float)(ip+1);
-                                //Log.e("Game", "passagem "+ip+" porcentagem "+porcentagem);
-
-                                aPosAConsiderarX = aPreviousX + (aDiferencaPosicaoX * porcentagemAplicadaNaPassagem);
-                                aPosAConsiderarY = aPreviousY + (aDiferencaPosicaoY * porcentagemAplicadaNaPassagem);
-                                //Log.e("Game", "passagem "+ip+" a.previousY "+ aPreviousY +" aDiferencaPosicaoX "+aDiferencaPosicaoX +  " porcentagemAplicadaNaPassagem "+porcentagemAplicadaNaPassagem);
-                                //Log.e("Game", "passagem "+ip+" aPosAConsiderarX "+ aPosAConsiderarX +" aPosAConsiderarY "+aPosAConsiderarY);
-                                //Log.e("Game", "a.y"+aPosAConsiderarY + " b.y"+bPosAConsiderarY);
-
-                                bPosAConsiderarX = bPreviousX + (bDiferencaPosicaoX * porcentagemAplicadaNaPassagem);
-                                bPosAConsiderarY = bPreviousY + (bDiferencaPosicaoY * porcentagemAplicadaNaPassagem);
-
-                                //Log.e("test posicoes", "a.y"+aPosAConsiderarY + " b.y"+bPosAConsiderarY);
-
-                                if (aType == false){
-                                    this.polygon1.pos.x = aPosAConsiderarX;
-                                    this.polygon1.pos.y = aPosAConsiderarY;
-                                } else {
-                                    this.circle1.pos.x = aPosAConsiderarX;
-                                    this.circle1.pos.y = aPosAConsiderarY;
-                                }
-
-                                if (bType == false){
-                                    this.polygon2.pos.x = bPosAConsiderarX;
-                                    this.polygon2.pos.y = bPosAConsiderarY;
-                                } else {
-                                    this.circle2.pos.x = bPosAConsiderarX;
-                                    this.circle2.pos.y = bPosAConsiderarY;
-                                }
-
-
-                                //Log.e("pos bola sat cc5", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
-
-                                if (aType == false){
-                                    if (bType == false) {
-                                        collided = Sat.getInstance().testPolygonPolygon(polygon1, polygon2, response);
-                                    } else {
-                                        collided = Sat.getInstance().testPolygonCircle(polygon1, circle2, response);
-                                    }
-                                } else {
-                                    if (bType == false) {
-                                        collided = Sat.getInstance().testCirclePolygon(circle1, polygon2, response);
-                                    } else {
-                                        collided = Sat.getInstance().testCircleCircle(circle1, circle2, response);
-                                    }
-
-                                }
-
-                                // se houver registro de colisão, mas se a resposta foi zerada, retorna para uma próxima verificação
-                                if (collided) {
-                                    if (response.overlapV.x == 0 &&  response.overlapV.y == 0){
-                                        continue;
-                                    } else {
-                                        break;
-                                    }
-                                }
-                            }
-
-                            //if (b.name == "obstacle"){
-                            //    Log.e("game", " x"+ this.polygon2.pos.x);
-                            //}
-
-                            if (collided && !(response.overlapV.x == 0 && response.overlapV.y == 0)){
-
-                                isHadCollision = true;
-
-                                if (respondToCollision){
-                                    a.isCollided = true;
-                                    b.isCollided = true;
-                                    a.respondToCollision(b, -response.overlapV.x, -response.overlapV.y, aPosAConsiderarX, aPosAConsiderarY, bPosAConsiderarX, bPosAConsiderarY);
-                                }
-                                
-                                if (updateCollisionsData){
-                                    a.collisionsData.add(new CollisionsData(b, -response.overlapV.x, -response.overlapV.y, b.weight));
-                                    b.collisionsData.add(new CollisionsData(a, response.overlapV.x, response.overlapV.y, a.weight));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return isHadCollision;
-    }
 
     public void setContext(Context context) {
         this.context = context;

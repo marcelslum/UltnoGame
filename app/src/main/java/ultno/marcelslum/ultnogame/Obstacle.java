@@ -1,5 +1,7 @@
 package ultno.marcelslum.ultnogame;
 
+import android.util.Log;
+
 /**
  * Created by marcel on 25/08/2016.
  */
@@ -24,4 +26,30 @@ public class Obstacle extends Rectangle{
         Utils.insertRectangleUvDataNumbersExplosion(uvsData, 0, 30);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
+
+    public void respondToCollision(float responseX, float responseY){
+        //Log.e("physical", "respond to collision " +responseX);
+        if (scaleVariationData != null) {
+            ScaleVariationData s = scaleVariationData;
+            if (s.isActive) {
+                if (responseX != 0f){
+                    scaleX -= Math.abs(responseX) / getTransformedWidth();
+                    s.increaseWidth = false;
+                }
+
+                if (responseY != 0f){
+                    scaleY -= Math.abs(responseY) / getTransformedHeight();
+                    s.increaseHeight = false;
+                }
+            } else {
+                this.accumulatedTranslateX += responseX;
+                this.accumulatedTranslateY += responseY;
+            }
+        } else {
+            this.accumulatedTranslateX += responseX;
+            this.accumulatedTranslateY += responseY;
+        }
+        this.checkTransformations(false);
+    }
+
 }
