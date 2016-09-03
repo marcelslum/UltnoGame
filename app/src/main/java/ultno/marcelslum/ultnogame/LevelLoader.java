@@ -103,10 +103,10 @@ public class LevelLoader {
             levelBuilder
                     .setBallsQuantity(1)
                     .setBallsX_B1(0.55f, 0.6f, 0.4f, 0.2f, 0.1f)
-                    .setBallsY_B1(0.1f, 0.2f, 0.2f, 0.2f, 0.8f)
+                    .setBallsY_B1(0.6f, 0.2f, 0.2f, 0.2f, 0.8f)
 
-                    .setBallsVX(1.501f, 0.301f, -1.501f, -0.901f, -0.601f)
-                    .setBallsVY(-1.301f, 1.301f, -0.501f, 1.001f, -0.801f)
+                    .setBallsVX(0.501f, 0.301f, -1.501f, -0.901f, -0.601f)
+                    .setBallsVY(-0.301f, 1.301f, -0.501f, 1.001f, -0.801f)
 
                     .setBallsAngleToRotate_BD_2(1.1f)
                     .setBarsWidth_BD_0_22(0.818f)

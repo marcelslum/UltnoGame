@@ -26,9 +26,9 @@ public class Game {
 
     public static final int BALL_WEIGHT = 1;
     public static final int BORDA_WEIGHT = 10;
-    public static final int OBSTACLES_WEIGHT = 9;
-    public static final int TARGET_WEIGHT = 8;
-    public static final int BAR_WEIGHT = 2;
+    public static final int OBSTACLES_WEIGHT = 7;
+    public static final int TARGET_WEIGHT = 10;
+    public static final int BAR_WEIGHT = 8;
     private static Game ourInstance = new Game();
     Context context;
 
@@ -1148,13 +1148,20 @@ public class Game {
                 }
             }
 
-            Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true);
-            Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true);
-            Collision.checkCollision(obstacles, quad, 0, true, true);
         }
         
         // verifica a colisão da barra
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
+
+            for (int i = 0; i < 2; i++) {
+                Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true);
+                Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true);
+                Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true);
+                Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true);
+                Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true);
+                Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true);
+            }
+
             //Collision.checkCollision(bars, quad, 0, true, true);
             //Collision.checkCollision(obstacles, quad, 0, true, true);
             quad.clear();

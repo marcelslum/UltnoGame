@@ -318,20 +318,57 @@ public abstract class Collision {
         b.accumulatedTranslateY += by - b.positionY;
 
         if (a.getWeight() > b.getWeight()) {// Move the other object out of us
-            b.respondToCollision(-responseX, -responseY);
-        } else if (a.getWeight() < b.getWeight()) {        // Move us out of the other object
-            //Log.e("PhysicalObject", "outro "+b.name+" mais pesado "+responseX+ " "+responseY );
-            for (int i = 0; i < a.collisionsData.size(); i++){
-                if (a.collisionsData.get(i).object.getWeight() > b.getWeight()){
-                    Log.e("Collision", "objeto mais pesado oferece força de x "+a.collisionsData.get(i).normalX+" y "+a.collisionsData.get(i).normalY);
-                    b.respondToCollision(-responseX, -responseY);
-                    responseX = 0f;
-                    responseY = 0f;
+            Log.e("Collision", a.name + " mais pesado que " + b.name);
+
+            float tResponseX = 0f;
+            float tResponseY = 0f;
+            for (int i = 0; i < b.collisionsData.size(); i++){
+                if (b.collisionsData.get(i).object != a) {
+                    if (b.collisionsData.get(i).object.getWeight() > a.getWeight()) {
+                        Log.e("Collision", "objeto mais pesado "+b.collisionsData.get(i).object.name +" oferece força de x " + b.collisionsData.get(i).normalX + " y " + b.collisionsData.get(i).normalY);
+                        if (responseX != 0) {
+                            tResponseX += responseX;
+                            responseX = 0f;
+                        }
+                        if (responseY != 0) {
+                            tResponseY += responseY;
+                            responseY = 0f;
+                        }
+                    }
                 }
             }
+            b.respondToCollision(tResponseX, tResponseY);
+            a.respondToCollision(-responseX, -responseY);
+        } else if (a.getWeight() < b.getWeight()) {        // Move us out of the other object
+            Log.e("Collision", a.name + " mais level que " + b.name);
+            //Log.e("PhysicalObject", "outro "+b.name+" mais pesado "+responseX+ " "+responseY );
+
+            float tResponseX = 0f;
+            float tResponseY = 0f;
+            Log.e("Collision", a.collisionsData.size() + " a.collisionsDatasize() ");
+            for (int i = 0; i < a.collisionsData.size(); i++){
+                if (a.collisionsData.get(i).object != b) {
+                    if (a.collisionsData.get(i).object.getWeight() > b.getWeight()) {
+                        Log.e("Collision", a.collisionsData.size() + " a.collisionsDatasize() ");
+                        Log.e("Collision", "objeto mais "+a.collisionsData.get(i).object.name +"  pesado oferece força de x " + a.collisionsData.get(i).normalX + " y " + a.collisionsData.get(i).normalY);
+                        if (responseX != 0) {
+                            tResponseX += responseX;
+                            responseX = 0f;
+                        }
+                        if (responseY != 0) {
+                            tResponseY += responseY;
+                            responseY = 0f;
+                        }
+                    }
+                }
+            }
+            b.respondToCollision(-tResponseX, -tResponseY);
             a.respondToCollision(responseX, responseY);
         } else if (a.getWeight() == b.getWeight()){        // Move equally out of each other
+
+
             a.respondToCollision(responseX/2f, responseY/2f);
+
             b.respondToCollision(-responseX/2f, -responseY/2f);
         }
     }

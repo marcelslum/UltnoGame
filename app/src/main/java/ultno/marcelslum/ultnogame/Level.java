@@ -375,7 +375,7 @@ public class Level {
                                     .y(targetY)
                                     .width(targetWidth)
                                     .height(targetHeight)
-                                    .weight(9)
+                                    .weight(Game.TARGET_WEIGHT)
                                     .type(targetsMap[iY][iX])
                                     .states(targetsStates)
                                     .build()
