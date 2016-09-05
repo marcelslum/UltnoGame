@@ -1093,3 +1093,112 @@ public class TextManager {
                 break;
         }
     }
+
+
+
+
+OBSTACLE
+
+ sizeOfSquaresY = (getHeight()/getTransformedHeight())* (game.resolutionX/50f);
+
+        int squaresOnX = (int)Math.floor(getWidth() / sizeOfSquaresX);
+        float restX = getWidth() % sizeOfSquaresX;
+
+        int squaresOnY = (int)Math.floor(getHeight() / sizeOfSquaresY);
+        float restY = getHeight() % sizeOfSquaresY;
+
+        //Log.e("obstacles", "sizeOfSquaresY "+sizeOfSquaresY);
+        //Log.e("obstacles", "squaresOnY "+squaresOnY);
+        //Log.e("obstacles", "restY "+restY);
+
+        if (lastSquaresOnY != squaresOnY && lastSquaresOnY != 0){
+            if (!midUpY) {
+                midUpY = true;
+            } else {
+                midUpY = false;
+            }
+        }
+        lastSquaresOnY = squaresOnY;
+
+        if (lastSquaresOnX != squaresOnX && lastSquaresOnX != 0){
+            if (!midUpX) {
+                midUpX = true;
+            } else {
+                midUpX = false;
+            }
+        }
+        lastSquaresOnX = squaresOnX;
+
+        if (restX > 0){
+            if (midUpX){
+                squaresOnX += 1;
+                restX = (getWidth() - ((squaresOnX - 2)*sizeOfSquaresX))/2f;
+            } else {
+                restX /= 2f;
+                squaresOnX += 2;
+            }
+        }
+
+        if (restY > 0){
+            if (midUpY){
+                squaresOnY += 1;
+                restY = (getHeight() - ((squaresOnY - 2)*sizeOfSquaresY))/2f;
+            } else {
+                restY /= 2f;
+                squaresOnY += 2;
+            }
+        }
+
+        //Log.e("obstacles", "midUpY "+midUpY);
+        //Log.e("obstacles", "squaresOnY "+squaresOnY);
+        //Log.e("obstacles", "restY "+restY);
+
+
+        int totalSquares = squaresOnY * squaresOnX;
+        initializeData(12 * totalSquares, 6 * totalSquares, 8 * totalSquares, 0);
+        int squareInserted = 0;
+        float posY;
+        float posX;
+        float w;
+        float h;
+        boolean invertUvY;
+        boolean invertUvX;
+        for (int iY = 0; iY < squaresOnY; iY++) {
+            invertUvY = false;
+            invertUvX = false;
+            if (restY != 0f){
+                if (iY == 0){
+                    posY = 0f;
+                    h = restY;
+                } else if (iY == (squaresOnY-1)) {
+                    posY = restY + (sizeOfSquaresY * (iY-1));
+                    h = restY;
+                    invertUvY = true;
+                } else {
+                    posY = restY + (sizeOfSquaresY * (iY-1));
+                    h = sizeOfSquaresY;
+                }
+            } else {
+                posY = sizeOfSquaresY * iY;
+                h = sizeOfSquaresY;
+            }
+
+            for (int iX = 0; iX < squaresOnX; iX++) {
+                if (restX != 0f){
+                    if (iX == 0){
+                        posX = 0f;
+                        w = restX;
+                    } else if (iX == squaresOnX-1) {
+                        posX = restX + (sizeOfSquaresX * (iX-1));
+                        w = restX;
+                        invertUvX = true;
+                    } else {
+                        posX = restX + (sizeOfSquaresX * (iX-1));
+                        w = sizeOfSquaresX;
+                    }
+                } else {
+                    posX = sizeOfSquaresX * iX;
+                    w = sizeOfSquaresX;
+                }
+
+                //Log.e("obstacle", " pos X "+posX+" Y "+posY +" w "+w+" h "+h);

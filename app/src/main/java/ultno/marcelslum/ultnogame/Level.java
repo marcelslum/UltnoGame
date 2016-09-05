@@ -171,6 +171,9 @@ public class Level {
         Utils.setTexture("drawable/finalback1", game.texturenames, Game.TEXTURE_BACKGROUND, game.context); // background
         this.game.background = new Background("background", this.game, 0, 0, this.game.gameAreaResolutionX,this.game.resolutionY);
 
+
+        Utils.setTexture("drawable/obstacle", game.texturenames, Game.TEXTURE_TITTLE, game.context); // background
+
         //Log.e("Level loadEnt", "1");
 
         this.game.bordaE = new Rectangle("bordaE", this.game, -999, 0, 1000, this.game.gameAreaResolutionY*2, 10, new Color(0,0,0,1));

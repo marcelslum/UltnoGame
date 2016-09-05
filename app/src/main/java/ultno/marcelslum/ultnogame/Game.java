@@ -1152,18 +1152,17 @@ public class Game {
         
         // verifica a colisão da barra
         if (this.gameState == GAME_STATE_JOGAR || this.gameState == GAME_STATE_TUTORIAL) {
-
             for (int i = 0; i < 2; i++) {
+                Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true);
+                Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true);
+                Collision.checkCollision(obstacles, quad, Game.BORDA_WEIGHT, true, true);
+                Collision.checkCollision(obstacles, quad, Game.BAR_WEIGHT, true, true);
+                Collision.checkCollision(obstacles, quad, Game.OBSTACLES_WEIGHT, true, true);
                 Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true);
                 Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true);
                 Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true);
                 Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true);
-                Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true);
-                Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true);
             }
-
-            //Collision.checkCollision(bars, quad, 0, true, true);
-            //Collision.checkCollision(obstacles, quad, 0, true, true);
             quad.clear();
         }
         

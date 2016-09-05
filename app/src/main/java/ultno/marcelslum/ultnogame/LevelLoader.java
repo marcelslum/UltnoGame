@@ -134,7 +134,7 @@ public class LevelLoader {
                             .setIsActive(false)
                             .setIncreaseWidth(true)
                             .setIncreaseHeight(true)
-                            .setWidthVelocity(0f)
+                            .setWidthVelocity(0.02f)
                             .setHeightVelocity(0.01f)
                             .setMinWidth_BI(0.5f)
                             .setMaxWidth_BI(4.5f)

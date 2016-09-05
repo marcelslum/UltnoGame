@@ -229,7 +229,15 @@ public class Utils {
         }
         insertRectangleUvData(array, startIndex);
     }
-    
+
+    public static void insertObstacleUvData(float[] array, int startIndex, float pX, float pY) {
+        Utils.y1 = 0f;
+        Utils.y2 = 1f * pY;
+        Utils.x1 = 0f;
+        Utils.x2 = 1f * pX;
+        insertRectangleUvData(array, startIndex);
+    }
+
     public static void insertRectangleUvDataNumbersExplosion(float[] array, int startIndex, int textureMap){
         
         if (textureMap < 8){
@@ -422,6 +430,9 @@ public class Utils {
         // Set filtering
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_MIRRORED_REPEAT);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_MIRRORED_REPEAT);
 
         // Load the bitmap into the bound texture.
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
