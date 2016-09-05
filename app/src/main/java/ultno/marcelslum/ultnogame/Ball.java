@@ -49,6 +49,11 @@ public class Ball extends Circle{
     boolean verifyAppendsIsFreeBall = false;
     BallParticleGenerator ballParticleGenerator;
     private int alarmId;
+    
+    public float lastResponseBallX = 0f;
+    public float lastResponseBallY = 0f;
+    public float impulsion = 0f;
+    
 
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
@@ -172,50 +177,40 @@ public class Ball extends Circle{
     }
 
     public void onCollision(){
-        // EXTRAI OS DADOS NECESSÁRIOS
 
-        float lastResponseBallX = 0;
-        float lastResponseBallY = 0;
-
-        ArrayList<PhysicalObject> lastObjects = new ArrayList<>();
-        boolean includeObject = true;
-
-        float impulsion = 0f;
+        lastResponseBallX = 0f;
+        lastResponseBallY = 0f;
+        impulsion = 0f;
+        collisionBordaB = false;
+        collisionBar = false;
+        collisionBarNumber = 0;
+        collisionTarget = false;
 
         for (int i = 0; i < collisionsData.size(); i++){
+            
             lastResponseBallX += collisionsData.get(i).responseX;
             lastResponseBallY += collisionsData.get(i).responseY;
 
-            Log.e("ball", collisionsData.get(i).object.name +
-                    " rX "+ collisionsData.get(i).responseX +
-                    " rY "+ collisionsData.get(i).responseY +
-                    " nX "+ collisionsData.get(i).normalX +
-                    " nY "+ collisionsData.get(i).normalY
-            );
+            Log.e("ball", collisionsData.get(i).object.name +" rX "+ collisionsData.get(i).responseX +" rY "+ collisionsData.get(i).responseY +" nX "+ collisionsData.get(i).normalX +" nY "+ collisionsData.get(i).normalY);
 
-            for (int i2 = 0; i2 < lastObjects.size(); i2++){
-                if (lastObjects.get(i2) == collisionsData.get(i).object)
-                {
-                    includeObject = false;
-                }
+            if (collisionsData.get(i).object.name == "bordaB"){
+                this.collisionBordaB = true;
             }
-            if (includeObject == true){
-                lastObjects.add(collisionsData.get(i).object);
-            } else {
-                includeObject = true;
+            
+            if (collisionsData.get(i).object.name == "bar"){
+                this.collisionBar = true;
+                this.collisionBarNumber = i;
             }
-
+            
+            if (collisionsData.get(i).object.name == "target"){
+                this.collisionTarget = true;
+            }
+        
             // verifica se obstáculo esta crescendo e, se a velocidade for maior que a da bola, impulsiona-a
             if (collisionsData.get(i).object.name == "obstacle"){
                 Obstacle o = (Obstacle)collisionsData.get(i).object;
                 if (o.scaleVariationData != null){
                     if (o.scaleVariationData.isActive){
-
-                        //Log.e("ball", "impulsion o.scaleVariationData.widthVelocity "+ (o.scaleVariationData.widthVelocity * o.getTransformedWidth())/2f);
-                        //Log.e("ball", "impulsion Math.abs(dvx) "+ Math.abs(dvx));
-                        //Log.e("ball", "impulsion o.scaleVariationData.heightVelocity "+ (o.scaleVariationData.heightVelocity * o.getTransformedHeight())/2f);
-                        //Log.e("ball", "impulsion Math.abs(dvy) "+ Math.abs(dvy));
-
                         if (o.scaleVariationData.widthVelocity > 0 && (o.scaleVariationData.widthVelocity * o.getTransformedWidth())/2f > Math.abs(dvx) && collisionsData.get(i).responseX != 0f){
                             impulsion += o.scaleVariationData.widthVelocity/Math.abs(dvx*0.9f);
                         }
@@ -232,54 +227,71 @@ public class Ball extends Circle{
             float iDvy = dvy;
             dvx *= (1+impulsion);
             dvy *= (1+impulsion);
-
-            Log.e("ball", "impulsion ------------"+ iDvx + " "+ iDvy +" para "+ dvx + " "+ dvy);
-
             this.accelerate(500, iDvx, iDvy);
         }
 
-
-        // AJUSTA O CASO DE GAMEOVER
-        this.collisionBordaB = false;
-        this.collisionBar = false;
-        this.collisionBarNumber = 0;
-        this.collisionTarget = false;
-        //Log.e("ball", "objetos colididos:");
-        for (int i = 0; i < lastObjects.size(); i++){
-            //Log.e("ball", " "+lastObjects.get(i).name);
-            if (lastObjects.get(i).name == "bordaB"){
-                this.collisionBordaB = true;
-            } else if (lastObjects.get(i).name == "bar"){
-                //Log.e("ball", " vx "+lastObjects.get(i).dvx);
-                this.collisionBar = true;
-                this.collisionBarNumber = i;
-            } else if (lastObjects.get(i).name == "target"){
-                this.collisionTarget = true;
-            }
+        if (this.collisionBordaB && !this.isInvencible && !listenForExplosion){
+            //this.setDead();
+            //this.game.ballFall = true;
         }
-
-        if ((this.collisionBordaB || (this.collisionBar && Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)))&&!this.isInvencible){
-            if (!listenForExplosion) {
-                //this.setDead();
-                //this.game.ballFall = true;
-            }
-        }
-
-        if (this.collisionsData.size() == 1){
-            if (Math.abs(lastResponseBallX) != 0 && Math.abs(lastResponseBallY) != 0){
-                if (Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)){
-                    lastResponseBallY = 0;
-                } else {
-                    lastResponseBallX = 0;
+        
+        if (lastResponseBallX != 0f && lastResponseBallY != 0f){
+            if (collisionBar){
+                lastResponseBallX = 0f;
+            } else {
+                if (collisionsData.size() == 1){
+                    if (Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)){
+                        lastResponseBallY = 0f;
+                    } else {
+                        lastResponseBallX = 0f;
+                    }
+                } else (collisionsData.size() > 1){
+                    boolean oppositeX = false;
+                    boolean oppositeY = false;
+                    int signalX = 0;
+                    int signalY = 0;
+                    for (int i = 0; i < collisionsData.size(); i++){
+                        if (collisionsData.get(i).responseX > 0){
+                            if (signalX == 0){
+                                signalX = 1;
+                            } else if (signalX == -1 && oppositeX == false){
+                                oppositeX = true;
+                            }
+                        } else if (collisionsData.get(i).responseX < 0){
+                            if (signalX == 0){
+                                signalX = -1;
+                            } else if (signalX == 1 && oppositeX == false){
+                                oppositeX = true;
+                            }
+                        }
+                        if (collisionsData.get(i).responseX < 0){
+                            if (signalY == 0){
+                                signalY= 1;
+                            } else if (signalY == -1 && oppositeY == false){
+                                oppositeY = true;
+                            }
+                        } else if (collisionsData.get(i).responseX < 0){
+                            if (signalY == 0){
+                                signalY= -1;
+                            } else if (signalY == 1 && oppositeY == false){
+                                oppositeY = true;
+                            }
+                        }
+                    }
+                    
+                    if (oppositeX){
+                        lastResponseBallX = 0f;
+                    }
+                    if (oppositeY){
+                        lastResponseBallY = 0f;
+                    }
                 }
             }
-        }
-
+        }    
+        
         // AJUSTA A VELOCIDADE DA BOLA
         if (lastResponseBallX < 0 && this.dvx > 0){
-
             this.dvx *= -1;
-
             if (this.accelStarted == true){
                 this.accelFinalVelocityX *= -1;
                 this.accelInitialVelocityX *= -1;
@@ -287,9 +299,7 @@ public class Ball extends Circle{
         }
 
         if (lastResponseBallX > 0 && this.dvx < 0){
-            //console.log("velocity x trocada ", lastResponseBall);
             this.dvx *= -1;
-
             if (this.accelStarted == true){
                 this.accelFinalVelocityX *= -1;
                 this.accelInitialVelocityX *= -1;
@@ -298,7 +308,6 @@ public class Ball extends Circle{
         
         if (lastResponseBallY < 0 && this.dvy > 0){
             this.dvy *= -1;
-
             if (this.accelStarted == true){
                 this.accelFinalVelocityY *= -1;
                 this.accelInitialVelocityY *= -1;
@@ -315,27 +324,25 @@ public class Ball extends Circle{
         }
 
         if(this.collisionBar){
-
             if (this.isAlive){
                 // TODO lastObjects.get(this.collisionBarNumber).lineAlphaAnim.start();
                 // TODO lastObjects.get(this.collisionBarNumber).lineColor = this.color;
-
             }
 
             float angleToRotate = 0;
             boolean velocityAdd = true;
             //Log.e("ball", "velocity add "+lastObjects.get(this.collisionBarNumber).vx);
             //console.log("this.velocityVariation", this.velocityVariation);
-            if (this.dvx < 0 && lastObjects.get(this.collisionBarNumber).vx < 0){
+            if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).vx < 0){
                 velocityAdd = false;
                 angleToRotate = this.angleToRotate;
-            } else if (this.dvx < 0 && lastObjects.get(this.collisionBarNumber).vx > 0){
+            } else if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).vx > 0){
                 velocityAdd = true;
                 angleToRotate = -this.angleToRotate;
-            } else if (this.dvx > 0 && lastObjects.get(this.collisionBarNumber).vx > 0){
+            } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).vx > 0){
                 velocityAdd = false;
                 angleToRotate = -this.angleToRotate;
-            } else if (this.dvx > 0 && lastObjects.get(this.collisionBarNumber).vx < 0){
+            } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).vx < 0){
                 velocityAdd = true;
                 angleToRotate = this.angleToRotate;
             }
