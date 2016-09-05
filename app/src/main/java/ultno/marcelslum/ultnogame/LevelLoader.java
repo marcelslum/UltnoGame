@@ -101,7 +101,7 @@ public class LevelLoader {
 
         if (levelNumber >= 4) {
             levelBuilder
-                    .setBallsQuantity(1)
+                    .setBallsQuantity(5)
                     .setBallsX_B1(0.55f, 0.6f, 0.4f, 0.2f, 0.1f)
                     .setBallsY_B1(0.6f, 0.2f, 0.2f, 0.2f, 0.8f)
 

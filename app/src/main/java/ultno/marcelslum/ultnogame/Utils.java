@@ -231,9 +231,9 @@ public class Utils {
     }
 
     public static void insertObstacleUvData(float[] array, int startIndex, float pX, float pY) {
-        Utils.y1 = 0f;
+        Utils.y1 = -1f * pY;
         Utils.y2 = 1f * pY;
-        Utils.x1 = 0f;
+        Utils.x1 = -1f * pY;
         Utils.x2 = 1f * pX;
         insertRectangleUvData(array, startIndex);
     }

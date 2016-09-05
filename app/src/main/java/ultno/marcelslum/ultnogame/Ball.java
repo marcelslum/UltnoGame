@@ -180,6 +180,8 @@ public class Ball extends Circle{
         ArrayList<PhysicalObject> lastObjects = new ArrayList<>();
         boolean includeObject = true;
 
+        float impulsion = 0f;
+
         for (int i = 0; i < collisionsData.size(); i++){
             lastResponseBallX += collisionsData.get(i).responseX;
             lastResponseBallY += collisionsData.get(i).responseY;
@@ -202,10 +204,42 @@ public class Ball extends Circle{
             } else {
                 includeObject = true;
             }
+
+            // verifica se obstáculo esta crescendo e, se a velocidade for maior que a da bola, impulsiona-a
+            if (collisionsData.get(i).object.name == "obstacle"){
+                Obstacle o = (Obstacle)collisionsData.get(i).object;
+                if (o.scaleVariationData != null){
+                    if (o.scaleVariationData.isActive){
+
+                        //Log.e("ball", "impulsion o.scaleVariationData.widthVelocity "+ (o.scaleVariationData.widthVelocity * o.getTransformedWidth())/2f);
+                        //Log.e("ball", "impulsion Math.abs(dvx) "+ Math.abs(dvx));
+                        //Log.e("ball", "impulsion o.scaleVariationData.heightVelocity "+ (o.scaleVariationData.heightVelocity * o.getTransformedHeight())/2f);
+                        //Log.e("ball", "impulsion Math.abs(dvy) "+ Math.abs(dvy));
+
+                        if (o.scaleVariationData.widthVelocity > 0 && (o.scaleVariationData.widthVelocity * o.getTransformedWidth())/2f > Math.abs(dvx) && collisionsData.get(i).responseX != 0f){
+                            impulsion += o.scaleVariationData.widthVelocity/Math.abs(dvx*0.9f);
+                        }
+                        if (o.scaleVariationData.heightVelocity > 0 && (o.scaleVariationData.heightVelocity * o.getTransformedHeight())/2f > Math.abs(dvy) && collisionsData.get(i).responseY != 0f){
+                            impulsion += o.scaleVariationData.heightVelocity/Math.abs(dvy*0.9f);
+                        }
+                    }
+                }
+            }
         }
 
-        // AJUSTA O CASO DE GAMEOVER
+        if (impulsion != 0f){
+            float iDvx = dvx;
+            float iDvy = dvy;
+            dvx *= (1+impulsion);
+            dvy *= (1+impulsion);
 
+            Log.e("ball", "impulsion ------------"+ iDvx + " "+ iDvy +" para "+ dvx + " "+ dvy);
+
+            this.accelerate(500, iDvx, iDvy);
+        }
+
+
+        // AJUSTA O CASO DE GAMEOVER
         this.collisionBordaB = false;
         this.collisionBar = false;
         this.collisionBarNumber = 0;
@@ -222,7 +256,6 @@ public class Ball extends Circle{
             } else if (lastObjects.get(i).name == "target"){
                 this.collisionTarget = true;
             }
-
         }
 
         if ((this.collisionBordaB || (this.collisionBar && Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)))&&!this.isInvencible){
@@ -375,8 +408,26 @@ public class Ball extends Circle{
 
         // TOCA O SOM ADEQUADO
 
-        this.game.soundPool.play(this.game.soundBallHit, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
 
+        float soundX = positionX / game.gameAreaResolutionX;
+        float volume = 0.01f* (float) game.volume;
+        float volumeD = volume;
+        float volumeE = volume;
+
+
+        if (soundX < 0.5f){
+            volumeE = volume * (1f + (0.5f - soundX));
+            volumeD = volume * (1f - ((0.5f - soundX)*2f));
+        }
+        if (soundX > 0.5f){
+            volumeD = volume * (1f + (soundX - 0.5f));
+            volumeE = volume * (1f - ((soundX - 0.5f)*2f));
+        }
+
+        Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
+
+
+        this.game.soundPool.play(this.game.soundBallHit, volumeE, volumeD, 0, 0, 1);
     }
 
     private void waitForExplosion() {
