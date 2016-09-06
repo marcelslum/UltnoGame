@@ -268,9 +268,11 @@ public class Ball extends Circle{
 	        double direction1 = Math.atan2(v1y, f1x) + collisionAngle;
 	        double direction2 = Math.atan2(v2y, f2x) + collisionAngle;
 	        
-	        
+	        double y1 = Math.sin(direction1) * f1x;
+		double x1 = Math.cos(direction1) * f1x;
 		
-
+		double y1 = Math.sin(direction2) * f2x;
+		double x1 = Math.cos(direction2) * f2x;
             }
         }
 
@@ -459,14 +461,11 @@ public class Ball extends Circle{
 
             //Log.e("ball", "velocity add "+velocityAdd);
             //Log.e("ball", "angleToRotate "+angleToRotate);
-
-            //console.log(velocityAdd);
-
-
+            
             vx = this.dvx;
             vy = this.dvy;
 
-            float initialLen = new Vector(this.initialDesireVelocityX, this.initialDesireVelocityY).len();
+            float initialLen = Math.sqrt(Math.pow(vx * initialDesireVelocityX,2) + Math.pow(vy * initialDesireVelocityY,2));
             float maxLen = initialLen * this.velocityMax_BI;
             float minLen = initialLen * this.velocityMin_BI;
             float scalePorcentage = 1f;
