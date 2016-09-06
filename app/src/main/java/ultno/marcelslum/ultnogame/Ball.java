@@ -252,8 +252,8 @@ public class Ball extends Circle{
 		double otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
 		
 		// calcula a magnitude das velocidades
-	        double thisVelocityLen = getVectorMagnitude(dvx, dvy);
-	        double otherVelocityLen = getVectorMagnitude(otherBall.dvx, otherBall.dvy);
+	        double thisVelocityLen = Utils.getVectorMagnitude(dvx, dvy);
+	        double otherVelocityLen = Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy);
 		        
 		// rotaciona as velocidades, de modo que o ponto de colisão seja perpendicular ao eixo y
 		double v1x = thisVelocityLen * Math.cos(thisDirection - collisionAngle);
@@ -271,12 +271,34 @@ public class Ball extends Circle{
 
 	        //double direction2 = Math.atan2(v2y, f2x) + collisionAngle;
 	        
+	        double finalAngle = Math.toDegrees(direction1);
 	        
+	        if (finalAngle < 0){
+	        	finalAngle = (finalAngle * -1d) + 180d;
+	        }
 	        
+	        double testAngle = finalAngle;
+	        if (testAngle > 90d){
+	        	testAngle %= 90d;
+	        }
 	        
+	        double angleToRotate = 0d;
+	        if (testAngle < minAngle){
+	        	angleToRotate = minAngle - testAngle;
+	        } else if (testAngle > maxAngle){
+	        	angleToRotate = maxAngle - testAngle;
+	        }
 	        
-	        double y1 = Math.sin(direction1) * f1x);
+	        double y1 = Math.sin(direction1) * f1x;
 		double x1 = Math.cos(direction1) * f1x;
+		
+		if (angleToRotate != 0d){
+			x1 = Utils.getXRotated(x1, y1, angleToRotate);
+			y1 = Utils.getYRotated(x1, y1, angleToRotate);
+		}
+
+		dvx = x1;
+		dvy = y1;
 		
 		//double y2 = Math.sin(direction2) * f2x;
 		//double x2 = Math.cos(direction2) * f2x;
@@ -449,7 +471,7 @@ public class Ball extends Circle{
 
                 float testAngle = (float)Math.toDegress(Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x)));
 
-                if (testAngle < this.maxAngle && testAngle > this.minAngle){
+                if (testAngle < maxAngle && testAngle > minAngle){
                     final_vx =  possibleVelocityRotate.x;
                     final_vy =  possibleVelocityRotate.y;
                 } else {
