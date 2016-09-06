@@ -57,6 +57,8 @@ public class Ball extends Circle{
     public float lastResponseBallY = 0f;
     public float impulsion = 0f;
     
+    double mass = 0f;
+    
 
     //todo ????_ball.lastResponseBall = V(0,0);
     //todo ????_ball.lastObjects = [];
@@ -66,6 +68,11 @@ public class Ball extends Circle{
         textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
         program = game.imageProgram;
         this.textureMap = textureMap;
+        
+        // volume of sphere = (4/3) * PI * r^3
+        // mass = density * volume
+        // considera apenas o cubo do raio, já que o resto é igual para todas as esferas
+       	mass = Math.pow(radius,3);
 
         isMovable = true;
         historicPositionX = new ArrayList<>();
@@ -245,8 +252,8 @@ public class Ball extends Circle{
 		double otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
 		
 		// calcula a magnitude das velocidades
-	        double thisVelocityLen = Math.sqrt(Math.pow(dvx,2) + Math.pow(dvy,2));
-	        double otherVelocityLen = Math.sqrt(Math.pow(otherBall.dvx, 2) + Math.pow(otherBall.dvy,2));
+	        double thisVelocityLen = getVectorMagnitude(dvx, dvy);
+	        double otherVelocityLen = getVectorMagnitude(otherBall.dvx, otherBall.dvy);
 		        
 		// rotaciona as velocidades, de modo que o ponto de colisão seja perpendicular ao eixo y
 		double v1x = thisVelocityLen * Math.cos(thisDirection - collisionAngle);
@@ -254,25 +261,25 @@ public class Ball extends Circle{
                 double v2x = otherVelocityLen * Math.cos(otherDirection - collisionAngle);
 	        double v2y = otherVelocityLen * Math.sin(otherDirection - collisionAngle);
 		
-	        // volume of sphere = (4/3) * PI * r^3
-                // mass = density * volume
-                // considera apenas o cubo do raio, já que o resto é igual para ambas as esferas
-	        double thisMass = Math.pow(radius,3);
-                double otherMass = Math.pow(otherBall.radius,3);
-		
+
 	        // calcula as velocidades resultantes da colisão, convervando a energia cinética
-	        double f1x = ((v1x * (thisMass - otherMass))+(2*otherMass*v2x))/(thisMass + otherMass);
-	        double f2x = ((v2x * (thisMass - otherMass))+(2*otherMass*v1x))/(thisMass + otherMass);
+	        double f1x = ((v1x * (mass - otherBall.mass))+(2*otherBall.mass*v2x))/(mass + otherBall.mass);
+	        //double f2x = ((v2x * (thisMass - otherMass))+(2*otherMass*v1x))/(thisMass + otherMass);
 	
 	        // calcula a direção final
 	        double direction1 = Math.atan2(v1y, f1x) + collisionAngle;
-	        double direction2 = Math.atan2(v2y, f2x) + collisionAngle;
+
+	        //double direction2 = Math.atan2(v2y, f2x) + collisionAngle;
 	        
-	        double y1 = Math.sin(direction1) * f1x;
+	        
+	        
+	        
+	        
+	        double y1 = Math.sin(direction1) * f1x);
 		double x1 = Math.cos(direction1) * f1x;
 		
-		double y1 = Math.sin(direction2) * f2x;
-		double x1 = Math.cos(direction2) * f2x;
+		//double y2 = Math.sin(direction2) * f2x;
+		//double x2 = Math.cos(direction2) * f2x;
             }
         }
 
@@ -352,56 +359,7 @@ public class Ball extends Circle{
         
         // AJUSTA A VELOCIDADE DA BOLA
 
-        if (collisionOtherBall){
-
-            float dvAngle = (float)Math.toDegrees(Math.atan2(dvy, dvx));
-            Log.e("ball", "bola com bola: dv anterior "+dvx + " "+ dvy);
-            Log.e("ball", "bola com bola: angle anterior "+dvAngle);
-
-            if (collisionAngle > 0f){
-                    Log.e("ball", " a > 0");
-                if (dvy < 0f){
-                    Log.e("ball", " a > 0 invert dvy");
-                    dvy*=-1;
-                }
-                if (collisionAngle < 90){
-                    Log.e("ball", " a < 90");
-                    if (dvx < 0){
-                        Log.e("ball", " a > 0 invert dvx");
-                        dvx*=-1;
-                    }
-                } else {
-                    Log.e("ball", " a > 90");
-                    if (dvx > 0){
-                        Log.e("ball", " a > 0 invert dvx");
-                        dvx*=-1;
-                    }
-                }
-            } else if (collisionAngle < 0){
-                Log.e("ball", " a < 0");
-                if (dvy > 0){
-                    Log.e("ball", " a < 0 invert dvy");
-                    dvy*=-1;
-                }
-                if (collisionAngle > -90f){
-                    Log.e("ball", " a > -90");
-                    if (dvx < 0){
-                        Log.e("ball", " a < 0 invert dvx");
-                        dvx*=-1;
-                    }
-                } else {
-                    Log.e("ball", " a < -90");
-                    if (dvx > 0){
-                        Log.e("ball", " a < 0 invert dvx");
-                        dvx*=-1;
-                    }
-                }
-            }
-
-            float dvAnglePos = (float)Math.toDegrees(Math.atan2(dvy, dvx));
-            Log.e("ball", "bola com bola: dv posterior "+dvx + " "+ dvy);
-            Log.e("ball", "bola com bola: angle posterior "+dvAnglePos);
-        } else {
+        if (!collisionOtherBall){
             if (lastResponseBallX < 0 && this.dvx > 0) {
                 this.dvx *= -1;
                 if (this.accelStarted == true) {
@@ -465,7 +423,7 @@ public class Ball extends Circle{
             vx = this.dvx;
             vy = this.dvy;
 
-            float initialLen = Math.sqrt(Math.pow(vx * initialDesireVelocityX,2) + Math.pow(vy * initialDesireVelocityY,2));
+            float initialLen = getVectorMagnitude(vx * initialDesireVelocityX, vy * initialDesireVelocityY);
             float maxLen = initialLen * this.velocityMax_BI;
             float minLen = initialLen * this.velocityMin_BI;
             float scalePorcentage = 1f;
@@ -480,7 +438,7 @@ public class Ball extends Circle{
                     scalePorcentage -=this.velocityVariation;
                 }
 
-                float possibleVelocityLen = Math.sqrt(Math.pow(vx * scalePorcentage,2) + Math.pow(vy * scalePorcentage,2));
+                float possibleVelocityLen = getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
 
                 if (possibleVelocityLen > minLen && possibleVelocityLen < maxLen){
                     vx = possibleVelocity.x;
