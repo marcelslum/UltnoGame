@@ -37,6 +37,14 @@ public class Utils {
         return Math.sqrt(Math.pow(x,2) + Math.pow(y,2))
     }
     
+    public static double getXRotated(double x, double y, double angle){
+        return x * Math.cos(angle) - y * Math.sin(angle);
+    }
+    
+    public static double getYRotated(double x, double y, double angle){
+        return x * Math.sin(angle) + y * Math.cos(angle);
+    }
+   
     public static boolean isInsideBounds(float testX, float testY, float x, float y, float width, float height){
         if (testX >= x && testX <= (x + width) && testY >= y && testY <= (y + height)) {
             return true;
