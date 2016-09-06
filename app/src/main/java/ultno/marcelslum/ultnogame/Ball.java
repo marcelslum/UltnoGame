@@ -241,32 +241,34 @@ public class Ball extends Circle{
                 double collisionAngle = Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX);
                 
                 // calcula o angulo em que as bolas estão se movendo
-        		double thisDirection = Math.atan2(dvy, dvx);
-        		double otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
-        		
-        		// calcula a magnitude das velocidades
-		        double thisVelocityLen = Math.sqrt(Math.pow(dvx,2) + Math.pow(dvy,2));
-		        double otherVelocityLen = Math.sqrt(Math.pow(otherBall.dvx, 2) + Math.pow(otherBall.dvy,2));
+		double thisDirection = Math.atan2(dvy, dvx);
+		double otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
+		
+		// calcula a magnitude das velocidades
+	        double thisVelocityLen = Math.sqrt(Math.pow(dvx,2) + Math.pow(dvy,2));
+	        double otherVelocityLen = Math.sqrt(Math.pow(otherBall.dvx, 2) + Math.pow(otherBall.dvy,2));
 		        
-		        // rotaciona as velocidades, de modo que o ponto de colisão seja perpendicular ao eixo y
-				double v1x = thisVelocityLen * Math.cos(thisDirection - collisionAngle);
+		// rotaciona as velocidades, de modo que o ponto de colisão seja perpendicular ao eixo y
+		double v1x = thisVelocityLen * Math.cos(thisDirection - collisionAngle);
                 double v1y = thisVelocityLen * Math.sin(thisDirection - collisionAngle);
                 double v2x = otherVelocityLen * Math.cos(otherDirection - collisionAngle);
-		        double v2y = otherVelocityLen * Math.sin(otherDirection - collisionAngle);
+	        double v2y = otherVelocityLen * Math.sin(otherDirection - collisionAngle);
 		
-		        // volume of sphere = (4/3) * PI * r^3
+	        // volume of sphere = (4/3) * PI * r^3
                 // mass = density * volume
                 // considera apenas o cubo do raio, já que o resto é igual para ambas as esferas
-		        double thisMass = Math.pow(radius,3);
+	        double thisMass = Math.pow(radius,3);
                 double otherMass = Math.pow(otherBall.radius,3);
 		
-		        // calcula as velocidades resultantes da colisão, convervando a energia cinética
-		        double f1x = ((v1x * (thisMass - otherMass))+(2*otherMass*v2x))/(thisMass + otherMass);
-		        double f2x = ((v2x * (thisMass - otherMass))+(2*otherMass*v1x))/(thisMass + otherMass);
-		
-		        // calcula a direção final
-		        double direction1 = Math.atan2(v1y, f1x) + collisionAngle;
-		        double direction2 = Math.atan2(v2y, f2x) + collisionAngle;
+	        // calcula as velocidades resultantes da colisão, convervando a energia cinética
+	        double f1x = ((v1x * (thisMass - otherMass))+(2*otherMass*v2x))/(thisMass + otherMass);
+	        double f2x = ((v2x * (thisMass - otherMass))+(2*otherMass*v1x))/(thisMass + otherMass);
+	
+	        // calcula a direção final
+	        double direction1 = Math.atan2(v1y, f1x) + collisionAngle;
+	        double direction2 = Math.atan2(v2y, f2x) + collisionAngle;
+	        
+	        
 		
 
             }
@@ -479,9 +481,7 @@ public class Ball extends Circle{
                     scalePorcentage -=this.velocityVariation;
                 }
 
-                Vector possibleVelocity = new Vector(vx * scalePorcentage, vy * scalePorcentage);
-
-                float possibleVelocityLen = possibleVelocity.len();
+                float possibleVelocityLen = Math.sqrt(Math.pow(vx * scalePorcentage,2) + Math.pow(vy * scalePorcentage,2));
 
                 if (possibleVelocityLen > minLen && possibleVelocityLen < maxLen){
                     vx = possibleVelocity.x;
@@ -490,10 +490,7 @@ public class Ball extends Circle{
 
                 Vector possibleVelocityRotate = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
 
-                float testAngle = (float)Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x));
-                testAngle = testAngle * 180f/(float)Math.PI;
-
-                //Log.e("ball", "angle "+angle);
+                float testAngle = (float)Math.toDegress(Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x)));
 
                 if (testAngle < this.maxAngle && testAngle > this.minAngle){
                     final_vx =  possibleVelocityRotate.x;
@@ -578,9 +575,9 @@ public class Ball extends Circle{
         int quantityOfClones = 3;
         float distance = radius * 3;
         
-        float initialDesiredVelocityLen = new Vector(initialDesireVelocityX, initialDesireVelocityY).len();
-        float desiredVelocityLen = new Vector(dvx, dvy).len();
-        
+        float initialDesiredVelocityLen = Math.sqrt(Math.pow(initialDesireVelocityX,2) + Math.pow(initialDesireVelocityY,2));
+        float desiredVelocityLen = Math.sqrt(Math.pow(dvx,2) + Math.pow(dvy,2));
+
         float explodeLen = initialDesiredVelocityLen;
         if (desiredVelocityLen < initialDesiredVelocityLen) explodeLen = desiredVelocityLen;
         
