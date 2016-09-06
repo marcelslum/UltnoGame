@@ -248,6 +248,9 @@ public class Ball extends Circle{
                 double collisionAngle = Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX);
                 
                 // calcula o angulo em que as bolas estão se movendo
+                
+                Log.e("ball", "dv inicial "+dvx+" dvy "+dvy);
+                
 		double thisDirection = Math.atan2(dvy, dvx);
 		double otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
 		
@@ -285,20 +288,28 @@ public class Ball extends Circle{
 	        double angleToRotate = 0d;
 	        if (testAngle < minAngle){
 	        	angleToRotate = minAngle - testAngle;
+	        	Log.e("ball", "angulo menor que o esperado, rotacao de "+angleToRotate);
+	        	
 	        } else if (testAngle > maxAngle){
 	        	angleToRotate = maxAngle - testAngle;
+	        	Log.e("ball", "angulo maior que o esperado, rotacao de "+angleToRotate);
 	        }
 	        
 	        double y1 = Math.sin(direction1) * f1x;
 		double x1 = Math.cos(direction1) * f1x;
 		
 		if (angleToRotate != 0d){
+			Log.e("ball", "ajuste do angulo");
+			Log.e("ball", "posicao antes da rotacao "+x1+" "+y1);
 			x1 = Utils.getXRotated(x1, y1, angleToRotate);
 			y1 = Utils.getYRotated(x1, y1, angleToRotate);
+			Log.e("ball", "posicao depois da rotacao "+x1+" "+y1);
 		}
 
 		dvx = x1;
 		dvy = y1;
+		
+		Log.e("ball", "dv final "+dvx+" dvy "+dvy);
 		
 		//double y2 = Math.sin(direction2) * f2x;
 		//double x2 = Math.cos(direction2) * f2x;
