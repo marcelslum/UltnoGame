@@ -27,7 +27,16 @@ public class Utils {
 
     private Utils() {
     }
-
+    
+    
+    public static float getVectorMagnitude(float x, float y){
+        return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2))
+    }
+    
+    public static double getVectorMagnitude(double x, double y){
+        return Math.sqrt(Math.pow(x,2) + Math.pow(y,2))
+    }
+    
     public static boolean isInsideBounds(float testX, float testY, float x, float y, float width, float height){
         if (testX >= x && testX <= (x + width) && testY >= y && testY <= (y + height)) {
             return true;
