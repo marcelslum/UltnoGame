@@ -101,13 +101,11 @@ public class LevelLoader {
 
         if (levelNumber >= 4) {
             levelBuilder
-                    .setBallsQuantity(5)
-                    .setBallsX_B1(0.55f, 0.6f, 0.4f, 0.2f, 0.1f)
-                    .setBallsY_B1(0.6f, 0.2f, 0.2f, 0.2f, 0.8f)
-
-                    .setBallsVX(0.501f, 0.301f, -1.501f, -0.901f, -0.601f)
-                    .setBallsVY(-0.301f, 1.301f, -0.501f, 1.001f, -0.801f)
-
+                    .setBallsQuantity(2)
+                    .setBallsX_B1(0.34f, 0.64f, 0.42f, 0.52f, 0.62f)
+                    .setBallsY_B1(0.75f, 0.25f, 0.5f, 0.5f, 0.5f)
+                    .setBallsVX(0.62f, -0.3f, 0.3f, 0.3f, 0.3f)
+                    .setBallsVY(-0.6f, 0.3f, -0.3f, -0.3f, -0.3f)
                     .setBallsAngleToRotate_BD_2(1.1f)
                     .setBarsWidth_BD_0_22(0.818f)
                     .setBarsVX_BD_0_0045(1.111f)
@@ -120,9 +118,9 @@ public class LevelLoader {
                                 {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0},
                                 {1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1},
                                 {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}
-                        })
+                        }) //{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}
                         .setTargetsStates(new int[]{0, 1})
-                        .setObstaclesQuantity(1)
+                        .setObstaclesQuantity(0)
                         .setObstaclesX(0.5f)
                         .setObstaclesY(0.3f)
                         .setObstaclesWidth(0.2f)

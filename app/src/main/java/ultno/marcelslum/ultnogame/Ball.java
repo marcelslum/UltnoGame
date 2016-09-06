@@ -45,6 +45,7 @@ public class Ball extends Circle{
     boolean collisionBordaB = false;
     boolean collisionBar = false;
     boolean collisionTarget = false;
+    boolean collisionOtherBall = false;
     int collisionBarNumber = -1;
     boolean verifyAppendsIsFreeBall = false;
     BallParticleGenerator ballParticleGenerator;
@@ -185,29 +186,36 @@ public class Ball extends Circle{
         collisionBar = false;
         collisionBarNumber = 0;
         collisionTarget = false;
+        collisionOtherBall = false;
+
+        float collisionAngle = 0f;
+
+        checkCollisionsDataObjectRepetition();
+
+        Log.e("ball", "iniciando checagem de colisão");
 
         for (int i = 0; i < collisionsData.size(); i++){
             
             lastResponseBallX += collisionsData.get(i).responseX;
             lastResponseBallY += collisionsData.get(i).responseY;
 
-            Log.e("ball", collisionsData.get(i).object.name +" rX "+ collisionsData.get(i).responseX +" rY "+ collisionsData.get(i).responseY +" nX "+ collisionsData.get(i).normalX +" nY "+ collisionsData.get(i).normalY);
+            Log.e("ball", collisionsData.get(i).object.name +" rX "+ collisionsData.get(i).responseX +" rY "+ collisionsData.get(i).responseY +" nX "+ collisionsData.get(i).normalX +" nY "+ collisionsData.get(i).normalY+" isRepeated "+collisionsData.get(i).isRepeated);
 
-            if (collisionsData.get(i).object.name == "bordaB"){
+            if (collisionsData.get(i).object.name == "bordaB" && !collisionsData.get(i).isRepeated){
                 this.collisionBordaB = true;
             }
             
-            if (collisionsData.get(i).object.name == "bar"){
+            if (collisionsData.get(i).object.name == "bar" && !collisionsData.get(i).isRepeated){
                 this.collisionBar = true;
                 this.collisionBarNumber = i;
             }
             
-            if (collisionsData.get(i).object.name == "target"){
+            if (collisionsData.get(i).object.name == "target" && !collisionsData.get(i).isRepeated){
                 this.collisionTarget = true;
             }
         
             // verifica se obstáculo esta crescendo e, se a velocidade for maior que a da bola, impulsiona-a
-            if (collisionsData.get(i).object.name == "obstacle"){
+            if (collisionsData.get(i).object.name == "obstacle" && !collisionsData.get(i).isRepeated){
                 Obstacle o = (Obstacle)collisionsData.get(i).object;
                 if (o.scaleVariationData != null){
                     if (o.scaleVariationData.isActive){
@@ -220,9 +228,47 @@ public class Ball extends Circle{
                     }
                 }
             }
+
+            if (collisionsData.get(i).object.name == "ball" && !collisionsData.get(i).isRepeated){
+
+                collisionOtherBall = true;
+
+                Ball otherBall = (Ball)collisionsData.get(i).object;
+                float otherVelocityLen = new Vector(otherBall.vx, otherBall.vy).len();
+                float thisVelocityLen = new Vector(vx, vy).len();
+
+                //Log.e("ball", "thisvelocityLen "+thisVelocityLen);
+                //Log.e("ball", "otherVelocityLen "+otherVelocityLen);
+                //Log.e("ball", "dvx antes "+dvx);
+
+                float difVelocity;
+                if (otherVelocityLen > thisVelocityLen){
+                    difVelocity = otherVelocityLen/thisVelocityLen;
+                    if (difVelocity > 3f){
+                        difVelocity = 3f;
+                    }
+                    difVelocity = (difVelocity - 1f)*0.5f;
+                    dvx *= 1 + difVelocity;
+                    dvy *= 1 + difVelocity;
+                } else if (thisVelocityLen > otherVelocityLen){
+                    difVelocity = thisVelocityLen/otherVelocityLen;
+                    if (difVelocity > 3f){
+                        difVelocity = 3f;
+                    }
+                    difVelocity = (difVelocity - 1f)*0.25f;
+                    dvx *= 1 - difVelocity;
+                    dvy *= 1 - difVelocity;
+                }
+                //Log.e("ball", "dvx depois "+dvx);
+
+
+                collisionAngle = (float)Math.toDegrees(Math.atan2(collisionsData.get(i).responseY, collisionsData.get(i).responseX));
+                Log.e("ball", "angle "+collisionAngle);
+            }
         }
 
         if (impulsion != 0f){
+            Log.e("ball", "impulsion "+impulsion);
             float iDvx = dvx;
             float iDvy = dvy;
             dvx *= (1+impulsion);
@@ -239,13 +285,15 @@ public class Ball extends Circle{
             if (collisionBar){
                 lastResponseBallX = 0f;
             } else {
-                if (collisionsData.size() == 1){
+                if (collisionsData.size() == 1 && !collisionOtherBall){
                     if (Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)){
+                        Log.e("ball", "zera response Y");
                         lastResponseBallY = 0f;
                     } else {
+                        Log.e("ball", "zera response X");
                         lastResponseBallX = 0f;
                     }
-                } else (collisionsData.size() > 1){
+                } else if(collisionsData.size() > 1 && !collisionOtherBall){
                     boolean oppositeX = false;
                     boolean oppositeY = false;
                     int signalX = 0;
@@ -287,40 +335,95 @@ public class Ball extends Circle{
                     }
                 }
             }
-        }    
+        }
+
+
+
+
         
         // AJUSTA A VELOCIDADE DA BOLA
-        if (lastResponseBallX < 0 && this.dvx > 0){
-            this.dvx *= -1;
-            if (this.accelStarted == true){
-                this.accelFinalVelocityX *= -1;
-                this.accelInitialVelocityX *= -1;
-            }
-        }
 
-        if (lastResponseBallX > 0 && this.dvx < 0){
-            this.dvx *= -1;
-            if (this.accelStarted == true){
-                this.accelFinalVelocityX *= -1;
-                this.accelInitialVelocityX *= -1;
-            }
-        }
-        
-        if (lastResponseBallY < 0 && this.dvy > 0){
-            this.dvy *= -1;
-            if (this.accelStarted == true){
-                this.accelFinalVelocityY *= -1;
-                this.accelInitialVelocityY *= -1;
-            }
-        }
+        if (collisionOtherBall){
 
-        if (lastResponseBallY > 0 && this.dvy < 0){
-            this.dvy *= -1;
-            if (this.accelStarted == true){
-                this.accelFinalVelocityY *= -1;
-                this.accelInitialVelocityY *= -1;
+            float dvAngle = (float)Math.toDegrees(Math.atan2(dvy, dvx));
+            Log.e("ball", "bola com bola: dv anterior "+dvx + " "+ dvy);
+            Log.e("ball", "bola com bola: angle anterior "+dvAngle);
+
+            if (collisionAngle > 0f){
+                    Log.e("ball", " a > 0");
+                if (dvy < 0f){
+                    Log.e("ball", " a > 0 invert dvy");
+                    dvy*=-1;
+                }
+                if (collisionAngle < 90){
+                    Log.e("ball", " a < 90");
+                    if (dvx < 0){
+                        Log.e("ball", " a > 0 invert dvx");
+                        dvx*=-1;
+                    }
+                } else {
+                    Log.e("ball", " a > 90");
+                    if (dvx > 0){
+                        Log.e("ball", " a > 0 invert dvx");
+                        dvx*=-1;
+                    }
+                }
+            } else if (collisionAngle < 0){
+                Log.e("ball", " a < 0");
+                if (dvy > 0){
+                    Log.e("ball", " a < 0 invert dvy");
+                    dvy*=-1;
+                }
+                if (collisionAngle > -90f){
+                    Log.e("ball", " a > -90");
+                    if (dvx < 0){
+                        Log.e("ball", " a < 0 invert dvx");
+                        dvx*=-1;
+                    }
+                } else {
+                    Log.e("ball", " a < -90");
+                    if (dvx > 0){
+                        Log.e("ball", " a < 0 invert dvx");
+                        dvx*=-1;
+                    }
+                }
             }
 
+            float dvAnglePos = (float)Math.toDegrees(Math.atan2(dvy, dvx));
+            Log.e("ball", "bola com bola: dv posterior "+dvx + " "+ dvy);
+            Log.e("ball", "bola com bola: angle posterior "+dvAnglePos);
+        } else {
+            if (lastResponseBallX < 0 && this.dvx > 0) {
+                this.dvx *= -1;
+                if (this.accelStarted == true) {
+                    this.accelFinalVelocityX *= -1;
+                    this.accelInitialVelocityX *= -1;
+                }
+            }
+
+            if (lastResponseBallX > 0 && this.dvx < 0) {
+                this.dvx *= -1;
+                if (this.accelStarted == true) {
+                    this.accelFinalVelocityX *= -1;
+                    this.accelInitialVelocityX *= -1;
+                }
+            }
+
+            if (lastResponseBallY < 0 && this.dvy > 0) {
+                this.dvy *= -1;
+                if (this.accelStarted == true) {
+                    this.accelFinalVelocityY *= -1;
+                    this.accelInitialVelocityY *= -1;
+                }
+            }
+
+            if (lastResponseBallY > 0 && this.dvy < 0) {
+                this.dvy *= -1;
+                if (this.accelStarted == true) {
+                    this.accelFinalVelocityY *= -1;
+                    this.accelInitialVelocityY *= -1;
+                }
+            }
         }
 
         if(this.collisionBar){
@@ -333,16 +436,16 @@ public class Ball extends Circle{
             boolean velocityAdd = true;
             //Log.e("ball", "velocity add "+lastObjects.get(this.collisionBarNumber).vx);
             //console.log("this.velocityVariation", this.velocityVariation);
-            if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).vx < 0){
+            if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).object.vx < 0){
                 velocityAdd = false;
                 angleToRotate = this.angleToRotate;
-            } else if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).vx > 0){
+            } else if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).object.vx > 0){
                 velocityAdd = true;
                 angleToRotate = -this.angleToRotate;
-            } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).vx > 0){
+            } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).object.vx > 0){
                 velocityAdd = false;
                 angleToRotate = -this.angleToRotate;
-            } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).vx < 0){
+            } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).object.vx < 0){
                 velocityAdd = true;
                 angleToRotate = this.angleToRotate;
             }
@@ -382,12 +485,12 @@ public class Ball extends Circle{
 
                 Vector possibleVelocityRotate = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
 
-                float angle = (float)Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x));
-                angle = angle * 180f/(float)Math.PI;
+                float testAngle = (float)Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x));
+                testAngle = testAngle * 180f/(float)Math.PI;
 
                 //Log.e("ball", "angle "+angle);
 
-                if (angle < this.maxAngle && angle > this.minAngle){
+                if (testAngle < this.maxAngle && testAngle > this.minAngle){
                     final_vx =  possibleVelocityRotate.x;
                     final_vy =  possibleVelocityRotate.y;
                 } else {
@@ -399,15 +502,14 @@ public class Ball extends Circle{
         }
 
         // AJUSTA O ALVO ATINGIDO
-        for (Entity e : lastObjects){
-            //console.log(lastObjects[i].name, " "); //lastObjects.position.x, " ", lastObjects.position.y);
-            if (e.name == "target"){
+
+        for (int i = 0; i < collisionsData.size(); i++) {
+            if (collisionsData.get(i).object.name == "target" && !collisionsData.get(i).isRepeated){
                 game.ballCollidedFx = 40;
-                Target target = (Target)e;
+                Target target = (Target)collisionsData.get(i).object;
                 target.onBallCollision();
                 game.resetTimeForPointsDecay();
                 if (target.special == 1 && !listenForExplosion){
-                    //Log.e("ball", " wait for explosion ativado");
                     waitForExplosion();
                 }
             }
@@ -431,7 +533,7 @@ public class Ball extends Circle{
             volumeE = volume * (1f - ((soundX - 0.5f)*2f));
         }
 
-        Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
+        //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
 
 
         this.game.soundPool.play(this.game.soundBallHit, volumeE, volumeD, 0, 0, 1);

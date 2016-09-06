@@ -34,6 +34,16 @@ public class PhysicalObject extends Entity implements Weight{
     public int updateBoundsState;
     public RectangleM satData;
 
+    public void checkCollisionsDataObjectRepetition(){
+        for (int i = 0; i < collisionsData.size(); i++) {
+            for (int ii = 0; ii < i; ii++){
+                if (collisionsData.get(i).object == collisionsData.get(ii).object){
+                    collisionsData.get(i).isRepeated = true;
+                }
+            }
+        }
+    }
+
     PhysicalObject(String name, Game game, float x, float y, int weight){
         super(name, game, x, y);
         this.weight = weight;

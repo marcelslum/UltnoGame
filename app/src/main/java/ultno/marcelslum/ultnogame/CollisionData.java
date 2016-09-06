@@ -8,6 +8,7 @@ public class CollisionData{
     public float normalX;
     public float normalY;
     public float weight;
+    public boolean isRepeated;
   
     public CollisionData(PhysicalObject object, float responseX, float responseY, float normalX, float normalY, float weight){
         this.object = object;
@@ -16,5 +17,6 @@ public class CollisionData{
         this.normalX = normalX;
         this.normalY = normalY;
         this.weight = weight;
+        isRepeated = false;
     }
 }
