@@ -241,15 +241,35 @@ public class Ball extends Circle{
                 
                 // volume of sphere = (4/3) * PI * r^3
                 // mass = density * volume
-                float thisVolume = PRE_VOLUME * radius * radius * radius;
-                float otherVolume = PRE_VOLUME * otherBall.radius * otherBall.radius * otherBall.radius;
-                
-                
-                
-                
-                
-                
+                // considera apenas o cubo do raio, já que o resto é igual para ambas as bolas
+                float thisMass = radius * radius * radius;
+                float otherMass = otherBall.radius * otherBall.radius * otherBall.radius;
 
+                collisionAngle = (float)Math.toDegrees(Math.atan2(collisionsData.get(i).responseY, collisionsData.get(i).responseX));
+                Log.e("ball", "collision angle from response "+collisionAngle);
+                
+                collisionAngle = (float)Math.toDegrees(Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX));
+                Log.e("ball", "angle from positions "+collisionAngle);
+                
+                float thisDirection = Math.atan2(dvy, dvx);
+                float otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
+                
+                // alinha a colisão com o eixo x
+                float v1x = thisVelocityLen * Math.cos(thisDirection - collisionAngle);
+                float v1y = thisVelocityLen * Math.sin(thisDirection - collisionAngle);
+                float v2x = otherVelocityLen * Math.cos(otherDirection - collisionAngle);
+                float v2y = otherVelocityLen * Math.sin(otherDirection - collisionAngle);
+
+                //float resultingVelocity = ((thisVelocityLen * (thisMass - otherMass))+(2*otherMass*otherVelocity))/(thisMass + otherMass);
+
+                // calcula a velocidade unidimensional no eixo x
+                float f1x = ((v1x * (thisMass - otherMass))+(2*otherMass*v2x))/(thisMass + otherMass);
+
+                float v1 = Math.squareRoot(((f1x * f1x) * (f1x * f1x)) + (v1y * (v1y * v1y)));
+                
+                float direction 
+                
+                
                 //Log.e("ball", "thisvelocityLen "+thisVelocityLen);
                 //Log.e("ball", "otherVelocityLen "+otherVelocityLen);
                 //Log.e("ball", "dvx antes "+dvx);
@@ -275,8 +295,8 @@ public class Ball extends Circle{
                 //Log.e("ball", "dvx depois "+dvx);
 
 
-                collisionAngle = (float)Math.toDegrees(Math.atan2(collisionsData.get(i).responseY, collisionsData.get(i).responseX));
-                Log.e("ball", "angle "+collisionAngle);
+                
+                
             }
         }
 
