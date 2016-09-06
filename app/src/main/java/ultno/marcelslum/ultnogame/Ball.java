@@ -19,6 +19,8 @@ public class Ball extends Circle{
     public static final int COLOR_BALL_ORANGE = 24;
     public static final int COLOR_BALL_PINK = 21;
     public static final int COLOR_BALL_PURPLE = 25;
+    
+    public static final float PRE_VOLUME = (4f/3f)*Math.PI;
 
     public float angleToRotate;
     public float velocityVariation;
@@ -236,6 +238,17 @@ public class Ball extends Circle{
                 Ball otherBall = (Ball)collisionsData.get(i).object;
                 float otherVelocityLen = new Vector(otherBall.vx, otherBall.vy).len();
                 float thisVelocityLen = new Vector(vx, vy).len();
+                
+                // volume of sphere = (4/3) * PI * r^3
+                // mass = density * volume
+                float thisVolume = PRE_VOLUME * radius * radius * radius;
+                float otherVolume = PRE_VOLUME * otherBall.radius * otherBall.radius * otherBall.radius;
+                
+                
+                
+                
+                
+                
 
                 //Log.e("ball", "thisvelocityLen "+thisVelocityLen);
                 //Log.e("ball", "otherVelocityLen "+otherVelocityLen);
