@@ -28,12 +28,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     float	effectiveScreenWidth;
     float	effectiveScreenHeight;
 
-    float 	ssu = 1.0f;
-    float 	ssx = 1.0f;
-    float 	ssy = 1.0f;
-    float 	swp = 320.0f;
-    float 	shp = 480.0f;
-
     float testeValue = 10f;
 
     public float fps = 60f;
@@ -51,16 +45,13 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     {
         mContext = c;
         mLastTime = System.currentTimeMillis() + 100;
-        this.gi = Game.getInstance();
-        this.gi.setContext(mContext);
+        Game.context = mContext;
     }
 
     public void onPause()
     {
-        if (gi != null) {
-            if (gi.music != null) {
-                gi.setGameState(Game.GAME_STATE_PAUSE);
-            }
+        if (Game.music != null) {
+            Game.setGameState(Game.GAME_STATE_PAUSE);
         }
     }
 
@@ -143,18 +134,18 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
         //this.gi.addText(new Text("titulo", this.gi, 0f, 0f, 300f, "ULTNO", this.gi.font));
 
-        this.gi.gameAreaResolutionX = this.effectiveScreenWidth;
-        this.gi.gameAreaResolutionY = this.effectiveScreenHeight * 0.85f;
+        Game.gameAreaResolutionX = this.effectiveScreenWidth;
+        Game.gameAreaResolutionY = this.effectiveScreenHeight * 0.85f;
 
-        this.gi.resolutionX = this.effectiveScreenWidth;
-        this.gi.resolutionY = this.effectiveScreenHeight;
+        Game.resolutionX = this.effectiveScreenWidth;
+        Game.resolutionY = this.effectiveScreenHeight;
 
-        this.gi.screenOffSetX = screenOffSetX;
-        this.gi.screenOffSetY = screenOffSetY;
+        Game.screenOffSetX = screenOffSetX;
+        Game.screenOffSetY = screenOffSetY;
 
-        this.gi.init();
+        Game.init();
 
-        this.gi.setGameState(Game.GAME_STATE_MENU);
+        Game.setGameState(Game.GAME_STATE_MENU);
     }
 
     @Override
@@ -172,10 +163,10 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         // Get the amount of time the last frame took.
         long elapsed = now - mLastTime;
 
-        this.gi.verifyTouchBlock();
-        this.gi.verifyListeners();
-        this.gi.simulate(elapsed, frameDuration);
-        this.gi.render(matrixView, matrixProjection);
+        Game.verifyTouchBlock();
+        Game.verifyListeners();
+        Game.simulate(elapsed, frameDuration);
+        Game.render(matrixView, matrixProjection);
 
         // Save the current time to see how long it took :).
         mLastTime = now;
@@ -184,14 +175,14 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     
     public void SetupTextures()
     {
-    	gi.texturenames = new int[8];
-        GLES20.glGenTextures(8, gi.texturenames, 0);
-        Utils.setTexture("drawable/botoesebolas", gi.texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
-        Utils.setTexture("drawable/jetset", gi.texturenames, Game.TEXTURE_FONT, mContext); // fonte
-        Utils.setTexture("drawable/targets", gi.texturenames, Game.TEXTURE_TARGETS, mContext); // targets
-        Utils.setTexture("drawable/bars", gi.texturenames, Game.TEXTURE_BARS, mContext); // bars
-        Utils.setTexture("drawable/numbers_explosion5", gi.texturenames, Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, mContext); // numeros
-        Utils.setTexture("drawable/tittle", gi.texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
+    	Game.texturenames = new int[8];
+        GLES20.glGenTextures(8, Game.texturenames, 0);
+        Utils.setTexture("drawable/botoesebolas", Game.texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
+        Utils.setTexture("drawable/jetset", Game.texturenames, Game.TEXTURE_FONT, mContext); // fonte
+        Utils.setTexture("drawable/targets", Game.texturenames, Game.TEXTURE_TARGETS, mContext); // targets
+        Utils.setTexture("drawable/bars", Game.texturenames, Game.TEXTURE_BARS, mContext); // bars
+        Utils.setTexture("drawable/numbers_explosion5", Game.texturenames, Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, mContext); // numeros
+        Utils.setTexture("drawable/tittle", Game.texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
         
     }
 }

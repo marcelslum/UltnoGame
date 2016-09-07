@@ -1,31 +1,28 @@
 package ultno.marcelslum.ultnogame;
 
 
-/**
- * Created by marcel on 11/08/2016.
- */
 public class Point extends Entity {
 
     private float size;
     private float value;
-    
-    private final static float textureSize = 1024f;
-    private final static float [] columns = new float [] {142f,284f,426f, 568f, 710f, 852f, 994f};
-    private final static float [] lines = new float [] {257f,514f,771f};
 
-    Point(String name, Game game, float x, float y, float size) {
-        super(name, game, x, y);
+    //private final static float textureSize = 1024f;
+    //private final static float [] columns = new float [] {142f,284f,426f, 568f, 710f, 852f, 994f};
+    //private final static float [] lines = new float [] {257f,514f,771f};
+
+    Point(String name, float x, float y, float size) {
+        super(name, x, y);
         this.size = size;
-        this.isSolid = false;
-        this.isCollidable = false;
-        this.isVisible = true;
-        this.alpha = 1;
-        this.textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
-        this.program = this.game.imageProgram;
+        isSolid = false;
+        isCollidable = false;
+        isVisible = true;
+        alpha = 1;
+        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+        program = Game.imageProgram;
     }
 
     public void setValue(int value){
-        this.value = value;
+        value = value;
 
         String valueString = String.valueOf(value);
         //Log.e("point", " "+valueString);
@@ -48,7 +45,7 @@ public class Point extends Entity {
 
             //Log.e("point", "subInteger "+subInteger);
 
-            Utils.insertRectangleVerticesData(this.verticesData, 0 + (i * 12), x, x+width, 0f, size, 0f);
+            Utils.insertRectangleVerticesData(this.verticesData, i * 12, x, x+width, 0f, size, 0f);
             
             if (subInteger == 1) {
                 x += width*0.46199f;
@@ -56,7 +53,7 @@ public class Point extends Entity {
                 x += width;
             }
             
-            Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
+            Utils.insertRectangleIndicesData(this.indicesData, i * 6, i * 4);
 
             int textureMap = Game.TEXTURE_MAP_NUMBERS_POINT1;
             switch (subInteger){
@@ -91,7 +88,7 @@ public class Point extends Entity {
                     textureMap = Game.TEXTURE_MAP_NUMBERS_POINT0;
                     break;
             }
-            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), textureMap);
+            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, textureMap);
         }
         
         this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);

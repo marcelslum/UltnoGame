@@ -5,26 +5,15 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by marcel on 01/08/2016.
- */
 public class Rectangle extends PhysicalObject {
-    float width;
-    float height;
-    ScaleVariationData scaleVariationData;
+    public float width;
+    public float height;
+    public ScaleVariationData scaleVariationData;
+    public PositionVariationData positionVariationData;
 
-    Rectangle(String name, Game game, float x, float y, float width, float height, int weight, Color color){
-        super(name, game, x, y, weight);
-        this.program = game.solidProgram;
-        this.color = color;
-        this.width = width;
-        this.height = height;
-        setDrawInfo();
-    }
-
-    Rectangle(String name, Game game, float x, float y, float width, float height, float z, int weight, Color color){
-        super(name, game, x, y, weight);
-        this.program = game.solidProgram;
+    Rectangle(String name, float x, float y, float width, float height, int weight, Color color){
+        super(name, x, y, weight);
+        this.program = Game.solidProgram;
         this.color = color;
         this.width = width;
         this.height = height;
@@ -49,7 +38,7 @@ public class Rectangle extends PhysicalObject {
         if(this.polygonData == null) {
             float transformedWidth = getTransformedWidth();
             float transformedHeight = getTransformedHeight();
-            ArrayList<Vector> points = new ArrayList<Vector>();
+            ArrayList<Vector> points = new ArrayList<>();
             points.add(new Vector(0, 0));
             points.add(new Vector(transformedWidth, 0));
             points.add(new Vector(transformedWidth, transformedHeight));
@@ -84,6 +73,10 @@ public class Rectangle extends PhysicalObject {
     public void setScaleVariation(ScaleVariationDataBuilder builder){
         scaleVariationData = builder.build();
     }
+
+    public void setPositionVariation(PositionVariationDataBuilder builder){
+        positionVariationData = builder.build();
+    }
     
     public void stopScaleVariation(){
         if (scaleVariationData != null) {
@@ -96,10 +89,60 @@ public class Rectangle extends PhysicalObject {
             scaleVariationData.isActive = true;
         }
     }
+
+    public void stopPositionVariation(){
+        if (positionVariationData != null) {
+            positionVariationData.isActive = false;
+        }
+    }
+
+    public void initPositionVariation(){
+        if (positionVariationData != null) {
+            positionVariationData.isActive = true;
+        }
+    }
     
 
     @Override
     public void checkTransformations(boolean updatePrevious) {
+
+        if (positionVariationData != null){
+            PositionVariationData p = positionVariationData;
+            if (p.isActive){
+                if (p.xVelocity > 0f){
+                    if (p.increaseX){
+                        translateX += p.xVelocity * Game.gameAreaResolutionX;
+                        if ((x + accumulatedTranslateX + translateX + getTransformedWidth())>(p.maxX*Game.gameAreaResolutionX)){
+                            translateX -= p.xVelocity * Game.gameAreaResolutionX * 2;    
+                            p.increaseX = false;
+                        }
+                    } else {
+                        translateX -= p.xVelocity * Game.gameAreaResolutionX;
+                        if ((x + accumulatedTranslateX + translateX)<(p.minX*Game.gameAreaResolutionX)){
+                            translateX += p.xVelocity * Game.gameAreaResolutionX * 2;
+                            p.increaseX = true;
+                        }
+                    }
+                }
+
+                if (p.yVelocity > 0f){
+                    if (p.increaseY){
+                        translateY += p.yVelocity * Game.gameAreaResolutionY;
+                        if ((y + accumulatedTranslateY + translateY + getTransformedHeight())>(p.maxY*Game.gameAreaResolutionY)){
+                            translateY -= p.yVelocity * Game.gameAreaResolutionY * 2;
+                            p.increaseY = false;
+                        }
+                    } else {
+                        translateY -= p.yVelocity * Game.gameAreaResolutionY;
+                        if ((y + accumulatedTranslateY + translateY)<(p.minY*Game.gameAreaResolutionY)){
+                            translateY += p.yVelocity * Game.gameAreaResolutionY * 2;
+                            p.increaseY = true;
+                        }
+                    }
+                }
+            }
+        }
+        
 
         if (scaleVariationData != null){
             ScaleVariationData s = scaleVariationData;
@@ -146,5 +189,75 @@ public class Rectangle extends PhysicalObject {
         quadtreeData.setY(positionY);
         quadtreeData.setWidth(getTransformedWidth());
         quadtreeData.setHeight(getTransformedHeight());
+    }
+
+    public void respondToCollision(float responseX, float responseY){
+        //Log.e("physical", "respond to collision " +responseX);
+        PositionVariationData p;
+        ScaleVariationData s;
+
+        boolean decreaseX = false;
+        boolean increaseX = false;
+        boolean decreaseY = false;
+        boolean increaseY = false;
+
+        if (positionVariationData != null){
+            p = positionVariationData;
+            if (p.isActive) {
+                if (responseX < 0f && p.increaseX){
+                    decreaseX = true;
+                } else if (responseX > 0f && !p.increaseX){
+                    increaseX = true;
+                }
+                if (responseY < 0f && p.increaseY){
+                    decreaseY = true;
+                } else if (responseY > 0f && !p.increaseY){
+                    increaseY = true;
+                }
+            }
+        }
+
+        if (positionVariationData != null) {
+            p = positionVariationData;
+            if (decreaseX) {
+                positionX -= p.xVelocity * Game.gameAreaResolutionX;
+                p.increaseX = false;
+            }
+            if (increaseX) {
+                positionX += p.xVelocity * Game.gameAreaResolutionX;
+                p.increaseX = true;
+            }
+            if (decreaseY) {
+                positionY -= p.yVelocity * Game.gameAreaResolutionY;
+                p.increaseY = false;
+            }
+            if (increaseY) {
+                positionY += p.yVelocity * Game.gameAreaResolutionY;
+                p.increaseY = true;
+            }
+        }
+
+        if (scaleVariationData != null) {
+            s = scaleVariationData;
+            if (s.isActive) {
+                if (responseX != 0f){
+                    scaleX -= Math.abs(responseX) / getTransformedWidth();
+                    s.increaseWidth = false;
+                }
+
+                if (responseY != 0f){
+                    scaleY -= Math.abs(responseY) / getTransformedHeight();
+                    s.increaseHeight = false;
+                }
+            } else {
+                this.accumulatedTranslateX += responseX;
+                this.accumulatedTranslateY += responseY;
+            }
+        } else {
+            this.accumulatedTranslateX += responseX;
+            this.accumulatedTranslateY += responseY;
+        }
+
+        this.checkTransformations(false);
     }
 }

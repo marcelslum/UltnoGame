@@ -5,14 +5,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 public class Storage {
-    private static Storage ourInstance = new Storage();
     public static SharedPreferences storage;
-    private static Context context;
     final static String STORAGE_FILE_NAME = "ultno.marcelslum.ultnogame.storage2";
-
-    public static Storage getInstance() {
-        return ourInstance;
-    }
 
     private Storage() {
     }

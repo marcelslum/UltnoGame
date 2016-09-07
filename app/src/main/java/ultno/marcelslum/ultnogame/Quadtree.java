@@ -1,18 +1,9 @@
 package ultno.marcelslum.ultnogame;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 
-/**
- * Created by marcel on 02/08/2016.
- */
 public class Quadtree {
-
-    private final static int TOP_LEFT = 0;
-    private final static int TOP_RIGHT = 1;
-    private final static int BOTTOM_LEFT = 2;
-    private final static int BOTTOM_RIGHT = 3;
 
     Node root;
 
@@ -34,9 +25,9 @@ public class Quadtree {
 
     public ArrayList<Entity> retrieve(Entity item){
 
-        this.outs = new ArrayList<Entity>();
-        this.root.retrieve(item, this.outs);
-        return this.outs;
+        outs = new ArrayList<>();
+        this.root.retrieve(item, outs);
+        return outs;
     }
 
     class Node{
@@ -58,8 +49,8 @@ public class Quadtree {
             this.depth = depth;
             this.maxDepth = maxDepth;
             this.maxChildren = maxChildren;
-            this.children = new ArrayList<Entity>();
-            this.stuckChildren = new ArrayList<Entity>();
+            this.children = new ArrayList<>();
+            this.stuckChildren = new ArrayList<>();
         }
 
         public void insert(Entity item){
@@ -190,14 +181,14 @@ public class Quadtree {
 
             boolean left;
 
-            if (bounds.x > this.bounds.x + this.bounds.width / 2){
+            if (bounds.x > this.bounds.x + (this.bounds.width / 2)){
                 left = false;
             } else {
                 left =  true;
             }
 
             boolean top;
-            if (bounds.y > this.bounds.y + this.bounds.height / 2){
+            if (bounds.y > this.bounds.y + (this.bounds.height / 2)){
                 top = false;
             } else {
                 top =  true;

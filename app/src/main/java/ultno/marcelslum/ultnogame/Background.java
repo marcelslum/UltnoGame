@@ -1,9 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-
-/**
- * Created by marcel on 11/08/2016.
- */
 public class Background extends Entity {
 
     //cor chanel painting 0,21 0,71 -1,87 -2,05 3,79 3e3e3eff
@@ -30,15 +26,15 @@ public class Background extends Entity {
     boolean uvYUp;
     //Rectangle rectangle;
 
-    Background(String name, Game game, float x, float y, float width, float height) {
-        super(name, game, x, y);
+    Background(String name, float x, float y, float width, float height) {
+        super(name, x, y);
         this.width = width;
         this.height = height;
         isSolid = false;
         isCollidable = false;
         isVisible = true;
         textureUnit = Game.TEXTURE_BACKGROUND;
-        program = game.imageColorizedFxProgram;
+        program = Game.imageColorizedFxProgram;
         this.alpha = 0.8f;
 
         uvXUp = true;

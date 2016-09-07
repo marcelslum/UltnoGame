@@ -1,8 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-/**
- * Created by marcel on 26/08/2016.
- */
 public class WindowGame extends PhysicalObject{
     
     int quantityOfLines;
@@ -11,16 +8,20 @@ public class WindowGame extends PhysicalObject{
     float size;
     float [] linesY;
     int quantityX;
+
     private float maxDistance;
     SubWindowGameM swgM;
     SubWindowGameF swgF;
+
+    boolean isActive;
     
-    public WindowGame(String name, Game game, float y, int quantityOfLines, float height, float distance, float velocity) {
-        super(name, game, 0f, y, 0);
+    public WindowGame(String name, float y, int quantityOfLines, float height, float distance, float velocity) {
+        super(name, 0f, y, 0);
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
-        program = game.imageProgram;
-        textureUnit = game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+        program = Game.imageProgram;
+        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+        isActive = false;
         swgM = new SubWindowGameM(this, 0f, y);
         swgF = new SubWindowGameF(this, 0f, y);
 
@@ -46,7 +47,7 @@ public class WindowGame extends PhysicalObject{
         size = height/(quantityOfLines - (distance * quantityOfLines) + distance);
         linesY = new float[quantityOfLines];
         
-        quantityX = (int)Math.floor((game.gameAreaResolutionX*2f) / (size * (1f - distance)));
+        quantityX = (int)Math.floor((Game.gameAreaResolutionX*2f) / (size * (1f - distance)));
         
         for (int i = 0; i < quantityOfLines; i++){
             linesY[i] = i * (size * (1 - distance)); 
@@ -81,12 +82,12 @@ public class WindowGame extends PhysicalObject{
                 if (iY%2 == 0){ // se é par
                     if (iY%4 == 0){
                         if (iX%4 == 3){
-                            Utils.insertRectangleVerticesData(this.verticesData, 0 + (insertedSquare * 12), xPosition, xPosition+size, yPosition, yPosition + size, 0f);
+                            Utils.insertRectangleVerticesData(this.verticesData, (insertedSquare * 12), xPosition, xPosition+size, yPosition, yPosition + size, 0f);
                             insertedSquare += 1;
                         }
                     } else {
                         if (iX%4 == 1){
-                            Utils.insertRectangleVerticesData(this.verticesData, 0 + (insertedSquare * 12), xPosition, xPosition+size, yPosition, yPosition + size, 0f);
+                            Utils.insertRectangleVerticesData(this.verticesData, (insertedSquare * 12), xPosition, xPosition+size, yPosition, yPosition + size, 0f);
                             insertedSquare += 1;
                         }
 
@@ -96,8 +97,8 @@ public class WindowGame extends PhysicalObject{
         }
         
         for (int i = 0; i < quantityOfSquares; i++){
-            Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
-            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), 29);
+            Utils.insertRectangleIndicesData(this.indicesData, i * 6, i * 4);
+            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
         }
         
         this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
@@ -109,9 +110,20 @@ public class WindowGame extends PhysicalObject{
         swgF.setDrawInfo(distanceToDraw, quantityOfLines);
     }
 
+    public void initMoving(){
+        isActive = true;
+
+    }
+
+    public void stopMoving(){
+        isActive = false;
+    }
 
     
     public void move(){
+        if (!isActive){
+            return;
+        }
         if (isMovable){
             x += vx;
             if (vx > 0){
@@ -141,7 +153,7 @@ public class WindowGame extends PhysicalObject{
         WindowGame wg;
 
         public SubWindowGameM(WindowGame wg, float x, float y) {
-            super(wg.name+"m", wg.game, x, y, 0);
+            super(wg.name+"m", x, y, 0);
             program = wg.program;
             textureUnit = wg.textureUnit;
             this.wg = wg;
@@ -162,7 +174,7 @@ public class WindowGame extends PhysicalObject{
                     yPosition = iY * distanceToDraw;
                     if (iY % 2 != 0) {
                         if (iX % 2 != 0) {
-                            Utils.insertRectangleVerticesData(this.verticesData, 0 + (insertedSquare * 12), xPosition, xPosition + size, yPosition, yPosition + size, 0f);
+                            Utils.insertRectangleVerticesData(this.verticesData, insertedSquare * 12, xPosition, xPosition + size, yPosition, yPosition + size, 0f);
                             insertedSquare += 1;
                         }
                     }
@@ -170,8 +182,8 @@ public class WindowGame extends PhysicalObject{
             }
 
             for (int i = 0; i < quantityOfSquares; i++) {
-                Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
-                Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), 29);
+                Utils.insertRectangleIndicesData(this.indicesData, i * 6, i * 4);
+                Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
             }
 
             this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
@@ -198,7 +210,7 @@ public class WindowGame extends PhysicalObject{
         WindowGame wg;
 
         public SubWindowGameF(WindowGame wg, float x, float y) {
-            super(wg.name+"f", wg.game, x, y, 0);
+            super(wg.name+"f", x, y, 0);
             program = wg.program;
             textureUnit = wg.textureUnit;
             this.wg = wg;
@@ -220,12 +232,12 @@ public class WindowGame extends PhysicalObject{
                     if (iY%2 == 0){ // se é par
                         if (iY%4 == 0){
                             if (iX%4 == 1){
-                                Utils.insertRectangleVerticesData(this.verticesData, 0 + (insertedSquare * 12), xPosition, xPosition+size, yPosition, yPosition + size, 0f);
+                                Utils.insertRectangleVerticesData(this.verticesData, insertedSquare * 12, xPosition, xPosition+size, yPosition, yPosition + size, 0f);
                                 insertedSquare += 1;
                             }
                         } else {
                             if (iX%4 == 3){
-                                Utils.insertRectangleVerticesData(this.verticesData, 0 + (insertedSquare * 12), xPosition, xPosition+size, yPosition, yPosition + size, 0f);
+                                Utils.insertRectangleVerticesData(this.verticesData, insertedSquare * 12, xPosition, xPosition+size, yPosition, yPosition + size, 0f);
                                 insertedSquare += 1;
                             }
                         }
@@ -234,8 +246,8 @@ public class WindowGame extends PhysicalObject{
             }
 
             for (int i = 0; i < quantityOfSquares; i++) {
-                Utils.insertRectangleIndicesData(this.indicesData, 0 + (i * 6), 0 + (i * 4));
-                Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), 29);
+                Utils.insertRectangleIndicesData(this.indicesData, i * 6, i * 4);
+                Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
             }
 
             this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);

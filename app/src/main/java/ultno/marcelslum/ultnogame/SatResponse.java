@@ -1,8 +1,6 @@
 package ultno.marcelslum.ultnogame;
 
-/**
- * Created by marcel on 01/08/2016.
- */
+
 public class SatResponse {
     // An object representing the result of an intersection. Contains:
     //  - The two objects participating in the intersection
@@ -38,5 +36,5 @@ public class SatResponse {
         this.bInA = true;
         this.overlap = Float.MAX_VALUE;
         return this;
-    };
+    }
 }

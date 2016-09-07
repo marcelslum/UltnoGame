@@ -29,14 +29,14 @@ public class Target extends Rectangle {
     public final static int POINTS_DURATION = 1000;
     boolean alive = true;
 
-    Target(String name, Game game, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
-        super(name, game, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(0,0,0,1));
+    Target(String name, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
+        super(name, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(0,0,0,1));
         this.states = states;
         this.currentState = currentState;
         this.special = special;
         setType();
         textureUnit = Game.TEXTURE_TARGETS;
-        program = this.game.imageProgram;
+        program = Game.imageProgram;
         isMovable = false;
         isGhost = ghost;
 
@@ -76,15 +76,15 @@ public class Target extends Rectangle {
     public void onBallCollision(){
 
         int points = 100;
-        if (game.objectivePanel.blueBalls > 0) {
-            for (int i = 0; i < game.objectivePanel.blueBalls; i++) {
+        if (Game.objectivePanel.blueBalls > 0) {
+            for (int i = 0; i < Game.objectivePanel.blueBalls; i++) {
                 points *= 2;
             }
         }
 
         this.decayState(points);
 
-    };
+    }
 
     public void renderPoints(float[] matrixView, float[] matrixProjection){
         //Log.e("target", "render points ");
@@ -97,7 +97,7 @@ public class Target extends Rectangle {
     public void showPoints(int points){
 
         this.pointsToShow = points;
-        this.pointsObject = new Point("points", this.game, x + (width/2f),y + (height/2f) ,height * 1.5f);
+        this.pointsObject = new Point("points", x + (width/2f),y + (height/2f) ,height * 1.5f);
         addChild(pointsObject);
         pointsObject.setValue(points);
 
@@ -109,16 +109,16 @@ public class Target extends Rectangle {
         //Log.e("target", "3");
         if (this.showPointsAlphaAnim != null) {
             this.showPointsAlphaAnim.start();
-            Utils.createSimpleAnimation(pointsObject, "translateX", "translateX", POINTS_DURATION, 0f, game.gameAreaResolutionX*0.025f).start();
-            Utils.createSimpleAnimation(pointsObject, "translateY", "translateY", POINTS_DURATION, 0f, -game.gameAreaResolutionX*0.02f).start();
+            Utils.createSimpleAnimation(pointsObject, "translateX", "translateX", POINTS_DURATION, 0f, Game.gameAreaResolutionX*0.025f).start();
+            Utils.createSimpleAnimation(pointsObject, "translateY", "translateY", POINTS_DURATION, 0f, -Game.gameAreaResolutionX*0.02f).start();
         }
     }
 
     public void decayState(int points){
 
-        this.game.soundPool.play(this.game.soundDestroyTarget, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+        Game.soundPool.play(Game.soundDestroyTarget, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
 
-        this.game.scorePanel.setValue(this.game.scorePanel.value + points,  true, 500, false);
+        Game.scorePanel.setValue(Game.scorePanel.value + points,  true, 500, false);
 
         this.currentState -= 1;
 

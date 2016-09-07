@@ -50,7 +50,7 @@ public class Tutorial {
         }
             textBox.display();
             
-            Animation anim = Utils.createSimpleAnimation(textBox, "textBoxTranslateX1", "translateX", 300, -textBox.game.resolutionX *2, 0f);
+            Animation anim = Utils.createSimpleAnimation(textBox, "textBoxTranslateX1", "translateX", 300, -Game.resolutionX *2, 0f);
             final Tutorial self = this;
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -95,24 +95,24 @@ public class Tutorial {
     }
 
     public interface OnShowBeforeAnim{
-        public void onShowBeforeAnim();
+        void onShowBeforeAnim();
     }
 
     public interface OnShowAfterAnim{
-        public void onShowAfterAnim();
+        void onShowAfterAnim();
     }
 
     public interface OnUnshowBeforeAnim{
-        public void onUnshowBeforeAnim();
+        void onUnshowBeforeAnim();
     }
 
 
     public interface OnUnshowAfterAnim2{
-        public void onUnshowAfterAnim2();
+        void onUnshowAfterAnim2();
     }
 
     public interface OnUnshowAfterAnim{
-        public void onUnshowAfterAnim();
+        void onUnshowAfterAnim();
     }
 
 

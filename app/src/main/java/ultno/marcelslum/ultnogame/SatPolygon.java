@@ -5,9 +5,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by marcel on 01/08/2016.
- */
 // ## SatPolygon
 //
 // Represents a *convex* polygon with any number of points (specified in counter-clockwise order)

@@ -1,11 +1,6 @@
 package ultno.marcelslum.ultnogame;
-
-
 import android.util.Log;
 
-/**
- * Created by marcel on 12/08/2016.
- */
 public class ObjectivePanel extends Entity{
 
     public float size;
@@ -20,7 +15,7 @@ public class ObjectivePanel extends Entity{
     public float lastXBall;
 
     ObjectivePanel(String name, Game game, float x, float y, float size) {
-        super(name, game, x, y);
+        super(name, x, y);
         initialX = x;
         initialY = y;
         this.size = size;
@@ -29,7 +24,7 @@ public class ObjectivePanel extends Entity{
         isVisible = true;
         alpha = 1;
         this.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
-        this.program = this.game.imageProgram;
+        this.program = Game.imageProgram;
         ballsAlive = 4;
         minBallsAlive = 2;
         ballsInvencible = 1;
@@ -66,9 +61,9 @@ public class ObjectivePanel extends Entity{
         for (int i = 0; i < ballsAlive;i++){
 
             if (ballsInvecibleDraw > 0) {
-                Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+size, 0f, size, 0f);
-                Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
-                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0 + (i * 8), 3);
+                Utils.insertRectangleVerticesData(verticesData, i * 12, xOfTriangle, xOfTriangle+size, 0f, size, 0f);
+                Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, i * 8, 3);
                 ballsInvecibleDraw -= 1;
                 if (ballsInvecibleDraw == 0){
                     xOfTriangle += size*2;
@@ -76,9 +71,9 @@ public class ObjectivePanel extends Entity{
                     xOfTriangle += size;
                 }
             } else if (ballsBlackDraw > 0){
-                Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+size, 0f, size, 0f);
-                Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
-                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0 + (i * 8), 4);
+                Utils.insertRectangleVerticesData(verticesData, i * 12, xOfTriangle, xOfTriangle+size, 0f, size, 0f);
+                Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, i * 8, 4);
 
                 ballsBlackDraw -= 1;
                 if (ballsBlackDraw == 0){
@@ -88,9 +83,9 @@ public class ObjectivePanel extends Entity{
                 }
             } else if (ballsBlueDraw > 0) {
 
-                Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle+size, 0f, size, 0f);
-                Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
-                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0 + (i * 8), 11);
+                Utils.insertRectangleVerticesData(verticesData, i * 12, xOfTriangle, xOfTriangle+size, 0f, size, 0f);
+                Utils.insertRectangleIndicesData(indicesData,i * 6, i * 4);
+                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, i * 8, 11);
                 
 
                 
@@ -112,18 +107,18 @@ public class ObjectivePanel extends Entity{
     public void explodeBlueBall(){
         if (blueBalls > 0){
 
-            game.soundPool.play(game.soundBlueBallExplosion1, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
-            game.soundPool.play(game.soundBlueBallExplosion2, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+            Game.soundPool.play(Game.soundBlueBallExplosion1, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
+            Game.soundPool.play(Game.soundBlueBallExplosion2, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
 
             setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
 
 
-            ParticleGenerator pg = new ParticleGenerator("explode", game,
+            ParticleGenerator pg = new ParticleGenerator("explode",
                                 initialX + animTranslateX + ((lastXBall)*animScaleX), y + animTranslateY + ((size/2f)*animScaleY),
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4, 
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5, 
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6);
-                            game.particleGenerator.add(pg);
+                            Game.particleGenerator.add(pg);
                             pg.activate();
         }
     }

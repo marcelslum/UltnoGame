@@ -10,8 +10,6 @@ import java.util.ArrayList;
  */
 public class TextBox extends Entity{
 
-    boolean displayArrow;
-    Image background;
     ArrayList<Text> texts;
     float width;
     float height;
@@ -25,13 +23,13 @@ public class TextBox extends Entity{
     Line arrow;
     
     private TextBox(TextBoxBuilder builder) {
-        super(builder.name, builder.game, builder.x, builder.y);
+        super(builder.name, builder.x, builder.y);
         this.width = builder.width;
         this.size = builder.size;
         this.text = builder.text;
         this.texts = new ArrayList<>();
 
-        Text textForMeasure = new Text("text", game, 0f, 0f, size, text, game.font, textColor);
+        Text textForMeasure = new Text("text", 0f, 0f, size, text, Game.font, textColor);
         float widthOfText = textForMeasure.calculateWidth();
 
         // subdivide o texto em partes, conforme width máximo
@@ -42,7 +40,7 @@ public class TextBox extends Entity{
             //Log.e("textBox", "splitedString lenght"+ splitedString.length);
 
             int elementToAdd = 1;
-            Text lastText = new Text("text", game, 0f, 0f, size, ".", game.font, textColor);
+            Text lastText = new Text("text", 0f, 0f, size, ".", Game.font, textColor);
 
             int limite = 100;
             int contador = 0;
@@ -50,7 +48,7 @@ public class TextBox extends Entity{
             do {
                 do {
                     contador += 1;
-                    textForMeasure = new Text("text"+contador, game, 0f, 0f, size, stringToTest, game.font, textColor);
+                    textForMeasure = new Text("text"+contador, 0f, 0f, size, stringToTest, Game.font, textColor);
                     //Log.e("textBox", "testando string "+ stringToTest);
 
                     widthOfText = textForMeasure.calculateWidth();
@@ -95,20 +93,19 @@ public class TextBox extends Entity{
             addChild(this.texts.get(i));
         }
 
-        frame = new Image("frame", game, x, y, width + (textPadding*6), textY - y + (textPadding*6), Game.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
+        frame = new Image("frame", x, y, width + (textPadding*6), textY - y + (textPadding*6), Game.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
         addChild(frame);
 
         //Log.e("texbox", x + " " + y + " " + (width + (textPadding*6)) + " " + (textY - y + (textPadding*6)));
 
-        arrowContinuar = new Button("arrowContinuar", this.game, x + width - size*0.5f, textY - textPadding, size, size, Game.TEXTURE_BUTTONS_AND_BALLS, 3f);
+        arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, textY - textPadding, size, size, Game.TEXTURE_BUTTONS_AND_BALLS, 3f);
         arrowContinuar.setTextureMap(14);
         arrowContinuar.textureMapUnpressed = 14;
         arrowContinuar.textureMapPressed = 6;
-            final Game innerGame = game;
         arrowContinuar.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
-                innerGame.levelObject.nextTutorial();
+                Game.levelObject.nextTutorial();
             }
         });
         addChild(arrowContinuar);
@@ -145,7 +142,7 @@ public class TextBox extends Entity{
 
         //Log.e("textbox appendArrow", " initialX " + initialX + " initialY " + initialY);
 
-        arrow = new Line("line", game, initialX, initialY, arrowX, arrowY, textColor);
+        arrow = new Line("line", initialX, initialY, arrowX, arrowY, textColor);
         addChild(arrow);
     }
 
@@ -175,14 +172,12 @@ public class TextBox extends Entity{
         private float x;
         private float y;
         private final String name;
-        private final Game game;
         private boolean isHaveArrow;
         private float arrowX;
         private float arrowY;
 
-        public TextBoxBuilder(String name, Game game) {
+        public TextBoxBuilder(String name) {
             this.name = name;
-            this.game = game;
             width = 0f;
             size = 0f;
             text = "";

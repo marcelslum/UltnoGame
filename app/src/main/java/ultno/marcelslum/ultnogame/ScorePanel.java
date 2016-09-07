@@ -19,8 +19,8 @@ public class ScorePanel extends Entity {
     private boolean displayMessage;
     private Text messageText;
 
-    ScorePanel(String name, Game game, float x, float y, float size) {
-        super(name, game, x, y);
+    ScorePanel(String name, float x, float y, float size) {
+        super(name, x, y);
 
         this.x -= (size * 0.55294f) * 2.5f;
 
@@ -30,11 +30,11 @@ public class ScorePanel extends Entity {
         isVisible = true;
         alpha = 1;
         textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
-        program = this.game.imageProgram;
+        program = Game.imageProgram;
         value = 0;
         setDrawInfo();
 
-        messageText = new Text("text", game, x + (getWidth()*0.7f), y - size*0.3f, size*1.5f, "message", game.font, new Color(1.0f, 0f, 0f, 1f));
+        messageText = new Text("text", x + (getWidth()*0.7f), y - size*0.3f, size*1.5f, "message", Game.font, new Color(1.0f, 0f, 0f, 1f));
         addChild(messageText);
     }
 
@@ -50,7 +50,7 @@ public class ScorePanel extends Entity {
 
     public void setDrawInfo() {
 
-        String valueString = String.valueOf((int) value);
+        String valueString = String.valueOf(value);
 
         int valueLength = valueString.length();
 
@@ -78,10 +78,10 @@ public class ScorePanel extends Entity {
                 //Log.e("point", "subInteger "+subInteger);
             }
 
-            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), xOfTriangle, xOfTriangle + width, 0f, size, 0f);
+            Utils.insertRectangleVerticesData(verticesData, i * 12, xOfTriangle, xOfTriangle + width, 0f, size, 0f);
             xOfTriangle += width - 1f;
 
-            Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
 
             int textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE1;
             switch (subInteger) {
@@ -116,7 +116,7 @@ public class ScorePanel extends Entity {
                     textureMap = Game.TEXTURE_MAP_NUMBERS_SCORE0;
                     break;
             }
-            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, 0 + (i * 8), textureMap);
+            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, textureMap);
 
         }
 
@@ -130,8 +130,8 @@ public class ScorePanel extends Entity {
         messageText.setText(message);
 
         final ScorePanel innerScorePanel = this;
-        Utils.createSimpleAnimation(messageText, "translateX", "translateX", duration, 0f, game.gameAreaResolutionX*0.05f).start();
-        Utils.createSimpleAnimation(messageText, "translateY", "translateY", duration, 0f, -game.gameAreaResolutionX*0.05f).start();
+        Utils.createSimpleAnimation(messageText, "translateX", "translateX", duration, 0f, Game.gameAreaResolutionX*0.05f).start();
+        Utils.createSimpleAnimation(messageText, "translateY", "translateY", duration, 0f, -Game.gameAreaResolutionX*0.05f).start();
 
         messageText.reduceAlpha(duration, 0f, new Animation.AnimationListener() {
             @Override
@@ -183,7 +183,7 @@ public class ScorePanel extends Entity {
                 subInteger = 10;
             }
             prepareUvData(subInteger);
-            Utils.insertRectangleUvData(uvsData, 0 + (i * 8));
+            Utils.insertRectangleUvData(uvsData, i * 8);
         }
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
@@ -191,7 +191,7 @@ public class ScorePanel extends Entity {
     public void setValue(int newValue, boolean animatePanel, int duration, boolean playSound){
 
         if (playSound){
-            game.soundPool.play(game.soundScore, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+            Game.soundPool.play(Game.soundScore, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
         }
 
         //Log.e("setValue", "animate "+animatePanel );

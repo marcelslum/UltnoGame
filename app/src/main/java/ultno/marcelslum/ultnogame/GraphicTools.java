@@ -3,13 +3,6 @@ package ultno.marcelslum.ultnogame;
 import android.opengl.GLES20;
 
 public class GraphicTools {
-
-    // Program variables
-    public static int sp_SolidColor;
-    public static int sp_Image;
-    public static int sp_Text;
-
-
     /* SHADER Solid
      *
      * This shader is for rendering a colored primitive.

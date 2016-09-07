@@ -6,11 +6,11 @@ package ultno.marcelslum.ultnogame;
  */
 public class Bar extends Rectangle{
 
-    Bar(String name, Game game, float x, float y, float width, float height){
-        super(name, game, x, y, width, height, Game.BAR_WEIGHT, new Color(0,0,0,1));
+    Bar(String name, float x, float y, float width, float height){
+        super(name, x, y, width, height, Game.BAR_WEIGHT, new Color(0,0,0,1));
 
-        this.program = game.imageProgram;
-        this.textureUnit = 3;
+        this.program = Game.imageProgram;
+        this.textureUnit = Game.TEXTURE_BARS;
         this.isCollidable = true;
         this.isSolid = true;
         this.setDrawInfo();
@@ -32,7 +32,7 @@ public class Bar extends Rectangle{
         */
         //0,7998046875
 
-        array[0 + (startIndex)] = 0f;
+        array[startIndex] = 0f;
         array[1 + (startIndex)] = 1-0.4931640625f;
         array[2 + (startIndex)] = 1f;
         array[3 + (startIndex)] = 1-0.4931640625f;
@@ -63,7 +63,7 @@ public class Bar extends Rectangle{
         float y1 = 0f;
         float y2 = this.height;
 
-        array[0 + (startIndex)] = x1;
+        array[startIndex] = x1;
         array[1 + (startIndex)] = y2;
         array[2 + (startIndex)] = 0.0f;
         array[3 + (startIndex)] = x2;
@@ -78,10 +78,10 @@ public class Bar extends Rectangle{
     }
 
     public void insertIndicesData(short[] array, int startIndex, int startValue){
-        array[0 + (startIndex)] = (short)(0 + (startValue));
+        array[startIndex] = (short)(startValue);
         array[1 + (startIndex)] = (short)(1 + (startValue));
         array[2 + (startIndex)] = (short)(2 + (startValue));
-        array[3 + (startIndex)] = (short)(0 + (startValue));
+        array[3 + (startIndex)] = (short)(startValue);
         array[4 + (startIndex)] = (short)(2 + (startValue));
         array[5 + (startIndex)] = (short)(3 + (startValue));
     }

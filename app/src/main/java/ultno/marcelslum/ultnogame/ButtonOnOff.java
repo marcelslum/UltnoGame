@@ -9,8 +9,8 @@ public class ButtonOnOff extends Button{
     public boolean on;
     private OnOffBehavior onOffBehavior;
 
-    ButtonOnOff(String name, Game game, float x, float y, float width, float height, int textureUnit, float listenerScale){
-        super(name, game, x, y, width, height, textureUnit, listenerScale);
+    ButtonOnOff(String name, float x, float y, float width, float height, int textureUnit, float listenerScale){
+        super(name, x, y, width, height, textureUnit, listenerScale);
         this.on = false;
     }
 
@@ -58,7 +58,7 @@ public class ButtonOnOff extends Button{
         this.onOffBehavior = onOffBehavior;
     }
 
-    public interface OnOffBehavior {
+    interface OnOffBehavior {
         public void onBehavior();
         public void offBehavior();
     }

@@ -3,9 +3,6 @@ package ultno.marcelslum.ultnogame;
 
 import java.util.ArrayList;
 
-/**
- * Created by marcel on 04/08/2016.
- */
 
 class Menu extends Entity{
     public ArrayList<MenuOption> menuOptions;
@@ -16,22 +13,22 @@ class Menu extends Entity{
     public Font font;
 
 
-    public Menu(String name, Game game, float x, float y, float size, Font font){
-        super(name, game, x, y);
+    public Menu(String name, float x, float y, float size, Font font){
+        super(name, x, y);
         this.font = font;
         this.size = size;
         isBlocked = true;
         isVisible = false;
-        menuOptions = new ArrayList<MenuOption>();
+        menuOptions = new ArrayList<>();
     }
 
     public void block(){
-        this.game.blockAndWaitTouchRelease();
+        Game.blockAndWaitTouchRelease();
         this.isBlocked = true;
     }
 
     public void unblock(){
-        this.game.blockAndWaitTouchRelease();
+        Game.blockAndWaitTouchRelease();
         this.isBlocked = false;
     }
 
@@ -52,7 +49,7 @@ class Menu extends Entity{
     }
 
     public void toSelector(Selector selector, String selectedValue){
-        game.soundPool.play(game.soundMenuSelectBig, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+        Game.soundPool.play(Game.soundMenuSelectBig, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
         this.block();
         this.display();
         selector.menuRelated = this;
@@ -81,12 +78,11 @@ class Menu extends Entity{
         ArrayList<float[]> valuesAnimationSelector = new ArrayList<float[]>();
         valuesAnimationSelector.add(new float[]{0,0});
         valuesAnimationSelector.add(new float[]{1,1});
-        Animation animationSelector = new Animation(this, "alphaSelector", "alpha", 800, valuesAnimationSelector, false, true);
         animationMenu.start();
     }
 
     public void fromSelector(Selector selector){
-        ArrayList<float[]> valuesAnimationMenu = new ArrayList<float[]>();
+        ArrayList<float[]> valuesAnimationMenu = new ArrayList<>();
         valuesAnimationMenu.add(new float[]{0,0.3f});
         valuesAnimationMenu.add(new float[]{1,1});
         Animation animationMenu = new Animation(this, "alphaMenu", "alpha", 300, valuesAnimationMenu, false, true);
@@ -98,12 +94,12 @@ class Menu extends Entity{
                                                }
                                            });
         animationMenu.start();
-        game.soundPool.play(game.soundMenuSelectBig, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+        Game.soundPool.play(Game.soundMenuSelectBig, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
     }
 
     public MenuOption getMenuOptionByName(String name){
         for (int i = 0; i < this.menuOptions.size();i++){
-            if (this.menuOptions.get(i).name == name){
+            if (this.menuOptions.get(i).name.equals(name)){
                 return this.menuOptions.get(i);
             }
         }
@@ -113,7 +109,7 @@ class Menu extends Entity{
     public MenuOption addMenuOption(String name, String text, MenuOption.OnChoice onChoice){
         float optionY = this.y + (optionsIds * (size *(1.01f+bottomPad)));
         this.optionsIds += 1;
-        MenuOption newMenuOption = new MenuOption(this.optionsIds, name, text, game, font, size, x, optionY);
+        MenuOption newMenuOption = new MenuOption(optionsIds, name, text, font, size, x, optionY);
         addChild(newMenuOption.textObject);
         newMenuOption.setOnChoice(onChoice);
         this.menuOptions.add(newMenuOption);
@@ -128,14 +124,14 @@ class Menu extends Entity{
                 optionY,
                 newMenuOption.width,
                 newMenuOption.size,
-                500, this, game,
+                500, this,
                     new InteractionListener.PressListener() {
                         @Override
                         public void onPress() {
                             //Log.e("Menu", "interaction menu");
                             if (!innerMenu.isBlocked){
-                                innerMenu.game.blockAndWaitTouchRelease();
-                                game.soundPool.play(game.soundMenuSelectBig, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+                                Game.blockAndWaitTouchRelease();
+                                Game.soundPool.play(Game.soundMenuSelectBig, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
 
                                 ArrayList<float[]> valuesAnimation = new ArrayList<>();
                                 valuesAnimation.add(new float[]{0f,1f});
@@ -166,7 +162,7 @@ class Menu extends Entity{
                                 animScaleY.start();
 
                                 for (int i = 0; i < innerMenu.menuOptions.size(); i++){
-                                    if (innerMenu.menuOptions.get(i).name == innerName){
+                                    if (innerMenu.menuOptions.get(i).name.equals(innerName)){
                                         innerMenu.selectedOption = innerId;
                                     }
                                 }

@@ -1,8 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-/**
- * Created by marcel on 02/09/2016.
- */
 public class ScaleVariationData{
     public boolean isActive;
     public boolean increaseWidth;
@@ -14,16 +11,16 @@ public class ScaleVariationData{
     public float widthVelocity;
     public float heightVelocity;
 
-    public ScaleVariationData(boolean isActive, boolean increaseWidth, boolean increaseHeight, float minWidth_BI, float maxWidth_BI, float minHeight_BI, float maxHeight_BI, float widthVelocity, float heightVelocity) {
-        this.isActive = isActive;
-        this.increaseWidth = increaseWidth;
-        this.increaseHeight = increaseHeight;
-        this.minWidth_BI = minWidth_BI;
-        this.maxWidth_BI = maxWidth_BI;
-        this.minHeight_BI = minHeight_BI;
-        this.maxHeight_BI = maxHeight_BI;
-        this.widthVelocity = widthVelocity;
-        this.heightVelocity = heightVelocity;
+    public ScaleVariationData(ScaleVariationDataBuilder builder) {
+        this.isActive = builder.isActive;
+        this.increaseWidth = builder.increaseWidth;
+        this.increaseHeight = builder.increaseHeight;
+        this.minWidth_BI = builder.minWidth_BI;
+        this.maxWidth_BI = builder.maxWidth_BI;
+        this.minHeight_BI = builder.minHeight_BI;
+        this.maxHeight_BI = builder.maxHeight_BI;
+        this.widthVelocity = builder.widthVelocity;
+        this.heightVelocity = builder.heightVelocity;
     }
 }
 

@@ -1,10 +1,6 @@
 package ultno.marcelslum.ultnogame;
 
 import java.util.ArrayList;
-
-/**
- * Created by marcel on 19/08/2016.
- */
 public class ParticleGenerator extends Entity {
     
     int numberOfParticles = 300;
@@ -12,10 +8,10 @@ public class ParticleGenerator extends Entity {
     boolean isActive;
     int [] textureMaps;
 
-    ParticleGenerator(String name, Game game, float x, float y, int textureMap1, int textureMap2, int textureMap3) {
-        super(name, game, x, y);
-        program = game.imageColorizedProgram;
-        textureUnit = game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+    ParticleGenerator(String name, float x, float y, int textureMap1, int textureMap2, int textureMap3) {
+        super(name, x, y);
+        program = Game.imageColorizedProgram;
+        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         this.textureMaps = new int []{textureMap1, textureMap2, textureMap3};
         generate();
     }
@@ -72,8 +68,8 @@ public class ParticleGenerator extends Entity {
             p.vy += p.velocity_variation_y;
             p.alpha -= p.alpha_decay;
             if(p.alpha < 0f) p.alpha = 0f;
-            Utils.insertRectangleVerticesData(this.verticesData, 0 + (i * 12), p.x, p.x + p.size, p.y, p.y + p.size, 0f);
-            Utils.insertRectangleColorsData(colorsData, 0 + (i * 16), new Color(0f, 0f, 0f, p.alpha));
+            Utils.insertRectangleVerticesData(this.verticesData, i * 12, p.x, p.x + p.size, p.y, p.y + p.size, 0f);
+            Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
         }
         verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
         colorsBuffer = Utils.generateFloatBuffer(colorsData);
@@ -85,10 +81,10 @@ public class ParticleGenerator extends Entity {
         initializeData(12*numberOfParticles, 6*numberOfParticles, 8*numberOfParticles, 16*numberOfParticles);
         for (int i = 0; i < numberOfParticles;i++) {
             Particle p = particlesArray.get(i);
-            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), 0, p.size, 0f, p.size, 0f);
-            Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
-            Utils.insertRectangleUvDataNumbersExplosion(uvsData, 0 + (i * 8), p.textureMap);
-            Utils.insertRectangleColorsData(colorsData, 0 + (i * 16), new Color(0f, 0f, 0f, p.alpha));
+            Utils.insertRectangleVerticesData(verticesData, i * 12, 0, p.size, 0f, p.size, 0f);
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+            Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
+            Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
         }
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         indicesBuffer = Utils.generateShortBuffer(indicesData);

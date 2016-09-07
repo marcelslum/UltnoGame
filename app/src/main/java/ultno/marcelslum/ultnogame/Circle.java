@@ -1,15 +1,11 @@
 package ultno.marcelslum.ultnogame;
 
-
-/**
- * Created by marcel on 02/08/2016.
- */
 public class Circle extends PhysicalObject {
     float radius;
     float[] verticesData;
 
-    Circle(String name, Game game, float x, float y, float radius, int weight){
-        super(name, game, x, y, weight);
+    Circle(String name, float x, float y, float radius, int weight){
+        super(name, x, y, weight);
         this.radius = radius;
     }
 

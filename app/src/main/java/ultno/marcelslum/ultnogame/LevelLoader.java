@@ -4,10 +4,9 @@ package ultno.marcelslum.ultnogame;
  * Created by marcel on 02/08/2016.
  */
 public class LevelLoader {
-    public static void loadLevel(Game game, int levelNumber) {
+    public static void loadLevel(int levelNumber) {
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
         levelBuilder
-                .game(game)
                 .setBallsX_B1(0.3f)
                 .setBallsY_B1(0.3f)
                 .setBarsX_B1(0.3f)
@@ -16,7 +15,8 @@ public class LevelLoader {
                 .setTargetsDistance(0.001f)
                 .setTargetsPadding(0.00225f)
                 .setBarsScaleVariationOff()
-                .setObstaclesScaleVariationOff();
+                .setObstaclesScaleVariationOff()
+                .setObstaclesPositionVariationOff();
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(
                     new int[][]{
@@ -102,7 +102,7 @@ public class LevelLoader {
         if (levelNumber >= 4) {
             levelBuilder
                     .setBallsQuantity(2)
-                    .setBallsRadius_BD_0_01(20f)
+                    .setBallsRadius_BD_0_01(1f)
                     .setBallsX_B1(0.34f, 0.64f, 0.42f, 0.52f, 0.62f, 0.14f, 0.24f, 0.32f, 0.42f, 0.82f, 0.34f, 0.64f, 0.42f, 0.52f, 0.62f, 0.14f, 0.24f, 0.32f, 0.42f, 0.82f)
                     .setBallsY_B1(0.75f, 0.25f, 0.5f, 0.5f, 0.5f, 0.15f, 0.85f, 0.9f, 0.9f, 0.9f, 0.25f, 0.15f, 0.4f, 0.4f, 0.4f, 0.25f, 0.65f, 0.8f, 0.7f, 0.75f)
                     .setBallsVX(1.62f, -0.9f, 0.8f, 0.5f, 0.8f)
@@ -121,12 +121,43 @@ public class LevelLoader {
                                 {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}
                         }) //{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}
                         .setTargetsStates(new int[]{0, 1})
-                        .setObstaclesQuantity(0)
-                        .setObstaclesX(0.5f)
-                        .setObstaclesY(0.3f)
-                        .setObstaclesWidth(0.2f)
+                        .setObstaclesQuantity(3)
+                        .setObstaclesX(0.2f, 0.4f, 0.6f)
+                        .setObstaclesY(0.2f, 0.2f, 0.2f)
+                        .setObstaclesWidth(0.1f, 0.1f, 0.1f)
                         //.setObstaclesHeight(0.02f)
-                        .setObstaclesHeight(0.3f)
+                        .setObstaclesHeight(0.1f, 0.1f, 0.1f)
+
+                        .setObstaclesPositionVariation(
+                                new PositionVariationDataBuilder()
+                                        .setIsActive(false)
+                                        .setMaxX(0.99f)
+                                        .setMinX(0.01f)
+                                        .setMaxY(0.7f)
+                                        .setMinY(0.3f)
+                                        .setxVelocity(0.01f)
+                                        .setyVelocity(0.01f),
+                                new PositionVariationDataBuilder()
+                                        .setIsActive(false)
+                                        .setMaxX(0.99f)
+                                        .setMinX(0.01f)
+                                        .setMaxY(0.7f)
+                                        .setMinY(0.3f)
+                                        .setxVelocity(0.01f)
+                                        .setyVelocity(0.01f),
+                                new PositionVariationDataBuilder()
+                                        .setIsActive(false)
+                                        .setMaxX(0.99f)
+                                        .setMinX(0.01f)
+                                        .setMaxY(0.7f)
+                                        .setMinY(0.3f)
+                                        .setxVelocity(0.01f)
+                                        .setyVelocity(0.01f)
+                        )
+
+
+
+
 
                         .setObstaclesScaleVariation(
                             new ScaleVariationDataBuilder()
@@ -140,6 +171,7 @@ public class LevelLoader {
                             .setMinHeight_BI(0.5f)
                             .setMaxHeight_BI(4.5f)
                         )
+
 
                         .setWindowsQuantity(0);
             }
@@ -370,7 +402,7 @@ public class LevelLoader {
             }
         }
 
-        game.levelObject = levelBuilder.build();
+        Game.levelObject = levelBuilder.build();
     }
 }
 /*

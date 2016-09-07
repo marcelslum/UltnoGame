@@ -1,10 +1,5 @@
 package ultno.marcelslum.ultnogame;
-
 import android.util.Log;
-
-/**
- * Created by marcel on 02/08/2016.
- */
 public class InteractionListener {
 
     public String name;
@@ -14,14 +9,13 @@ public class InteractionListener {
     public float height;
     public int frequency;
     public Entity objectAppend;
-    public Game game;
     public boolean pressedOnVerify;
     public boolean active;
     public boolean onPress;
     public long startTime;
     public PressListener myPressListener;
 
-    InteractionListener(String name, float x, float y, float width, float height, int frequency, Entity objectAppend, Game gameObject) {
+    InteractionListener(String name, float x, float y, float width, float height, int frequency, Entity objectAppend) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -29,12 +23,11 @@ public class InteractionListener {
         this.height = height;
         this.frequency = frequency;
         this.objectAppend = objectAppend;
-        this.game = gameObject;
         this.pressedOnVerify = false;
         this.active = false;
     }
 
-    InteractionListener(String name, float x, float y, float width, float height, int frequency, Entity objectAppend, Game game, PressListener pressListener){
+    InteractionListener(String name, float x, float y, float width, float height, int frequency, Entity objectAppend, PressListener pressListener){
         this.name = name;
         this.x = x;
         this.y = y;
@@ -42,7 +35,6 @@ public class InteractionListener {
         this.height = height;
         this.frequency = frequency;
         this.objectAppend = objectAppend;
-        this.game = game;
         this.pressedOnVerify = false;
         this.active = false;
         this.myPressListener = pressListener;
@@ -53,7 +45,7 @@ public class InteractionListener {
         //Log.e("listener", "verificando listener "+name);
 
         // verifica se o game estiver bloqueado, caso o listener esteja na mesma passagem do listener que bloqueia o game
-        if (game.isBlocked){
+        if (Game.isBlocked){
             return;
         }
 
@@ -67,34 +59,34 @@ public class InteractionListener {
 
         this.pressedOnVerify = false;
 
-        for (int i = 0; i < this.game.touchEvents.size(); i++) {
-            this.pressedOnVerify = Utils.isInsideBounds(
-                    this.game.touchEvents.get(i).x,
-                    this.game.touchEvents.get(i).y,
+        for (int i = 0; i < Game.touchEvents.size(); i++) {
+            pressedOnVerify = Utils.isInsideBounds(
+                    Game.touchEvents.get(i).x,
+                    Game.touchEvents.get(i).y,
                     x, y, width, height);
-            if (this.pressedOnVerify) {
-                //Log.e("interaction", " pressed "+ this.name);
+            if (pressedOnVerify) {
+                Log.e("interaction", " pressed "+ this.name);
                 break;
             }
         }
 
         if (this.pressedOnVerify) {
-            if (this.active == false) {
-                this.active = true;
-                this.objectAppend.isPressed = true;
-                this.startTime = Utils.getTime();
+            if (!active) {
+                active = true;
+                objectAppend.isPressed = true;
+                startTime = Utils.getTime();
                 //console.log("onPress ", this.name);
-                if (this.myPressListener != null) {
-                    //Log.e("listener", "ativando onpress no listener "+name);
-                    this.myPressListener.onPress();
+                if (myPressListener != null) {
+                    Log.e("listener", "ativando onpress no listener "+name);
+                    myPressListener.onPress();
                 }
             } else {
                 long actualTime = Utils.getTime();
                 long timeElapsed = actualTime - this.startTime;
                 if (timeElapsed > (long) frequency) {
-                    if (this.myPressListener != null) {
-                        //Log.e("listener", "ativando onpress no listener "+name);
-                        this.myPressListener.onPress();
+                    if (myPressListener != null) {
+                        Log.e("listener", "ativando onpress no listener "+name);
+                        myPressListener.onPress();
                     }
                     //console.log("onPress");
                     this.startTime = actualTime;
@@ -102,23 +94,24 @@ public class InteractionListener {
             }
         }
 
-        if (!this.pressedOnVerify) {
-            if (this.active == true) {
-                if (this.myPressListener != null) {
-                    this.myPressListener.onUnpress();
+        if (!pressedOnVerify) {
+            if (active) {
+                if (myPressListener != null) {
+                    //Log.e("listener", "ativando onunpress no listener "+name);
+                    myPressListener.onUnpress();
                 }
 
-                this.objectAppend.isPressed = false;
-                this.active = false;
+                objectAppend.isPressed = false;
+                active = false;
             }
         }
     }
 
     public void setPressListener(PressListener listener) {
-        this.myPressListener = listener;
+        myPressListener = listener;
     }
 
-    public static interface PressListener {
+    public interface PressListener {
         void onPress();
         void onUnpress();
     }

@@ -1,16 +1,13 @@
 package ultno.marcelslum.ultnogame;
 
-/**
- * Created by marcel on 14/08/2016.
- */
 public class Image extends Entity{
 
     float width;
     float height;
     float x1, x2, y1, y2;
 
-    Image(String name, Game game, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2){
-        super(name, game, x, y);
+    Image(String name, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2){
+        super(name, x, y);
         this.width = width;
         this.height = height;
         this.textureUnit = textureUnit;
@@ -18,12 +15,12 @@ public class Image extends Entity{
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
-        this.program = game.imageProgram;
+        this.program = Game.imageProgram;
         setDrawInfo();
     }
 
-    Image(String name, Game game, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2, Color color){
-        super(name, game, x, y);
+    Image(String name, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2, Color color){
+        super(name, x, y);
         this.width = width;
         this.height = height;
         this.textureUnit = textureUnit;
@@ -32,7 +29,7 @@ public class Image extends Entity{
         this.y1 = y1;
         this.y2 = y2;
         this.color = color;
-        this.program = game.imageColorizedProgram;
+        this.program = Game.imageColorizedProgram;
         setDrawInfo();
     }
     

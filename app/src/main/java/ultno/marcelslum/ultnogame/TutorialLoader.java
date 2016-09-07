@@ -17,12 +17,11 @@ public class TutorialLoader {
     private TutorialLoader() {
     }
 
-    public static void loadTutorial(Game game, int levelNumber){
+    public static void loadTutorial(int levelNumber){
 
         final Timer timer = new Timer();
-        final Game g = game;
-        final float gX = game.gameAreaResolutionX;
-        final float gY = game.gameAreaResolutionY;
+        final float gX = Game.gameAreaResolutionX;
+        final float gY = Game.gameAreaResolutionY;
         float size = gX*0.04f;
         float width = gX*0.8f;
         float x = gX*0.15f;
@@ -31,22 +30,22 @@ public class TutorialLoader {
         switch (levelNumber){
             case 1:
                 // L1T1
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox1", g)
+                            new TextBox.TextBoxBuilder("textoBox1")
                                 .position(x, y)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l1t1))
+                                .text(Utils.getStringResource( R.string.l1t1))
                                 .withArrow(gX *0.4f, gY *0.9f)
                                 .build()
                         )
                         .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                             @Override
                             public void onShowBeforeAnim() {
-                                    g.balls.get(0).clearDisplay();
-                                    g.balls.get(0).isMovable = false;
-                                    g.bars.get(0).isMovable = true;
+                                    Game.balls.get(0).clearDisplay();
+                                    Game.balls.get(0).isMovable = false;
+                                    Game.bars.get(0).isMovable = true;
                                 }
                             }
                         )
@@ -54,24 +53,24 @@ public class TutorialLoader {
                 );
                 
                 // L1T2
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
-                        new TextBox.TextBoxBuilder("textoBox2", g)
+                        new TextBox.TextBoxBuilder("textoBox2")
                             .position(x, y)
                             .width(width)
                             .size(size)
-                            .text(Utils.getStringResource(game, R.string.l1t2))
+                            .text(Utils.getStringResource( R.string.l1t2))
                             .withArrow(gX *0.7f, gY *0.6f)
                             .build()
                     )
                    .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                         @Override
                         public void onShowBeforeAnim() {
-                                g.balls.get(0).display();
-                                g.balls.get(0).x = gX * 0.7f;
-                                g.balls.get(0).y = gY * 0.7f;
-                                g.bars.get(0).isMovable = false;
-                                g.bars.get(0).x = g.levelObject.barsX_BR[0];
+                                Game.balls.get(0).display();
+                                Game.balls.get(0).x = gX * 0.7f;
+                                Game.balls.get(0).y = gY * 0.7f;
+                                Game.bars.get(0).isMovable = false;
+                                Game.bars.get(0).x = Game.levelObject.barsX_BR[0];
                             }
                         }
                     )
@@ -79,10 +78,10 @@ public class TutorialLoader {
                             @Override
                             public void onShowAfterAnim() {
                                 
-                                Utils.createAnimation3v(g.balls.get(0), "translateX", "translateX", 2000,
+                                Utils.createAnimation3v(Game.balls.get(0), "translateX", "translateX", 2000,
                                     0f, 0f, 0.3f, gX * 0.2f, 1f, gX * 0.2f,  true, true).start();
 
-                                Utils.createAnimation3v(g.balls.get(0), "translateY", "translateY", 2000,
+                                Utils.createAnimation3v(Game.balls.get(0), "translateY", "translateY", 2000,
                                     0f, 0f, 0.3f, gY * 0.285f, 1f, gY * 0.285f, true, true).start();
                                     
                                 // TODO xVermelho
@@ -100,7 +99,7 @@ public class TutorialLoader {
                     .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
                         @Override
                         public void onUnshowBeforeAnim() {
-                                g.balls.get(0).clearAnimations();
+                                Game.balls.get(0).clearAnimations();
                                 // TODO xVermelho clearDisplay()
                             }
                         }
@@ -108,32 +107,32 @@ public class TutorialLoader {
                     .build()
                 );       
                 // L1T3
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
-                        new TextBox.TextBoxBuilder("textoBox3", g)
+                        new TextBox.TextBoxBuilder("textoBox3")
                             .position(x, y*2.5f)
                             .width(width)
                             .size(size)
-                            .text(Utils.getStringResource(game, R.string.l1t3))
+                            .text(Utils.getStringResource( R.string.l1t3))
                             .withArrow(gX *0.59f, gY *0.15f)
                             .build()
                     )
                    .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                         @Override
                         public void onShowBeforeAnim() {
-                                g.balls.get(0).x = gX * 0.4f;
-                                g.balls.get(0).y = gY * 0.3f;
+                                Game.balls.get(0).x = gX * 0.4f;
+                                Game.balls.get(0).y = gY * 0.3f;
                             }
                         }
                     )
                     .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                Utils.createAnimation3v(g.balls.get(0), "translateX", "translateX", 2000,
+                                Utils.createAnimation3v(Game.balls.get(0), "translateX", "translateX", 2000,
                                     0f, 0f, 0.3f, gX * 0.19f, 1f, gX * 0.19f, true, true).start();
-                                Utils.createAnimation3v(g.balls.get(0), "translateY", "translateY", 2000,
+                                Utils.createAnimation3v(Game.balls.get(0), "translateY", "translateY", 2000,
                                     0f, 0f, 0.3f, -gY * 0.25f,  1f, -gY * 0.25f, true, true).start();
-                                Utils.createAnimation3v(g.targets.get(5), "alpha", "alpha", 2000,
+                                Utils.createAnimation3v(Game.targets.get(5), "alpha", "alpha", 2000,
                                     0f, 1f, 0.35f, 1f, 0.5f, 0f, true, true).start();
                             }
                         }
@@ -142,25 +141,25 @@ public class TutorialLoader {
                 );
                 
                 // L1T4
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
-                        new TextBox.TextBoxBuilder("textoBox4", g)
+                        new TextBox.TextBoxBuilder("textoBox4")
                             .position(x, y*2f)
                             .width(width)
                             .size(size)
-                            .text(Utils.getStringResource(game, R.string.l1t4))
+                            .text(Utils.getStringResource( R.string.l1t4))
                             .withArrow(gX *0.49f, gY *0.95f)
                             .build()
                     )
                     .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                g.balls.get(0).clearAnimations();
-                                g.targets.get(5).clearAnimations();
-                                g.targets.get(5).clearDisplay();
-                                g.balls.get(0).x = gX * 0.59f;
-                                g.balls.get(0).y = gY * 0.05f;
-                                g.scorePanel.setValue(100, true, 500, false);
+                                Game.balls.get(0).clearAnimations();
+                                Game.targets.get(5).clearAnimations();
+                                Game.targets.get(5).clearDisplay();
+                                Game.balls.get(0).x = gX * 0.59f;
+                                Game.balls.get(0).y = gY * 0.05f;
+                                Game.scorePanel.setValue(100, true, 500, false);
                             }
                         }
                     )
@@ -168,28 +167,28 @@ public class TutorialLoader {
                 );
                 
                 // L1T5
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
-                        new TextBox.TextBoxBuilder("textoBox5", g)
+                        new TextBox.TextBoxBuilder("textoBox5")
                             .position(x, y*2f)
                             .width(width)
                             .size(size)
-                            .text(Utils.getStringResource(game, R.string.l1t5))
+                            .text(Utils.getStringResource( R.string.l1t5))
                             .withArrow(gX *0.5f, gY *0.95f)
                             .build()
                     )
                     .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                for (int i = 0; i < g.targets.size(); i++){
+                                for (int i = 0; i < Game.targets.size(); i++){
                                     if (i != 5){
-                                        g.targets.get(i).reduceAlpha(500, 0f);
+                                        Game.targets.get(i).reduceAlpha(500, 0f);
                                     }
                                 }
 
-                                g.balls.get(0).x = gX * 0.59f;
-                                g.balls.get(0).y = gY * 0.05f;
-                                g.scorePanel.setValue(900, true, 500, false);
+                                Game.balls.get(0).x = gX * 0.59f;
+                                Game.balls.get(0).y = gY * 0.05f;
+                                Game.scorePanel.setValue(900, true, 500, false);
                             }
                         }
                     )
@@ -200,17 +199,17 @@ public class TutorialLoader {
                 final TimerTask ttl1t6 = new TimerTask() {
                     @Override
                     public void run() {
-                        g.scorePanel.setValue(g.scorePanel.value - 10, false, 1000, false);
-                    };
+                        Game.scorePanel.setValue(Game.scorePanel.value - 10, false, 1000, false);
+                    }
                 };
 
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
-                        new TextBox.TextBoxBuilder("textoBox6", g)
+                        new TextBox.TextBoxBuilder("textoBox6")
                             .position(x, y*2f)
                             .width(width)
                             .size(size)
-                            .text(Utils.getStringResource(game, R.string.l1t6))
+                            .text(Utils.getStringResource( R.string.l1t6))
                             .withArrow(gX *0.5f, gY *0.95f)
                             .build()
                     )
@@ -225,13 +224,13 @@ public class TutorialLoader {
                 );
                 
                 // L1T7
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
-                        new TextBox.TextBoxBuilder("textoBox7", g)
+                        new TextBox.TextBoxBuilder("textoBox7")
                             .position(x, y*2f)
                             .width(width)
                             .size(size)
-                            .text(Utils.getStringResource(game, R.string.l1t7))
+                            .text(Utils.getStringResource( R.string.l1t7))
                             .withoutArrow()
                             .build()
                     )
@@ -250,23 +249,23 @@ public class TutorialLoader {
                 
                 case 2:
                 // L2T1
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox1", g)
+                            new TextBox.TextBoxBuilder("textoBox1")
                                 .position(x*0.5f, y)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l2t1))
+                                .text(Utils.getStringResource( R.string.l2t1))
                                 .withoutArrow()
                                 .build()
                         )
                         .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                             @Override
                             public void onShowBeforeAnim() {
-                                    g.balls.get(0).isMovable = false;
-                                    g.balls.get(0).x = gX * 0.3f;
-                                    g.balls.get(0).y = gY * 0.72f;
-                                    g.bars.get(0).x = gX * 0.56f;
+                                    Game.balls.get(0).isMovable = false;
+                                    Game.balls.get(0).x = gX * 0.3f;
+                                    Game.balls.get(0).y = gY * 0.72f;
+                                    Game.bars.get(0).x = gX * 0.56f;
                                 }
                             }
                         )
@@ -274,32 +273,32 @@ public class TutorialLoader {
                 );
                 
                 // L2T2
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox2", g)
+                            new TextBox.TextBoxBuilder("textoBox2")
                                 .position(x*0.25f, y*0.25f)
                                 .width(width*1.25f)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l2t2))
+                                .text(Utils.getStringResource( R.string.l2t2))
                                 .withoutArrow()
                                 .build()
                         )
                         .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                             @Override
                             public void onShowBeforeAnim() {
-                                    g.balls.get(0).x = gX * 0.3f;
-                                    g.balls.get(0).y = gY * 0.72f;
+                                    Game.balls.get(0).x = gX * 0.3f;
+                                    Game.balls.get(0).y = gY * 0.72f;
                                 }
                             }
                         )
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                    Utils.createAnimation4v(g.balls.get(0), "translateX", "translateX", 3000,
+                                    Utils.createAnimation4v(Game.balls.get(0), "translateX", "translateX", 3000,
                                         0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.4f, 1f, gX*0.4f, true, true).start();
-                                    Utils.createAnimation4v(g.balls.get(0), "translateY", "translateY", 3000,
+                                    Utils.createAnimation4v(Game.balls.get(0), "translateY", "translateY", 3000,
                                         0f, 0f, 0.25f, gY*0.245f, 0.5f, -gY*0.3f, 1f, -gY*0.3f, true, true).start();
-                                    Utils.createAnimation3v(g.bars.get(0), "translateX", "translateX", 3000,
+                                    Utils.createAnimation3v(Game.bars.get(0), "translateX", "translateX", 3000,
                                         0f, 0f, 0.5f, -gX*0.4f, 1f, -gX*0.4f, true, true).start();
                                 }
                             }
@@ -308,35 +307,35 @@ public class TutorialLoader {
                 );
                 
                 // L2T3
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox3", g)
+                            new TextBox.TextBoxBuilder("textoBox3")
                                 .position(x*0.25f, y*0.25f)
                                 .width(width*1.25f)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l2t3))
+                                .text(Utils.getStringResource( R.string.l2t3))
                                 .withoutArrow()
                                 .build()
                         )
                         .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                             @Override
                             public void onShowBeforeAnim() {
-                                    g.balls.get(0).clearAnimations();
-                                    g.bars.get(0).clearAnimations();
-                                    g.balls.get(0).x = gX * 0.3f;
-                                    g.balls.get(0).y = gY * 0.72f;
-                                    g.bars.get(0).x = gX * 0.1f;
+                                    Game.balls.get(0).clearAnimations();
+                                    Game.bars.get(0).clearAnimations();
+                                    Game.balls.get(0).x = gX * 0.3f;
+                                    Game.balls.get(0).y = gY * 0.72f;
+                                    Game.bars.get(0).x = gX * 0.1f;
                                 }
                             }
                         )
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                Utils.createAnimation4v(g.balls.get(0), "translateX", "translateX", 3000,
+                                Utils.createAnimation4v(Game.balls.get(0), "translateX", "translateX", 3000,
                                     0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.2f, 1f, gX*0.2f, true, true).start();
-                                Utils.createAnimation4v(g.balls.get(0), "translateY", "translateY", 3000,
+                                Utils.createAnimation4v(Game.balls.get(0), "translateY", "translateY", 3000,
                                     0f, 0f, 0.25f, gY*0.245f, 0.5f, gY*0.15f, 1f, gY*0.15f, true, true).start();
-                                Utils.createAnimation3v(g.bars.get(0), "translateX", "translateX", 3000,
+                                Utils.createAnimation3v(Game.bars.get(0), "translateX", "translateX", 3000,
                                     0f, 0f, 0.5f, gX*0.4f, 1f, gX*0.4f, true, true).start();
                                 }
                             }
@@ -344,8 +343,8 @@ public class TutorialLoader {
                         .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
                             @Override
                             public void onUnshowBeforeAnim() {
-                                g.balls.get(0).clearAnimations();
-                                g.bars.get(0).clearAnimations();
+                                Game.balls.get(0).clearAnimations();
+                                Game.bars.get(0).clearAnimations();
                                 }
                             }
                         )
@@ -353,13 +352,13 @@ public class TutorialLoader {
                 );
                 
                 // L2T4
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox4", g)
+                            new TextBox.TextBoxBuilder("textoBox4")
                                 .position(x*0.25f, y)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l2t4))
+                                .text(Utils.getStringResource( R.string.l2t4))
                                 .withoutArrow()
                                 .build()
                         )
@@ -369,13 +368,13 @@ public class TutorialLoader {
                 
                 case 4:
                 // L4T1
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textBox1", g)
+                            new TextBox.TextBoxBuilder("textBox1")
                                 .position(x*0.1f, y*0.1f)
                                 .width(width)
                                 .size(size)
-                                    .text(Utils.getStringResource(game, R.string.l4t1))
+                                    .text(Utils.getStringResource( R.string.l4t1))
                                 .withArrow(gX*0.5f, gY*0.35f)
                                 .build()
                         )
@@ -385,45 +384,45 @@ public class TutorialLoader {
                 
                 case 7:
                 // L7T1
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textBox1", g)
+                            new TextBox.TextBoxBuilder("textBox1")
                                 .position(x*0.5f, y*2f)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l7t1))
+                                .text(Utils.getStringResource( R.string.l7t1))
                                 .withArrow(gX*0.5f, gY*0.08f)
                                 .build()
                         )
                         .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                             @Override
                             public void onShowBeforeAnim() {
-                                g.balls.get(0).clearDisplay();
-                                g.targets.get(4).setUvInfo(Target.TARGET_GREEN);
+                                Game.balls.get(0).clearDisplay();
+                                Game.targets.get(4).setUvInfo(Target.TARGET_GREEN);
                                 }
                             }
                         )
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                    Utils.createAnimation3v(g.targets.get(4), "alpha", "alpha", 3000,
+                                    Utils.createAnimation3v(Game.targets.get(4), "alpha", "alpha", 3000,
                                         0f, 1f, 0.75f, 0.99f, 1f, 0, true, true).start(); 
                                     ArrayList<float[]> valuesAnimTarget = new ArrayList<>();
                                         valuesAnimTarget.add(new float[]{0f,3f});
                                         valuesAnimTarget.add(new float[]{0.25f,2f});
                                         valuesAnimTarget.add(new float[]{0.5f,1f});
                                         valuesAnimTarget.add(new float[]{0.75f,0f});
-                                    Animation animTarget = new Animation(g.targets.get(4), "animTarget", "numberForAnimation", 3000, 
+                                    Animation animTarget = new Animation(Game.targets.get(4), "animTarget", "numberForAnimation", 3000, 
                                         valuesAnimTarget, true, false);
                                         animTarget.setOnChangeNotFluid(new Animation.OnChange() {
                                             @Override
                                             public void onChange() {
-                                                if (g.targets.get(4).numberForAnimation == 3f){
-                                                    g.targets.get(4).setUvInfo(Target.TARGET_GREEN);
-                                                } else if (g.targets.get(4).numberForAnimation == 2f) {
-                                                    g.targets.get(4).setUvInfo(Target.TARGET_BLUE);
-                                                } else if (g.targets.get(4).numberForAnimation == 1f) {
-                                                    g.targets.get(4).setUvInfo(Target.TARGET_BLACK);
+                                                if (Game.targets.get(4).numberForAnimation == 3f){
+                                                    Game.targets.get(4).setUvInfo(Target.TARGET_GREEN);
+                                                } else if (Game.targets.get(4).numberForAnimation == 2f) {
+                                                    Game.targets.get(4).setUvInfo(Target.TARGET_BLUE);
+                                                } else if (Game.targets.get(4).numberForAnimation == 1f) {
+                                                    Game.targets.get(4).setUvInfo(Target.TARGET_BLACK);
                                                 }
                                             }
                                         });
@@ -434,9 +433,9 @@ public class TutorialLoader {
                         .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                                   @Override
                                   public void onShowBeforeAnim() {
-                                      g.targets.get(4).clearAnimations();
-                                      g.targets.get(4).alpha = 1f;
-                                      g.targets.get(4).setUvInfo(Target.TARGET_BLACK);
+                                      Game.targets.get(4).clearAnimations();
+                                      Game.targets.get(4).alpha = 1f;
+                                      Game.targets.get(4).setUvInfo(Target.TARGET_BLACK);
                                   }
                               }
                         )
@@ -446,13 +445,13 @@ public class TutorialLoader {
                 
                 case 9:
                 // L9T1
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox1", g)
+                            new TextBox.TextBoxBuilder("textoBox1")
                                 .position(x*0.5f, y*2f)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l9t1))
+                                .text(Utils.getStringResource( R.string.l9t1))
                                 .withoutArrow()
                                 .build()
                         )
@@ -460,13 +459,13 @@ public class TutorialLoader {
                 );
                 
                 // L9T2
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox2", g)
+                            new TextBox.TextBoxBuilder("textoBox2")
                                 .position(x*0.5f, y*2f)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l9t2))
+                                .text(Utils.getStringResource( R.string.l9t2))
                                 .withArrow(gX*0.5f, gY*0.25f)
                                 .build()
                         )
@@ -474,13 +473,13 @@ public class TutorialLoader {
                 );
                 
                 // L9T3
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBox.TextBoxBuilder("textoBox3", g)
+                            new TextBox.TextBoxBuilder("textoBox3")
                                 .position(x*0.5f, y*2.5f)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(game, R.string.l9t3))
+                                .text(Utils.getStringResource( R.string.l9t3))
                                 .withoutArrow()
                                 .build()
                         )
@@ -490,36 +489,36 @@ public class TutorialLoader {
                                      float posX = gX * 0.6f;
                                      float posY = gY * 0.28f;
 
-                                     final Ball ball1 = g.balls.get(0);
+                                     final Ball ball1 = Game.balls.get(0);
                                      ball1.x = posX;
                                      ball1.y = posY;
 
                                      float size = ball1.radius;
 
-                                     final Ball ball2 = new Ball("ball2", g, posX - size * 2, posY - size * 2, size, Ball.COLOR_BALL_BLUE);
+                                     final Ball ball2 = new Ball("ball2", posX - size * 2, posY - size * 2, size, Ball.COLOR_BALL_BLUE);
                                      ball2.isCollidable = false;
                                      ball2.alpha = 0f;
                                      ball2.display();
 
-                                     final Ball ball3 = new Ball("ball2", g, posX + size * 2, posY - size * 2, size, Ball.COLOR_BALL_ORANGE);
+                                     final Ball ball3 = new Ball("ball2", posX + size * 2, posY - size * 2, size, Ball.COLOR_BALL_ORANGE);
                                      ball3.isCollidable = false;
                                      ball3.alpha = 0f;
                                      ball3.display();
 
-                                     final Ball ball4 = new Ball("ball2", g, posX - size * 2, posY + size * 2, size, Ball.COLOR_BALL_RED);
+                                     final Ball ball4 = new Ball("ball2", posX - size * 2, posY + size * 2, size, Ball.COLOR_BALL_RED);
                                      ball4.isCollidable = false;
                                      ball4.alpha = 0f;
                                      ball4.display();
 
-                                     final Ball ball5 = new Ball("ball2", g, posX + size * 2, posY + size * 2, size, Ball.COLOR_BALL_PINK);
+                                     final Ball ball5 = new Ball("ball2", posX + size * 2, posY + size * 2, size, Ball.COLOR_BALL_PINK);
                                      ball5.isCollidable = false;
                                      ball5.alpha = 0f;
                                      ball5.display();
 
-                                     g.addBall(ball2);
-                                     g.addBall(ball3);
-                                     g.addBall(ball4);
-                                     g.addBall(ball5);
+                                     Game.addBall(ball2);
+                                     Game.addBall(ball3);
+                                     Game.addBall(ball4);
+                                     Game.addBall(ball5);
 
                                      Utils.createAnimation3v(ball1, "translateX", "translateX", 5000,
                                              0f, -gX * 0.15f, 0.2f, 0f, 1f, 0f, true, true).start();
@@ -576,7 +575,7 @@ public class TutorialLoader {
                                      Utils.createAnimation4v(ball5, "translateY", "translateY", 5000,
                                              0f, 0f, 0.25f, 0f, 0.4f, desloc, 1f, desloc, true, true).start();
 
-                                     Utils.createAnimation4v(g.targets.get(35), "alpha", "alpha", 5000,
+                                     Utils.createAnimation4v(Game.targets.get(35), "alpha", "alpha", 5000,
                                              0f, 1f, 0.1f, 1f, 0.15f, 0f, 1f, 0f, true, true).start();
 
                                  }
@@ -585,67 +584,67 @@ public class TutorialLoader {
                         .onUnshowAfterAnim(new Tutorial.OnUnshowAfterAnim() {
                                     @Override
                                     public void onUnshowAfterAnim() {
-                                    g.balls.get(0).clearAnimations();
-                                    g.balls.get(1).clearAnimations();
-                                    g.balls.get(2).clearAnimations();
-                                    g.balls.get(3).clearAnimations();
-                                    g.balls.get(4).clearAnimations();
+                                    Game.balls.get(0).clearAnimations();
+                                    Game.balls.get(1).clearAnimations();
+                                    Game.balls.get(2).clearAnimations();
+                                    Game.balls.get(3).clearAnimations();
+                                    Game.balls.get(4).clearAnimations();
                                         
-                                    g.balls.get(0).clearDisplay();
-                                    g.targets.get(35).clearAnimations();
-                                    g.targets.get(35).alpha = 0f;
+                                    Game.balls.get(0).clearDisplay();
+                                    Game.targets.get(35).clearAnimations();
+                                    Game.targets.get(35).alpha = 0f;
                                     
-                                    float desloc = g.balls.get(1).radius * 4;
-                                    g.balls.get(1).translate(-desloc, -desloc);
-                                    g.balls.get(2).translate(desloc, -desloc);
-                                    g.balls.get(3).translate(-desloc, desloc);
-                                    g.balls.get(4).translate(desloc, desloc);
+                                    float desloc = Game.balls.get(1).radius * 4;
+                                    Game.balls.get(1).translate(-desloc, -desloc);
+                                    Game.balls.get(2).translate(desloc, -desloc);
+                                    Game.balls.get(3).translate(-desloc, desloc);
+                                    Game.balls.get(4).translate(desloc, desloc);
                                 }
                             }
                         )
                         .build()
                 );
                 // L9T4
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox4", g)
+                                new TextBox.TextBoxBuilder("textoBox4")
                                         .position(x*0.5f, y*2.5f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t4))
+                                        .text(Utils.getStringResource( R.string.l9t4))
                                         .withoutArrow()
                                         .build()
                         )
                                 .build()
                 );
                 // L9T5
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox5", g)
+                                new TextBox.TextBoxBuilder("textoBox5")
                                         .position(x*0.5f, y*2f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t5))
+                                        .text(Utils.getStringResource( R.string.l9t5))
                                         .withArrow(gX*0.50f, gY*0.97f)
                                         .build()
                         )
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                g.objectivePanel.setValues(4, 1, 0);
+                                Game.objectivePanel.setValues(4, 1, 0);
                             }
                         })
                         .build()
                 );
 
                 // L6T6
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox6", g)
+                                new TextBox.TextBoxBuilder("textoBox6")
                                         .position(x*0.5f, y*2f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t6))
+                                        .text(Utils.getStringResource( R.string.l9t6))
                                         .withArrow(gX*0.50f, gY*0.97f)
                                         .build()
                         )
@@ -658,13 +657,13 @@ public class TutorialLoader {
                                 .build()
                 );
                 // L6T7
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox7", g)
+                                new TextBox.TextBoxBuilder("textoBox7")
                                         .position(x*0.5f, y*2f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t7))
+                                        .text(Utils.getStringResource( R.string.l9t7))
                                         .withArrow(gX*0.50f, gY*0.97f)
                                         .build()
                         )
@@ -678,13 +677,13 @@ public class TutorialLoader {
                 );
 
                 // L6T8
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox8", g)
+                                new TextBox.TextBoxBuilder("textoBox8")
                                         .position(x*0.5f, y*2f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t8))
+                                        .text(Utils.getStringResource( R.string.l9t8))
                                         .withArrow(gX*0.53f, gY*0.97f)
                                         .build()
                                 )
@@ -693,13 +692,13 @@ public class TutorialLoader {
 
 
                 // L6T9
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox9", g)
+                                new TextBox.TextBoxBuilder("textoBox9")
                                         .position(x*0.5f, y*2.5f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t9))
+                                        .text(Utils.getStringResource( R.string.l9t9))
                                         .withArrow(gX*0.53f, gY*0.97f)
                                         .build()
                         )
@@ -707,36 +706,36 @@ public class TutorialLoader {
                                     @Override
                                     public void onShowAfterAnim() {
 
-                                        Utils.createAnimation3v(g.balls.get(2), "translateX", "translateX", 3000, 0f, 0f, 0.3f, g.gameAreaResolutionX * 0.32f, 1f, g.gameAreaResolutionX * 0.32f, true, true).start();
-                                        Utils.createAnimation3v(g.balls.get(3), "translateX", "translateX", 3000, 0f, 0f, 0.25f, g.gameAreaResolutionX * 0.25f, 1f, g.gameAreaResolutionX * 0.25f, true, true).start();
-                                        Utils.createAnimation3v(g.balls.get(4), "translateX", "translateX", 3000, 0f, 0f, 0.25f, g.gameAreaResolutionX * 0.25f, 1f, g.gameAreaResolutionX * 0.25f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(2), "translateX", "translateX", 3000, 0f, 0f, 0.3f, Game.gameAreaResolutionX * 0.32f, 1f, Game.gameAreaResolutionX * 0.32f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(3), "translateX", "translateX", 3000, 0f, 0f, 0.25f, Game.gameAreaResolutionX * 0.25f, 1f, Game.gameAreaResolutionX * 0.25f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(4), "translateX", "translateX", 3000, 0f, 0f, 0.25f, Game.gameAreaResolutionX * 0.25f, 1f, Game.gameAreaResolutionX * 0.25f, true, true).start();
 
-                                        Utils.createAnimation3v(g.balls.get(2), "translateY", "translateY", 3000, 0f, 0f, 0.3f, g.gameAreaResolutionY * 0.775f, 1f, g.gameAreaResolutionY * 0.775f, true, true).start();
-                                        Utils.createAnimation3v(g.balls.get(3), "translateY", "translateY", 3000, 0f, 0f, 0.25f, g.gameAreaResolutionY * 0.63f, 1f, g.gameAreaResolutionY * 0.63f, true, true).start();
-                                        Utils.createAnimation3v(g.balls.get(4), "translateY", "translateY", 3000, 0f, 0f, 0.25f, g.gameAreaResolutionY * 0.63f, 1f, g.gameAreaResolutionY * 0.63f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(2), "translateY", "translateY", 3000, 0f, 0f, 0.3f, Game.gameAreaResolutionY * 0.775f, 1f, Game.gameAreaResolutionY * 0.775f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(3), "translateY", "translateY", 3000, 0f, 0f, 0.25f, Game.gameAreaResolutionY * 0.63f, 1f, Game.gameAreaResolutionY * 0.63f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(4), "translateY", "translateY", 3000, 0f, 0f, 0.25f, Game.gameAreaResolutionY * 0.63f, 1f, Game.gameAreaResolutionY * 0.63f, true, true).start();
 
-                                        Utils.createAnimation3v(g.balls.get(2), "alpha", "alpha", 3000, 0f, 1f, 0.3f, 1f, 0.45f, 0f, true, true).start();
-                                        Utils.createAnimation3v(g.balls.get(3), "alpha", "alpha", 3000, 0f, 1f, 0.25f, 1f, 0.4f, 0f, true, true).start();
-                                        Utils.createAnimation3v(g.balls.get(4), "alpha", "alpha", 3000, 0f, 1f, 0.25f, 1f, 0.4f, 0f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(2), "alpha", "alpha", 3000, 0f, 1f, 0.3f, 1f, 0.45f, 0f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(3), "alpha", "alpha", 3000, 0f, 1f, 0.25f, 1f, 0.4f, 0f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(4), "alpha", "alpha", 3000, 0f, 1f, 0.25f, 1f, 0.4f, 0f, true, true).start();
 
                                         ArrayList<float[]> valuesAnimPanel = new ArrayList<>();
                                         valuesAnimPanel.add(new float[]{0f,4f});
                                         valuesAnimPanel.add(new float[]{0.25f,2f});
                                         valuesAnimPanel.add(new float[]{0.3f,1f});
                                         valuesAnimPanel.add(new float[]{1f,1f});
-                                        Animation animPanel = new Animation(g.balls.get(2), "numberForAnimation", "numberForAnimation", 3000,
+                                        Animation animPanel = new Animation(Game.balls.get(2), "numberForAnimation", "numberForAnimation", 3000,
                                                 valuesAnimPanel, true, false);
                                         animPanel.setOnChangeNotFluid(new Animation.OnChange() {
                                             @Override
                                             public void onChange() {
-                                                if (g.balls.get(2).numberForAnimation == 4f){
-                                                    g.objectivePanel.setValues(4, 1, 0);
-                                                } else if (g.balls.get(2).numberForAnimation == 3f){
-                                                    g.objectivePanel.setValues(3, 1, 0);
-                                                } else if (g.balls.get(2).numberForAnimation == 2f) {
-                                                    g.objectivePanel.setValues(2, 1, 0);
-                                                } else if (g.balls.get(2).numberForAnimation == 1f) {
-                                                    g.objectivePanel.setValues(1, 1, 0);
+                                                if (Game.balls.get(2).numberForAnimation == 4f){
+                                                    Game.objectivePanel.setValues(4, 1, 0);
+                                                } else if (Game.balls.get(2).numberForAnimation == 3f){
+                                                    Game.objectivePanel.setValues(3, 1, 0);
+                                                } else if (Game.balls.get(2).numberForAnimation == 2f) {
+                                                    Game.objectivePanel.setValues(2, 1, 0);
+                                                } else if (Game.balls.get(2).numberForAnimation == 1f) {
+                                                    Game.objectivePanel.setValues(1, 1, 0);
                                                 }
                                             }
                                         });
@@ -746,23 +745,23 @@ public class TutorialLoader {
                                 .onUnshowAfterAnim(new Tutorial.OnUnshowAfterAnim() {
                                     @Override
                                     public void onUnshowAfterAnim() {
-                                        g.balls.get(2).clearAnimations();
-                                        g.balls.get(3).clearAnimations();
-                                        g.balls.get(4).clearAnimations();
-                                        g.objectivePanel.setValues(4, 1, 0);
+                                        Game.balls.get(2).clearAnimations();
+                                        Game.balls.get(3).clearAnimations();
+                                        Game.balls.get(4).clearAnimations();
+                                        Game.objectivePanel.setValues(4, 1, 0);
                                     }
                                 })
                                 .build()
                 );
 
                 // L6T10
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox10", g)
+                                new TextBox.TextBoxBuilder("textoBox10")
                                         .position(x*0.5f, y*2.5f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t10))
+                                        .text(Utils.getStringResource( R.string.l9t10))
                                         .withoutArrow()
                                         .build()
                         )
@@ -770,36 +769,36 @@ public class TutorialLoader {
                 );
 
                 // L6T11
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox11", g)
+                                new TextBox.TextBoxBuilder("textoBox11")
                                         .position(x*0.5f, y*2.5f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t11))
+                                        .text(Utils.getStringResource( R.string.l9t11))
                                         .withoutArrow()
                                         .build()
                                 )
                                 .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                                     @Override
                                     public void onShowBeforeAnim() {
-                                        Utils.createAnimation3v(g.balls.get(4), "translateX", "translateX", 3000, 0f, 0f, 0.25f, g.gameAreaResolutionX * 0.06f, 1f, g.gameAreaResolutionX * 0.061f, true, true).start();
-                                        Utils.createAnimation3v(g.balls.get(4), "translateY", "translateY", 3000, 0f, 0f, 0.25f, -g.gameAreaResolutionY * 0.16f, 1f, -g.gameAreaResolutionY * 0.16f, true, true).start();
-                                        Utils.createAnimation4v(g.targets.get(37), "alpha", "alpha", 3000, 0f, 1f, 0.25f, 1f, 0.3f, 0f, 1f, 0f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(4), "translateX", "translateX", 3000, 0f, 0f, 0.25f, Game.gameAreaResolutionX * 0.06f, 1f, Game.gameAreaResolutionX * 0.061f, true, true).start();
+                                        Utils.createAnimation3v(Game.balls.get(4), "translateY", "translateY", 3000, 0f, 0f, 0.25f, -Game.gameAreaResolutionY * 0.16f, 1f, -Game.gameAreaResolutionY * 0.16f, true, true).start();
+                                        Utils.createAnimation4v(Game.targets.get(37), "alpha", "alpha", 3000, 0f, 1f, 0.25f, 1f, 0.3f, 0f, 1f, 0f, true, true).start();
 
 
                                         ArrayList<float[]> valuesAnimPoints = new ArrayList<>();
                                         valuesAnimPoints.add(new float[]{0f,2f});
                                         valuesAnimPoints.add(new float[]{0.25f,1f});
                                         valuesAnimPoints.add(new float[]{1f,0f});
-                                        Animation animPoints = new Animation(g.balls.get(4), "numberForAnimation", "numberForAnimation", 3000,
+                                        Animation animPoints = new Animation(Game.balls.get(4), "numberForAnimation", "numberForAnimation", 3000,
                                                 valuesAnimPoints, true, false);
                                         animPoints.setOnChangeNotFluid(new Animation.OnChange() {
                                             @Override
                                             public void onChange() {
-                                                if (g.balls.get(4).numberForAnimation == 1f){
-                                                    g.scorePanel.setValue(800, false, 1000, true);
-                                                    g.targets.get(37).showPoints(800);
+                                                if (Game.balls.get(4).numberForAnimation == 1f){
+                                                    Game.scorePanel.setValue(800, false, 1000, true);
+                                                    Game.targets.get(37).showPoints(800);
                                                 }
                                             }
                                         });
@@ -809,9 +808,9 @@ public class TutorialLoader {
                                 .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
                                     @Override
                                     public void onUnshowBeforeAnim() {
-                                        g.balls.get(4).clearAnimations();
-                                        g.targets.get(37).clearAnimations();
-                                        g.targets.get(37).reduceAlpha(100, 0f);
+                                        Game.balls.get(4).clearAnimations();
+                                        Game.targets.get(37).clearAnimations();
+                                        Game.targets.get(37).reduceAlpha(100, 0f);
                                     }
                                 })
 
@@ -819,26 +818,26 @@ public class TutorialLoader {
                 );
 
                 // L6T12
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox12", g)
+                                new TextBox.TextBoxBuilder("textoBox12")
                                         .position(x*0.5f, y*2.5f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t12))
+                                        .text(Utils.getStringResource( R.string.l9t12))
                                         .withoutArrow()
                                         .build()
                         )
                                 .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                                     @Override
                                     public void onShowAfterAnim() {
-                                        for (int i = 0; i < g.targets.size(); i++) {
+                                        for (int i = 0; i < Game.targets.size(); i++) {
                                             if (i != 37) {
-                                                g.targets.get(i).reduceAlpha(500, 0);
+                                                Game.targets.get(i).reduceAlpha(500, 0);
                                             }
                                         }
 
-                                        g.scorePanel.setValue(10000, true, 1000, true);
+                                        Game.scorePanel.setValue(10000, true, 1000, true);
 
                                     ArrayList<float[]> valuesScoreAnim = new ArrayList<>();
                                         valuesScoreAnim.add(new float[]{0f,5f});
@@ -847,26 +846,26 @@ public class TutorialLoader {
                                         valuesScoreAnim.add(new float[]{0.6f,2f});
                                         valuesScoreAnim.add(new float[]{0.8f,1f});
                                         valuesScoreAnim.add(new float[]{1f,0f});
-                                    Animation animScore = new Animation(g.balls.get(4), "numberForAnimation", "numberForAnimation",
+                                    Animation animScore = new Animation(Game.balls.get(4), "numberForAnimation", "numberForAnimation",
                                             10000, valuesScoreAnim, false, false);
                                         animScore.setOnChangeNotFluid(new Animation.OnChange() {
                                         @Override
                                         public void onChange() {
-                                            if (g.balls.get(4).numberForAnimation == 4f){
-                                                g.scorePanel.setValue(7500, true, 1000, true);
-                                                g.scorePanel.showMessage("+ 50%", 1000);
-                                                g.objectivePanel.setValues(3, 1, 0);
-                                                g.balls.get(3).clearDisplay();
-                                            } else if (g.balls.get(4).numberForAnimation == 3f){
-                                                g.scorePanel.setValue(11125, true, 1000, true);
-                                                g.scorePanel.showMessage("+ 50%", 1000);
-                                                g.objectivePanel.setValues(2, 1, 0);
-                                                g.balls.get(2).clearDisplay();
-                                            } else if (g.balls.get(4).numberForAnimation == 2f){
-                                                g.scorePanel.setValue(16875, true, 1000, true);
-                                                g.scorePanel.showMessage("+ 50%", 1000);
-                                                g.objectivePanel.setValues(1, 1, 0);
-                                                g.balls.get(1).clearDisplay();
+                                            if (Game.balls.get(4).numberForAnimation == 4f){
+                                                Game.scorePanel.setValue(7500, true, 1000, true);
+                                                Game.scorePanel.showMessage("+ 50%", 1000);
+                                                Game.objectivePanel.setValues(3, 1, 0);
+                                                Game.balls.get(3).clearDisplay();
+                                            } else if (Game.balls.get(4).numberForAnimation == 3f){
+                                                Game.scorePanel.setValue(11125, true, 1000, true);
+                                                Game.scorePanel.showMessage("+ 50%", 1000);
+                                                Game.objectivePanel.setValues(2, 1, 0);
+                                                Game.balls.get(2).clearDisplay();
+                                            } else if (Game.balls.get(4).numberForAnimation == 2f){
+                                                Game.scorePanel.setValue(16875, true, 1000, true);
+                                                Game.scorePanel.showMessage("+ 50%", 1000);
+                                                Game.objectivePanel.setValues(1, 1, 0);
+                                                Game.balls.get(1).clearDisplay();
                                             }
                                         }
                                     });
@@ -877,13 +876,13 @@ public class TutorialLoader {
                 );
 
                 // L6T13
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox13", g)
+                                new TextBox.TextBoxBuilder("textoBox13")
                                         .position(x*0.5f, y*2.5f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t13))
+                                        .text(Utils.getStringResource( R.string.l9t13))
                                         .withoutArrow()
                                         .build()
                         )
@@ -891,13 +890,13 @@ public class TutorialLoader {
                 );
 
                 // L6T14
-                game.levelObject.tutorials.add(
+                Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                                new TextBox.TextBoxBuilder("textoBox14", g)
+                                new TextBox.TextBoxBuilder("textoBox14")
                                         .position(x*0.5f, y*2.5f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource(game, R.string.l9t14))
+                                        .text(Utils.getStringResource( R.string.l9t14))
                                         .withoutArrow()
                                         .build()
                         )

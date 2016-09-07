@@ -1,9 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-
-/**
- * Created by marcel on 01/08/2016.
- */
 // ## SatCircle
 //
 // Represents a circle with a position and a radius.

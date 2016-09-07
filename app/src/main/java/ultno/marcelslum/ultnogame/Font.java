@@ -1,8 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-/**
- * Created by marcel on 06/08/2016.
- */
 public class Font {
 
     /*
@@ -29,9 +26,7 @@ public class Font {
     };
 
     */
-    public float uvBoxWidth;
     public float textureSize;
-    public float[] lSize;
     public static final float[] fontData = new float[]{
             32,	1021,	496,	2,	123,
             33,	408,	868,	14,	123,
@@ -204,12 +199,6 @@ public class Font {
     public int textureUnit;
     public Program program;
 
-    public Font(float uvBoxWidth, float textureSize, float[] lSize){
-        this.lSize = lSize;
-        this.uvBoxWidth = uvBoxWidth;
-        this.textureSize = textureSize;
-    }
-
     public Font(int textureUnit, Program program){
         this.textureUnit = textureUnit;
         this.program = program;
@@ -218,19 +207,19 @@ public class Font {
 
     public float getCharToIndex(int c_val, float[] charData)
     {
-        for (int i = 0; i < (this.fontData.length/5); i++){
+        for (int i = 0; i < (fontData.length/5); i++){
 
-            if (this.fontData[i*5] == c_val){
+            if (fontData[i*5] == c_val){
                 //Log.e("valor da tabela", " "+ this.fontData[i*5]);
-                charData[0] = this.fontData[(i*5)+1];
+                charData[0] = fontData[(i*5)+1];
                 //Log.e("valor da tabela", " "+ charData[0]);
-                charData[1] = this.fontData[(i*5)+2];
+                charData[1] = fontData[(i*5)+2];
                 //Log.e("valor da tabela", " "+ charData[1]);
-                charData[2] = this.fontData[(i*5)+3];
+                charData[2] = fontData[(i*5)+3];
                 //Log.e("valor da tabela", " "+ charData[2]);
-                charData[3] = this.fontData[(i*5)+4];
+                charData[3] = fontData[(i*5)+4];
                 //Log.e("valor da tabela", " "+ charData[3]);
-                return this.fontData[(i*5)];
+                return fontData[(i*5)];
             }
         }
         return -1;

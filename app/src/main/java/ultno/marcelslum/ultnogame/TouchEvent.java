@@ -14,11 +14,4 @@ public class TouchEvent {
         this.y = y;
         this.id = id;
     }
-
-    TouchEvent(){
-
-    }
-
-
-
 }

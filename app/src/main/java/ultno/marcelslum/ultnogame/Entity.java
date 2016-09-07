@@ -16,7 +16,6 @@ public class Entity{
     final public static int SHOW_POINTS_OFF = 0;
 
     public String name;
-    public Game game;
     public float x;
     public float y;
     public float positionX;
@@ -103,14 +102,13 @@ public class Entity{
         this.textureUnit = textureUnit;
     }
 
-    Entity(String name, Game game, float x, float y) {
+    Entity(String name, float x, float y) {
         this.name = name;
-        this.game = game;
         this.x = x;
         this.y = y;
         previousX = x;
         previousY = y;
-        animations = new ArrayList<Animation>();
+        animations = new ArrayList<>();
         childs = new ArrayList<>();
         checkTransformations(false);
     }
@@ -183,7 +181,7 @@ public class Entity{
 
     public void clearAnimations() {
         for (int i = 0; i < this.animations.size(); i++) {
-            if (this.animations.get(i).started && this.animations.get(i).name != "ballInvencible") {
+            if (this.animations.get(i).started && this.animations.get(i).name.equals("ballInvencible")){
                 this.animations.get(i).stopAndConclude();
             }
         }
@@ -317,9 +315,7 @@ public class Entity{
     public void setMatrixModel(){
         Matrix.setIdentityM(matrixModel, 0);
 
-        if (name == "ball"){
-            //Log.e("entity", " "+positionX);
-        }
+
 
         if (accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
             Matrix.translateM(matrixModel, 0, positionX + animTranslateX + (getTransformedWidth() - getWidth()) / 2f,
@@ -354,6 +350,10 @@ public class Entity{
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {
+
+        if (name == "arrowBack") {
+            //Log.e("entity", "rendering arrowBack");
+        }
 
         setMatrixModel();
 
@@ -400,24 +400,24 @@ public class Entity{
         //Log.e("render", " ");
 
 
-        if (this.program == game.imageColorizedFxProgram){
+        if (this.program == Game.imageColorizedFxProgram){
             int uv2_ballPosition = GLES20.glGetUniformLocation(this.program.get(), "uv2_ballPosition");
-            GLES20.glUniform2f(uv2_ballPosition, game.balls.get(0).x + game.screenOffSetX, game.resolutionY - (game.balls.get(0).y+game.screenOffSetY));
+            GLES20.glUniform2f(uv2_ballPosition, Game.balls.get(0).x + Game.screenOffSetX, Game.resolutionY - (Game.balls.get(0).y+Game.screenOffSetY));
 
             float variation;
-            if (game.ballCollidedFx > 0) {
+            if (Game.ballCollidedFx > 0) {
 
-                if (game.ballCollidedFx > 30){
+                if (Game.ballCollidedFx > 30){
                     variation = 0.007f;
-                } else if (game.ballCollidedFx > 20){
+                } else if (Game.ballCollidedFx > 20){
                     variation = 0.0055f;
-                } else if (game.ballCollidedFx > 10){
+                } else if (Game.ballCollidedFx > 10){
                     variation = 0.004f;
                 } else{
                     variation = 0.002f;
                 }
 
-                if (timeVar == true) {
+                if (timeVar) {
                     time += variation;
                     if (time > 0.001f) {
                         timeVar = false;

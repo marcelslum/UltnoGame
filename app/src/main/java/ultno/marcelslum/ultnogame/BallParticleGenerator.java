@@ -9,10 +9,10 @@ public class BallParticleGenerator extends Entity {
     boolean isActive = true;
     boolean isVisible = true;
     
-    BallParticleGenerator(String name, Game game, float x, float y) {
-        super(name, game, x, y);
-        program = game.imageColorizedProgram;
-        textureUnit = game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+    BallParticleGenerator(String name, float x, float y) {
+        super(name, x, y);
+        program = Game.imageColorizedProgram;
+        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         particlesArray= new ArrayList<>();
     }
 
@@ -74,14 +74,14 @@ public class BallParticleGenerator extends Entity {
             p.alpha -= p.alpha_decay;
             if(p.alpha < 0f) p.alpha = 0f;
             
-            Utils.insertRectangleVerticesData(verticesData, 0 + (i * 12), p.x - p.size/2f, p.x + p.size/2f, p.y- p.size/2f, p.y + p.size/2f, 0f);
+            Utils.insertRectangleVerticesData(verticesData, i * 12, p.x - p.size/2f, p.x + p.size/2f, p.y- p.size/2f, p.y + p.size/2f, 0f);
 
 
             //Log.e("ballParticleGenerator", " "+p.x+" "+p.y+" "+p.size);
 
-            Utils.insertRectangleColorsData(colorsData, 0 + (i * 16), new Color(0f, 0f, 0f, p.alpha));
-            Utils.insertRectangleIndicesData(indicesData, 0 + (i * 6), 0 + (i * 4));
-            Utils.insertRectangleUvDataNumbersExplosion(uvsData, 0 + (i * 8), p.textureMap);
+            Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+            Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
         }
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         indicesBuffer = Utils.generateShortBuffer(indicesData);

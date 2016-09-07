@@ -24,8 +24,8 @@ public class Text extends Entity{
     public int align;
     //public float[] colorData2;
     
-    public Text(String name, Game game, float x, float y, float size, String text, Font font, Color color, int align) {
-        super(name, game, x, y);
+    public Text(String name, float x, float y, float size, String text, Font font, Color color, int align) {
+        super(name, x, y);
         this.text = text;
         this.size = size;
         this.color = color;
@@ -42,8 +42,8 @@ public class Text extends Entity{
 
     }
 
-    public Text(String name, Game game, float x, float y, float size, String text, Font font, Color color) {
-        super(name, game, x, y);
+    public Text(String name, float x, float y, float size, String text, Font font, Color color) {
+        super(name, x, y);
         this.text = text;
         this.size = size;
         this.color = color;
@@ -59,8 +59,8 @@ public class Text extends Entity{
         this.setDrawInfo();
     }
 
-    public Text(String name, Game game, float x, float y, float size, String text, Font font) {
-        super(name, game, x, y);
+    public Text(String name, float x, float y, float size, String text, Font font) {
+        super(name, x, y);
         this.text = text;
         this.size = size;
 
@@ -158,7 +158,7 @@ public class Text extends Entity{
             float y = charData[1]/font.textureSize;
             float y2 = (charData[1] + charData[3])/font.textureSize;
             float x = charData[0]/font.textureSize;
-            float x2 = (charData[0] + charData[2])/font.textureSize;;
+            float x2 = (charData[0] + charData[2])/font.textureSize;
 
             // Creating the triangle information
             float[] vec = new float[12];

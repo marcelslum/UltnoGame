@@ -99,6 +99,6 @@ public class TargetBuilder {
                 break;
         }
 
-        return new Target(name, game, x, y, width, height, states, state, special, isGhost);
+        return new Target(name, x, y, width, height, states, state, special, isGhost);
     }
 }

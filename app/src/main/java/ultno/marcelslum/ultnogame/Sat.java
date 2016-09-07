@@ -124,7 +124,7 @@ public class Sat {
         }
         // This is not a separating axis. If we're calculating a response, calculate the overlap.
         if (response != null) {
-            float overlap = 0.0f;
+            float overlap;
             // A starts further left than B
             if (rangeA[0] < rangeB[0]) {
                 //console.log("A starts further left than B");

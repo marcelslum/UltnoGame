@@ -23,8 +23,8 @@ public class Selector extends Entity{
     private OnChange onChange;
 
 
-    Selector(String name, Game game, float x, float y, float size, String text, String [] values, Font font){
-        super(name, game, x, y);
+    Selector(String name, float x, float y, float size, String text, String [] values, Font font){
+        super(name, x, y);
         this.size = size;
         this.text = text;
         this.values = values;
@@ -43,8 +43,8 @@ public class Selector extends Entity{
 
         maxWidth = 0f;
 
-        if (text != ""){
-            mainTextObject = new Text("selector"+text+"Text", game, x, y, size, text, this.font);
+        if (!text.equals("")){
+            mainTextObject = new Text("selector"+text+"Text", x, y, size, text, this.font);
             mainTextWidth = (mainTextObject.calculateWidth()) + (size*0.75f);
             addChild(mainTextObject);
         } else {
@@ -55,7 +55,7 @@ public class Selector extends Entity{
 
         for (int i = 0; i < values.length; i++){
             //Log.e("selector", " "+values[i]);
-            textsObjects[i] = new Text("selector"+values[i]+"Text", game, 0f, y, size, values[i], this.font);
+            textsObjects[i] = new Text("selector"+values[i]+"Text", 0f, y, size, values[i], this.font);
             float width = textsObjects[i].calculateWidth();
             textsObjects[i].setX(mainTextWidth + x - (width/2));
             if (width > maxWidth) maxWidth = width;
@@ -67,7 +67,7 @@ public class Selector extends Entity{
         float buttonSize = size*0.90f;
         final Selector innerSelector = this;
 
-        arrowUp = new Button("arrowUp", this.game, mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        arrowUp = new Button("arrowUp", mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         arrowUp.setTextureMap(16);
         arrowUp.textureMapUnpressed = 16;
         arrowUp.textureMapPressed = 8;
@@ -81,7 +81,7 @@ public class Selector extends Entity{
         });
         addChild(arrowUp);
 
-        arrowDown = new Button("arrowDown", this.game, mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        arrowDown = new Button("arrowDown", mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
         arrowDown.textureMapPressed = 7;
@@ -96,13 +96,13 @@ public class Selector extends Entity{
         addChild(arrowDown);
 
         float arrowBackX;
-        if (text == "") {
+        if (text.equals("")) {
             arrowBackX = x - (buttonSize * 1.5f) - (maxWidth/2);
         } else {
             arrowBackX = x - (buttonSize * 1.5f);
         }
 
-        arrowBack = new Button("arrowBack", this.game, arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        arrowBack = new Button("arrowBack", arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         arrowBack.setTextureMap(13);
         arrowBack.textureMapUnpressed = 13;
         arrowBack.textureMapPressed = 5;
@@ -125,7 +125,7 @@ public class Selector extends Entity{
     }
 
     interface OnChange{
-        public void onChange();
+        void onChange();
     }
 
     public void setSelectedValue(int selectedValue){
@@ -134,7 +134,7 @@ public class Selector extends Entity{
 
     public void setSelectedByString(String selectedValue){
         for (int i = 0; i < this.values.length; i++) {
-            if (this.values[i] == selectedValue){
+            if (this.values[i].equals(selectedValue)){
                 setSelectedValue(i);
                 return;
             }
@@ -143,7 +143,7 @@ public class Selector extends Entity{
 
     public void levelDown() {
         if (this.selectedValue != 0){
-            game.soundPool.play(game.soundMenuSelectSmall, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+            Game.soundPool.play(Game.soundMenuSelectSmall, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
             this.selectedValue -=1;
 
             this.verifyOnChangeComplete();
@@ -152,7 +152,7 @@ public class Selector extends Entity{
 
     public void levelUp(){
         if (this.selectedValue < (this.values.length-1)){
-            game.soundPool.play(game.soundMenuSelectSmall, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+            Game.soundPool.play(Game.soundMenuSelectSmall, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
             //this.audioSmall.play();
             this.selectedValue +=1;
             this.verifyOnChangeComplete();
@@ -176,26 +176,26 @@ public class Selector extends Entity{
     @Override
     public void render(float[] matrixView, float[] matrixProjection){
 
-        if (this.mainTextObject != null){
-            this.mainTextObject.alpha = alpha;
-            this.mainTextObject.render(matrixView, matrixProjection);
+        if (mainTextObject != null){
+            mainTextObject.alpha = alpha;
+            mainTextObject.render(matrixView, matrixProjection);
         }
 
-        this.textsObjects[selectedValue].alpha = alpha;
-        this.textsObjects[selectedValue].render(matrixView, matrixProjection);
+        textsObjects[selectedValue].alpha = alpha;
+        textsObjects[selectedValue].render(matrixView, matrixProjection);
 
 
-        if (this.selectedValue != (this.values.length-1)){
-            this.arrowUp.alpha = alpha;
-            this.arrowUp.render(matrixView, matrixProjection);
+        if (selectedValue != (this.values.length-1)){
+            arrowUp.alpha = alpha;
+            arrowUp.render(matrixView, matrixProjection);
         }
-        if (this.selectedValue != 0){
-            this.arrowDown.alpha = alpha;
-            this.arrowDown.render(matrixView, matrixProjection);
+        if (selectedValue != 0){
+            arrowDown.alpha = alpha;
+            arrowDown.render(matrixView, matrixProjection);
         }
 
-        this.arrowBack.alpha = alpha;
-        this.arrowBack.render(matrixView, matrixProjection);
+        arrowBack.alpha = alpha;
+        arrowBack.render(matrixView, matrixProjection);
     }
 
     public void fromMenu(Menu menu){
@@ -227,7 +227,7 @@ public class Selector extends Entity{
 
 
     public void backToMenu(){
-        game.soundPool.play(game.soundMenuSelectBig, 0.01f* (float) game.volume, 0.01f* (float) game.volume, 0, 0, 1);
+        Game.soundPool.play(Game.soundMenuSelectBig, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
         isBlocked = true;
 
         ArrayList<float[]> valuesAnimation = new ArrayList<>();

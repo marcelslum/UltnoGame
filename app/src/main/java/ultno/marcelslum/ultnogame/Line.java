@@ -7,13 +7,13 @@ import android.util.Log;
  */
 public class Line extends Entity{
     float x2, y2;
-    Line(String name, Game game, float x1, float y1, float x2, float y2, Color color){
-        super(name, game, x1, y1);
+    Line(String name, float x1, float y1, float x2, float y2, Color color){
+        super(name, x1, y1);
         this.color = color;
         this.x2 = x2;
         this.y2 = y2;
         isLineGL = true;
-        program = game.lineProgram;
+        program = Game.lineProgram;
         lineWidth = 4;
         setDrawInfo();
     }

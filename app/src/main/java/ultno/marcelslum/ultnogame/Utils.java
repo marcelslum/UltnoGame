@@ -17,18 +17,13 @@ import java.util.ArrayList;
 /**
  * Created by marcel on 02/08/2016.
  */
-public class Utils {
-    private static Utils ourInstance = new Utils();
+public abstract class Utils {
     public static float x1;
     public static float x2;
     public static float y1;
     public static float y2;
     public static float z = 0f;
 
-    private Utils() {
-    }
-    
-    
     public static float getVectorMagnitude(float x, float y){
         return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
     }
@@ -89,7 +84,7 @@ public class Utils {
     }
     
     public static void insertRectangleVerticesData(float[] array, int startIndex){
-        array[0 + (startIndex)] = x1;
+        array[startIndex] = x1;
         array[1 + (startIndex)] = y2;
         array[2 + (startIndex)] = z;
         array[3 + (startIndex)] = x2;
@@ -104,7 +99,7 @@ public class Utils {
     }
     
     public static void insertRectangleVerticesData(float[] array, int startIndex, float x1, float x2, float y1, float y2, float z){
-        array[0 + (startIndex)] = x1;
+        array[startIndex] = x1;
         array[1 + (startIndex)] = y2;
         array[2 + (startIndex)] = z;
         array[3 + (startIndex)] = x2;
@@ -119,7 +114,7 @@ public class Utils {
     }
 
     public static void insertLineVerticesData(float[] array, int startIndex, float x1, float y1, float x2, float y2, float z){
-        array[0 + (startIndex)] = x1;
+        array[startIndex] = x1;
         array[1 + (startIndex)] = y1;
         array[2 + (startIndex)] = z;
         array[3 + (startIndex)] = x2;
@@ -128,22 +123,22 @@ public class Utils {
     }
 
     public static void insertLineIndicesData(short[] array, int startIndex, int startValue){
-        array[0 + (startIndex)] = (short)(0 + (startValue));
+        array[startIndex] = (short)(startValue);
         array[1 + (startIndex)] = (short)(1 + (startValue));
     }
 
 
     public static void insertRectangleIndicesData(short[] array, int startIndex, int startValue){
-        array[0 + (startIndex)] = (short)(0 + (startValue));
+        array[startIndex] = (short)(0 + (startValue));
         array[1 + (startIndex)] = (short)(1 + (startValue));
         array[2 + (startIndex)] = (short)(2 + (startValue));
-        array[3 + (startIndex)] = (short)(0 + (startValue));
+        array[3 + (startIndex)] = (short)(startValue);
         array[4 + (startIndex)] = (short)(2 + (startValue));
         array[5 + (startIndex)] = (short)(3 + (startValue));
     }
     
     public static void insertRectangleColorsData(float[] array, int startIndex, Color color){
-        array[0 + (startIndex)] = color.r;
+        array[startIndex] = color.r;
         array[1 + (startIndex)] = color.g;
         array[2 + (startIndex)] = color.b;
         array[3 + (startIndex)] = color.a;
@@ -162,7 +157,7 @@ public class Utils {
     }
 
     public static void insertLineColorsData(float[] array, int startIndex, Color color){
-        array[0 + (startIndex)] = color.r;
+        array[startIndex] = color.r;
         array[1 + (startIndex)] = color.g;
         array[2 + (startIndex)] = color.b;
         array[3 + (startIndex)] = color.a;
@@ -173,7 +168,7 @@ public class Utils {
     }
 
     public static void insertRectangleUvData(float[] array, int startIndex){
-            array[0 + (startIndex)] = x1;
+            array[startIndex] = x1;
             array[1 + (startIndex)] = 1f-y1;
             array[2 + (startIndex)] = x2;
             array[3 + (startIndex)] = 1-y1;
@@ -410,7 +405,7 @@ public class Utils {
     
     
     public static void insertRectangleUvData(float[] array, int startIndex, float x1, float x2, float y1, float y2){
-            array[0 + (startIndex)] = x1;
+            array[startIndex] = x1;
             array[1 + (startIndex)] = 1f-y1;
             array[2 + (startIndex)] = x2;
             array[3 + (startIndex)] = 1-y1;
@@ -497,8 +492,8 @@ public class Utils {
         return anim;
     }
     
-    public static String getStringResource(Game game, int tag){
-        return game.context.getResources().getString(tag);
+    public static String getStringResource(int tag){
+        return Game.context.getResources().getString(tag);
     }
 
 

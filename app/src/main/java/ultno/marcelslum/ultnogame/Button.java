@@ -14,17 +14,17 @@ public class Button extends Entity{
     int textureMapUnpressed;
     int textureMap;
 
-    Button(String name, Game game, float x, float y, float width, float height, int textureUnit, float listenerScale) {
-        super(name, game, x, y);
+    Button(String name, float x, float y, float width, float height, int textureUnit, float listenerScale) {
+        super(name, x, y);
         this.height = height;
         this.width = width;
-        this.isCollidable = false;
-        this.isVisible = true;
-        this.isMovable = false;
-        this.isSolid =  false;
+        isCollidable = false;
+        isVisible = true;
+        isMovable = false;
+        isSolid =  false;
 
         this.textureUnit = textureUnit;
-        this.program = this.game.imageProgram;
+        program = Game.imageProgram;
 
         float lw = width * listenerScale;
         float lh = height * listenerScale;
@@ -32,7 +32,7 @@ public class Button extends Entity{
         float ly = this.y - (lh - height);
 
         final Button finalButton =  this;
-        setListener(new InteractionListener("listenerButton"+this.name, lx, ly, lw, lh, 5000, this, game,
+        setListener(new InteractionListener("listenerButton"+this.name, lx, ly, lw, lh, 5000, this,
             new InteractionListener.PressListener() {
                 @Override
                 public void onPress() {
@@ -53,35 +53,35 @@ public class Button extends Entity{
         ));
     }
     
-    public void setTextureMap(int textureMap){
-        this.textureMap = textureMap;
-        this.setDrawInfo();
+    public void setTextureMap(int _textureMap){
+        textureMap = _textureMap;
+        setDrawInfo();
     }
 
     public void setPressed() {
-        this.isPressed = true;
+        isPressed = true;
         setTextureMap(textureMapPressed);
     }
 
     public void setUnpressed() {
-        this.isPressed = false;
+        isPressed = false;
         setTextureMap(textureMapUnpressed);
     }
 
-    public void setOnPress(OnPress onPress){
-        this.onPress = onPress;
+    public void setOnPress(OnPress _onPress){
+        onPress = _onPress;
     }
 
-    public void setOnUnpress(OnUnpress onUnpress){
-        this.onUnpress = onUnpress;
+    public void setOnUnpress(OnUnpress _onUnpress){
+        onUnpress = _onUnpress;
     }
 
     public interface OnPress{
-        public void onPress();
+        void onPress();
     }
 
     public interface OnUnpress{
-        public void onUnpress();
+        void onUnpress();
     }
 
     public void setDrawInfo(){

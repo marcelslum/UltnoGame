@@ -1,18 +1,15 @@
 package ultno.marcelslum.ultnogame;
 
-/**
- * Created by marcel on 02/09/2016.
- */
 public class ScaleVariationDataBuilder {
-    private boolean isActive = false;
-    private boolean increaseWidth = false;
-    private boolean incraseHeight = false;
-    private float minWidth_bi = 0.5f;
-    private float maxWidth_bi = 2f;
-    private float minHeight_bi = 0.5f;
-    private float maxHeight_bi = 2f;
-    private float widthVelocity = 0f;
-    private float heightVelocity = 0f;
+    public boolean isActive = false;
+    public boolean increaseWidth = false;
+    public boolean increaseHeight = false;
+    public float minWidth_BI = 0.5f;
+    public float maxWidth_BI = 2f;
+    public float minHeight_BI = 0.5f;
+    public float maxHeight_BI = 2f;
+    public float widthVelocity = 0f;
+    public float heightVelocity = 0f;
 
     public ScaleVariationDataBuilder(){
 
@@ -29,27 +26,27 @@ public class ScaleVariationDataBuilder {
     }
 
     public ScaleVariationDataBuilder setIncreaseHeight(boolean incraseHeight) {
-        this.incraseHeight = incraseHeight;
+        this.increaseHeight = incraseHeight;
         return this;
     }
 
     public ScaleVariationDataBuilder setMinWidth_BI(float minWidth_bi) {
-        this.minWidth_bi = minWidth_bi;
+        this.minWidth_BI = minWidth_bi;
         return this;
     }
 
     public ScaleVariationDataBuilder setMaxWidth_BI(float maxWidth_bi) {
-        this.maxWidth_bi = maxWidth_bi;
+        this.maxWidth_BI = maxWidth_bi;
         return this;
     }
 
     public ScaleVariationDataBuilder setMinHeight_BI(float minHeight_bi) {
-        this.minHeight_bi = minHeight_bi;
+        this.minHeight_BI = minHeight_bi;
         return this;
     }
 
     public ScaleVariationDataBuilder setMaxHeight_BI(float maxHeight_bi) {
-        this.maxHeight_bi = maxHeight_bi;
+        this.maxHeight_BI = maxHeight_bi;
         return this;
     }
 
@@ -64,6 +61,6 @@ public class ScaleVariationDataBuilder {
     }
 
     public ScaleVariationData build() {
-        return new ScaleVariationData(isActive, increaseWidth, incraseHeight, minWidth_bi, maxWidth_bi, minHeight_bi, maxHeight_bi, widthVelocity, heightVelocity);
+        return new ScaleVariationData(this);
     }
 }

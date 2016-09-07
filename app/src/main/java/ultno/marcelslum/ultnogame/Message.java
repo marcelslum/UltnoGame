@@ -1,21 +1,15 @@
 package ultno.marcelslum.ultnogame;
 
-
-import java.util.ArrayList;
-
-/**
- * Created by marcel on 07/08/2016.
- */
 public class Message extends Entity {
     String text;
     Text textObject;
     float size;
 
     public Message(String name, Game game, String text, float x, float y, float size, Color color, int align) {
-        super(name, game, x, y);
+        super(name, x, y);
         this.size = size;
         this.text = text;
-        textObject = new Text("text", game, x, y, size, text, game.font, color, align);
+        textObject = new Text("text", x, y, size, text, Game.font, color, align);
         addChild(textObject);
         isVisible = false;
     }

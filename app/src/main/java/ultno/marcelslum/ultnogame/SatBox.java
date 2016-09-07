@@ -2,9 +2,6 @@ package ultno.marcelslum.ultnogame;
 
 import java.util.ArrayList;
 
-/**
- * Created by marcel on 01/08/2016.
- */
 public class SatBox {
 
         Vector pos;
