@@ -19,8 +19,6 @@ public class Ball extends Circle{
     public static final int COLOR_BALL_ORANGE = 24;
     public static final int COLOR_BALL_PINK = 21;
     public static final int COLOR_BALL_PURPLE = 25;
-    
-    public static final float PRE_VOLUME = (4f/3f)*Math.PI;
 
     public float angleToRotate;
     public float velocityVariation;
@@ -56,6 +54,8 @@ public class Ball extends Circle{
     public float lastResponseBallX = 0f;
     public float lastResponseBallY = 0f;
     public float impulsion = 0f;
+
+    ArrayList<Ball> ballsCollidedProcessed;
     
     double mass = 0f;
     
@@ -68,6 +68,7 @@ public class Ball extends Circle{
         textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
         program = game.imageProgram;
         this.textureMap = textureMap;
+        ballsCollidedProcessed = new ArrayList<>();
         
         // volume of sphere = (4/3) * PI * r^3
         // mass = density * volume
@@ -197,11 +198,11 @@ public class Ball extends Circle{
         collisionTarget = false;
         collisionOtherBall = false;
 
-        float collisionAngle = 0f;
-
         checkCollisionsDataObjectRepetition();
 
-        Log.e("ball", "iniciando checagem de colisão");
+        Log.e("ball", "iniciando checagem de colisão---------------------------------");
+
+        boolean collidedProcessed = false;
 
         for (int i = 0; i < collisionsData.size(); i++){
             
@@ -238,81 +239,102 @@ public class Ball extends Circle{
                 }
             }
 
-            if (collisionsData.get(i).object.name == "ball" && !collisionsData.get(i).isRepeated){
+            if (collisionsData.get(i).object.name == "ball" && !collisionsData.get(i).isRepeated) {
+                for (int i2 = 0; i2 < ballsCollidedProcessed.size(); i2++) {
+                    if (ballsCollidedProcessed.get(i2) == collisionsData.get(i).object) {
+                        Log.e("ball", "collided processed");
+                        collidedProcessed = true;
+                    }
+                }
 
-                collisionOtherBall = true;
-                
-                Ball otherBall = (Ball)collisionsData.get(i).object;
-                
-                // calcula o angulo em que as bolas estão colidindo
-                double collisionAngle = Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX);
-                
-                // calcula o angulo em que as bolas estão se movendo
-                
-                Log.e("ball", "dv inicial "+dvx+" dvy "+dvy);
-                
-		double thisDirection = Math.atan2(dvy, dvx);
-		double otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
-		
-		// calcula a magnitude das velocidades
-	        double thisVelocityLen = Utils.getVectorMagnitude(dvx, dvy);
-	        double otherVelocityLen = Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy);
-		        
-		// rotaciona as velocidades, de modo que o ponto de colisão seja perpendicular ao eixo y
-		double v1x = thisVelocityLen * Math.cos(thisDirection - collisionAngle);
-                double v1y = thisVelocityLen * Math.sin(thisDirection - collisionAngle);
-                double v2x = otherVelocityLen * Math.cos(otherDirection - collisionAngle);
-	        double v2y = otherVelocityLen * Math.sin(otherDirection - collisionAngle);
-		
+                if (!collidedProcessed) {
+                    collisionOtherBall = true;
 
-	        // calcula as velocidades resultantes da colisão, convervando a energia cinética
-	        double f1x = ((v1x * (mass - otherBall.mass))+(2*otherBall.mass*v2x))/(mass + otherBall.mass);
-	        //double f2x = ((v2x * (thisMass - otherMass))+(2*otherMass*v1x))/(thisMass + otherMass);
-	
-	        // calcula a direção final
-	        double direction1 = Math.atan2(v1y, f1x) + collisionAngle;
+                    Ball otherBall = (Ball) collisionsData.get(i).object;
 
-	        //double direction2 = Math.atan2(v2y, f2x) + collisionAngle;
-	        
-	        double finalAngle = Math.toDegrees(direction1);
-	        
-	        if (finalAngle < 0){
-	        	finalAngle = (finalAngle * -1d) + 180d;
-	        }
-	        
-	        double testAngle = finalAngle;
-	        if (testAngle > 90d){
-	        	testAngle %= 90d;
-	        }
-	        
-	        double angleToRotate = 0d;
-	        if (testAngle < minAngle){
-	        	angleToRotate = minAngle - testAngle;
-	        	Log.e("ball", "angulo menor que o esperado, rotacao de "+angleToRotate);
-	        	
-	        } else if (testAngle > maxAngle){
-	        	angleToRotate = maxAngle - testAngle;
-	        	Log.e("ball", "angulo maior que o esperado, rotacao de "+angleToRotate);
-	        }
-	        
-	        double y1 = Math.sin(direction1) * f1x;
-		double x1 = Math.cos(direction1) * f1x;
-		
-		if (angleToRotate != 0d){
-			Log.e("ball", "ajuste do angulo");
-			Log.e("ball", "posicao antes da rotacao "+x1+" "+y1);
-			x1 = Utils.getXRotated(x1, y1, angleToRotate);
-			y1 = Utils.getYRotated(x1, y1, angleToRotate);
-			Log.e("ball", "posicao depois da rotacao "+x1+" "+y1);
-		}
+                    // calcula o angulo em que as bolas estão colidindo
+                    double collisionAngle = Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX);
+                    Log.e("ball", "collisionAngle " + Math.toDegrees(collisionAngle));
 
-		dvx = x1;
-		dvy = y1;
-		
-		Log.e("ball", "dv final "+dvx+" dvy "+dvy);
-		
-		//double y2 = Math.sin(direction2) * f2x;
-		//double x2 = Math.cos(direction2) * f2x;
+                    // calcula o angulo em que as bolas estão se movendo
+
+                    Log.e("ball", "dv inicial " + dvx + " dvy " + dvy);
+
+                    double thisDirection = Math.atan2(dvy, dvx);
+                    Log.e("ball", "thisDirection " + Math.toDegrees(thisDirection));
+                    double otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
+                    Log.e("ball", "otherDirection " + Math.toDegrees(otherDirection));
+
+                    // calcula a magnitude das velocidades
+                    double thisVelocityLen = Utils.getVectorMagnitude(dvx, dvy);
+                    Log.e("ball", "thisVelocityLen " + thisVelocityLen);
+                    double otherVelocityLen = Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy);
+                    Log.e("ball", "otherVelocityLen " + otherVelocityLen);
+
+                    // rotaciona as velocidades, de modo que o ponto de colisão seja perpendicular ao eixo y
+                    double v1x = thisVelocityLen * Math.cos(thisDirection - collisionAngle);
+                    Log.e("ball", "v1x " + v1x);
+                    double v1y = thisVelocityLen * Math.sin(thisDirection - collisionAngle);
+                    Log.e("ball", "v1y " + v1y);
+                    Log.e("ball", "thisVelocityLen " + Utils.getVectorMagnitude(v1x, v1y));
+
+                    double v2x = otherVelocityLen * Math.cos(otherDirection - collisionAngle);
+                    Log.e("ball", "v2x " + v2x);
+                    double v2y = otherVelocityLen * Math.sin(otherDirection - collisionAngle);
+                    Log.e("ball", "v2y " + v2y);
+                    Log.e("ball", "otherVelocityLen " + Utils.getVectorMagnitude(v2x, v2y));
+
+
+                    // calcula as velocidades resultantes da colisão, convervando a energia cinética
+                    double f1x = ((v1x * (mass - otherBall.mass)) + (2 * otherBall.mass * v2x)) / (mass + otherBall.mass);
+                    Log.e("ball", "f1x " + f1x);
+                    double f2x = ((v2x * (otherBall.mass - mass)) + (2 * mass * v1x)) / (mass + otherBall.mass);
+                    Log.e("ball", "f2x " + f2x);
+                    double f1y = v1y;
+                    double f2y = v2y;
+
+
+                    dvx = (float)(Math.cos(collisionAngle)*f1x+Math.cos(collisionAngle+Math.PI/2)*f1y);
+                    dvy = (float)(Math.sin(collisionAngle)*f1x+Math.sin(collisionAngle+Math.PI/2)*f1y);
+
+                    Log.e("ball", "dv antes da colisão " + dvx + " " + dvy);
+                    Log.e("ball", "dv initial len -----" + Utils.getVectorMagnitude(dvx, dvy));
+
+                    otherBall.dvx = (float)(Math.cos(collisionAngle)*f2x+Math.cos(collisionAngle+Math.PI/2)*f2y);
+                    otherBall.dvy = (float)(Math.sin(collisionAngle)*f2x+Math.sin(collisionAngle+Math.PI/2)*f2y);
+
+                    //double v1 = Math.sqrt(Math.pow(f1x,2) * Math.pow(f1x,2) + v1y * Math.pow(v1y,2));
+                    //Log.e("ball", "v1 " + v1);
+                    //double v2 = Math.sqrt(Math.pow(f2x,2) * Math.pow(f2x,2) + v2y * Math.pow(v2y,2));
+                    //Log.e("ball", "v2 " + v2);
+
+                    // calcula a direção final
+                    //double direction1 = Math.atan2(v1y, f1x) + collisionAngle;
+                    //Log.e("ball", "direction1 " + Math.toDegrees(direction1));
+                    //double direction2 = Math.atan2(v2y, f2x) + collisionAngle;
+                    //Log.e("ball", "direction2 " + Math.toDegrees(direction2));
+
+                    //dvy = (float)(Math.sin(direction1) * v1);
+                    //dvx = (float)(Math.cos(direction1) * v1);
+
+                    checkDesireVelocity();
+
+                    Log.e("ball", "dv final " + dvx + " " + dvy);
+                    Log.e("ball", "dv final len --------" + Utils.getVectorMagnitude(dvx, dvy));
+
+                    //otherBall.dvy = (float) (Math.sin(direction2) * v2);
+                    //otherBall.dvx = (float) (Math.cos(direction2) * v2);
+
+                    Log.e("ball", "otherBall.dv initial" + otherBall.dvx + " " + otherBall.dvy);
+                    Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
+
+                    otherBall.checkDesireVelocity();
+
+                    Log.e("ball", "otherBall.dv final" + otherBall.dvx + " " + otherBall.dvy);
+                    Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
+
+                    otherBall.ballsCollidedProcessed.add(this);
+                }
             }
         }
 
@@ -330,7 +352,7 @@ public class Ball extends Circle{
             //this.game.ballFall = true;
         }
         
-        if (lastResponseBallX != 0f && lastResponseBallY != 0f){
+        if (lastResponseBallX != 0f && lastResponseBallY != 0f && !collidedProcessed){
             if (collisionBar){
                 lastResponseBallX = 0f;
             } else {
@@ -386,13 +408,9 @@ public class Ball extends Circle{
             }
         }
 
-
-
-
-        
         // AJUSTA A VELOCIDADE DA BOLA
 
-        if (!collisionOtherBall){
+        if (!collisionOtherBall && !collidedProcessed){
             if (lastResponseBallX < 0 && this.dvx > 0) {
                 this.dvx *= -1;
                 if (this.accelStarted == true) {
@@ -456,7 +474,7 @@ public class Ball extends Circle{
             vx = this.dvx;
             vy = this.dvy;
 
-            float initialLen = getVectorMagnitude(vx * initialDesireVelocityX, vy * initialDesireVelocityY);
+            float initialLen = Utils.getVectorMagnitude(vx * initialDesireVelocityX, vy * initialDesireVelocityY);
             float maxLen = initialLen * this.velocityMax_BI;
             float minLen = initialLen * this.velocityMin_BI;
             float scalePorcentage = 1f;
@@ -471,16 +489,16 @@ public class Ball extends Circle{
                     scalePorcentage -=this.velocityVariation;
                 }
 
-                float possibleVelocityLen = getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
+                float possibleVelocityLen = Utils.getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
 
                 if (possibleVelocityLen > minLen && possibleVelocityLen < maxLen){
-                    vx = possibleVelocity.x;
-                    vy = possibleVelocity.y;
+                    vx = vx * scalePorcentage;
+                    vy = vy * scalePorcentage;
                 }
 
                 Vector possibleVelocityRotate = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
 
-                float testAngle = (float)Math.toDegress(Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x)));
+                float testAngle = (float)Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x)));
 
                 if (testAngle < maxAngle && testAngle > minAngle){
                     final_vx =  possibleVelocityRotate.x;
@@ -509,26 +527,102 @@ public class Ball extends Circle{
 
         // TOCA O SOM ADEQUADO
 
+        if (!collidedProcessed) {
+            float soundX = positionX / game.gameAreaResolutionX;
+            float volume = 0.01f * (float) game.volume;
+            float volumeD = volume;
+            float volumeE = volume;
 
-        float soundX = positionX / game.gameAreaResolutionX;
-        float volume = 0.01f* (float) game.volume;
-        float volumeD = volume;
-        float volumeE = volume;
 
+            if (soundX < 0.5f) {
+                volumeE = volume * (1f + (0.5f - soundX));
+                volumeD = volume * (1f - ((0.5f - soundX) * 2f));
+            }
+            if (soundX > 0.5f) {
+                volumeD = volume * (1f + (soundX - 0.5f));
+                volumeE = volume * (1f - ((soundX - 0.5f) * 2f));
+            }
 
-        if (soundX < 0.5f){
-            volumeE = volume * (1f + (0.5f - soundX));
-            volumeD = volume * (1f - ((0.5f - soundX)*2f));
+            //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
+            this.game.soundPool.play(this.game.soundBallHit, volumeE, volumeD, 0, 0, 1);
         }
-        if (soundX > 0.5f){
-            volumeD = volume * (1f + (soundX - 0.5f));
-            volumeE = volume * (1f - ((soundX - 0.5f)*2f));
+    }
+
+    public void checkDesireVelocity(){
+
+        Log.e("ball", "teste de angulo ---------------");
+        double angle = Math.toDegrees(Math.atan2(dvy, dvx));
+        Log.e("ball", "angle " + angle);
+
+        if (angle < 0) {
+            angle = 360d-(angle * -1d);
         }
 
-        //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
+        double testAngle = angle;
+        if (testAngle > 90d) {
+            testAngle %= 90d;
+        }
+
+        Log.e("ball", "testAngle " + testAngle);
+        Log.e("ball", "minAngle " + minAngle);
+        Log.e("ball", "maxAngle " + maxAngle);
 
 
-        this.game.soundPool.play(this.game.soundBallHit, volumeE, volumeD, 0, 0, 1);
+        double angleToRotate = 0d;
+        if (testAngle < minAngle) {
+            angleToRotate = minAngle - testAngle;
+            Log.e("ball", "angulo menor que o esperado, rotacao de " + angleToRotate);
+
+        } else if (testAngle > maxAngle) {
+            angleToRotate = maxAngle - testAngle;
+            Log.e("ball", "angulo maior que o esperado, rotacao de " + angleToRotate);
+        }
+
+        if (angleToRotate != 0d) {
+            Log.e("ball", "ajuste do angulo");
+            Log.e("ball", "v antes da rotacao " + dvx + " " + dvy);
+
+            Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+
+            dvx = (float)Utils.getXRotated(dvx, dvy, angleToRotate);
+            dvy = (float) Utils.getYRotated(dvx, dvy, angleToRotate);
+            Log.e("ball", "v depois da rotacao " + dvx + " " + dvy);
+            Log.e("ball", "angulo depois"+Math.toDegrees(Math.atan2(dvy, dvx)));
+            Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+        }
+
+
+        float initialLen = Utils.getVectorMagnitude(initialDesireVelocityX, initialDesireVelocityY);
+        float maxLen = initialLen * this.velocityMax_BI;
+        float minLen = initialLen * this.velocityMin_BI;
+
+        float actualLen = Utils.getVectorMagnitude(dvx, dvy);
+
+
+        if (actualLen > maxLen){
+            Log.e("ball", "ajustando velocidade");
+
+            dvx *= (maxLen/actualLen);
+            dvy *= (maxLen/actualLen);
+
+            Log.e("ball", "v " + dvx + " " + dvy);
+            Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
+            Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+
+        } else if (actualLen < minLen){
+            Log.e("ball", "ajustando velocidade");
+            dvx *= (minLen/actualLen);
+            dvy *= (minLen/actualLen);
+            Log.e("ball", "v " + dvx + " " + dvy);
+            Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
+            Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+        }
+
+
+
+
+
+
     }
 
     private void waitForExplosion() {
@@ -565,8 +659,9 @@ public class Ball extends Circle{
         int quantityOfClones = 3;
         float distance = radius * 3;
         
-        float initialDesiredVelocityLen = Math.sqrt(Math.pow(initialDesireVelocityX,2) + Math.pow(initialDesireVelocityY,2));
-        float desiredVelocityLen = Math.sqrt(Math.pow(dvx,2) + Math.pow(dvy,2));
+        float initialDesiredVelocityLen = Utils.getVectorMagnitude(initialDesireVelocityX,initialDesireVelocityY);
+
+        float desiredVelocityLen = Utils.getVectorMagnitude(dvx,dvy);
 
         float explodeLen = initialDesiredVelocityLen;
         if (desiredVelocityLen < initialDesiredVelocityLen) explodeLen = desiredVelocityLen;

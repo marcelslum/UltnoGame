@@ -30,19 +30,19 @@ public class Utils {
     
     
     public static float getVectorMagnitude(float x, float y){
-        return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2))
+        return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
     }
     
     public static double getVectorMagnitude(double x, double y){
-        return Math.sqrt(Math.pow(x,2) + Math.pow(y,2))
+        return Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
     }
     
     public static double getXRotated(double x, double y, double angle){
-        return x * Math.cos(angle) - y * Math.sin(angle);
+        return (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
     }
-    
+
     public static double getYRotated(double x, double y, double angle){
-        return x * Math.sin(angle) + y * Math.cos(angle);
+        return x * Math.sin(Math.toRadians(angle)) + y * Math.cos(Math.toRadians(angle));
     }
    
     public static boolean isInsideBounds(float testX, float testY, float x, float y, float width, float height){
