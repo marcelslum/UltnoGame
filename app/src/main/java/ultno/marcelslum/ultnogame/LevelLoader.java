@@ -135,24 +135,24 @@ public class LevelLoader {
                                         .setMinX(0.01f)
                                         .setMaxY(0.7f)
                                         .setMinY(0.3f)
-                                        .setxVelocity(0.01f)
-                                        .setyVelocity(0.01f),
+                                        .setxVelocity(0.001f)
+                                        .setyVelocity(0.001f),
                                 new PositionVariationDataBuilder()
                                         .setIsActive(false)
                                         .setMaxX(0.99f)
                                         .setMinX(0.01f)
                                         .setMaxY(0.7f)
                                         .setMinY(0.3f)
-                                        .setxVelocity(0.01f)
-                                        .setyVelocity(0.01f),
+                                        .setxVelocity(0.001f)
+                                        .setyVelocity(0.001f),
                                 new PositionVariationDataBuilder()
                                         .setIsActive(false)
                                         .setMaxX(0.99f)
                                         .setMinX(0.01f)
                                         .setMaxY(0.7f)
                                         .setMinY(0.3f)
-                                        .setxVelocity(0.01f)
-                                        .setyVelocity(0.01f)
+                                        .setxVelocity(0.001f)
+                                        .setyVelocity(0.001f)
                         )
 
 

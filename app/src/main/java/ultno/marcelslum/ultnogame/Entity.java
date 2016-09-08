@@ -351,8 +351,8 @@ public class Entity{
 
     public void render(float[] matrixView, float[] matrixProjection) {
 
-        if (name == "arrowBack") {
-            //Log.e("entity", "rendering arrowBack");
+        if (name == "wind") {
+            //Log.e("entity", "rendering wind");
         }
 
         setMatrixModel();
@@ -434,6 +434,22 @@ public class Entity{
         }
         // TODO verificar se a inversão do eixo y considera o offset
 
+
+
+
+        if (program == Game.windProgram){
+
+            float time = (float)((Utils.getTime() - Game.initTime))/360;
+            Log.e("entity", ""+time);
+            int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
+            GLES20.glUniform1f(uf_time, time);
+
+            int uf_resolutionY = GLES20.glGetUniformLocation(this.program.get(), "uf_resolutionY");
+            GLES20.glUniform1f(uf_resolutionY, Game.resolutionY);
+        }
+
+
+
         if (this.textureUnit != -1) {
             // Get handle to textures locations
             // Set the sampler texture unit to 0, where we have saved the texture.
@@ -466,8 +482,8 @@ public class Entity{
             GLES20.glDisableVertexAttribArray(av4_colorsHandle);
         }
 
-        //if (name == "explode")
-            //Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
+        if (name == "wind")
+            Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
             //Log.e("entity2", GLES20.glGetProgram(program.get()));
 
     }

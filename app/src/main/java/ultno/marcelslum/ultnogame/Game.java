@@ -54,8 +54,8 @@ public class Game {
     public static ArrayList<BallParticleGenerator> ballParticleGenerator;
     public static ArrayList<Message> messages;
     public static ArrayList<Line> lines;
-    
     public static Background background;
+    public static Wind wind;
 
     public static ScorePanel scorePanel;
     public static ObjectivePanel objectivePanel;
@@ -178,6 +178,7 @@ public class Game {
     public final static int TEXTURE_MAP_NUMBERS_EXPLODE_BALL = 27;
     
     public final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
+    public static long initTime;
 
     // bars and balls data
     //public float [] barsInitialPositionX = new float[10];
@@ -199,6 +200,7 @@ public class Game {
     public static Program textProgram;
     public static Program solidProgram;
     public static Program imageColorizedFxProgram;
+    public static Program windProgram;
 
     public static int ballsNotInvencibleAlive;
     public static int ballsInvencible;
@@ -583,7 +585,10 @@ public class Game {
 
         for (int i = 0; i < windows.size(); i++){
             windows.get(i).isActive = true;
+        }
 
+        if (wind != null){
+            wind.init();
         }
 
     }
@@ -609,7 +614,10 @@ public class Game {
 
         for (int i = 0; i < windows.size(); i++){
             windows.get(i).isActive = false;
+        }
 
+        if (wind != null){
+            wind.stop();
         }
     }
 
@@ -631,6 +639,7 @@ public class Game {
         targets.clear();
         windows.clear();
         obstacles.clear();
+        wind = null;
     }
 
     public static void eraseAllHudEntities() {
@@ -647,6 +656,7 @@ public class Game {
         buttonSound = null;
         buttonMusic = null;
         background = null;
+        wind = null;
     }
 
     public static void eraseAllTutorials() {
@@ -666,6 +676,9 @@ public class Game {
             //Log.e("game ", "maxLevel "+maxLevel);
 
         levelNumber = Storage.getActualLevel();
+        
+        initTime = Utils.getTime();
+        
         initSounds();
         initPrograms();
         initFont();
@@ -793,7 +806,9 @@ public class Game {
         list.addAll(targets);
         list.addAll(obstacles);
         list.addAll(windows);
-
+        if (wind != null) {
+            list.add(wind);
+        }
         return list;
     }
 
@@ -1031,12 +1046,13 @@ public class Game {
     }
 
     public static void initPrograms(){
-        imageProgram = new Program(GraphicTools.vs_Image, GraphicTools.fs_Image);
-        imageColorizedProgram = new Program(GraphicTools.vs_Image_Colorized, GraphicTools.fs_Image_Colorized);
-        imageColorizedFxProgram = new Program(GraphicTools.vs_Image_Colorized_fx, GraphicTools.fs_Image_Colorized_fx);
-        textProgram = new Program(GraphicTools.vs_Text, GraphicTools.fs_Text);
-        solidProgram = new Program(GraphicTools.vs_SolidColor, GraphicTools.fs_SolidColor);
-        lineProgram = new Program(GraphicTools.vs_Line, GraphicTools.fs_Line);
+        imageProgram = new Program(Programs.vs_Image, Programs.fs_Image);
+        imageColorizedProgram = new Program(Programs.vs_Image_Colorized, Programs.fs_Image_Colorized);
+        imageColorizedFxProgram = new Program(Programs.vs_Image_Colorized_fx, Programs.fs_Image_Colorized_fx);
+        textProgram = new Program(Programs.vs_Text, Programs.fs_Text);
+        solidProgram = new Program(Programs.vs_SolidColor, Programs.fs_SolidColor);
+        lineProgram = new Program(Programs.vs_Line, Programs.fs_Line);
+        windProgram = new Program(Programs.vs_Wind, Programs.fs_Wind);
 
     }
 
@@ -1279,6 +1295,10 @@ public class Game {
     
     public static void checkTransformations(){
 
+        if (wind != null){
+            wind.checkTransformations(true);
+        }
+
         for (int i = 0; i < balls.size(); i++){
             if (balls.get(i).ballParticleGenerator != null){
                 balls.get(i).ballParticleGenerator.checkTransformations(true);
@@ -1395,6 +1415,10 @@ public class Game {
 
         for (int i = 0; i < windows.size(); i++){
             windows.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
+        if (wind != null) {
+            wind.prepareRender(matrixView, matrixProjection);
         }
         
         if (menuMain != null) menuMain.prepareRender(matrixView, matrixProjection);

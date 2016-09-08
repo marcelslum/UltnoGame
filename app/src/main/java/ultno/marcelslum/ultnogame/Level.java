@@ -172,6 +172,7 @@ public class Level {
         Utils.setTexture("drawable/finalback1", Game.texturenames, Game.TEXTURE_BACKGROUND, Game.context); // background
         Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY);
 
+        Game.wind = new Wind("wind", 0f, Game.gameAreaResolutionY*0.2f, Game.gameAreaResolutionX, Game.gameAreaResolutionY*0.6f);
 
         Utils.setTexture("drawable/obstacle", Game.texturenames, Game.TEXTURE_TITTLE, Game.context); // background
 

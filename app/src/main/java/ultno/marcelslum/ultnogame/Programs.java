@@ -2,12 +2,48 @@ package ultno.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 
-public class GraphicTools {
+public class Programs {
     /* SHADER Solid
      *
      * This shader is for rendering a colored primitive.
      *
      */
+
+
+
+
+    public static final String vs_Wind =
+            "uniform mat4 um4_projection;" +
+                    "uniform mat4 um4_view;" +
+                    "uniform mat4 um4_model;" +
+                    "attribute vec4 av4_colors;" +
+                    "varying vec4 vv4_Colors;" +
+                    "attribute vec4 av4_vertices;" +
+                    "varying float vf_alpha;" +
+                    "   void main() {" +
+                    "       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
+                    "       vv4_Colors = av4_colors;" +
+                    "   }";
+    public static final String fs_Wind =
+            "precision mediump float;" +
+            "varying vec4 vv4_Colors;" +
+            "uniform float uf_alpha;" +
+            "uniform float uf_time;" +
+                    "uniform float uf_resolutionY;" +
+                    "void main() {" +
+                    "float posY = sin(uf_time*10.0)*uf_resolutionY;"+
+                    "float posX = sin(uf_time*10.0)*uf_resolutionY;"+
+                    "if ((gl_FragCoord.y > (posY - 5.0)) && (gl_FragCoord.y < (posY + 5.0)) && (gl_FragCoord.x < (posX + 5.0)) && (gl_FragCoord.x > (posX - 5.0))){"+
+                    "   float alphaFrag = (gl_FragCoord.y - (posY - 5.0))/10.0"+
+                    "   gl_FragColor = vec4(vv4_Colors.r, vv4_Colors.g, vv4_Colors.b, uf_alpha * vv4_Colors.a);" +
+                    "} else {" +
+                    "  gl_FragColor = vec4(vv4_Colors.r, vv4_Colors.g, vv4_Colors.b, 0.0);" +
+                    "}" +
+            "}";
+
+
+
+
     public static final String vs_SolidColor =
                     "uniform mat4 um4_projection;" +
                     "uniform mat4 um4_view;" +
