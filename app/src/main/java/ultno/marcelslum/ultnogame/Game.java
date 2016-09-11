@@ -1046,14 +1046,27 @@ public class Game {
     }
 
     public static void initPrograms(){
-        imageProgram = new Program(Programs.vs_Image, Programs.fs_Image);
-        imageColorizedProgram = new Program(Programs.vs_Image_Colorized, Programs.fs_Image_Colorized);
-        imageColorizedFxProgram = new Program(Programs.vs_Image_Colorized_fx, Programs.fs_Image_Colorized_fx);
-        textProgram = new Program(Programs.vs_Text, Programs.fs_Text);
-        solidProgram = new Program(Programs.vs_SolidColor, Programs.fs_SolidColor);
-        lineProgram = new Program(Programs.vs_Line, Programs.fs_Line);
-        windProgram = new Program(Programs.vs_Wind, Programs.fs_Wind);
 
+        imageProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_image),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_image));
+
+        imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
+
+        imageColorizedFxProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorizedfx),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorizedfx));
+
+        textProgram  =new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_text),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_text));
+
+        solidProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_solidcolor),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_solidcolor));
+
+        lineProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_line),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_line));
+
+        windProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_solidcolor),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_wind));
     }
 
     public static void initFont(){

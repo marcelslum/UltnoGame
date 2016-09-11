@@ -177,7 +177,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     {
     	Game.texturenames = new int[8];
         GLES20.glGenTextures(8, Game.texturenames, 0);
-        Utils.setTexture("drawable/botoesebolas", Game.texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
+        Utils.setTexture("drawable/botoesebolas2", Game.texturenames, Game.TEXTURE_BUTTONS_AND_BALLS, mContext); // balls
         Utils.setTexture("drawable/jetset", Game.texturenames, Game.TEXTURE_FONT, mContext); // fonte
         Utils.setTexture("drawable/targets", Game.texturenames, Game.TEXTURE_TARGETS, mContext); // targets
         Utils.setTexture("drawable/bars", Game.texturenames, Game.TEXTURE_BARS, mContext); // bars

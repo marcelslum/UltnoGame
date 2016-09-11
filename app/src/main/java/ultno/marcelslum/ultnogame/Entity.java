@@ -439,13 +439,12 @@ public class Entity{
 
         if (program == Game.windProgram){
 
-            float time = (float)((Utils.getTime() - Game.initTime))/360;
-            Log.e("entity", ""+time);
+            float time = ((float)(Utils.getTime() - Game.initTime))/1000f;
+            //Log.e("entity", ""+time);
             int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
             GLES20.glUniform1f(uf_time, time);
-
-            int uf_resolutionY = GLES20.glGetUniformLocation(this.program.get(), "uf_resolutionY");
-            GLES20.glUniform1f(uf_resolutionY, Game.resolutionY);
+            int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");
+            GLES20.glUniform2f(uv2_resolution, Game.gameAreaResolutionX, Game.gameAreaResolutionY);
         }
 
 
@@ -482,8 +481,11 @@ public class Entity{
             GLES20.glDisableVertexAttribArray(av4_colorsHandle);
         }
 
-        if (name == "wind")
-            Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
+        //if (name == "wind")
+            //Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
+
+
+
             //Log.e("entity2", GLES20.glGetProgram(program.get()));
 
     }
