@@ -351,9 +351,9 @@ public class Entity{
 
     public void render(float[] matrixView, float[] matrixProjection) {
 
-        if (name == "wind") {
+        //if (name == "wind") {
             //Log.e("entity", "rendering wind");
-        }
+            //}
 
         setMatrixModel();
 
@@ -434,20 +434,13 @@ public class Entity{
         }
         // TODO verificar se a inversão do eixo y considera o offset
 
-
-
-
         if (program == Game.windProgram){
-
             float time = ((float)(Utils.getTime() - Game.initTime))/1000f;
-            //Log.e("entity", ""+time);
             int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
             GLES20.glUniform1f(uf_time, time);
             int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");
-            GLES20.glUniform2f(uv2_resolution, Game.gameAreaResolutionX, Game.gameAreaResolutionY);
+            GLES20.glUniform2f(uv2_resolution, Game.resolutionX, Game.resolutionY);
         }
-
-
 
         if (this.textureUnit != -1) {
             // Get handle to textures locations

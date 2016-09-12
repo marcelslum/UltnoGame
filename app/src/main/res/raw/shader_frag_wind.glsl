@@ -105,5 +105,5 @@ void main()
     }
 
     float multiply = 0.8;
-    gl_FragColor = vec4(1.0, 1.0, 1.0, alpha*multiply);
+    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
 }

@@ -1065,8 +1065,8 @@ public class Game {
         lineProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_line),
                 Utils.readRawTextFile(Game.context, R.raw.shader_frag_line));
 
-        windProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_solidcolor),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_wind));
+        windProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_wind),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_wind3));
     }
 
     public static void initFont(){

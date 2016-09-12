@@ -160,6 +160,25 @@ public abstract class Utils {
         array[15 + (startIndex)] = color.a;
     }
 
+    public static void insertRectangleColorsData(float[] array, int startIndex, float r, float g, float b, float a){
+        array[startIndex] = r;
+        array[1 + (startIndex)] = g;
+        array[2 + (startIndex)] = b;
+        array[3 + (startIndex)] = a;
+        array[4 + (startIndex)] = r;
+        array[5 + (startIndex)] = g;
+        array[6 + (startIndex)] = b;
+        array[7 + (startIndex)] = a;
+        array[8 + (startIndex)] = r;
+        array[9 + (startIndex)] = g;
+        array[10 + (startIndex)] = b;
+        array[11 + (startIndex)] = a;
+        array[12 + (startIndex)] = r;
+        array[13 + (startIndex)] = g;
+        array[14 + (startIndex)] = b;
+        array[15 + (startIndex)] = a;
+    }
+
     public static void insertLineColorsData(float[] array, int startIndex, Color color){
         array[startIndex] = color.r;
         array[1 + (startIndex)] = color.g;
@@ -516,7 +535,7 @@ public abstract class Utils {
         } catch (IOException e) {
             return null;
         }
-        Log.e("utils", text.toString());
+        //Log.e("utils", text.toString());
 
         return text.toString();
     }
