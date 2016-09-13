@@ -351,9 +351,8 @@ public class Entity{
 
     public void render(float[] matrixView, float[] matrixProjection) {
 
-        //if (name == "wind") {
-            //Log.e("entity", "rendering wind");
-            //}
+        //if (name == "specialBall") {
+            //Log.e("entity", "rendering wind");}
 
         setMatrixModel();
 
@@ -434,12 +433,13 @@ public class Entity{
         }
         // TODO verificar se a inversão do eixo y considera o offset
 
-        if (program == Game.windProgram){
+        if (program == Game.windProgram || program == Game.specialBallProgram){
             float time = ((float)(Utils.getTime() - Game.initTime))/1000f;
             int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
             GLES20.glUniform1f(uf_time, time);
             int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");
-            GLES20.glUniform2f(uv2_resolution, Game.resolutionX, Game.resolutionY);
+            GLES20.glUniform2f(uv2_resolution, Game.effectiveScreenWidth, Game.effectiveScreenHeight);
+            // TODO adicionar screen offset ao wind
         }
 
         if (this.textureUnit != -1) {
@@ -474,10 +474,8 @@ public class Entity{
             GLES20.glDisableVertexAttribArray(av4_colorsHandle);
         }
 
-        //if (name == "wind")
-            //Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
-
-
+        if (name == "specialBall")
+            Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
 
             //Log.e("entity2", GLES20.glGetProgram(program.get()));
 

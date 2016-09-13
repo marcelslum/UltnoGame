@@ -15,7 +15,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     public Game gi;
 
-
     // Our matrices
     private final float[] matrixProjection = new float[16];
     private final float[] matrixView = new float[16];
@@ -112,6 +111,14 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
         Log.e("effectiveScreenHeight ", " "+effectiveScreenHeight);
         Log.e("effectiveScreenWidth ", " "+effectiveScreenWidth);
+
+        Game.screenOffSetX = screenOffSetX;
+        Game.screenOffSetY = screenOffSetY;
+
+        Game.effectiveScreenHeight = effectiveScreenHeight;
+        Game.effectiveScreenWidth = effectiveScreenWidth;
+
+
 
         // Clear our matrices
         for(int i=0;i<16;i++)

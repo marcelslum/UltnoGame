@@ -56,6 +56,7 @@ public class Game {
     public static ArrayList<Line> lines;
     public static Background background;
     public static Wind wind;
+    public static ArrayList<SpecialBall> specialBalls;
 
     public static ScorePanel scorePanel;
     public static ObjectivePanel objectivePanel;
@@ -179,6 +180,8 @@ public class Game {
     
     public final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
     public static long initTime;
+    public static float effectiveScreenHeight;
+    public static float effectiveScreenWidth;
 
     // bars and balls data
     //public float [] barsInitialPositionX = new float[10];
@@ -201,6 +204,7 @@ public class Game {
     public static Program solidProgram;
     public static Program imageColorizedFxProgram;
     public static Program windProgram;
+    public static Program specialBallProgram;
 
     public static int ballsNotInvencibleAlive;
     public static int ballsInvencible;
@@ -217,6 +221,7 @@ public class Game {
         balls = new ArrayList<>();
         obstacles = new ArrayList<>();
         windows = new ArrayList<>();
+        specialBalls = new ArrayList<>();
         touchEvents = new ArrayList<>();
         texts = new ArrayList<>();
         interactionListeners = new ArrayList<>();
@@ -253,6 +258,10 @@ public class Game {
 
     public static void addWindow(WindowGame window){
         windows.add(window);
+    }
+
+    public static void addSpecialBall(SpecialBall sb){
+        specialBalls.add(sb);
     }
 
     public static void addText(Text text){
@@ -638,6 +647,7 @@ public class Game {
         bars.clear();
         targets.clear();
         windows.clear();
+        specialBalls.clear();
         obstacles.clear();
         wind = null;
     }
@@ -656,7 +666,6 @@ public class Game {
         buttonSound = null;
         buttonMusic = null;
         background = null;
-        wind = null;
     }
 
     public static void eraseAllTutorials() {
@@ -806,6 +815,7 @@ public class Game {
         list.addAll(targets);
         list.addAll(obstacles);
         list.addAll(windows);
+        list.addAll(specialBalls);
         if (wind != null) {
             list.add(wind);
         }
@@ -1067,6 +1077,9 @@ public class Game {
 
         windProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_wind),
                 Utils.readRawTextFile(Game.context, R.raw.shader_frag_wind3));
+
+        specialBallProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_specialball),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_specialball));
     }
 
     public static void initFont(){
@@ -1348,6 +1361,10 @@ public class Game {
             windows.get(i).checkTransformations(true);
         }
 
+        for (int i = 0; i < specialBalls.size(); i++){
+            specialBalls.get(i).checkTransformations(true);
+        }
+
         if (menuMain != null) menuMain.checkTransformations(true);
         if (menuInGame != null) menuInGame.checkTransformations(true);
         if (menuTutorial != null) menuTutorial.checkTransformations(true);
@@ -1428,6 +1445,10 @@ public class Game {
 
         for (int i = 0; i < windows.size(); i++){
             windows.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
+        for (int i = 0; i < specialBalls.size(); i++){
+            specialBalls.get(i).prepareRender(matrixView, matrixProjection);
         }
 
         if (wind != null) {
