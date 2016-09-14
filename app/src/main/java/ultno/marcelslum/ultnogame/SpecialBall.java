@@ -1,7 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-import android.util.Log;
-
 /**
  * Created by marcel on 13/09/2016.
  */
@@ -15,7 +13,7 @@ public class SpecialBall extends Circle{
         isCollidable = false;
         isSolid = false;
         isVisible = true;
-        textureUnit = Game.TEXTURE_SPECIAL_BALL;
+        textureId = Game.TEXTURE_SPECIAL_BALL;
         textureMap = 0;
         textureSituation = 0;
         setDrawInfo();

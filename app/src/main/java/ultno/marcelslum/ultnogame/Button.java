@@ -23,7 +23,7 @@ public class Button extends Entity{
         isMovable = false;
         isSolid =  false;
 
-        this.textureUnit = textureUnit;
+        this.textureId = textureUnit;
         program = Game.imageProgram;
 
         float lw = width * listenerScale;

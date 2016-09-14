@@ -22,7 +22,7 @@ import java.util.TimerTask;
  */
 public class Game {
 
-    public static int[] texturenames;
+
 
     public static final int BALL_WEIGHT = 1;
     public static final int BORDA_WEIGHT = 10;
@@ -141,15 +141,6 @@ public class Game {
     //public final static int GAME_STATE_REINICIAR =  16;
     public final static int GAME_STATE_PAUSE =  16;
 
-
-    public final static int TEXTURE_BUTTONS_AND_BALLS = 0;
-    public final static int TEXTURE_FONT = 1;
-    public final static int TEXTURE_TARGETS = 2;
-    public final static int TEXTURE_BARS = 3;
-    public final static int TEXTURE_BACKGROUND = 4;
-    public final static int TEXTURE_NUMBERS_EXPLOSION_OBSTACLE = 5;
-    public final static int TEXTURE_TITTLE = 6;
-    public final static int TEXTURE_SPECIAL_BALL = 7;
 
     public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
     public final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
@@ -688,7 +679,9 @@ public class Game {
         levelNumber = Storage.getActualLevel();
         
         initTime = Utils.getTime();
-        
+
+        initTextures();
+
         initSounds();
         initPrograms();
         initFont();
@@ -696,11 +689,23 @@ public class Game {
         initTexts();
     }
 
+    private static void initTextures() {
+        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/ballspecial"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/obstacle"));
+    }
+
     public static void initTexts(){
         tittle = new Image("tittle",
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
-                TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
+                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
                 
         ArrayList<float[]> valuesAnimationTittle = new ArrayList<>();
         valuesAnimationTittle.add(new float[]{0f,1f});

@@ -1,8 +1,6 @@
 package ultno.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 public class Text extends Entity{
 
     public final static int TEXT_ALIGN_LEFT = 0;
@@ -31,7 +29,7 @@ public class Text extends Entity{
         this.color = color;
         this.font = font;
         this.program = this.font.program;
-        this.textureUnit = this.font.textureUnit;
+        this.textureId = this.font.textureUnit;
         this.align = align;
 
         this.charData = new float[]{0f, 0f, 0f, 0f,};
@@ -49,7 +47,7 @@ public class Text extends Entity{
         this.color = color;
         this.font = font;
         this.program = this.font.program;
-        this.textureUnit = this.font.textureUnit;
+        this.textureId = this.font.textureUnit;
         this.align = TEXT_ALIGN_LEFT;
 
         this.charData = new float[]{0f, 0f, 0f, 0f,};
@@ -67,7 +65,7 @@ public class Text extends Entity{
         this.color = new Color(0f,0f,0f,1f);
         this.font = font;
         this.program = this.font.program;
-        this.textureUnit = this.font.textureUnit;
+        this.textureId = this.font.textureUnit;
         this.align = TEXT_ALIGN_LEFT;
 
         this.charData = new float[]{0f, 0f, 0f, 0f};

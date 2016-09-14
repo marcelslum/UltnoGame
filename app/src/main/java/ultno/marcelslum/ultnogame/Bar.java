@@ -10,7 +10,7 @@ public class Bar extends Rectangle{
         super(name, x, y, width, height, Game.BAR_WEIGHT, new Color(0,0,0,1));
 
         this.program = Game.imageProgram;
-        this.textureUnit = Game.TEXTURE_BARS;
+        this.textureId = Game.TEXTURE_BARS;
         this.isCollidable = true;
         this.isSolid = true;
         this.setDrawInfo();

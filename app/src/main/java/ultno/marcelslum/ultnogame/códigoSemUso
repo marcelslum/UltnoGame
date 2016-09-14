@@ -4,7 +4,7 @@
         this.currentState = currentState;
         this.special = special;
         setType();
-        textureUnit = Game.TEXTURE_TARGETS;
+        textureId = Game.TEXTURE_TARGETS;
         program = this.game.imageProgram;
         isMovable = false;
         isGhost = ghost;
@@ -380,7 +380,7 @@ public void SetupTargets(){
 
              this.gi.addBall(new Ball("ball", this.gi, 100f, 100f, 10f, 8));
              this.gi.balls.get(0).program = this.imageProgram;
-             this.gi.balls.get(0).textureUnit = 0;
+             this.gi.balls.get(0).textureId = 0;
              this.gi.balls.get(0).vx = 12.1f;
              this.gi.balls.get(0).vy = 12.1f;
 
@@ -388,33 +388,33 @@ public void SetupTargets(){
 
              this.gi.addBall(new Ball("ball", this.gi, 200f, 200f, 16f, 8));
              this.gi.balls.get(1).program = this.imageProgram;
-             this.gi.balls.get(1).textureUnit = 0;
+             this.gi.balls.get(1).textureId = 0;
 
              this.gi.balls.get(1).vx = 18.1f;
              this.gi.balls.get(1).vy = 18.1f;
 
              this.gi.addBall(new Ball("ball", this.gi, 300f, 300f, 5f, 8));
              this.gi.balls.get(2).program = this.imageProgram;
-             this.gi.balls.get(2).textureUnit = 0;
+             this.gi.balls.get(2).textureId = 0;
 
              this.gi.balls.get(2).vx = 7.1f;
              this.gi.balls.get(2).vy = 7.1f;
 
              this.gi.addBall(new Ball("ball", this.gi, 250f, 110f, 13f, 8));
              this.gi.balls.get(3).program = this.imageProgram;
-             this.gi.balls.get(3).textureUnit = 0;
+             this.gi.balls.get(3).textureId = 0;
              this.gi.balls.get(3).vx = 6.1f;
              this.gi.balls.get(3).vy = 6.1f;
 
              this.gi.addBall(new Ball("ball", this.gi, 250f, 190f, 5f, 8));
              this.gi.balls.get(4).program = this.imageProgram;
-             this.gi.balls.get(4).textureUnit = 0;
+             this.gi.balls.get(4).textureId = 0;
              this.gi.balls.get(4).vx = 8.1f;
              this.gi.balls.get(4).vy = 8.1f;
 
              this.gi.addBall(new Ball("ball", this.gi, 250f, 310f, 15f, 8));
              this.gi.balls.get(5).program = this.imageProgram;
-             this.gi.balls.get(5).textureUnit = 0;
+             this.gi.balls.get(5).textureId = 0;
              this.gi.balls.get(5).vx = 2.1f;
              this.gi.balls.get(5).vy = 2.1f;
              //Log.e("tag setup entities2", " ");
@@ -460,7 +460,7 @@ public void SetupTargets(){
 
 
              for (int i = 0; i < this.gi.targets.size(); i++){
-                 this.gi.targets.get(i).textureUnit = 2;
+                 this.gi.targets.get(i).textureId = 2;
                  this.gi.targets.get(i).program = imageProgram;
              }
      */

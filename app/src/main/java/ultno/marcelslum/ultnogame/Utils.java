@@ -438,42 +438,7 @@ public abstract class Utils {
             array[7 + (startIndex)] = 1-y2;
     }
     
-    public static void setBitmap(String identifier, Bitmap destination, Context context){
-        int id = context.getResources().getIdentifier(identifier, null, context.getPackageName());
-        destination = BitmapFactory.decodeResource(context.getResources(), id);
-    }
-    
-    public static void setTexture(String identifier, int [] arrayOfNames, int number, Context context){
 
-        Log.e("Utils", " setuping "+identifier);
-        int id = context.getResources().getIdentifier(identifier, null, context.getPackageName());
-        
-        // Temporary create a bitmap
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), id);
-
-        //Log.e("setup textures ", "1");
-
-        // Bind texture to texturename
-        if (number == 0){
-            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, arrayOfNames[0]);
-        } else {
-            GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + number);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, arrayOfNames[number]);
-        }
-
-        // Set filtering
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_MIRRORED_REPEAT);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_MIRRORED_REPEAT);
-
-        // Load the bitmap into the bound texture.
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-
-        bmp.recycle();
-    }
 
     public static Animation createSimpleAnimation(Entity object, String name, String parameter, int duration, float v1, float v2){
         ArrayList<float[]> values = new ArrayList<>();

@@ -2,7 +2,6 @@ package ultno.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -91,15 +90,15 @@ public class Entity{
     public float[] matrixTemp = new float[16];
 
     public Program program;
-    public int textureUnit = -1;
+    public int textureId = -1;
     public int special;
 
     public void setProgram(Program program){
         this.program = program;
     }
 
-    public void setTextureUnit(int textureUnit){
-        this.textureUnit = textureUnit;
+    public void setTextureId(int textureId){
+        this.textureId = textureId;
     }
 
     Entity(String name, float x, float y) {
@@ -365,7 +364,7 @@ public class Entity{
         //Log.e("render", " ");
 
         int av2_uvHandle = -1;
-        if (this.textureUnit != -1) {
+        if (this.textureId != -1) {
             // Get handle to texture coordinates location and load the texture uvs
             av2_uvHandle = GLES20.glGetAttribLocation(this.program.get(), "av2_uv");
             GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, this.uvsBuffer);
@@ -398,39 +397,6 @@ public class Entity{
         GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, this.matrixModel, 0);
         //Log.e("render", " ");
 
-
-        if (this.program == Game.imageColorizedFxProgram){
-            int uv2_ballPosition = GLES20.glGetUniformLocation(this.program.get(), "uv2_ballPosition");
-            GLES20.glUniform2f(uv2_ballPosition, Game.balls.get(0).x + Game.screenOffSetX, Game.resolutionY - (Game.balls.get(0).y+Game.screenOffSetY));
-
-            float variation;
-            if (Game.ballCollidedFx > 0) {
-
-                if (Game.ballCollidedFx > 30){
-                    variation = 0.007f;
-                } else if (Game.ballCollidedFx > 20){
-                    variation = 0.0055f;
-                } else if (Game.ballCollidedFx > 10){
-                    variation = 0.004f;
-                } else{
-                    variation = 0.002f;
-                }
-
-                if (timeVar) {
-                    time += variation;
-                    if (time > 0.001f) {
-                        timeVar = false;
-                    }
-                } else {
-                    time -= variation;
-                    if (time < -0.001f) {
-                        timeVar = true;
-                    }
-                }
-            }
-            int uf_timeHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
-            GLES20.glUniform1f(uf_timeHandle, time);
-        }
         // TODO verificar se a inversão do eixo y considera o offset
 
         if (program == Game.windProgram || program == Game.specialBallProgram){
@@ -442,21 +408,11 @@ public class Entity{
             // TODO adicionar screen offset ao wind
         }
 
-        if (this.textureUnit != -1) {
+        if (textureId != -1) {
             // Get handle to textures locations
-            // Set the sampler texture unit to 0, where we have saved the texture.
             int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
-            GLES20.glUniform1i(us_textureHandle, this.textureUnit);
-
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+            GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
         }
-
-        //Log.e("entidade "+this.name + " indices len"," "+ this.indicesData.length);
-        //Log.e("entidade "+this.name + " indices len"," "+ this.indicesBuffer.toString());
-
-        // No depth testing
-        // Draw the triangle
 
         if (isLineGL) {
             GLES20.glLineWidth(lineWidth);

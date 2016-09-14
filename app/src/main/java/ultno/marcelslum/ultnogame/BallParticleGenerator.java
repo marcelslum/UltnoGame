@@ -12,7 +12,7 @@ public class BallParticleGenerator extends Entity {
     BallParticleGenerator(String name, float x, float y) {
         super(name, x, y);
         program = Game.imageColorizedProgram;
-        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+        textureId = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         particlesArray= new ArrayList<>();
     }
 

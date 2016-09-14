@@ -20,7 +20,7 @@ public class WindowGame extends PhysicalObject{
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
         program = Game.imageProgram;
-        textureUnit = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+        textureId = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         isActive = false;
         swgM = new SubWindowGameM(this, 0f, y);
         swgF = new SubWindowGameF(this, 0f, y);
@@ -155,7 +155,7 @@ public class WindowGame extends PhysicalObject{
         public SubWindowGameM(WindowGame wg, float x, float y) {
             super(wg.name+"m", x, y, 0);
             program = wg.program;
-            textureUnit = wg.textureUnit;
+            textureId = wg.textureId;
             this.wg = wg;
         }
 
@@ -212,7 +212,7 @@ public class WindowGame extends PhysicalObject{
         public SubWindowGameF(WindowGame wg, float x, float y) {
             super(wg.name+"f", x, y, 0);
             program = wg.program;
-            textureUnit = wg.textureUnit;
+            textureId = wg.textureId;
             this.wg = wg;
         }
 

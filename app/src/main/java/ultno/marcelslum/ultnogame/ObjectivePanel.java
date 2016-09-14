@@ -1,5 +1,4 @@
 package ultno.marcelslum.ultnogame;
-import android.util.Log;
 
 public class ObjectivePanel extends Entity{
 
@@ -23,7 +22,7 @@ public class ObjectivePanel extends Entity{
         isCollidable = false;
         isVisible = true;
         alpha = 1;
-        this.textureUnit = Game.TEXTURE_BUTTONS_AND_BALLS;
+        this.textureId = Game.TEXTURE_BUTTONS_AND_BALLS;
         this.program = Game.imageProgram;
         ballsAlive = 4;
         minBallsAlive = 2;

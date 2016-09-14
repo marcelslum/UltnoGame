@@ -169,15 +169,12 @@ public class Level {
         } else {
             back = Game.levelNumber % 10;
         }
-        Utils.setTexture("drawable/finalback1", Game.texturenames, Game.TEXTURE_BACKGROUND, Game.context); // background
         Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY);
 
         Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY);
         Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY);
 
         Game.specialBalls.add(new SpecialBall("specialBall", 100f, 100f, 30.0f));
-
-        Utils.setTexture("drawable/obstacle", Game.texturenames, Game.TEXTURE_TITTLE, Game.context); // background
 
         //Log.e("Level loadEnt", "1");
 
@@ -207,7 +204,7 @@ public class Level {
 
         // BOTÃO 1 ESQUERDA
         float x = Game.resolutionX * 0.01f;
-        Game.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        Game.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         Game.button1Left.setTextureMap(19);
         Game.button1Left.textureMapUnpressed = 19;
         Game.button1Left.textureMapPressed = 18;
@@ -215,7 +212,7 @@ public class Level {
 
         // BOTÃO 1 DIREITA
         x = Game.resolutionX * 0.14f;
-        Game.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        Game.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         Game.button1Right.setTextureMap(20);
         Game.button1Right.textureMapUnpressed = 20;
         Game.button1Right.textureMapPressed = 17;
@@ -225,14 +222,14 @@ public class Level {
         if (this.barsQuantity > 1) {
             // BOTÃO 2 ESQUERDA
             x = Game.resolutionX * 0.66f;
-            Game.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+            Game.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
             Game.button2Left.setTextureMap(19);
             Game.button2Left.textureMapUnpressed = 19;
             Game.button2Left.textureMapPressed = 18;
 
             // BOTÃO 2 DIREITA
             x = Game.resolutionX * 0.83f;
-            Game.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+            Game.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
             Game.button2Right.setTextureMap(20);
             Game.button2Right.textureMapUnpressed = 20;
             Game.button2Right.textureMapPressed = 17;
@@ -240,7 +237,7 @@ public class Level {
 
         // BOTÃO SOM
         Game.buttonSound = new ButtonOnOff("buttonSound", Game.gameAreaResolutionX * 0.35f,
-                Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+                Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         Game.buttonSound.textureMapUnpressed = 9;
         Game.buttonSound.textureMapPressed = 10;
         Game.buttonSound.getListener().x = Game.gameAreaResolutionX * 0.32f;
@@ -274,7 +271,7 @@ public class Level {
 
         // BOTÃO MUSICA
         Game.buttonMusic = new ButtonOnOff("buttonMusic",Game.gameAreaResolutionX * 0.61f,
-                Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Game.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+                Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         Game.buttonMusic.textureMapUnpressed = 2;
         Game.buttonMusic.textureMapPressed = 1;
         Game.buttonMusic.alpha = 0.5f;

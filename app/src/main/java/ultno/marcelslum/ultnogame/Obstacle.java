@@ -1,7 +1,5 @@
 package ultno.marcelslum.ultnogame;
 
-import android.util.Log;
-
 /**
  * Created by marcel on 25/08/2016.
  */
@@ -11,7 +9,7 @@ public class Obstacle extends Rectangle{
 
     Obstacle(String name, float x, float y, float width, float height) {
         super(name, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(1.0f, 1.0f, 1.0f, 1.0f));
-        this.textureUnit = Game.TEXTURE_TITTLE;
+        this.textureId = Game.TEXTURE_TITTLE;
         this.program = Game.imageProgram;
         setDrawInfo();
     }

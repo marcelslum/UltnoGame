@@ -1,8 +1,6 @@
 package ultno.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -35,7 +33,7 @@ public class Target extends Rectangle {
         this.currentState = currentState;
         this.special = special;
         setType();
-        textureUnit = Game.TEXTURE_TARGETS;
+        textureId = Game.TEXTURE_TARGETS;
         program = Game.imageProgram;
         isMovable = false;
         isGhost = ghost;

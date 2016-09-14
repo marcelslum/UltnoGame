@@ -10,7 +10,7 @@ public class Image extends Entity{
         super(name, x, y);
         this.width = width;
         this.height = height;
-        this.textureUnit = textureUnit;
+        this.textureId = textureUnit;
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
@@ -19,11 +19,11 @@ public class Image extends Entity{
         setDrawInfo();
     }
 
-    Image(String name, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2, Color color){
+    Image(String name, float x, float y, float width, float height, int textureId, float x1, float x2, float y1, float y2, Color color){
         super(name, x, y);
         this.width = width;
         this.height = height;
-        this.textureUnit = textureUnit;
+        this.textureId = textureId;
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
