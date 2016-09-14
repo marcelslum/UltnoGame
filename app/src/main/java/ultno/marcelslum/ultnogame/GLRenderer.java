@@ -118,8 +118,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Game.effectiveScreenHeight = effectiveScreenHeight;
         Game.effectiveScreenWidth = effectiveScreenWidth;
 
-
-
         // Clear our matrices
         for(int i=0;i<16;i++)
         {
@@ -190,6 +188,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Utils.setTexture("drawable/bars", Game.texturenames, Game.TEXTURE_BARS, mContext); // bars
         Utils.setTexture("drawable/numbers_explosion5", Game.texturenames, Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, mContext); // numeros
         Utils.setTexture("drawable/tittle", Game.texturenames, Game.TEXTURE_TITTLE, mContext); // titulo e caixa de testo
+        Utils.setTexture("drawable/ballspecial", Game.texturenames, Game.TEXTURE_SPECIAL_BALL, mContext); // titulo e caixa de testo
         
     }
 }

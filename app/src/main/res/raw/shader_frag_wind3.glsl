@@ -21,7 +21,7 @@ void main() {
     // centralY
     float y = 1.0-vv4_Colors.a + (espessura * 0.25 * cos(radians(fragmentRelativePosition*360.0)));
 
-    float alpha = 0.2;
+    float alpha = 0.25;
 
     if (relativePosition.y > (y-espessura) && relativePosition.y < (y+espessura)){
         if (relativePosition.y < y){

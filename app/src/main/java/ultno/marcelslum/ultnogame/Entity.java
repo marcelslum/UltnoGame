@@ -474,11 +474,9 @@ public class Entity{
             GLES20.glDisableVertexAttribArray(av4_colorsHandle);
         }
 
-        if (name == "specialBall")
-            Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
-
+        //if (name == "specialBall")
+            //Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
             //Log.e("entity2", GLES20.glGetProgram(program.get()));
-
     }
 
     public void display(){

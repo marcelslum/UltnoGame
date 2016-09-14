@@ -149,6 +149,7 @@ public class Game {
     public final static int TEXTURE_BACKGROUND = 4;
     public final static int TEXTURE_NUMBERS_EXPLOSION_OBSTACLE = 5;
     public final static int TEXTURE_TITTLE = 6;
+    public final static int TEXTURE_SPECIAL_BALL = 7;
 
     public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
     public final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
