@@ -1130,22 +1130,10 @@ public class Game {
                 ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
                 ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
 
-                if (wind != null){
-                    if (wind.isActive){
-                        if (wind.rightDirection){
-                            if (ball.vx > 0) {
-                                ball.translate(ball.vx * 1.3f, ball.vy);
-                            } else if (ball.vx < 0) {
-                                ball.translate(ball.vx * 0.7f, ball.vy);
-                            }
-                        }
-                    }
-                } else {
-                    ball.translate(ball.vx, ball.vy);
-                }
-
+                ball.translate(ball.vx, ball.vy);
+                
+                ball.verifyWind();
                  //Log.e("game", "ballv "+ ball.vx+" "+ball.vy);
-
             }
 
             for (int i = 0; i < specialBalls.size(); i++) {
@@ -1156,10 +1144,6 @@ public class Game {
                 //Log.e("game", "specialBall "+ specialBall.vx+" "+specialBall.vy);
                 specialBall.translate(specialBall.vx, specialBall.vy);
             }
-
-
-
-
         }
 
         // atualiza posição da barra
@@ -1174,24 +1158,8 @@ public class Game {
                         bars.get(0).vx = 0f;
                     }
 
-
-                    if (wind != null){
-                        if (wind.isActive){
-                            if (wind.rightDirection){
-                                if (bars.get(0).vx > 0) {
-                                    bars.get(0).translate(bars.get(0).vx * 1.1f, 0);
-                                } else if (bars.get(0).vx < 0) {
-                                    bars.get(0).translate(bars.get(0).vx * 0.95f, 0);
-                                }
-                            }
-                        }
-                    } else {
-                        bars.get(0).translate(bars.get(0).vx, 0);
-                    }
-                    
-                    
-                    
-                    
+                    bars.get(0).translate(bars.get(0).vx, 0);
+                    bars(0).verifyWind();
 
                     if (bars.size() == 2) {
                         if (button2Left.isPressed) {
@@ -1202,19 +1170,8 @@ public class Game {
                             bars.get(1).vx = 0f;
                         }
 
-                        if (wind != null){
-                            if (wind.isActive){
-                                if (wind.rightDirection){
-                                    if (bars.get(1).vx > 0) {
-                                        bars.get(1).translate(bars.get(1).vx * 1.1f, 0);
-                                    } else if (bars.get(1).vx < 0) {
-                                        bars.get(1).translate(bars.get(1).vx * 0.95f, 0);
-                                    }
-                                }
-                            }
-                        } else {
-                            bars.get(1).translate(bars.get(1).vx, 0);
-                        }
+                        bars.get(1).translate(bars.get(0).vx, 0);
+                        bars(1).verifyWind();
                     }
                 }
             }
