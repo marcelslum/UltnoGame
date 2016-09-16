@@ -6,6 +6,7 @@ package ultno.marcelslum.ultnogame;
 public class SpecialBall extends Circle{
     int textureMap;
     int textureSituation;
+    boolean isDead = false;
 
     public SpecialBall(String name, float x, float y, float radius) {
         super(name, x, y, radius, 0);
@@ -13,7 +14,7 @@ public class SpecialBall extends Circle{
         isCollidable = false;
         isSolid = false;
         isVisible = true;
-        textureId = Game.TEXTURE_SPECIAL_BALL;
+        textureId = Texture.TEXTURE_SPECIAL_BALL;
         textureMap = 0;
         textureSituation = 0;
         setDrawInfo();
@@ -93,5 +94,23 @@ public class SpecialBall extends Circle{
     public void prepareRender(float[] matrixView, float[] matrixProjection) {
         updateDrawInfo();
         super.prepareRender(matrixView, matrixProjection);
+    }
+
+    public void verifyBars() {
+        for(int i = 0; i < Game.bars.size(); i++){
+            Bar bar = Game.bars.get(i);
+            if (positionY + radius > bar.positionY){
+                if ((positionX - radius < bar.positionX + bar.getTransformedWidth() && positionX - radius > bar.positionX)||
+                    (positionX + radius > bar.positionX && positionX + radius < bar.positionX + bar.getTransformedWidth())){
+                    isVisible = false;
+                    dvy = 0f;
+                    isDead = true;
+
+                    bar.specialBarScale();
+                }
+            }
+        }
+
+
     }
 }

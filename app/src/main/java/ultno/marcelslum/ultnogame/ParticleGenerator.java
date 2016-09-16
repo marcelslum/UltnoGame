@@ -11,7 +11,7 @@ public class ParticleGenerator extends Entity {
     ParticleGenerator(String name, float x, float y, int textureMap1, int textureMap2, int textureMap3) {
         super(name, x, y);
         program = Game.imageColorizedProgram;
-        textureId = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+        textureId = Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         this.textureMaps = new int []{textureMap1, textureMap2, textureMap3};
         generate();
     }

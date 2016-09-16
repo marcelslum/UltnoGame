@@ -57,6 +57,8 @@ public class Level {
     public int[] windowsQuantityOfLines;
     public float[] windowsDistance;
     public float[] windowsVelocity;
+    public boolean isHaveSpecialBall = true;
+    public float specialBallPercentage = 1.0f;
 
     private Level(){
         this.ballsQuantity = LevelBuilder.ballsQuantity;
@@ -173,8 +175,6 @@ public class Level {
 
         Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY);
         Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY);
-
-        Game.specialBalls.add(new SpecialBall("specialBall", 100f, 100f, 30.0f));
 
         //Log.e("Level loadEnt", "1");
 

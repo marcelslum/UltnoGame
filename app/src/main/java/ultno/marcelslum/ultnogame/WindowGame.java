@@ -20,7 +20,7 @@ public class WindowGame extends PhysicalObject{
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
         program = Game.imageProgram;
-        textureId = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+        textureId = Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         isActive = false;
         swgM = new SubWindowGameM(this, 0f, y);
         swgF = new SubWindowGameF(this, 0f, y);

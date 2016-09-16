@@ -33,7 +33,7 @@ public class Background extends Entity {
         isSolid = false;
         isCollidable = false;
         isVisible = true;
-        textureId = Game.TEXTURE_BACKGROUND;
+        textureId = Texture.TEXTURE_BACKGROUND;
         program = Game.imageColorizedFxProgram;
         this.alpha = 0.8f;
 

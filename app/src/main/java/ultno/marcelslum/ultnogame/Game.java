@@ -141,7 +141,6 @@ public class Game {
     //public final static int GAME_STATE_REINICIAR =  16;
     public final static int GAME_STATE_PAUSE =  16;
 
-
     public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
     public final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
     public final static int TEXTURE_MAP_NUMBERS_SCORE3 = 3;
@@ -679,9 +678,7 @@ public class Game {
         levelNumber = Storage.getActualLevel();
         
         initTime = Utils.getTime();
-
         initTextures();
-
         initSounds();
         initPrograms();
         initFont();
@@ -690,13 +687,16 @@ public class Game {
     }
 
     private static void initTextures() {
+
+        Texture.textures = new ArrayList<>();
+
         Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
         Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/ballspecial"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/obstacle"));
     }
@@ -1130,9 +1130,36 @@ public class Game {
                 ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
                 ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
 
+                if (wind != null){
+                    if (wind.isActive){
+                        if (wind.rightDirection){
+                            if (ball.vx > 0) {
+                                ball.translate(ball.vx * 1.3f, ball.vy);
+                            } else if (ball.vx < 0) {
+                                ball.translate(ball.vx * 0.7f, ball.vy);
+                            }
+                        }
+                    }
+                } else {
+                    ball.translate(ball.vx, ball.vy);
+                }
+
                  //Log.e("game", "ballv "+ ball.vx+" "+ball.vy);
-                ball.translate(ball.vx, ball.vy);
+
             }
+
+            for (int i = 0; i < specialBalls.size(); i++) {
+                SpecialBall specialBall = specialBalls.get(i);
+                specialBall.vx = (specialBall.dvx * (float) elapsed) / frameDuration;
+                specialBall.vy = (specialBall.dvy * (float) elapsed) / frameDuration;
+
+                //Log.e("game", "specialBall "+ specialBall.vx+" "+specialBall.vy);
+                specialBall.translate(specialBall.vx, specialBall.vy);
+            }
+
+
+
+
         }
 
         // atualiza posição da barra
@@ -1147,7 +1174,24 @@ public class Game {
                         bars.get(0).vx = 0f;
                     }
 
-                    bars.get(0).translate(bars.get(0).vx, 0);
+
+                    if (wind != null){
+                        if (wind.isActive){
+                            if (wind.rightDirection){
+                                if (bars.get(0).vx > 0) {
+                                    bars.get(0).translate(bars.get(0).vx * 1.1f, 0);
+                                } else if (bars.get(0).vx < 0) {
+                                    bars.get(0).translate(bars.get(0).vx * 0.95f, 0);
+                                }
+                            }
+                        }
+                    } else {
+                        bars.get(0).translate(bars.get(0).vx, 0);
+                    }
+                    
+                    
+                    
+                    
 
                     if (bars.size() == 2) {
                         if (button2Left.isPressed) {
@@ -1158,11 +1202,35 @@ public class Game {
                             bars.get(1).vx = 0f;
                         }
 
-                        bars.get(1).translate(bars.get(1).vx, 0);
+                        if (wind != null){
+                            if (wind.isActive){
+                                if (wind.rightDirection){
+                                    if (bars.get(1).vx > 0) {
+                                        bars.get(1).translate(bars.get(1).vx * 1.1f, 0);
+                                    } else if (bars.get(1).vx < 0) {
+                                        bars.get(1).translate(bars.get(1).vx * 0.95f, 0);
+                                    }
+                                }
+                            }
+                        } else {
+                            bars.get(1).translate(bars.get(1).vx, 0);
+                        }
                     }
                 }
             }
-            // atualiza posição e tamanho dos obstáculos
+
+            // verifica se a bola especial tocou a barra
+            for (int i = 0; i < specialBalls.size(); i++) {
+                specialBalls.get(i).verifyBars();
+            }
+
+            for (int i = 0; i < specialBalls.size(); i++) {
+                if (specialBalls.get(i).isDead){
+                    specialBalls.remove(i);
+                }
+            }
+
+
         }
 
         // atualiza os dados da entidade, aplicando todas as transformações setadas

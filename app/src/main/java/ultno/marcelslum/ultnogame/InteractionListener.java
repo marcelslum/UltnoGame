@@ -60,7 +60,7 @@ public class InteractionListener {
         this.pressedOnVerify = false;
 
         for (int i = 0; i < Game.touchEvents.size(); i++) {
-            pressedOnVerify = Utils.isInsideBounds(
+            pressedOnVerify = Utils.isPointInsideBounds(
                     Game.touchEvents.get(i).x,
                     Game.touchEvents.get(i).y,
                     x, y, width, height);

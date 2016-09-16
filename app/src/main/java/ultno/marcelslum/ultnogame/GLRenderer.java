@@ -73,8 +73,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
-        SetupTextures();
-
     }
 
     @Override
@@ -177,10 +175,4 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         mLastTime = now;
     }
 
-    
-    public void SetupTextures()
-    {
-
-        
-    }
 }

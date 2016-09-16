@@ -1,21 +1,26 @@
 package ultno.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 /**
  * Created by marcel on 07/08/2016.
  */
 public class Bar extends Rectangle{
 
-    Bar(String name, float x, float y, float width, float height){
-        super(name, x, y, width, height, Game.BAR_WEIGHT, new Color(0,0,0,1));
+    long startTimeSpecialBallAnim = 0;
+    long specialBallAnimDuration = 1000;
+    boolean specialBallAnimActive = false;
 
-        this.program = Game.imageProgram;
-        this.textureId = Game.TEXTURE_BARS;
+    Bar(String name, float x, float y, float width, float height){
+        super(name, x, y, width, height, Game.BAR_WEIGHT, new Color(0.0f, 0.0f, 0.0f, 1.0f));
+
+        this.program = Game.imageColorizedProgram;
+        this.textureId = Texture.TEXTURE_BARS;
         this.isCollidable = true;
         this.isSolid = true;
+
         this.setDrawInfo();
-
-
     }
 
     public void insertUvData(float[] array, int startIndex){
@@ -43,17 +48,21 @@ public class Bar extends Rectangle{
     }
 
     public void setDrawInfo(){
-        this.verticesData = new float[12];
-        this.insertVerticesData(this.verticesData,0);
-        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
+        verticesData = new float[12];
+        insertVerticesData(this.verticesData,0);
+        verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
 
-        this.indicesData = new short[6];
-        this.insertIndicesData(this.indicesData, 0, 0);
-        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
+        indicesData = new short[6];
+        insertIndicesData(this.indicesData, 0, 0);
+        indicesBuffer = Utils.generateShortBuffer(this.indicesData);
 
-        this.uvsData = new float[12];
-        this.insertUvData(this.uvsData, 0);
-        this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        uvsData = new float[12];
+        insertUvData(this.uvsData, 0);
+        uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+
+        colorsData = new float[16];
+        Utils.insertRectangleColorsData(colorsData, 0, color);
+        colorsBuffer = Utils.generateFloatBuffer(colorsData);
     }
 
 
@@ -86,5 +95,32 @@ public class Bar extends Rectangle{
         array[5 + (startIndex)] = (short)(3 + (startValue));
     }
 
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection) {
 
+        if (specialBallAnimActive){
+            long elapsedTime = Utils.getTime() - startTimeSpecialBallAnim;
+            if (elapsedTime < specialBallAnimDuration){
+                color.r = 0.8f * (1.0f - ((float)elapsedTime/(float)specialBallAnimDuration));
+                color.g = 0.4f * (1.0f - ((float)elapsedTime/(float)specialBallAnimDuration));
+                color.b = 0.5f * (1.0f - ((float)elapsedTime/(float)specialBallAnimDuration));
+            } else {
+                specialBallAnimActive = false;
+                color.r = 0f;
+                color.g = 0f;
+                color.b = 0f;
+            }
+            Log.e("bar", "color r "+color.r+ " g "+color.g+ " b "+color.b);
+            Utils.insertRectangleColorsData(colorsData, 0, color);
+            colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        }
+
+        super.prepareRender(matrixView, matrixProjection);
+    }
+
+    public void specialBarScale() {
+        scale(0.1f, 0.0f);
+        startTimeSpecialBallAnim = Utils.getTime();
+        specialBallAnimActive = true;
+    }
 }

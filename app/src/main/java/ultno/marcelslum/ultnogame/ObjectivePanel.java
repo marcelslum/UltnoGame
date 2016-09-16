@@ -22,7 +22,7 @@ public class ObjectivePanel extends Entity{
         isCollidable = false;
         isVisible = true;
         alpha = 1;
-        this.textureId = Game.TEXTURE_BUTTONS_AND_BALLS;
+        this.textureId = Texture.TEXTURE_BUTTONS_AND_BALLS;
         this.program = Game.imageProgram;
         ballsAlive = 4;
         minBallsAlive = 2;

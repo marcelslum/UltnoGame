@@ -15,6 +15,7 @@ public class Wind extends Entity{
     float frequenciaCentral;
     Wave[]waves;
     float height;
+    boolean rightDirection;
 
 
     public Wind(String name, float x, float y, float height) {
@@ -30,6 +31,8 @@ public class Wind extends Entity{
 
         quantityOfWaves = (int)Math.floor(height/(float)density);
         waves = new Wave[quantityOfWaves];
+
+        rightDirection = true;
 
         float frequency;
         float initX;

@@ -93,12 +93,12 @@ public class TextBox extends Entity{
             addChild(this.texts.get(i));
         }
 
-        frame = new Image("frame", x, y, width + (textPadding*6), textY - y + (textPadding*6), Game.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
+        frame = new Image("frame", x, y, width + (textPadding*6), textY - y + (textPadding*6), Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
         addChild(frame);
 
         //Log.e("texbox", x + " " + y + " " + (width + (textPadding*6)) + " " + (textY - y + (textPadding*6)));
 
-        arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, textY - textPadding, size, size, Game.TEXTURE_BUTTONS_AND_BALLS, 3f);
+        arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, textY - textPadding, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS, 3f);
         arrowContinuar.setTextureMap(14);
         arrowContinuar.textureMapUnpressed = 14;
         arrowContinuar.textureMapPressed = 6;

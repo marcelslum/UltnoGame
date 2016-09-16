@@ -44,7 +44,7 @@ public abstract class Utils {
         return x * Math.sin(Math.toRadians(angle)) + y * Math.cos(Math.toRadians(angle));
     }
    
-    public static boolean isInsideBounds(float testX, float testY, float x, float y, float width, float height){
+    public static boolean isPointInsideBounds(float testX, float testY, float x, float y, float width, float height){
         if (testX >= x && testX <= (x + width) && testY >= y && testY <= (y + height)) {
             return true;
         } else {
@@ -437,8 +437,6 @@ public abstract class Utils {
             array[6 + (startIndex)] = x1;
             array[7 + (startIndex)] = 1-y2;
     }
-    
-
 
     public static Animation createSimpleAnimation(Entity object, String name, String parameter, int duration, float v1, float v2){
         ArrayList<float[]> values = new ArrayList<>();

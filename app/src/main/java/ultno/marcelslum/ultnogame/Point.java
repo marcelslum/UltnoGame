@@ -17,7 +17,7 @@ public class Point extends Entity {
         isCollidable = false;
         isVisible = true;
         alpha = 1;
-        textureId = Game.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
+        textureId = Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE;
         program = Game.imageProgram;
     }
 
