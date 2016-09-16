@@ -81,8 +81,28 @@ public class PhysicalObject extends Entity implements Weight{
         this.updateQuatreeData();
         return this.quadtreeData;
     }
-
-
+    
+    public void verifyWind(){
+        Wind w = Game.wind;
+        if (w != null){
+            if (w.isActive){
+                if (w.rightDirection){
+                    if (translateX > 0) {
+                        translateX * 1.15f;
+                    } else if (translateX < 0) {
+                        translateX * 0.85f;
+                    }
+                } else {
+                    if (translateX < 0) {
+                        translateX * 1.15f;
+                    } else if (translateX > 0) {
+                        translateX * 0.85f;
+                    }
+                    
+                }
+            }
+        }
+    }
 
     public void verifyAcceleration(){
         if (this.accelStarted){
@@ -96,9 +116,7 @@ public class PhysicalObject extends Entity implements Weight{
             } else {
                 this.dvx = this.accelInitialVelocityX + ((this.accelFinalVelocityX - this.accelInitialVelocityX) * porcentage);
                 this.dvy = this.accelInitialVelocityY + ((this.accelFinalVelocityY - this.accelInitialVelocityY) * porcentage);
-
                 //Log.e("ball", "verify acceleration "+this.name + " dvx "+dvx);
-
             }
         }
     }
