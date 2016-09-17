@@ -105,13 +105,11 @@ public class ObjectivePanel extends Entity{
     
     public void explodeBlueBall(){
         if (blueBalls > 0){
-
-            Game.soundPool.play(Game.soundBlueBallExplosion1, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
-            Game.soundPool.play(Game.soundBlueBallExplosion2, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
+            Sound.play(Sound.soundBlueBallExplosion1, 1, 1, 0);
+            Sound.play(Sound.soundBlueBallExplosion2, 1, 1, 0);
 
             setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
-
-
+            
             ParticleGenerator pg = new ParticleGenerator("explode",
                                 initialX + animTranslateX + ((lastXBall)*animScaleX), y + animTranslateY + ((size/2f)*animScaleY),
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4, 

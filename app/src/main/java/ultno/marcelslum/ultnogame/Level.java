@@ -112,7 +112,7 @@ public class Level {
         Game.blockAndWaitTouchRelease();
         this.showingTutorial = 0;
         this.tutorials.get(0).textBox.alpha = 0f;
-        this.tutorials.get(0).show(Game.soundPool, Game.soundTextBoxAppear, Game.volume);
+        this.tutorials.get(0).show(Sound.soundTextBoxAppear, Game.volume);
     }
 
     public void nextTutorial(){
@@ -121,7 +121,7 @@ public class Level {
         final Level innerLevel = this;
         Game.blockAndWaitTouchRelease();
         if (this.tutorials.get(this.showingTutorial).isBlocked == false){
-            Game.soundPool.play(Game.soundMenuSelectBig, 0.01f*(float)Game.volume, 0.01f*(float)Game.volume, 0, 0, 1);
+            Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
             if (showingTutorial + 1 == this.tutorials.size()){
 
                 Log.e("level", "ultimo tutorail, setando preparar");
@@ -140,7 +140,7 @@ public class Level {
                     public void onUnshowAfterAnim2() {
                         //Log.e("level", "onUnshowAfterAnim2");
                         innerLevel.showingTutorial = innerLevel.showingTutorial + 1;
-                        innerLevel.tutorials.get(innerLevel.showingTutorial).show(Game.soundPool, Game.soundTextBoxAppear, Game.volume);
+                        innerLevel.tutorials.get(innerLevel.showingTutorial).show(Sound.soundTextBoxAppear, Game.volume);
                     }
                 });
                 tutorials.get(showingTutorial).unshow();
@@ -293,17 +293,17 @@ public class Level {
                     Game.volume = 50;
                     Game.menuVolume = 50;
                 }
-                if (Game.music != null){
-                    Game.music.setVolume(0.006f* (float) 50, 0.006f* (float) 50);
-                    Game.music.start();
+                if (Sound.music != null){
+                    Sound.music.setVolume(0.006f* (float) 50, 0.006f* (float) 50);
+                    Sound.music.start();
                 }
             }
 
             @Override
             public void offBehavior() {
                 Game.musicOn = false;
-                if (Game.music != null){
-                    Game.music.pause();
+                if (Sound.music != null){
+                    Sound.music.pause();
                 }
             }
         });

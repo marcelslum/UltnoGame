@@ -49,7 +49,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     public void onPause()
     {
-        if (Game.music != null) {
+        if (Sound.music != null) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
         }
     }

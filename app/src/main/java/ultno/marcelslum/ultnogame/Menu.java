@@ -49,7 +49,7 @@ class Menu extends Entity{
     }
 
     public void toSelector(Selector selector, String selectedValue){
-        Game.soundPool.play(Game.soundMenuSelectBig, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
+        Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
         this.block();
         this.display();
         selector.menuRelated = this;
@@ -94,7 +94,7 @@ class Menu extends Entity{
                                                }
                                            });
         animationMenu.start();
-        Game.soundPool.play(Game.soundMenuSelectBig, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
+        Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
     }
 
     public MenuOption getMenuOptionByName(String name){
@@ -131,7 +131,7 @@ class Menu extends Entity{
                             //Log.e("Menu", "interaction menu");
                             if (!innerMenu.isBlocked){
                                 Game.blockAndWaitTouchRelease();
-                                Game.soundPool.play(Game.soundMenuSelectBig, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
+                                Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
 
                                 ArrayList<float[]> valuesAnimation = new ArrayList<>();
                                 valuesAnimation.add(new float[]{0f,1f});

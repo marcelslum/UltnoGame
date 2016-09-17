@@ -55,36 +55,36 @@ public class SpecialBall extends Circle{
 
     public void setUvData(){
         if (textureMap < 9){
-            Utils.y1 = (0f + 1f)/1024f;
-            Utils.y2 = (128f - 1f)/1024f;
+            Utils.y1 = (0f + 1.5f)/1024f;
+            Utils.y2 = (128f - 1.5f)/1024f;
         } else {
-            Utils.y1 = (128f + 1f)/1024f;
-            Utils.y2 = (256f - 1f)/1024f;
+            Utils.y1 = (128f + 1.5f)/1024f;
+            Utils.y2 = (256f - 1.5f)/1024f;
         }
         if (textureMap == 1 || textureMap == 9){
-            Utils.x1 = (0f + 1f)/1024f;
-            Utils.x2 = (128f - 1f)/1024f;
+            Utils.x1 = (0f + 1.5f)/1024f;
+            Utils.x2 = (128f - 1.5f)/1024f;
         } else if (textureMap == 2 || textureMap == 10){
-            Utils.x1 = (128f + 1f)/1024f;
-            Utils.x2 = (256f - 1f)/1024f;
+            Utils.x1 = (128f + 1.5f)/1024f;
+            Utils.x2 = (256f - 1.5f)/1024f;
         } else if (textureMap == 3 || textureMap == 11){
-            Utils.x1 = (256f + 1f)/1024f;
-            Utils.x2 = (384f - 1f)/1024f;
+            Utils.x1 = (256f + 1.5f)/1024f;
+            Utils.x2 = (384f - 1.5f)/1024f;
         } else if (textureMap == 4 || textureMap == 12){
-            Utils.x1 = (384f + 1f)/1024f;
-            Utils.x2 = (512f - 1f)/1024f;
+            Utils.x1 = (384f + 1.5f)/1024f;
+            Utils.x2 = (512f - 1.5f)/1024f;
         } else if (textureMap == 5 || textureMap == 13){
-            Utils.x1 = (512f + 1f)/1024f;
-            Utils.x2 = (640f - 1f)/1024f;
+            Utils.x1 = (512f + 1.5f)/1024f;
+            Utils.x2 = (640f - 1.5f)/1024f;
         } else if (textureMap == 6 || textureMap == 14){
-            Utils.x1 = (640f + 1f)/1024f;
-            Utils.x2 = (768f - 1f)/1024f;
+            Utils.x1 = (640f + 1.5f)/1024f;
+            Utils.x2 = (768f - 1.5f)/1024f;
         } else if (textureMap == 7 || textureMap == 15){
-            Utils.x1 = (768f + 1f)/1024f;
-            Utils.x2 = (896f - 1f)/1024f;
+            Utils.x1 = (768f + 1.5f)/1024f;
+            Utils.x2 = (896f - 1.5f)/1024f;
         } else if (textureMap == 8 || textureMap == 16){
-            Utils.x1 = (896f + 1f)/1024f;
-            Utils.x2 = (1024f - 1f)/1024f;
+            Utils.x1 = (896f + 1.5f)/1024f;
+            Utils.x2 = (1024f - 1.5f)/1024f;
         }
         Utils.insertRectangleUvData(uvsData, 0);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
@@ -97,6 +97,13 @@ public class SpecialBall extends Circle{
     }
 
     public void verifyBars() {
+
+        if (positionY - radius > Game.bars.get(0).positionY + Game.bars.get(0).getTransformedHeight()){
+            isVisible = false;
+            dvy = 0f;
+            isDead = true;
+        }
+
         for(int i = 0; i < Game.bars.size(); i++){
             Bar bar = Game.bars.get(i);
             if (positionY + radius > bar.positionY){
@@ -107,6 +114,7 @@ public class SpecialBall extends Circle{
                     isDead = true;
 
                     bar.specialBarScale();
+                    Sound.play(Sound.soundBarSize, 0.12f, 0.12f, 0);
                 }
             }
         }

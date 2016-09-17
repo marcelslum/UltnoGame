@@ -16,6 +16,7 @@ public class Wind extends Entity{
     Wave[]waves;
     float height;
     boolean rightDirection;
+    int soundStreamId;
 
 
     public Wind(String name, float x, float y, float height) {
@@ -32,7 +33,7 @@ public class Wind extends Entity{
         quantityOfWaves = (int)Math.floor(height/(float)density);
         waves = new Wave[quantityOfWaves];
 
-        rightDirection = true;
+        rightDirection = false;
 
         float frequency;
         float initX;
@@ -40,7 +41,12 @@ public class Wind extends Entity{
         float waveY;
 
         for (int i = 0; i < quantityOfWaves; i++) {
+
             frequency = frequenciaCentral + 0.8f * (float) Math.cos(Utils.getRandonFloat(0.0f, 360.0f));
+
+            if (!rightDirection){
+                frequency *= -1.0f;
+            }
 
             if (i%4 == 1) {
                 initX = 0f;
@@ -69,7 +75,7 @@ public class Wind extends Entity{
         indicesData = new short[6*quantityOfWaves];
         colorsData = new float[16*quantityOfWaves];
 
-        Log.e("wind", "quantityOfWaves "+quantityOfWaves);
+        //Log.e("wind", "quantityOfWaves "+quantityOfWaves);
 
         for (int i = 0; i < quantityOfWaves; i++){
 
@@ -77,7 +83,7 @@ public class Wind extends Entity{
             float y2 = (waves[i].y + 0.1f)*Game.resolutionY;
             Utils.insertRectangleVerticesData(verticesData, i * 12,  0f, Game.resolutionX, y1, y2, 0.0f);
 
-            Log.e("wind", "onda y1 "+y1+" y2 "+y2);
+            //Log.e("wind", "onda y1 "+y1+" y2 "+y2+" f"+waves[i].frequency);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
             Utils.insertRectangleColorsData(colorsData, i * 16, waves[i].initX, waves[i].finalX, waves[i].frequency, waves[i].y);
         }
@@ -88,11 +94,13 @@ public class Wind extends Entity{
     }
 
     public void stop(){
+        Sound.soundPool.stop(soundStreamId);
         isActive = false;
         alpha = 0f;
     }
 
     public void init(){
+        soundStreamId = Sound.play(Sound.soundWind, 0.6f, 0.6f, -1);
         isActive = true;
         alpha = 1f;
     }

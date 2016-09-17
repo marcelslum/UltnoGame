@@ -88,25 +88,6 @@ public class Game {
     // font
     public static Font font;
 
-    // sounds
-    public static SoundPool soundPool;
-    public static int soundBallHit;
-    public static int soundCounter;
-    public static int soundDestroyTarget;
-    public static int soundScore;
-    public static int soundAlarm;
-    public static int soundBallFall;
-    public static int soundBlueBallExplosion1;
-    public static int soundBlueBallExplosion2;
-    public static int soundExplosion1;
-    public static int soundExplosion2;
-    public static int soundGameOver;
-    public static int soundMenuSelectBig;
-    public static int soundMenuSelectSmall;
-    public static int soundWin;
-    public static int soundTextBoxAppear;
-    public static MediaPlayer music;
-
     // scree properties
     public static float gameAreaResolutionX;
     public static float gameAreaResolutionY;
@@ -309,9 +290,9 @@ public class Game {
         } else if (state == GAME_STATE_PREPARAR){
             eraseAllTutorials();
             levelObject.loadEntities();
-            music = MediaPlayer.create(context, R.raw.musicgroove90);
-            music.setVolume(0.006f* (float) volume, 0.006f* (float) volume);
-            music.setLooping(true);
+            Sound.music = MediaPlayer.create(context, R.raw.musicgroove90);
+            Sound.music.setVolume(0.006f* (float) volume, 0.006f* (float) volume);
+            Sound.music.setLooping(true);
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
                 values.add(new float[]{0f,3f});
@@ -321,16 +302,17 @@ public class Game {
             final Text innerMessagePreparation = messagePreparation;
             messagePreparation.setText("3");
             messagePreparation.display();
-            soundPool.play(soundCounter, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
+            Sound.play(Sound.soundCounter, 1, 1, 0);
+
             Animation anim = new Animation(messagePreparation, "messagePreparation", "numberForAnimation", 4000, values, false, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
                     if (innerMessagePreparation.numberForAnimation == 2f){
-                        soundPool.play(soundCounter, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
+                        Sound.play(Sound.soundCounter, 1, 1, 0);
                         innerMessagePreparation.setText("2");
                     } else if (innerMessagePreparation.numberForAnimation == 1f) {
-                        soundPool.play(soundCounter, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
+                        Sound.play(Sound.soundCounter, 1, 1, 0);
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
                         innerMessagePreparation.setText("GO!");
@@ -353,7 +335,7 @@ public class Game {
 
             if (musicOn) {
                 Log.e("game", "musicOn");
-                music.start();
+                Sound.music.start();
             }
 
             for (int i = 0; i < bars.size(); i++) {
@@ -376,7 +358,8 @@ public class Game {
             freeAllGameEntities();
         } else if (state == GAME_STATE_DERROTA){
             stopAndReleaseMusic();
-            soundPool.play(soundGameOver, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
+            Sound.play(Sound.soundGameOver, 1, 1, 0);
+
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
@@ -392,9 +375,9 @@ public class Game {
             }
 
         } else if (state == GAME_STATE_PAUSE){
-            music.pause();
+            Sound.music.pause();
             Log.e("game", "ativando game_state_pause");
-            soundPool.play(soundMenuSelectBig, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
+            Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
             menuInGame.appearAndUnblock(300);
@@ -429,7 +412,7 @@ public class Game {
 
         } else if (state == GAME_STATE_VITORIA){
             stopAndReleaseMusic();
-            soundPool.play(soundWin, 0.01f* (float) volume, 0.01f* (float) volume, 0, 0, 1);
+            Sound.play(Sound.soundWin, 1, 1, 0);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
 
@@ -510,7 +493,7 @@ public class Game {
             messageInGame.increaseAlpha(1600, 1f, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
-                    Game.soundPool.play(Game.soundTextBoxAppear, 1, 1, 0, 0, 1);
+                    Sound.play(Sound.soundTextBoxAppear, 1, 1, 0);
                     Game.menuInGame.appearAndUnblock(800);
                 }
             });
@@ -559,10 +542,10 @@ public class Game {
     }
 
     public static void stopAndReleaseMusic(){
-        if (music != null) {
-            music.stop();
-            music.release();
-            music = null;
+        if (Sound.music != null) {
+            Sound.music.stop();
+            Sound.music.release();
+            Sound.music = null;
         }
     }
 
@@ -679,7 +662,7 @@ public class Game {
         
         initTime = Utils.getTime();
         initTextures();
-        initSounds();
+        Sound.init();
         initPrograms();
         initFont();
         initMenus();
@@ -698,7 +681,7 @@ public class Game {
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/obstacle"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_OBSTACLE, "drawable/obstacle"));
     }
 
     public static void initTexts(){
@@ -1017,7 +1000,7 @@ public class Game {
                Game.blockAndWaitTouchRelease();
                Game.setGameState(GAME_STATE_TUTORIAL);
                Game.levelObject.showingTutorial = 0;
-               Game.levelObject.tutorials.get(0).show(Game.soundPool, Game.soundTextBoxAppear, 0.01f* (float) volume);
+               Game.levelObject.tutorials.get(0).show(Sound.soundTextBoxAppear, 0.01f* (float) volume);
                Game.menuTutorial.block();
                Game.menuTutorial.clearDisplay();
             }
@@ -1096,26 +1079,7 @@ public class Game {
 
         volume = Storage.getVolume();
 
-        AudioAttributes audioAttrib = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .build();
-        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(8).build();
-        soundBallHit = soundPool.load(context, R.raw.ballhit, 1);
-        soundCounter = soundPool.load(context, R.raw.counter, 1);
-        soundDestroyTarget = soundPool.load(context, R.raw.destroytarget, 1);
-        soundAlarm = soundPool.load(context, R.raw.alarm, 1);
-        soundBallFall = soundPool.load(context, R.raw.ballfall, 1);
-        soundBlueBallExplosion1 = soundPool.load(context, R.raw.blueballexplosion1, 1);
-        soundBlueBallExplosion2 = soundPool.load(context, R.raw.blueballexplosion2, 1);
-        soundExplosion1 = soundPool.load(context, R.raw.explosion1, 1);
-        soundExplosion2 = soundPool.load(context, R.raw.explosion21, 1);
-        soundGameOver = soundPool.load(context, R.raw.gameover2, 1);
-        soundMenuSelectBig = soundPool.load(context, R.raw.menuselectbig, 1);
-        soundMenuSelectSmall = soundPool.load(context, R.raw.menuselectsmall, 1);
-        soundScore = soundPool.load(context, R.raw.score, 1);
-        soundWin = soundPool.load(context, R.raw.win, 1);
-        soundTextBoxAppear = soundPool.load(context, R.raw.textboxappear, 1);
+
     }
 
     public static void simulate(long elapsed, float frameDuration){
@@ -1159,7 +1123,7 @@ public class Game {
                     }
 
                     bars.get(0).translate(bars.get(0).vx, 0);
-                    bars(0).verifyWind();
+                    bars.get(0).verifyWind();
 
                     if (bars.size() == 2) {
                         if (button2Left.isPressed) {
@@ -1171,7 +1135,7 @@ public class Game {
                         }
 
                         bars.get(1).translate(bars.get(0).vx, 0);
-                        bars(1).verifyWind();
+                        bars.get(1).verifyWind();
                     }
                 }
             }

@@ -517,22 +517,21 @@ public class Ball extends Circle{
 
         if (!collidedProcessed) {
             float soundX = positionX / Game.gameAreaResolutionX;
-            float volume = 0.01f * (float) Game.volume;
-            float volumeD = volume;
-            float volumeE = volume;
+            float volumeD = 0.5f;
+            float volumeE = 0.5f;
 
 
             if (soundX < 0.5f) {
-                volumeE = volume * (1f + (0.5f - soundX));
-                volumeD = volume * (1f - ((0.5f - soundX) * 2f));
+                volumeE = (0.5f + (0.5f - soundX));
+                volumeD = (0.5f - (0.5f - soundX));
             }
             if (soundX > 0.5f) {
-                volumeD = volume * (1f + (soundX - 0.5f));
-                volumeE = volume * (1f - ((soundX - 0.5f) * 2f));
+                volumeD = (0.5f + (soundX - 0.5f));
+                volumeE = (0.5f - (soundX - 0.5f));
             }
 
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
-            Game.soundPool.play(Game.soundBallHit, volumeE, volumeD, 0, 0, 1);
+            Sound.play(Sound.soundBallHit, volumeE, volumeD, 0);
         }
     }
 
@@ -605,17 +604,10 @@ public class Ball extends Circle{
             //Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
             //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
         }
-
-
-
-
-
-
     }
 
     private void waitForExplosion() {
-
-        alarmId = Game.soundPool.play(Game.soundAlarm, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 100, 1);
+        alarmId = Sound.play(Sound.soundAlarm, 1, 1, 100);
         initialTimeWaitingExplosion = Utils.getTime();
         listenForExplosion = true;
         setTextureMapAndUvData(COLOR_BALL_RED);
@@ -627,7 +619,6 @@ public class Ball extends Circle{
 
         Animation anim = new Animation(this, "alphaExplode", "alpha", 3000, valuesAlphaRedBall, true, true);
         anim.start();
-        
     }
     
     public void explode(){
@@ -637,10 +628,10 @@ public class Ball extends Circle{
         Game.particleGenerator.add(pg);
         pg.activate();
 
-        Game.soundPool.stop(alarmId);
+        Sound.soundPool.stop(alarmId);
 
-        Game.soundPool.play(Game.soundExplosion1, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
-        Game.soundPool.play(Game.soundExplosion2, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
+        Sound.play(Sound.soundExplosion1, 1, 1, 0);
+        Sound.play(Sound.soundExplosion2, 1, 1, 0);
 
         listenForExplosion = false;
 

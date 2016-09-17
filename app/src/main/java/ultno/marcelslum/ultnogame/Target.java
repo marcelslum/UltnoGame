@@ -129,7 +129,7 @@ public class Target extends Rectangle {
 
     public void decayState(int points){
 
-        Game.soundPool.play(Game.soundDestroyTarget, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
+        Sound.play(Sound.soundDestroyTarget, 1, 1, 0);
 
         Game.scorePanel.setValue(Game.scorePanel.value + points,  true, 500, false);
 
@@ -160,7 +160,8 @@ public class Target extends Rectangle {
                 this.isMovable = false;
                 this.isSolid = false;
             }
-        } else {
+        } else if (this.currentState != -1){
+
             if (this.states[this.currentState] == 0){
                 this.isCollidable = false;
                 this.isMovable = false;

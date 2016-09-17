@@ -8,14 +8,14 @@ public class Obstacle extends Rectangle{
     public float sizeOfSquares;
 
     Obstacle(String name, float x, float y, float width, float height) {
-        super(name, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(1.0f, 1.0f, 1.0f, 1.0f));
-        this.textureId = Texture.TEXTURE_TITTLE;
-        this.program = Game.imageProgram;
+        super(name, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(0.7f, 0.7f, 0.7f, 1.0f));
+        //this.textureId = Texture.TEXTURE_TITTLE;
+        this.program = Game.solidProgram;
         setDrawInfo();
     }
 
     public void setDrawInfo(){
-        initializeData(12, 6, 8, 0);
+        initializeData(12, 6, 0, 16);
 
         sizeOfSquares = (getWidth()/getTransformedWidth())* (Game.resolutionX/10f);
 
@@ -25,13 +25,16 @@ public class Obstacle extends Rectangle{
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
         indicesBuffer = Utils.generateShortBuffer(indicesData);
 
-        Utils.insertObstacleUvData(uvsData, 0, getTransformedWidth()/sizeOfSquares, getTransformedHeight()/sizeOfSquares);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        //Utils.insertObstacleUvData(uvsData, 0, getTransformedWidth()/sizeOfSquares, getTransformedHeight()/sizeOfSquares);
+        //uvsBuffer = Utils.generateFloatBuffer(uvsData);
+
+        Utils.insertRectangleColorsData(colorsData,0, color);
+        colorsBuffer = Utils.generateFloatBuffer(colorsData);
     }
 
     public void updateUvInfo(){
-        Utils.insertObstacleUvData(uvsData, 0, getTransformedWidth()/sizeOfSquares, getTransformedHeight()/sizeOfSquares);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        //Utils.insertObstacleUvData(uvsData, 0, getTransformedWidth()/sizeOfSquares, getTransformedHeight()/sizeOfSquares);
+        //uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
 
 

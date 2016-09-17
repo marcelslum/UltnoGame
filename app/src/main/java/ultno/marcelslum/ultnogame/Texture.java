@@ -7,6 +7,8 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -22,8 +24,9 @@ public class Texture {
     public final static int TEXTURE_NUMBERS_EXPLOSION_OBSTACLE = 5;
     public final static int TEXTURE_TITTLE = 6;
     public final static int TEXTURE_SPECIAL_BALL = 7;
+    public final static int TEXTURE_OBSTACLE = 8;
 
-    public static int MAX_TEXTURES = 5;
+    public static int MAX_TEXTURES = 8;
 
     public static int lastTextureUsed = -1;
 
@@ -54,6 +57,9 @@ public class Texture {
             Log.e("texture", "max texture size "+maxTextureSize[0]);
 
             MAX_TEXTURES = maxTextureUnits[0];
+            if (MAX_TEXTURES > 8){
+                MAX_TEXTURES = 8;
+            }
 
             textureNames = new int[Texture.MAX_TEXTURES];
             textureNamesUsed = new boolean[Texture.MAX_TEXTURES];
@@ -61,6 +67,10 @@ public class Texture {
         }
         resoureIdentifierId = Game.context.getResources().getIdentifier(this.resoureIdentifier, null, Game.context.getPackageName());
         bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
+
+
+        //Picasso.with(Game.context).load(resoureIdentifierId).into(bitmap);
+
     }
 
     public static Texture getTextureById(int id){
@@ -102,6 +112,8 @@ public class Texture {
         if (lastTextureUsed == MAX_TEXTURES){
             lastTextureUsed = 0;
         }
+
+        Log.e("texture", "lastTextureUsed "+lastTextureUsed);
 
         getTextureByTextureUnit(lastTextureUsed).bounded = false;
         getTextureByTextureUnit(lastTextureUsed).textureUnit = -1;

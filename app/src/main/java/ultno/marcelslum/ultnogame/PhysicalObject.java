@@ -84,21 +84,31 @@ public class PhysicalObject extends Entity implements Weight{
     
     public void verifyWind(){
         Wind w = Game.wind;
+        float windForce = 0.15f;
         if (w != null){
             if (w.isActive){
-                if (w.rightDirection){
-                    if (translateX > 0) {
-                        translateX * 1.15f;
-                    } else if (translateX < 0) {
-                        translateX * 0.85f;
+                if (translateX != 0f) {
+                    if (w.rightDirection) {
+                        //Log.e("physical", "right " + translateX);
+                        if (translateX > 0) {
+                            translateX *= 1.0f + windForce;
+                        } else if (translateX < 0) {
+                            translateX *= 1.0f - windForce;
+                        }
+                    } else {
+                        //Log.e("physical", "not right" + translateX);
+                        if (translateX < 0) {
+                            translateX *= 1.0f + windForce;
+                        } else if (translateX > 0) {
+                            translateX *= 1.0f - windForce;
+                        }
                     }
                 } else {
-                    if (translateX < 0) {
-                        translateX * 1.15f;
-                    } else if (translateX > 0) {
-                        translateX * 0.85f;
+                    if (w.rightDirection) {
+                        translateX = dvx*0.2f;
+                    } else {
+                        translateX = -dvx*0.2f;
                     }
-                    
                 }
             }
         }
@@ -116,7 +126,6 @@ public class PhysicalObject extends Entity implements Weight{
             } else {
                 this.dvx = this.accelInitialVelocityX + ((this.accelFinalVelocityX - this.accelInitialVelocityX) * porcentage);
                 this.dvy = this.accelInitialVelocityY + ((this.accelFinalVelocityY - this.accelInitialVelocityY) * porcentage);
-                //Log.e("ball", "verify acceleration "+this.name + " dvx "+dvx);
             }
         }
     }

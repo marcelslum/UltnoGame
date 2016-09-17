@@ -191,7 +191,7 @@ public class ScorePanel extends Entity {
     public void setValue(int newValue, boolean animatePanel, int duration, boolean playSound){
 
         if (playSound){
-            Game.soundPool.play(Game.soundScore, 0.01f* (float) Game.volume, 0.01f* (float) Game.volume, 0, 0, 1);
+            Sound.play(Sound.soundScore, 1, 1, 0);
         }
 
         //Log.e("setValue", "animate "+animatePanel );

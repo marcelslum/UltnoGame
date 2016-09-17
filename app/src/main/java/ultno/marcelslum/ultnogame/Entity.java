@@ -313,9 +313,6 @@ public class Entity{
 
     public void setMatrixModel(){
         Matrix.setIdentityM(matrixModel, 0);
-
-
-
         if (accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
             Matrix.translateM(matrixModel, 0, positionX + animTranslateX + (getTransformedWidth() - getWidth()) / 2f,
                     positionY + animTranslateY  + (getTransformedHeight() - getHeight()) / 2f, 0);
@@ -400,7 +397,14 @@ public class Entity{
         // TODO verificar se a inversão do eixo y considera o offset
 
         if (program == Game.windProgram || program == Game.specialBallProgram){
+
             float time = ((float)(Utils.getTime() - Game.initTime))/1000f;
+
+
+            if (time > 1000.0f){
+                time = time - (float)(Math.floor(time/1000)*1000);
+            }
+
             int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
             GLES20.glUniform1f(uf_time, time);
             int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");

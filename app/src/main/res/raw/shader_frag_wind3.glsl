@@ -9,12 +9,23 @@ void main() {
 
     vec2 relativePosition = gl_FragCoord.xy/uv2_resolution.xy;
     float frequency = vv4_Colors.b;
+    bool right = true;
+    if (frequency < 0.0){
+     right = false;
+    }
 
     // resto da divisão entre o tempo e a frequencia
     float resto = mod(uf_time, frequency);
     // porcentagem do resto no eixo x
     float porcentagem = resto/frequency;
-    float x = uv2_resolution.x * (porcentagem);
+
+    float x;
+    if (right ==true){
+     x = uv2_resolution.x * (porcentagem);
+    } else {
+     x = uv2_resolution.x * (1.0 - porcentagem);
+    }
+
     // diferença entre o fragmento atual e o ponto x utilizado como base
     float fragmentRelativePosition =((gl_FragCoord.x-x)/uv2_resolution.x);
 
@@ -57,9 +68,9 @@ void main() {
             alpha = 0.0;
         }
     } else {
-        alpha *= 0.5;
+        alpha *= 0.4;
     }
 
 
-    gl_FragColor = vec4(1.0, 1.0, 1.0, alpha*1.2*uf_alpha);
+    gl_FragColor = vec4(1.0, 1.0, 1.0, alpha*1.35*uf_alpha);
 }
