@@ -27,9 +27,20 @@ public class TextBox extends Entity{
         super(builder.name, builder.x, builder.y);
         width = builder.width;
         size = builder.size;
-        text = builder.text;
         texts = new ArrayList<>();
-
+        setText(builder.text);
+    }
+    
+    
+    public void setText(String text){
+        if (texts != null){
+            texts = new ArrayList<>();
+        }
+        if (childs != null){
+            childs.clear();
+        }
+        this.text = text;
+        
         Text textForMeasure = new Text("text", 0f, 0f, size, text, Game.font, textColor);
         float widthOfText = textForMeasure.calculateWidth();
 
@@ -112,6 +123,8 @@ public class TextBox extends Entity{
         if (builder.isHaveArrow){
             appendArrow(builder.arrowX, builder.arrowY);
         }
+        
+        
     }
 
     public void appendArrow(float arrowX, float arrowY){
