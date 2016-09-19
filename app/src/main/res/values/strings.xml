@@ -53,4 +53,14 @@
     <string name="l9t14">Mas chega de papo furado. Você quer ação, não é mesmo?</string>
     <string name="l12t1">Apenas um alvo? Que fácil, não é? Nem tanto...</string>
     <string name="l12t2">Neste nível haverá alguns alvos invisíveis. Destrua todos!</string>
+    <string name="options">Opções</string>
+    <string name="dificuldade">Alterar dificuldade</string>
+    <string name="musica">Música</string>
+    <string name="sons">Sons do Jogo</string>
+    <string name="facil">Fácil</string>
+    <string name="normal">Normal</string>
+    <string name="dificil">Difícil</string>
+    <string name="insano">Insano</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
 </resources>

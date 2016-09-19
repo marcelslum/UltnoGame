@@ -255,12 +255,7 @@ public class Level {
         Game.buttonSound.setOnOffBehavior(new ButtonOnOff.OnOffBehavior() {
             @Override
             public void onBehavior() {
-                if (Game.menuVolume == 0) {
-                    Game.volume = 50;
-                    Game.menuVolume = 50;
-                } else {
-                    Game.volume = Game.menuVolume;
-                }
+                Game.volume = 100;
             }
 
             @Override
@@ -395,14 +390,15 @@ public class Level {
             float obstacleWidth = Game.gameAreaResolutionX * obstaclesWidth_BR[i];
             float obstacleHeight = Game.gameAreaResolutionY * obstaclesHeight_BR[i];
             Obstacle obstacle = new Obstacle("obstacle", obstacleX, obstacleY, obstacleWidth, obstacleHeight);
+            obstacle.addBorder(0.05f, Game.gameAreaResolutionX * 0.003f, Game.gameAreaResolutionX * 0.003f, new Color(0.3f, 0.305f, 0.3f, 1.0f));
             if (obstaclesScaleVariationData != null) {
-                Log.e("level", "setting obstacle scale variation data");
+                //Log.e("level", "setting obstacle scale variation data");
                 if (obstaclesScaleVariationData.length > i) {
                     obstacle.setScaleVariation(obstaclesScaleVariationData[i]);
                 }
             }
             if (obstaclesPositionVariationData != null) {
-                Log.e("level", "setting obstacle scale variation data");
+                //Log.e("level", "setting obstacle scale variation data");
                 if (obstaclesPositionVariationData.length > i) {
                     obstacle.setPositionVariation(obstaclesPositionVariationData[i]);
                 }

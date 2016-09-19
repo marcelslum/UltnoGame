@@ -1202,3 +1202,29 @@ OBSTACLE
                 }
 
                 //Log.e("obstacle", " pos X "+posX+" Y "+posY +" w "+w+" h "+h);
+
+
+                 // cria o seletor de volume
+                        selectorVolumn = new Selector("selectorVolumn",0f,0f, 40f, "", volumns, font);
+                        final Selector innerSelectorVolumn = selectorVolumn;
+                        selectorVolumn.setOnChange(new Selector.OnChange() {
+                            @Override
+                            public void onChange() {
+                                Game.volume = Game.possibleVolums[innerSelectorVolumn.selectedValue];
+                                Storage.setVolume(Game.volume);
+                            }
+                        });
+
+                        // adiciona a opção de alterar volume
+                        menuMain.addMenuOption("AlterarVolume", context.getResources().getString(R.string.menuPrincipalAlterarVolume), new MenuOption.OnChoice() {
+                            @Override
+                            public void onChoice() {
+                                innerSelectorVolumn.fromMenu(innerMenu);
+                                int volumeToSelector = volume / 10;
+                                innerSelectorVolumn.setSelectedValue(volumeToSelector);
+                            }
+                        });
+
+                        // ajusta a posição do seletor de nível
+                        MenuOption menuOptionSelectVolumn = menuMain.getMenuOptionByName("AlterarVolume");
+                        selectorVolumn.setPosition(menuOptionSelectLevel.x + (menuOptionSelectVolumn.width), menuOptionSelectVolumn.y);

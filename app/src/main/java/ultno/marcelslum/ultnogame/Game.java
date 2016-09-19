@@ -34,10 +34,14 @@ public class Game {
 
     // entities
     public static Menu menuMain;
+    public static Menu menuOptions;
     public static Menu menuInGame;
     public static Menu menuTutorial;
     public static Selector selectorLevel;
-    public static Selector selectorVolumn;
+    public static Selector selectorDificulty;
+    public static Selector selectorMusic;
+    public static Selector selectorSound;
+    //public static Selector selectorVolumn;
 
     public static ArrayList<Target> targets;
     public static ArrayList<Ball> balls;
@@ -121,6 +125,12 @@ public class Game {
     public final static int GAME_STATE_TUTORIAL =  15;
     //public final static int GAME_STATE_REINICIAR =  16;
     public final static int GAME_STATE_PAUSE =  16;
+    public final static int GAME_STATE_OPCOES =  16;
+
+    public final static int DIFICULDADE_FACIL = 0;
+    public final static int DIFICULDADE_NORMAL = 1;
+    public final static int DIFICULDADE_DIFÍCIL = 2;
+    public final static int DIFICULDADE_INSANO = 3;
 
     public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
     public final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
@@ -154,6 +164,7 @@ public class Game {
     public static long initTime;
     public static float effectiveScreenHeight;
     public static float effectiveScreenWidth;
+    public static int dificulty;
 
     // bars and balls data
     //public float [] barsInitialPositionX = new float[10];
@@ -267,7 +278,14 @@ public class Game {
     public static void setGameState(int state){
         gameState = state;
         clearAllMenuEntities();
-        if (state == GAME_STATE_MENU){
+
+        if (state == GAME_STATE_OPCOES){
+            tittle.display();
+            menuMain.isBlocked = true;
+            menuOptions.isBlocked = false;
+            menuOptions.display();
+        } else if (state == GAME_STATE_MENU){
+            menuOptions.isBlocked = true;
             stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();
@@ -670,9 +688,7 @@ public class Game {
     }
 
     private static void initTextures() {
-
         Texture.textures = new ArrayList<>();
-
         Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
@@ -689,7 +705,7 @@ public class Game {
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
                 Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
-                
+
         ArrayList<float[]> valuesAnimationTittle = new ArrayList<>();
         valuesAnimationTittle.add(new float[]{0f,1f});
         valuesAnimationTittle.add(new float[]{0.15f,2f});
@@ -717,7 +733,7 @@ public class Game {
             animTittle.start();
 
 
-        messageGameOver = new Text("messageGameOver", 
+        messageGameOver = new Text("messageGameOver",
             gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.2f,
             context.getResources().getString(R.string.messageGameOver), font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
@@ -740,9 +756,9 @@ public class Game {
                 }
             });
             animMessageGameOver.start();
-            
-            
-        messagePreparation = new Text("messagePreparation", 
+
+
+        messagePreparation = new Text("messagePreparation",
             gameAreaResolutionX*0.5f, gameAreaResolutionY*0.3f, gameAreaResolutionY*0.4f,
                 " ", font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
@@ -754,7 +770,7 @@ public class Game {
              resolutionX*0.05f, resolutionY*0.78f, resolutionY*0.05f,
                 context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
 
-        messageMaxScoreLevel = new Text("messageMaxScoreLevel", 
+        messageMaxScoreLevel = new Text("messageMaxScoreLevel",
             resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.05f,
                 context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f,0.5f), Text.TEXT_ALIGN_LEFT);
 
@@ -766,8 +782,12 @@ public class Game {
     public static ArrayList<Entity> collectAllMenuEntities(){
         ArrayList<Entity> list = new ArrayList<>();
         list.add(menuMain);
+        list.add(menuOptions);
         list.add(selectorLevel);
-        list.add(selectorVolumn);
+        list.add(selectorDificulty);
+        list.add(selectorMusic);
+        list.add(selectorSound);
+        list.add(selectorLevel);
         list.add(menuInGame);
         list.add(menuTutorial);
         list.add(tittle);
@@ -848,9 +868,115 @@ public class Game {
 
 
     public static void initMenus(){
+
+        float fontSize = gameAreaResolutionY*0.09f;
+
+
+        // cria o menu options
+        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY/2, fontSize, font);
+
+        // cria o seletor de dificuldade -------------------------------------------------------------------------------------
+        selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
+            new String[]{
+                    context.getResources().getString(R.string.insano),
+                    context.getResources().getString(R.string.dificil),
+                    context.getResources().getString(R.string.normal),
+                    context.getResources().getString(R.string.facil)
+            }, font);
+        menuOptions.addMenuOption("dificuldade", context.getResources().getString(R.string.dificuldade), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.selectorDificulty.fromMenu(Game.menuOptions);
+            }
+        });
+        final MenuOption menuOptionDificuldade = menuOptions.getMenuOptionByName("dificuldade");
+        selectorDificulty.setPosition(menuOptionDificuldade.x + (menuOptionDificuldade.width), menuOptionDificuldade.y);
+
+        if (dificulty == DIFICULDADE_FACIL){
+            selectorDificulty.setSelectedValue(3);
+        } else if (dificulty == DIFICULDADE_NORMAL){
+            selectorDificulty.setSelectedValue(2);
+        } else if (dificulty == DIFICULDADE_DIFÍCIL){
+            selectorDificulty.setSelectedValue(1);
+        } else if (dificulty == DIFICULDADE_INSANO){
+            selectorDificulty.setSelectedValue(0);
+        }
+        selectorDificulty.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                Game.changeDificulty(selectorDificulty.selectedValue);
+            }
+        });
+
+        // cria o seletor de musica -------------------------------------------------------------------------------------
+        selectorMusic = new Selector("selectorMusic", 0f,0f, fontSize, "",
+                new String[]{
+                        context.getResources().getString(R.string.sim),
+                        context.getResources().getString(R.string.nao)}, font);
+        menuOptions.addMenuOption("musica", context.getResources().getString(R.string.musica), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.selectorMusic.fromMenu(Game.menuOptions);
+            }
+        });
+        MenuOption menuOptionMusic = menuOptions.getMenuOptionByName("musica");
+        selectorMusic.setPosition(menuOptionMusic.x + ((menuOptionMusic.width)*2.0f), menuOptionMusic.y);
+        if (musicOn) {
+            selectorMusic.setSelectedValue(0);
+        } else {
+            selectorMusic.setSelectedValue(1);
+        }
+        selectorMusic.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                if (selectorMusic.selectedValue == 0){
+                    musicOn = true;
+                } else {
+                    musicOn = false;
+                }
+            }
+        });
+
+        // cria o seletor de sons -------------------------------------------------------------------------------------
+        selectorSound = new Selector("selectorSound", 0f,0f, fontSize, "",
+                new String[]{
+                        context.getResources().getString(R.string.sim),
+                        context.getResources().getString(R.string.nao)}, font);
+        menuOptions.addMenuOption("sound", context.getResources().getString(R.string.sons), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.selectorSound.fromMenu(Game.menuOptions);
+            }
+        });
+        MenuOption menuOptionSound = menuOptions.getMenuOptionByName("sound");
+        selectorSound.setPosition(menuOptionSound.x + (menuOptionMusic.width*2.0f), menuOptionSound.y);
+        if (volume == 100) {
+            selectorSound.setSelectedValue(0);
+        } else {
+            selectorSound.setSelectedValue(1);
+        }
+        selectorSound.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                if (selectorSound.selectedValue == 0){
+                    volume = 100;
+                } else {
+                    volume = 0;
+                }
+            }
+        });
+
+        menuOptions.addMenuOption("retornar", context.getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                setGameState(GAME_STATE_MENU);
+            }
+        });
+
+
         
         // cria o menu principal
-        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
+        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY/2, fontSize, font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -896,7 +1022,7 @@ public class Game {
         }
 
         // cria o seletor de nível
-        selectorLevel = new Selector("selectorLevel", 0f,0f, 40f, "", levels, font);
+        selectorLevel = new Selector("selectorLevel", 0f,0f, fontSize, "", levels, font);
         final Selector innerSelectorLevel = selectorLevel;
         // adiciona a opção de selecionar nível
         menuMain.addMenuOption("SelecionarNivel", context.getResources().getString(R.string.menuPrincipalAlterarNivel), new MenuOption.OnChoice() {
@@ -916,39 +1042,19 @@ public class Game {
             }
         });
 
-        // prepara os valores para o seletor de volume
-        String [] volumns = new String [11];
-        for (int i = 0; i < 11; i++){
-            volumns[i] = Integer.toString(possibleVolums[i]) + "%";
-        }
 
-        // cria o seletor de volume
-        selectorVolumn = new Selector("selectorVolumn",0f,0f, 40f, "", volumns, font);
-        final Selector innerSelectorVolumn = selectorVolumn;
-        selectorVolumn.setOnChange(new Selector.OnChange() {
-            @Override
-            public void onChange() {
-                Game.volume = Game.possibleVolums[innerSelectorVolumn.selectedValue];
-                Storage.setVolume(Game.volume);
-            }
-        });
-
-        // adiciona a opção de alterar volume
-        menuMain.addMenuOption("AlterarVolume", context.getResources().getString(R.string.menuPrincipalAlterarVolume), new MenuOption.OnChoice() {
+        // adiciona a opção de acessar as opções do jogo
+        menuMain.addMenuOption("options", context.getResources().getString(R.string.options), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                innerSelectorVolumn.fromMenu(innerMenu);
-                int volumeToSelector = volume / 10;
-                innerSelectorVolumn.setSelectedValue(volumeToSelector);
+                setGameState(GAME_STATE_OPCOES);
+
             }
         });
 
-        // ajusta a posição do seletor de nível
-        MenuOption menuOptionSelectVolumn = menuMain.getMenuOptionByName("AlterarVolume");
-        selectorVolumn.setPosition(menuOptionSelectLevel.x + (menuOptionSelectVolumn.width), menuOptionSelectVolumn.y);
         
         // cria o menu in game
-        menuInGame = new Menu("menuInGame",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, 40f, font);
+        menuInGame = new Menu("menuInGame",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, fontSize, font);
 
         // adiciona a opção continuar
         final Menu innerMenuInGame = menuInGame;
@@ -991,7 +1097,7 @@ public class Game {
         });
 
         // cria o menu tutorial
-        menuTutorial = new Menu("menuTutorial", gameAreaResolutionX/2, gameAreaResolutionY/2, 40f, font);
+        menuTutorial = new Menu("menuTutorial", gameAreaResolutionX/2, gameAreaResolutionY/2, fontSize, font);
 
         // adiciona a opção exibir tutorial
         menuTutorial.addMenuOption("exibirTutorial", context.getResources().getString(R.string.menuTutorialExibirTutorial), new MenuOption.OnChoice() {
@@ -1026,6 +1132,18 @@ public class Game {
                 
             }
         });
+    }
+
+    private static void changeDificulty(int selectedValue) {
+        if (selectedValue == 3){
+            dificulty = DIFICULDADE_FACIL;
+        } else if (selectedValue == 2){
+            dificulty = DIFICULDADE_NORMAL;
+        } else if (selectedValue == 1){
+            dificulty = DIFICULDADE_DIFÍCIL;
+        } else if (selectedValue == 0){
+            dificulty = DIFICULDADE_INSANO;
+        }
     }
 
     private static void changeLevel(int level) {
@@ -1364,7 +1482,14 @@ public class Game {
         if (menuInGame != null) menuInGame.checkTransformations(true);
         if (menuTutorial != null) menuTutorial.checkTransformations(true);
         if (selectorLevel != null) selectorLevel.checkTransformations(true);
-        if (selectorVolumn != null) selectorVolumn.checkTransformations(true);
+
+        if (menuOptions != null)menuOptions.checkTransformations(true);
+        if (selectorDificulty != null)selectorDificulty.checkTransformations(true);
+        if (selectorMusic != null)selectorMusic.checkTransformations(true);
+        if (selectorSound != null)selectorSound.checkTransformations(true);
+
+
+
         if (tittle != null) tittle.checkTransformations(true);
 
         if (gameState == GAME_STATE_TUTORIAL){
@@ -1454,7 +1579,12 @@ public class Game {
         if (menuInGame != null) menuInGame.prepareRender(matrixView, matrixProjection);
         if (menuTutorial != null) menuTutorial.prepareRender(matrixView, matrixProjection);
         if (selectorLevel != null) selectorLevel.prepareRender(matrixView, matrixProjection);
-        if (selectorVolumn != null) selectorVolumn.prepareRender(matrixView, matrixProjection);
+
+        if (menuOptions != null)menuOptions.prepareRender(matrixView, matrixProjection);
+        if (selectorDificulty != null)selectorDificulty.prepareRender(matrixView, matrixProjection);
+        if (selectorMusic != null)selectorMusic.prepareRender(matrixView, matrixProjection);
+        if (selectorSound != null)selectorSound.prepareRender(matrixView, matrixProjection);
+
         if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
 
         if (gameState == GAME_STATE_TUTORIAL){
@@ -1513,7 +1643,10 @@ public class Game {
         if (menuInGame != null) menuInGame.verifyListener();
         if (menuTutorial != null) menuTutorial.verifyListener();
         if (selectorLevel != null) selectorLevel.verifyListener();
-        if (selectorVolumn != null) selectorVolumn.verifyListener();
+        if (menuOptions != null)menuOptions.verifyListener();
+        if (selectorDificulty != null)selectorDificulty.verifyListener();
+        if (selectorMusic != null)selectorMusic.verifyListener();
+        if (selectorSound != null)selectorSound.verifyListener();
 
         if (gameState == GAME_STATE_TUTORIAL){
             if (levelObject.tutorials.size() >  levelObject.showingTutorial){
