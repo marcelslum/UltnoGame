@@ -767,7 +767,7 @@ public class Game {
         messageInGame = new Text("messageInGame",
             gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.2f,
                 context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
-se
+
         messageCurrentLevel = new Text("messageCurrentLevel",
              resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.05f,
                 context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
@@ -793,15 +793,27 @@ se
                             .isHaveFrame(false)
                             .isHaveArrowContinue(false)
                             .build()
+        
+        setBottomText("");
+        
     }
     
     
     public void setBottomText(String text){
-        bottomTextBox.setText(text);
-        bottomTextBox.y = resolutionY - bottomTextBox.height;
-        messageMaxScoreLevel.y = resolutionY * (bottomTextBox.height - 0.18f);
-        messageMaxScoreTotal = resolutionY * (bottomTextBox.height - 0.12f);
-        messageMaxScoreTotal = resolutionY * (bottomTextBox.height - 0.06f);
+        if (text != ""){
+            bottomTextBox.setText(text);
+            bottomTextBox.y = resolutionY - bottomTextBox.height;
+            messageMaxScoreLevel.y = resolutionY - bottomTextBox.height - (resolutionY * 0.18f);
+            messageMaxScoreTotal = resolutionY - bottomTextBox.height - (resolutionY * 0.12f);
+            messageMaxScoreTotal = resolutionY - bottomTextBox.height - (resolutionY * 0.16f);
+        } else {
+            bottomTextBox.setText("...");
+            bottomTextBox.y = resolutionY - bottomTextBox.height;
+            bottomTextBox.clearDisplay();
+            messageMaxScoreLevel.y = resolutionY - (resolutionY * 0.18f);
+            messageMaxScoreTotal = resolutionY - (resolutionY * 0.12f);
+            messageMaxScoreTotal = resolutionY - (resolutionY * 0.06f);
+        }
     }
 
     public static ArrayList<Entity> collectAllMenuEntities(){
