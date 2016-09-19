@@ -296,6 +296,8 @@ public class Game {
             messageCurrentLevel.display();
             messageMaxScoreLevel.display();
             messageMaxScoreTotal.display();
+            setBottomText("Não conectado");
+            bottomTextBox.display();
 
             messageMaxScoreLevel.setText(
                     context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+
@@ -765,18 +767,41 @@ public class Game {
         messageInGame = new Text("messageInGame",
             gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.2f,
                 context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
-
+se
         messageCurrentLevel = new Text("messageCurrentLevel",
-             resolutionX*0.05f, resolutionY*0.78f, resolutionY*0.05f,
+             resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.05f,
                 context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
 
         messageMaxScoreLevel = new Text("messageMaxScoreLevel",
-            resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.05f,
+            resolutionX*0.05f, resolutionY*0.78f, resolutionY*0.05f,
                 context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f,0.5f), Text.TEXT_ALIGN_LEFT);
 
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
+                resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.05f,
+                context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
+                
+        messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 resolutionX*0.05f, resolutionY*0.9f, resolutionY*0.05f,
                 context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
+
+        bottomTextBox = new TextBox.TextBoxBuilder("bottomTextBox")
+                            .position(resolutionY*0.9f, 0.0f)
+                            .width(resolutionX)
+                            .size(resolutionY*0.05f)
+                            .text("...")
+                            .withoutArrow()
+                            .isHaveFrame(false)
+                            .isHaveArrowContinue(false)
+                            .build()
+    }
+    
+    
+    public void setBottomText(String text){
+        bottomTextBox.setText(text);
+        bottomTextBox.y = resolutionY - bottomTextBox.height;
+        messageMaxScoreLevel.y = resolutionY * (bottomTextBox.height - 0.18f);
+        messageMaxScoreTotal = resolutionY * (bottomTextBox.height - 0.12f);
+        messageMaxScoreTotal = resolutionY * (bottomTextBox.height - 0.06f);
     }
 
     public static ArrayList<Entity> collectAllMenuEntities(){
@@ -797,6 +822,7 @@ public class Game {
         list.add(messageCurrentLevel);
         list.add(messageMaxScoreLevel);
         list.add(messageMaxScoreTotal);
+        list.add(bottomTextBox);
         return list;
     }
 
@@ -1504,6 +1530,7 @@ public class Game {
         messageCurrentLevel.checkTransformations(true);
         messageMaxScoreLevel.checkTransformations(true);
         messageMaxScoreTotal.checkTransformations(true);
+        bottomTextBox.checkTransformations(true);
 
         if (bordaE != null)bordaE.checkTransformations(true);
         if (bordaD != null)bordaD.checkTransformations(true);
@@ -1599,6 +1626,9 @@ public class Game {
         messageCurrentLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
+        
+        bottomTextBox.prepareRender(matrixView, matrixProjection)
+        
 
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
         if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
