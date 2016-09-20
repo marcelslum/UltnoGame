@@ -35,7 +35,7 @@ public abstract class Sound {
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
-        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(8).build();
+        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(16).build();
 
         soundBallHit = soundPool.load(Game.context, R.raw.ballhit, 1);
         soundCounter = soundPool.load(Game.context, R.raw.counter, 1);

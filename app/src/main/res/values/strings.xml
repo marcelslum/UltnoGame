@@ -63,4 +63,8 @@
     <string name="insano">Insano</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
+    <string name="mensagemDificuldadeFacil">A velocidade do jogo será lenta. A pontuação simples será de 5 pontos.</string>
+    <string name="mensagemDificuldadeNormal">A velocidade do jogo será normal. A pontuação simples será de 10 pontos.</string>
+    <string name="mensagemDificuldadeDificil">A velocidade do jogo será rápida. A pontuação simples será de 15 pontos.</string>
+    <string name="mensagemDificuldadeInsano">A velocidade do jogo será muito rápida, quase impossível de se jogar. A pontuação simples será de 25 pontos.</string>
 </resources>

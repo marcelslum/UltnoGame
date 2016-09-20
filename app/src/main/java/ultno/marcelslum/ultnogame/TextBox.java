@@ -17,16 +17,23 @@ public class TextBox extends Entity{
     float padding = 0.2f;
     boolean isHaveArrow = false;
     boolean isHaveFrame = true;
-    booelan isHaveArrowContinue = true;
+    boolean isHaveArrowContinue = true;
     Button arrowContinuar;
     Image frame;
     Color textColor = new Color(0f, 0f, 0f, 0.9f);
     Line arrow;
+    float arrowX;
+    float arrowY;
     
     private TextBox(TextBoxBuilder builder) {
         super(builder.name, builder.x, builder.y);
         width = builder.width;
         size = builder.size;
+        isHaveArrow = builder.isHaveArrow;
+        isHaveFrame = builder.isHaveFrame;
+        isHaveArrowContinue = builder.isHaveArrowContinue;
+        arrowX = builder.arrowX;
+        arrowY = builder.arrowY;
         texts = new ArrayList<>();
         setText(builder.text);
     }
@@ -96,9 +103,16 @@ public class TextBox extends Entity{
             textY += size + textPadding;
             addChild(this.texts.get(i));
         }
-        
-        height = textY - y + (textPadding*6);
-        
+
+        if (isHaveArrowContinue) {
+            height = textY - y + (textPadding * 6);
+        } else {
+            height = textY - y + (textPadding * 3);
+        }
+
+        Log.e("textbox", "height "+ height);
+
+
         if (isHaveFrame){
             frame = new Image("frame", x, y, width + (textPadding*6), height, Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
             addChild(frame);
@@ -120,12 +134,33 @@ public class TextBox extends Entity{
             addChild(arrowContinuar);
         }
         
-        if (builder.isHaveArrow){
-            appendArrow(builder.arrowX, builder.arrowY);
+        if (isHaveArrow){
+            appendArrow(arrowX, arrowY);
         }
-        
-        
     }
+
+    public void setPositionY(float y) {
+        this.y = y;
+        float textPadding = size * padding;
+        float textY = this.y + (textPadding * 4);
+        for (int i = 0; i < this.texts.size(); i++){
+            this.texts.get(i).y = textY;
+            textY += size + textPadding;
+        }
+
+        if (isHaveFrame){
+            frame.y = y;
+        }
+
+        if (isHaveArrowContinue){
+            arrowContinuar.y = textY - textPadding;
+        }
+
+        if (isHaveArrow){
+            appendArrow(arrowX, arrowY);
+        }
+    }
+
 
     public void appendArrow(float arrowX, float arrowY){
         isHaveArrow = true;
@@ -172,7 +207,8 @@ public class TextBox extends Entity{
             this.texts.get(i).prepareRender(matrixView, matrixProjection);
         }
     }
-    
+
+
     public static class TextBoxBuilder {
         private float width;
         private float size;

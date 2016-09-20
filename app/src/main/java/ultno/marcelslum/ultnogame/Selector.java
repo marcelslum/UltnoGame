@@ -21,6 +21,7 @@ public class Selector extends Entity{
     Button arrowDown;
     Button arrowBack;
     private OnChange onChange;
+    private OnConclude onConclude;
 
 
     Selector(String name, float x, float y, float size, String text, String [] values, Font font){
@@ -114,6 +115,9 @@ public class Selector extends Entity{
             public void onPress() {
                 if (!innerSelector.isBlocked){
                     innerSelector.backToMenu();
+                    if (onConclude != null){
+                        onConclude.onConclude();
+                    }
                 }
             }
         });
@@ -126,6 +130,14 @@ public class Selector extends Entity{
 
     interface OnChange{
         void onChange();
+    }
+
+    public void setOnConclude(OnConclude onConclude){
+        this.onConclude = onConclude;
+    }
+
+    interface OnConclude{
+        void onConclude();
     }
 
     public void setSelectedValue(int selectedValue){

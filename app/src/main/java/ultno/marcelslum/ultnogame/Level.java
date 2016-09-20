@@ -310,7 +310,7 @@ public class Level {
             @Override
             public void onPress() {
                 if (Game.gameState == Game.GAME_STATE_JOGAR){
-                    ////Log.e("level", "listener pause ativado");
+                    Log.e("level", "listener pause ativado");
                     Game.blockAndWaitTouchRelease();
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 }

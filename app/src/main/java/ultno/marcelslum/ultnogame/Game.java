@@ -83,8 +83,8 @@ public class Game {
     public static Text messagePreparation;
     public static Text messageInGame;
     public static Text messageCurrentLevel;
-    public static Text messageMaxScoreLevel;
     public static Text messageMaxScoreTotal;
+    public static TextBox bottomTextBox;
 
     // quadtree objects
     public static Quadtree quad;
@@ -125,7 +125,7 @@ public class Game {
     public final static int GAME_STATE_TUTORIAL =  15;
     //public final static int GAME_STATE_REINICIAR =  16;
     public final static int GAME_STATE_PAUSE =  16;
-    public final static int GAME_STATE_OPCOES =  16;
+    public final static int GAME_STATE_OPCOES =  17;
 
     public final static int DIFICULDADE_FACIL = 0;
     public final static int DIFICULDADE_NORMAL = 1;
@@ -284,6 +284,7 @@ public class Game {
             menuMain.isBlocked = true;
             menuOptions.isBlocked = false;
             menuOptions.display();
+            setBottomText("");
         } else if (state == GAME_STATE_MENU){
             menuOptions.isBlocked = true;
             stopAndReleaseMusic();
@@ -294,16 +295,11 @@ public class Game {
             menuMain.display();
             tittle.display();
             messageCurrentLevel.display();
-            messageMaxScoreLevel.display();
             messageMaxScoreTotal.display();
+            setBottomText("");
+            // TODO verificar conexão
             setBottomText("Não conectado");
             bottomTextBox.display();
-
-            messageMaxScoreLevel.setText(
-                    context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+
-                            Integer.toString(Storage.getLevelMaxScore(levelNumber))
-            );
-
             messageMaxScoreTotal.setText(
                     context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
 
@@ -426,10 +422,6 @@ public class Game {
             messageInGame.setText(context.getResources().getString(R.string.pause));
             messageInGame.increaseAlpha(100, 1f);
             messageInGame.display();
-
-
-
-
         } else if (state == GAME_STATE_VITORIA){
             stopAndReleaseMusic();
             Sound.play(Sound.soundWin, 1, 1, 0);
@@ -678,6 +670,8 @@ public class Game {
             maxLevel = Storage.getMaxLevel();
             //Log.e("game ", "maxLevel "+maxLevel);
 
+            dificulty = Storage.getDificulty();
+
         levelNumber = Storage.getActualLevel();
         
         initTime = Utils.getTime();
@@ -704,8 +698,8 @@ public class Game {
 
     public static void initTexts(){
         tittle = new Image("tittle",
-                gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.1f,
-                gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.5f * 0.3671875f,
+                gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.07f,
+                gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.4f * 0.3671875f,
                 Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
 
         ArrayList<float[]> valuesAnimationTittle = new ArrayList<>();
@@ -769,51 +763,69 @@ public class Game {
                 context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
         messageCurrentLevel = new Text("messageCurrentLevel",
-             resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.05f,
-                context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
-
-        messageMaxScoreLevel = new Text("messageMaxScoreLevel",
-            resolutionX*0.05f, resolutionY*0.78f, resolutionY*0.05f,
-                context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f,0.5f), Text.TEXT_ALIGN_LEFT);
+             resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.04f,
+                context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber) + " - " + context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
 
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
-                resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.05f,
-                context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
-                
-        messageMaxScoreTotal = new Text("messageMaxScoreTotal",
-                resolutionX*0.05f, resolutionY*0.9f, resolutionY*0.05f,
+                resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.04f,
                 context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
 
         bottomTextBox = new TextBox.TextBoxBuilder("bottomTextBox")
-                            .position(resolutionY*0.9f, 0.0f)
-                            .width(resolutionX)
-                            .size(resolutionY*0.05f)
+                            .position(resolutionX*0.05f, resolutionY*0.9f)
+                            .width(resolutionX*0.9f)
+                            .size(resolutionY*0.04f)
                             .text("...")
                             .withoutArrow()
-                            .isHaveFrame(false)
+                            .isHaveFrame(true)
                             .isHaveArrowContinue(false)
-                            .build()
+                            .build();
         
         setBottomText("");
         
     }
     
     
-    public void setBottomText(String text){
-        if (text != ""){
-            bottomTextBox.setText(text);
-            bottomTextBox.y = resolutionY - bottomTextBox.height;
-            messageMaxScoreLevel.y = resolutionY - bottomTextBox.height - (resolutionY * 0.18f);
-            messageMaxScoreTotal = resolutionY - bottomTextBox.height - (resolutionY * 0.12f);
-            messageMaxScoreTotal = resolutionY - bottomTextBox.height - (resolutionY * 0.16f);
-        } else {
-            bottomTextBox.setText("...");
-            bottomTextBox.y = resolutionY - bottomTextBox.height;
-            bottomTextBox.clearDisplay();
-            messageMaxScoreLevel.y = resolutionY - (resolutionY * 0.18f);
-            messageMaxScoreTotal = resolutionY - (resolutionY * 0.12f);
-            messageMaxScoreTotal = resolutionY - (resolutionY * 0.06f);
+    public static void setBottomText(String text){
+
+        float previousPosition = bottomTextBox.y;
+        String previousText = bottomTextBox.text;
+
+        if (previousText.equals("...")|| previousText.equals("")){
+            previousPosition = resolutionY * 2;
         }
+
+        boolean appearOrDesapear = false;
+        if (!text.equals("")){
+            if (bottomTextBox.y == resolutionY*2 || !bottomTextBox.isVisible){
+                appearOrDesapear = true;
+            }
+
+            bottomTextBox.setText(text);
+            bottomTextBox.display();
+            bottomTextBox.setPositionY(resolutionY - bottomTextBox.height);
+            messageCurrentLevel.y = resolutionY - bottomTextBox.height - (resolutionY * 0.14f);
+            messageMaxScoreTotal.y = resolutionY - bottomTextBox.height - (resolutionY * 0.08f);
+        } else {
+            if (!previousText.equals("...")){
+                appearOrDesapear = true;
+            }
+            bottomTextBox.setText("...");
+            bottomTextBox.setPositionY(resolutionY*2);
+            messageCurrentLevel.y = resolutionY - (resolutionY * 0.14f);
+            messageMaxScoreTotal.y = resolutionY - (resolutionY * 0.08f);
+        }
+
+        float difference = previousPosition - bottomTextBox.y;
+        if (difference != 0) {
+            Utils.createSimpleAnimation(bottomTextBox, "translateY", "translateY", 200, difference, 0.0f).start();
+        }
+
+        if (appearOrDesapear){
+            Sound.play(Sound.soundTextBoxAppear, 0.8f, 0.8f, 0);
+        }
+
+
+
     }
 
     public static ArrayList<Entity> collectAllMenuEntities(){
@@ -832,7 +844,6 @@ public class Game {
         list.add(messagePreparation);
         list.add(messageInGame);
         list.add(messageCurrentLevel);
-        list.add(messageMaxScoreLevel);
         list.add(messageMaxScoreTotal);
         list.add(bottomTextBox);
         return list;
@@ -911,34 +922,40 @@ public class Game {
 
 
         // cria o menu options
-        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY/2, fontSize, font);
+        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.4f, fontSize, font);
 
         // cria o seletor de dificuldade -------------------------------------------------------------------------------------
         selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
             new String[]{
-                    context.getResources().getString(R.string.insano),
-                    context.getResources().getString(R.string.dificil),
+                    context.getResources().getString(R.string.facil),
                     context.getResources().getString(R.string.normal),
-                    context.getResources().getString(R.string.facil)
+                    context.getResources().getString(R.string.dificil),
+                    context.getResources().getString(R.string.insano)
+
             }, font);
         menuOptions.addMenuOption("dificuldade", context.getResources().getString(R.string.dificuldade), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 Game.selectorDificulty.fromMenu(Game.menuOptions);
+                if (dificulty == DIFICULDADE_FACIL){
+                    selectorDificulty.setSelectedValue(0);
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeFacil));
+                } else if (dificulty == DIFICULDADE_NORMAL){
+                    selectorDificulty.setSelectedValue(1);
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeNormal));
+                } else if (dificulty == DIFICULDADE_DIFÍCIL){
+                    selectorDificulty.setSelectedValue(2);
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeDificil));
+                } else if (dificulty == DIFICULDADE_INSANO){
+                    selectorDificulty.setSelectedValue(3);
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeInsano));
+                }
             }
         });
         final MenuOption menuOptionDificuldade = menuOptions.getMenuOptionByName("dificuldade");
         selectorDificulty.setPosition(menuOptionDificuldade.x + (menuOptionDificuldade.width), menuOptionDificuldade.y);
 
-        if (dificulty == DIFICULDADE_FACIL){
-            selectorDificulty.setSelectedValue(3);
-        } else if (dificulty == DIFICULDADE_NORMAL){
-            selectorDificulty.setSelectedValue(2);
-        } else if (dificulty == DIFICULDADE_DIFÍCIL){
-            selectorDificulty.setSelectedValue(1);
-        } else if (dificulty == DIFICULDADE_INSANO){
-            selectorDificulty.setSelectedValue(0);
-        }
+
         selectorDificulty.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
@@ -946,11 +963,18 @@ public class Game {
             }
         });
 
+        selectorDificulty.setOnConclude(new Selector.OnConclude() {
+            @Override
+            public void onConclude() {
+                setBottomText("");
+            }
+        });
+
         // cria o seletor de musica -------------------------------------------------------------------------------------
         selectorMusic = new Selector("selectorMusic", 0f,0f, fontSize, "",
                 new String[]{
-                        context.getResources().getString(R.string.sim),
-                        context.getResources().getString(R.string.nao)}, font);
+                        context.getResources().getString(R.string.nao),
+                        context.getResources().getString(R.string.sim)}, font);
         menuOptions.addMenuOption("musica", context.getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -960,14 +984,14 @@ public class Game {
         MenuOption menuOptionMusic = menuOptions.getMenuOptionByName("musica");
         selectorMusic.setPosition(menuOptionMusic.x + ((menuOptionMusic.width)*2.0f), menuOptionMusic.y);
         if (musicOn) {
-            selectorMusic.setSelectedValue(0);
-        } else {
             selectorMusic.setSelectedValue(1);
+        } else {
+            selectorMusic.setSelectedValue(0);
         }
         selectorMusic.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
-                if (selectorMusic.selectedValue == 0){
+                if (selectorMusic.selectedValue == 1){
                     musicOn = true;
                 } else {
                     musicOn = false;
@@ -978,8 +1002,8 @@ public class Game {
         // cria o seletor de sons -------------------------------------------------------------------------------------
         selectorSound = new Selector("selectorSound", 0f,0f, fontSize, "",
                 new String[]{
-                        context.getResources().getString(R.string.sim),
-                        context.getResources().getString(R.string.nao)}, font);
+                        context.getResources().getString(R.string.nao),
+                        context.getResources().getString(R.string.sim)}, font);
         menuOptions.addMenuOption("sound", context.getResources().getString(R.string.sons), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -989,14 +1013,14 @@ public class Game {
         MenuOption menuOptionSound = menuOptions.getMenuOptionByName("sound");
         selectorSound.setPosition(menuOptionSound.x + (menuOptionMusic.width*2.0f), menuOptionSound.y);
         if (volume == 100) {
-            selectorSound.setSelectedValue(0);
-        } else {
             selectorSound.setSelectedValue(1);
+        } else {
+            selectorSound.setSelectedValue(0);
         }
         selectorSound.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
-                if (selectorSound.selectedValue == 0){
+                if (selectorSound.selectedValue == 1){
                     volume = 100;
                 } else {
                     volume = 0;
@@ -1014,7 +1038,7 @@ public class Game {
 
         
         // cria o menu principal
-        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY/2, fontSize, font);
+        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.4f, fontSize, font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -1173,15 +1197,21 @@ public class Game {
     }
 
     private static void changeDificulty(int selectedValue) {
-        if (selectedValue == 3){
+        if (selectedValue == 0){
             dificulty = DIFICULDADE_FACIL;
-        } else if (selectedValue == 2){
-            dificulty = DIFICULDADE_NORMAL;
+            setBottomText(context.getResources().getString(R.string.mensagemDificuldadeFacil));
         } else if (selectedValue == 1){
+            dificulty = DIFICULDADE_NORMAL;
+            setBottomText(context.getResources().getString(R.string.mensagemDificuldadeNormal));
+        } else if (selectedValue == 2){
             dificulty = DIFICULDADE_DIFÍCIL;
-        } else if (selectedValue == 0){
+            setBottomText(context.getResources().getString(R.string.mensagemDificuldadeDificil));
+        } else if (selectedValue == 3){
             dificulty = DIFICULDADE_INSANO;
+            setBottomText(context.getResources().getString(R.string.mensagemDificuldadeInsano));
         }
+        Storage.setDificulty(selectedValue);
+
     }
 
     private static void changeLevel(int level) {
@@ -1189,12 +1219,8 @@ public class Game {
         
         // alterar texto que mostra o level
         messageCurrentLevel.setText(
-            context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber)
-        );
-
-        // alterar texto que mostra a pontuação
-        messageMaxScoreLevel.setText(
-            context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber))
+            context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber) + " - "+
+                    context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber))
         );
 
         Storage.setActualLevel(level);
@@ -1540,7 +1566,6 @@ public class Game {
         messagePreparation.checkTransformations(true);
         messageInGame.checkTransformations(true);
         messageCurrentLevel.checkTransformations(true);
-        messageMaxScoreLevel.checkTransformations(true);
         messageMaxScoreTotal.checkTransformations(true);
         bottomTextBox.checkTransformations(true);
 
@@ -1636,10 +1661,9 @@ public class Game {
         messagePreparation.prepareRender(matrixView, matrixProjection);
         messageInGame.prepareRender(matrixView, matrixProjection);
         messageCurrentLevel.prepareRender(matrixView, matrixProjection);
-        messageMaxScoreLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         
-        bottomTextBox.prepareRender(matrixView, matrixProjection)
+        bottomTextBox.prepareRender(matrixView, matrixProjection);
         
 
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
