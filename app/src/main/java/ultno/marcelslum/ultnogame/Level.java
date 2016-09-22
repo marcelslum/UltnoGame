@@ -176,26 +176,7 @@ public class Level {
         Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY);
         Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY);
 
-        //Log.e("Level loadEnt", "1");
-
-        Game.bordaE = new Rectangle("bordaE", -999, 0, 1000, Game.gameAreaResolutionY*2, 10, new Color(0,0,0,1));
-        Game.bordaE.isMovable = false;
-        Game.bordaE.program = Game.solidProgram;
-
-        //Log.e("Level loadEnt", "1");
-        Game.bordaD = new Rectangle("bordaD", Game.gameAreaResolutionX-2, 0, 1000, Game.gameAreaResolutionY*2, 10, new Color(0,0,0,1));
-        Game.bordaD.isMovable = false;
-        Game.bordaD.program = Game.solidProgram;
-
-        //Log.e("Level loadEnt", "1");
-        Game.bordaC = new Rectangle("bordaC",  1, -1000, Game.gameAreaResolutionX-4, 1001, 10, new Color(0,0,0,1));
-        Game.bordaC.isMovable = false;
-        Game.bordaC.program = Game.solidProgram;
-
-        //Log.e("Level loadEnt", "1");
-        Game.bordaB = new Rectangle("bordaB", -1000, Game.gameAreaResolutionY-2, Game.gameAreaResolutionX*3, 1000, 10, new Color(0,0,0,1));
-        Game.bordaB.isMovable = false;
-        Game.bordaB.program = Game.solidProgram;
+        Game.bordaB.y = Game.gameAreaResolutionY-2;
 
         //Log.e("Level loadEnt", "1");
         float y = Game.resolutionY * 0.86f;

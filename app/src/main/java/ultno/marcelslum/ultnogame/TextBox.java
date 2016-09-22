@@ -9,23 +9,26 @@ import java.util.ArrayList;
  * Created by marcel on 07/08/2016.
  */
 public class TextBox extends Entity{
-    ArrayList<Text> texts;
-    float width;
-    float height;
-    float size;
-    String text;
-    float padding = 0.2f;
-    boolean isHaveArrow = false;
-    boolean isHaveFrame = true;
-    boolean isHaveArrowContinue = true;
-    Button arrowContinuar;
-    Image frame;
-    Color textColor = new Color(0f, 0f, 0f, 0.9f);
-    Line arrow;
-    float arrowX;
-    float arrowY;
-    
-    private TextBox(TextBoxBuilder builder) {
+    public ArrayList<Text> texts;
+    public float width;
+    public float height;
+    public float size;
+    public String text;
+    public float padding = 0.2f;
+    public boolean isHaveArrow = false;
+    public boolean isHaveFrame = true;
+    public boolean isHaveArrowContinue = true;
+    public Button arrowContinuar;
+    public Color textColor = new Color(0f, 0f, 0f, 0.9f);
+    public Line arrow;
+    public float arrowX;
+    public float arrowY;
+    public Entity frame;
+    public float frameWidth;
+    public int frameType;
+    private OnPress onPress;
+
+    public TextBox(TextBoxBuilder builder) {
         super(builder.name, builder.x, builder.y);
         width = builder.width;
         size = builder.size;
@@ -35,9 +38,9 @@ public class TextBox extends Entity{
         arrowX = builder.arrowX;
         arrowY = builder.arrowY;
         texts = new ArrayList<>();
+        frameType = builder.frameType;
         setText(builder.text);
     }
-    
     
     public void setText(String text){
         if (texts != null){
@@ -55,8 +58,6 @@ public class TextBox extends Entity{
         if (widthOfText > this.width) {
             String [] splitedString = text.split(" ");
             String stringToTest = splitedString[0];
-
-            //Log.e("textBox", "splitedString lenght"+ splitedString.length);
 
             int elementToAdd = 1;
             Text lastText = new Text("text", 0f, 0f, size, ".", Game.font, textColor);
@@ -96,7 +97,6 @@ public class TextBox extends Entity{
         float textY = this.y + (textPadding * 4);
         float textX = this.x + (textPadding * 4);
 
-
         for (int i = 0; i < this.texts.size(); i++){
             this.texts.get(i).x = textX;
             this.texts.get(i).y = textY;
@@ -110,15 +110,17 @@ public class TextBox extends Entity{
             height = textY - y + (textPadding * 3);
         }
 
-        Log.e("textbox", "height "+ height);
-
+        frameWidth = width + (textPadding*6);
 
         if (isHaveFrame){
-            frame = new Image("frame", x, y, width + (textPadding*6), height, Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f/1024f);
+
+            if (frameType == TextBoxBuilder.FRAME_TYPE_IMAGE) {
+                frame = new Image("frame", x, y, frameWidth, height, Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f / 1024f);
+            } else if (frameType == TextBoxBuilder.FRAME_TYPE_SOLID) {
+                frame = new Rectangle("frame", x, y, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
+            }
             addChild(frame);
         }
-
-        //Log.e("texbox", x + " " + y + " " + (width + (textPadding*6)) + " " + (textY - y + (textPadding*6)));
         
         if (isHaveArrowContinue){
             arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, textY - textPadding, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS, 3f);
@@ -132,11 +134,35 @@ public class TextBox extends Entity{
                 }
             });
             addChild(arrowContinuar);
+        } else {
+            setListener(new InteractionListener("listenerTextBox"+this.name, x, y, frameWidth, height, 2000, this,
+                    new InteractionListener.PressListener() {
+                        @Override
+                        public void onPress() {
+                                Log.e("textbox", "onPress textBox");
+                           if (onPress != null){
+                               onPress.onPress();
+                           }
+                        }
+
+                        @Override
+                        public void onUnpress() {
+                        }
+                    }
+            ));
         }
         
         if (isHaveArrow){
             appendArrow(arrowX, arrowY);
         }
+    }
+
+    public void setOnPress(OnPress _onPress){
+        onPress = _onPress;
+    }
+
+    public interface OnPress{
+        void onPress();
     }
 
     public void setPositionY(float y) {
@@ -154,6 +180,8 @@ public class TextBox extends Entity{
 
         if (isHaveArrowContinue){
             arrowContinuar.y = textY - textPadding;
+        } else {
+            getListener().y = y;
         }
 
         if (isHaveArrow){
@@ -167,20 +195,20 @@ public class TextBox extends Entity{
         float initialX;
         float initialY;
         //Log.e("textbox appendArrow", " " + frame.x + " " + frame.y + " " + frame.width + " " + frame.height);
-        if (arrowY > (frame.y + frame.height)){
-            initialY = frame.y + frame.height;
-            initialX = frame.x + (frame.width/2f);
+        if (arrowY > (y + height)){
+            initialY = y + height;
+            initialX = x + (frameWidth/2f);
         } else if (arrowY < frame.y){
-            initialY = frame.y;
-            initialX = frame.x + (frame.width/2f);
+            initialY = y;
+            initialX = x + (frameWidth/2f);
         } else {
-            initialY = frame.y + (frame.height/2f);
-            if (arrowX < frame.x){
-                initialX = frame.x;
-            } else if (arrowX > (frame.x+frame.width)){
-                initialX = frame.x + frame.width;
+            initialY = y + (height/2f);
+            if (arrowX < x){
+                initialX = x;
+            } else if (arrowX > (x+frameWidth)){
+                initialX = x + frameWidth;
             } else {
-                initialX = frame.x;
+                initialX = x;
             }
         }
         //Log.e("textbox appendArrow", " initialX " + initialX + " initialY " + initialY);
@@ -207,81 +235,4 @@ public class TextBox extends Entity{
             this.texts.get(i).prepareRender(matrixView, matrixProjection);
         }
     }
-
-
-    public static class TextBoxBuilder {
-        private float width;
-        private float size;
-        private String text;
-        private float x;
-        private float y;
-        private final String name;
-        private boolean isHaveArrow;
-        private boolean isHaveFrame;
-        private boolean isHaveArrowContinue;
-        private float arrowX;
-        private float arrowY;
-
-        public TextBoxBuilder(String name) {
-            this.name = name;
-            width = 0f;
-            size = 0f;
-            text = "";
-            x = 0f;
-            y = 0f;
-            isHaveArrow = false;
-            isHaveFrame = true;
-            isHaveArrowContinue = true;
-            arrowX = 0f;
-            arrowY = 0f;
-        }
-
-        public TextBoxBuilder position(float x, float y){
-            this.x = x;
-            this.y = y;
-            return this;
-        }
-        
-        public TextBoxBuilder size(float size){
-            this.size = size;
-            return this;
-        }
-        
-        public TextBoxBuilder text(String text){
-            this.text = text;
-            return this;
-        }
-        
-        public TextBoxBuilder width(float width){
-            this.width = width;
-            return this;
-        }
-        
-        public TextBoxBuilder withArrow(float arrowX, float arrowY){
-            this.isHaveArrow = true;
-            this.arrowX = arrowX;
-            this.arrowY = arrowY;
-            return this;
-        }
-        
-        public TextBoxBuilder withoutArrow(){
-            this.isHaveArrow = false;
-            return this;
-        }
-        
-        public TextBoxBuilder isHaveFrame(boolean isHaveFrame){
-            this.isHaveFrame = isHaveFrame;
-            return this;
-        }
-        
-        public TextBoxBuilder isHaveArrowContinue(boolean isHaveArrowContinue){
-            this.isHaveArrowContinue = isHaveArrowContinue;
-            return this;
-        }
-
-        public TextBox build(){
-            return new TextBox(this);
-        }
-    }
-    
 }

@@ -286,6 +286,7 @@ public class Game {
             menuOptions.display();
             setBottomText("");
         } else if (state == GAME_STATE_MENU){
+            Game.bordaB.y = Game.resolutionY;
             menuOptions.isBlocked = true;
             stopAndReleaseMusic();
             eraseAllGameEntities();
@@ -298,7 +299,13 @@ public class Game {
             messageMaxScoreTotal.display();
             setBottomText("");
             // TODO verificar conexão
-            setBottomText("Não conectado");
+            setBottomText("Não foi possível conectar com a internet.Clique aqui para tentar novamente.");
+            bottomTextBox.setOnPress(new TextBox.OnPress() {
+                @Override
+                public void onPress() {
+                    setBottomText("Conectando...");
+                }
+            });
             bottomTextBox.display();
             messageMaxScoreTotal.setText(
                     context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
@@ -641,10 +648,6 @@ public class Game {
     public static void eraseAllHudEntities() {
         objectivePanel = null;
         scorePanel = null;
-        bordaB = null;
-        bordaC = null;
-        bordaD = null;
-        bordaE = null;
         button1Left = null;
         button1Right = null;
         button2Left = null;
@@ -681,6 +684,32 @@ public class Game {
         initFont();
         initMenus();
         initTexts();
+        initEdges();
+    }
+
+    private static void initEdges(){
+        Game.bordaE = new Rectangle("bordaE", -999, 0, 1000, Game.resolutionY*2, 10, new Color(0,0,0,1));
+        Game.bordaE.isMovable = false;
+        Game.bordaE.isVisible = true;
+        Game.bordaE.program = Game.solidProgram;
+
+        //Log.e("Level loadEnt", "1");
+        Game.bordaD = new Rectangle("bordaD", Game.resolutionX-2, 0, 1000, Game.resolutionY*2, 10, new Color(0,0,0,1));
+        Game.bordaD.isMovable = false;
+        Game.bordaD.isVisible = true;
+        Game.bordaD.program = Game.solidProgram;
+
+        //Log.e("Level loadEnt", "1");
+        Game.bordaC = new Rectangle("bordaC",  1, -1000, Game.resolutionX-4, 1001, 10, new Color(0,0,0,1));
+        Game.bordaC.isMovable = false;
+        Game.bordaC.isVisible = true;
+        Game.bordaC.program = Game.solidProgram;
+
+        //Log.e("Level loadEnt", "1");
+        Game.bordaB = new Rectangle("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000, 10, new Color(0,0,0,1));
+        Game.bordaB.isMovable = false;
+        Game.bordaB.isVisible = true;
+        Game.bordaB.program = Game.solidProgram;
     }
 
     private static void initTextures() {
@@ -770,21 +799,22 @@ public class Game {
                 resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.04f,
                 context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
 
-        bottomTextBox = new TextBox.TextBoxBuilder("bottomTextBox")
-                            .position(resolutionX*0.05f, resolutionY*0.9f)
-                            .width(resolutionX*0.9f)
-                            .size(resolutionY*0.04f)
-                            .text("...")
-                            .withoutArrow()
-                            .isHaveFrame(true)
-                            .isHaveArrowContinue(false)
-                            .build();
-        
+        bottomTextBox = new TextBoxBuilder("bottomTextBox")
+                .position(resolutionX*0.05f, resolutionY*0.9f)
+                .width(resolutionX*0.9f)
+                .size(resolutionY*0.04f)
+                .text("...")
+                .withoutArrow()
+                .isHaveFrame(true)
+                .isHaveArrowContinue(false)
+                .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
+                .build();
+
+
         setBottomText("");
         
     }
-    
-    
+
     public static void setBottomText(String text){
 
         float previousPosition = bottomTextBox.y;
@@ -803,6 +833,8 @@ public class Game {
             bottomTextBox.setText(text);
             bottomTextBox.display();
             bottomTextBox.setPositionY(resolutionY - bottomTextBox.height);
+            bottomTextBox.isBlocked = false;
+
             messageCurrentLevel.y = resolutionY - bottomTextBox.height - (resolutionY * 0.14f);
             messageMaxScoreTotal.y = resolutionY - bottomTextBox.height - (resolutionY * 0.08f);
         } else {
@@ -810,6 +842,7 @@ public class Game {
                 appearOrDesapear = true;
             }
             bottomTextBox.setText("...");
+            bottomTextBox.isBlocked = true;
             bottomTextBox.setPositionY(resolutionY*2);
             messageCurrentLevel.y = resolutionY - (resolutionY * 0.14f);
             messageMaxScoreTotal.y = resolutionY - (resolutionY * 0.08f);
@@ -858,10 +891,6 @@ public class Game {
         list.add(button2Left);
         list.add(button2Right);
         list.add(scorePanel);
-        list.add(bordaE);
-        list.add(bordaD);
-        list.add(bordaC);
-        list.add(bordaB);
         list.add(objectivePanel);
         return list;
     }
@@ -1726,5 +1755,6 @@ public class Game {
         if (button2Right != null) button1Right.verifyListener();
         if (buttonMusic != null) buttonMusic.verifyListener();
         if (buttonSound != null) buttonSound.verifyListener();
+        if (bottomTextBox != null) bottomTextBox.verifyListener();
     }
 }

@@ -2,6 +2,7 @@ package ultno.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -47,8 +48,6 @@ public class Entity{
     
     public float dX;
     public float dY;
-    public float previousDX;
-    public float previousDY;
     
     public float alpha = 1f;
     
@@ -75,7 +74,6 @@ public class Entity{
     public short[] indicesData;
     public float[] uvsData;
     public float[] colorsData;
-    public float[] alphaData;
 
     public boolean isLineGL = false;
     public int lineWidth = 1;
@@ -444,11 +442,18 @@ public class Entity{
     }
 
     public void verifyListener(){
+
+
+
         if (isBlocked){
             return;
         }
-        if (this.getListener() != null)
+        if (this.getListener() != null) {
+            //if (name == "bottomTextBox") {
+                //Log.e("listener", "verificando listener " + name);
+            //}
             this.getListener().verify();
+        }
         for (int i = 0; i < this.childs.size(); i++){
             this.childs.get(i).verifyListener();
         }

@@ -41,8 +41,6 @@ public class InteractionListener {
     }
 
     public void verify() {
-        //if(name=="arroContinuartextBox1")
-        //Log.e("listener", "verificando listener "+name);
 
         // verifica se o game estiver bloqueado, caso o listener esteja na mesma passagem do listener que bloqueia o game
         if (Game.isBlocked){
@@ -57,7 +55,10 @@ public class InteractionListener {
             return;
         }
 
-        this.pressedOnVerify = false;
+        pressedOnVerify = false;
+
+        //if(objectAppend.name=="bottomTextBox")
+          //Log.e("listener", "verificando listener "+x +" "+ y+" "+ width+" "+ height);
 
         for (int i = 0; i < Game.touchEvents.size(); i++) {
             pressedOnVerify = Utils.isPointInsideBounds(
@@ -70,7 +71,7 @@ public class InteractionListener {
             }
         }
 
-        if (this.pressedOnVerify) {
+        if (pressedOnVerify) {
             if (!active) {
                 active = true;
                 objectAppend.isPressed = true;
@@ -89,7 +90,7 @@ public class InteractionListener {
                         myPressListener.onPress();
                     }
                     //console.log("onPress");
-                    this.startTime = actualTime;
+                    startTime = actualTime;
                 }
             }
         }
