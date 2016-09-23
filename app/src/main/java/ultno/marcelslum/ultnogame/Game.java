@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.Handler;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -22,8 +23,9 @@ import java.util.TimerTask;
  */
 public class Game {
 
+    public static final Timer timer = new Timer();
 
-
+    public static int connectionAttempts = 0;
     public static final int BALL_WEIGHT = 1;
     public static final int BORDA_WEIGHT = 10;
     public static final int OBSTACLES_WEIGHT = 7;
@@ -126,6 +128,11 @@ public class Game {
     //public final static int GAME_STATE_REINICIAR =  16;
     public final static int GAME_STATE_PAUSE =  16;
     public final static int GAME_STATE_OPCOES =  17;
+
+    public final static int INTERNET_STATE_CONNECTED = 1;
+    public final static int INTERNET_STATE_NOT_CONNECTED = 1;
+
+    public static int internetState;
 
     public final static int DIFICULDADE_FACIL = 0;
     public final static int DIFICULDADE_NORMAL = 1;
@@ -297,15 +304,7 @@ public class Game {
             tittle.display();
             messageCurrentLevel.display();
             messageMaxScoreTotal.display();
-            setBottomText("");
-            // TODO verificar conexão
-            setBottomText("Não foi possível conectar com a internet.Clique aqui para tentar novamente.");
-            bottomTextBox.setOnPress(new TextBox.OnPress() {
-                @Override
-                public void onPress() {
-                    setBottomText("Conectando...");
-                }
-            });
+            new InternetConnection().execute("teste");
             bottomTextBox.display();
             messageMaxScoreTotal.setText(
                     context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
@@ -668,15 +667,13 @@ public class Game {
 
     public static void init(){
         Storage.initializeStorage(context, quantityOfLevels);
-            levelNumber = Storage.getActualLevel();
-            //Log.e("game ", "levelNumber "+levelNumber);
-            maxLevel = Storage.getMaxLevel();
-            //Log.e("game ", "maxLevel "+maxLevel);
-
-            dificulty = Storage.getDificulty();
+        levelNumber = Storage.getActualLevel();
+        //Log.e("game ", "levelNumber "+levelNumber);
+        maxLevel = Storage.getMaxLevel();
+        //Log.e("game ", "maxLevel "+maxLevel);
+        dificulty = Storage.getDificulty();
 
         levelNumber = Storage.getActualLevel();
-        
         initTime = Utils.getTime();
         initTextures();
         Sound.init();
@@ -810,9 +807,20 @@ public class Game {
                 .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
                 .build();
 
+        bottomTextBox.setOnPress(new TextBox.OnPress() {
+            @Override
+            public void onPress() {
+                if (gameState == GAME_STATE_MENU) {
+                    Log.e("game", "internetState "+internetState);
+                    if (internetState == INTERNET_STATE_NOT_CONNECTED) {
+                        new InternetConnection().execute("teste");
+                    }
+                }
+            }
+        });
 
         setBottomText("");
-        
+
     }
 
     public static void setBottomText(String text){
@@ -854,7 +862,7 @@ public class Game {
         }
 
         if (appearOrDesapear){
-            Sound.play(Sound.soundTextBoxAppear, 0.8f, 0.8f, 0);
+            //Sound.play(Sound.soundTextBoxAppear, 0.8f, 0.8f, 0);
         }
 
 
@@ -1067,7 +1075,7 @@ public class Game {
 
         
         // cria o menu principal
-        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.4f, fontSize, font);
+        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.37f, fontSize, font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -1756,5 +1764,42 @@ public class Game {
         if (buttonMusic != null) buttonMusic.verifyListener();
         if (buttonSound != null) buttonSound.verifyListener();
         if (bottomTextBox != null) bottomTextBox.verifyListener();
+    }
+
+    public static void handleInternetConnection(Integer result) {
+        if (result == InternetConnection.ATTEMPT && internetState != INTERNET_STATE_CONNECTED){
+            Log.e("game", "internetConnection attempt");
+            setBottomText(context.getResources().getString(R.string.conectando));
+            return;
+        }
+
+        connectionAttempts += 1;
+        final int fresult = result;
+
+        final TimerTask task2 = new TimerTask() {
+            @Override
+            public void run() {
+                setBottomText("");
+            }
+        };
+
+        final TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                if (fresult == InternetConnection.CONNECTED){
+                    if (internetState != INTERNET_STATE_CONNECTED) {
+                        internetState = INTERNET_STATE_CONNECTED;
+                        Log.e("game", "internetConnection connected");
+                        setBottomText(context.getResources().getString(R.string.conexao));
+                        timer.schedule(task2, 1500);
+                    }
+                } else if (fresult == InternetConnection.NOT_CONNECTED){
+                    Log.e("game", "internetConnection not connected");
+                    internetState = INTERNET_STATE_NOT_CONNECTED;
+                    setBottomText(context.getResources().getString(R.string.nao_conectado1));
+                }
+            }
+        };
+        timer.schedule(task, 2000);
     }
 }

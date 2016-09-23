@@ -13,7 +13,7 @@
     <string name="score">score</string>
     <string name="pause">PAUSE</string>
     <string name="continuarJogar">Continuar a jogar</string>
-    <string name="retornarAoMenuPrincipal">Retornar ao menu principal</string>
+    <string name="retornarAoMenuPrincipal">Voltar</string>
     <string name="nivelConcluido1">NÍVEL </string>
     <string name="nivelConcluido2"> CONCLUÍDO</string>
     <string name="menuInGameNivelConcluido1">Jogar o nível</string>
@@ -67,4 +67,7 @@
     <string name="mensagemDificuldadeNormal">A velocidade do jogo será normal. A pontuação simples será de 10 pontos.</string>
     <string name="mensagemDificuldadeDificil">A velocidade do jogo será rápida. A pontuação simples será de 15 pontos.</string>
     <string name="mensagemDificuldadeInsano">A velocidade do jogo será muito rápida, quase impossível de se jogar. A pontuação simples será de 25 pontos.</string>
+    <string name="conexao">Conectado</string>
+    <string name="nao_conectado1">Dispositivo não conectado. Clique aqui para tentar novamente. Você pode jogar sem conexão, mas as informações de ranking não serão atualizadas.</string>
+    <string name="conectando">Conectando...</string>
 </resources>

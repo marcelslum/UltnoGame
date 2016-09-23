@@ -135,21 +135,25 @@ public class TextBox extends Entity{
             });
             addChild(arrowContinuar);
         } else {
-            setListener(new InteractionListener("listenerTextBox"+this.name, x, y, frameWidth, height, 2000, this,
-                    new InteractionListener.PressListener() {
-                        @Override
-                        public void onPress() {
+            if (getListener() == null) {
+                setListener(new InteractionListener("listenerTextBox" + this.name, x, y, frameWidth, height, 5000, this,
+                        new InteractionListener.PressListener() {
+                            @Override
+                            public void onPress() {
                                 Log.e("textbox", "onPress textBox");
-                           if (onPress != null){
-                               onPress.onPress();
-                           }
-                        }
+                                if (onPress != null) {
+                                    onPress.onPress();
+                                }
+                            }
 
-                        @Override
-                        public void onUnpress() {
+                            @Override
+                            public void onUnpress() {
+                            }
                         }
-                    }
-            ));
+                ));
+            } else {
+                getListener().setPositionAndSize(x, y, frameWidth, height);
+            }
         }
         
         if (isHaveArrow){

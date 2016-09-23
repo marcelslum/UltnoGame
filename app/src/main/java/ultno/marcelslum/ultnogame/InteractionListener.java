@@ -66,7 +66,7 @@ public class InteractionListener {
                     Game.touchEvents.get(i).y,
                     x, y, width, height);
             if (pressedOnVerify) {
-                Log.e("interaction", " pressed "+ this.name);
+                //Log.e("interaction", " pressed "+ this.name);
                 break;
             }
         }
@@ -74,19 +74,20 @@ public class InteractionListener {
         if (pressedOnVerify) {
             if (!active) {
                 active = true;
+
                 objectAppend.isPressed = true;
                 startTime = Utils.getTime();
                 //console.log("onPress ", this.name);
                 if (myPressListener != null) {
-                    Log.e("listener", "ativando onpress no listener "+name);
                     myPressListener.onPress();
                 }
             } else {
                 long actualTime = Utils.getTime();
                 long timeElapsed = actualTime - this.startTime;
+                Log.e("listener", "timeElapsed "+timeElapsed);
                 if (timeElapsed > (long) frequency) {
                     if (myPressListener != null) {
-                        Log.e("listener", "ativando onpress no listener "+name);
+                        Log.e("listener", "ativando onpress no listener "+name +" após testar o tempo");
                         myPressListener.onPress();
                     }
                     //console.log("onPress");
@@ -96,9 +97,10 @@ public class InteractionListener {
         }
 
         if (!pressedOnVerify) {
+
             if (active) {
                 if (myPressListener != null) {
-                    //Log.e("listener", "ativando onunpress no listener "+name);
+                    Log.e("listener", "ativando onunpress no listener "+name);
                     myPressListener.onUnpress();
                 }
 
@@ -106,10 +108,18 @@ public class InteractionListener {
                 active = false;
             }
         }
+
     }
 
     public void setPressListener(PressListener listener) {
         myPressListener = listener;
+    }
+
+    public void setPositionAndSize(float x, float y, float frameWidth, float height) {
+        this.x = x;
+        this.y = y;
+        this.width = frameWidth;
+        this.height = height;
     }
 
     public interface PressListener {

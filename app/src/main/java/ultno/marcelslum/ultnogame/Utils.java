@@ -3,6 +3,7 @@ package ultno.marcelslum.ultnogame;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
@@ -502,6 +503,4 @@ public abstract class Utils {
 
         return text.toString();
     }
-
-
 }
