@@ -79,7 +79,7 @@ public class BallParticleGenerator extends Entity {
 
             //Log.e("ballParticleGenerator", " "+p.x+" "+p.y+" "+p.size);
 
-            Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
+            Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0.1f, 0.1f, 0.1f, p.alpha));
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
             Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
         }

@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+
 public class MainActivity extends Activity {
 
     // Our OpenGL Surfaceview
@@ -21,6 +22,12 @@ public class MainActivity extends Activity {
         // Turn off the window's title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        //Game.mGoogleApiClient = new GoogleApiClient.Builder(this)
+        //        .addConnectionCallbacks(this)
+        //        .addOnConnectionFailedListener(this)
+        //        .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+        //        .build();
 
 
         // Super
@@ -44,6 +51,20 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        //Game.mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //if (Game.mGoogleApiClient.isConnected()) {
+        //    Game.mGoogleApiClient.disconnect();
+        //}
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         glSurfaceView.onPause();
@@ -54,5 +75,6 @@ public class MainActivity extends Activity {
         super.onResume();
         glSurfaceView.onResume();
     }
+
 
 }

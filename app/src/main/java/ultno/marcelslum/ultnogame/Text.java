@@ -1,6 +1,8 @@
 package ultno.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 public class Text extends Entity{
 
     public final static int TEXT_ALIGN_LEFT = 0;
@@ -296,10 +298,8 @@ public class Text extends Entity{
     }
 
     public void setColor(Color color) {
-
         this.color = color;
         this.setDrawInfo();
-
     }
 
     @Override
@@ -310,5 +310,25 @@ public class Text extends Entity{
     @Override
     public float getHeight() {
         return size*1.5f;
+    }
+
+    public void reduceWidth(float desiredWidth) {
+        Log.e("text", "reduce width");
+        int length = text.length();
+        Text textForMeasure;
+        float widthOfText;
+        int contador = 1;
+        for (int i = 0; i < length; i++) {
+            //Log.e("text", "testando "+text.substring(0, length - contador));
+            textForMeasure = new Text("text", 0f, 0f, size, text.substring(0, length - contador), Game.font, color);
+            widthOfText = textForMeasure.calculateWidth();
+            //Log.e("text", "width "+widthOfText);
+            if (widthOfText < desiredWidth) {
+                //Log.e("text", "texto final ");
+                setText(text.substring(0, length - contador).concat("..."));
+                break;
+            }
+            contador += 1;
+        }
     }
 }

@@ -4,6 +4,8 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
 
+    apply plugin: 'com.android.application'
+
     defaultConfig {
         applicationId "ultno.marcelslum.ultnogame"
         minSdkVersion 21
@@ -20,13 +22,11 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
         }
     }
 }
 
 dependencies {
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    //compile 'com.google.android.gms:play-services-games:9.6.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
 }

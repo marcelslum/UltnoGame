@@ -150,26 +150,20 @@ public class Ball extends Circle{
                 if (i == 0){
                     numberOfParticles = 1;
                 } else if (i == 0){
-                    numberOfParticles = 2;
+                    numberOfParticles = 3;
                 } else if (i == 2){
-                    numberOfParticles = 3;
+                    numberOfParticles = 1;
                 } else if (i == 4){
-                    numberOfParticles = 2;
-                } else if (i == 6){
                     numberOfParticles = 5;
+                } else if (i == 6){
+                    numberOfParticles = 2;
                 } else if (i == 8){
-                    numberOfParticles = 3;
+                    numberOfParticles = 1;
                 } else if (i == 10){
-                    numberOfParticles = 6;
+                    numberOfParticles = 2;
                 } else if (i == 12){
                     numberOfParticles = 1;
-                } else if (i == 14){
-                    numberOfParticles = 4;
-                } else if (i == 16){
-                    numberOfParticles = 1;
-                }  else if (i == 18){
-                    numberOfParticles = 2;
-                }else {
+                } else {
                     numberOfParticles = 0;
                 }
                 ballParticleGenerator.generate(historicPositionX.get(i), historicPositionY.get(i), radius, numberOfParticles);

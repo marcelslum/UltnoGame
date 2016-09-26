@@ -2,12 +2,10 @@ package ultno.marcelslum.ultnogame;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.GLES10;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
 
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 

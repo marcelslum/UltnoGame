@@ -6,6 +6,9 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Handler;
 import android.util.Log;
+
+//import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,6 +46,7 @@ public class Game {
     public static Selector selectorDificulty;
     public static Selector selectorMusic;
     public static Selector selectorSound;
+    public static List listRanking;
     //public static Selector selectorVolumn;
 
     public static ArrayList<Target> targets;
@@ -128,6 +132,7 @@ public class Game {
     //public final static int GAME_STATE_REINICIAR =  16;
     public final static int GAME_STATE_PAUSE =  16;
     public final static int GAME_STATE_OPCOES =  17;
+    public final static int GAME_STATE_RANKING =  18;
 
     public final static int INTERNET_STATE_CONNECTED = 1;
     public final static int INTERNET_STATE_NOT_CONNECTED = 1;
@@ -172,6 +177,7 @@ public class Game {
     public static float effectiveScreenHeight;
     public static float effectiveScreenWidth;
     public static int dificulty;
+//    public static GoogleApiClient mGoogleApiClient;
 
     // bars and balls data
     //public float [] barsInitialPositionX = new float[10];
@@ -286,7 +292,13 @@ public class Game {
         gameState = state;
         clearAllMenuEntities();
 
-        if (state == GAME_STATE_OPCOES){
+        if (state == GAME_STATE_RANKING){
+            tittle.clearDisplay();
+            menuMain.isBlocked = true;
+            listRanking.display();
+            listRanking.isBlocked = false;
+            setBottomText("");
+        } else if (state == GAME_STATE_OPCOES){
             tittle.display();
             menuMain.isBlocked = true;
             menuOptions.isBlocked = false;
@@ -299,6 +311,8 @@ public class Game {
             eraseAllGameEntities();
             eraseAllHudEntities();
             eraseAllTutorials();
+            listRanking.clearDisplay();
+            listRanking.isBlocked = true;
             menuMain.isBlocked = false;
             menuMain.display();
             tittle.display();
@@ -873,6 +887,7 @@ public class Game {
         ArrayList<Entity> list = new ArrayList<>();
         list.add(menuMain);
         list.add(menuOptions);
+        list.add(listRanking);
         list.add(selectorLevel);
         list.add(selectorDificulty);
         list.add(selectorMusic);
@@ -957,18 +972,74 @@ public class Game {
 
         float fontSize = gameAreaResolutionY*0.09f;
 
+        float padd = resolutionX * 0.02f;
+
+        listRanking = new List("listRanking", 0f + padd, 0f + padd, resolutionX - (padd*2), resolutionY - (padd*2), 15);
+        listRanking.addItem(new RankingItem(1, "teste asdfba09sd8fb0a9d8sb0f9a8bsd09f8abd9s08fba09ds8bf0a9db8sf09ads0f9a8bds09f8abd9s08fb", 109283));
+        listRanking.addItem(new RankingItem(2, "teste f", 109283));
+        listRanking.addItem(new RankingItem(3, "teste asdf", 10928));
+        listRanking.addItem(new RankingItem(4, "teste sdfg ", 10923));
+        listRanking.addItem(new RankingItem(5, "teste dfg hdfg ", 109283));
+        listRanking.addItem(new RankingItem(6, "teste23b4", 10983));
+        listRanking.addItem(new RankingItem(7, "teste we w w ", 10283));
+        listRanking.addItem(new RankingItem(8, "testewer  wew", 109283));
+        listRanking.addItem(new RankingItem(9, "testew erw ", 109283));
+        listRanking.addItem(new RankingItem(10, "testeas df as d", 109283));
+        listRanking.addItem(new RankingItem(11, "testessdfsdf s df sdsdfsdf", 109283));
+        listRanking.addItem(new RankingItem(12, "teste sdf wwef ", 109283));
+        listRanking.addItem(new RankingItem(13, "teste sef s ee f", 109283));
+        listRanking.addItem(new RankingItem(14, "teste sa sdf w ", 109283));
+        listRanking.addItem(new RankingItem(15, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(16, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(17, "teste we w ew e we w e w", 109283));
+        listRanking.addItem(new RankingItem(18, "testew erw ", 109283));
+        listRanking.addItem(new RankingItem(19, "testeas df as d", 109283));
+        listRanking.addItem(new RankingItem(20, "testessdfsdf s df sdsdfsdf", 109283));
+        listRanking.addItem(new RankingItem(21, "teste sdf wwef ", 109283));
+        listRanking.addItem(new RankingItem(22, "teste sef s ee f", 109283));
+        listRanking.addItem(new RankingItem(23, "teste sa sdf w ", 109283));
+        listRanking.addItem(new RankingItem(24, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(25, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(26, "teste we w ew e we w e w", 109283));
+        listRanking.addItem(new RankingItem(110, "testeas df as d", 109283));
+        listRanking.addItem(new RankingItem(111, "testessdfsdf s df sdsdfsdf", 109283));
+        listRanking.addItem(new RankingItem(112, "teste sdf wwef ", 109283));
+        listRanking.addItem(new RankingItem(113, "teste sef s ee f", 109283));
+        listRanking.addItem(new RankingItem(114, "teste sa sdf w ", 109283));
+        listRanking.addItem(new RankingItem(115, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(116, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(117, "teste we w ew e we w e w", 109283));
+        listRanking.addItem(new RankingItem(118, "testew erw ", 109283));
+        listRanking.addItem(new RankingItem(119, "testeas df as d", 109283));
+        listRanking.addItem(new RankingItem(120, "testessdfsdf s df sdsdfsdf", 109283));
+        listRanking.addItem(new RankingItem(121, "teste sdf wwef ", 109283));
+        listRanking.addItem(new RankingItem(122, "teste sef s ee f", 109283));
+        listRanking.addItem(new RankingItem(123, "teste sa sdf w ", 109283));
+        listRanking.addItem(new RankingItem(124, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(125, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(126, "teste we w ew e we w e w", 109283));
+        listRanking.addItem(new RankingItem(224, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(225, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(226, "teste we w ew e we w e w", 109283));
+        listRanking.showItem(20);
+
+        listRanking.setOnBack(new List.OnBack() {
+            @Override
+            public void onBack() {
+                setGameState(GAME_STATE_MENU);
+            }
+        });
+
 
         // cria o menu options
         menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.4f, fontSize, font);
 
         // cria o seletor de dificuldade -------------------------------------------------------------------------------------
         selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
-            new String[]{
-                    context.getResources().getString(R.string.facil),
+            new String[]{context.getResources().getString(R.string.facil),
                     context.getResources().getString(R.string.normal),
                     context.getResources().getString(R.string.dificil),
                     context.getResources().getString(R.string.insano)
-
             }, font);
         menuOptions.addMenuOption("dificuldade", context.getResources().getString(R.string.dificuldade), new MenuOption.OnChoice() {
             @Override
@@ -1147,7 +1218,14 @@ public class Game {
             @Override
             public void onChoice() {
                 setGameState(GAME_STATE_OPCOES);
+            }
+        });
 
+        // adiciona a opção de acessar as opções do jogo
+        menuMain.addMenuOption("ranking", context.getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                setGameState(GAME_STATE_RANKING);
             }
         });
 
@@ -1589,6 +1667,8 @@ public class Game {
         if (selectorMusic != null)selectorMusic.checkTransformations(true);
         if (selectorSound != null)selectorSound.checkTransformations(true);
 
+        if (listRanking != null) listRanking.checkTransformations(true);
+
 
 
         if (tittle != null) tittle.checkTransformations(true);
@@ -1686,6 +1766,8 @@ public class Game {
         if (selectorMusic != null)selectorMusic.prepareRender(matrixView, matrixProjection);
         if (selectorSound != null)selectorSound.prepareRender(matrixView, matrixProjection);
 
+        if (listRanking != null) listRanking.prepareRender(matrixView, matrixProjection);
+
         if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
 
         if (gameState == GAME_STATE_TUTORIAL){
@@ -1747,6 +1829,7 @@ public class Game {
         if (menuTutorial != null) menuTutorial.verifyListener();
         if (selectorLevel != null) selectorLevel.verifyListener();
         if (menuOptions != null)menuOptions.verifyListener();
+        if (listRanking != null)listRanking.verifyListener();
         if (selectorDificulty != null)selectorDificulty.verifyListener();
         if (selectorMusic != null)selectorMusic.verifyListener();
         if (selectorSound != null)selectorSound.verifyListener();

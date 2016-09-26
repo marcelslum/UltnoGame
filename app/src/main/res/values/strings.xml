@@ -70,4 +70,5 @@
     <string name="conexao">Conectado</string>
     <string name="nao_conectado1">Dispositivo não conectado. Clique aqui para tentar novamente. Você pode jogar sem conexão, mas as informações de ranking não serão atualizadas.</string>
     <string name="conectando">Conectando...</string>
+    <string name="ranking">Ranking</string>
 </resources>

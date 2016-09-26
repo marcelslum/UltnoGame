@@ -371,7 +371,7 @@ public class Level {
             float obstacleWidth = Game.gameAreaResolutionX * obstaclesWidth_BR[i];
             float obstacleHeight = Game.gameAreaResolutionY * obstaclesHeight_BR[i];
             Obstacle obstacle = new Obstacle("obstacle", obstacleX, obstacleY, obstacleWidth, obstacleHeight);
-            obstacle.addBorder(0.05f, Game.gameAreaResolutionX * 0.003f, Game.gameAreaResolutionX * 0.003f, new Color(0.3f, 0.305f, 0.3f, 1.0f));
+            obstacle.addBorder(0.05f, Game.gameAreaResolutionX * 0.003f, Game.gameAreaResolutionX * 0.003f, new Color(0.6f, 0.605f, 0.6f, 1.0f));
             if (obstaclesScaleVariationData != null) {
                 //Log.e("level", "setting obstacle scale variation data");
                 if (obstaclesScaleVariationData.length > i) {

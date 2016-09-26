@@ -84,7 +84,7 @@ public class InteractionListener {
             } else {
                 long actualTime = Utils.getTime();
                 long timeElapsed = actualTime - this.startTime;
-                Log.e("listener", "timeElapsed "+timeElapsed);
+                //Log.e("listener", "timeElapsed "+timeElapsed);
                 if (timeElapsed > (long) frequency) {
                     if (myPressListener != null) {
                         Log.e("listener", "ativando onpress no listener "+name +" após testar o tempo");
