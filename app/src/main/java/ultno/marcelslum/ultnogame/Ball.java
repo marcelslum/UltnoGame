@@ -148,20 +148,14 @@ public class Ball extends Circle{
             int numberOfParticles;
             for (int i = 0; i < historicPositionX.size(); i++){
                 if (i == 0){
-                    numberOfParticles = 1;
-                } else if (i == 0){
-                    numberOfParticles = 3;
-                } else if (i == 2){
-                    numberOfParticles = 1;
-                } else if (i == 4){
                     numberOfParticles = 5;
+                } else if (i == 0){
+                    numberOfParticles = 4;
+                } else if (i == 2){
+                    numberOfParticles = 3;
+                } else if (i == 4){
+                    numberOfParticles = 2;
                 } else if (i == 6){
-                    numberOfParticles = 2;
-                } else if (i == 8){
-                    numberOfParticles = 1;
-                } else if (i == 10){
-                    numberOfParticles = 2;
-                } else if (i == 12){
                     numberOfParticles = 1;
                 } else {
                     numberOfParticles = 0;
