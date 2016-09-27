@@ -1,10 +1,7 @@
 package ultno.marcelslum.ultnogame;
 
 import android.content.Context;
-import android.media.AudioAttributes;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.os.Handler;
 import android.util.Log;
 
 //import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,15 +23,31 @@ import java.util.TimerTask;
  */
 public class Game {
 
-    public static final Timer timer = new Timer();
+    public static int basePoints;
+    public static float difficultyVelocityBarMultiplicator;
+    public static float difficultyVelocityObstacleMultiplicator;
+    public static float difficultyVelocityBallMultiplicator;
+    public static final float BAR_EASY = 0.85f;
+    public static final float BALL_EASY = 0.8f;
+    public static final float OBSTACLE_EASY = 0.9f;
+    public static final float BAR_NORMAL = 1f;
+    public static final float BALL_NORMAL = 1f;
+    public static final float OBSTACLE_NORMAL = 1f;
+    public static final float BAR_HARD = 1.2f;
+    public static final float BALL_HARD = 1.2f;
+    public static final float OBSTACLE_HARD = 1.1f;
+    public static final float BAR_INSANE = 1.5f;
+    public static final float BALL_INSANE = 1.5f;
+    public static final float OBSTACLE_INSANE = 1.2f;
+    
 
+    public static final Timer timer = new Timer();
     public static int connectionAttempts = 0;
     public static final int BALL_WEIGHT = 1;
     public static final int BORDA_WEIGHT = 10;
     public static final int OBSTACLES_WEIGHT = 7;
     public static final int TARGET_WEIGHT = 10;
     public static final int BAR_WEIGHT = 8;
-    private static Game ourInstance = new Game();
     public static Context context;
 
     // entities
@@ -71,10 +84,10 @@ public class Game {
     public static ScorePanel scorePanel;
     public static ObjectivePanel objectivePanel;
 
-    public static Rectangle bordaC;
-    public static Rectangle bordaE;
-    public static Rectangle bordaD;
-    public static Rectangle bordaB;
+    public static Edge bordaC;
+    public static Edge bordaE;
+    public static Edge bordaD;
+    public static Edge bordaB;
 
     public static Button button1Left;
     public static Button button1Right;
@@ -129,7 +142,6 @@ public class Game {
     public final static int GAME_STATE_VITORIA =  13;
     public final static int GAME_STATE_DERROTA =  14;
     public final static int GAME_STATE_TUTORIAL =  15;
-    //public final static int GAME_STATE_REINICIAR =  16;
     public final static int GAME_STATE_PAUSE =  16;
     public final static int GAME_STATE_OPCOES =  17;
     public final static int GAME_STATE_RANKING =  18;
@@ -176,19 +188,8 @@ public class Game {
     public static long initTime;
     public static float effectiveScreenHeight;
     public static float effectiveScreenWidth;
-    public static int dificulty;
-//    public static GoogleApiClient mGoogleApiClient;
-
-    // bars and balls data
-    //public float [] barsInitialPositionX = new float[10];
-    //public float [] barsInitialPositionY = new float[10];
-    //public float [] barsDesiredVelocityX = new float[10];
-    //public float [] barsDesiredVelocityY = new float[10];
-    //public float[] ballsInitialPositionX = new float[10];
-    //public float[] ballsInitialPositionY = new float[10];
-    //public float[] ballsDesiredVelocityX = new float[10];
-    //public float[] ballsDesiredVelocityY = new float[10];
-
+    public static int difficulty;
+    //public static GoogleApiClient mGoogleApiClient;
 
     public boolean ballFall;
 
@@ -204,15 +205,37 @@ public class Game {
 
     public static int ballsNotInvencibleAlive;
     public static int ballsInvencible;
-    //int ballsAlive;
 
-    
     public static long initialTimePointsDecay;
     public static final long TIME_FOR_POINTS_DECAY = 3000;
     public static final int POINTS_DECAY = 10;
 
-    private Game() {
-        // initialize data
+    public static final int POINTS_EASY = 100;
+    public static final int POINTS_NORMAL = 200;
+    public static final int POINTS_HARD = 300;
+    public static final int POINTS_INSANE = 500;
+
+    private Game() {}
+
+    public static void init(){
+        initData();
+        Storage.initializeStorage(context, quantityOfLevels);
+        maxLevel = Storage.getMaxLevel();
+        difficulty = Storage.getDificulty();
+        changeDifficulty(difficulty);
+        Log.e("game", "getDifficultu from storage "+difficulty);
+        levelNumber = Storage.getActualLevel();
+        initTime = Utils.getTime();
+        initTextures();
+        Sound.init();
+        initPrograms();
+        initFont();
+        initMenus();
+        initTexts();
+        initEdges();
+    }
+
+    public static void initData(){
         targets = new ArrayList<>();
         balls = new ArrayList<>();
         obstacles = new ArrayList<>();
@@ -229,12 +252,491 @@ public class Game {
         textBoxes = new ArrayList<>();
         messages = new ArrayList<>();
         lines = new ArrayList<>();
+    }
 
-        //barsInitialPositionX = new float[10];
-        //barsInitialPositionY = new float[10];
-        //barsDesiredVelocityX = new float[10];
-        //barsDesiredVelocityY = new float[10];
-   }
+    private static void initEdges(){
+        Game.bordaE = new Edge("bordaE", -999, 0, 1000, Game.resolutionY*2);
+        Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0, 1000, Game.resolutionY*2);
+        Game.bordaC = new Edge("bordaC",  1, -1000, Game.resolutionX-4, 1001);
+        Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000);
+    }
+
+    private static void initTextures() {
+        Texture.textures = new ArrayList<>();
+        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
+    }
+
+    public static void initTexts(){
+        tittle = new Image("tittle",
+                gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.07f,
+                gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.4f * 0.3671875f,
+                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
+
+        ArrayList<float[]> valuesAnimationTittle = new ArrayList<>();
+        valuesAnimationTittle.add(new float[]{0f,1f});
+        valuesAnimationTittle.add(new float[]{0.15f,2f});
+        valuesAnimationTittle.add(new float[]{0.45f,3f});
+        valuesAnimationTittle.add(new float[]{0.6f,4f});
+        valuesAnimationTittle.add(new float[]{0.85f,5f});
+        final Image innerImage = tittle;
+        Animation animTittle = new Animation(innerImage, "numberForAnimation", "numberForAnimation", 5000, valuesAnimationTittle, true, false);
+        animTittle.setOnChangeNotFluid(new Animation.OnChange() {
+            @Override
+            public void onChange() {
+                if (innerImage.numberForAnimation == 1f){
+                    innerImage.setColor(new Color(0f, 0f, 0f, 1f));
+                } else if (innerImage.numberForAnimation == 2f) {
+                    innerImage.setColor(new Color(1f, 0f, 0f, 1f));
+                } else if (innerImage.numberForAnimation == 3f) {
+                    innerImage.setColor(new Color(0f, 0f, 1f, 1f));
+                } else if (innerImage.numberForAnimation == 4f) {
+                    innerImage.setColor(new Color(0f, 1f, 0f, 1f));
+                } else if (innerImage.numberForAnimation == 5f) {
+                    innerImage.setColor(new Color(1f, 1f, 0f, 1f));
+                }
+            }
+        });
+        animTittle.start();
+
+
+        messageGameOver = new Text("messageGameOver",
+                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.2f,
+                context.getResources().getString(R.string.messageGameOver), font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
+
+        final Text innerMessageGameOver = messageGameOver;
+        ArrayList<float[]> valuesAnimationGameOver = new ArrayList<>();
+        valuesAnimationGameOver.add(new float[]{0f,1f});
+        valuesAnimationGameOver.add(new float[]{0.55f,2f});
+        valuesAnimationGameOver.add(new float[]{0.85f,3f});
+        Animation animMessageGameOver = new Animation(innerMessageGameOver, "numberForAnimation", "numberForAnimation", 4000, valuesAnimationGameOver, true, false);
+        animMessageGameOver.setOnChangeNotFluid(new Animation.OnChange() {
+            @Override
+            public void onChange() {
+                if (innerMessageGameOver.numberForAnimation == 1f){
+                    innerMessageGameOver.setColor(new Color(0f, 0f, 0f, 1f));
+                } else if (innerMessageGameOver.numberForAnimation == 2f) {
+                    innerMessageGameOver.setColor(new Color(1f, 0f, 0f, 1f));
+                } else if (innerMessageGameOver.numberForAnimation == 3f) {
+                    innerMessageGameOver.setColor(new Color(0f, 0f, 1f, 1f));
+                }
+            }
+        });
+        animMessageGameOver.start();
+
+
+        messagePreparation = new Text("messagePreparation",
+                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.3f, gameAreaResolutionY*0.4f,
+                " ", font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
+
+        messageInGame = new Text("messageInGame",
+                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.2f,
+                context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
+
+        messageCurrentLevel = new Text("messageCurrentLevel",
+                resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.04f,
+                context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber) + " - " + context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
+
+        messageMaxScoreTotal = new Text("messageMaxScoreTotal",
+                resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.04f,
+                context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
+
+        bottomTextBox = new TextBoxBuilder("bottomTextBox")
+                .position(resolutionX*0.05f, resolutionY*0.9f)
+                .width(resolutionX*0.9f)
+                .size(resolutionY*0.04f)
+                .text("...")
+                .withoutArrow()
+                .isHaveFrame(true)
+                .isHaveArrowContinue(false)
+                .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
+                .build();
+
+        bottomTextBox.setOnPress(new TextBox.OnPress() {
+            @Override
+            public void onPress() {
+                if (gameState == GAME_STATE_MENU) {
+                    Log.e("game", "internetState "+internetState);
+                    if (internetState == INTERNET_STATE_NOT_CONNECTED) {
+                        new InternetConnection().execute("teste");
+                    }
+                }
+            }
+        });
+
+        setBottomText("");
+
+    }
+
+    public static void initMenus(){
+        float fontSize = gameAreaResolutionY*0.09f;
+
+        // -------------------------------------------RANKING
+        float padd = resolutionX * 0.02f;
+        listRanking = new List("listRanking", 0f + padd, 0f + padd, resolutionX - (padd*2), resolutionY - (padd*2), 15);
+        listRanking.addItem(new RankingItem(1, "teste asdfba09sd8fb0a9d8sb0f9a8bsd09f8abd9s08fba09ds8bf0a9db8sf09ads0f9a8bds09f8abd9s08fb", 109283));
+        listRanking.addItem(new RankingItem(2, "teste f", 109283));
+        listRanking.addItem(new RankingItem(3, "teste asdf", 10928));
+        listRanking.addItem(new RankingItem(4, "teste sdfg ", 10923));
+        listRanking.addItem(new RankingItem(5, "teste dfg hdfg ", 109283));
+        listRanking.addItem(new RankingItem(6, "teste23b4", 10983));
+        listRanking.addItem(new RankingItem(7, "teste we w w ", 10283));
+        listRanking.addItem(new RankingItem(8, "testewer  wew", 109283));
+        listRanking.addItem(new RankingItem(9, "testew erw ", 109283));
+        listRanking.addItem(new RankingItem(10, "testeas df as d", 109283));
+        listRanking.addItem(new RankingItem(11, "testessdfsdf s df sdsdfsdf", 109283));
+        listRanking.addItem(new RankingItem(12, "teste sdf wwef ", 109283));
+        listRanking.addItem(new RankingItem(13, "teste sef s ee f", 109283));
+        listRanking.addItem(new RankingItem(14, "teste sa sdf w ", 109283));
+        listRanking.addItem(new RankingItem(15, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(16, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(17, "teste we w ew e we w e w", 109283));
+        listRanking.addItem(new RankingItem(18, "testew erw ", 109283));
+        listRanking.addItem(new RankingItem(19, "testeas df as d", 109283));
+        listRanking.addItem(new RankingItem(20, "testessdfsdf s df sdsdfsdf", 109283));
+        listRanking.addItem(new RankingItem(21, "teste sdf wwef ", 109283));
+        listRanking.addItem(new RankingItem(22, "teste sef s ee f", 109283));
+        listRanking.addItem(new RankingItem(23, "teste sa sdf w ", 109283));
+        listRanking.addItem(new RankingItem(24, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(25, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(26, "teste we w ew e we w e w", 109283));
+        listRanking.addItem(new RankingItem(110, "testeas df as d", 109283));
+        listRanking.addItem(new RankingItem(111, "testessdfsdf s df sdsdfsdf", 109283));
+        listRanking.addItem(new RankingItem(112, "teste sdf wwef ", 109283));
+        listRanking.addItem(new RankingItem(113, "teste sef s ee f", 109283));
+        listRanking.addItem(new RankingItem(114, "teste sa sdf w ", 109283));
+        listRanking.addItem(new RankingItem(115, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(116, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(117, "teste we w ew e we w e w", 109283));
+        listRanking.addItem(new RankingItem(118, "testew erw ", 109283));
+        listRanking.addItem(new RankingItem(119, "testeas df as d", 109283));
+        listRanking.addItem(new RankingItem(120, "testessdfsdf s df sdsdfsdf", 109283));
+        listRanking.addItem(new RankingItem(121, "teste sdf wwef ", 109283));
+        listRanking.addItem(new RankingItem(122, "teste sef s ee f", 109283));
+        listRanking.addItem(new RankingItem(123, "teste sa sdf w ", 109283));
+        listRanking.addItem(new RankingItem(124, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(125, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(126, "teste we w ew e we w e w", 109283));
+        listRanking.addItem(new RankingItem(224, "teste w ew ef wef ", 109283));
+        listRanking.addItem(new RankingItem(225, "teste asdfasdfasd  fsdf", 109283));
+        listRanking.addItem(new RankingItem(226, "teste we w ew e we w e w", 109283));
+        listRanking.showItem(20);
+        listRanking.setOnBack(new List.OnBack() {
+            @Override
+            public void onBack() {
+                setGameState(GAME_STATE_MENU);
+            }
+        });
+
+        // -------------------------------------------MENU OPTIONS
+        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.4f, fontSize, font);
+
+        // cria o seletor de dificuldade
+        selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
+                new String[]{context.getResources().getString(R.string.facil),
+                        context.getResources().getString(R.string.normal),
+                        context.getResources().getString(R.string.dificil),
+                        context.getResources().getString(R.string.insano)
+                }, font);
+        menuOptions.addMenuOption("dificuldade", context.getResources().getString(R.string.dificuldade), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.selectorDificulty.fromMenu(Game.menuOptions);
+                if (difficulty == DIFICULDADE_FACIL){
+                    selectorDificulty.setSelectedValue(0);
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeFacil));
+                } else if (difficulty == DIFICULDADE_NORMAL){
+                    selectorDificulty.setSelectedValue(1);
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeNormal));
+                } else if (difficulty == DIFICULDADE_DIFÍCIL){
+                    selectorDificulty.setSelectedValue(2);
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeDificil));
+                } else if (difficulty == DIFICULDADE_INSANO){
+                    selectorDificulty.setSelectedValue(3);
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeInsano));
+                }
+            }
+        });
+        final MenuOption menuOptionDificuldade = menuOptions.getMenuOptionByName("dificuldade");
+        selectorDificulty.setPosition(menuOptionDificuldade.x + (menuOptionDificuldade.width), menuOptionDificuldade.y);
+
+        selectorDificulty.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                Game.changeDifficulty(selectorDificulty.selectedValue);
+                if (selectorDificulty.selectedValue == 0){
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeFacil));
+                } else if (selectorDificulty.selectedValue == 1){
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeNormal));
+                } else if (selectorDificulty.selectedValue == 2){
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeDificil));
+                } else if (selectorDificulty.selectedValue == 3){
+                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeInsano));
+                }
+            }
+        });
+
+        selectorDificulty.setOnConclude(new Selector.OnConclude() {
+            @Override
+            public void onConclude() {
+                setBottomText("");
+            }
+        });
+
+        // cria o seletor de musica
+        selectorMusic = new Selector("selectorMusic", 0f,0f, fontSize, "",
+                new String[]{
+                        context.getResources().getString(R.string.nao),
+                        context.getResources().getString(R.string.sim)}, font);
+        menuOptions.addMenuOption("musica", context.getResources().getString(R.string.musica), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.selectorMusic.fromMenu(Game.menuOptions);
+            }
+        });
+        MenuOption menuOptionMusic = menuOptions.getMenuOptionByName("musica");
+        selectorMusic.setPosition(menuOptionMusic.x + ((menuOptionMusic.width)*2.0f), menuOptionMusic.y);
+        if (musicOn) {
+            selectorMusic.setSelectedValue(1);
+        } else {
+            selectorMusic.setSelectedValue(0);
+        }
+        selectorMusic.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                if (selectorMusic.selectedValue == 1){
+                    musicOn = true;
+                } else {
+                    musicOn = false;
+                }
+            }
+        });
+
+        // cria o seletor de sons
+        selectorSound = new Selector("selectorSound", 0f,0f, fontSize, "",
+                new String[]{
+                        context.getResources().getString(R.string.nao),
+                        context.getResources().getString(R.string.sim)}, font);
+        menuOptions.addMenuOption("sound", context.getResources().getString(R.string.sons), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.selectorSound.fromMenu(Game.menuOptions);
+            }
+        });
+        MenuOption menuOptionSound = menuOptions.getMenuOptionByName("sound");
+        selectorSound.setPosition(menuOptionSound.x + (menuOptionMusic.width*2.0f), menuOptionSound.y);
+        if (volume == 100) {
+            selectorSound.setSelectedValue(1);
+        } else {
+            selectorSound.setSelectedValue(0);
+        }
+        selectorSound.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                if (selectorSound.selectedValue == 1){
+                    volume = 100;
+                } else {
+                    volume = 0;
+                }
+            }
+        });
+
+        menuOptions.addMenuOption("retornar", context.getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                setGameState(GAME_STATE_MENU);
+            }
+        });
+
+        // -------------------------------------------MENU MAIN
+        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.37f, fontSize, font);
+
+        // adiciona a opção de iniciar o jogo
+        final Menu innerMenu = menuMain;
+        menuMain.addMenuOption("IniciarJogo", context.getResources().getString(R.string.menuPrincipalIniciar), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                innerMenu.block();
+                Game.blockAndWaitTouchRelease();
+                Game.clearAllMenuEntities();
+                LevelLoader.loadLevel(Game.levelNumber);
+                TutorialLoader.loadTutorial(Game.levelNumber);
+                if (Game.levelObject.tutorials.size() > 0) {
+                    if (!Storage.getLevelTutorialSaw(Game.levelNumber)) {
+                        Storage.setLevelTutorialSaw(Game.levelNumber, true);
+                        Game.levelObject.loadEntities();
+                        Game.setGameState(GAME_STATE_TUTORIAL);
+                        Game.levelObject.showFirstTutorial();
+                    } else {
+                        Game.menuTutorial.getMenuOptionByName("exibirTutorial").setText = context.getResources().getString(R.string.menuTutorialExibirTutorial) + Game.levelNumber;
+                        Game.menuTutorial.unblock();
+                        Game.menuTutorial.display();
+                        tittle.display();
+                    }
+                } else {
+                    Game.setGameState(GAME_STATE_PREPARAR);
+                }
+            }
+        });
+
+        // prepara os valores para o seletor de nível
+        String [] levels = new String [quantityOfLevels-1];
+        for (int i = 0; i < quantityOfLevels-1; i++){
+            levels[i] = Integer.toString(i+1);
+        }
+
+        // cria o seletor de nível
+        selectorLevel = new Selector("selectorLevel", 0f,0f, fontSize, "", levels, font);
+        selectorLevel.setSelectedValue(levelNumber - 1);
+
+        // adiciona a opção de selecionar nível
+        menuMain.addMenuOption("SelecionarNivel", context.getResources().getString(R.string.menuPrincipalAlterarNivel), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.selectorLevel.fromMenu(innerMenu);
+            }
+        });
+
+        // ajusta a posição do seletor de nível
+        MenuOption menuOptionSelectLevel = menuMain.getMenuOptionByName("SelecionarNivel");
+        selectorLevel.setPosition(menuOptionSelectLevel.x + (menuOptionSelectLevel.width), menuOptionSelectLevel.y);
+        selectorLevel.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                Game.changeLevel(Game.selectorLevel.selectedValue+1);
+            }
+        });
+
+        // adiciona a opção de acessar as opções do jogo
+        menuMain.addMenuOption("options", context.getResources().getString(R.string.options), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                setGameState(GAME_STATE_OPCOES);
+            }
+        });
+
+        // adiciona a opção de acessar as opções do jogo
+        menuMain.addMenuOption("ranking", context.getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                setGameState(GAME_STATE_RANKING);
+            }
+        });
+
+
+        // ----------------------------------------------------MENU IN GAME
+        menuInGame = new Menu("menuInGame",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, fontSize, font);
+
+        // adiciona a opção continuar
+        menuInGame.addMenuOption("Continuar", context.getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.menuInGame.block();
+                Game.blockAndWaitTouchRelease();
+                if (Game.gameState == GAME_STATE_DERROTA){
+                    LevelLoader.loadLevel(Game.levelNumber);
+                    Game.menuInGame.clearDisplay();
+                    Game.setGameState(GAME_STATE_PREPARAR);
+                } else if (Game.gameState == GAME_STATE_VITORIA){
+                    Game.menuMain.getMenuOptionByName("IniciarJogo").fireOnChoice();
+                } else if (Game.gameState == GAME_STATE_PAUSE){
+                    Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
+                    Game.increaseAllGameEntitiesAlpha(500);
+                    Game.messageInGame.reduceAlpha(500,0f);
+                    Game.menuInGame.reduceAlpha(500,0f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            Log.e("game", "ativando callback GAME_STATE_JOGAR");
+                            Game.setGameState(GAME_STATE_JOGAR);
+                        }
+                    });
+                }
+            }
+        });
+
+        // adiciona a opção de voltar ao menu principal
+        menuInGame.addMenuOption("RetornarAoMenuPrincipal", context.getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.menuInGame.block();
+                Game.blockAndWaitTouchRelease();
+                Game.setGameState(GAME_STATE_MENU);
+            }
+        });
+
+        // cria o menu tutorial
+        menuTutorial = new Menu("menuTutorial", gameAreaResolutionX/2, gameAreaResolutionY/2, fontSize, font);
+
+        // adiciona a opção exibir tutorial
+        menuTutorial.addMenuOption("exibirTutorial", context.getResources().getString(R.string.menuTutorialExibirTutorial), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.blockAndWaitTouchRelease();
+                Game.setGameState(GAME_STATE_TUTORIAL);
+                Game.levelObject.showingTutorial = 0;
+                Game.levelObject.tutorials.get(0).show(Sound.soundTextBoxAppear, 0.01f* (float) volume);
+                Game.menuTutorial.block();
+                Game.menuTutorial.clearDisplay();
+            }
+        });
+
+        // adiciona a opção pular tutorial
+        menuTutorial.addMenuOption("PularTutorial", context.getResources().getString(R.string.menuTutorialPularTutorial), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.blockAndWaitTouchRelease();
+                Game.setGameState(GAME_STATE_PREPARAR);
+                Game.menuTutorial.block();
+                Game.menuTutorial.clearDisplay();
+            }
+        });
+
+        // adiciona a opção de voltar ao menu principal
+        menuTutorial.addMenuOption("Retornar", context.getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.blockAndWaitTouchRelease();
+                Game.setGameState(GAME_STATE_MENU);
+
+            }
+        });
+    }
+
+    public static void initPrograms(){
+        imageProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_image),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_image));
+        imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
+        imageColorizedFxProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorizedfx),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorizedfx));
+        textProgram  =new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_text),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_text));
+        solidProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_solidcolor),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_solidcolor));
+        lineProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_line),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_line));
+        windProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_wind),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_wind3));
+        specialBallProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_specialball),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_specialball));
+    }
+
+    public static void initFont(){
+        font = new Font(1,textProgram);
+    }
+
+    public static void initSounds(){
+
+        volume = Storage.getVolume();
+
+
+    }
    
     public static void addBall(Ball ball){
         balls.add(ball);
@@ -452,14 +954,16 @@ public class Game {
             if (button1Left != null) {
                 Utils.createSimpleAnimation(button1Left, "alphaVitoria", "alpha", 1000, button1Left.alpha, 0f).start();
                 button1Left.block();
-                Utils.createSimpleAnimation(button1Right, "alphaVitoria", "alpha", 1000, button1Right.alpha, 0f).start();
-                button1Right.block();
+            }
+            if (button2Right != null) {
+                Utils.createSimpleAnimation(button2Right, "alphaVitoria", "alpha", 1000, button2Right.alpha, 0f).start();
+                button2Right.block();
             }
             if (button2Left != null) {
                 Utils.createSimpleAnimation(button2Left, "alphaVitoria", "alpha", 1000, button2Left.alpha, 0f).start();
                 button2Left.block();
-                Utils.createSimpleAnimation(button2Right, "alphaVitoria", "alpha", 1000, button2Right.alpha, 0f).start();
-                button2Right.block();
+                Utils.createSimpleAnimation(button1Right, "alphaVitoria", "alpha", 1000, button1Right.alpha, 0f).start();
+                button1Right.block();
             }
             Utils.createSimpleAnimation(buttonMusic, "alphaVitoria", "alpha", 1000, buttonMusic.alpha,0f).start();
             buttonMusic.block();
@@ -679,164 +1183,6 @@ public class Game {
         }
     }
 
-    public static void init(){
-        Storage.initializeStorage(context, quantityOfLevels);
-        levelNumber = Storage.getActualLevel();
-        //Log.e("game ", "levelNumber "+levelNumber);
-        maxLevel = Storage.getMaxLevel();
-        //Log.e("game ", "maxLevel "+maxLevel);
-        dificulty = Storage.getDificulty();
-
-        levelNumber = Storage.getActualLevel();
-        initTime = Utils.getTime();
-        initTextures();
-        Sound.init();
-        initPrograms();
-        initFont();
-        initMenus();
-        initTexts();
-        initEdges();
-    }
-
-    private static void initEdges(){
-        Game.bordaE = new Rectangle("bordaE", -999, 0, 1000, Game.resolutionY*2, 10, new Color(0,0,0,1));
-        Game.bordaE.isMovable = false;
-        Game.bordaE.isVisible = true;
-        Game.bordaE.program = Game.solidProgram;
-
-        //Log.e("Level loadEnt", "1");
-        Game.bordaD = new Rectangle("bordaD", Game.resolutionX-2, 0, 1000, Game.resolutionY*2, 10, new Color(0,0,0,1));
-        Game.bordaD.isMovable = false;
-        Game.bordaD.isVisible = true;
-        Game.bordaD.program = Game.solidProgram;
-
-        //Log.e("Level loadEnt", "1");
-        Game.bordaC = new Rectangle("bordaC",  1, -1000, Game.resolutionX-4, 1001, 10, new Color(0,0,0,1));
-        Game.bordaC.isMovable = false;
-        Game.bordaC.isVisible = true;
-        Game.bordaC.program = Game.solidProgram;
-
-        //Log.e("Level loadEnt", "1");
-        Game.bordaB = new Rectangle("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000, 10, new Color(0,0,0,1));
-        Game.bordaB.isMovable = false;
-        Game.bordaB.isVisible = true;
-        Game.bordaB.program = Game.solidProgram;
-    }
-
-    private static void initTextures() {
-        Texture.textures = new ArrayList<>();
-        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_OBSTACLE, "drawable/obstacle"));
-    }
-
-    public static void initTexts(){
-        tittle = new Image("tittle",
-                gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.07f,
-                gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.4f * 0.3671875f,
-                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
-
-        ArrayList<float[]> valuesAnimationTittle = new ArrayList<>();
-        valuesAnimationTittle.add(new float[]{0f,1f});
-        valuesAnimationTittle.add(new float[]{0.15f,2f});
-        valuesAnimationTittle.add(new float[]{0.45f,3f});
-        valuesAnimationTittle.add(new float[]{0.6f,4f});
-        valuesAnimationTittle.add(new float[]{0.85f,5f});
-            final Image innerImage = tittle;
-            Animation animTittle = new Animation(innerImage, "numberForAnimation", "numberForAnimation", 5000, valuesAnimationTittle, true, false);
-            animTittle.setOnChangeNotFluid(new Animation.OnChange() {
-                @Override
-                public void onChange() {
-                    if (innerImage.numberForAnimation == 1f){
-                        innerImage.setColor(new Color(0f, 0f, 0f, 1f));
-                    } else if (innerImage.numberForAnimation == 2f) {
-                        innerImage.setColor(new Color(1f, 0f, 0f, 1f));
-                    } else if (innerImage.numberForAnimation == 3f) {
-                        innerImage.setColor(new Color(0f, 0f, 1f, 1f));
-                    } else if (innerImage.numberForAnimation == 4f) {
-                        innerImage.setColor(new Color(0f, 1f, 0f, 1f));
-                    } else if (innerImage.numberForAnimation == 5f) {
-                        innerImage.setColor(new Color(1f, 1f, 0f, 1f));
-                    }
-                }
-            });
-            animTittle.start();
-
-
-        messageGameOver = new Text("messageGameOver",
-            gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.2f,
-            context.getResources().getString(R.string.messageGameOver), font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
-
-            final Text innerMessageGameOver = messageGameOver;
-            ArrayList<float[]> valuesAnimationGameOver = new ArrayList<>();
-                valuesAnimationGameOver.add(new float[]{0f,1f});
-                valuesAnimationGameOver.add(new float[]{0.55f,2f});
-                valuesAnimationGameOver.add(new float[]{0.85f,3f});
-            Animation animMessageGameOver = new Animation(innerMessageGameOver, "numberForAnimation", "numberForAnimation", 4000, valuesAnimationGameOver, true, false);
-            animMessageGameOver.setOnChangeNotFluid(new Animation.OnChange() {
-                @Override
-                public void onChange() {
-                    if (innerMessageGameOver.numberForAnimation == 1f){
-                        innerMessageGameOver.setColor(new Color(0f, 0f, 0f, 1f));
-                    } else if (innerMessageGameOver.numberForAnimation == 2f) {
-                        innerMessageGameOver.setColor(new Color(1f, 0f, 0f, 1f));
-                    } else if (innerMessageGameOver.numberForAnimation == 3f) {
-                        innerMessageGameOver.setColor(new Color(0f, 0f, 1f, 1f));
-                    }
-                }
-            });
-            animMessageGameOver.start();
-
-
-        messagePreparation = new Text("messagePreparation",
-            gameAreaResolutionX*0.5f, gameAreaResolutionY*0.3f, gameAreaResolutionY*0.4f,
-                " ", font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
-
-        messageInGame = new Text("messageInGame",
-            gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.2f,
-                context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
-
-        messageCurrentLevel = new Text("messageCurrentLevel",
-             resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.04f,
-                context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber) + " - " + context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
-
-        messageMaxScoreTotal = new Text("messageMaxScoreTotal",
-                resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.04f,
-                context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
-
-        bottomTextBox = new TextBoxBuilder("bottomTextBox")
-                .position(resolutionX*0.05f, resolutionY*0.9f)
-                .width(resolutionX*0.9f)
-                .size(resolutionY*0.04f)
-                .text("...")
-                .withoutArrow()
-                .isHaveFrame(true)
-                .isHaveArrowContinue(false)
-                .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
-                .build();
-
-        bottomTextBox.setOnPress(new TextBox.OnPress() {
-            @Override
-            public void onPress() {
-                if (gameState == GAME_STATE_MENU) {
-                    Log.e("game", "internetState "+internetState);
-                    if (internetState == INTERNET_STATE_NOT_CONNECTED) {
-                        new InternetConnection().execute("teste");
-                    }
-                }
-            }
-        });
-
-        setBottomText("");
-
-    }
-
     public static void setBottomText(String text){
 
         float previousPosition = bottomTextBox.y;
@@ -967,371 +1313,37 @@ public class Game {
         return scoreTotal;
     }
 
-
-    public static void initMenus(){
-
-        float fontSize = gameAreaResolutionY*0.09f;
-
-        float padd = resolutionX * 0.02f;
-
-        listRanking = new List("listRanking", 0f + padd, 0f + padd, resolutionX - (padd*2), resolutionY - (padd*2), 15);
-        listRanking.addItem(new RankingItem(1, "teste asdfba09sd8fb0a9d8sb0f9a8bsd09f8abd9s08fba09ds8bf0a9db8sf09ads0f9a8bds09f8abd9s08fb", 109283));
-        listRanking.addItem(new RankingItem(2, "teste f", 109283));
-        listRanking.addItem(new RankingItem(3, "teste asdf", 10928));
-        listRanking.addItem(new RankingItem(4, "teste sdfg ", 10923));
-        listRanking.addItem(new RankingItem(5, "teste dfg hdfg ", 109283));
-        listRanking.addItem(new RankingItem(6, "teste23b4", 10983));
-        listRanking.addItem(new RankingItem(7, "teste we w w ", 10283));
-        listRanking.addItem(new RankingItem(8, "testewer  wew", 109283));
-        listRanking.addItem(new RankingItem(9, "testew erw ", 109283));
-        listRanking.addItem(new RankingItem(10, "testeas df as d", 109283));
-        listRanking.addItem(new RankingItem(11, "testessdfsdf s df sdsdfsdf", 109283));
-        listRanking.addItem(new RankingItem(12, "teste sdf wwef ", 109283));
-        listRanking.addItem(new RankingItem(13, "teste sef s ee f", 109283));
-        listRanking.addItem(new RankingItem(14, "teste sa sdf w ", 109283));
-        listRanking.addItem(new RankingItem(15, "teste w ew ef wef ", 109283));
-        listRanking.addItem(new RankingItem(16, "teste asdfasdfasd  fsdf", 109283));
-        listRanking.addItem(new RankingItem(17, "teste we w ew e we w e w", 109283));
-        listRanking.addItem(new RankingItem(18, "testew erw ", 109283));
-        listRanking.addItem(new RankingItem(19, "testeas df as d", 109283));
-        listRanking.addItem(new RankingItem(20, "testessdfsdf s df sdsdfsdf", 109283));
-        listRanking.addItem(new RankingItem(21, "teste sdf wwef ", 109283));
-        listRanking.addItem(new RankingItem(22, "teste sef s ee f", 109283));
-        listRanking.addItem(new RankingItem(23, "teste sa sdf w ", 109283));
-        listRanking.addItem(new RankingItem(24, "teste w ew ef wef ", 109283));
-        listRanking.addItem(new RankingItem(25, "teste asdfasdfasd  fsdf", 109283));
-        listRanking.addItem(new RankingItem(26, "teste we w ew e we w e w", 109283));
-        listRanking.addItem(new RankingItem(110, "testeas df as d", 109283));
-        listRanking.addItem(new RankingItem(111, "testessdfsdf s df sdsdfsdf", 109283));
-        listRanking.addItem(new RankingItem(112, "teste sdf wwef ", 109283));
-        listRanking.addItem(new RankingItem(113, "teste sef s ee f", 109283));
-        listRanking.addItem(new RankingItem(114, "teste sa sdf w ", 109283));
-        listRanking.addItem(new RankingItem(115, "teste w ew ef wef ", 109283));
-        listRanking.addItem(new RankingItem(116, "teste asdfasdfasd  fsdf", 109283));
-        listRanking.addItem(new RankingItem(117, "teste we w ew e we w e w", 109283));
-        listRanking.addItem(new RankingItem(118, "testew erw ", 109283));
-        listRanking.addItem(new RankingItem(119, "testeas df as d", 109283));
-        listRanking.addItem(new RankingItem(120, "testessdfsdf s df sdsdfsdf", 109283));
-        listRanking.addItem(new RankingItem(121, "teste sdf wwef ", 109283));
-        listRanking.addItem(new RankingItem(122, "teste sef s ee f", 109283));
-        listRanking.addItem(new RankingItem(123, "teste sa sdf w ", 109283));
-        listRanking.addItem(new RankingItem(124, "teste w ew ef wef ", 109283));
-        listRanking.addItem(new RankingItem(125, "teste asdfasdfasd  fsdf", 109283));
-        listRanking.addItem(new RankingItem(126, "teste we w ew e we w e w", 109283));
-        listRanking.addItem(new RankingItem(224, "teste w ew ef wef ", 109283));
-        listRanking.addItem(new RankingItem(225, "teste asdfasdfasd  fsdf", 109283));
-        listRanking.addItem(new RankingItem(226, "teste we w ew e we w e w", 109283));
-        listRanking.showItem(20);
-
-        listRanking.setOnBack(new List.OnBack() {
-            @Override
-            public void onBack() {
-                setGameState(GAME_STATE_MENU);
-            }
-        });
-
-
-        // cria o menu options
-        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.4f, fontSize, font);
-
-        // cria o seletor de dificuldade -------------------------------------------------------------------------------------
-        selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
-            new String[]{context.getResources().getString(R.string.facil),
-                    context.getResources().getString(R.string.normal),
-                    context.getResources().getString(R.string.dificil),
-                    context.getResources().getString(R.string.insano)
-            }, font);
-        menuOptions.addMenuOption("dificuldade", context.getResources().getString(R.string.dificuldade), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Game.selectorDificulty.fromMenu(Game.menuOptions);
-                if (dificulty == DIFICULDADE_FACIL){
-                    selectorDificulty.setSelectedValue(0);
-                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeFacil));
-                } else if (dificulty == DIFICULDADE_NORMAL){
-                    selectorDificulty.setSelectedValue(1);
-                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeNormal));
-                } else if (dificulty == DIFICULDADE_DIFÍCIL){
-                    selectorDificulty.setSelectedValue(2);
-                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeDificil));
-                } else if (dificulty == DIFICULDADE_INSANO){
-                    selectorDificulty.setSelectedValue(3);
-                    setBottomText(context.getResources().getString(R.string.mensagemDificuldadeInsano));
-                }
-            }
-        });
-        final MenuOption menuOptionDificuldade = menuOptions.getMenuOptionByName("dificuldade");
-        selectorDificulty.setPosition(menuOptionDificuldade.x + (menuOptionDificuldade.width), menuOptionDificuldade.y);
-
-
-        selectorDificulty.setOnChange(new Selector.OnChange() {
-            @Override
-            public void onChange() {
-                Game.changeDificulty(selectorDificulty.selectedValue);
-            }
-        });
-
-        selectorDificulty.setOnConclude(new Selector.OnConclude() {
-            @Override
-            public void onConclude() {
-                setBottomText("");
-            }
-        });
-
-        // cria o seletor de musica -------------------------------------------------------------------------------------
-        selectorMusic = new Selector("selectorMusic", 0f,0f, fontSize, "",
-                new String[]{
-                        context.getResources().getString(R.string.nao),
-                        context.getResources().getString(R.string.sim)}, font);
-        menuOptions.addMenuOption("musica", context.getResources().getString(R.string.musica), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Game.selectorMusic.fromMenu(Game.menuOptions);
-            }
-        });
-        MenuOption menuOptionMusic = menuOptions.getMenuOptionByName("musica");
-        selectorMusic.setPosition(menuOptionMusic.x + ((menuOptionMusic.width)*2.0f), menuOptionMusic.y);
-        if (musicOn) {
-            selectorMusic.setSelectedValue(1);
-        } else {
-            selectorMusic.setSelectedValue(0);
-        }
-        selectorMusic.setOnChange(new Selector.OnChange() {
-            @Override
-            public void onChange() {
-                if (selectorMusic.selectedValue == 1){
-                    musicOn = true;
-                } else {
-                    musicOn = false;
-                }
-            }
-        });
-
-        // cria o seletor de sons -------------------------------------------------------------------------------------
-        selectorSound = new Selector("selectorSound", 0f,0f, fontSize, "",
-                new String[]{
-                        context.getResources().getString(R.string.nao),
-                        context.getResources().getString(R.string.sim)}, font);
-        menuOptions.addMenuOption("sound", context.getResources().getString(R.string.sons), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Game.selectorSound.fromMenu(Game.menuOptions);
-            }
-        });
-        MenuOption menuOptionSound = menuOptions.getMenuOptionByName("sound");
-        selectorSound.setPosition(menuOptionSound.x + (menuOptionMusic.width*2.0f), menuOptionSound.y);
-        if (volume == 100) {
-            selectorSound.setSelectedValue(1);
-        } else {
-            selectorSound.setSelectedValue(0);
-        }
-        selectorSound.setOnChange(new Selector.OnChange() {
-            @Override
-            public void onChange() {
-                if (selectorSound.selectedValue == 1){
-                    volume = 100;
-                } else {
-                    volume = 0;
-                }
-            }
-        });
-
-        menuOptions.addMenuOption("retornar", context.getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                setGameState(GAME_STATE_MENU);
-            }
-        });
-
-
-        
-        // cria o menu principal
-        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.37f, fontSize, font);
-
-        // adiciona a opção de iniciar o jogo
-        final Menu innerMenu = menuMain;
-        menuMain.addMenuOption("IniciarJogo", context.getResources().getString(R.string.menuPrincipalIniciar), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                innerMenu.block();
-                Game.blockAndWaitTouchRelease();
-                Game.clearAllMenuEntities();
-                LevelLoader.loadLevel(Game.levelNumber);
-                TutorialLoader.loadTutorial(Game.levelNumber);
-
-                //Log.e("game", "tutorials size: "+ Game.levelObject.tutorials.size());
-                if (Game.levelObject.tutorials.size() > 0) {
-
-                    //Log.e("game ", "Storage.getLevelTutorialSaw(Game.levelNumber) "+Storage.getLevelTutorialSaw(Game.levelNumber));
-
-                    if (!Storage.getLevelTutorialSaw(Game.levelNumber)) {
-                        //Log.e("game", "tutorial ainda não visto");
-                        Storage.setLevelTutorialSaw(Game.levelNumber, true);
-                        Game.levelObject.loadEntities();
-                        Game.setGameState(GAME_STATE_TUTORIAL);
-                        Game.levelObject.showFirstTutorial();
-                    } else {
-                        //Log.e("game", "tutorial já visto");
-                        //Log.e("game", "game blocked "+isBlocked);
-                        Game.menuTutorial.getMenuOptionByName("exibirTutorial").setText = context.getResources().getString(R.string.menuTutorialExibirTutorial) + Game.levelNumber;
-                        Game.menuTutorial.unblock();
-                        Game.menuTutorial.display();
-                        tittle.display();
-                    }
-                } else {
-                    //Log.e("game", "load Entities");
-                    Game.setGameState(GAME_STATE_PREPARAR);
-                }
-            }
-        });
-
-        // prepara os valores para o seletor de nível
-        String [] levels = new String [quantityOfLevels-1];
-        for (int i = 0; i < quantityOfLevels-1; i++){
-            levels[i] = Integer.toString(i+1);
-        }
-
-        // cria o seletor de nível
-        selectorLevel = new Selector("selectorLevel", 0f,0f, fontSize, "", levels, font);
-        final Selector innerSelectorLevel = selectorLevel;
-        // adiciona a opção de selecionar nível
-        menuMain.addMenuOption("SelecionarNivel", context.getResources().getString(R.string.menuPrincipalAlterarNivel), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                innerSelectorLevel.fromMenu(innerMenu);
-            }
-        });
-
-        // ajusta a posição do seletor de nível
-        MenuOption menuOptionSelectLevel = menuMain.getMenuOptionByName("SelecionarNivel");
-        selectorLevel.setPosition(menuOptionSelectLevel.x + (menuOptionSelectLevel.width), menuOptionSelectLevel.y);
-        selectorLevel.setOnChange(new Selector.OnChange() {
-            @Override
-            public void onChange() {
-                Game.changeLevel(innerSelectorLevel.selectedValue+1);
-            }
-        });
-
-
-        // adiciona a opção de acessar as opções do jogo
-        menuMain.addMenuOption("options", context.getResources().getString(R.string.options), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                setGameState(GAME_STATE_OPCOES);
-            }
-        });
-
-        // adiciona a opção de acessar as opções do jogo
-        menuMain.addMenuOption("ranking", context.getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                setGameState(GAME_STATE_RANKING);
-            }
-        });
-
-        
-        // cria o menu in game
-        menuInGame = new Menu("menuInGame",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, fontSize, font);
-
-        // adiciona a opção continuar
-        final Menu innerMenuInGame = menuInGame;
-        menuInGame.addMenuOption("Continuar", context.getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                innerMenuInGame.block();
-                Game.blockAndWaitTouchRelease();
-                if (Game.gameState == GAME_STATE_DERROTA){
-                    LevelLoader.loadLevel(Game.levelNumber);
-                    Game.menuInGame.clearDisplay();
-                    Game.setGameState(GAME_STATE_PREPARAR);
-                } else if (Game.gameState == GAME_STATE_VITORIA){
-                    Game.menuMain.getMenuOptionByName("IniciarJogo").fireOnChoice();
-                } else if (Game.gameState == GAME_STATE_PAUSE){
-                    Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
-                    Game.increaseAllGameEntitiesAlpha(500);
-                    Game.messageInGame.reduceAlpha(500,0f);
-                    Game.menuInGame.reduceAlpha(500,0f, new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationEnd() {
-                            Log.e("game", "ativando callback GAME_STATE_JOGAR");
-                            Game.setGameState(GAME_STATE_JOGAR);
-
-                        }
-                    });
-
-                }
-            }
-        });
-        
-        // adiciona a opção de voltar ao menu principal
-        menuInGame.addMenuOption("RetornarAoMenuPrincipal", context.getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                innerMenuInGame.block();
-                Game.blockAndWaitTouchRelease();
-                Game.setGameState(GAME_STATE_MENU);
-            }
-        });
-
-        // cria o menu tutorial
-        menuTutorial = new Menu("menuTutorial", gameAreaResolutionX/2, gameAreaResolutionY/2, fontSize, font);
-
-        // adiciona a opção exibir tutorial
-        menuTutorial.addMenuOption("exibirTutorial", context.getResources().getString(R.string.menuTutorialExibirTutorial), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-               Game.blockAndWaitTouchRelease();
-               Game.setGameState(GAME_STATE_TUTORIAL);
-               Game.levelObject.showingTutorial = 0;
-               Game.levelObject.tutorials.get(0).show(Sound.soundTextBoxAppear, 0.01f* (float) volume);
-               Game.menuTutorial.block();
-               Game.menuTutorial.clearDisplay();
-            }
-        });
-        
-        // adiciona a opção pular tutorial
-        menuTutorial.addMenuOption("PularTutorial", context.getResources().getString(R.string.menuTutorialPularTutorial), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-               Game.blockAndWaitTouchRelease();
-               Game.setGameState(GAME_STATE_PREPARAR);
-               Game.menuTutorial.block();
-               Game.menuTutorial.clearDisplay();
-            }
-        });
-        
-        // adiciona a opção de voltar ao menu principal
-        menuTutorial.addMenuOption("Retornar", context.getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Game.blockAndWaitTouchRelease();
-                Game.setGameState(GAME_STATE_MENU);
-                
-            }
-        });
-    }
-
-    private static void changeDificulty(int selectedValue) {
+    private static void changeDifficulty(int selectedValue) {
         if (selectedValue == 0){
-            dificulty = DIFICULDADE_FACIL;
-            setBottomText(context.getResources().getString(R.string.mensagemDificuldadeFacil));
+            basePoints = POINTS_EASY;
+            difficulty = DIFICULDADE_FACIL;
+            difficultyVelocityBarMultiplicator = BAR_EASY;
+            difficultyVelocityObstacleMultiplicator = OBSTACLE_EASY;
+            difficultyVelocityBallMultiplicator = BALL_EASY;
         } else if (selectedValue == 1){
-            dificulty = DIFICULDADE_NORMAL;
-            setBottomText(context.getResources().getString(R.string.mensagemDificuldadeNormal));
+            basePoints = POINTS_NORMAL;
+            difficulty = DIFICULDADE_NORMAL;
+            difficultyVelocityBarMultiplicator = BAR_NORMAL;
+            difficultyVelocityObstacleMultiplicator = OBSTACLE_NORMAL;
+            difficultyVelocityBallMultiplicator = BALL_NORMAL;
         } else if (selectedValue == 2){
-            dificulty = DIFICULDADE_DIFÍCIL;
-            setBottomText(context.getResources().getString(R.string.mensagemDificuldadeDificil));
+            basePoints = POINTS_HARD;
+            difficulty = DIFICULDADE_DIFÍCIL;
+            difficultyVelocityBarMultiplicator = BAR_HARD;
+            difficultyVelocityObstacleMultiplicator = OBSTACLE_HARD;
+            difficultyVelocityBallMultiplicator = BALL_HARD;
         } else if (selectedValue == 3){
-            dificulty = DIFICULDADE_INSANO;
-            setBottomText(context.getResources().getString(R.string.mensagemDificuldadeInsano));
+            basePoints = POINTS_INSANE;
+            difficulty = DIFICULDADE_INSANO;
+            difficultyVelocityBarMultiplicator = BAR_INSANE;
+            difficultyVelocityObstacleMultiplicator = OBSTACLE_INSANE;
+            difficultyVelocityBallMultiplicator = BALL_INSANE;
         }
         Storage.setDificulty(selectedValue);
-
     }
 
     private static void changeLevel(int level) {
         levelNumber = level;
-        
         // alterar texto que mostra o level
         messageCurrentLevel.setText(
             context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber) + " - "+
@@ -1339,44 +1351,6 @@ public class Game {
         );
 
         Storage.setActualLevel(level);
-    }
-
-    public static void initPrograms(){
-
-        imageProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_image),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_image));
-
-        imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
-
-        imageColorizedFxProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorizedfx),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorizedfx));
-
-        textProgram  =new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_text),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_text));
-
-        solidProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_solidcolor),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_solidcolor));
-
-        lineProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_line),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_line));
-
-        windProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_wind),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_wind3));
-
-        specialBallProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_specialball),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_specialball));
-    }
-
-    public static void initFont(){
-        font = new Font(1,textProgram);
-    }
-
-    public static void initSounds(){
-
-        volume = Storage.getVolume();
-
-
     }
 
     public static void simulate(long elapsed, float frameDuration){
@@ -1410,7 +1384,18 @@ public class Game {
         // atualiza posição da barra
         if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
             if (bars != null) {
-                if (bars.size() > 0) {
+                if (bars.size() == 1) {
+                    if (button1Left.isPressed) {
+                        bars.get(0).vx = -(bars.get(0).dvx * (float) elapsed) / frameDuration;
+                    } else if (button2Right.isPressed) {
+                        bars.get(0).vx = (bars.get(0).dvx * (float) elapsed) / frameDuration;
+                    } else {
+                        bars.get(0).vx = 0f;
+                    }
+                    bars.get(0).translate(bars.get(0).vx, 0);
+                    bars.get(0).verifyWind();
+                }
+                if (bars.size() == 2) {
                     if (button1Left.isPressed) {
                         bars.get(0).vx = -(bars.get(0).dvx * (float) elapsed) / frameDuration;
                     } else if (button1Right.isPressed) {
@@ -1418,23 +1403,21 @@ public class Game {
                     } else {
                         bars.get(0).vx = 0f;
                     }
-
                     bars.get(0).translate(bars.get(0).vx, 0);
                     bars.get(0).verifyWind();
 
-                    if (bars.size() == 2) {
-                        if (button2Left.isPressed) {
-                            bars.get(1).vx = -(bars.get(1).dvx * (float) elapsed) / frameDuration;
-                        } else if (button2Right.isPressed) {
-                            bars.get(1).vx = (bars.get(1).dvx * (float) elapsed) / frameDuration;
-                        } else {
-                            bars.get(1).vx = 0f;
-                        }
-
-                        bars.get(1).translate(bars.get(0).vx, 0);
-                        bars.get(1).verifyWind();
+                    if (button2Left.isPressed) {
+                        bars.get(1).vx = -(bars.get(1).dvx * (float) elapsed) / frameDuration;
+                    } else if (button2Right.isPressed) {
+                        bars.get(1).vx = (bars.get(1).dvx * (float) elapsed) / frameDuration;
+                    } else {
+                        bars.get(1).vx = 0f;
                     }
+
+                    bars.get(1).translate(bars.get(0).vx, 0);
+                    bars.get(1).verifyWind();
                 }
+
             }
 
             // verifica se a bola especial tocou a barra
@@ -1452,7 +1435,7 @@ public class Game {
         }
 
         // atualiza os dados da entidade, aplicando todas as transformações setadas
-        checkTransformations();
+        verifyTransformations();
 
         if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
             // atualiza posição das windows
@@ -1611,7 +1594,7 @@ public class Game {
         }
     }
     
-    public static void checkTransformations(){
+    public static void verifyTransformations(){
 
         if (wind != null){
             wind.checkTransformations(true);
@@ -1696,8 +1679,8 @@ public class Game {
 
         if (button1Left != null) button1Left.checkTransformations(true);
         if (button1Right != null) button1Right.checkTransformations(true);
-        if (button2Left != null) button1Left.checkTransformations(true);
-        if (button2Right != null) button1Right.checkTransformations(true);
+        if (button2Left != null) button2Left.checkTransformations(true);
+        if (button2Right != null) button2Right.checkTransformations(true);
 
         if (buttonMusic != null) buttonMusic.checkTransformations(true);
         if (buttonSound != null) buttonSound.checkTransformations(true);
@@ -1781,9 +1764,7 @@ public class Game {
         messageInGame.prepareRender(matrixView, matrixProjection);
         messageCurrentLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
-        
         bottomTextBox.prepareRender(matrixView, matrixProjection);
-        
 
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
         if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
@@ -1795,8 +1776,8 @@ public class Game {
 
         if (button1Left != null) button1Left.prepareRender(matrixView, matrixProjection);
         if (button1Right != null) button1Right.prepareRender(matrixView, matrixProjection);
-        if (button2Left != null) button1Left.prepareRender(matrixView, matrixProjection);
-        if (button2Right != null) button1Right.prepareRender(matrixView, matrixProjection);
+        if (button2Left != null) button2Left.prepareRender(matrixView, matrixProjection);
+        if (button2Right != null) button2Right.prepareRender(matrixView, matrixProjection);
 
         if (buttonMusic != null) buttonMusic.prepareRender(matrixView, matrixProjection);
         if (buttonSound != null) buttonSound.prepareRender(matrixView, matrixProjection);
@@ -1815,15 +1796,11 @@ public class Game {
     }
 
     public static void verifyListeners() {
-
-        //Log.e("game", ""+touchEvents.size());
-
         if (!isBlocked) {
             for (int i = 0; i < interactionListeners.size(); i++) {
                 interactionListeners.get(i).verify();
             }
         }
-
         if (menuMain != null) menuMain.verifyListener();
         if (menuInGame != null) menuInGame.verifyListener();
         if (menuTutorial != null) menuTutorial.verifyListener();
@@ -1833,17 +1810,15 @@ public class Game {
         if (selectorDificulty != null)selectorDificulty.verifyListener();
         if (selectorMusic != null)selectorMusic.verifyListener();
         if (selectorSound != null)selectorSound.verifyListener();
-
         if (gameState == GAME_STATE_TUTORIAL){
             if (levelObject.tutorials.size() >  levelObject.showingTutorial){
                 levelObject.tutorials.get(levelObject.showingTutorial).textBox.verifyListener();
             }
         }
-
         if (button1Left != null) button1Left.verifyListener();;
         if (button1Right != null) button1Right.verifyListener();
-        if (button2Left != null) button1Left.verifyListener();
-        if (button2Right != null) button1Right.verifyListener();
+        if (button2Left != null) button2Left.verifyListener();
+        if (button2Right != null) button2Right.verifyListener();
         if (buttonMusic != null) buttonMusic.verifyListener();
         if (buttonSound != null) buttonSound.verifyListener();
         if (bottomTextBox != null) bottomTextBox.verifyListener();

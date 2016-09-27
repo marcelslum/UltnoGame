@@ -39,6 +39,8 @@ public class MainActivity extends Activity {
         // We create our Surfaceview for our OpenGL here.
         glSurfaceView = new GLSurf(this);
 
+        glSurfaceView.setPreserveEGLContextOnPause(true);
+
         // Set our view.
         setContentView(R.layout.activity_main);
 

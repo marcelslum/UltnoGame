@@ -40,17 +40,17 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     public float screenOffSetY;
 
 
-    public GLRenderer(Context c)
-    {
+    public GLRenderer(Context c) {
         mContext = c;
         mLastTime = System.currentTimeMillis() + 100;
         Game.context = mContext;
     }
 
-    public void onPause()
-    {
-        if (Sound.music != null) {
+    public void onPause() {
+        if (Game.gameState == Game.GAME_STATE_JOGAR) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
+        } else if (Game.gameState == Game.GAME_STATE_PREPARAR || Game.gameState == Game.GAME_STATE_TUTORIAL) {
+            Game.setGameState(Game.GAME_STATE_MENU);
         }
     }
 
@@ -61,22 +61,18 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-
-        GLES20.glClearColor(0.902f, 0.89f, 0.922f, 1.0f);
-
-        // Setup our scaling system
-        //SetupScaling();
-
-        GLES20.glEnable(GLES20.GL_BLEND);
-
-        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-
-        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        if (Game.texts != null){
+            return;
+        }
+
+        GLES20.glClearColor(0.902f, 0.89f, 0.922f, 1.0f);
+        GLES20.glEnable(GLES20.GL_BLEND);
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
@@ -129,31 +125,19 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         // Set the camera position (View matrix)
         Matrix.setLookAtM(matrixView, 0, -screenOffSetX, 0f, 100f, -screenOffSetX, 0f, 0f, 0f, 1.0f, 0.0f);
 
-        // Calculate the projection and view transformation
-        //Matrix.multiplyMM(matrixProjectionAndView, 0, matrixProjection, 0, matrixView, 0);
-
-        // Setup our scaling system
-        //SetupScaling();
-
-        //this.gi.addText(new Text("titulo", this.gi, 0f, 0f, 300f, "ULTNO", this.gi.font));
-
         Game.gameAreaResolutionX = this.effectiveScreenWidth;
         Game.gameAreaResolutionY = this.effectiveScreenHeight * 0.85f;
-
         Game.resolutionX = this.effectiveScreenWidth;
         Game.resolutionY = this.effectiveScreenHeight;
-
         Game.screenOffSetX = screenOffSetX;
         Game.screenOffSetY = screenOffSetY;
 
         Game.init();
-
         Game.setGameState(Game.GAME_STATE_MENU);
     }
 
     @Override
     public void onDrawFrame(GL10 unused) {
-
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
         GLES20.glClearColor(0.902f, 0.89f, 0.922f, 1.0f);
 

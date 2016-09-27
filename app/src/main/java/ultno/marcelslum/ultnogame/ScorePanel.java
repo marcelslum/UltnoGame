@@ -22,7 +22,7 @@ public class ScorePanel extends Entity {
     ScorePanel(String name, float x, float y, float size) {
         super(name, x, y);
 
-        this.x -= (size * 0.55294f) * 2.5f;
+        this.x -= (size * 0.55294f) * 3.5f;
 
         this.size = size;
         isSolid = false;
@@ -54,22 +54,22 @@ public class ScorePanel extends Entity {
 
         int valueLength = valueString.length();
 
-        initializeData(12 * 5, 6 * 5, 8 * 5, 0);
+        initializeData(12 * 7, 6 * 7, 8 * 7, 0);
 
         float width = size * 0.55294f;
 
         float xOfTriangle = 0f;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 7; i++) {
 
             int subInteger;
 
-            if (i < (5 - valueLength)) {
+            if (i < (7 - valueLength)) {
                 subInteger = 0;
             } else {
 
 
-                String subString = valueString.substring(i - (5 - valueLength), i + 1 - (5 - valueLength));
+                String subString = valueString.substring(i - (7 - valueLength), i + 1 - (7 - valueLength));
 
                 //Log.e("point", "subString "+subString);
 
@@ -171,12 +171,12 @@ public class ScorePanel extends Entity {
     public void changeDisplayValue(int valueToDisplay){
         String valueString = String.valueOf(valueToDisplay);
         int valueLength = valueString.length();
-        for (int i = 0; i < 5;i++){
+        for (int i = 0; i < 7;i++){
             int subInteger;
-            if (i < (5-valueLength)) {
+            if (i < (7-valueLength)) {
                 subInteger = 0;
             } else {
-                String subString = valueString.substring(i - (5 - valueLength), i + 1- (5 - valueLength));
+                String subString = valueString.substring(i - (7 - valueLength), i + 1- (7 - valueLength));
                 subInteger = Integer.parseInt(subString);
             }
             if (subInteger == 0){

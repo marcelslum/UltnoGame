@@ -313,7 +313,6 @@ public class Text extends Entity{
     }
 
     public void reduceWidth(float desiredWidth) {
-        Log.e("text", "reduce width");
         int length = text.length();
         Text textForMeasure;
         float widthOfText;

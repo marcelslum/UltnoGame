@@ -184,40 +184,39 @@ public class Level {
 
 
         // BOTÃO 1 ESQUERDA
-        float x = Game.resolutionX * 0.01f;
+        float x = Game.resolutionX * 0.03f;
         Game.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         Game.button1Left.setTextureMap(19);
         Game.button1Left.textureMapUnpressed = 19;
         Game.button1Left.textureMapPressed = 18;
         Game.button1Left.alpha = 0.7f;
 
-        // BOTÃO 1 DIREITA
-        x = Game.resolutionX * 0.14f;
-        Game.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
-        Game.button1Right.setTextureMap(20);
-        Game.button1Right.textureMapUnpressed = 20;
-        Game.button1Right.textureMapPressed = 17;
-        Game.button1Right.alpha = 0.7f;
+        // BOTÃO 2 DIREITA
+        x = Game.resolutionX * 0.85f;
+        Game.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        Game.button2Right.setTextureMap(20);
+        Game.button2Right.textureMapUnpressed = 20;
+        Game.button2Right.textureMapPressed = 17;
 
-        //Log.e("Level loadEnt", "1");
         if (this.barsQuantity > 1) {
+            // BOTÃO 1 DIREITA
+            x = Game.resolutionX * 0.14f;
+            Game.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+            Game.button1Right.setTextureMap(20);
+            Game.button1Right.textureMapUnpressed = 20;
+            Game.button1Right.textureMapPressed = 17;
+            Game.button1Right.alpha = 0.7f;
+
             // BOTÃO 2 ESQUERDA
             x = Game.resolutionX * 0.66f;
             Game.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
             Game.button2Left.setTextureMap(19);
             Game.button2Left.textureMapUnpressed = 19;
             Game.button2Left.textureMapPressed = 18;
-
-            // BOTÃO 2 DIREITA
-            x = Game.resolutionX * 0.83f;
-            Game.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
-            Game.button2Right.setTextureMap(20);
-            Game.button2Right.textureMapUnpressed = 20;
-            Game.button2Right.textureMapPressed = 17;
         }
 
         // BOTÃO SOM
-        Game.buttonSound = new ButtonOnOff("buttonSound", Game.gameAreaResolutionX * 0.35f,
+        Game.buttonSound = new ButtonOnOff("buttonSound", Game.gameAreaResolutionX * 0.32f,
                 Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         Game.buttonSound.textureMapUnpressed = 9;
         Game.buttonSound.textureMapPressed = 10;
@@ -311,8 +310,8 @@ public class Level {
             float barWidth = Game.gameAreaResolutionX * barsWidth_BR[i];
             float barHeight = Game.gameAreaResolutionY * barsHeight_BR[i];
 
-            float barVelocityX = Game.gameAreaResolutionX * barsVX_BR[i];
-            float barVelocityY = Game.gameAreaResolutionY * barsVY_BR[i];
+            float barVelocityX = Game.gameAreaResolutionX * barsVX_BR[i] * Game.difficultyVelocityBarMultiplicator;
+            float barVelocityY = Game.gameAreaResolutionY * barsVY_BR[i] * Game.difficultyVelocityBarMultiplicator;
 
             //Game.barsDesiredVelocityX[i] = barVelocityX;
             //Game.barsDesiredVelocityY[i] = barVelocityY;
@@ -376,12 +375,16 @@ public class Level {
                 //Log.e("level", "setting obstacle scale variation data");
                 if (obstaclesScaleVariationData.length > i) {
                     obstacle.setScaleVariation(obstaclesScaleVariationData[i]);
+                    obstacle.scaleVariationData.heightVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                    obstacle.scaleVariationData.heightVelocity *= Game.difficultyVelocityObstacleMultiplicator;
                 }
             }
             if (obstaclesPositionVariationData != null) {
                 //Log.e("level", "setting obstacle scale variation data");
                 if (obstaclesPositionVariationData.length > i) {
                     obstacle.setPositionVariation(obstaclesPositionVariationData[i]);
+                    obstacle.positionVariationData.xVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                    obstacle.positionVariationData.yVelocity *= Game.difficultyVelocityObstacleMultiplicator;
                 }
             }
             Game.addObstacle(obstacle);
@@ -401,25 +404,8 @@ public class Level {
                 quantityOfSpecialTargets += 1;
         }
 
-        // TODO?????
-        /*
-        for (var i = 0; i < quantityOfSpecialTargets * 3; i++){
-            Game.preAllocateBalls[i] = BALL.createBall("ballexploded", this.game, V(0,0), 0, false);
-            Game.preAllocateBalls[i].preAllocateUsed = false;
-        }
-
-        for (var i = 0; i < quantityOfSpecialTargets; i++){
-            Game.preAllocateParticles[i] = PARTICLES.createParticles("ballExplode", this.game, 4, V(0,0), 2,1000, Game.resolution, black);
-            Game.preAllocateParticles[i].preAllocateUsed = false;
-        }
-        */
-
-
-        //Log.e("Level loadEnt", "2");
         int numberOfBallsInvencible = 0;
-
         for (int i = 0; i < this.ballsQuantity; i++){
-
             int ic = i; if (i > this.ballsX_BR.length - 1) {ic = 0;}
             float ballX = Game.gameAreaResolutionX * this.ballsX_BR[ic];
             ic = i; if (i > this.ballsY_BR.length - 1) {ic = 0;}
@@ -428,24 +414,16 @@ public class Level {
             ic = i; if (i > this.ballsRadius_BR.length - 1) {ic = 0;}
             float radius = Game.gameAreaResolutionY * this.ballsRadius_BR[ic];
 
-            Log.e("level", "radius "+radius);
-
             ic = i; if (i > this.ballsVX_BR.length - 1) {ic = 0;}
-            float ballVelocityX = Game.gameAreaResolutionX * this.ballsVX_BR[ic];
-            ic = i; if (i > this.ballsVY_BR.length - 1) {ic = 0;}
-            float ballVelocityY = Game.gameAreaResolutionY * this.ballsVY_BR[ic];
+            float ballVelocityX = Game.gameAreaResolutionX * this.ballsVX_BR[ic] * Game.difficultyVelocityBallMultiplicator;
 
-            //Game.ballsDesiredVelocityX[i] = ballVelocityX;
-            //Game.ballsDesiredVelocityY[i] = ballVelocityY;
-            //Game.ballsInitialPositionX[i] = ballX;
-            //Game.ballsInitialPositionY[i] = ballY;
+            ic = i; if (i > this.ballsVY_BR.length - 1) {ic = 0;}
+            float ballVelocityY = Game.gameAreaResolutionY * this.ballsVY_BR[ic] * Game.difficultyVelocityBallMultiplicator;
 
             ic = i; if (i > this.ballsInvencible.length - 1) {ic = 0;}
             if (this.ballsInvencible[ic]){
                 numberOfBallsInvencible += 1;
             }
-
-            //Log.e("Level loadEnt", "3");
 
             ic = i; if (i > this.ballsTextureMap.length - 1) {ic = 0;}
             Ball ball = new Ball("ball", ballX, ballY, radius, this.ballsTextureMap[ic]);
@@ -459,8 +437,6 @@ public class Level {
             ball.velocityMax_BI = ballsVelocityMax_BI[ic];
             ic = i; if (i > this.ballsVelocityMin_BI.length - 1) {ic = 0;}
             ball.velocityMin_BI = ballsVelocityMin_BI[ic];
-
-            //Log.e("Level loadEnt", "4");
 
             ic = i; if (i > this.ballsMaxAngle.length - 1) {ic = 0;}
             ball.maxAngle = this.ballsMaxAngle[ic];
@@ -480,14 +456,9 @@ public class Level {
             for (int t = 0; t < this.ballsTargetsAppend.size(); t++){
                 ball.targetsAppend = this.ballsTargetsAppend.get(ic);
             }
-            //console.log(ball.targetsAppend);
-
-            //Log.e("Level loadEnt", "5");
 
             ic = i; if (i > this.ballsFree.length - 1) {ic = 0;}
             ball.isFree = this.ballsFree[ic];
-
-            //Log.e("Level loadEnt", "5.1");
 
             ic = i; if (i > this.ballsInvencible.length - 1) {ic = 0;}
             if (this.ballsInvencible[ic]){
@@ -497,7 +468,6 @@ public class Level {
             Game.addBall(ball);
 
         }
-       //todo Game.hudEntities.scorePanel.setValue(this.ballsQuantity - ballsInvencible, ballsInvencible, this.minBallsAlive);
     }
 
     static public class LevelBuilder {

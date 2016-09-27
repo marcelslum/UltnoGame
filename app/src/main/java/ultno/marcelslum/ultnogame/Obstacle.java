@@ -22,7 +22,7 @@ public class Obstacle extends Rectangle{
     @Override
     public void checkTransformations(boolean updatePrevious) {
 
-        // verifica antes de "checkTransformations" se haverá alteração na escala
+        // verifica antes de "verifyTransformations" se haverá alteração na escala
         boolean changeUfInfo = false;
 
         if (scaleVariationData != null){

@@ -70,20 +70,15 @@ public class Target extends Rectangle {
         });
     }
 
-
     public void onBallCollision(){
-
-        int points = 100;
+        int points = Game.basePoints;
         if (Game.objectivePanel.blueBalls > 0) {
             for (int i = 0; i < Game.objectivePanel.blueBalls; i++) {
                 points *= 2;
             }
         }
-
         decayState(points);
-
         verifySpecialBall();
-
     }
 
     public void verifySpecialBall(){

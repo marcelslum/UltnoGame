@@ -711,10 +711,7 @@ public class Ball extends Circle{
 
             Game.addBall(ball);
 
-            //Log.e("ball", "explode x: "+explodeVelocityX+" y: "+explodeVelocityX);
             ball.accelerate(500, explodeVelocityX, explodeVelocityY);
-
-
         }
         
         for (Animation a : animations){
