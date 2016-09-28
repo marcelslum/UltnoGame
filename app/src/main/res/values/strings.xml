@@ -2,10 +2,10 @@
     <string name="app_name">Ultno</string>
     <string name="menuTutorialExibirTutorial">Exibir o tutorial do nível </string>
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
-    <string name="menuPrincipalIniciar">Iniciar</string>
+    <string name="menuPrincipalIniciar">Jogar o nível</string>
     <string name="menuPrincipalAlterarNivel">Alterar nível</string>
     <string name="menuPrincipalAlterarVolume">Alterar volume</string>
-    <string name="messageMaxScoreLevel">Maior pontução desde nível:</string>
+    <string name="messageMaxScoreLevel">Maior pontução neste nível:</string>
     <string name="nivel">Nível: </string>
     <string name="messageMaxScoreTotal">Pontuação total: </string>
     <string name="messageCurrentLevel">Nível:</string>
@@ -13,6 +13,7 @@
     <string name="score">score</string>
     <string name="pause">PAUSE</string>
     <string name="continuarJogar">Continuar a jogar</string>
+    <string name="continuarDepoisVitoria">Continuar</string>
     <string name="retornarAoMenuPrincipal">Voltar</string>
     <string name="nivelConcluido1">NÍVEL </string>
     <string name="nivelConcluido2"> CONCLUÍDO</string>
@@ -23,7 +24,7 @@
     <string name="l1t1">Mova a barra utilizando os botões abaixo. Vamos lá, pode testar!</string>
     <string name="l1t2">Não deixe a bola cair.</string>
     <string name="l1t3">Elimine os alvos acertendo-os com a bola.</string>
-    <string name="l1t4">Cada alvo valerá 100 pontos.</string>
+    <string name="l1t4">A pontuação de cada alvo depende do nível de dificuldade escolhido. No nível fácil, por exemplo, cada alvo valerá 100 pontos.</string>
     <string name="l1t5">Elimine todos os alvos para completar o nível.</string>
     <string name="l1t6">Mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
     <string name="l1t7">Vamos lá! Pressione a flecha para iniciar a contagem regressiva.</string>
@@ -71,4 +72,5 @@
     <string name="nao_conectado1">Dispositivo não conectado. Clique aqui para tentar novamente. Você pode jogar sem conexão, mas as informações de ranking não serão atualizadas.</string>
     <string name="conectando">Conectando...</string>
     <string name="ranking">Ranking</string>
+    <string name="rankingObtidoAposVitoria">Ranking atingido:</string>
 </resources>

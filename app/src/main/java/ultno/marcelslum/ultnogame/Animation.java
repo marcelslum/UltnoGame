@@ -70,18 +70,16 @@ public class Animation{
     }
 
     public void stop(){
-        this.started = false;
+        started = false;
     }
 
     public void stopAndConclude(){
-
-        this.stop();
-        this.targetObject.applyAnimation(this.parameterToAnimate, this.values.get(this.values.size() - 1)[1]);
+        stop();
+        targetObject.applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1]);
         fireAnimationEnd();
     }
 
     public void doAnimation(){
-        //Log.e("Animation", "do Animation");
 
         this.elapsedTime = Utils.getTime() - this.startTime;
         this.percentage = this.elapsedTime/(float)this.duration;

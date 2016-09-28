@@ -55,6 +55,7 @@ public class Game {
     public static Menu menuOptions;
     public static Menu menuInGame;
     public static Menu menuTutorial;
+    public static Menu menuWin;
     public static Selector selectorLevel;
     public static Selector selectorDificulty;
     public static Selector selectorMusic;
@@ -101,6 +102,7 @@ public class Game {
     public static Text messageGameOver;
     public static Text messagePreparation;
     public static Text messageInGame;
+    public static Text messageRankingWin;
     public static Text messageCurrentLevel;
     public static Text messageMaxScoreTotal;
     public static TextBox bottomTextBox;
@@ -339,6 +341,10 @@ public class Game {
                 gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.2f,
                 context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
+        messageRankingWin = new Text("messageRankingWin",
+                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.55f, gameAreaResolutionY*0.12f,
+                "-", font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
+
         messageCurrentLevel = new Text("messageCurrentLevel",
                 resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.04f,
                 context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber) + " - " + context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
@@ -559,7 +565,7 @@ public class Game {
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
-        menuMain.addMenuOption("IniciarJogo", context.getResources().getString(R.string.menuPrincipalIniciar), new MenuOption.OnChoice() {
+        menuMain.addMenuOption("IniciarJogo", context.getResources().getString(R.string.menuPrincipalIniciar) + " "+levelNumber, new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerMenu.block();
@@ -571,10 +577,11 @@ public class Game {
                     if (!Storage.getLevelTutorialSaw(Game.levelNumber)) {
                         Storage.setLevelTutorialSaw(Game.levelNumber, true);
                         Game.levelObject.loadEntities();
+                        Game.levelObject.tutorials.get(0).textBox.alpha = 0f;
                         Game.setGameState(GAME_STATE_TUTORIAL);
                         Game.levelObject.showFirstTutorial();
                     } else {
-                        Game.menuTutorial.getMenuOptionByName("exibirTutorial").setText = context.getResources().getString(R.string.menuTutorialExibirTutorial) + Game.levelNumber;
+                        Game.menuTutorial.getMenuOptionByName("exibirTutorial").setText(context.getResources().getString(R.string.menuTutorialExibirTutorial) + Game.levelNumber);
                         Game.menuTutorial.unblock();
                         Game.menuTutorial.display();
                         tittle.display();
@@ -630,6 +637,20 @@ public class Game {
         });
 
 
+        // ----------------------------------------------------MENU WIN
+        menuWin = new Menu("menuWin",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.4f, fontSize, font);
+
+        // adiciona a opção continuar
+        menuWin.addMenuOption("Continuar", context.getResources().getString(R.string.continuarDepoisVitoria), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.menuWin.block();
+                Game.blockAndWaitTouchRelease();
+                setGameState(GAME_STATE_MENU);
+            }
+        });
+
+
         // ----------------------------------------------------MENU IN GAME
         menuInGame = new Menu("menuInGame",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, fontSize, font);
 
@@ -643,8 +664,6 @@ public class Game {
                     LevelLoader.loadLevel(Game.levelNumber);
                     Game.menuInGame.clearDisplay();
                     Game.setGameState(GAME_STATE_PREPARAR);
-                } else if (Game.gameState == GAME_STATE_VITORIA){
-                    Game.menuMain.getMenuOptionByName("IniciarJogo").fireOnChoice();
                 } else if (Game.gameState == GAME_STATE_PAUSE){
                     Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
                     Game.increaseAllGameEntitiesAlpha(500);
@@ -679,6 +698,7 @@ public class Game {
             public void onChoice() {
                 Game.blockAndWaitTouchRelease();
                 Game.setGameState(GAME_STATE_TUTORIAL);
+                Game.levelObject.tutorials.get(0).textBox.alpha = 0f;
                 Game.levelObject.showingTutorial = 0;
                 Game.levelObject.tutorials.get(0).show(Sound.soundTextBoxAppear, 0.01f* (float) volume);
                 Game.menuTutorial.block();
@@ -925,17 +945,16 @@ public class Game {
             valuesAnimPause.add(new float[]{0f,1f});
             valuesAnimPause.add(new float[]{0.25f,2f});
             valuesAnimPause.add(new float[]{0.7f,3f});
-            final Text innerMessageInGame = messageInGame;
             Animation anim = new Animation(messageInGame, "messageInGameColor", "numberForAnimation", 4000, valuesAnimPause, true, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
-                    if (innerMessageInGame.numberForAnimation == 1f){
-                        innerMessageInGame.setColor(new Color(0f, 0f, 1f, 1f));
-                    } else if (innerMessageInGame.numberForAnimation == 2f) {
-                        innerMessageInGame.setColor(new Color(0f, 0f, 0f, 1f));
-                    } else if (innerMessageInGame.numberForAnimation == 3f) {
-                        innerMessageInGame.setColor(new Color(1f, 1f, 0f, 1f));
+                    if (messageInGame.numberForAnimation == 1f){
+                        messageInGame.setColor(new Color(0f, 0f, 1f, 1f));
+                    } else if (messageInGame.numberForAnimation == 2f) {
+                        messageInGame.setColor(new Color(0f, 0f, 0f, 1f));
+                    } else if (messageInGame.numberForAnimation == 3f) {
+                        messageInGame.setColor(new Color(1f, 1f, 0f, 1f));
                     }
                 }
             });
@@ -943,6 +962,7 @@ public class Game {
 
             messageInGame.setText(context.getResources().getString(R.string.pause));
             messageInGame.increaseAlpha(100, 1f);
+            messageInGame.y = gameAreaResolutionY*0.25f;
             messageInGame.display();
         } else if (state == GAME_STATE_VITORIA){
             stopAndReleaseMusic();
@@ -976,19 +996,18 @@ public class Game {
             valuesAnimVitoria.add(new float[]{0.2f,2f});
             valuesAnimVitoria.add(new float[]{0.5f,3f});
             valuesAnimVitoria.add(new float[]{0.7f,4f});
-            final Text innerMessageInGame = messageInGame;
             Animation anim = new Animation(messageInGame, "messageInGameColor", "numberForAnimation", 3000, valuesAnimVitoria, true, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
-                    if (innerMessageInGame.numberForAnimation == 1f){
-                        innerMessageInGame.setColor(new Color(0f, 0f, 1f, 1f));
-                    } else if (innerMessageInGame.numberForAnimation == 2f) {
-                        innerMessageInGame.setColor(new Color(0f, 0f, 0f, 1f));
-                    } else if (innerMessageInGame.numberForAnimation == 3f) {
-                        innerMessageInGame.setColor(new Color(1f, 1f, 0f, 1f));
-                    } else if (innerMessageInGame.numberForAnimation == 4f) {
-                        innerMessageInGame.setColor(new Color(1f, 0f, 0f, 1f));
+                    if (messageInGame.numberForAnimation == 1f){
+                        messageInGame.setColor(new Color(0f, 0f, 1f, 1f));
+                    } else if (messageInGame.numberForAnimation == 2f) {
+                        messageInGame.setColor(new Color(0f, 0f, 0f, 1f));
+                    } else if (messageInGame.numberForAnimation == 3f) {
+                        messageInGame.setColor(new Color(1f, 1f, 0f, 1f));
+                    } else if (messageInGame.numberForAnimation == 4f) {
+                        messageInGame.setColor(new Color(1f, 0f, 0f, 1f));
                     }
                 }
             });
@@ -1017,29 +1036,30 @@ public class Game {
 
             timer.scheduleAtFixedRate(timerTask, 2000, 2000);
 
-
             ArrayList<float[]> valuesAnimVitoriaTranslate = new ArrayList<>();
             valuesAnimVitoriaTranslate.add(new float[]{0f,-gameAreaResolutionY*3});
             valuesAnimVitoriaTranslate.add(new float[]{0.8f,-gameAreaResolutionY*3});
             valuesAnimVitoriaTranslate.add(new float[]{1f,0f});
             new Animation(messageInGame, "messageInGameTranslateX", "translateX", 2000, valuesAnimVitoriaTranslate, false, true).start();
 
-            menuInGame.getMenuOptionByName("Continuar").textObject.setText(context.getResources().getString(R.string.menuInGameNivelConcluido1)+" "+(levelNumber+1));
-            menuInGame.alpha = 0f;
+            messageRankingWin.setText(context.getResources().getString(R.string.rankingObtidoAposVitoria)+ " 2222");
+            menuWin.alpha = 0f;
             messageInGame.increaseAlpha(1600, 1f, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Sound.play(Sound.soundTextBoxAppear, 1, 1, 0);
-                    Game.menuInGame.appearAndUnblock(800);
+                    Game.menuWin.appearAndUnblock(800);
+                    messageRankingWin.display();
                 }
             });
 
             messageInGame.setText(context.getResources().getString(R.string.nivelConcluido1)+ " "+levelNumber+ " "+context.getResources().getString(R.string.nivelConcluido2));
+            messageInGame.y = gameAreaResolutionY*0.15f;
             messageInGame.display();
 
             Utils.createSimpleAnimation(objectivePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY*0.2f).start();
-            Utils.createSimpleAnimation(objectivePanel, "scaleX", "scaleX", 2000, 1f, 2.5f).start();
-            Utils.createSimpleAnimation(objectivePanel, "scaleY", "scaleY", 2000, 1f, 2.5f).start();
+            Utils.createSimpleAnimation(objectivePanel, "scaleX", "scaleX", 2000, 1f, 1.5f).start();
+            Utils.createSimpleAnimation(objectivePanel, "scaleY", "scaleY", 2000, 1f, 1.5f).start();
             Utils.createSimpleAnimation(scorePanel, "scaleX", "scaleX", 2000, 1f, 2f).start();
             Utils.createSimpleAnimation(scorePanel, "scaleY", "scaleY", 2000, 1f, 2f).start();
             Utils.createSimpleAnimation(scorePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY * 0.1f, new Animation.AnimationListener() {
@@ -1072,6 +1092,7 @@ public class Game {
 
         } else if (state == GAME_STATE_TUTORIAL) {
             Game.levelObject.loadEntities();
+
             verifyDead();
         }
 
@@ -1240,11 +1261,13 @@ public class Game {
         list.add(selectorSound);
         list.add(selectorLevel);
         list.add(menuInGame);
+        list.add(menuWin);
         list.add(menuTutorial);
         list.add(tittle);
         list.add(messageGameOver);
         list.add(messagePreparation);
         list.add(messageInGame);
+        list.add(messageRankingWin);
         list.add(messageCurrentLevel);
         list.add(messageMaxScoreTotal);
         list.add(bottomTextBox);
@@ -1349,7 +1372,7 @@ public class Game {
             context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber) + " - "+
                     context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber))
         );
-
+        menuMain.getMenuOptionByName("IniciarJogo").setText(context.getResources().getString(R.string.menuPrincipalIniciar) + " "+levelNumber);
         Storage.setActualLevel(level);
     }
 
@@ -1642,6 +1665,7 @@ public class Game {
 
         if (menuMain != null) menuMain.checkTransformations(true);
         if (menuInGame != null) menuInGame.checkTransformations(true);
+        if (menuWin != null) menuWin.checkTransformations(true);
         if (menuTutorial != null) menuTutorial.checkTransformations(true);
         if (selectorLevel != null) selectorLevel.checkTransformations(true);
 
@@ -1665,6 +1689,7 @@ public class Game {
         messageGameOver.checkTransformations(true);
         messagePreparation.checkTransformations(true);
         messageInGame.checkTransformations(true);
+        messageRankingWin.checkTransformations(true);
         messageCurrentLevel.checkTransformations(true);
         messageMaxScoreTotal.checkTransformations(true);
         bottomTextBox.checkTransformations(true);
@@ -1741,6 +1766,7 @@ public class Game {
         
         if (menuMain != null) menuMain.prepareRender(matrixView, matrixProjection);
         if (menuInGame != null) menuInGame.prepareRender(matrixView, matrixProjection);
+        if (menuWin != null) menuWin.prepareRender(matrixView, matrixProjection);
         if (menuTutorial != null) menuTutorial.prepareRender(matrixView, matrixProjection);
         if (selectorLevel != null) selectorLevel.prepareRender(matrixView, matrixProjection);
 
@@ -1762,6 +1788,7 @@ public class Game {
         messageGameOver.prepareRender(matrixView, matrixProjection);
         messagePreparation.prepareRender(matrixView, matrixProjection);
         messageInGame.prepareRender(matrixView, matrixProjection);
+        messageRankingWin.prepareRender(matrixView, matrixProjection);
         messageCurrentLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         bottomTextBox.prepareRender(matrixView, matrixProjection);
@@ -1803,6 +1830,7 @@ public class Game {
         }
         if (menuMain != null) menuMain.verifyListener();
         if (menuInGame != null) menuInGame.verifyListener();
+        if (menuWin != null) menuWin.verifyListener();
         if (menuTutorial != null) menuTutorial.verifyListener();
         if (selectorLevel != null) selectorLevel.verifyListener();
         if (menuOptions != null)menuOptions.verifyListener();

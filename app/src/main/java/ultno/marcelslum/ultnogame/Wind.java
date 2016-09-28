@@ -19,7 +19,7 @@ public class Wind extends Entity{
     int soundStreamId;
 
 
-    public Wind(String name, float x, float y, float height) {
+    public Wind(String name, float x, float y, float height, boolean toRight) {
         super(name, x, y);
         this.height = height;
         program = Game.windProgram;
@@ -33,7 +33,7 @@ public class Wind extends Entity{
         quantityOfWaves = (int)Math.floor(height/(float)density);
         waves = new Wave[quantityOfWaves];
 
-        rightDirection = false;
+        rightDirection = toRight;
 
         float frequency;
         float initX;

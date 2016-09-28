@@ -177,9 +177,9 @@ public class Entity{
     }
 
     public void clearAnimations() {
-        for (int i = 0; i < this.animations.size(); i++) {
-            if (this.animations.get(i).started && this.animations.get(i).name.equals("ballInvencible")){
-                this.animations.get(i).stopAndConclude();
+        for (int i = 0; i < animations.size(); i++) {
+            if (animations.get(i).started && !this.animations.get(i).name.equals("ballInvencible")){
+                animations.get(i).stopAndConclude();
             }
         }
         this.animTranslateX = 0;
@@ -187,9 +187,7 @@ public class Entity{
         this.animScaleX = 1f;
         this.animScaleY = 1f;
         this.alpha = 1;
-        //this.resetSpecificData();
     }
-    //public void resetSpecificData() {}
 
     public void reduceAlpha(int duration, float finalValue){
         Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue).start();
@@ -395,20 +393,49 @@ public class Entity{
         // TODO verificar se a inversão do eixo y considera o offset
 
         if (program == Game.windProgram || program == Game.specialBallProgram){
-
             float time = ((float)(Utils.getTime() - Game.initTime))/1000f;
-
-
             if (time > 1000.0f){
                 time = time - (float)(Math.floor(time/1000)*1000);
             }
-
             int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
             GLES20.glUniform1f(uf_time, time);
             int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");
             GLES20.glUniform2f(uv2_resolution, Game.effectiveScreenWidth, Game.effectiveScreenHeight);
             // TODO adicionar screen offset ao wind
         }
+
+        if (this.program == Game.imageColorizedFxProgram){
+
+            float variation;
+            if (Game.ballCollidedFx > 0) {
+                if (Game.ballCollidedFx > 30){
+                    variation = 0.007f;
+                } else if (Game.ballCollidedFx > 20){
+                    variation = 0.0055f;
+                } else if (Game.ballCollidedFx > 10){
+                    variation = 0.004f;
+                } else{
+                    variation = 0.002f;
+                }
+
+                if (timeVar) {
+                    time += variation;
+                    if (time > 0.001f) {
+                        timeVar = false;
+                    }
+                } else {
+                    time -= variation;
+                    if (time < -0.001f) {
+                        timeVar = true;
+                    }
+                }
+            }
+            int uf_timeHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
+            GLES20.glUniform1f(uf_timeHandle, time);
+        }
+        // TODO verificar se a inversão do eixo y considera o offset
+
+
 
         if (textureId != -1) {
             // Get handle to textures locations

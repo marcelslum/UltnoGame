@@ -10,6 +10,9 @@ import java.util.ArrayList;
  */
 public class Level {
 
+    public static final int WIND_TYPE_NO = 0;
+    public static final int WIND_TYPE_RIGHT = 1;
+    public static final int WIND_TYPE_LEFT = 2;
     ArrayList<Tutorial> tutorials;
     int showingTutorial = -1;
     public Game game;
@@ -58,7 +61,8 @@ public class Level {
     public float[] windowsDistance;
     public float[] windowsVelocity;
     public boolean isHaveSpecialBall = true;
-    public float specialBallPercentage = 1.0f;
+    public float specialBallPercentage = 0.0f;
+    public float windType;
 
     private Level(){
         this.ballsQuantity = LevelBuilder.ballsQuantity;
@@ -105,7 +109,10 @@ public class Level {
         this.windowsQuantityOfLines = LevelBuilder.windowsQuantityOfLines;
         this.windowsDistance = LevelBuilder.windowsDistance;
         this.windowsVelocity = LevelBuilder.windowsVelocity;
+        this.specialBallPercentage = LevelBuilder.specialBallPercentage;
+        this.windType = LevelBuilder.windType;
         this.tutorials = new ArrayList<>();
+
     }
     
     public void showFirstTutorial(){
@@ -173,15 +180,19 @@ public class Level {
         }
         Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY);
 
-        Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY);
-        Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY);
+        if (windType == Level.WIND_TYPE_NO){
+            Game.wind = null;
+        } else if (windType == Level.WIND_TYPE_RIGHT){
+            Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY, true);
+        } else if (windType == Level.WIND_TYPE_LEFT){
+            Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY, false);
+        }
 
         Game.bordaB.y = Game.gameAreaResolutionY-2;
 
         //Log.e("Level loadEnt", "1");
         float y = Game.resolutionY * 0.86f;
         float buttonSize = Game.resolutionY * 0.13f;
-
 
         // BOTÃO 1 ESQUERDA
         float x = Game.resolutionX * 0.03f;
@@ -192,7 +203,7 @@ public class Level {
         Game.button1Left.alpha = 0.7f;
 
         // BOTÃO 2 DIREITA
-        x = Game.resolutionX * 0.85f;
+        x = Game.resolutionX * 0.87f;
         Game.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         Game.button2Right.setTextureMap(20);
         Game.button2Right.textureMapUnpressed = 20;
@@ -200,7 +211,7 @@ public class Level {
 
         if (this.barsQuantity > 1) {
             // BOTÃO 1 DIREITA
-            x = Game.resolutionX * 0.14f;
+            x = Game.resolutionX * 0.18f;
             Game.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
             Game.button1Right.setTextureMap(20);
             Game.button1Right.textureMapUnpressed = 20;
@@ -208,7 +219,7 @@ public class Level {
             Game.button1Right.alpha = 0.7f;
 
             // BOTÃO 2 ESQUERDA
-            x = Game.resolutionX * 0.66f;
+            x = Game.resolutionX * 0.72f;
             Game.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
             Game.button2Left.setTextureMap(19);
             Game.button2Left.textureMapUnpressed = 19;
@@ -216,7 +227,7 @@ public class Level {
         }
 
         // BOTÃO SOM
-        Game.buttonSound = new ButtonOnOff("buttonSound", Game.gameAreaResolutionX * 0.32f,
+        Game.buttonSound = new ButtonOnOff("buttonSound", Game.gameAreaResolutionX * 0.34f,
                 Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
         Game.buttonSound.textureMapUnpressed = 9;
         Game.buttonSound.textureMapPressed = 10;
@@ -535,6 +546,8 @@ public class Level {
         private static int[] windowsQuantityOfLines;
         private static float[] windowsDistance;
         private static float[] windowsVelocity;
+        private static float specialBallPercentage;
+        private static int windType = Level.WIND_TYPE_NO;
 
         public LevelBuilder setBallsQuantity(int _ballsQuantity) {
             ballsQuantity = _ballsQuantity;
@@ -832,6 +845,16 @@ public class Level {
         public LevelBuilder setWindowsVelocity(float... _windowsVelocity) {
             windowsVelocity = new float[_windowsVelocity.length];
             System.arraycopy(_windowsVelocity, 0, windowsVelocity, 0, _windowsVelocity.length);
+            return this;
+        }
+
+        public LevelBuilder setSpecialBallPercentage0_1(float percentage){
+            specialBallPercentage = percentage;
+            return this;
+        }
+
+        public LevelBuilder setWindType(int type){
+            windType = type;
             return this;
         }
 

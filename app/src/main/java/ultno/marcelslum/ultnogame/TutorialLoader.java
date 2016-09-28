@@ -1,5 +1,7 @@
 package ultno.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +25,7 @@ public class TutorialLoader {
         final float gX = Game.gameAreaResolutionX;
         final float gY = Game.gameAreaResolutionY;
         float size = gX*0.04f;
-        float width = gX*0.8f;
+        float width = gX*0.7f;
         float x = gX*0.15f;
         float y = gY*0.2f;
 
@@ -32,7 +34,7 @@ public class TutorialLoader {
                 // L1T1
                 Game.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBoxBuilder("textoBox1")
+                            new TextBoxBuilder("textBox1")
                                 .position(x, y)
                                 .width(width)
                                 .size(size)
@@ -60,7 +62,7 @@ public class TutorialLoader {
                             .width(width)
                             .size(size)
                             .text(Utils.getStringResource( R.string.l1t2))
-                            .withArrow(gX *0.7f, gY *0.6f)
+                            .withArrow(gX *0.65f, gY *0.62f)
                             .build()
                     )
                    .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
@@ -113,7 +115,7 @@ public class TutorialLoader {
                             .position(x, y*2.5f)
                             .width(width)
                             .size(size)
-                            .text(Utils.getStringResource( R.string.l1t3))
+                            .text(Utils.getStringResource(R.string.l1t3))
                             .withArrow(gX *0.59f, gY *0.15f)
                             .build()
                     )
@@ -185,7 +187,6 @@ public class TutorialLoader {
                                         Game.targets.get(i).reduceAlpha(500, 0f);
                                     }
                                 }
-
                                 Game.balls.get(0).x = gX * 0.59f;
                                 Game.balls.get(0).y = gY * 0.05f;
                                 Game.scorePanel.setValue(900, true, 500, false);

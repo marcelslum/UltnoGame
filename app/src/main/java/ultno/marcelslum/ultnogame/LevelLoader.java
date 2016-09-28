@@ -16,11 +16,13 @@ public class LevelLoader {
                 .setTargetsPadding(0.00225f)
                 .setBarsScaleVariationOff()
                 .setObstaclesScaleVariationOff()
-                .setObstaclesPositionVariationOff();
+                .setObstaclesPositionVariationOff()
+                .setWindType(Level.WIND_TYPE_NO);
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(
                     new int[][]{
-                            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}
+                            //{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                     })
                     .setTargetsStates(new int[]{0, 1})
                     .setObstaclesQuantity(0)
