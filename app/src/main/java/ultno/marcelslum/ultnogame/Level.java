@@ -173,12 +173,13 @@ public class Level {
 
         // escolhe o background de acordo com o número do nível
         int back;
-        if (Game.levelNumber < 10) {
+        if (Game.levelNumber < 9) {
             back = Game.levelNumber;
         } else {
-            back = Game.levelNumber % 10;
+            back = Game.levelNumber % 9;
         }
-        Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY);
+
+        Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY, back);
 
         if (windType == Level.WIND_TYPE_NO){
             Game.wind = null;
@@ -189,6 +190,7 @@ public class Level {
         }
 
         Game.bordaB.y = Game.gameAreaResolutionY-2;
+        Game.bordaB.clearAnimations();
 
         //Log.e("Level loadEnt", "1");
         float y = Game.resolutionY * 0.86f;

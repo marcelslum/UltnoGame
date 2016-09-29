@@ -42,9 +42,7 @@ public class Texture {
     Texture(int id, String resourceIdentifier){
         this.id = id;
         this.resoureIdentifier = resourceIdentifier;
-
         if (textureNames == null){
-
             int[] maxTextureUnits = new int[1];
             GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS, maxTextureUnits, 0);
 
@@ -58,17 +56,13 @@ public class Texture {
             if (MAX_TEXTURES > 8){
                 MAX_TEXTURES = 8;
             }
-
             textureNames = new int[Texture.MAX_TEXTURES];
             textureNamesUsed = new boolean[Texture.MAX_TEXTURES];
             Texture.config();
         }
         resoureIdentifierId = Game.context.getResources().getIdentifier(this.resoureIdentifier, null, Game.context.getPackageName());
         bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
-
-
-        //Picasso.with(Game.context).load(resoureIdentifierId).into(bitmap);
-
+        bind();
     }
 
     public static Texture getTextureById(int id){
@@ -118,6 +112,30 @@ public class Texture {
         return lastTextureUsed;
     }
 
+    public void changeBitmap(String resoureIdentifier){
+        this.resoureIdentifier = resoureIdentifier;
+        resoureIdentifierId = Game.context.getResources().getIdentifier(this.resoureIdentifier, null, Game.context.getPackageName());
+        bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
+
+        if (textureUnit == 0){
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureNames[0]);
+        } else {
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0 + textureUnit);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureNames[textureUnit]);
+        }
+
+        // Set filtering
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_MIRRORED_REPEAT);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_MIRRORED_REPEAT);
+
+        // Load the bitmap into the bound texture.
+        Log.e("texture", "troca textura "+id+ " texture unit "+textureUnit);
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+    }
+
     public int bind(){
         if (bounded){
             //Log.e("texture", "textureBounded "+id);
@@ -146,9 +164,8 @@ public class Texture {
 
         // Load the bitmap into the bound texture.
 
-        //Log.e("texture", "nova textura "+id);
+        Log.e("texture", "nova textura "+id);
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
-
         return textureUnit;
     }
 }

@@ -26,7 +26,7 @@ public class Background extends Entity {
     boolean uvYUp;
     //Rectangle rectangle;
 
-    Background(String name, float x, float y, float width, float height) {
+    Background(String name, float x, float y, float width, float height, int variationNumber) {
         super(name, x, y);
         this.width = width;
         this.height = height;
@@ -34,6 +34,39 @@ public class Background extends Entity {
         isCollidable = false;
         isVisible = true;
         textureId = Texture.TEXTURE_BACKGROUND;
+        String bitmap;
+
+        switch (variationNumber){
+            case 1:
+                bitmap = "drawable/finalback1";
+                break;
+            case 2:
+                bitmap = "drawable/finalback2";
+                break;
+            case 3:
+                bitmap = "drawable/finalback3";
+                break;
+            case 4:
+                bitmap = "drawable/finalback4";
+                break;
+            case 5:
+                bitmap = "drawable/finalback5";
+                break;
+            case 6:
+                bitmap = "drawable/finalback6";
+                break;
+            case 7:
+                bitmap = "drawable/finalback7";
+                break;
+            case 8:
+                bitmap = "drawable/finalback8";
+                break;
+            default:
+                bitmap = "drawable/finalback1";
+        }
+
+        Texture.getTextureById(textureId).changeBitmap(bitmap);
+
         program = Game.imageColorizedFxProgram;
         this.alpha = 0.8f;
 

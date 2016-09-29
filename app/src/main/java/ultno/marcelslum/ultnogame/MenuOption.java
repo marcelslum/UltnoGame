@@ -31,12 +31,19 @@ class MenuOption {
         this.x = x;
         this.y = y;
         setText(text);
+
     }
 
     public void setText(String text){
-        textObject = new Text("menuOptions"+name+"text", 0f, this.y, this.size, text, this.font);
+        if (textObject == null) {
+            textObject = new Text("menuOptions" + name + "text", x, y, this.size, text, this.font);
+        } else {
+            textObject.setText(text);
+        }
         width = textObject.calculateWidth();
-        textObject.setX(x - (this.width/2));
+        //Log.e("MenuOption", "width "+width);
+        textObject.setX(this.x - (this.width/2f));
+        //Log.e("MenuOption", "x "+textObject.x);
     }
 
     public void setOnChoice(OnChoice onChoice) {

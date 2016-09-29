@@ -307,6 +307,10 @@ public class Text extends Entity{
         return width;
     }
 
+    public float getTransformedWidth(){
+        return width * accumulatedScaleX;
+    }
+
     @Override
     public float getHeight() {
         return size*1.5f;

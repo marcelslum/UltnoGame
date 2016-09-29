@@ -108,16 +108,16 @@ class Menu extends Entity{
 
     public MenuOption addMenuOption(String name, String text, MenuOption.OnChoice onChoice){
         float optionY = this.y + (optionsIds * (size *(1.01f+bottomPad)));
-        this.optionsIds += 1;
+        optionsIds += 1;
         MenuOption newMenuOption = new MenuOption(optionsIds, name, text, font, size, x, optionY);
         addChild(newMenuOption.textObject);
         newMenuOption.setOnChoice(onChoice);
-        this.menuOptions.add(newMenuOption);
+        menuOptions.add(newMenuOption);
 
         final Menu innerMenu = this;
         final String innerName = name;
         final Text innerText = newMenuOption.textObject;
-        final int innerId = this.optionsIds;
+        final int innerId = optionsIds;
 
         newMenuOption.textObject.setListener(new InteractionListener(name,
                 newMenuOption.x - (newMenuOption.width/2),

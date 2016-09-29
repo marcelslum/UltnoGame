@@ -27,18 +27,18 @@ public class Game {
     public static float difficultyVelocityBarMultiplicator;
     public static float difficultyVelocityObstacleMultiplicator;
     public static float difficultyVelocityBallMultiplicator;
-    public static final float BAR_EASY = 0.85f;
-    public static final float BALL_EASY = 0.8f;
+    public static final float BAR_EASY = 0.9f;
+    public static final float BALL_EASY = 0.9f;
     public static final float OBSTACLE_EASY = 0.9f;
     public static final float BAR_NORMAL = 1f;
     public static final float BALL_NORMAL = 1f;
     public static final float OBSTACLE_NORMAL = 1f;
-    public static final float BAR_HARD = 1.2f;
-    public static final float BALL_HARD = 1.2f;
-    public static final float OBSTACLE_HARD = 1.1f;
-    public static final float BAR_INSANE = 1.5f;
-    public static final float BALL_INSANE = 1.5f;
-    public static final float OBSTACLE_INSANE = 1.2f;
+    public static final float BAR_HARD = 1.3f;
+    public static final float BALL_HARD = 1.3f;
+    public static final float OBSTACLE_HARD = 1.2f;
+    public static final float BAR_INSANE = 1.6f;
+    public static final float BALL_INSANE = 1.6f;
+    public static final float OBSTACLE_INSANE = 1.4f;
     
 
     public static final Timer timer = new Timer();
@@ -89,6 +89,8 @@ public class Game {
     public static Edge bordaE;
     public static Edge bordaD;
     public static Edge bordaB;
+
+    public static Rectangle frame;
 
     public static Button button1Left;
     public static Button button1Right;
@@ -235,6 +237,20 @@ public class Game {
         initMenus();
         initTexts();
         initEdges();
+        frame = new Rectangle("frame", 0f, 0f, resolutionX, resolutionY, -1, new Color(0f, 0f, 0f, 1f));
+        frame.clearDisplay();
+        frame.alpha = 0f;
+    }
+
+    public static void activateFrame(int duration){
+        frame.display();
+        frame.alpha = 1f;
+        frame.reduceAlpha(duration, 0f, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                frame.clearDisplay();
+            }
+        });
     }
 
     public static void initData(){
@@ -581,9 +597,10 @@ public class Game {
                         Game.setGameState(GAME_STATE_TUTORIAL);
                         Game.levelObject.showFirstTutorial();
                     } else {
-                        Game.menuTutorial.getMenuOptionByName("exibirTutorial").setText(context.getResources().getString(R.string.menuTutorialExibirTutorial) + Game.levelNumber);
+                        Game.menuTutorial.getMenuOptionByName("exibirTutorial").setText(context.getResources().getString(R.string.menuTutorialExibirTutorial) + " "+Game.levelNumber);
                         Game.menuTutorial.unblock();
                         Game.menuTutorial.display();
+                        activateFrame(200);
                         tittle.display();
                     }
                 } else {
@@ -722,6 +739,8 @@ public class Game {
             @Override
             public void onChoice() {
                 Game.blockAndWaitTouchRelease();
+                menuTutorial.block();
+                menuTutorial.isVisible = false;
                 Game.setGameState(GAME_STATE_MENU);
 
             }
@@ -815,27 +834,30 @@ public class Game {
         clearAllMenuEntities();
 
         if (state == GAME_STATE_RANKING){
+            activateFrame(200);
             tittle.clearDisplay();
             menuMain.isBlocked = true;
             listRanking.display();
             listRanking.isBlocked = false;
             setBottomText("");
         } else if (state == GAME_STATE_OPCOES){
+            activateFrame(200);
             tittle.display();
             menuMain.isBlocked = true;
             menuOptions.isBlocked = false;
             menuOptions.display();
             setBottomText("");
         } else if (state == GAME_STATE_MENU){
+            activateFrame(200);
             Game.bordaB.y = Game.resolutionY;
-            menuOptions.isBlocked = true;
+            menuOptions.block();
             stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();
             eraseAllTutorials();
             listRanking.clearDisplay();
-            listRanking.isBlocked = true;
-            menuMain.isBlocked = false;
+            listRanking.block();
+            menuMain.unblock();
             menuMain.display();
             tittle.display();
             messageCurrentLevel.display();
@@ -846,6 +868,7 @@ public class Game {
                     context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
 
         } else if (state == GAME_STATE_PREPARAR){
+            activateFrame(500);
             eraseAllTutorials();
             levelObject.loadEntities();
             Sound.music = MediaPlayer.create(context, R.raw.musicgroove90);
@@ -1084,18 +1107,13 @@ public class Game {
                         }
                     }
             ).start();
-
-
-
-            // TODO se for o último level
-            levelNumber += 1;
-
+            // TODO se for o último level não aumentar o nível
+            changeLevel(levelNumber + 1);
         } else if (state == GAME_STATE_TUTORIAL) {
+            activateFrame(500);
             Game.levelObject.loadEntities();
-
             verifyDead();
         }
-
     }
 
     public static void stopAndReleaseMusic(){
@@ -1699,6 +1717,8 @@ public class Game {
         if (bordaC != null)bordaC.checkTransformations(true);
         if (bordaB != null)bordaB.checkTransformations(true);
 
+        if (frame != null)frame.checkTransformations(true);
+
         if (scorePanel != null) scorePanel.checkTransformations(true);
         if (objectivePanel != null) objectivePanel.checkTransformations(true);
 
@@ -1812,6 +1832,8 @@ public class Game {
         for (int i = 0; i < messages.size(); i++){
             messages.get(i).prepareRender(matrixView, matrixProjection);
         }
+
+        if (frame != null)frame.prepareRender(matrixView, matrixProjection);
     }
 
     public static void verifyTouchBlock() {
