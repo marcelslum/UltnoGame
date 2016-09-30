@@ -65,7 +65,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        if (Game.texts != null){
+        if (Game.texts != null ){
             return;
         }
 
@@ -77,7 +77,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
+        display.getRealMetrics(metrics);
+        //display.getMetrics(metrics);
 
         // We need to know the current width and height.
         mScreenWidth = metrics.widthPixels;

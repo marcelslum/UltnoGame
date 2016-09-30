@@ -274,7 +274,7 @@ public class Game {
 
     private static void initEdges(){
         Game.bordaE = new Edge("bordaE", -999, 0, 1000, Game.resolutionY*2);
-        Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0, 1000, Game.resolutionY*2);
+        Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0, 2000, Game.resolutionY*2);
         Game.bordaC = new Edge("bordaC",  1, -1000, Game.resolutionX-4, 1001);
         Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000);
     }
@@ -838,7 +838,7 @@ public class Game {
             tittle.clearDisplay();
             menuMain.isBlocked = true;
             listRanking.display();
-            listRanking.isBlocked = false;
+            listRanking.unblock();
             setBottomText("");
         } else if (state == GAME_STATE_OPCOES){
             activateFrame(200);
@@ -851,6 +851,7 @@ public class Game {
             activateFrame(200);
             Game.bordaB.y = Game.resolutionY;
             menuOptions.block();
+            menuInGame.block();
             stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();

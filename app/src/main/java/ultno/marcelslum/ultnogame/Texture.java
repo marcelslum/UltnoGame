@@ -88,9 +88,7 @@ public class Texture {
     }
 
     public static int getFreeTextureUnit(){
-
         //Log.e("texture", "getFreeTextureUnit");
-
         for (int i = 0; i < MAX_TEXTURES; i++){
             //Log.e("texture", "used "+i+" "+textureNamesUsed[i]);
             if (!textureNamesUsed[i]){
@@ -98,7 +96,6 @@ public class Texture {
                 return i;
             }
         }
-
 
         lastTextureUsed += 1;
         if (lastTextureUsed == MAX_TEXTURES){

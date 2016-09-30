@@ -235,10 +235,6 @@ public class Rectangle extends PhysicalObject {
                 float difHeight = height / getTransformedHeight();
                 float difWidth = width / getTransformedWidth();
 
-
-
-
-
                 for (int i = 0; i < 4; i++){
                     if (i == 0){
                         Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, width, 0f, borderThicknes * difHeight, 0f);
@@ -251,16 +247,9 @@ public class Rectangle extends PhysicalObject {
                     }
                 }
             }
-
             verticesBuffer = Utils.generateFloatBuffer(verticesData);
-
-
-
         }
         super.checkTransformations(updatePrevious);
-
-
-
     }
 
     @Override
@@ -271,73 +260,4 @@ public class Rectangle extends PhysicalObject {
         quadtreeData.setHeight(getTransformedHeight());
     }
 
-    public void respondToCollision(float responseX, float responseY){
-        //Log.e("physical", "respond to collision " +responseX);
-        PositionVariationData p;
-        ScaleVariationData s;
-
-        boolean decreaseX = false;
-        boolean increaseX = false;
-        boolean decreaseY = false;
-        boolean increaseY = false;
-
-        if (positionVariationData != null){
-            p = positionVariationData;
-            if (p.isActive) {
-                if (responseX < 0f && p.increaseX){
-                    decreaseX = true;
-                } else if (responseX > 0f && !p.increaseX){
-                    increaseX = true;
-                }
-                if (responseY < 0f && p.increaseY){
-                    decreaseY = true;
-                } else if (responseY > 0f && !p.increaseY){
-                    increaseY = true;
-                }
-            }
-        }
-
-        if (positionVariationData != null) {
-            p = positionVariationData;
-            if (decreaseX) {
-                positionX -= p.xVelocity * Game.gameAreaResolutionX;
-                p.increaseX = false;
-            }
-            if (increaseX) {
-                positionX += p.xVelocity * Game.gameAreaResolutionX;
-                p.increaseX = true;
-            }
-            if (decreaseY) {
-                positionY -= p.yVelocity * Game.gameAreaResolutionY;
-                p.increaseY = false;
-            }
-            if (increaseY) {
-                positionY += p.yVelocity * Game.gameAreaResolutionY;
-                p.increaseY = true;
-            }
-        }
-
-        if (scaleVariationData != null) {
-            s = scaleVariationData;
-            if (s.isActive) {
-                if (responseX != 0f){
-                    scaleX -= Math.abs(responseX) / getTransformedWidth();
-                    s.increaseWidth = false;
-                }
-
-                if (responseY != 0f){
-                    scaleY -= Math.abs(responseY) / getTransformedHeight();
-                    s.increaseHeight = false;
-                }
-            } else {
-                this.accumulatedTranslateX += responseX;
-                this.accumulatedTranslateY += responseY;
-            }
-        } else {
-            this.accumulatedTranslateX += responseX;
-            this.accumulatedTranslateY += responseY;
-        }
-
-        this.checkTransformations(false);
-    }
 }

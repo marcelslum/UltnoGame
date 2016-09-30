@@ -1,10 +1,13 @@
 package ultno.marcelslum.ultnogame;
 
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -20,8 +23,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         // Turn off the window's title bar
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+
+
 
         //Game.mGoogleApiClient = new GoogleApiClient.Builder(this)
         //        .addConnectionCallbacks(this)
@@ -36,6 +43,30 @@ public class MainActivity extends Activity {
         // Fullscreen mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        this.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
+                (new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        // Note that system bars will only be "visible" if none of the
+                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                            // TODO: The system bars are visible. Make any desired
+                            // adjustments to your UI, such as showing the action bar or
+                            // other navigational controls.
+
+                            if (Game.gameState == Game.GAME_STATE_JOGAR){
+                                Game.setGameState(Game.GAME_STATE_PAUSE);
+                            }
+
+                        } else {
+                            // TODO: The system bars are NOT visible. Make any desired
+                            // adjustments to your UI, such as hiding the action bar or
+                            // other navigational controls.
+                        }
+                    }
+                });
+
+
         // We create our Surfaceview for our OpenGL here.
         glSurfaceView = new GLSurf(this);
 
@@ -49,7 +80,24 @@ public class MainActivity extends Activity {
 
         // Attach our surfaceview to our relative layout from our main layout.
         RelativeLayout.LayoutParams glParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+
         layout.addView(glSurfaceView, glParams);
+    }
+
+    private void setFullScreen()
+    {
+        int uiOptions = this.getWindow().getDecorView().getSystemUiVisibility();
+        if (Build.VERSION.SDK_INT >= 14) {
+            uiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        }
+        if (Build.VERSION.SDK_INT >= 16) {
+            uiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        }
+        if (Build.VERSION.SDK_INT >= 18) {
+            uiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        }
+
+        this.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
     }
 
     @Override
@@ -73,8 +121,32 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (Game.gameState == Game.GAME_STATE_JOGAR) {
+            Game.setGameState(Game.GAME_STATE_PAUSE);
+        } else if (Game.gameState == Game.GAME_STATE_MENU) {
+            super.onPause();
+            glSurfaceView.onPause();
+            moveTaskToBack(true);
+            //minimizeApp();
+        } else {
+            Game.setGameState(Game.GAME_STATE_MENU);
+        }
+    }
+
+    public void minimizeApp() {
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+    }
+
+
+
+    @Override
     protected void onResume() {
         super.onResume();
+        setFullScreen();
         glSurfaceView.onResume();
     }
 

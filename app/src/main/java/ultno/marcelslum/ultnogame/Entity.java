@@ -270,7 +270,7 @@ public class Entity{
             scaleX = 0f;
             scaleY = 0f;
         }
-        
+
         if (updatePrevious) {
             // TODO renomear para previousPositionX;
             previousX = positionX;

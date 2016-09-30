@@ -17,7 +17,8 @@ public class LevelLoader {
                 .setBarsScaleVariationOff()
                 .setObstaclesScaleVariationOff()
                 .setObstaclesPositionVariationOff()
-                .setWindType(Level.WIND_TYPE_NO);
+                .setWindType(Level.WIND_TYPE_RIGHT)
+                .setSpecialBallPercentage0_1(0.3f);
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(
                     new int[][]{
@@ -72,11 +73,11 @@ public class LevelLoader {
             if (levelNumber == 3) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
-                                {0, 1, 0, 4, 0, 1, 2, 0, 0, 0, 4},
+                                {1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1},
                         })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0)
-                        .setWindowsQuantity(1)
+                        .setWindowsQuantity(0)
                         .setWindowsHeight(0.5f)
                         .setWindowsY(0.4f)
                         .setWindowsDistance(0.2f)
@@ -84,9 +85,10 @@ public class LevelLoader {
                         .setWindowsVelocity(-0.003f)
                         .setBarsScaleVariation(new ScaleVariationDataBuilder()
                                 .setIsActive(false)
-                                .setWidthVelocity(0.01f)
-                                .setMinWidth_BI(2f)
-                                .setMaxWidth_BI(0.5f));
+                                .setIncreaseWidth(false)
+                                .setWidthVelocity(0.002f)
+                                .setMinWidth_BI(0.5f)
+                                .setMaxWidth_BI(2f));
 
                 /*{0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
                 {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},

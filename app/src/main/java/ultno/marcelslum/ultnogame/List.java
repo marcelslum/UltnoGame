@@ -184,6 +184,9 @@ public class List extends Entity{
 
     @Override
     public void verifyListener() {
+        if (isBlocked){
+            return;
+        }
         super.verifyListener();
         arrowDown.verifyListener();
         arrowUp.verifyListener();
