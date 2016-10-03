@@ -24,7 +24,7 @@ public class TutorialLoader {
         final Timer timer = new Timer();
         final float gX = Game.gameAreaResolutionX;
         final float gY = Game.gameAreaResolutionY;
-        float size = gX*0.04f;
+        float size = gX*0.035f;
         float width = gX*0.7f;
         float x = gX*0.15f;
         float y = gY*0.2f;
@@ -146,7 +146,7 @@ public class TutorialLoader {
                 Game.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
                         new TextBoxBuilder("textoBox4")
-                            .position(x, y*2f)
+                            .position(x, y*1.5f)
                             .width(width)
                             .size(size)
                             .text(Utils.getStringResource( R.string.l1t4))

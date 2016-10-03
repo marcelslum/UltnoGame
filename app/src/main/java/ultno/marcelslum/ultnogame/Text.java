@@ -34,10 +34,7 @@ public class Text extends Entity{
         this.textureId = this.font.textureUnit;
         this.align = align;
 
-        this.charData = new float[]{0f, 0f, 0f, 0f,};
-        //Log.e("this.color", " teste ");
-        //this.colorData2 = new float[]{0.9f, 0.5f, 0f, 0.2f,};
-        //Log.e("this.color", " "+this.colorData2[1]);
+        this.charData = new float[7];
         this.setDrawInfo();
 
     }
@@ -52,10 +49,7 @@ public class Text extends Entity{
         this.textureId = this.font.textureUnit;
         this.align = TEXT_ALIGN_LEFT;
 
-        this.charData = new float[]{0f, 0f, 0f, 0f,};
-        //Log.e("this.color", " teste ");
-        //this.colorData2 = new float[]{0.9f, 0.5f, 0f, 0.2f,};
-        //Log.e("this.color", " "+this.colorData2[1]);
+        this.charData = new float[7];
         this.setDrawInfo();
     }
 
@@ -70,10 +64,7 @@ public class Text extends Entity{
         this.textureId = this.font.textureUnit;
         this.align = TEXT_ALIGN_LEFT;
 
-        this.charData = new float[]{0f, 0f, 0f, 0f};
-        //Log.e("this.color", " teste ");
-        //this.colorData2 = new float[]{0f, 0f, 0f, 0.8f,};
-        //Log.e("this.color", " "+this.colorData2[1]);
+        this.charData = new float[7];
         this.setDrawInfo();
     }
 
@@ -112,147 +103,124 @@ public class Text extends Entity{
         indicesBuffer = Utils.generateShortBuffer(indicesData);
         colorsBuffer = Utils.generateFloatBuffer(colorsData);
 
-        //Log.e("teste1115", " ");
-
-        this.width = calculateWidth();
+        width = calculateWidth();
     }
 
-    private void convertTextToTriangleInfo(float xOffset)
-    {
+    private void convertTextToTriangleInfo(float xOffset){
         // Get attributes from text object
+        float cursor = 0 + xOffset;
 
-        //Log.e("size ", " "+size);
+        float proportion = size/font.lineHeight;
 
-        //Log.e("convertTextToTri", "1 ");
-
-        float initialX = 0 + xOffset;
-
-        // Create
-
-        //Log.e("convertTextToTri", "1 ");
-        for(int j=0; j<text.length(); j++)
-        {
-            // get ascii value
+        for(int j=0; j<text.length(); j++){
             char c = text.charAt(j);
             int c_val = (int)c;
 
-            if (this.charData == null){
-                this.charData = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
+            if (charData == null){
+                charData = new float[7];
             }
-            //Log.e("convertTextToTri", "2 ");
 
-            //Log.e("this.color", " "+this.colorData2[1]);
-
-
-            //Log.e("convertTextToTri", "3 ");
-            float indx = font.getCharToIndex(c_val, this.charData);
-
-            //Log.e("this.color", " "+this.colorData2[1]);
+            float indx = font.getCharToIndex(c_val, charData);
 
             if(indx==-1.0f) {
-                // unknown character, we will add a space for it to be save.
-                initialX += (size);
+                cursor += (size);
                 continue;
             }
 
-            float y = charData[1]/font.textureSize;
-            float y2 = (charData[1] + charData[3])/font.textureSize;
             float x = charData[0]/font.textureSize;
             float x2 = (charData[0] + charData[2])/font.textureSize;
+            float y = charData[1]/font.textureSize;
+            float y2 = (charData[1] + charData[3])/font.textureSize;
 
             // Creating the triangle information
             float[] vec = new float[12];
             float[] uv = new float[8];
             float[] colors;
-/*
-            vec[0] = initialX;
-            vec[1] = 0 + size;
-            vec[2] = 0.95f;
-            vec[3] = initialX;
-            vec[4] = 0;
-            vec[5] = 0.95f;
-            vec[6] = initialX + size;
-            vec[7] = 0;
-            vec[8] = 0.95f;
-            vec[9] = initialX + size;
-            vec[10] = 0 + size;
-            vec[11] = 0.95f;
 
-*/
-            vec[0] = initialX;
-            vec[1] = 0 + size;
+            float destLeft   = cursor + (charData[4]*proportion);
+            float destTop    = 0 + (charData[5]*proportion) - (size*0.1f);
+            float destRight  = destLeft + (charData[2]*proportion);
+            float destBottom = destTop + (charData[3]*proportion)- (size*0.1f);
+
+            vec[0] = cursor;
+            vec[1] = destBottom;
             vec[2] = 0f;
-            vec[3] = initialX;
-            vec[4] = 0;
+            vec[3] = cursor;
+            vec[4] = destTop;
             vec[5] = 0f;
-            vec[6] = initialX + (size*(charData[2]/charData[3]));
-            vec[7] = 0;
+            vec[6] = destRight;
+            vec[7] = destTop;
             vec[8] = 0f;
-            vec[9] = initialX + (size*(charData[2]/charData[3]));
-            vec[10] = 0 + size;
+            vec[9] = destRight;
+            vec[10] = destBottom;
             vec[11] = 0f;
 
+/*
+            vec[0] = cursor;
+            vec[1] = 0 + size;
+            vec[2] = 0f;
+            vec[3] = cursor;
+            vec[4] = 0;
+            vec[5] = 0f;
+            vec[6] = cursor + (size*(charData[2]/charData[3]));
+            vec[7] = 0;
+            vec[8] = 0f;
+            vec[9] = cursor + (size*(charData[2]/charData[3]));
+            vec[10] = 0 + size;
+            vec[11] = 0f;
+*/
             colors = new float[]
                     {   this.color.r, this.color.g, this.color.b, this.color.a,
                         this.color.r, this.color.g, this.color.b, this.color.a,
                         this.color.r, this.color.g, this.color.b, this.color.a,
                         this.color.r, this.color.g, this.color.b, this.color.a
                     };
-            // 0.001f = texture bleeding hack/fix
-            uv[0] = x+0.002f;
-            uv[1] = y2-0.002f;
-            uv[2] = x+0.002f;
-            uv[3] = y+0.002f;
-            uv[4] = x2-0.002f;
-            uv[5] = y+0.002f;
-            uv[6] = x2-0.002f;
-            uv[7] = y2-0.002f;
+
+            uv[0] = x;
+            uv[1] = y2;
+            uv[2] = x;
+            uv[3] = y;
+            uv[4] = x2;
+            uv[5] = y;
+            uv[6] = x2;
+            uv[7] = y2;
 
             short[] inds = {0, 1, 2, 0, 2, 3};
 
             // Add our triangle information to our collection for 1 render call.
-
-
-            //for (int i = 0; i < colors.length; i++){
-                //Log.e("colorsData111 "+i, " "+colors[i]);
-            //}
-
             addCharRenderInformation(vec, colors, uv, inds);
 
             // Calculate the new position
-
-            initialX += (size*(charData[2]/charData[3]))+(this.size*0.05);
+            cursor +=  charData[6] * proportion;
             if (c_val == 32){
-                initialX += size*0.15f;
+                cursor += size*0.15f;
             }
         }
     }
 
     public float calculateWidth(){
-        float initialX = 0;
+        float cursor = 0;
 
         for(int j=0; j<text.length(); j++)
         {
             char c = text.charAt(j);
             int c_val = (int)c;
 
-            if (this.charData == null){
-                this.charData = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
+            if (charData == null){
+                charData = new float[7];
             }
 
-            float indx = font.getCharToIndex(c_val, this.charData);
+            float indx = font.getCharToIndex(c_val, charData);
 
             if(indx==-1.0f) {
                 // unknown character, we will add a space for it to be save.
-                initialX += (size);
+                cursor += (size);
                 continue;
             }
-            initialX += (size*(charData[2]/charData[3]))+(this.size*0.05);
-            if (c_val == 32){
-                initialX += size*0.15f;
-            }
+
+            cursor += (size/font.lineHeight) * charData[6];
         }
-        return initialX;
+        return cursor;
     }
 
     public void addCharRenderInformation(float[] vec, float[] cs, float[] uv, short[] indi)

@@ -767,7 +767,7 @@ public class Game {
     }
 
     public static void initFont(){
-        font = new Font(1,textProgram);
+        font = new Font(Texture.TEXTURE_FONT,textProgram);
     }
 
     public static void initSounds(){

@@ -140,7 +140,7 @@ public class List extends Entity{
         float maxPositionWidth = 0f;
         int firstItemToAdd = (page * numberOfLines);
         for (int i = 0; i < numberOfLines; i++){
-            yPosition = (i * size)+padd + y;
+            yPosition = (i * size)+ padd + y;
             if (itens.size() > (i+firstItemToAdd)){
                 textsPosition.add(new Text("t", x + padd, yPosition, fontSize, Integer.toString(itens.get(i+firstItemToAdd).position), Game.font, new Color(0f, 0f, 0f, 1f)));
                 float textWidth = textsPosition.get(i).calculateWidth();
