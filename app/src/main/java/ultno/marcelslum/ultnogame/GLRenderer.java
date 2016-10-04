@@ -13,8 +13,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class GLRenderer implements GLSurfaceView.Renderer {
 
-    public Game gi;
-
     // Our matrices
     private final float[] matrixProjection = new float[16];
     private final float[] matrixView = new float[16];
@@ -133,9 +131,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Game.screenOffSetX = screenOffSetX;
         Game.screenOffSetY = screenOffSetY;
 
-        Game.showIntro();
-        Game.setGameState(Game.GAME_STATE_INTRO);
-
+        Game.init();
     }
 
     @Override
@@ -152,17 +148,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         // Get the amount of time the last frame took.
         long elapsed = now - mLastTime;
 
-
-        Log.e("GLRenderer ", "game state "+Game.gameState);
-
         if (Game.gameState == Game.GAME_STATE_INTRO){
-
-            if (Game.targets == null){
-                Game.init();
-            }
-
-            Log.e("GLRenderer ", "game state intro");
-
             if (Game.tittle != null){
                 Game.tittle.prepareRender(matrixView, matrixProjection);
             }
