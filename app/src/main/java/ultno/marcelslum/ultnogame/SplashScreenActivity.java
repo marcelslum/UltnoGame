@@ -12,8 +12,13 @@ public class SplashScreenActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+       	requestWindowFeature(Window.FEATURE_NO_TITLE);
+	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		
+	getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		setContentView(R.layout.activity_splash_screen);
-
 		new BackgroundSplashTask().execute();
 
 	}
@@ -31,20 +36,9 @@ public class SplashScreenActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
-
-			// I have just given a sleep for this thread
-			// if you want to load database, make
-			// network calls, load images
-			// you can do them here and remove the following
-			// sleep
-
-			// do not worry about this Thread.sleep
-			// this is an async task, it will not disrupt the UI
-			try {
-				Thread.sleep(SPLASH_SHOW_TIME);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			// We create our Surfaceview for our OpenGL here.
+			Game.glSurfaceView = new GLSurf(this);
+			Game.glSurfaceView.setPreserveEGLContextOnPause(true);
 
 			return null;
 		}
