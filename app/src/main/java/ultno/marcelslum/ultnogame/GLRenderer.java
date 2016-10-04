@@ -154,7 +154,9 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             }
 
             if ((Utils.getTime() - Game.timeIntro)>Game.INTRO_DURATION && Game.loaderConclude){
+                Game.activateFrame(1000);
                 Game.setGameState(Game.GAME_STATE_MENU);
+                
             }
         } else {
             Game.verifyTouchBlock();
