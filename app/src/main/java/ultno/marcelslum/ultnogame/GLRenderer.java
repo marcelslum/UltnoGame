@@ -153,7 +153,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
                 Game.tittle.prepareRender(matrixView, matrixProjection);
             }
 
-            if ((Utils.getTime() - Game.timeIntro)>Game.INTRO_DURATION){
+            if ((Utils.getTime() - Game.timeIntro)>Game.INTRO_DURATION && Game.loaderConclude){
                 Game.setGameState(Game.GAME_STATE_MENU);
             }
         } else {
