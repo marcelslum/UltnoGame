@@ -22,6 +22,8 @@ import java.util.TimerTask;
 /** * Created by marcel on 01/08/2016.
  */
 public class Game {
+    
+    public static boolean loaderConclude = false;
 
     public static int basePoints;
     public static float difficultyVelocityBarMultiplicator;
