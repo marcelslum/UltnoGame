@@ -226,12 +226,15 @@ public class Game {
     private Game() {}
 
     public static void init(){
+
+        initSplash();
+        setGameState(Game.GAME_STATE_INTRO);
+        
         initData();
         Storage.initializeStorage(context, quantityOfLevels);
         maxLevel = Storage.getMaxLevel();
         difficulty = Storage.getDificulty();
         changeDifficulty(difficulty);
-        Log.e("game", "getDifficultu from storage "+difficulty);
         levelNumber = Storage.getActualLevel();
         initTime = Utils.getTime();
         initTextures();
@@ -283,20 +286,23 @@ public class Game {
         Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000);
     }
 
-    public static void showIntro(){
-
+    public static void initSplash(){
         Texture.textures = new ArrayList<>();
-
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
-
+        
         imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
                 Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
-
         tittle = new Image("tittle",
                 resolutionX * 0.3f, resolutionY * 0.4f,
                 gameAreaResolutionX * 0.6f, gameAreaResolutionX * 0.6f * 0.3671875f,
                 Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
 
+    }
+    
+    public static void onLoadingEnd(){
+        for (int i = 0; i < Texture.textures.size();i++){
+            Texture.textures.get(i).bind();
+        }
     }
 
     private static void initTextures() {
