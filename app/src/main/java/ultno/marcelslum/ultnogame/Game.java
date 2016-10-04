@@ -229,24 +229,7 @@ public class Game {
 
         initSplash();
         setGameState(Game.GAME_STATE_INTRO);
-        
-        initData();
-        Storage.initializeStorage(context, quantityOfLevels);
-        maxLevel = Storage.getMaxLevel();
-        difficulty = Storage.getDificulty();
-        changeDifficulty(difficulty);
-        levelNumber = Storage.getActualLevel();
-        initTime = Utils.getTime();
-        initTextures();
-        Sound.init();
         initPrograms();
-        initFont();
-        initMenus();
-        initTexts();
-        initEdges();
-        frame = new Rectangle("frame", 0f, 0f, resolutionX, resolutionY, -1, new Color(0f, 0f, 0f, 1f));
-        frame.clearDisplay();
-        frame.alpha = 0f;
     }
 
     public static void activateFrame(int duration){
