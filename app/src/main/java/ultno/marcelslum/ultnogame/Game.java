@@ -231,7 +231,12 @@ public class Game {
 
         initSplash();
         setGameState(Game.GAME_STATE_INTRO);
+        loaderConclude = false;
         initPrograms();
+        
+        InitLoader.execute();
+        
+        
     }
 
     public static void activateFrame(int duration){
