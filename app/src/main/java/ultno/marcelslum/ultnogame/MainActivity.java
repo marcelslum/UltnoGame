@@ -15,20 +15,8 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
 
-    // Our OpenGL Surfaceview
-    private GLSurfaceView glSurfaceView;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        // Turn off the window's title bar
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-
-
 
         //Game.mGoogleApiClient = new GoogleApiClient.Builder(this)
         //        .addConnectionCallbacks(this)
@@ -39,9 +27,6 @@ public class MainActivity extends Activity {
 
         // Super
         super.onCreate(savedInstanceState);
-
-        // Fullscreen mode
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         this.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
                 (new View.OnSystemUiVisibilityChangeListener() {
@@ -65,12 +50,6 @@ public class MainActivity extends Activity {
                         }
                     }
                 });
-
-
-        // We create our Surfaceview for our OpenGL here.
-        glSurfaceView = new GLSurf(this);
-
-        glSurfaceView.setPreserveEGLContextOnPause(true);
 
         // Set our view.
         setContentView(R.layout.activity_main);
