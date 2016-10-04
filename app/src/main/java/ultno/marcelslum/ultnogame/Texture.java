@@ -42,27 +42,8 @@ public class Texture {
     Texture(int id, String resourceIdentifier){
         this.id = id;
         this.resoureIdentifier = resourceIdentifier;
-        if (textureNames == null){
-            int[] maxTextureUnits = new int[1];
-            GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS, maxTextureUnits, 0);
-
-            int[] maxTextureSize = new int[1];
-            GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_SIZE, maxTextureSize, 0);
-
-            Log.e("texture", "max texture units "+maxTextureUnits[0]);
-            Log.e("texture", "max texture size "+maxTextureSize[0]);
-
-            MAX_TEXTURES = maxTextureUnits[0];
-            if (MAX_TEXTURES > 8){
-                MAX_TEXTURES = 8;
-            }
-            textureNames = new int[Texture.MAX_TEXTURES];
-            textureNamesUsed = new boolean[Texture.MAX_TEXTURES];
-            Texture.config();
-        }
         resoureIdentifierId = Game.context.getResources().getIdentifier(this.resoureIdentifier, null, Game.context.getPackageName());
         bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
-        bind();
     }
 
     public static Texture getTextureById(int id){
@@ -134,6 +115,29 @@ public class Texture {
     }
 
     public int bind(){
+        
+        if (textureNames == null){
+            int[] maxTextureUnits = new int[1];
+            GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS, maxTextureUnits, 0);
+
+            int[] maxTextureSize = new int[1];
+            GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_SIZE, maxTextureSize, 0);
+
+            Log.e("texture", "max texture units "+maxTextureUnits[0]);
+            Log.e("texture", "max texture size "+maxTextureSize[0]);
+
+            MAX_TEXTURES = maxTextureUnits[0];
+            if (MAX_TEXTURES > 8){
+                MAX_TEXTURES = 8;
+            }
+            textureNames = new int[Texture.MAX_TEXTURES];
+            textureNamesUsed = new boolean[Texture.MAX_TEXTURES];
+            Texture.config();
+        }
+        
+        
+        
+        
         if (bounded){
             //Log.e("texture", "textureBounded "+id);
             return textureUnit;
