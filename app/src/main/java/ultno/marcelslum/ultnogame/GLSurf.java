@@ -67,19 +67,18 @@ public class GLSurf extends GLSurfaceView {
         switch (maskedAction) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
+
+                //Log.e("GLSurf", "ACTION_DOWN "+ pointerId);
                 //Log.e("GLSurf", "ACTION_DOWN "+ pointerId);
                 // We have a new pointer. Lets add it to the list of pointers
 
-                Game.touchEvents.add(new TouchEvent(pointerId, event.getX()-screenOffSetX,event.getY()-screenOffSetY));
+                Game.touchEvents.add(new TouchEvent(pointerId, event.getX(pointerIndex)-screenOffSetX,event.getY(pointerIndex)-screenOffSetY));
                 break;
 
             case MotionEvent.ACTION_MOVE: // a pointer was moved
 
                 for (int size = event.getPointerCount(), i = 0; i < size; i++) {
                     for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
-
-
-
                         if (Game.touchEvents.get(i2).id == event.getPointerId(i)) {
 
                             //Log.e("GLSurf", "ACTION_MOVE "+ event.getPointerId(i));

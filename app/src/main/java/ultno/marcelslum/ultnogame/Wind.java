@@ -85,6 +85,9 @@ public class Wind extends Entity{
 
             //Log.e("wind", "onda y1 "+y1+" y2 "+y2+" f"+waves[i].frequency);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+
+            color = new Color(waves[i].initX, waves[i].finalX, waves[i].frequency, waves[i].y);
+
             Utils.insertRectangleColorsData(colorsData, i * 16, waves[i].initX, waves[i].finalX, waves[i].frequency, waves[i].y);
         }
 

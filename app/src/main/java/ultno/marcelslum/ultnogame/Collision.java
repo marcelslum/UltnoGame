@@ -312,14 +312,14 @@ public abstract class Collision {
         b.accumulatedTranslateY += by - b.positionY;
 
         if (a.getWeight() > b.getWeight()) {// Move the other object out of us
-            Log.e("Collision", a.name + " mais pesado que " + b.name + " rX "+responseX + " rY " + responseY);
+            //Log.e("Collision", a.name + " mais pesado que " + b.name + " rX "+responseX + " rY " + responseY);
 
             float tResponseX = 0f;
             float tResponseY = 0f;
             for (int i = 0; i < b.collisionsData.size(); i++){
                 if (b.collisionsData.get(i).object != a) {
                     if (b.collisionsData.get(i).object.getWeight() > a.getWeight()) {
-                        Log.e("Collision", "objeto mais pesado "+b.collisionsData.get(i).object.name +" oferece força de x " + b.collisionsData.get(i).normalX + " y " + b.collisionsData.get(i).normalY);
+                        //Log.e("Collision", "objeto mais pesado "+b.collisionsData.get(i).object.name +" oferece força de x " + b.collisionsData.get(i).normalX + " y " + b.collisionsData.get(i).normalY);
                         if ((b.collisionsData.get(i).responseX < 0 && responseX > 0)||
                             (b.collisionsData.get(i).responseX > 0 && responseX < 0)){
                             tResponseX = responseX;
@@ -338,7 +338,7 @@ public abstract class Collision {
             }
             a.respondToCollision(responseX, responseY);
         } else if (a.getWeight() < b.getWeight()) {        // Move us out of the other object
-            Log.e("Collision", a.name + " mais leve que " + b.name + " rX "+responseX + " rY " + responseY);
+            //Log.e("Collision", a.name + " mais leve que " + b.name + " rX "+responseX + " rY " + responseY);
             //Log.e("PhysicalObject", "outro "+b.name+" mais pesado "+responseX+ " "+responseY );
 
             float tResponseX = 0f;
@@ -346,7 +346,7 @@ public abstract class Collision {
             for (int i = 0; i < a.collisionsData.size(); i++){
                 if (a.collisionsData.get(i).object != b) {
                     if (a.collisionsData.get(i).object.getWeight() > b.getWeight()) {
-                        Log.e("Collision", "objeto mais pesado "+a.collisionsData.get(i).object.name +" oferece força de x " + a.collisionsData.get(i).normalX + " y " + a.collisionsData.get(i).normalY);
+                        //Log.e("Collision", "objeto mais pesado "+a.collisionsData.get(i).object.name +" oferece força de x " + a.collisionsData.get(i).normalX + " y " + a.collisionsData.get(i).normalY);
                         if ((a.collisionsData.get(i).responseX < 0 && responseX > 0)||
                                 (a.collisionsData.get(i).responseX > 0 && responseX < 0)){
                             tResponseX = responseX;

@@ -149,6 +149,10 @@ public class Game {
     public final static int GAME_STATE_PAUSE =  16;
     public final static int GAME_STATE_OPCOES =  17;
     public final static int GAME_STATE_RANKING =  18;
+    public final static int GAME_STATE_INTRO =  19;
+
+    public static long timeIntro;
+    public final static long INTRO_DURATION = 5000;
 
     public final static int INTERNET_STATE_CONNECTED = 1;
     public final static int INTERNET_STATE_NOT_CONNECTED = 1;
@@ -279,14 +283,31 @@ public class Game {
         Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000);
     }
 
-    private static void initTextures() {
+    public static void showIntro(){
+
         Texture.textures = new ArrayList<>();
+
+        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
+
+        imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
+
+        tittle = new Image("tittle",
+                resolutionX * 0.3f, resolutionY * 0.4f,
+                gameAreaResolutionX * 0.6f, gameAreaResolutionX * 0.6f * 0.3671875f,
+                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
+
+    }
+
+    private static void initTextures() {
+        if (Texture.textures == null) {
+            Texture.textures = new ArrayList<>();
+        }
         Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
         Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
     }
@@ -750,8 +771,7 @@ public class Game {
     public static void initPrograms(){
         imageProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_image),
                 Utils.readRawTextFile(Game.context, R.raw.shader_frag_image));
-        imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
+
         imageColorizedFxProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorizedfx),
                 Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorizedfx));
         textProgram  =new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_text),
@@ -833,7 +853,10 @@ public class Game {
         gameState = state;
         clearAllMenuEntities();
 
-        if (state == GAME_STATE_RANKING){
+        if (state == GAME_STATE_INTRO) {
+            tittle.display();
+            timeIntro = Utils.getTime();
+        } else if (state == GAME_STATE_RANKING){
             activateFrame(200);
             tittle.clearDisplay();
             menuMain.isBlocked = true;
@@ -1423,13 +1446,25 @@ public class Game {
             }
         }
 
+
+        if (button2Right != null) {
+            if (button2Right.isPressed) {
+                Log.e("game", "button2Right.isPressed");
+            }
+
+            if (button1Left.isPressed) {
+                Log.e("game", "button1Left.isPressed");
+            }
+        }
+
+
         // atualiza posição da barra
         if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
             if (bars != null) {
                 if (bars.size() == 1) {
-                    if (button1Left.isPressed) {
+                    if (button1Left.isPressed && !button2Right.isPressed) {
                         bars.get(0).vx = -(bars.get(0).dvx * (float) elapsed) / frameDuration;
-                    } else if (button2Right.isPressed) {
+                    } else if (button2Right.isPressed && !button1Left.isPressed) {
                         bars.get(0).vx = (bars.get(0).dvx * (float) elapsed) / frameDuration;
                     } else {
                         bars.get(0).vx = 0f;
@@ -1438,9 +1473,9 @@ public class Game {
                     bars.get(0).verifyWind();
                 }
                 if (bars.size() == 2) {
-                    if (button1Left.isPressed) {
+                    if (button1Left.isPressed && !button1Right.isPressed) {
                         bars.get(0).vx = -(bars.get(0).dvx * (float) elapsed) / frameDuration;
-                    } else if (button1Right.isPressed) {
+                    } else if (button1Right.isPressed && !button1Left.isPressed) {
                         bars.get(0).vx = (bars.get(0).dvx * (float) elapsed) / frameDuration;
                     } else {
                         bars.get(0).vx = 0f;
@@ -1798,7 +1833,10 @@ public class Game {
 
         if (listRanking != null) listRanking.prepareRender(matrixView, matrixProjection);
 
-        if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
+        if (tittle != null) {
+            Log.e("game", "render tittle");
+            tittle.prepareRender(matrixView, matrixProjection);
+        }
 
         if (gameState == GAME_STATE_TUTORIAL){
             if (levelObject.tutorials.size() >  levelObject.showingTutorial){
@@ -1846,6 +1884,7 @@ public class Game {
     }
 
     public static void verifyListeners() {
+
         if (!isBlocked) {
             for (int i = 0; i < interactionListeners.size(); i++) {
                 interactionListeners.get(i).verify();

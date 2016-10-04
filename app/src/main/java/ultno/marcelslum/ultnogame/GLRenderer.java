@@ -133,8 +133,9 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Game.screenOffSetX = screenOffSetX;
         Game.screenOffSetY = screenOffSetY;
 
-        Game.init();
-        Game.setGameState(Game.GAME_STATE_MENU);
+        Game.showIntro();
+        Game.setGameState(Game.GAME_STATE_INTRO);
+
     }
 
     @Override
@@ -151,11 +152,30 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         // Get the amount of time the last frame took.
         long elapsed = now - mLastTime;
 
-        Game.verifyTouchBlock();
-        Game.verifyListeners();
-        Game.simulate(elapsed, frameDuration);
-        Game.render(matrixView, matrixProjection);
 
+        Log.e("GLRenderer ", "game state "+Game.gameState);
+
+        if (Game.gameState == Game.GAME_STATE_INTRO){
+
+            if (Game.targets == null){
+                Game.init();
+            }
+
+            Log.e("GLRenderer ", "game state intro");
+
+            if (Game.tittle != null){
+                Game.tittle.prepareRender(matrixView, matrixProjection);
+            }
+
+            if ((Utils.getTime() - Game.timeIntro)>Game.INTRO_DURATION){
+                Game.setGameState(Game.GAME_STATE_MENU);
+            }
+        } else {
+            Game.verifyTouchBlock();
+            Game.verifyListeners();
+            Game.simulate(elapsed, frameDuration);
+            Game.render(matrixView, matrixProjection);
+        }
         // Save the current time to see how long it took :).
         mLastTime = now;
     }

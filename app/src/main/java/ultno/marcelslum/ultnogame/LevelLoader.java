@@ -17,7 +17,7 @@ public class LevelLoader {
                 .setBarsScaleVariationOff()
                 .setObstaclesScaleVariationOff()
                 .setObstaclesPositionVariationOff()
-                .setWindType(Level.WIND_TYPE_RIGHT)
+                .setWindType(Level.WIND_TYPE_NO)
                 .setSpecialBallPercentage0_1(0.3f);
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(

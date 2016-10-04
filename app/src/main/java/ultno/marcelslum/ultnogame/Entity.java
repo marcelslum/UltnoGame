@@ -393,12 +393,14 @@ public class Entity{
         // TODO verificar se a inversão do eixo y considera o offset
 
         if (program == Game.windProgram || program == Game.specialBallProgram){
-            float time = ((float)(Utils.getTime() - Game.initTime))/1000f;
-            if (time > 1000.0f){
-                time = time - (float)(Math.floor(time/1000)*1000);
+            float time = ((Utils.getTime() - Game.initTime)) / 1000f;
+            if (program == Game.windProgram) {
+               time = (time - (((float)Math.floor(time/color.b)) * color.b))/color.b;//Log.e("entity", "time " + time);
             }
+
+
             int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
-            GLES20.glUniform1f(uf_time, time);
+            GLES20.glUniform1f(uf_time, (float)time);
             int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");
             GLES20.glUniform2f(uv2_resolution, Game.effectiveScreenWidth, Game.effectiveScreenHeight);
             // TODO adicionar screen offset ao wind

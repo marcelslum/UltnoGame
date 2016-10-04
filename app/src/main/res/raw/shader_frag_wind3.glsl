@@ -14,10 +14,11 @@ void main() {
      right = false;
     }
 
+
     // resto da divisão entre o tempo e a frequencia
-    float resto = mod(uf_time, frequency);
+    //float resto = mod(uf_time, frequency);
     // porcentagem do resto no eixo x
-    float porcentagem = resto/frequency;
+    float porcentagem = uf_time;
 
     float x;
     if (right ==true){
