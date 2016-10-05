@@ -10,14 +10,11 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 // TODO erro: jogo trava quando se aperta os dois botões de flecha ao mesmo tempo: resolvido
 // TODO pausar a música quando minimiza o aplicativo: resolvido?
 // TODO verificar arquivo targets.png se está atualizado
 // TODO pausar todos os sons do sound pool quando o jogo fecha
 // TODO voltar ao estado anterior quando o jogo fecha
-
-
 
 /** * Created by marcel on 01/08/2016.
  */
@@ -41,7 +38,6 @@ public class Game {
     public static final float BAR_INSANE = 1.6f;
     public static final float BALL_INSANE = 1.6f;
     public static final float OBSTACLE_INSANE = 1.4f;
-    
 
     public static final Timer timer = new Timer();
     public static int connectionAttempts = 0;
@@ -212,14 +208,12 @@ public class Game {
     public static Program imageColorizedFxProgram;
     public static Program windProgram;
     public static Program specialBallProgram;
-
     public static int ballsNotInvencibleAlive;
     public static int ballsInvencible;
-
     public static long initialTimePointsDecay;
+
     public static final long TIME_FOR_POINTS_DECAY = 3000;
     public static final int POINTS_DECAY = 10;
-
     public static final int POINTS_EASY = 100;
     public static final int POINTS_NORMAL = 200;
     public static final int POINTS_HARD = 300;
@@ -228,15 +222,11 @@ public class Game {
     private Game() {}
 
     public static void init(){
-
         initSplash();
         setGameState(Game.GAME_STATE_INTRO);
         loaderConclude = false;
         initPrograms();
-        
-        InitLoader.execute();
-        
-        
+        new InitLoader().execute();
     }
 
     public static void activateFrame(int duration){
@@ -269,7 +259,7 @@ public class Game {
         lines = new ArrayList<>();
     }
 
-    private static void initEdges(){
+    public static void initEdges(){
         Game.bordaE = new Edge("bordaE", -999, 0, 1000, Game.resolutionY*2);
         Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0, 2000, Game.resolutionY*2);
         Game.bordaC = new Edge("bordaC",  1, -1000, Game.resolutionX-4, 1001);
@@ -277,25 +267,29 @@ public class Game {
     }
 
     public static void initSplash(){
+
         Texture.textures = new ArrayList<>();
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
         
         imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
                 Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
+
         tittle = new Image("tittle",
-                resolutionX * 0.3f, resolutionY * 0.4f,
+                resolutionX * 0.2f, resolutionY * 0.3f,
                 gameAreaResolutionX * 0.6f, gameAreaResolutionX * 0.6f * 0.3671875f,
-                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
+                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.0f, 0.0f, 0.0f, 1f));
 
     }
     
     public static void onLoadingEnd(){
+
         for (int i = 0; i < Texture.textures.size();i++){
             Texture.textures.get(i).bind();
         }
+
     }
 
-    private static void initTextures() {
+    public static void initTextures() {
         if (Texture.textures == null) {
             Texture.textures = new ArrayList<>();
         }
@@ -867,6 +861,7 @@ public class Game {
             menuOptions.display();
             setBottomText("");
         } else if (state == GAME_STATE_MENU){
+            Log.e("game", "gameStateMenu");
             activateFrame(200);
             Game.bordaB.y = Game.resolutionY;
             menuOptions.block();
@@ -1374,7 +1369,7 @@ public class Game {
         return scoreTotal;
     }
 
-    private static void changeDifficulty(int selectedValue) {
+    public static void changeDifficulty(int selectedValue) {
         if (selectedValue == 0){
             basePoints = POINTS_EASY;
             difficulty = DIFICULDADE_FACIL;
@@ -1830,7 +1825,7 @@ public class Game {
         if (listRanking != null) listRanking.prepareRender(matrixView, matrixProjection);
 
         if (tittle != null) {
-            Log.e("game", "render tittle");
+            //Log.e("game", "render tittle");
             tittle.prepareRender(matrixView, matrixProjection);
         }
 

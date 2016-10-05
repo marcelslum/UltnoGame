@@ -154,8 +154,10 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             }
 
             if ((Utils.getTime() - Game.timeIntro)>Game.INTRO_DURATION && Game.loaderConclude){
-                Game.activateFrame(1000);
+
+                Log.e("GLrenderer", " ativando game state menu");
                 Game.setGameState(Game.GAME_STATE_MENU);
+                Game.activateFrame(2000);
                 
             }
         } else {
