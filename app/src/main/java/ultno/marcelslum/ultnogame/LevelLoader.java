@@ -18,11 +18,10 @@ public class LevelLoader {
                 .setObstaclesScaleVariationOff()
                 .setObstaclesPositionVariationOff()
                 .setWindType(Level.WIND_TYPE_NO)
-                .setSpecialBallPercentage0_1(0.3f);
+                .setSpecialBallPercentage0_1(0f);
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(
                     new int[][]{
-                            //{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}
                             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                     })
                     .setTargetsStates(new int[]{0, 1})

@@ -15,7 +15,6 @@ public class InitLoader extends AsyncTask<Integer , Integer, Integer> {
         Game.initTime = Utils.getTime();
         Game.initTextures();
         Sound.init();
-        Game.initFont();
         Game.initMenus();
         Game.initTexts();
         Game.initEdges();
@@ -33,5 +32,6 @@ public class InitLoader extends AsyncTask<Integer , Integer, Integer> {
     protected void onPostExecute(Integer i) {
         Log.e("initloader", " onPostExecute");
         Game.loaderConclude = true;
+
      }
  }

@@ -190,12 +190,12 @@ public class Font {
             32,	0,	0,	0,	0,	5,	33,	26
     };
 
-    public int textureUnit;
+    public int textureId;
     public Program program;
     public float lineHeight;
 
-    public Font(int textureUnit, Program program){
-        this.textureUnit = textureUnit;
+    public Font(int textureId, Program program){
+        this.textureId = textureId;
         this.program = program;
         textureSize = 1024f;
         lineHeight = 72f;

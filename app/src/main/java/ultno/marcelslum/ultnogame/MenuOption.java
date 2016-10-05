@@ -40,7 +40,7 @@ class MenuOption {
         } else {
             textObject.setText(text);
         }
-        width = textObject.calculateWidth();
+        width = textObject.width;
         //Log.e("MenuOption", "width "+width);
         textObject.setX(this.x - (this.width/2f));
         //Log.e("MenuOption", "x "+textObject.x);

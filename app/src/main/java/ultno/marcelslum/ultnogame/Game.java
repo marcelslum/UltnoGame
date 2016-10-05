@@ -105,6 +105,7 @@ public class Game {
     public static Text messageRankingWin;
     public static Text messageCurrentLevel;
     public static Text messageMaxScoreTotal;
+    public static Text messageLoading;
     public static TextBox bottomTextBox;
 
     // quadtree objects
@@ -222,10 +223,11 @@ public class Game {
     private Game() {}
 
     public static void init(){
+        initPrograms();
+        initFont();
         initSplash();
         setGameState(Game.GAME_STATE_INTRO);
         loaderConclude = false;
-        initPrograms();
         new InitLoader().execute();
     }
 
@@ -270,31 +272,66 @@ public class Game {
 
         Texture.textures = new ArrayList<>();
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
-        
-        imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
+        Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
 
         tittle = new Image("tittle",
-                resolutionX * 0.2f, resolutionY * 0.3f,
-                gameAreaResolutionX * 0.6f, gameAreaResolutionX * 0.6f * 0.3671875f,
+                resolutionX * 0.2f, resolutionY * 0.25f,
+                resolutionX * 0.6f, resolutionX * 0.6f * 0.3671875f,
                 Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.0f, 0.0f, 0.0f, 1f));
 
-    }
-    
-    public static void onLoadingEnd(){
 
-        for (int i = 0; i < Texture.textures.size();i++){
-            Texture.textures.get(i).bind();
-        }
+        ArrayList<float[]> valuesAnimationTittleSplash = new ArrayList<>();
+        valuesAnimationTittleSplash.add(new float[]{0f,1f});
+        valuesAnimationTittleSplash.add(new float[]{0.68f,2f});
+        Animation animationTittleSplash = new Animation(tittle, "numberForAnimation", "numberForAnimation", 2000, valuesAnimationTittleSplash, true, false);
+        animationTittleSplash.setOnChangeNotFluid(new Animation.OnChange() {
+            @Override
+            public void onChange() {
+                if (tittle.numberForAnimation == 1f){
+                    tittle.setColor(new Color(0f, 0f, 0f, 1f));
+                } else if (tittle.numberForAnimation == 2f) {
+                    tittle.setColor(new Color(0f, 0f, 1f, 1f));
+                }
+            }
+        });
+        animationTittleSplash.start();
 
+        messageLoading = new Text("messageLoading",
+                0f, resolutionY*0.8f, resolutionY*0.10f,
+                context.getResources().getString(R.string.carregando)+"..", font, new Color(0f, 0f, 0f, 0.6f),Text.TEXT_ALIGN_LEFT);
+
+        float w = messageLoading.width;
+
+        messageLoading = new Text("messageLoading",
+                resolutionX*0.5f - (w/2), resolutionY*0.8f, resolutionY*0.10f,
+                context.getResources().getString(R.string.carregando)+"..", font, new Color(0f, 0f, 0f, 0.6f),Text.TEXT_ALIGN_LEFT);
+
+        ArrayList<float[]> valuesAnimationMessageLoading = new ArrayList<>();
+        valuesAnimationMessageLoading.add(new float[]{0f,1f});
+        valuesAnimationMessageLoading.add(new float[]{0.33f,2f});
+        valuesAnimationMessageLoading.add(new float[]{0.66f,3f});
+        Animation animationMessageLoading = new Animation(messageLoading, "numberForAnimation", "numberForAnimation", 1800, valuesAnimationMessageLoading, true, false);
+        animationMessageLoading.setOnChangeNotFluid(new Animation.OnChange() {
+            @Override
+            public void onChange() {
+                if (messageLoading.numberForAnimation == 1f){
+                    messageLoading.setText(context.getResources().getString(R.string.carregando)+".");
+                } else if (messageLoading.numberForAnimation == 2f) {
+                    messageLoading.setText(context.getResources().getString(R.string.carregando)+"..");
+                } else if (messageLoading.numberForAnimation == 3f) {
+                    messageLoading.setText(context.getResources().getString(R.string.carregando)+"...");
+                }
+            }
+        });
+        animationMessageLoading.start();
     }
+
 
     public static void initTextures() {
         if (Texture.textures == null) {
             Texture.textures = new ArrayList<>();
         }
         Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
         Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
@@ -336,24 +373,23 @@ public class Game {
 
 
         messageGameOver = new Text("messageGameOver",
-                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.2f,
+                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.17f,
                 context.getResources().getString(R.string.messageGameOver), font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
-        final Text innerMessageGameOver = messageGameOver;
         ArrayList<float[]> valuesAnimationGameOver = new ArrayList<>();
         valuesAnimationGameOver.add(new float[]{0f,1f});
         valuesAnimationGameOver.add(new float[]{0.55f,2f});
         valuesAnimationGameOver.add(new float[]{0.85f,3f});
-        Animation animMessageGameOver = new Animation(innerMessageGameOver, "numberForAnimation", "numberForAnimation", 4000, valuesAnimationGameOver, true, false);
+        Animation animMessageGameOver = new Animation(messageGameOver, "numberForAnimation", "numberForAnimation", 4000, valuesAnimationGameOver, true, false);
         animMessageGameOver.setOnChangeNotFluid(new Animation.OnChange() {
             @Override
             public void onChange() {
-                if (innerMessageGameOver.numberForAnimation == 1f){
-                    innerMessageGameOver.setColor(new Color(0f, 0f, 0f, 1f));
-                } else if (innerMessageGameOver.numberForAnimation == 2f) {
-                    innerMessageGameOver.setColor(new Color(1f, 0f, 0f, 1f));
-                } else if (innerMessageGameOver.numberForAnimation == 3f) {
-                    innerMessageGameOver.setColor(new Color(0f, 0f, 1f, 1f));
+                if (messageGameOver.numberForAnimation == 1f){
+                    messageGameOver.setColor(new Color(0f, 0f, 0f, 1f));
+                } else if (messageGameOver.numberForAnimation == 2f) {
+                    messageGameOver.setColor(new Color(1f, 0f, 0f, 1f));
+                } else if (messageGameOver.numberForAnimation == 3f) {
+                    messageGameOver.setColor(new Color(0f, 0f, 1f, 1f));
                 }
             }
         });
@@ -365,25 +401,25 @@ public class Game {
                 " ", font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
         messageInGame = new Text("messageInGame",
-                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.2f,
+                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.17f,
                 context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
         messageRankingWin = new Text("messageRankingWin",
-                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.55f, gameAreaResolutionY*0.12f,
+                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.55f, gameAreaResolutionY*0.10f,
                 "-", font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
         messageCurrentLevel = new Text("messageCurrentLevel",
-                resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.04f,
+                resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.036f,
                 context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(levelNumber) + " - " + context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(Storage.getLevelMaxScore(levelNumber)), font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
 
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
-                resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.04f,
+                resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.036f,
                 context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
 
         bottomTextBox = new TextBoxBuilder("bottomTextBox")
                 .position(resolutionX*0.05f, resolutionY*0.9f)
                 .width(resolutionX*0.9f)
-                .size(resolutionY*0.04f)
+                .size(resolutionY*0.032f)
                 .text("...")
                 .withoutArrow()
                 .isHaveFrame(true)
@@ -408,7 +444,7 @@ public class Game {
     }
 
     public static void initMenus(){
-        float fontSize = gameAreaResolutionY*0.09f;
+        float fontSize = gameAreaResolutionY*0.08f;
 
         // -------------------------------------------RANKING
         float padd = resolutionX * 0.02f;
@@ -759,13 +795,14 @@ public class Game {
     }
 
     public static void initPrograms(){
-        imageProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_image),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_image));
-
+        imageProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_text),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_text));
+        textProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
+        imageColorizedProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorized),
+                Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorized));
         imageColorizedFxProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_imagecolorizedfx),
                 Utils.readRawTextFile(Game.context, R.raw.shader_frag_imagecolorizedfx));
-        textProgram  =new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_text),
-                Utils.readRawTextFile(Game.context, R.raw.shader_frag_text));
         solidProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_solidcolor),
                 Utils.readRawTextFile(Game.context, R.raw.shader_frag_solidcolor));
         lineProgram = new Program(Utils.readRawTextFile(Game.context, R.raw.shader_vertex_line),
@@ -845,6 +882,7 @@ public class Game {
 
         if (state == GAME_STATE_INTRO) {
             tittle.display();
+            messageLoading.display();
             timeIntro = Utils.getTime();
         } else if (state == GAME_STATE_RANKING){
             activateFrame(200);
@@ -870,6 +908,7 @@ public class Game {
             eraseAllGameEntities();
             eraseAllHudEntities();
             eraseAllTutorials();
+            messageLoading.clearDisplay();
             listRanking.clearDisplay();
             listRanking.block();
             menuMain.unblock();
@@ -886,7 +925,26 @@ public class Game {
             activateFrame(500);
             eraseAllTutorials();
             levelObject.loadEntities();
-            Sound.music = MediaPlayer.create(context, R.raw.musicgroove90);
+
+
+            int musicNumber = levelNumber - Math.floor(levelNumber / 7);
+
+            if (musicNumber == 1){
+                Sound.music = MediaPlayer.create(context, R.raw.music1);
+            } else if (musicNumber == 2){
+                Sound.music = MediaPlayer.create(context, R.raw.music2);
+            } else if (musicNumber == 3){
+                Sound.music = MediaPlayer.create(context, R.raw.music3);
+            } else if (musicNumber == 4){
+                Sound.music = MediaPlayer.create(context, R.raw.music4);
+            } else if (musicNumber == 5){
+                Sound.music = MediaPlayer.create(context, R.raw.music5);
+            } else if (musicNumber == 6){
+                Sound.music = MediaPlayer.create(context, R.raw.music6);
+            } else{
+                Sound.music = MediaPlayer.create(context, R.raw.music7);
+            }
+
             Sound.music.setVolume(0.006f* (float) volume, 0.006f* (float) volume);
             Sound.music.setLooping(true);
             // cria a animação de preparação;

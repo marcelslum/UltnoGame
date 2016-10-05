@@ -151,14 +151,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         if (Game.gameState == Game.GAME_STATE_INTRO){
             if (Game.tittle != null){
                 Game.tittle.prepareRender(matrixView, matrixProjection);
+                Game.messageLoading.prepareRender(matrixView, matrixProjection);
             }
 
             if ((Utils.getTime() - Game.timeIntro)>Game.INTRO_DURATION && Game.loaderConclude){
-
-                Log.e("GLrenderer", " ativando game state menu");
                 Game.setGameState(Game.GAME_STATE_MENU);
-                Game.activateFrame(2000);
-                
             }
         } else {
             Game.verifyTouchBlock();

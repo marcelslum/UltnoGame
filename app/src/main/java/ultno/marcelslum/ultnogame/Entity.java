@@ -2,7 +2,6 @@ package ultno.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;

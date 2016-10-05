@@ -22,7 +22,6 @@ public class Texture {
     public final static int TEXTURE_NUMBERS_EXPLOSION_OBSTACLE = 5;
     public final static int TEXTURE_TITTLE = 6;
     public final static int TEXTURE_SPECIAL_BALL = 7;
-    public final static int TEXTURE_OBSTACLE = 8;
 
     public static int MAX_TEXTURES = 8;
 
@@ -47,8 +46,14 @@ public class Texture {
     }
 
     public static Texture getTextureById(int id){
+        //Log.e("texture", "getTextureById "+id);
         for (int i = 0; i < textures.size(); i++){
             if (textures.get(i).id == id){
+                //Log.e("texture", " return "+textures.get(i).textureId);
+                if (!textures.get(i).bounded){
+                    textures.get(i).bind();
+                }
+
                 return textures.get(i);
             }
         }
@@ -144,7 +149,7 @@ public class Texture {
         }
 
         textureUnit = getFreeTextureUnit();
-        Log.e("texture", "texture id "+id +" novo textureUnit "+textureUnit);
+        Log.e("texture", "texture id "+id +" novo textureId "+textureUnit);
 
         bounded = true;
 

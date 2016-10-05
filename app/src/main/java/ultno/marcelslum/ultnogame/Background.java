@@ -1,5 +1,7 @@
 package ultno.marcelslum.ultnogame;
 
+import android.util.Log;
+
 public class Background extends Entity {
 
     //cor chanel painting 0,21 0,71 -1,87 -2,05 3,79 3e3e3eff
@@ -64,6 +66,9 @@ public class Background extends Entity {
             default:
                 bitmap = "drawable/finalback1";
         }
+
+
+        Log.e("background", "change bitmap of texture "+textureId);
 
         Texture.getTextureById(textureId).changeBitmap(bitmap);
 

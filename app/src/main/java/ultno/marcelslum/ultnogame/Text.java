@@ -30,10 +30,9 @@ public class Text extends Entity{
         this.size = size;
         this.color = color;
         this.font = font;
-        this.program = this.font.program;
-        this.textureId = this.font.textureUnit;
+        this.program = font.program;
+        this.textureId = font.textureId;
         this.align = align;
-
         this.charData = new float[7];
         this.setDrawInfo();
 
@@ -46,7 +45,7 @@ public class Text extends Entity{
         this.color = color;
         this.font = font;
         this.program = this.font.program;
-        this.textureId = this.font.textureUnit;
+        this.textureId = font.textureId;
         this.align = TEXT_ALIGN_LEFT;
 
         this.charData = new float[7];
@@ -61,7 +60,7 @@ public class Text extends Entity{
         this.color = new Color(0f,0f,0f,1f);
         this.font = font;
         this.program = this.font.program;
-        this.textureId = this.font.textureUnit;
+        this.textureId = font.textureId;
         this.align = TEXT_ALIGN_LEFT;
 
         this.charData = new float[7];

@@ -73,4 +73,5 @@
     <string name="conectando">Conectando...</string>
     <string name="ranking">Ranking</string>
     <string name="rankingObtidoAposVitoria">Ranking atingido:</string>
+    <string name="carregando">Carregando</string>
 </resources>
