@@ -927,7 +927,7 @@ public class Game {
             levelObject.loadEntities();
 
 
-            int musicNumber = levelNumber - Math.floor(levelNumber / 7);
+            int musicNumber = levelNumber - ((int)Math.floor(levelNumber / 7)*levelNumber);
 
             if (musicNumber == 1){
                 Sound.music = MediaPlayer.create(context, R.raw.music1);
@@ -1494,18 +1494,6 @@ public class Game {
                 specialBall.translate(specialBall.vx, specialBall.vy);
             }
         }
-
-
-        if (button2Right != null) {
-            if (button2Right.isPressed) {
-                Log.e("game", "button2Right.isPressed");
-            }
-
-            if (button1Left.isPressed) {
-                Log.e("game", "button1Left.isPressed");
-            }
-        }
-
 
         // atualiza posição da barra
         if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {

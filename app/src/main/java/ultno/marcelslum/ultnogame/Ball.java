@@ -444,15 +444,20 @@ public class Ball extends Circle{
                 angleToRotate = this.angleToRotate;
             }
 
-            //Log.e("ball", "velocity add "+velocityAdd);
-            //Log.e("ball", "angleToRotate "+angleToRotate);
+            Log.e("ball", "velocity add "+velocityAdd);
+            Log.e("ball", "angleToRotate "+angleToRotate);
             
             vx = this.dvx;
             vy = this.dvy;
 
-            float initialLen = Utils.getVectorMagnitude(vx * initialDesireVelocityX, vy * initialDesireVelocityY);
+            float initialLen = Utils.getVectorMagnitude(initialDesireVelocityX, initialDesireVelocityY);
+            Log.e("ball", "initialLen "+initialLen);
+
             float maxLen = initialLen * this.velocityMax_BI;
+            Log.e("ball", "maxLen "+maxLen);
+
             float minLen = initialLen * this.velocityMin_BI;
+            Log.e("ball", "minLen "+minLen);
             float scalePorcentage = 1f;
 
             float final_vx  = vx;
@@ -466,23 +471,35 @@ public class Ball extends Circle{
                 }
 
                 float possibleVelocityLen = Utils.getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
+                Log.e("ball", "possibleVelocityLen");
 
                 if (possibleVelocityLen > minLen && possibleVelocityLen < maxLen){
+                    Log.e("ball", "ajustando velocidade maior ou menor");
                     vx = vx * scalePorcentage;
                     vy = vy * scalePorcentage;
+                } else {
+                    Log.e("ball", "velocidade excede");
                 }
 
                 Vector possibleVelocityRotate = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
 
                 float testAngle = (float)Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x)));
+                Log.e("ball", "possible angle "+testAngle);
 
                 if (testAngle < maxAngle && testAngle > minAngle){
+                    Log.e("ball", "rotacionando ");
                     final_vx =  possibleVelocityRotate.x;
                     final_vy =  possibleVelocityRotate.y;
                 } else {
+                    Log.e("ball", " não rotacionando ");
                     final_vx =  vx;
                     final_vy =  vy;
                 }
+
+
+                Log.e("ball", "finalLen "+Utils.getVectorMagnitude(final_vx, final_vy));
+
+
             }
             this.accelerate(150, final_vx, final_vy);
         }
@@ -557,7 +574,7 @@ public class Ball extends Circle{
             //Log.e("ball", "ajuste do angulo");
             //Log.e("ball", "v antes da rotacao " + dvx + " " + dvy);
 
-            //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+            Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
 
             dvx = (float)Utils.getXRotated(dvx, dvy, angleToRotate);
             dvy = (float) Utils.getYRotated(dvx, dvy, angleToRotate);
@@ -575,7 +592,7 @@ public class Ball extends Circle{
 
 
         if (actualLen > maxLen){
-            //Log.e("ball", "ajustando velocidade");
+            Log.e("ball", "ajustando velocidade - diminuindo");
 
             dvx *= (maxLen/actualLen);
             dvy *= (maxLen/actualLen);
@@ -585,13 +602,15 @@ public class Ball extends Circle{
             //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
 
         } else if (actualLen < minLen){
-            Log.e("ball", "ajustando velocidade");
+            Log.e("ball", "ajustando velocidade - aumentando");
             dvx *= (minLen/actualLen);
             dvy *= (minLen/actualLen);
             //Log.e("ball", "v " + dvx + " " + dvy);
-            //Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
-            //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
         }
+
+        Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
+        Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+
     }
 
     private void waitForExplosion() {

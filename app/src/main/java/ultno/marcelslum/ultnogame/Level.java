@@ -428,10 +428,10 @@ public class Level {
             float radius = Game.gameAreaResolutionY * this.ballsRadius_BR[ic];
 
             ic = i; if (i > this.ballsVX_BR.length - 1) {ic = 0;}
-            float ballVelocityX = Game.gameAreaResolutionX * this.ballsVX_BR[ic] * Game.difficultyVelocityBallMultiplicator;
+            float ballVelocityX = Game.gameAreaResolutionX * this.ballsVX_BR[ic];
 
             ic = i; if (i > this.ballsVY_BR.length - 1) {ic = 0;}
-            float ballVelocityY = Game.gameAreaResolutionY * this.ballsVY_BR[ic] * Game.difficultyVelocityBallMultiplicator;
+            float ballVelocityY = Game.gameAreaResolutionY * this.ballsVY_BR[ic];
 
             ic = i; if (i > this.ballsInvencible.length - 1) {ic = 0;}
             if (this.ballsInvencible[ic]){
@@ -447,9 +447,9 @@ public class Level {
             ball.velocityVariation = this.ballsVelocityVariation[ic];
 
             ic = i; if (i > this.ballsVelocityMax_BI.length - 1) {ic = 0;}
-            ball.velocityMax_BI = ballsVelocityMax_BI[ic];
+            ball.velocityMax_BI = ballsVelocityMax_BI[ic] * Game.difficultyVelocityBallMultiplicator;
             ic = i; if (i > this.ballsVelocityMin_BI.length - 1) {ic = 0;}
-            ball.velocityMin_BI = ballsVelocityMin_BI[ic];
+            ball.velocityMin_BI = ballsVelocityMin_BI[ic] * Game.difficultyVelocityBallMultiplicator;
 
             ic = i; if (i > this.ballsMaxAngle.length - 1) {ic = 0;}
             ball.maxAngle = this.ballsMaxAngle[ic];

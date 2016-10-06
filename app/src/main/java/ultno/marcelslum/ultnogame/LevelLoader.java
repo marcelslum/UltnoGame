@@ -18,22 +18,22 @@ public class LevelLoader {
                 .setObstaclesScaleVariationOff()
                 .setObstaclesPositionVariationOff()
                 .setWindType(Level.WIND_TYPE_NO)
-                .setSpecialBallPercentage0_1(0f);
+                .setSpecialBallPercentage0_1(0f)
+                .setObstaclesQuantity(0)
+                .setWindowsQuantity(0);
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(
                     new int[][]{
                             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                     })
-                    .setTargetsStates(new int[]{0, 1})
-                    .setObstaclesQuantity(0)
-                    .setWindowsQuantity(0);
+                    .setTargetsStates(new int[]{0, 1});
         }
 
         if (levelNumber >= 2) {
             levelBuilder
-                    .setBallsAngleToRotate_BD_2(2f)
-                    .setBallsMaxAngle_BD_55(1.182f)
-                    .setBallsMinAngle_BD_35(0.715f)
+                    .setBallsAngleToRotate_BD_2(4f)
+                    .setBallsMaxAngle_BD_55(2.182f)
+                    .setBallsMinAngle_BD_35(0.857f)
                     .setBallsVelocityVariation_BD_0_1(2f)
                     .setBallsVelocityMax_BD_1_5(1.467f)
                     .setBallsVelocityMin_BD_0_8(0.875f)
@@ -46,9 +46,7 @@ public class LevelLoader {
                                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                                 {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0}
                         })
-                        .setTargetsStates(new int[]{0, 1})
-                        .setObstaclesQuantity(0)
-                        .setWindowsQuantity(0);
+                        .setTargetsStates(new int[]{0, 1});
             }
         }
 
@@ -104,7 +102,7 @@ public class LevelLoader {
 
         if (levelNumber >= 4) {
             levelBuilder
-                    .setBallsQuantity(2)
+                    .setBallsQuantity(1)
                     .setBallsRadius_BD_0_01(1f)
                     .setBallsX_B1(0.34f, 0.64f, 0.42f, 0.52f, 0.62f, 0.14f, 0.24f, 0.32f, 0.42f, 0.82f, 0.34f, 0.64f, 0.42f, 0.52f, 0.62f, 0.14f, 0.24f, 0.32f, 0.42f, 0.82f)
                     .setBallsY_B1(0.75f, 0.25f, 0.5f, 0.5f, 0.5f, 0.15f, 0.85f, 0.9f, 0.9f, 0.9f, 0.25f, 0.15f, 0.4f, 0.4f, 0.4f, 0.25f, 0.65f, 0.8f, 0.7f, 0.75f)
