@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       
+	    
         interstitial = new InterstitialAd(MainActivity.this);
         Game.interstitial = interstitial;
         interstitial.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
@@ -31,8 +31,7 @@ public class MainActivity extends Activity {
             .addTestDevice(????)
             .build();
         
-        adView.loadAd(adRequest);
-	    
+        adView.loadAd(adRequest);    
 	adView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
@@ -56,13 +55,7 @@ public class MainActivity extends Activity {
             public void onAdOpened() {
 	    }
         });
-	    
-	    
-	    
         interstitial.loadAd(adRequest);
-	    
-	    
-	    
 	    
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
