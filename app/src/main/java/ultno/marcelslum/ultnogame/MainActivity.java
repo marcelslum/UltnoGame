@@ -18,16 +18,6 @@ public class MainActivity extends Activity {
     // Our OpenGL Surfaceview
     private GLSurfaceView glSurfaceView;
     private InterstitialAd interstitial;
-    
-    
-    
-    public void displayInterstitial() {
-		// If Ads are loaded, show Interstitial else show nothing.
-		if (interstitial.isLoaded()) {
-			interstitial.show();
-		}
-	}
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
