@@ -20,8 +20,8 @@ import java.util.TimerTask;
  */
 public class Game {
     
-    public static boolean loaderConclude = false;
-
+    public static InterstitialAd interstitial;
+    public static boolean loaderConclude = false
     public static int basePoints;
     public static float difficultyVelocityBarMultiplicator;
     public static float difficultyVelocityObstacleMultiplicator;
@@ -230,6 +230,12 @@ public class Game {
         loaderConclude = false;
         new InitLoader().execute();
     }
+    
+    public static void displayInterstitial() {
+		if (interstitial.isLoaded()) {
+			interstitial.show();
+		}
+	}
 
     public static void activateFrame(int duration){
         frame.display();
