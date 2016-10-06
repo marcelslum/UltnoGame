@@ -17,12 +17,24 @@ public class MainActivity extends Activity {
 
     // Our OpenGL Surfaceview
     private GLSurfaceView glSurfaceView;
+    private InterstitialAd interstitial;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        // Turn off the window's title bar
+       
+        interstitial = new InterstitialAd(MainActivity.this);
+        Game.interstitial = interstitial;
+        interstitial.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
+        AdView adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+            .addTestDevice(????)
+            .build();
+        
+        adView.loadAd(adRequest);
+        interstitial.loadAd(adRequest);
+        
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
