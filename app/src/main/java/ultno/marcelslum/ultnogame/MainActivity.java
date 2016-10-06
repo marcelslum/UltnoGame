@@ -42,9 +42,38 @@ public class MainActivity extends Activity {
             .build();
         
         adView.loadAd(adRequest);
+	    
+	adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+	    }
+		
+            @Override
+            public void onAdClosed() {
+                Game.setGameState(Game.GAME_STATE_MENU);
+            }
+ 
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+		Game.setGameState(Game.GAME_STATE_MENU);
+	    }
+ 
+            @Override
+            public void onAdLeftApplication() {
+	    }
+ 
+            @Override
+            public void onAdOpened() {
+	    }
+        });
+	    
+	    
+	    
         interstitial.loadAd(adRequest);
-        
-
+	    
+	    
+	    
+	    
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
