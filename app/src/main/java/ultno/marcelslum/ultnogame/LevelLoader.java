@@ -62,40 +62,38 @@ public class LevelLoader {
                     .setBallsVelocityVariation_BD_0_1(1f)
                     .setBallsVelocityMax_BD_1_5(1f)
                     .setBallsVelocityMin_BD_0_8(1f)
-                    .setBarsWidth_BD_0_22(0.95f)
+                    .setBarsWidth_BD_0_22(0.909f)
                     .setBarsX_B1(0.3f)
                     .setBarsVX_BD_0_0045(1.111f)
-                    .setTargetsWidth(0.0891f)
-                    .setTargetsDistance(0.0014f);
             if (levelNumber == 3) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
-                                {1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1},
+                            {0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
+                            {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                            {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
+                            {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                            {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+                            {1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0},
                         })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(0)
-                        .setWindowsQuantity(0)
-                        .setWindowsHeight(0.5f)
-                        .setWindowsY(0.4f)
-                        .setWindowsDistance(0.2f)
-                        .setWindowsQuantityOfLines(6)
-                        .setWindowsVelocity(-0.003f)
-                        .setBarsScaleVariation(new ScaleVariationDataBuilder()
-                                .setIsActive(false)
-                                .setIncreaseWidth(false)
-                                .setWidthVelocity(0.002f)
-                                .setMinWidth_BI(0.5f)
-                                .setMaxWidth_BI(2f));
+                        .setObstaclesQuantity(0);
 
-                /*{0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
-                {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
-                {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
-                {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-                {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
-                {1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0}*/
+                        //.setWindowsQuantity(0)
+                        //.setWindowsHeight(0.5f)
+                        //.setWindowsY(0.4f)
+                        //.setWindowsDistance(0.2f)
+                        //.setWindowsQuantityOfLines(6)
+                        //.setWindowsVelocity(-0.003f)
+                        //.setBarsScaleVariation(new ScaleVariationDataBuilder()
+                        //        .setIsActive(false)
+                        //        .setIncreaseWidth(false)
+                        //        .setWidthVelocity(0.002f)
+                        //        .setMinWidth_BI(0.5f)
+                        //        .setMaxWidth_BI(2f));
+
+
 
             }
         }
