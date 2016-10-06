@@ -101,32 +101,29 @@ public class LevelLoader {
         if (levelNumber >= 4) {
             levelBuilder
                     .setBallsQuantity(1)
-                    .setBallsRadius_BD_0_01(1f)
-                    .setBallsX_B1(0.34f, 0.64f, 0.42f, 0.52f, 0.62f, 0.14f, 0.24f, 0.32f, 0.42f, 0.82f, 0.34f, 0.64f, 0.42f, 0.52f, 0.62f, 0.14f, 0.24f, 0.32f, 0.42f, 0.82f)
-                    .setBallsY_B1(0.75f, 0.25f, 0.5f, 0.5f, 0.5f, 0.15f, 0.85f, 0.9f, 0.9f, 0.9f, 0.25f, 0.15f, 0.4f, 0.4f, 0.4f, 0.25f, 0.65f, 0.8f, 0.7f, 0.75f)
-                    .setBallsVX(3.62f, -2.9f, 0.8f, 0.5f, 0.8f)
-                    .setBallsVY(-3.6f, 2.9f, -0.9f, -0.7f, -0.5f)
+                    .setBallsX_B1(0.1f)
+                    .setBallsY_B1(0.6f)
+                    .setBallsVX(1.071f)
+                    .setBallsVY(1.071f)
                     .setBallsAngleToRotate_BD_2(1.1f)
                     .setBarsWidth_BD_0_22(0.818f)
                     .setBarsVX_BD_0_0045(1.111f)
-                    .setTargetsWidth(0.075176f)
-                    .setBarsScaleVariationOff()
-                    .setObstaclesScaleVariationOff();
             if (levelNumber == 4) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
-                                {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0},
-                                {1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1},
-                                {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}
-                        }) //{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}
+                                {0,1,0,1,0,1,0,1,0,1,0},
+                                {1,0,1,0,1,0,1,0,1,0,1},
+                                {0,1,0,1,0,1,0,1,0,1,0}
+                        })
                         .setTargetsStates(new int[]{0, 1})
-                        .setObstaclesQuantity(3)
-                        .setObstaclesX(0.2f, 0.4f, 0.6f)
-                        .setObstaclesY(0.2f, 0.2f, 0.2f)
-                        .setObstaclesWidth(0.1f, 0.1f, 0.1f)
-                        //.setObstaclesHeight(0.02f)
-                        .setObstaclesHeight(0.1f, 0.1f, 0.1f)
+                        .setObstaclesQuantity(1)
+                        .setObstaclesX(0.45f)
+                        .setObstaclesY(0.25f)
+                        .setObstaclesWidth(0.1f)
+                        .setObstaclesHeight(0.1f);
 
+                    
+                        /*
                         .setObstaclesPositionVariation(
                                 new PositionVariationDataBuilder()
                                         .setIsActive(false)
@@ -153,11 +150,6 @@ public class LevelLoader {
                                         .setxVelocity(0.001f)
                                         .setyVelocity(0.001f)
                         )
-
-
-
-
-
                         .setObstaclesScaleVariation(
                             new ScaleVariationDataBuilder()
                             .setIsActive(false)
@@ -170,20 +162,23 @@ public class LevelLoader {
                             .setMinHeight_BI(0.5f)
                             .setMaxHeight_BI(4.5f)
                         )
-
-
                         .setWindowsQuantity(0);
+                        */
             }
         }
 
 
         if (levelNumber >= 5) {
             levelBuilder
-                        .setTargetsWidth(0.0891f)
                         .setBallsX_B1(0.2f)
                         .setBallsY_B1(0.45f)   // ALTERAR NA PLANILHA
                         .setBallsVX(1.143f)
                         .setBallsVY(1.143f);
+                        .setObstaclesQuantity(2)
+                        .setObstaclesX(0.35f, 0.5f)
+                        .setObstaclesY(0.0925f, 0.2597f)
+                        .setObstaclesWidth(0.15f, 0.15f)
+                        .setObstaclesHeight(0.035f, 0.035f);
             if (levelNumber == 5) {
                 levelBuilder
                         .setTargetsMap(
@@ -198,9 +193,8 @@ public class LevelLoader {
                                         {0,0,0,0,0,0,0,0,0,0,0},
                                         {1,1,1,1,1,1,1,1,1,1,1}
                                 })
-                .setTargetsStates(new int[]{0, 1})
-                .setObstaclesQuantity(0)
-                .setWindowsQuantity(0);
+                .setTargetsStates(new int[]{0, 1});
+
             }
         }
 
