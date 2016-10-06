@@ -367,6 +367,24 @@ public class TutorialLoader {
                 );
                 break;
                 
+                
+                case 3:
+                // L3T1
+                Game.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                            new TextBoxBuilder("textBox1")
+                                .position(x*0.1f, y*0.1f)
+                                .width(width)
+                                .size(size)
+                                    .text(Utils.getStringResource( R.string.l3t1))
+                                .withArrow(gX*0.5f, gY*0.2f)
+                                .build()
+                        )
+                        .build()
+                );
+                break;
+                
+                
                 case 4:
                 // L4T1
                 Game.levelObject.tutorials.add(
