@@ -1,4 +1,4 @@
-public final class Application extends android.app.Application {
+public final class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
