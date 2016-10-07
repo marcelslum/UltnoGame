@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ultno.marcelslum.ultnogame">
+    package="com.marcelslum.ultnogame">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Ultno">
 
-        <activity android:name="ultno.marcelslum.ultnogame.MainActivity"
+        <activity android:name="com.marcelslum.ultnogame.MainActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
