@@ -1,5 +1,6 @@
 package com.marcelslum.ultnogame;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
@@ -22,7 +23,7 @@ import java.util.TimerTask;
  */
 public class Game {
     
-    public static InterstitialAd interstitial;
+    public static MainActivity mainActivity;
     public static boolean loaderConclude = false;
     public static int basePoints;
     public static float difficultyVelocityBarMultiplicator;
@@ -233,11 +234,7 @@ public class Game {
         new InitLoader().execute();
     }
     
-    public static void showInterstitial() {
-		if (interstitial.isLoaded()) {
-			interstitial.show();
-		}
-	}
+
 
     public static void activateFrame(int duration){
         frame.display();
@@ -718,7 +715,7 @@ public class Game {
             public void onChoice() {
                 Game.menuWin.block();
                 Game.blockAndWaitTouchRelease();
-                setGameState(GAME_STATE_MENU);
+                mainActivity.showInterstitial();
             }
         });
 
@@ -757,7 +754,7 @@ public class Game {
             public void onChoice() {
                 Game.menuInGame.block();
                 Game.blockAndWaitTouchRelease();
-                Game.setGameState(GAME_STATE_MENU);
+                mainActivity.showInterstitial();
             }
         });
 
@@ -907,10 +904,6 @@ public class Game {
             menuOptions.display();
             setBottomText("");
         } else if (state == GAME_STATE_MENU){
-
-            showInterstitial();
-
-
             Log.e("game", "gameStateMenu");
             activateFrame(200);
             Game.bordaB.y = Game.resolutionY;

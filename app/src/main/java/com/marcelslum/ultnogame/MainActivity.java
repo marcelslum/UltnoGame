@@ -24,11 +24,13 @@ public class MainActivity extends Activity {
     private GLSurfaceView glSurfaceView;
     private InterstitialAd interstitial;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	    
         interstitial = new InterstitialAd(MainActivity.this);
-        Game.interstitial = interstitial;
+        Game.mainActivity = this;
         interstitial.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
         AdRequest adRequest = new AdRequest.Builder()
             .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -175,6 +177,17 @@ public class MainActivity extends Activity {
         startActivity(startMain);
     }
 
+    public void showInterstitial() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                if (interstitial.isLoaded()) {
+                    interstitial.show();
+                } else {
+                    //Log.d(TAG, "Interstitial ad is not loaded yet");
+                }
+            }
+        });
+    }
 
 
     @Override
