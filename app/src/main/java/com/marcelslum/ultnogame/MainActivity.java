@@ -26,6 +26,17 @@ public class MainActivity extends Activity implements OnConnectionFailedListener
 
 	private GoogleApiClient mGoogleApiClient;
 	private boolean mResolvingError = false;
+	// Request code to use when launching the resolution activity
+	private static final int REQUEST_RESOLVE_ERROR = 1001;
+	// Unique tag for the error dialog fragment
+	private static final String DIALOG_ERROR = "dialog_error";
+	private static final String STATE_RESOLVING_ERROR = "resolving_error";
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+	    super.onSaveInstanceState(outState);
+	    outState.putBoolean(STATE_RESOLVING_ERROR, mResolvingError);
+	}
 	
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
@@ -148,6 +159,9 @@ public class MainActivity extends Activity implements OnConnectionFailedListener
 		Game.mainActivity = this;
 
 		initAds();
+		
+		mResolvingError = savedInstanceState != null && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
+
 		
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
 			.enableAutoManage(this /* FragmentActivity */,
