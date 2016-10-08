@@ -904,6 +904,15 @@ public class Game {
             menuOptions.display();
             setBottomText("");
         } else if (state == GAME_STATE_MENU){
+
+            if (mainActivity.mGoogleApiClient != null && mainActivity.mGoogleApiClient.isConnected()) {
+                // Call a Play Games services API method, for example:
+                //Achievements.unlock(mGoogleApiClient, MY_ACHIEVEMENT_ID);
+            } else {
+                // Alternative implementation (or warn user that they must
+                // sign in to use this feature)
+            }
+
             Log.e("game", "gameStateMenu");
             activateFrame(200);
             Game.bordaB.y = Game.resolutionY;

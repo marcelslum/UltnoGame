@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO: Replace this by your app's app ID! -->
+
+    <!-- TODO: Replace these by your achievement/leaderboard IDs! -->
+    <string name="leaderboard_easy">ReplaceMe</string>
+    <string name="leaderboard_hard">ReplaceMe</string>
+</resources>
