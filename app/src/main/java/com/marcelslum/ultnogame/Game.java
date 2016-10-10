@@ -277,7 +277,7 @@ public class Game {
 
     public static void initTittle(){
         tittle = new Image("tittle",
-                gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.07f,
+                gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.1f,
                 gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.4f * 0.3671875f,
                 Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
 
@@ -600,7 +600,7 @@ public class Game {
             public void onChoice() {
                 Game.selectorLevel.fromMenu(innerMenu);
                 mainActivity.unlockAchievement();
-                mainActivity.submitScore();
+                GooglePlayGames.getInstance().submitScore();
             }
         });
 
@@ -626,7 +626,7 @@ public class Game {
         menuMain.addMenuOption("conquistas", context.getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                mainActivity.showAchievements();
+                GooglePlayGames.getInstance().showAchievements();
 
                 //setGameState(GAME_STATE_RANKING);
             }
@@ -637,7 +637,7 @@ public class Game {
             @Override
             public void onChoice() {
                 //setGameState(GAME_STATE_RANKING);
-                mainActivity.showLeaderboards();
+                GooglePlayGames.getInstance().showLeaderboards();
             }
         });
 
@@ -820,6 +820,7 @@ public class Game {
     public static void setGameState(int state){
         gameState = state;
         clearAllMenuEntities();
+        mainActivity.hideAdView();
 
         if (state == GAME_STATE_INTRO) {
             Splash.init();
@@ -841,6 +842,7 @@ public class Game {
             setBottomText("");
         } else if (state == GAME_STATE_MENU){
             initTittle();
+            mainActivity.showAdView();
             activateFrame(200);
             Game.bordaB.y = Game.resolutionY;
             menuOptions.block();

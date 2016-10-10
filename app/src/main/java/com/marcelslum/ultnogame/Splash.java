@@ -13,6 +13,7 @@ public class Splash {
     public static long timeInitIntro;
     public static long timeInitConectando;
     public static long timeInitCarregando;
+    public static int googleConnectionAttempts = 0;
 
     public final static long INTRO_DURATION = 5000;
     private final static long INTRO_PARTIAL_DURATION = 1500;
@@ -59,11 +60,12 @@ public class Splash {
             ConnectionHandler.connect();
             timeInitConectando = Utils.getTime();
         } else {
-            new InitLoader().execute();
+            new InitLoaderAyncTask().execute();
             setSplashMessage(MESSAGE_CARREGANDO);
             timeInitCarregando = Utils.getTime();
         }
 
+        googleConnectionAttempts = 0;
 
         setGameEntities();
     }
@@ -144,7 +146,7 @@ public class Splash {
             Log.e("setSplashState", "MESSAGE_INTERNET_NAO_CONECTADA");
             message1.clearAnimations();
             message1 = new Text("messageSplash1",
-                    Game.resolutionX* 0.5f, Game.resolutionY * 0.7f, Game.resolutionY * 0.06f,
+                    Game.resolutionX* 0.5f, Game.resolutionY * 0.5f, Game.resolutionY * 0.06f,
                     Game.context.getResources().getString(R.string.splash_nao_foi_possivel_conectar1), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message2 = new Text("messageSplash2",
@@ -157,7 +159,7 @@ public class Splash {
             Log.e("setSplashState", "MESSAGE_GOOGLE_NAO_CONECTADO");
             message1.clearAnimations();
             message1 = new Text("messageSplash1",
-                    Game.resolutionX* 0.5f, Game.resolutionY * 0.7f, Game.resolutionY * 0.06f,
+                    Game.resolutionX* 0.5f, Game.resolutionY * 0.75f, Game.resolutionY * 0.04f,
                     Game.context.getResources().getString(R.string.splash_nao_foi_possivel_conectar_ao_google), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message2 = new Text("messageSplash2",
@@ -202,7 +204,14 @@ public class Splash {
                     if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()){
                         Game.setGameState(Game.GAME_STATE_MENU);
                     } else {
-                        setSplashMessage(AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO);
+                        if (googleConnectionAttempts < 5){
+                            timeInitConectando = Utils.getTime();
+                            googleConnectionAttempts += 1;
+                            Game.mainActivity.mGoogleApiClient.connect();
+                        } else {
+                            setSplashMessage(AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO);
+                            googleConnectionAttempts = 0;
+                        }
                     }
         } else if (state == AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION){
@@ -214,11 +223,11 @@ public class Splash {
     }
 
     public static void notifyClick() {
-        Log.e("splash", "notify click");
-        if (state == MESSAGE_INTERNET_NAO_CONECTADA){
+        if (state == MESSAGE_INTERNET_NAO_CONECTADA || state == MESSAGE_GOOGLE_NAO_CONECTADO) {
             timeInitConectando = Utils.getTime();
             setSplashMessage(MESSAGE_CONECTANDO);
             ConnectionHandler.connect();
+            Game.mainActivity.mGoogleApiClient.connect();
         }
     }
 }

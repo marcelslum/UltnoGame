@@ -2,7 +2,7 @@ package com.marcelslum.ultnogame;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class InitLoader extends AsyncTask<Integer , Integer, Integer> {
+public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
 
     protected Integer doInBackground(Integer... i){
         Game.initData();

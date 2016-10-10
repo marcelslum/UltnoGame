@@ -105,7 +105,7 @@
     <string name="message_typeface_mono_bold_italic">Typeface mono, bold italic</string>
     <string name="conquistas">Conquistas</string>
     <string name="splash_nao_foi_possivel_conectar1">Conexão com a internet indisponível</string>
-    <string name="splash_nao_foi_possivel_conectar_ao_google">Não foi possível conectar-se aos serviços do Google Play</string>
+    <string name="splash_nao_foi_possivel_conectar_ao_google">Não foi possível realizar conexão com o Google Play Games</string>
     <string name="splash_clique_aqui">Clique aqui para tentar novamente</string>
 
 

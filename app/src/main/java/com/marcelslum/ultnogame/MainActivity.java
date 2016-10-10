@@ -15,6 +15,8 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -24,11 +26,13 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 public class MainActivity extends FragmentActivity implements
         OnConnectionFailedListener{
 
-    private static final int REQUEST_ACHIEVEMENTS = 2001;
-    private static final int REQUEST_LEADERBOARD = 3001;
+
     private GLSurfaceView glSurfaceView;
     private InterstitialAd interstitial;
     public GoogleApiClient mGoogleApiClient;
+    AdView mAdView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +42,13 @@ public class MainActivity extends FragmentActivity implements
         Game.forInitGame = true;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        initAds();
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
+
+        GooglePlayGames.getInstance().init(mGoogleApiClient, this);
 
         // Fullscreen mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -60,12 +66,27 @@ public class MainActivity extends FragmentActivity implements
                 }
             }
         });
+
+        // Create and load the AdView.
+        mAdView = new AdView(this);
+        mAdView.setAdUnitId("ca-app-pub-2413920269734587/4375714557");
+        mAdView.setAdSize(AdSize.SMART_BANNER);
+
         glSurfaceView = new GLSurf(this);
         glSurfaceView.setPreserveEGLContextOnPause(true);
         setContentView(R.layout.activity_main);
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.gamelayout);
         RelativeLayout.LayoutParams glParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         layout.addView(glSurfaceView, glParams);
+
+
+        // Add adView to the bottom of the screen.
+        RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        layout.addView(mAdView, adParams);
+
+        initAds();
     }
 
     @Override
@@ -73,11 +94,41 @@ public class MainActivity extends FragmentActivity implements
         ConnectionHandler.connect();
     }
 
-	private void initAds(){    
+
+    public void hideAdView(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdView.pause();
+                mAdView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void showAdView(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdView.resume();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+
+	private void initAds(){
+        AdRequest adRequestBanner = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
+                .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
+                .build();
+        mAdView.loadAd(adRequestBanner);
+
+
 		interstitial = new InterstitialAd(MainActivity.this);
 		interstitial.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
 	
-		AdRequest adRequest = new AdRequest.Builder()
+		final AdRequest adRequest = new AdRequest.Builder()
 		    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
 		    .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
             .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
@@ -90,12 +141,14 @@ public class MainActivity extends FragmentActivity implements
 
 		    @Override
 		    public void onAdClosed() {
-			Game.setGameState(Game.GAME_STATE_MENU);
+                Game.setGameState(Game.GAME_STATE_MENU);
+                interstitial.loadAd(adRequest);
 		    }
 
 		    @Override
 		    public void onAdFailedToLoad(int errorCode) {
-			    //Game.setGameState(Game.GAME_STATE_MENU);
+			    Game.setGameState(Game.GAME_STATE_MENU);
+                interstitial.loadAd(adRequest);
 		    }
 
 		    @Override
@@ -130,6 +183,9 @@ public class MainActivity extends FragmentActivity implements
         Log.e("MainActivity", "onPause()");
         super.onPause();
         glSurfaceView.onPause();
+        if (mAdView != null) {
+            mAdView.pause();
+        }
     }
 
     @Override
@@ -151,7 +207,8 @@ public class MainActivity extends FragmentActivity implements
                 if (interstitial.isLoaded()) {
                     interstitial.show();
                 } else {
-                    //Log.d(TAG, "Interstitial ad is not loaded yet");
+                    Log.e("MainActivity", "Interstitial ad is not loaded yet");
+                    Game.setGameState(Game.GAME_STATE_MENU);
                 }
             }
         });
@@ -163,6 +220,17 @@ public class MainActivity extends FragmentActivity implements
         super.onResume();
         setFullScreen();
         glSurfaceView.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     public void unlockAchievement() {
@@ -173,52 +241,11 @@ public class MainActivity extends FragmentActivity implements
         }
     }
 
-
     @Override
     protected void onActivityResult(int requestCode,
                            int resultCode,
                            Intent data){
-        if (requestCode == REQUEST_ACHIEVEMENTS || requestCode == REQUEST_LEADERBOARD) {
-            Log.e("MainActivity", "onActivityResult REQUEST_ACHIEVEMENTS or REQUEST_LEADERBOARD " + resultCode);
-        }
-    }
+        GooglePlayGames.getInstance().onRequestResult(requestCode, resultCode);
 
-    public void showAchievements(){
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            // Call a Play Games services API method, for example:
-            Games.Achievements.unlock(mGoogleApiClient, "CgkIjNyO58cTEAIQAQ");
-
-            Intent intent = Games.Achievements.getAchievementsIntent(mGoogleApiClient);
-
-            startActivityForResult(intent,
-                    REQUEST_ACHIEVEMENTS);
-        } else {
-            // Alternative implementation (or warn user that they must
-            // sign in to use this feature)
-        }
-    }
-
-    public void showLeaderboards(){
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                    "CgkIjNyO58cTEAIQAg"), REQUEST_LEADERBOARD);
-        } else {
-            Log.e("mainActivity", "não conectado");
-        }
-    }
-
-    public void submitScore() {
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            Games.Leaderboards.submitScore(mGoogleApiClient, "CgkIjNyO58cTEAIQAg", 12333);
-        } else {
-            Log.e("mainActivity", "não conectado");
-
-            // Alternative implementation (or warn user that they must sign in to use this feature)
-        }
-    }
-
-    public void connectMGoogleApiClient() {
-        Log.e("mainActivity", "mGoogleApiClient.connect();");
-        mGoogleApiClient.connect();
     }
 }
