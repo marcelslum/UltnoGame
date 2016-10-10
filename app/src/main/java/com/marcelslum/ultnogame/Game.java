@@ -1,13 +1,10 @@
 package com.marcelslum.ultnogame;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
 
 //import com.google.android.gms.common.api.GoogleApiClient;
-
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -22,9 +19,11 @@ import java.util.TimerTask;
 /** * Created by marcel on 01/08/2016.
  */
 public class Game {
-    
+
     public static MainActivity mainActivity;
-    public static boolean loaderConclude = false;
+
+    public static boolean forInitGame;
+
     public static int basePoints;
     public static float difficultyVelocityBarMultiplicator;
     public static float difficultyVelocityObstacleMultiplicator;
@@ -42,8 +41,6 @@ public class Game {
     public static final float BALL_INSANE = 1.6f;
     public static final float OBSTACLE_INSANE = 1.4f;
 
-    public static final Timer timer = new Timer();
-    public static int connectionAttempts = 0;
     public static final int BALL_WEIGHT = 1;
     public static final int BORDA_WEIGHT = 10;
     public static final int OBSTACLES_WEIGHT = 7;
@@ -62,7 +59,6 @@ public class Game {
     public static Selector selectorMusic;
     public static Selector selectorSound;
     public static List listRanking;
-    //public static Selector selectorVolumn;
 
     public static ArrayList<Target> targets;
     public static ArrayList<Ball> balls;
@@ -108,7 +104,8 @@ public class Game {
     public static Text messageRankingWin;
     public static Text messageCurrentLevel;
     public static Text messageMaxScoreTotal;
-    public static Text messageLoading;
+    public static Text messageSplash1;
+    public static Text messageSplash2;
     public static TextBox bottomTextBox;
 
     // quadtree objects
@@ -153,70 +150,62 @@ public class Game {
     public final static int GAME_STATE_RANKING =  18;
     public final static int GAME_STATE_INTRO =  19;
 
-    public static long timeIntro;
-    public final static long INTRO_DURATION = 5000;
-
-    public final static int INTERNET_STATE_CONNECTED = 1;
-    public final static int INTERNET_STATE_NOT_CONNECTED = 1;
-
-    public static int internetState;
-
     public final static int DIFICULDADE_FACIL = 0;
     public final static int DIFICULDADE_NORMAL = 1;
     public final static int DIFICULDADE_DIFÍCIL = 2;
     public final static int DIFICULDADE_INSANO = 3;
 
-    public final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE3 = 3;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE4 = 4;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE5 = 5;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE6 = 6;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE7 = 7;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE8 = 8;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE9 = 9;
-    public final static int TEXTURE_MAP_NUMBERS_SCORE0 = 10;
-    public final static int TEXTURE_MAP_NUMBERS_POINT1 = 11;
-    public final static int TEXTURE_MAP_NUMBERS_POINT2 = 12;
-    public final static int TEXTURE_MAP_NUMBERS_POINT3 = 13;
-    public final static int TEXTURE_MAP_NUMBERS_POINT4 = 14;
-    public final static int TEXTURE_MAP_NUMBERS_POINT5 = 15;
-    public final static int TEXTURE_MAP_NUMBERS_POINT6 = 16;
-    public final static int TEXTURE_MAP_NUMBERS_POINT7 = 17;
-    public final static int TEXTURE_MAP_NUMBERS_POINT8 = 18;
-    public final static int TEXTURE_MAP_NUMBERS_POINT9 = 19;
-    public final static int TEXTURE_MAP_NUMBERS_POINT0 = 20;
-    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1 = 21;
-    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2 = 22;
-    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3 = 23;
-    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4 = 24;
-    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5 = 25;
-    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6 = 26;
-    public final static int TEXTURE_MAP_NUMBERS_EXPLODE_BALL = 27;
+    final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
+    final static int TEXTURE_MAP_NUMBERS_SCORE3 = 3;
+    final static int TEXTURE_MAP_NUMBERS_SCORE4 = 4;
+    final static int TEXTURE_MAP_NUMBERS_SCORE5 = 5;
+    final static int TEXTURE_MAP_NUMBERS_SCORE6 = 6;
+    final static int TEXTURE_MAP_NUMBERS_SCORE7 = 7;
+    final static int TEXTURE_MAP_NUMBERS_SCORE8 = 8;
+    final static int TEXTURE_MAP_NUMBERS_SCORE9 = 9;
+    final static int TEXTURE_MAP_NUMBERS_SCORE0 = 10;
+    final static int TEXTURE_MAP_NUMBERS_POINT1 = 11;
+    final static int TEXTURE_MAP_NUMBERS_POINT2 = 12;
+    final static int TEXTURE_MAP_NUMBERS_POINT3 = 13;
+    final static int TEXTURE_MAP_NUMBERS_POINT4 = 14;
+    final static int TEXTURE_MAP_NUMBERS_POINT5 = 15;
+    final static int TEXTURE_MAP_NUMBERS_POINT6 = 16;
+    final static int TEXTURE_MAP_NUMBERS_POINT7 = 17;
+    final static int TEXTURE_MAP_NUMBERS_POINT8 = 18;
+    final static int TEXTURE_MAP_NUMBERS_POINT9 = 19;
+    final static int TEXTURE_MAP_NUMBERS_POINT0 = 20;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1 = 21;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2 = 22;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3 = 23;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4 = 24;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5 = 25;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6 = 26;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_BALL = 27;
     
-    public final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
-    public static long initTime;
-    public static float effectiveScreenHeight;
-    public static float effectiveScreenWidth;
-    public static int difficulty;
+    final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
+    static long initTime;
+    static float effectiveScreenHeight;
+    static float effectiveScreenWidth;
+    static int difficulty;
     //public static GoogleApiClient mGoogleApiClient;
 
     public boolean ballFall;
 
     // programs
-    public static Program imageProgram;
-    public static Program imageColorizedProgram;
-    public static Program lineProgram;
-    public static Program textProgram;
-    public static Program solidProgram;
-    public static Program imageColorizedFxProgram;
-    public static Program windProgram;
-    public static Program specialBallProgram;
-    public static int ballsNotInvencibleAlive;
-    public static int ballsInvencible;
-    public static long initialTimePointsDecay;
+    static Program imageProgram;
+    static Program imageColorizedProgram;
+    static Program lineProgram;
+    static Program textProgram;
+    static Program solidProgram;
+    static Program imageColorizedFxProgram;
+    static Program windProgram;
+    static Program specialBallProgram;
+    static int ballsNotInvencibleAlive;
+    static int ballsInvencible;
+    static long initialTimePointsDecay;
 
-    public static final long TIME_FOR_POINTS_DECAY = 3000;
+   static final long TIME_FOR_POINTS_DECAY = 3000;
     public static final int POINTS_DECAY = 10;
     public static final int POINTS_EASY = 100;
     public static final int POINTS_NORMAL = 200;
@@ -228,13 +217,11 @@ public class Game {
     public static void init(){
         initPrograms();
         initFont();
-        initSplash();
+        Texture.textures = new ArrayList<>();
+        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
         setGameState(Game.GAME_STATE_INTRO);
-        loaderConclude = false;
-        new InitLoader().execute();
     }
-    
-
 
     public static void activateFrame(int duration){
         frame.display();
@@ -273,65 +260,6 @@ public class Game {
         Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000);
     }
 
-    public static void initSplash(){
-
-        Texture.textures = new ArrayList<>();
-        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
-
-        tittle = new Image("tittle",
-                resolutionX * 0.2f, resolutionY * 0.25f,
-                resolutionX * 0.6f, resolutionX * 0.6f * 0.3671875f,
-                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.0f, 0.0f, 0.0f, 1f));
-
-
-        ArrayList<float[]> valuesAnimationTittleSplash = new ArrayList<>();
-        valuesAnimationTittleSplash.add(new float[]{0f,1f});
-        valuesAnimationTittleSplash.add(new float[]{0.68f,2f});
-        Animation animationTittleSplash = new Animation(tittle, "numberForAnimation", "numberForAnimation", 2000, valuesAnimationTittleSplash, true, false);
-        animationTittleSplash.setOnChangeNotFluid(new Animation.OnChange() {
-            @Override
-            public void onChange() {
-                if (tittle.numberForAnimation == 1f){
-                    tittle.setColor(new Color(0f, 0f, 0f, 1f));
-                } else if (tittle.numberForAnimation == 2f) {
-                    tittle.setColor(new Color(0f, 0f, 1f, 1f));
-                }
-            }
-        });
-        animationTittleSplash.start();
-
-        messageLoading = new Text("messageLoading",
-                0f, resolutionY*0.8f, resolutionY*0.10f,
-                context.getResources().getString(R.string.carregando)+"..", font, new Color(0f, 0f, 0f, 0.6f),Text.TEXT_ALIGN_LEFT);
-
-        float w = messageLoading.width;
-
-        messageLoading = new Text("messageLoading",
-                resolutionX*0.5f - (w/2), resolutionY*0.8f, resolutionY*0.10f,
-                context.getResources().getString(R.string.carregando)+"..", font, new Color(0f, 0f, 0f, 0.6f),Text.TEXT_ALIGN_LEFT);
-
-        ArrayList<float[]> valuesAnimationMessageLoading = new ArrayList<>();
-        valuesAnimationMessageLoading.add(new float[]{0f,1f});
-        valuesAnimationMessageLoading.add(new float[]{0.33f,2f});
-        valuesAnimationMessageLoading.add(new float[]{0.66f,3f});
-        Animation animationMessageLoading = new Animation(messageLoading, "numberForAnimation", "numberForAnimation", 1800, valuesAnimationMessageLoading, true, false);
-        animationMessageLoading.setOnChangeNotFluid(new Animation.OnChange() {
-            @Override
-            public void onChange() {
-                if (messageLoading.numberForAnimation == 1f){
-                    messageLoading.setText(context.getResources().getString(R.string.carregando)+".");
-                } else if (messageLoading.numberForAnimation == 2f) {
-                    messageLoading.setText(context.getResources().getString(R.string.carregando)+"..");
-                } else if (messageLoading.numberForAnimation == 3f) {
-                    messageLoading.setText(context.getResources().getString(R.string.carregando)+"...");
-                }
-            }
-        });
-        animationMessageLoading.start();
-    }
-
-
     public static void initTextures() {
         if (Texture.textures == null) {
             Texture.textures = new ArrayList<>();
@@ -342,9 +270,12 @@ public class Game {
         Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
+
+
+
     }
 
-    public static void initTexts(){
+    public static void initTittle(){
         tittle = new Image("tittle",
                 gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.07f,
                 gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.4f * 0.3671875f,
@@ -376,7 +307,11 @@ public class Game {
         });
         animTittle.start();
 
+    }
 
+
+    public static void initTexts(){
+        initTittle();
         messageGameOver = new Text("messageGameOver",
                 gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.17f,
                 context.getResources().getString(R.string.messageGameOver), font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
@@ -431,18 +366,6 @@ public class Game {
                 .isHaveArrowContinue(false)
                 .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
                 .build();
-
-        bottomTextBox.setOnPress(new TextBox.OnPress() {
-            @Override
-            public void onPress() {
-                if (gameState == GAME_STATE_MENU) {
-                    Log.e("game", "internetState "+internetState);
-                    if (internetState == INTERNET_STATE_NOT_CONNECTED) {
-                        new InternetConnection().execute("teste");
-                    }
-                }
-            }
-        });
 
         setBottomText("");
 
@@ -676,6 +599,8 @@ public class Game {
             @Override
             public void onChoice() {
                 Game.selectorLevel.fromMenu(innerMenu);
+                mainActivity.unlockAchievement();
+                mainActivity.submitScore();
             }
         });
 
@@ -698,10 +623,21 @@ public class Game {
         });
 
         // adiciona a opção de acessar as opções do jogo
+        menuMain.addMenuOption("conquistas", context.getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                mainActivity.showAchievements();
+
+                //setGameState(GAME_STATE_RANKING);
+            }
+        });
+
+        // adiciona a opção de acessar as opções do jogo
         menuMain.addMenuOption("ranking", context.getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                setGameState(GAME_STATE_RANKING);
+                //setGameState(GAME_STATE_RANKING);
+                mainActivity.showLeaderboards();
             }
         });
 
@@ -886,9 +822,9 @@ public class Game {
         clearAllMenuEntities();
 
         if (state == GAME_STATE_INTRO) {
-            tittle.display();
-            messageLoading.display();
-            timeIntro = Utils.getTime();
+            Splash.init();
+            Splash.display();
+            Splash.timeInitIntro = Utils.getTime();
         } else if (state == GAME_STATE_RANKING){
             activateFrame(200);
             tittle.clearDisplay();
@@ -904,16 +840,7 @@ public class Game {
             menuOptions.display();
             setBottomText("");
         } else if (state == GAME_STATE_MENU){
-
-            if (mainActivity.mGoogleApiClient != null && mainActivity.mGoogleApiClient.isConnected()) {
-                // Call a Play Games services API method, for example:
-                //Achievements.unlock(mGoogleApiClient, MY_ACHIEVEMENT_ID);
-            } else {
-                // Alternative implementation (or warn user that they must
-                // sign in to use this feature)
-            }
-
-            Log.e("game", "gameStateMenu");
+            initTittle();
             activateFrame(200);
             Game.bordaB.y = Game.resolutionY;
             menuOptions.block();
@@ -922,7 +849,10 @@ public class Game {
             eraseAllGameEntities();
             eraseAllHudEntities();
             eraseAllTutorials();
-            messageLoading.clearDisplay();
+            messageSplash1.clearDisplay();
+            if (messageSplash2 != null) {
+                messageSplash2.clearDisplay();
+            }
             listRanking.clearDisplay();
             listRanking.block();
             menuMain.unblock();
@@ -930,7 +860,9 @@ public class Game {
             tittle.display();
             messageCurrentLevel.display();
             messageMaxScoreTotal.display();
-            new InternetConnection().execute("teste");
+
+            ConnectionHandler.connect();
+
             bottomTextBox.display();
             messageMaxScoreTotal.setText(
                     context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
@@ -939,7 +871,6 @@ public class Game {
             activateFrame(500);
             eraseAllTutorials();
             levelObject.loadEntities();
-
 
             int musicNumber = levelNumber - ((int)Math.floor(levelNumber / 7)*levelNumber);
 
@@ -1935,7 +1866,6 @@ public class Game {
     }
 
     public static void verifyListeners() {
-
         if (!isBlocked) {
             for (int i = 0; i < interactionListeners.size(); i++) {
                 interactionListeners.get(i).verify();
@@ -1963,42 +1893,5 @@ public class Game {
         if (buttonMusic != null) buttonMusic.verifyListener();
         if (buttonSound != null) buttonSound.verifyListener();
         if (bottomTextBox != null) bottomTextBox.verifyListener();
-    }
-
-    public static void handleInternetConnection(Integer result) {
-        if (result == InternetConnection.ATTEMPT && internetState != INTERNET_STATE_CONNECTED){
-            Log.e("game", "internetConnection attempt");
-            setBottomText(context.getResources().getString(R.string.conectando));
-            return;
-        }
-
-        connectionAttempts += 1;
-        final int fresult = result;
-
-        final TimerTask task2 = new TimerTask() {
-            @Override
-            public void run() {
-                setBottomText("");
-            }
-        };
-
-        final TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                if (fresult == InternetConnection.CONNECTED){
-                    if (internetState != INTERNET_STATE_CONNECTED) {
-                        internetState = INTERNET_STATE_CONNECTED;
-                        Log.e("game", "internetConnection connected");
-                        setBottomText(context.getResources().getString(R.string.conexao));
-                        timer.schedule(task2, 1500);
-                    }
-                } else if (fresult == InternetConnection.NOT_CONNECTED){
-                    Log.e("game", "internetConnection not connected");
-                    internetState = INTERNET_STATE_NOT_CONNECTED;
-                    setBottomText(context.getResources().getString(R.string.nao_conectado1));
-                }
-            }
-        };
-        timer.schedule(task, 2000);
     }
 }

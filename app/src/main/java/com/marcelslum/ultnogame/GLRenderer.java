@@ -39,12 +39,14 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
 
     public GLRenderer(Context c) {
+        Log.e("GLRenderer", "create");
         mContext = c;
         mLastTime = System.currentTimeMillis() + 100;
         Game.context = mContext;
     }
 
     public void onPause() {
+        Log.e("GLRenderer", "onPause");
         if (Game.gameState == Game.GAME_STATE_JOGAR) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
         } else if (Game.gameState == Game.GAME_STATE_PREPARAR || Game.gameState == Game.GAME_STATE_TUTORIAL) {
@@ -54,18 +56,24 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     public void onResume()
     {
+        Log.e("GLRenderer", "onResume");
         mLastTime = System.currentTimeMillis();
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        Log.e("GLRenderer", "onSurfaceCreated");
+
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        if (Game.texts != null ){
+        Log.e("GLRenderer", "onSurfaceChanged");
+        if (!Game.forInitGame){
             return;
         }
+
+        Game.forInitGame = false;
 
         GLES20.glClearColor(0.902f, 0.89f, 0.922f, 1.0f);
         GLES20.glEnable(GLES20.GL_BLEND);
@@ -130,7 +138,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Game.resolutionY = this.effectiveScreenHeight;
         Game.screenOffSetX = screenOffSetX;
         Game.screenOffSetY = screenOffSetY;
-
         Game.init();
     }
 
@@ -150,13 +157,17 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
         if (Game.gameState == Game.GAME_STATE_INTRO){
             if (Game.tittle != null){
-                Game.tittle.prepareRender(matrixView, matrixProjection);
-                Game.messageLoading.prepareRender(matrixView, matrixProjection);
+                Splash.render(matrixView, matrixProjection);
+            }
+            Splash.verifySplashState();
+
+
+            if (Game.touchEvents != null) {
+                if (Game.touchEvents.size() > 0) {
+                    Splash.notifyClick();
+                }
             }
 
-            if ((Utils.getTime() - Game.timeIntro)>Game.INTRO_DURATION && Game.loaderConclude){
-                Game.setGameState(Game.GAME_STATE_MENU);
-            }
         } else {
             Game.verifyTouchBlock();
             Game.verifyListeners();
@@ -166,5 +177,4 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         // Save the current time to see how long it took :).
         mLastTime = now;
     }
-
 }

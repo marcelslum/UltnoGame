@@ -5,7 +5,6 @@ import android.util.Log;
 public class InitLoader extends AsyncTask<Integer , Integer, Integer> {
 
     protected Integer doInBackground(Integer... i){
-        Log.e("initLoader", "doInBackground");
         Game.initData();
         Storage.initializeStorage(Game.context, Game.quantityOfLevels);
         Game.maxLevel = Storage.getMaxLevel();
@@ -30,8 +29,6 @@ public class InitLoader extends AsyncTask<Integer , Integer, Integer> {
 
 
     protected void onPostExecute(Integer i) {
-        Log.e("initloader", " onPostExecute");
-        Game.loaderConclude = true;
-
+        Splash.loaderConclude = true;
      }
  }

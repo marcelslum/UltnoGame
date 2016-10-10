@@ -11,10 +11,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.GamesActivityResultCodes;
 
-/**
- * Created by marcel on 08/10/2016.
- */
-
 public class BaseGameUtils2 {
 
     /**

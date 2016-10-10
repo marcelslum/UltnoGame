@@ -42,25 +42,25 @@ public class Background extends Entity {
             case 1:
                 bitmap = "drawable/finalback1";
                 break;
-            case 2:
+            case 12:
                 bitmap = "drawable/finalback2";
                 break;
-            case 3:
+            case 13:
                 bitmap = "drawable/finalback3";
                 break;
-            case 4:
+            case 14:
                 bitmap = "drawable/finalback4";
                 break;
-            case 5:
+            case 15:
                 bitmap = "drawable/finalback5";
                 break;
-            case 6:
+            case 16:
                 bitmap = "drawable/finalback6";
                 break;
-            case 7:
+            case 17:
                 bitmap = "drawable/finalback7";
                 break;
-            case 8:
+            case 18:
                 bitmap = "drawable/finalback8";
                 break;
             default:

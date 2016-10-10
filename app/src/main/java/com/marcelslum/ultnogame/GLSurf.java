@@ -4,6 +4,7 @@ package com.marcelslum.ultnogame;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class GLSurf extends GLSurfaceView {
 
     public GLSurf(Context context) {
         super(context);
+
+        Log.e("GLSURF", "createGlSurf");
 
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);
@@ -33,14 +36,14 @@ public class GLSurf extends GLSurfaceView {
 
     @Override
     public void onPause() {
-        // TODO Auto-generated method stub
+        Log.e("GLSURF", "onPause");
         super.onPause();
         mRenderer.onPause();
     }
 
     @Override
     public void onResume() {
-        // TODO Auto-generated method stub
+        Log.e("GLSURF", "onResume");
         super.onResume();
         mRenderer.onResume();
     }

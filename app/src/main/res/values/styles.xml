@@ -1,5 +1,4 @@
 <resources>
-    <style name="Ultno" parent="android:Theme.Material.NoActionBar">
-       <item name="android:typeface">serif</item>
+    <style name="Ultno" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
 </resources>

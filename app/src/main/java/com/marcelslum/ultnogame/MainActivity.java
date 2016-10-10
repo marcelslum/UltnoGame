@@ -6,6 +6,9 @@ import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,90 +19,60 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
-public class MainActivity extends Activity implements GoogleApiClient.ConnectionCallbacks,
-    GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends FragmentActivity implements
+        OnConnectionFailedListener{
 
-
-	private GLSurfaceView glSurfaceView;
-
+    private static final int REQUEST_ACHIEVEMENTS = 2001;
+    private static final int REQUEST_LEADERBOARD = 3001;
+    private GLSurfaceView glSurfaceView;
     private InterstitialAd interstitial;
-
-	public GoogleApiClient mGoogleApiClient;
-
-    private static int RC_SIGN_IN = 9001;
-    private boolean mResolvingConnectionFailure = false;
-    private boolean mAutoStartSignInflow = true;
-    private boolean mSignInClicked = false;
-
-    private static String STATE_RESOLVING_ERROR = "re";
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-	    super.onSaveInstanceState(outState);
-	    outState.putBoolean(STATE_RESOLVING_ERROR, mResolvingConnectionFailure);
-	}
+    public GoogleApiClient mGoogleApiClient;
 
     @Override
-    public void onConnected(Bundle connectionHint) {
-        // The player is signed in. Hide the sign-in button and allow the
-        // player to proceed.
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.e("mainActivity", "create");
+        super.onCreate(savedInstanceState);
+        Game.mainActivity = this;
+        Game.forInitGame = true;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        initAds();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .build();
+
+        // Fullscreen mode
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    // TODO: The system bars are visible. Make any desired
+                    if (Game.gameState == Game.GAME_STATE_JOGAR) {
+                        Game.setGameState(Game.GAME_STATE_PAUSE);
+                    }
+                } else {
+                    // TODO: The system bars are NOT visible. Make any desired
+                }
+            }
+        });
+        glSurfaceView = new GLSurf(this);
+        glSurfaceView.setPreserveEGLContextOnPause(true);
+        setContentView(R.layout.activity_main);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.gamelayout);
+        RelativeLayout.LayoutParams glParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        layout.addView(glSurfaceView, glParams);
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        if (mResolvingConnectionFailure) {
-            return;
-        }
-
-        // if the sign-in button was clicked or if auto sign-in is enabled,
-        // launch the sign-in flow
-        if (mSignInClicked || mAutoStartSignInflow) {
-            mAutoStartSignInflow = false;
-            mSignInClicked = false;
-            mResolvingConnectionFailure = true;
-
-            // Attempt to resolve the connection failure using BaseGameUtils.
-            // The R.string.signin_other_error value should reference a generic
-            // error string in your strings.xml file, such as "There was
-            // an issue with sign-in, please try again later."
-
-            //if (!BaseGameUtils.resolveConnectionFailure(this,
-            //        mGoogleApiClient, connectionResult,
-            //        RC_SIGN_IN, getResources().getString(R.string.signin_other_error))) {
-            //    mResolvingConnectionFailure = false;
-            //}
-        }
-
-        // Put code here to display the sign-in button
+        ConnectionHandler.connect();
     }
 
-    @Override
-    public void onConnectionSuspended(int i) {
-        // Attempt to reconnect
-        mGoogleApiClient.connect();
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent intent) {
-        if (requestCode == RC_SIGN_IN) {
-            mSignInClicked = false;
-            mResolvingConnectionFailure = false;
-            if (resultCode == RESULT_OK) {
-                mGoogleApiClient.connect();
-            } else {
-                // Bring up an error dialog to alert the user that sign-in
-                // failed. The R.string.signin_failure should reference an error
-                // string in your strings.xml file that tells the user they
-                // could not be signed in, such as "Unable to sign in."
-
-
-                //BaseGameUtils.showActivityResultError(this,
-                //        requestCode, resultCode, R.string.signin_failure);
-            }
-        }
-    }
-	
 	private void initAds(){    
 		interstitial = new InterstitialAd(MainActivity.this);
 		interstitial.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
@@ -122,7 +95,7 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 
 		    @Override
 		    public void onAdFailedToLoad(int errorCode) {
-			Game.setGameState(Game.GAME_STATE_MENU);
+			    //Game.setGameState(Game.GAME_STATE_MENU);
 		    }
 
 		    @Override
@@ -136,69 +109,6 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 		interstitial.loadAd(adRequest);
 		
 	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-        Game.mainActivity = this;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        initAds();
-        mResolvingConnectionFailure = savedInstanceState != null && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
-
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                //.addConnectionCallbacks(this)
-                //.addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .build();
-        /*
-        */
-
-        super.onCreate(savedInstanceState);
-
-        // Fullscreen mode
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        this.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
-                (new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int visibility) {
-                        // Note that system bars will only be "visible" if none of the
-                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-                        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                            // TODO: The system bars are visible. Make any desired
-                            // adjustments to your UI, such as showing the action bar or
-                            // other navigational controls.
-
-                            if (Game.gameState == Game.GAME_STATE_JOGAR) {
-                                Game.setGameState(Game.GAME_STATE_PAUSE);
-                            }
-
-                        } else {
-                            // TODO: The system bars are NOT visible. Make any desired
-                            // adjustments to your UI, such as hiding the action bar or
-                            // other navigational controls.
-                        }
-                    }
-                });
-
-
-        // We create our Surfaceview for our OpenGL here.
-        glSurfaceView = new GLSurf(this);
-
-        glSurfaceView.setPreserveEGLContextOnPause(true);
-
-        // Set our view.
-        setContentView(R.layout.activity_main);
-
-        // Retrieve our Relative layout from our main layout we just set to our view.
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.gamelayout);
-
-        // Attach our surfaceview to our relative layout from our main layout.
-        RelativeLayout.LayoutParams glParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-
-        layout.addView(glSurfaceView, glParams);
-    }
 
 	private void setFullScreen() {
 		int uiOptions = this.getWindow().getDecorView().getSystemUiVisibility();
@@ -216,26 +126,8 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 	}
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.connect();
-        }
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mGoogleApiClient != null) {
-            if (mGoogleApiClient.isConnected()) {
-                mGoogleApiClient.disconnect();
-            }
-        }
-    }
-
-    @Override
     protected void onPause() {
+        Log.e("MainActivity", "onPause()");
         super.onPause();
         glSurfaceView.onPause();
     }
@@ -267,8 +159,66 @@ public class MainActivity extends Activity implements GoogleApiClient.Connection
 
     @Override
     protected void onResume() {
+        Log.e("MainActivity", "onResume()");
         super.onResume();
         setFullScreen();
         glSurfaceView.onResume();
+    }
+
+    public void unlockAchievement() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            Games.Achievements.unlock(mGoogleApiClient, "CgkIjNyO58cTEAIQAQ");
+        } else {
+            // Alternative implementation (or warn user that they must sign in to use this feature)
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode,
+                           int resultCode,
+                           Intent data){
+        if (requestCode == REQUEST_ACHIEVEMENTS || requestCode == REQUEST_LEADERBOARD) {
+            Log.e("MainActivity", "onActivityResult REQUEST_ACHIEVEMENTS or REQUEST_LEADERBOARD " + resultCode);
+        }
+    }
+
+    public void showAchievements(){
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            // Call a Play Games services API method, for example:
+            Games.Achievements.unlock(mGoogleApiClient, "CgkIjNyO58cTEAIQAQ");
+
+            Intent intent = Games.Achievements.getAchievementsIntent(mGoogleApiClient);
+
+            startActivityForResult(intent,
+                    REQUEST_ACHIEVEMENTS);
+        } else {
+            // Alternative implementation (or warn user that they must
+            // sign in to use this feature)
+        }
+    }
+
+    public void showLeaderboards(){
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                    "CgkIjNyO58cTEAIQAg"), REQUEST_LEADERBOARD);
+        } else {
+            Log.e("mainActivity", "não conectado");
+        }
+    }
+
+    public void submitScore() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            Games.Leaderboards.submitScore(mGoogleApiClient, "CgkIjNyO58cTEAIQAg", 12333);
+        } else {
+            Log.e("mainActivity", "não conectado");
+
+            // Alternative implementation (or warn user that they must sign in to use this feature)
+        }
+    }
+
+    public void connectMGoogleApiClient() {
+        Log.e("mainActivity", "mGoogleApiClient.connect();");
+        mGoogleApiClient.connect();
     }
 }

@@ -17,3 +17,5 @@
 #}
 -optimizations !code/allocation/variable
 -keepattributes EnclosingMethod
+# please KEEP ALL THE NAMES
+-keepnames class ** { *; }

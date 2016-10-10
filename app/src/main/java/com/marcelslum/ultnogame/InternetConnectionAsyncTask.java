@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 /**
  * Created by marcel on 23/09/2016.
  */
-public class InternetConnection extends AsyncTask<String,Integer,Integer> {
+public class InternetConnectionAsyncTask extends AsyncTask<String,Integer,Integer> {
 
     public static final int ATTEMPT = 2;
     public static final int CONNECTED = 1;
@@ -15,7 +15,7 @@ public class InternetConnection extends AsyncTask<String,Integer,Integer> {
 
     @Override
     protected void onPreExecute(){
-        Game.handleInternetConnection(ATTEMPT);
+        ConnectionHandler.handleInternetConnection(ATTEMPT);
     }
     @Override
     protected Integer doInBackground(String... params) {
@@ -29,7 +29,7 @@ public class InternetConnection extends AsyncTask<String,Integer,Integer> {
     }
     @Override
     protected void onPostExecute(Integer result){
-        Game.handleInternetConnection(result);
+        ConnectionHandler.handleInternetConnection(result);
     }
     protected void onProgressUpdate(){
         //Codigo

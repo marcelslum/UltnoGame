@@ -74,10 +74,39 @@
     <string name="conectando">Conectando...</string>
     <string name="ranking">Ranking</string>
     <string name="rankingObtidoAposVitoria">Ranking atingido:</string>
-    <string name="carregando">Carregando</string>
+    <string name="splash_conectando">Conectando</string>
+    <string name="splash_carregando">Carregando</string>
+    <string name="splash_nao_foi_possivel_conectar">Internet não conectada. Clique aqui para tentar novamente</string>
     <string name="signin_failure">Não foi possível conectar.</string>
     <string name="signin_other_error">Erro na conexão.</string>
     <string name="app_misconfigured">app_misconfigured</string>
     <string name="sign_in_failed">sign_in_failed</string>
     <string name="license_failed">license_failed</string>
+
+
+    <string name="message_default">Default normal</string>
+    <string name="message_default_bold">Default bold</string>
+    <string name="message_default_italic">Default italic</string>
+    <string name="message_default_bold_italic">Default bold italic</string>
+
+    <string name="message_typeface_sans">Typeface sans, normal</string>
+    <string name="message_typeface_sans_bold">Typeface sans, bold</string>
+    <string name="message_typeface_sans_italic">Typeface sans, italic</string>
+    <string name="message_typeface_sans_bold_italic">Typeface sans, bold italic</string>
+
+    <string name="message_typeface_serif">Typeface serif, normal</string>
+    <string name="message_typeface_serif_bold">Typeface serif, bold</string>
+    <string name="message_typeface_serif_italic">Typeface serif, italic</string>
+    <string name="message_typeface_serif_bold_italic">Typeface serif, bold italic</string>
+
+    <string name="message_typeface_mono">Typeface mono, normal</string>
+    <string name="message_typeface_mono_bold">Typeface mono, bold</string>
+    <string name="message_typeface_mono_italic">Typeface mono, italic</string>
+    <string name="message_typeface_mono_bold_italic">Typeface mono, bold italic</string>
+    <string name="conquistas">Conquistas</string>
+    <string name="splash_nao_foi_possivel_conectar1">Conexão com a internet indisponível</string>
+    <string name="splash_nao_foi_possivel_conectar_ao_google">Não foi possível conectar-se aos serviços do Google Play</string>
+    <string name="splash_clique_aqui">Clique aqui para tentar novamente</string>
+
+
 </resources>
