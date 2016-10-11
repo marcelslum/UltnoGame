@@ -14,6 +14,15 @@ public class Achievements {
     public static init(){
         achievements = new ArraList<>;
     }
+    
+    public static MyAchievement getById(String id){
+        for (int i = 0; i < achievements.size(); i++){
+            if (id == achievements.get(i).id){
+                return achievements.get(i);
+            }
+        }
+        return null;
+    }
 
     public static add(Games.Achievement ach){
         
@@ -52,7 +61,7 @@ public class Achievements {
             this.name = name;
             this.id = id;
             this.totalSteps = 1;
-            this.type = ACHIEVEMENT_TYPE_NORMAL;
+            this.type = TYPE_STANDARD;
         }
 
 
@@ -61,9 +70,23 @@ public class Achievements {
             this.id = id;
             this.totalSteps = totalSteps;
             if (totalSteps > 1){
-                this.type = ACHIEVEMENT_TYPE_INCREMENTAL;
+                this.type = TYPE_INCREMENTAL;
             } else {
-                this.type = ACHIEVEMENT_TYPE_NORMAL;
+                this.type = TYPE_STANDARD;
+            }
+        }
+        
+        public void increment(GoogleApiClient mGoogleApiClient, int value){
+            if (type == TYPE_STANDARD){
+                if  (currentSteps == 0){
+                    currentSteps += 1;
+                    GooglePlayGames.unlockAchievement(mGoogleApiClient, id);
+                }
+            } else {
+                if (currentSteps < totalSteps){
+                    currentSteps += value;
+                    GooglePlayGames.setSteps(mGoogleApiClient, id, currentSteps);
+                }
             }
         }
         
