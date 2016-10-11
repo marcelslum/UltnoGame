@@ -46,6 +46,7 @@ public class MainActivity extends FragmentActivity implements
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+		.addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
                 .build();
 
         GooglePlayGames.getInstance().init(mGoogleApiClient, this);
