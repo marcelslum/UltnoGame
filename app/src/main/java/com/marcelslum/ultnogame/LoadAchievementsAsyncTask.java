@@ -25,7 +25,7 @@ public class LoadAchievementsAsyncTask extends AsyncTask<String,Integer,Integer>
          int status = r.getStatus().getStatusCode();
          if ( status != GamesStatusCodes.STATUS_OK )  {
             r.release();
-            return;           // Error Occured
+            return -1;
          }
 
          // cache the loaded achievements
@@ -37,10 +37,15 @@ public class LoadAchievementsAsyncTask extends AsyncTask<String,Integer,Integer>
          }
          buf.close();
          r.release();
+        
+         return 0;
+        
     }
     @Override
     protected void onPostExecute(Integer result){
-        ConnectionHandler.handleInternetConnection(result);
+        if (result == -1){
+            Game.setGameState(GAME_STATE_INTRO);
+        }
     }
     protected void onProgressUpdate(){
         //Codigo
