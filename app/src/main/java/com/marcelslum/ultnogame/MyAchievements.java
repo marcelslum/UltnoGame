@@ -16,6 +16,7 @@ public class Achievements {
     }
 
     public static add(Games.Achievement ach){
+        
         int type = ach.getType();
         if (type = TYPE_STANDARD){
             MyAchievement a = new MyAchievement(ach.getName, ach.getAchievementId);
@@ -32,9 +33,13 @@ public class Achievements {
                 a.currentSteps = a.getCurrentSteps;                
             }
         }
+        
+        if (achievements == null){
+            achievements = new ArrayList<MyAchievement>;   
+        }
+        
+        achievements.add(a);
     }
-
-
 
     private class MyAchievement(){
         int type;
