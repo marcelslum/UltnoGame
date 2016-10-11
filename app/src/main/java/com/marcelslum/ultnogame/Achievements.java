@@ -24,16 +24,14 @@ public class Achievements {
         String name;
         int id;
         int totalSteps;
-        
-        
+        int stepsConquered;
 
         Achievement(String name, int id){
             this.name = name;
             this.id = id;
             this.totalSteps = 1;
             this.type = ACHIEVEMENT_TYPE_NORMAL;
-            
-            verifyStorage();
+            checkStorage();
         }
 
 
@@ -45,6 +43,15 @@ public class Achievements {
                 this.type = ACHIEVEMENT_TYPE_INCREMENTAL;
             } else {
                 this.type = ACHIEVEMENT_TYPE_NORMAL;
+            }
+            checkStorage();
+        }
+        
+        private void checkStorage(){
+            if (!Storage.contains(id)){
+                Storage.setInt(id, 0);
+            } else {
+                stepsConquered = Storage.getInt(id);
             }
         }
         
