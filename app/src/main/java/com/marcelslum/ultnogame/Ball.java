@@ -477,6 +477,17 @@ public class Ball extends Circle{
                     Log.e("ball", "ajustando velocidade maior ou menor");
                     vx = vx * scalePorcentage;
                     vy = vy * scalePorcentage;
+
+                    // achievemntAcelerador
+                    if (velocityAdd) {
+                        int achievementAceleradorValue = Storage.getInt("achievementAcelerador");
+                        if (achievementAceleradorValue < 5) {
+                            Storage.setInt("achievementAcelerador", achievementAceleradorValue + 1);
+                            GooglePlayGames.getInstance().incrementAchievement(R.string.achievement_acelerador, achievementAceleradorValue + 1);
+                            Log.e("ball", "increment achievement acelerador "+ (achievementAceleradorValue + 1));
+                        }
+                    }
+
                 } else {
                     Log.e("ball", "velocidade excede");
                 }

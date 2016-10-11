@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Ultno</string>
-    <string name="app_id">672110194188</string>
     <string name="menuTutorialExibirTutorial">Exibir o tutorial do nível </string>
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
     <string name="menuPrincipalIniciar">Jogar o nível</string>

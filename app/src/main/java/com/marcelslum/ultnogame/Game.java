@@ -147,7 +147,7 @@ public class Game {
     public final static int GAME_STATE_TUTORIAL =  15;
     public final static int GAME_STATE_PAUSE =  16;
     public final static int GAME_STATE_OPCOES =  17;
-    public final static int GAME_STATE_RANKING =  18;
+    //public final static int GAME_STATE_RANKING =  18;
     public final static int GAME_STATE_INTRO =  19;
 
     public final static int DIFICULDADE_FACIL = 0;
@@ -599,8 +599,6 @@ public class Game {
             @Override
             public void onChoice() {
                 Game.selectorLevel.fromMenu(innerMenu);
-                mainActivity.unlockAchievement();
-                GooglePlayGames.getInstance().submitScore();
             }
         });
 
@@ -626,7 +624,7 @@ public class Game {
         menuMain.addMenuOption("conquistas", context.getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                GooglePlayGames.getInstance().showAchievements();
+                GooglePlayGames.showAchievements(mainActivity.mGoogleApiClient, mainActivity);
 
                 //setGameState(GAME_STATE_RANKING);
             }
@@ -637,7 +635,7 @@ public class Game {
             @Override
             public void onChoice() {
                 //setGameState(GAME_STATE_RANKING);
-                GooglePlayGames.getInstance().showLeaderboards();
+                GooglePlayGames.showLeaderboards(mainActivity.mGoogleApiClient, mainActivity);
             }
         });
 
@@ -826,7 +824,7 @@ public class Game {
             Splash.init();
             Splash.display();
             Splash.timeInitIntro = Utils.getTime();
-        } else if (state == GAME_STATE_RANKING){
+        //} else if (state == GAME_STATE_RANKING){
             //mainActivity.hideAdView();
             //activateFrame(200);
             //tittle.clearDisplay();
@@ -966,7 +964,7 @@ public class Game {
 
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
-            menuInGame.appearAndUnblock(300);
+            menuInGame.appearAndUnblock(1000);
             messageGameOver.display();
 
             if (scorePanel.value > 0) {
@@ -1382,6 +1380,7 @@ public class Game {
         for (int i = 0; i < quantityOfLevels; i++){
             scoreTotal += Storage.getLevelMaxScore(i+1);
         }
+        GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, scoreTotal);
         return scoreTotal;
     }
 

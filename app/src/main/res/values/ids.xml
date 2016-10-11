@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
 <resources>
-    <!-- TODO: Replace this by your app's app ID! -->
-
-    <!-- TODO: Replace these by your achievement/leaderboard IDs! -->
-    <string name="leaderboard_easy">ReplaceMe</string>
-    <string name="leaderboard_hard">ReplaceMe</string>
+    <string name="app_id">672110194188</string>
+    <string name="package_name">com.marcelslum.ultno</string>
+    <string name="achievement_teste">CgkIjNyO58cTEAIQAQ</string>
+    <string name="achievement_acelerador">CgkIjNyO58cTEAIQBA</string>
+    <string name="leaderboard_ranking">CgkIjNyO58cTEAIQAw</string>
 </resources>

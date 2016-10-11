@@ -256,13 +256,7 @@ public class MainActivity extends FragmentActivity implements
         super.onDestroy();
     }
 
-    public void unlockAchievement() {
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            Games.Achievements.unlock(mGoogleApiClient, "CgkIjNyO58cTEAIQAQ");
-        } else {
-            // Alternative implementation (or warn user that they must sign in to use this feature)
-        }
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode,

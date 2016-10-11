@@ -61,6 +61,13 @@ public class Storage {
 
         if (!Storage.contains("difficulty"))
             Storage.setInt("difficulty", 0);
+
+        if (!Storage.contains("achievementAcelerador")) {
+            Storage.setInt("achievementAcelerador", 0);
+        } else {
+            Storage.setInt("achievementAcelerador", 0);
+        }
+
     }
     
     public static int getMaxLevel(){
