@@ -34,10 +34,7 @@ public class GooglePlayGames {
     public void showAchievements() {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             // Call a Play Games services API method, for example:
-            Games.Achievements.unlock(mGoogleApiClient, "CgkIjNyO58cTEAIQAQ");
-
             Intent intent = Games.Achievements.getAchievementsIntent(mGoogleApiClient);
-
             fragmentActivity.startActivityForResult(intent,
                     REQUEST_ACHIEVEMENTS);
         } else {
@@ -49,7 +46,7 @@ public class GooglePlayGames {
     public void showLeaderboards() {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             fragmentActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                    "CgkIjNyO58cTEAIQAg"), REQUEST_LEADERBOARD);
+                    "CgkIjNyO58cTEAIQAw"), REQUEST_LEADERBOARD);
         } else {
             Log.e("mainActivity", "não conectado");
         }

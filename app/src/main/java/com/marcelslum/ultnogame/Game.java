@@ -277,8 +277,8 @@ public class Game {
 
     public static void initTittle(){
         tittle = new Image("tittle",
-                gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.1f,
-                gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.4f * 0.3671875f,
+                gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.2f,
+                gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.35f * 0.3671875f,
                 Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
 
         ArrayList<float[]> valuesAnimationTittle = new ArrayList<>();
@@ -341,7 +341,7 @@ public class Game {
                 " ", font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
         messageInGame = new Text("messageInGame",
-                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.17f,
+                gameAreaResolutionX*0.5f, gameAreaResolutionY*0.25f, gameAreaResolutionY*0.14f,
                 context.getResources().getString(R.string.pause), font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
         messageRankingWin = new Text("messageRankingWin",
@@ -432,7 +432,7 @@ public class Game {
         });
 
         // -------------------------------------------MENU OPTIONS
-        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.4f, fontSize, font);
+        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.43f, fontSize, font);
 
         // cria o seletor de dificuldade
         selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
@@ -552,7 +552,7 @@ public class Game {
         });
 
         // -------------------------------------------MENU MAIN
-        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.37f, fontSize, font);
+        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.43f, fontSize, font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -820,20 +820,23 @@ public class Game {
     public static void setGameState(int state){
         gameState = state;
         clearAllMenuEntities();
-        mainActivity.hideAdView();
+        mainActivity.setFullScreen();
 
         if (state == GAME_STATE_INTRO) {
+            mainActivity.hideAdView();
             Splash.init();
             Splash.display();
             Splash.timeInitIntro = Utils.getTime();
         } else if (state == GAME_STATE_RANKING){
-            activateFrame(200);
-            tittle.clearDisplay();
-            menuMain.isBlocked = true;
-            listRanking.display();
-            listRanking.unblock();
-            setBottomText("");
+            //mainActivity.hideAdView();
+            //activateFrame(200);
+            //tittle.clearDisplay();
+            //menuMain.isBlocked = true;
+            //listRanking.display();
+            //listRanking.unblock();
+            //setBottomText("");
         } else if (state == GAME_STATE_OPCOES){
+
             activateFrame(200);
             tittle.display();
             menuMain.isBlocked = true;
@@ -870,6 +873,7 @@ public class Game {
                     context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
 
         } else if (state == GAME_STATE_PREPARAR){
+            mainActivity.hideAdView();
             activateFrame(500);
             eraseAllTutorials();
             levelObject.loadEntities();
@@ -1072,6 +1076,10 @@ public class Game {
                         if (Storage.getLevelMaxScore(levelNumber) < scorePanel.value){
                             Storage.setLevelMaxScore(levelNumber, scorePanel.value);
                         }
+                        if (Game.menuWin.isBlocked) {
+                            Game.menuWin.appearAndUnblock(800);
+                        }
+
                         cancel();
                     }
                 }
@@ -1085,13 +1093,16 @@ public class Game {
             valuesAnimVitoriaTranslate.add(new float[]{1f,0f});
             new Animation(messageInGame, "messageInGameTranslateX", "translateX", 2000, valuesAnimVitoriaTranslate, false, true).start();
 
-            messageRankingWin.setText(context.getResources().getString(R.string.rankingObtidoAposVitoria)+ " 2222");
+            //messageRankingWin.setText(context.getResources().getString(R.string.rankingObtidoAposVitoria)+ " 2222");
             menuWin.alpha = 0f;
             messageInGame.increaseAlpha(1600, 1f, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Sound.play(Sound.soundTextBoxAppear, 1, 1, 0);
-                    Game.menuWin.appearAndUnblock(800);
+                    if (objectivePanel.blueBalls == 0){
+                        Game.menuWin.appearAndUnblock(800);
+                    }
+
                     messageRankingWin.display();
                 }
             });
@@ -1130,6 +1141,7 @@ public class Game {
             // TODO se for o último level não aumentar o nível
             changeLevel(levelNumber + 1);
         } else if (state == GAME_STATE_TUTORIAL) {
+            mainActivity.hideAdView();
             activateFrame(500);
             Game.levelObject.loadEntities();
             verifyDead();
