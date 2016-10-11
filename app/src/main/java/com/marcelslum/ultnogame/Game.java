@@ -820,7 +820,6 @@ public class Game {
     public static void setGameState(int state){
         gameState = state;
         clearAllMenuEntities();
-        mainActivity.setFullScreen();
 
         if (state == GAME_STATE_INTRO) {
             mainActivity.hideAdView();
