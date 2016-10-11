@@ -33,13 +33,7 @@ public class LoadAchievementsAsyncTask extends AsyncTask<String,Integer,Integer>
          int bufSize = buf.getCount();
          for ( int i = 0; i < bufSize; i++ )  {
             Achievement ach = buf.get( i );
-            // here you now have access to the achievement's data
-            String id = ach.getAchievementId();  // the achievement ID string
-            boolean unlocked = ach.getState == Achievement.STATE_UNLOCKED;  // is unlocked
-            boolean incremental = ach.getType() == Achievement.TYPE_INCREMENTAL;  // is incremental
-            if (incremental){
-               int steps = ach.getCurrentSteps();  // current incremental steps
-            }
+            Achievements.add(ach);
          }
          buf.close();
          r.release();
