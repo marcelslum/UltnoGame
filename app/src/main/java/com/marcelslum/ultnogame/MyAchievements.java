@@ -23,6 +23,15 @@ public class Achievements {
         }
         return null;
     }
+    
+    public static MyAchievement getById(int id){
+        for (int i = 0; i < achievements.size(); i++){
+            if (Game.mainActivity.getResources.getString(id) == achievements.get(i).id){
+                return achievements.get(i);
+            }
+        }
+        return null;
+    }
 
     public static add(Games.Achievement ach){
         
