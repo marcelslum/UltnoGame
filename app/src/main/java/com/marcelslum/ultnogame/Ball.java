@@ -480,12 +480,7 @@ public class Ball extends Circle{
 
                     // achievemntAcelerador
                     if (velocityAdd) {
-                        int achievementAceleradorValue = Storage.getInt("achievementAcelerador");
-                        if (achievementAceleradorValue < 5) {
-                            Storage.setInt("achievementAcelerador", achievementAceleradorValue + 1);
-                            GooglePlayGames.getInstance().incrementAchievement(R.string.achievement_acelerador, achievementAceleradorValue + 1);
-                            Log.e("ball", "increment achievement acelerador "+ (achievementAceleradorValue + 1));
-                        }
+                        Achievements.getById(id do achievement).increment(1);
                     }
 
                 } else {
