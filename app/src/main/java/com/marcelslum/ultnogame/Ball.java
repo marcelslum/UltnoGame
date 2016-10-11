@@ -480,7 +480,7 @@ public class Ball extends Circle{
 
                     // achievemntAcelerador
                     if (velocityAdd) {
-                        Achievements.getById(id do achievement).increment(1);
+                        Achievements.getById(Game.mainActivity.mGoogleApiCliente, id do achievement).increment(1);
                     }
 
                 } else {
