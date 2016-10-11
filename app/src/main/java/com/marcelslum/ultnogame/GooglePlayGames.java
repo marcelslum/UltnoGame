@@ -59,30 +59,17 @@ public class GooglePlayGames {
         }
     }
 
-    public static void unlockAchievement(GoogleApiClient mGoogleApiClient, int id) {
+    public static void unlockAchievement(GoogleApiClient mGoogleApiClient, String  id) {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            Games.Achievements.unlock(mGoogleApiClient, Game.mainActivity.getResources().getString(id));
+            Games.Achievements.unlock(mGoogleApiClient, id);
         } else {
             // Alternative implementation (or warn user that they must sign in to use this feature)
         }
     }
 
-    public static void incrementAchievement(GoogleApiClient mGoogleApiClient, int id, int value) {
+    public static void setSteps(GoogleApiClient mGoogleApiClient, String  id, int value) {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            Games.Achievements.setStepsImmediate(mGoogleApiClient, Game.mainActivity.getResources().getString(id), value)
-                    .setResultCallback(new  ResultCallback<Achievements.UpdateAchievementResult>() {
-                        @Override
-                        public void onResult(Achievements.UpdateAchievementResult result) {
-                            if (result.getStatus().getStatusCode() == GamesStatusCodes.STATUS_ACHIEVEMENT_UNLOCKED) {
-                                // play your sound. achievement was unlocked
-                            }
-                        }
-
-
-
-                    });
-
-
+            Games.Achievements.setSteps(mGoogleApiClient, id, value);
         }
     }
 
