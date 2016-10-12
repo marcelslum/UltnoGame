@@ -16,6 +16,9 @@ import java.util.TimerTask;
 // TODO pausar todos os sons do sound pool quando o jogo fecha
 // TODO voltar ao estado anterior quando o jogo fecha
 
+// TODO verificar os listeners ativos
+
+
 /** * Created by marcel on 01/08/2016.
  */
 public class Game {
@@ -188,6 +191,7 @@ public class Game {
     static float effectiveScreenHeight;
     static float effectiveScreenWidth;
     static int difficulty;
+    private static int maxScoreTotal;
     //public static GoogleApiClient mGoogleApiClient;
 
     public boolean ballFall;
@@ -215,11 +219,24 @@ public class Game {
     private Game() {}
 
     public static void init(){
+
+        Log.e("game", "init()");
+
+        gameState = GAME_STATE_INTRO;
+        Splash.loaderConclude = false;
+        MyAchievements.loaded = false;
+
         initPrograms();
         initFont();
+
         Texture.textures = new ArrayList<>();
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
         Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
+
+        Game.frame = new Rectangle("frame", 0f, 0f, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
+        Game.frame.clearDisplay();
+        Game.frame.alpha = 0f;
+
         setGameState(Game.GAME_STATE_INTRO);
     }
 
@@ -250,7 +267,7 @@ public class Game {
         selectors = new ArrayList<>();
         textBoxes = new ArrayList<>();
         messages = new ArrayList<>();
-        lines = new ArrayList<>();
+        lines = new ArrayList<> ();
     }
 
     public static void initEdges(){
@@ -366,7 +383,6 @@ public class Game {
                 .isHaveArrowContinue(false)
                 .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
                 .build();
-
         setBottomText("");
 
     }
@@ -620,7 +636,6 @@ public class Game {
             }
         });
 
-        // adiciona a opção de acessar as opções do jogo
         menuMain.addMenuOption("conquistas", context.getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -630,7 +645,6 @@ public class Game {
             }
         });
 
-        // adiciona a opção de acessar as opções do jogo
         menuMain.addMenuOption("ranking", context.getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -641,7 +655,7 @@ public class Game {
 
 
         // ----------------------------------------------------MENU WIN
-        menuWin = new Menu("menuWin",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.4f, fontSize, font);
+        menuWin = new Menu("menuWin",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, fontSize, font);
 
         // adiciona a opção continuar
         menuWin.addMenuOption("Continuar", context.getResources().getString(R.string.continuarDepoisVitoria), new MenuOption.OnChoice() {
@@ -650,6 +664,13 @@ public class Game {
                 Game.menuWin.block();
                 Game.blockAndWaitTouchRelease();
                 mainActivity.showInterstitial();
+            }
+        });
+
+        menuWin.addMenuOption("ranking", context.getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                GooglePlayGames.showLeaderboards(mainActivity.mGoogleApiClient, mainActivity);
             }
         });
 
@@ -816,22 +837,15 @@ public class Game {
     }
 
     public static void setGameState(int state){
+        Log.e("game", "set game state "+state);
         gameState = state;
         clearAllMenuEntities();
-
         if (state == GAME_STATE_INTRO) {
             mainActivity.hideAdView();
+            ConnectionHandler.internetState = ConnectionHandler.INTERNET_STATE_NOT_CONNECTED;
+            Splash.timeInitIntro = Utils.getTime();
             Splash.init();
             Splash.display();
-            Splash.timeInitIntro = Utils.getTime();
-        //} else if (state == GAME_STATE_RANKING){
-            //mainActivity.hideAdView();
-            //activateFrame(200);
-            //tittle.clearDisplay();
-            //menuMain.isBlocked = true;
-            //listRanking.display();
-            //listRanking.unblock();
-            //setBottomText("");
         } else if (state == GAME_STATE_OPCOES){
 
             activateFrame(200);
@@ -862,12 +876,11 @@ public class Game {
             tittle.display();
             messageCurrentLevel.display();
             messageMaxScoreTotal.display();
-
-            ConnectionHandler.connect();
-
             bottomTextBox.display();
             messageMaxScoreTotal.setText(
                     context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
+
+            ConnectionHandler.verify();
 
         } else if (state == GAME_STATE_PREPARAR){
             mainActivity.hideAdView();
@@ -973,7 +986,9 @@ public class Game {
                 scorePanel.setValue(points, true, 1000, true);
                 if (Storage.getLevelMaxScore(Game.levelNumber) < points) {
                     Storage.setLevelMaxScore(Game.levelNumber, points);
+                    setMaxScoreTotal();
                 }
+
             }
 
         } else if (state == GAME_STATE_PAUSE){
@@ -1058,6 +1073,7 @@ public class Game {
             anim.start();
 
 
+
             // verifica a quantidade de bolas azuis, e atualiza a pontuação
             final Timer timer = new Timer();
             final TimerTask timerTask = new TimerTask() {
@@ -1072,6 +1088,7 @@ public class Game {
                     } else {
                         if (Storage.getLevelMaxScore(levelNumber) < scorePanel.value){
                             Storage.setLevelMaxScore(levelNumber, scorePanel.value);
+                            setMaxScoreTotal();
                         }
                         if (Game.menuWin.isBlocked) {
                             Game.menuWin.appearAndUnblock(800);
@@ -1105,7 +1122,7 @@ public class Game {
             });
 
             messageInGame.setText(context.getResources().getString(R.string.nivelConcluido1)+ " "+levelNumber+ " "+context.getResources().getString(R.string.nivelConcluido2));
-            messageInGame.y = gameAreaResolutionY*0.15f;
+            messageInGame.y = gameAreaResolutionY*0.25f;
             messageInGame.display();
 
             Utils.createSimpleAnimation(objectivePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY*0.2f).start();
@@ -1375,14 +1392,22 @@ public class Game {
         }
     }
 
+    public static void setMaxScoreTotal(){
+        int scoreTotal = getMaxScoreTotal();
+        GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), scoreTotal);
+        maxScoreTotal = scoreTotal;
+    }
+
     public static int getMaxScoreTotal(){
         int scoreTotal = 0;
         for (int i = 0; i < quantityOfLevels; i++){
             scoreTotal += Storage.getLevelMaxScore(i+1);
         }
-        GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, scoreTotal);
+        maxScoreTotal = scoreTotal;
+        Log.e("Game", "score total retornando após calculo "+ scoreTotal);
         return scoreTotal;
     }
+
 
     public static void changeDifficulty(int selectedValue) {
         if (selectedValue == 0){

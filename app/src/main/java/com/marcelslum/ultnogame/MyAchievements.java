@@ -1,108 +1,112 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.achievement.Achievement;
+import java.util.ArrayList;
+
 /**
  * Created by marcel on 11/10/2016.
  */
 
-public class Achievements {
-    
-    public static final TYPE_INCREMENTAL = Game.Achievement.TYPE_INCREMENTAL;
-    public static final TYPE_STANDARD = Game.Achievement.TYPE_STANDARD;
-    
-    ArrayList<MyAchievement> achievements;
+public class MyAchievements {
 
-    public static init(){
-        achievements = new ArraList<>;
-    }
+    public static final String TAG = "MyAchievements";
+    public static final int TYPE_INCREMENTAL = Achievement.TYPE_INCREMENTAL;
+    public static final int TYPE_STANDARD = Achievement.TYPE_STANDARD;
+    public static boolean loaded = false;
     
+    static ArrayList<MyAchievement> achievements;
+
     public static MyAchievement getById(String id){
+
+        if (achievements == null){
+            achievements = new ArrayList<>();
+        }
+
         for (int i = 0; i < achievements.size(); i++){
-            if (id == achievements.get(i).id){
+
+            Log.e("Achievements", i + " id " + achievements.get(i).id);
+
+            if (id.equals(achievements.get(i).id)){
+                Log.e("Achievements", i + " returning id " + achievements.get(i).id);
                 return achievements.get(i);
             }
         }
+        Log.e("Achievements", " returning null ");
         return null;
     }
     
     public static MyAchievement getById(int id){
+
+        if (achievements == null){
+            achievements = new ArrayList<>();
+        }
+
         for (int i = 0; i < achievements.size(); i++){
-            if (Game.mainActivity.getResources.getString(id) == achievements.get(i).id){
+            Log.e("Achievements", i + " id " + achievements.get(i).id);
+            if (Game.mainActivity.getResources().getString(id).equals(achievements.get(i).id)){
+                Log.e("Achievements", i + " returning id " + achievements.get(i).id);
                 return achievements.get(i);
             }
         }
+
+        Log.e("Achievements", " returning null ");
+
         return null;
     }
 
-    public static add(Games.Achievement ach){
-        
+
+
+    public static void add(Achievement ach){
+        MyAchievement a;
+
+        if (getById(ach.getAchievementId()) != null){
+            return;
+        }
+
+        Log.e(TAG, "1");
         int type = ach.getType();
-        if (type = TYPE_STANDARD){
-            MyAchievement a = new MyAchievement(ach.getName, ach.getAchievementId);
-            if (ach.getState() == Games.Achievement.STATE_UNLOCKED){
-                a.setCurrentSteps = 1;
+        if (type == Achievement.TYPE_STANDARD){
+            Log.e(TAG, "2 "+type);
+            a = new MyAchievement(ach.getName(), ach.getAchievementId());
+            Log.e(TAG, "3 name "+ach.getName() + " id "+ ach.getAchievementId());
+            if (ach.getState() == Achievement.STATE_UNLOCKED){
+                a.setCurrentSteps(1);
             } else {
-                a.setCurrentSteps = 0;
+                a.setCurrentSteps(0);
             }
+            Log.e(TAG, "4");
         } else {
-            MyAchievement a = new MyAchievement(ach.getName, ach.getAchievementId, ach.getTotalSteps());
-            if (ach.getState() == Games.Achievement.STATE_UNLOCKED){
+
+            a = new MyAchievement(ach.getName(), ach.getAchievementId(), ach.getTotalSteps());
+            Log.e(TAG, "5 name "+ach.getName() + " id "+ ach.getAchievementId());
+            Log.e(TAG, "5 total steps "+ach.getTotalSteps() + " currentSteps "+ ach.getCurrentSteps());
+            if (ach.getState() == Achievement.STATE_UNLOCKED){
                 a.currentSteps = a.totalSteps;   
             } else {
-                a.currentSteps = a.getCurrentSteps;                
+                a.currentSteps = ach.getCurrentSteps();
             }
+            Log.e(TAG, "6");
         }
         
         if (achievements == null){
-            achievements = new ArrayList<MyAchievement>;   
+            achievements = new ArrayList<>();
         }
-        
         achievements.add(a);
     }
 
-    private class MyAchievement(){
-        int type;
-        String name;
-        String id;
-        int totalSteps;
-        int currentSteps;
+    public static void increment(GoogleApiClient mGoogleApiClient, int id, int value) {
 
-        MyAchievement(String name, String id){
-            this.name = name;
-            this.id = id;
-            this.totalSteps = 1;
-            this.type = TYPE_STANDARD;
+        MyAchievement a = getById(id);
+        if (a != null){
+            a.increment(mGoogleApiClient, value);
+        } else {
+            Log.e("MyAchievements", "nao foi possível incrementar a conquista, pois ela não foi encontrada");
         }
 
 
-        MyAchievement(String name, String id, int totalSteps){
-            this.name = name;
-            this.id = id;
-            this.totalSteps = totalSteps;
-            if (totalSteps > 1){
-                this.type = TYPE_INCREMENTAL;
-            } else {
-                this.type = TYPE_STANDARD;
-            }
-        }
-        
-        public void increment(GoogleApiClient mGoogleApiClient, int value){
-            if (type == TYPE_STANDARD){
-                if  (currentSteps == 0){
-                    currentSteps += 1;
-                    GooglePlayGames.unlockAchievement(mGoogleApiClient, id);
-                }
-            } else {
-                if (currentSteps < totalSteps){
-                    currentSteps += value;
-                    GooglePlayGames.setSteps(mGoogleApiClient, id, currentSteps);
-                }
-            }
-        }
-        
-        public void setCurrentSteps(int currentSteps){
-            this.currentSteps = currentSteps;
-        }
-       
     }
-
 }

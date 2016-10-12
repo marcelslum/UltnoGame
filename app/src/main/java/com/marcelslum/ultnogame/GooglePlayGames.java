@@ -40,14 +40,6 @@ public class GooglePlayGames {
         }
     }
 
-    public static void submitScore(GoogleApiClient mGoogleApiClient, int score) {
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            Games.Leaderboards.submitScore(mGoogleApiClient, Game.mainActivity.getResources().getString(R.string.leaderboard_ranking), score);
-        } else {
-            Game.setGameState(Game.GAME_STATE_INTRO);
-        }
-    }
-
     public static void connectMGoogleApiClient(GoogleApiClient mGoogleApiClient) {
         Log.e("mainActivity", "mGoogleApiClient.connect();");
         mGoogleApiClient.connect();
@@ -67,10 +59,17 @@ public class GooglePlayGames {
         }
     }
 
-    public static void setSteps(GoogleApiClient mGoogleApiClient, String  id, int value) {
+    public static void increment(GoogleApiClient mGoogleApiClient, String  id, int value) {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            Games.Achievements.setSteps(mGoogleApiClient, id, value);
+            Games.Achievements.increment(mGoogleApiClient, id, value);
         }
     }
 
+    public static void submitScore(GoogleApiClient mGoogleApiClient, String id, int value){
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            Games.Leaderboards.submitScore(mGoogleApiClient, id, value);
+        } else {
+            Game.setGameState(Game.GAME_STATE_INTRO);
+        }
+    }
 }

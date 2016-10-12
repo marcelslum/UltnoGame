@@ -20,6 +20,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
@@ -46,10 +47,8 @@ public class MainActivity extends FragmentActivity implements
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-		.addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
+		        //.addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
                 .build();
-
-        GooglePlayGames.getInstance().init(mGoogleApiClient, this);
 
         // Fullscreen mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -169,37 +168,32 @@ public class MainActivity extends FragmentActivity implements
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
             getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 
 	public void setFullScreen() {
-
         final FragmentActivity fa = this;
-
         runOnUiThread(new Runnable() {
             public void run() {
-                int uiOptions = fa.getWindow().getDecorView().getSystemUiVisibility();
-                if (Build.VERSION.SDK_INT >= 14) {
-                    uiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-                }
-                if (Build.VERSION.SDK_INT >= 16) {
-                    uiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
-                }
-                if (Build.VERSION.SDK_INT >= 18) {
-                    uiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-                }
-
-                fa.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-
+            int uiOptions = fa.getWindow().getDecorView().getSystemUiVisibility();
+            if (Build.VERSION.SDK_INT >= 14) {
+                uiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+            }
+            if (Build.VERSION.SDK_INT >= 16) {
+                uiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+            }
+            if (Build.VERSION.SDK_INT >= 18) {
+                uiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            }
+            fa.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
             }
         });
-
-
 	}
 
     @Override
@@ -228,12 +222,12 @@ public class MainActivity extends FragmentActivity implements
     public void showInterstitial() {
         runOnUiThread(new Runnable() {
             public void run() {
-                if (interstitial.isLoaded()) {
-                    interstitial.show();
-                } else {
-                    Log.e("MainActivity", "Interstitial ad is not loaded yet");
-                    Game.setGameState(Game.GAME_STATE_MENU);
-                }
+            if (interstitial.isLoaded()) {
+                interstitial.show();
+            } else {
+                Log.e("MainActivity", "Interstitial ad is not loaded yet");
+                Game.setGameState(Game.GAME_STATE_MENU);
+            }
             }
         });
     }
@@ -257,13 +251,10 @@ public class MainActivity extends FragmentActivity implements
         super.onDestroy();
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode,
                            int resultCode,
                            Intent data){
-        GooglePlayGames.getInstance().onRequestResult(requestCode, resultCode);
-
+        GooglePlayGames.onRequestResult(requestCode, resultCode);
     }
 }

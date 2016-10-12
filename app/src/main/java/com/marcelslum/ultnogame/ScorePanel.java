@@ -34,13 +34,13 @@ public class ScorePanel extends Entity {
         value = 0;
         setDrawInfo();
 
-        messageText = new Text("text", x + (getWidth()*0.7f), y - size*0.3f, size*1.5f, "message", Game.font, new Color(1.0f, 0f, 0f, 1f));
+        messageText = new Text("text", x + (getWidth()*0.8f), y - size*0.3f, size*1.5f, "message", Game.font, new Color(1.0f, 0f, 0f, 1f));
         addChild(messageText);
     }
 
     @Override
     public float getWidth() {
-        return size * 0.55294f * 5;
+        return size * 0.55294f * 7;
     }
 
     @Override

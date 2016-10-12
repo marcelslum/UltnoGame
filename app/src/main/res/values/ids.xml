@@ -6,7 +6,8 @@ Save this file as res/values/games-ids.xml in your project.
 <resources>
     <string name="app_id">672110194188</string>
     <string name="package_name">com.marcelslum.ultno</string>
-    <string name="achievement_teste">CgkIjNyO58cTEAIQAQ</string>
-    <string name="achievement_acelerador">CgkIjNyO58cTEAIQBA</string>
+    <string name="achievement_acelerando">CgkIjNyO58cTEAIQBA</string>
+    <string name="achievement_pisando_no_freio">CgkIjNyO58cTEAIQBQ</string>
+    <string name="achievement_acelerando_2">CgkIjNyO58cTEAIQCQ</string>
     <string name="leaderboard_ranking">CgkIjNyO58cTEAIQAw</string>
 </resources>

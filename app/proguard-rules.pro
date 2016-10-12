@@ -19,3 +19,4 @@
 -keepattributes EnclosingMethod
 # please KEEP ALL THE NAMES
 -keepnames class ** { *; }
+-keepattributes SourceFile,LineNumberTable

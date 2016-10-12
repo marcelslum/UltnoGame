@@ -5,6 +5,9 @@ import android.util.Log;
 public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
 
     protected Integer doInBackground(Integer... i){
+        Log.e("InitLoaderAyncTask", "doInBackground");
+
+
         Game.initData();
         Storage.initializeStorage(Game.context, Game.quantityOfLevels);
         Game.maxLevel = Storage.getMaxLevel();
@@ -17,9 +20,6 @@ public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
         Game.initMenus();
         Game.initTexts();
         Game.initEdges();
-        Game.frame = new Rectangle("frame", 0f, 0f, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
-        Game.frame.clearDisplay();
-        Game.frame.alpha = 0f;
         return 0;
     }
 
@@ -29,6 +29,7 @@ public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
 
 
     protected void onPostExecute(Integer i) {
+        Log.e("InitLoaderAyncTask", "onPostExecute Splash.loaderConclude = true");
         Splash.loaderConclude = true;
      }
  }

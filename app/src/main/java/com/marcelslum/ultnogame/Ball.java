@@ -480,9 +480,10 @@ public class Ball extends Circle{
 
                     // achievemntAcelerador
                     if (velocityAdd) {
-                        Achievements.getById(Game.mainActivity.mGoogleApiCliente, id do achievement).increment(1);
+                        MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_acelerando, 1);
+                    } else {
+                        MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_pisando_no_freio,  1);
                     }
-
                 } else {
                     Log.e("ball", "velocidade excede");
                 }
@@ -769,7 +770,6 @@ public class Ball extends Circle{
         }
         return color;
     }
-
 
     private void setDead() {
         this.isAlive = false;

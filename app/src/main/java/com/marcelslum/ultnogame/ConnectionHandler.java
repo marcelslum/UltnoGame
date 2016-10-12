@@ -12,6 +12,7 @@ public class ConnectionHandler {
     public final static int INTERNET_STATE_NOT_CONNECTED = 2;
     public static int internetState = INTERNET_STATE_NOT_CONNECTED;
     public static boolean mGoogleApiClientConected = false;
+    public static boolean verifying = false;
 
     public static void connect() {
         mGoogleApiClientConected = false;
@@ -19,6 +20,11 @@ public class ConnectionHandler {
     }
 
     public static void handleInternetConnection(Integer result) {
+
+        if (verifying){
+            verifying = false;
+        }
+
         if (result == InternetConnectionAsyncTask.NOT_CONNECTED) {
             internetState = INTERNET_STATE_NOT_CONNECTED;
             if (Game.gameState != Game.GAME_STATE_INTRO) {
@@ -70,5 +76,10 @@ public class ConnectionHandler {
         timer.schedule(task, 2000);
 
         */
+    }
+
+    public static void verify() {
+        verifying = true;
+        new InternetConnectionAsyncTask().execute("-");
     }
 }

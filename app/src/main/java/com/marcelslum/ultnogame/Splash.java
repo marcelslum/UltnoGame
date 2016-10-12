@@ -32,6 +32,7 @@ public class Splash {
     private static Text message2;
 
     public static boolean loaderConclude = false;
+    public static boolean loadingAchievements = false;
 
     public static void init(){
         tittle = new Image("tittle",
@@ -66,7 +67,6 @@ public class Splash {
         }
 
         googleConnectionAttempts = 0;
-
         setGameEntities();
     }
 
@@ -189,10 +189,10 @@ public class Splash {
     }
 
     public static void verifySplashState() {
-
         if (state == MESSAGE_CARREGANDO
                 && Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION
                 && loaderConclude){
+            Log.e("splash", "loader conclude - conectando");
             ConnectionHandler.connect();
             setSplashMessage(MESSAGE_CONECTANDO);
             timeInitConectando = Utils.getTime();
@@ -201,8 +201,18 @@ public class Splash {
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION
                 && ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_CONNECTED
                 ){
+                    Log.e("splash", "conectando");
                     if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()){
-                        Game.setGameState(Game.GAME_STATE_MENU);
+                        if (MyAchievements.loaded) {
+                            loadingAchievements = false;
+                            Log.e("splash", "conectando");
+                            Game.setGameState(Game.GAME_STATE_MENU);
+                        } else if (!loadingAchievements){
+                            Log.e("splash", "loadAchievements");
+                            loadingAchievements = true;
+                            new LoadAchievementsAsyncTask().execute("");
+                            //MyAchievements.loaded = true;
+                        }
                     } else {
                         if (googleConnectionAttempts < 5){
                             timeInitConectando = Utils.getTime();
