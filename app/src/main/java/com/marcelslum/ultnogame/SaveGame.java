@@ -14,6 +14,7 @@ import org.json.JSONObject;
 public class SaveGame {
     private static final String TAG = "SaveGame";
     private static final String SERIAL_VERSION = "1.0";
+    public static final SHARED_PREFERENCES_FILE_NAME = "saveGame";
     
     public int maxNumberOfLevels;
     public int currentMaxLevel;
@@ -24,10 +25,8 @@ public class SaveGame {
     public boolean music;
     public boolean sound;
     public long date;
-    
-    
+
     public loaded = false;
-    
     
     public SaveGame(SaveGameBuilder builder){
             maxNumberOfLevels = builder.maxNumberOfLevels;
@@ -95,7 +94,6 @@ public class SaveGame {
             .setDate(fdate)
             .build();
     }
-    
     
     public static int[] getHiger(int[] array1, int[] array2){
         int size = getHigher(array1.length(), array2.length());
@@ -192,15 +190,15 @@ public class SaveGame {
         }
     }
 
-    public static void saveLocal(){
-        Storage.setString("saveGame", getString());
+    public static void saveStringOnLocal(){
+        Storage.setString(SHARED_PREFERENCES_FILE_NAME, getStringFromSaveGame(saveGame));
+    }
+ 
+    public static String getStringFromLocal(){
+        return Storage.getString(SHARED_PREFERENCES_FILE_NAME);
     }
 
-    public static String getLocalSave(){
-        return Storage.getString("saveGame");
-    }
-
-    public static String getString(SaveGame saveGame) {
+    public static String getStringFromSaveGame(SaveGame saveGame) {
         try {
             JSONObject obj = new JSONObject();
             obj.put("version", SERIAL_VERSION);
