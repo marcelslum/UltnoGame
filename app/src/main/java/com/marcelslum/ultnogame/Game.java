@@ -125,10 +125,11 @@ public class Game {
 
     public static int ballCollidedFx = 0;
 
+    // savegame
+    public static SaveGame saveGame;
+    
     // options
-    public static boolean musicOn = true;
     public static boolean isBlocked;
-    public static  int volume = 100;
     
     // game state
     public static int gameState;
@@ -180,7 +181,6 @@ public class Game {
     static long initTime;
     static float effectiveScreenHeight;
     static float effectiveScreenWidth;
-    static int currentDifficulty;
     
     // programs
     static Program imageProgram;
