@@ -23,6 +23,7 @@ public class SaveGame {
     public int[] pointsLevels;
     public boolean music;
     public boolean sound;
+    public long date;
     
     
     public SaveGame(SaveGameBuilder builder){
@@ -34,7 +35,51 @@ public class SaveGame {
             pointsLevels = builder.pointsLevels;
             music = builder.music;
             sound = builder.sound;
+            date = builder.date;
     }
+    
+    
+    public static compareAndMerge(SaveGame sg1, SaveGame sg2){
+        int fmaxNumberOfLevels;
+        int fcurrentMaxLevel;
+        int fcurrentLevelNumber;
+        int fcurretDifficulty;
+        int[] fdifficultyLevels;
+        int[] fpointsLevels;
+        boolean fmusic;
+        boolean fsound;
+        long fdate;
+        
+        
+        fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sg2.maxNumberOfLevels);
+        fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sg2.currentMaxLevel);
+        fcurrentLevelNumber = getHigher(sg1.currentLevelNumber, sg2.currentLevelNumber);
+        fcurretDifficulty = getHigher(sg1.curretDifficulty, sg2.curretDifficulty);
+        
+        fmusic = sg2.music || sg2.music;
+        fmusic = sg2.sound || sg2.sound;
+        fdate = getHigher(sg1.date, sg2.date);
+
+    }
+    
+    
+    public static int getHigher(int value1, int value2){
+         if (value1 == value2 || value1 > value2){
+                return value1;
+        } else {
+                return value2;
+        }
+    }
+    
+    public static long getHigher(long value1, long value2){
+         if (value1 == value2 || value1 > value2){
+                return value1;
+        } else {
+                return value2;
+        }
+    }
+    
+    
     
     public static void loadFromJson(String json) {
         if (json == null || json.trim().equals("")) return;
