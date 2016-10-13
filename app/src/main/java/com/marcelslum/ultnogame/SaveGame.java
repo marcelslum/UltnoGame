@@ -15,6 +15,27 @@ public class SaveGame {
     private static final String TAG = "SaveGame";
     private static final String SERIAL_VERSION = "1.0";
     
+    public int maxNumberOfLevels;
+    public int currentMaxLevel;
+    public int currentLevelNumber;
+    public int curretDifficulty;
+    public int[] difficultyLevels;
+    public int[] pointsLevels;
+    public boolean music;
+    public boolean sound;
+    
+    
+    public SaveGame(SaveGameBuilder builder){
+            maxNumberOfLevels = builder.maxNumberOfLevels;
+            currentMaxLevel = builder.currentMaxLevel;
+            currentLevelNumber = builder.currentLevelNumber;
+            curretDifficulty = builder.curretDifficulty;
+            difficultyLevels = builder.difficultyLevels;
+            pointsLevels = builder.pointsLevels;
+            music = builder.music;
+            sound = builder.sound;
+    }
+    
     public static void loadFromJson(String json) {
         if (json == null || json.trim().equals("")) return;
 
