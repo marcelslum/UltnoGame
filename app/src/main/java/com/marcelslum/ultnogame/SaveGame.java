@@ -14,7 +14,8 @@ import org.json.JSONObject;
 public class SaveGame {
     private static final String TAG = "SaveGame";
     private static final String SERIAL_VERSION = "1.0";
-    public static final SHARED_PREFERENCES_FILE_NAME = "saveGame";
+    public static final SHARED_PREFERENCES_KEY_NAME = "saveGame";
+    // TODO adicionar informação do usuário
     
     public int maxNumberOfLevels;
     public int currentMaxLevel;
@@ -57,7 +58,29 @@ public class SaveGame {
     }
     
     public static onFailLoadFromSnapshot(String data){
-        saveGame = getSaveGameFromJson(loadStringFromLocal());
+        if (Storage.contains(SHARED_PREFERENCES_KEY_NAME)){
+            saveGame = getSaveGameFromJson(loadStringFromLocal());
+        } else {
+            
+            
+            int[] fpointsLevels = new int[100];
+            int[] fdifficultyLevels = new int[100];
+            
+            
+            
+            
+         saveGame = SaveGameBuilder()
+            .setMaxNumberOfLevels(MAX_NUMBER_OF_LEVELS)
+            .setCurrentMaxLevel(1)
+            .setCurrentLevelNumber(1)
+            .setCurretDifficulty(Game.DIFFICULTY_EASY)
+            .setDifficultyLevels(fdifficultyLevels)
+            .setPointsLevels(fpointsLevels)
+            .setMusic(true)
+            .setSound(true)
+            .setDate()
+            .build();   
+        }
         loaded = true;
     }
     
