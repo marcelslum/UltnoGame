@@ -62,11 +62,16 @@ public class SaveGame {
         fdate = getHigher(sg1.date, sg2.date);
         
         return new SaveGameBuilder()
-            .
-        
-        
-        
-
+            .setMaxNumberOfLevels(fmaxNumberOfLevels)
+            .setCurrentMaxLevel(fcurrentMaxLevel)
+            .setCurrentLevelNumber(fcurrentLevelNumber)
+            .setCurretDifficulty(fcurretDifficulty)
+            .setDifficultyLevels(fdifficultyLevels)
+            .setPointsLevels(fpointsLevels)
+            .setMusic(fmusic)
+            .setSound(fsound)
+            .setDate(fdate)
+            .build();
     }
     
     
