@@ -26,6 +26,9 @@ public class SaveGame {
     public long date;
     
     
+    public loaded = false;
+    
+    
     public SaveGame(SaveGameBuilder builder){
             maxNumberOfLevels = builder.maxNumberOfLevels;
             currentMaxLevel = builder.currentMaxLevel;
@@ -36,6 +39,12 @@ public class SaveGame {
             music = builder.music;
             sound = builder.sound;
             date = builder.date;
+    }
+    
+    public static load(){
+        loaded = false;
+        
+        
     }
     
     
