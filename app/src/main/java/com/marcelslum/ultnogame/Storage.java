@@ -21,6 +21,16 @@ public class Storage {
     public static int getInt(String key){
         return storage.getInt(key, -1);
     }
+
+    public static void setString(String key, String value){
+        SharedPreferences.Editor editor = storage.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    public static String getString(String key){
+        return storage.getString(key, "");
+    }
     
     public static void setBoolean(String key, boolean value){
           SharedPreferences.Editor editor = storage.edit();
@@ -36,9 +46,10 @@ public class Storage {
         return storage.contains(key);
     }
     
-    public static void initializeStorage(Context context, int quantityOfLevels){
+    public static void initializeStorage(Context context, int maxNumberOfLevels){
+
         storage = context.getSharedPreferences(STORAGE_FILE_NAME, 0);
-        for (int i = 0; i < quantityOfLevels; i++){
+        for (int i = 0; i < maxNumberOfLevels; i++){
             int levelToTest = i + 1;
             if (!Storage.contains("tutorial"+ levelToTest +"visto")) {
                 Log.e("Storage", "not contains tutorial visto level " + levelToTest);
@@ -49,7 +60,7 @@ public class Storage {
                 Storage.setInt("score" + levelToTest, 0);
             }
         }
-        
+
         if (!Storage.contains("actualLevel"))
                 Storage.setInt("actualLevel", 1);
         
@@ -59,15 +70,21 @@ public class Storage {
         if (!Storage.contains("volume"))
             Storage.setInt("volume", 100);
 
-        if (!Storage.contains("difficulty"))
-            Storage.setInt("difficulty", 0);
+        if (!Storage.contains("currentDifficulty"))
+            Storage.setInt("currentDifficulty", 0);
 
-        if (!Storage.contains("achievementAcelerador")) {
-            Storage.setInt("achievementAcelerador", 0);
-        } else {
-            Storage.setInt("achievementAcelerador", 0);
+
+        Levels.pointsLevels = new int[maxNumberOfLevels];
+        Levels.difficultyLevels = new int[maxNumberOfLevels];
+
+        for (int i = 0; i < maxNumberOfLevels; i++){
+            Levels.pointsLevels[i] = getLevelMaxScore(i+1);
+            if (Levels.pointsLevels[i] > 0){
+                Levels.difficultyLevels[i] = Levels.LEVEL_COMPLETE_EASY;
+            } else {
+                Levels.difficultyLevels[i] = Levels.LEVEL_NOT_COMPLETED;
+            }
         }
-
     }
     
     public static int getMaxLevel(){
@@ -79,11 +96,11 @@ public class Storage {
     }
 
     public static int getDificulty(){
-        return getInt("difficulty");
+        return getInt("currentDifficulty");
     }
 
     public static void setDificulty(int value){
-        setInt("difficulty", value);
+        setInt("currentDifficulty", value);
     }
     
     public static int getActualLevel(){

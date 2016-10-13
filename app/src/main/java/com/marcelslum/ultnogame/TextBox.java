@@ -130,7 +130,7 @@ public class TextBox extends Entity{
             arrowContinuar.setOnPress(new Button.OnPress() {
                 @Override
                 public void onPress() {
-                    Game.levelObject.nextTutorial();
+                    Levels.levelObject.nextTutorial();
                 }
             });
             addChild(arrowContinuar);

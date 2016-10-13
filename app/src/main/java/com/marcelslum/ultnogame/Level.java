@@ -173,10 +173,10 @@ public class Level {
 
         // escolhe o background de acordo com o número do nível
         int back;
-        if (Game.levelNumber < 9) {
-            back = Game.levelNumber;
+        if (Levels.currentLevelNumber < 9) {
+            back = Levels.currentLevelNumber;
         } else {
-            back = Game.levelNumber % 9;
+            back = Levels.currentLevelNumber % 9;
         }
 
         Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY, back);
@@ -239,7 +239,7 @@ public class Level {
         Game.buttonSound.getListener().height = Game.resolutionY * 0.12f;
 
         Game.buttonSound.alpha = 0.5f;
-        if (Game.menuVolume == 0 || Game.volume == 0) {
+        if (Game.volume == 0) {
             Game.buttonSound.setOff();
         } else {
             Game.buttonSound.setOn();
@@ -267,7 +267,7 @@ public class Level {
         Game.buttonMusic.getListener().y = Game.resolutionY * 0.86f;
         Game.buttonMusic.getListener().width = Game.gameAreaResolutionX * 0.12f;
         Game.buttonMusic.getListener().height = Game.resolutionY * 0.12f;
-        if (!Game.musicOn || Game.menuVolume == 0) {
+        if (!Game.musicOn) {
             Game.buttonMusic.setOff();
         } else {
             Game.buttonMusic.setOn();
@@ -277,9 +277,8 @@ public class Level {
             @Override
             public void onBehavior() {
                 Game.musicOn = true;
-                if (Game.menuVolume == 0) {
-                    Game.volume = 50;
-                    Game.menuVolume = 50;
+                if (Game.volume == 0) {
+                    Game.volume = 100;
                 }
                 if (Sound.music != null){
                     Sound.music.setVolume(0.006f* (float) 50, 0.006f* (float) 50);
@@ -343,8 +342,8 @@ public class Level {
             }
         }
 
-        float targetWidth = Game.gameAreaResolutionX * Game.levelObject.targetWidth_BR;
-        float targetHeight = Game.gameAreaResolutionY * Game.levelObject.targetHeight_BR;
+        float targetWidth = Game.gameAreaResolutionX * Levels.levelObject.targetWidth_BR;
+        float targetHeight = Game.gameAreaResolutionY * Levels.levelObject.targetHeight_BR;
         float targetX;
         float targetY;
 

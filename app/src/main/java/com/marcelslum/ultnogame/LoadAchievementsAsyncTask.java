@@ -62,5 +62,4 @@ public class LoadAchievementsAsyncTask extends AsyncTask<String,Integer,Integer>
     protected void onProgressUpdate(){
         //Codigo
     }
-
 }

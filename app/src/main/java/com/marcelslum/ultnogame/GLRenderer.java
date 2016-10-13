@@ -50,6 +50,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         if (Game.gameState == Game.GAME_STATE_JOGAR) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
         } else if (Game.gameState == Game.GAME_STATE_PREPARAR || Game.gameState == Game.GAME_STATE_TUTORIAL) {
+            Log.e("GLRenderer", "setGameState MENU");
+            Log.e("findStateMenu", "5");
             Game.setGameState(Game.GAME_STATE_MENU);
         }
     }
@@ -63,17 +65,18 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         Log.e("GLRenderer", "onSurfaceCreated");
-
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         Log.e("GLRenderer", "onSurfaceChanged");
-        if (!Game.forInitGame){
+        if (!Game.forInitGame && Game.bordaE != null){
+            Log.e("GLRenderer", "onSurfaceChanged - apenas resumindo jogo");
             return;
         }
 
         Game.forInitGame = false;
+        Splash.loaderConclude = false;
 
         GLES20.glClearColor(0.902f, 0.89f, 0.922f, 1.0f);
         GLES20.glEnable(GLES20.GL_BLEND);
@@ -160,7 +163,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
                 Splash.render(matrixView, matrixProjection);
             }
             Splash.verifySplashState();
-
 
             if (Game.touchEvents != null) {
                 if (Game.touchEvents.size() > 0) {

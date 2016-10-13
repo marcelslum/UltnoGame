@@ -395,7 +395,7 @@ public class LevelLoader {
             }
         }
 
-        Game.levelObject = levelBuilder.build();
+        Levels.levelObject = levelBuilder.build();
     }
 }
 /*

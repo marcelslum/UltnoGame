@@ -30,7 +30,7 @@ public class TutorialLoader {
         switch (levelNumber){
             case 1:
                 // L1T1
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox1")
                                 .position(x, y)
@@ -53,7 +53,7 @@ public class TutorialLoader {
                 );
                 
                 // L1T2
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
                         new TextBoxBuilder("textoBox2")
                             .position(x, y)
@@ -70,7 +70,7 @@ public class TutorialLoader {
                                 Game.balls.get(0).x = gX * 0.7f;
                                 Game.balls.get(0).y = gY * 0.7f;
                                 Game.bars.get(0).isMovable = false;
-                                Game.bars.get(0).x = Game.levelObject.barsX_BR[0];
+                                Game.bars.get(0).x = Levels.levelObject.barsX_BR[0];
                             }
                         }
                     )
@@ -107,7 +107,7 @@ public class TutorialLoader {
                     .build()
                 );       
                 // L1T3
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
                         new TextBoxBuilder("textoBox3")
                             .position(x, y*2.5f)
@@ -141,7 +141,7 @@ public class TutorialLoader {
                 );
                 
                 // L1T4
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
                         new TextBoxBuilder("textoBox4")
                             .position(x, y*1.5f)
@@ -167,7 +167,7 @@ public class TutorialLoader {
                 );
                 
                 // L1T5
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
                         new TextBoxBuilder("textoBox5")
                             .position(x, y*2f)
@@ -202,7 +202,7 @@ public class TutorialLoader {
                     }
                 };
 
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
                         new TextBoxBuilder("textoBox6")
                             .position(x, y*2f)
@@ -223,7 +223,7 @@ public class TutorialLoader {
                 );
                 
                 // L1T7
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                     new Tutorial.TutorialBuilder(
                         new TextBoxBuilder("textoBox7")
                             .position(x, y*2f)
@@ -248,7 +248,7 @@ public class TutorialLoader {
                 
                 case 2:
                 // L2T1
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox1")
                                 .position(x*0.5f, y)
@@ -272,7 +272,7 @@ public class TutorialLoader {
                 );
                 
                 // L2T2
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox2")
                                 .position(x*0.25f, y*0.25f)
@@ -306,7 +306,7 @@ public class TutorialLoader {
                 );
                 
                 // L2T3
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox3")
                                 .position(x*0.25f, y*0.25f)
@@ -351,7 +351,7 @@ public class TutorialLoader {
                 );
                 
                 // L2T4
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox4")
                                 .position(x*0.25f, y)
@@ -367,7 +367,7 @@ public class TutorialLoader {
                 
                 case 4:
                 // L4T1
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox1")
                                 .position(x*0.1f, y*0.1f)
@@ -383,7 +383,7 @@ public class TutorialLoader {
                 
                 case 7:
                 // L7T1
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox1")
                                 .position(x*0.5f, y*2f)
@@ -444,7 +444,7 @@ public class TutorialLoader {
                 
                 case 9:
                 // L9T1
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox1")
                                 .position(x*0.5f, y*2f)
@@ -458,7 +458,7 @@ public class TutorialLoader {
                 );
                 
                 // L9T2
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox2")
                                 .position(x*0.5f, y*2f)
@@ -472,7 +472,7 @@ public class TutorialLoader {
                 );
                 
                 // L9T3
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox3")
                                 .position(x*0.5f, y*2.5f)
@@ -604,7 +604,7 @@ public class TutorialLoader {
                         .build()
                 );
                 // L9T4
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox4")
                                         .position(x*0.5f, y*2.5f)
@@ -617,7 +617,7 @@ public class TutorialLoader {
                                 .build()
                 );
                 // L9T5
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox5")
                                         .position(x*0.5f, y*2f)
@@ -637,7 +637,7 @@ public class TutorialLoader {
                 );
 
                 // L6T6
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox6")
                                         .position(x*0.5f, y*2f)
@@ -656,7 +656,7 @@ public class TutorialLoader {
                                 .build()
                 );
                 // L6T7
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox7")
                                         .position(x*0.5f, y*2f)
@@ -676,7 +676,7 @@ public class TutorialLoader {
                 );
 
                 // L6T8
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox8")
                                         .position(x*0.5f, y*2f)
@@ -691,7 +691,7 @@ public class TutorialLoader {
 
 
                 // L6T9
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox9")
                                         .position(x*0.5f, y*2.5f)
@@ -754,7 +754,7 @@ public class TutorialLoader {
                 );
 
                 // L6T10
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox10")
                                         .position(x*0.5f, y*2.5f)
@@ -768,7 +768,7 @@ public class TutorialLoader {
                 );
 
                 // L6T11
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox11")
                                         .position(x*0.5f, y*2.5f)
@@ -817,7 +817,7 @@ public class TutorialLoader {
                 );
 
                 // L6T12
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox12")
                                         .position(x*0.5f, y*2.5f)
@@ -875,7 +875,7 @@ public class TutorialLoader {
                 );
 
                 // L6T13
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox13")
                                         .position(x*0.5f, y*2.5f)
@@ -889,7 +889,7 @@ public class TutorialLoader {
                 );
 
                 // L6T14
-                Game.levelObject.tutorials.add(
+                Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox14")
                                         .position(x*0.5f, y*2.5f)

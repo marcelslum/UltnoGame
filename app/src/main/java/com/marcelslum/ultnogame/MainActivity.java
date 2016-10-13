@@ -47,7 +47,7 @@ public class MainActivity extends FragmentActivity implements
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-		        //.addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
+                .addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
                 .build();
 
         // Fullscreen mode
@@ -141,13 +141,18 @@ public class MainActivity extends FragmentActivity implements
 
 		    @Override
 		    public void onAdClosed() {
+                Log.e("findStateMenu", "1");
                 Game.setGameState(Game.GAME_STATE_MENU);
                 interstitial.loadAd(adRequest);
 		    }
 
 		    @Override
 		    public void onAdFailedToLoad(int errorCode) {
-			    Game.setGameState(Game.GAME_STATE_MENU);
+                Log.e("findStateMenu", "2" + "loader conclude "+Splash.loaderConclude);
+                if (Splash.loaderConclude && Game.gameState != Game.GAME_STATE_INTRO) {
+                    Game.setGameState(Game.GAME_STATE_MENU);
+                    return;
+                }
                 interstitial.loadAd(adRequest);
 		    }
 
@@ -214,7 +219,8 @@ public class MainActivity extends FragmentActivity implements
             super.onPause();
             glSurfaceView.onPause();
             moveTaskToBack(true);
-        } else {
+        } else if (Game.gameState != Game.GAME_STATE_INTRO){
+            Log.e("findStateMenu", "2");
             Game.setGameState(Game.GAME_STATE_MENU);
         }
     }
@@ -226,7 +232,10 @@ public class MainActivity extends FragmentActivity implements
                 interstitial.show();
             } else {
                 Log.e("MainActivity", "Interstitial ad is not loaded yet");
-                Game.setGameState(Game.GAME_STATE_MENU);
+                if (Game.gameState != Game.GAME_STATE_INTRO){
+                    Log.e("findStateMenu", "4");
+                    Game.setGameState(Game.GAME_STATE_MENU);
+                }
             }
             }
         });

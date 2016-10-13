@@ -56,11 +56,15 @@ public class Splash {
         });
         animationTittleSplash.start();
 
+        Log.e("splash", "init");
+
         if (loaderConclude){
+            Log.e("splash", "loader já concluido, conectando");
             setSplashMessage(MESSAGE_CONECTANDO);
             ConnectionHandler.connect();
             timeInitConectando = Utils.getTime();
         } else {
+            Log.e("splash", "ativando loader");
             new InitLoaderAyncTask().execute();
             setSplashMessage(MESSAGE_CARREGANDO);
             timeInitCarregando = Utils.getTime();
@@ -146,7 +150,7 @@ public class Splash {
             Log.e("setSplashState", "MESSAGE_INTERNET_NAO_CONECTADA");
             message1.clearAnimations();
             message1 = new Text("messageSplash1",
-                    Game.resolutionX* 0.5f, Game.resolutionY * 0.5f, Game.resolutionY * 0.06f,
+                    Game.resolutionX* 0.5f, Game.resolutionY  * 0.75f, Game.resolutionY * 0.06f,
                     Game.context.getResources().getString(R.string.splash_nao_foi_possivel_conectar1), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message2 = new Text("messageSplash2",
@@ -189,40 +193,49 @@ public class Splash {
     }
 
     public static void verifySplashState() {
-        if (state == MESSAGE_CARREGANDO
-                && Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION
-                && loaderConclude){
-            Log.e("splash", "loader conclude - conectando");
-            ConnectionHandler.connect();
-            setSplashMessage(MESSAGE_CONECTANDO);
-            timeInitConectando = Utils.getTime();
-        } else if (state == MESSAGE_CONECTANDO
-                && (Utils.getTime() - timeInitIntro) > INTRO_DURATION
+        Log.e("Splash", "verifyState");
+        if (state == MESSAGE_CARREGANDO){
+            if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION
+            && loaderConclude) {
+                Log.e("splash", "carregado - ativando conexao");
+                timeInitConectando = Utils.getTime();
+                ConnectionHandler.connect();
+                setSplashMessage(MESSAGE_CONECTANDO);
+            } else {
+                Log.e("Splash", "ainda não carregado");
+            }
+        } else if (state == MESSAGE_CONECTANDO){
+            if ((Utils.getTime() - timeInitIntro) > INTRO_DURATION
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION
-                && ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_CONNECTED
-                ){
-                    Log.e("splash", "conectando");
-                    if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()){
-                        if (MyAchievements.loaded) {
-                            loadingAchievements = false;
-                            Log.e("splash", "conectando");
-                            Game.setGameState(Game.GAME_STATE_MENU);
-                        } else if (!loadingAchievements){
-                            Log.e("splash", "loadAchievements");
-                            loadingAchievements = true;
-                            new LoadAchievementsAsyncTask().execute("");
-                            //MyAchievements.loaded = true;
-                        }
-                    } else {
-                        if (googleConnectionAttempts < 5){
-                            timeInitConectando = Utils.getTime();
-                            googleConnectionAttempts += 1;
-                            Game.mainActivity.mGoogleApiClient.connect();
-                        } else {
-                            setSplashMessage(AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO);
-                            googleConnectionAttempts = 0;
-                        }
+                && ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_CONNECTED) {
+                Log.e("splash", "conectado - verificando conexao com o google");
+                if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()) {
+                    Log.e("splash", "conectado ao google");
+                    if (MyAchievements.loaded) {
+                        Log.e("splash", "achievements carregados");
+                        loadingAchievements = false;
+                        Log.e("splash", "ativando game state menu");
+                        Log.e("findStateMenu", "5");
+                        Game.setGameState(Game.GAME_STATE_MENU);
+                    } else if (!loadingAchievements) {
+                        Log.e("splash", "iniciando carregamento dos achievements");
+                        loadingAchievements = true;
+                        new LoadAchievementsAsyncTask().execute("");
                     }
+                } else {
+                    Log.e("splash", "ainda não conectado ao google");
+                    if (googleConnectionAttempts < 5) {
+                        Log.e("splash", "fazendo nova tentativa");
+                        timeInitConectando = Utils.getTime();
+                        googleConnectionAttempts += 1;
+                        Game.mainActivity.mGoogleApiClient.connect();
+                    } else {
+                        Log.e("splash", "falhou ao conectar ao google");
+                        setSplashMessage(AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO);
+                        googleConnectionAttempts = 0;
+                    }
+                }
+            }
         } else if (state == AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION){
             setSplashMessage(MESSAGE_INTERNET_NAO_CONECTADA);
