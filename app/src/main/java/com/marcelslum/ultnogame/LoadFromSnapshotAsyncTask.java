@@ -47,9 +47,12 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
             data = null;
         }
 
-        if (data != null) {
-            Log.e(TAG, data.toString());
+        if (data != null){
+            SaveGame.onLoadFromSnapshot(data.toString());
+        } else {
+            SaveGame.onFailLoadFromSnapshot();
         }
+        
 
     }
     protected void onProgressUpdate(){
