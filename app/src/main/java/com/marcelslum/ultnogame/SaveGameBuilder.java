@@ -55,12 +55,20 @@ public class SaveGameBuilder {
         this.sound = sound;
         return this;
     }
+    
+    public SaveGameBuilder setDate(long date){
+        this.date = date;   
+    }
+    
+    public SaveGameBuilder setDate(){
+        this.date = Calendar.getInstance().getTimeInMillis();  
+    }
 
     public SaveGame build() {
-        date = Calendar.getInstance().getTimeInMillis();
+        
         if (maxNumberOfLevels == null|| currentMaxLevel == null || currentLevelNumber == null || 
             curretDifficulty == null || difficultyLevels == null || pointsLevels == null || 
-            music == null || sound == null){
+            music == null || sound == null || date == null){
             Log.e(TAG, "Não foi possível criar o SaveGame, em razão de algum dos parâmetros não ter sido definido)/
             return null;   
         } else {
