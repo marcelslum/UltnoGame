@@ -55,11 +55,37 @@ public class SaveGame {
         fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sg2.currentMaxLevel);
         fcurrentLevelNumber = getHigher(sg1.currentLevelNumber, sg2.currentLevelNumber);
         fcurretDifficulty = getHigher(sg1.curretDifficulty, sg2.curretDifficulty);
+        fdifficultyLevels = getHiger(sg1.difficultyLevels, sg2.difficultyLevels);
+        fpointsLevels = getHiger(sg1.pointsLevels, sg2.pointsLevels);
         
         fmusic = sg2.music || sg2.music;
         fmusic = sg2.sound || sg2.sound;
         fdate = getHigher(sg1.date, sg2.date);
 
+    }
+    
+    
+    public static int[] getHiger(int[] array1, int[] array2){
+        int size = getHigher(array1.length(), array2.length());
+        int[] result = new int [size];
+        int v1;
+        int v2;
+        for (int i = 0; i < result.length; i++){
+            if (array1.length > i){
+                v1 = array1[i];
+            } else {
+                v1 = 0;
+            }
+            
+            if (array2.length > i){
+                v2 = array2[i];
+            } else {
+                v2 = 0;
+            }
+            
+            result[i] = getHigher(v1, v2);
+        }
+        return result;
     }
     
     
