@@ -126,43 +126,45 @@ public class SaveGame {
     
     
     
-    public static void loadFromJson(String json) {
+    public static void getSaveGameFromJson(String json) {
         if (json == null || json.trim().equals("")) return;
-
+        SaveGameBuilder saveGameBuilder = new SaveGameBuilder();
         try {
+            
             JSONObject obj = new JSONObject(json);
             String format = obj.getString("version");
             if (!format.equals(SERIAL_VERSION)) {
                 throw new RuntimeException("Unexpected loot format " + format);
             }
 
-            Levels.maxNumberOfLevels = obj.getInt("maxNumberOfLevels");
-            Levels.currentMaxLevel = obj.getInt("currentMaxLevel");
+            saveGameBuilder.setMaxNumberOfLevels(obj.getInt("maxNumberOfLevels"));
+            saveGameBuilder.setCurrentMaxLevel(obj.getInt("currentMaxLevel"));
+            saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
+            saveGameBuilder.setCurretDifficulty(obj.getInt("curretDifficulty"));
+            
+            
             // pontuação dos levels
-            if (Levels.pointsLevels == null){
-                Levels.pointsLevels = new int[Levels.maxNumberOfLevels];
-            } else if (Levels.pointsLevels.length  != Levels.maxNumberOfLevels){
-                Levels.pointsLevels = new int[Levels.maxNumberOfLevels];
-            }
+            int [] pointsLevels = new int[saveGameBuilder.maxNumberOfLevels];
             JSONArray array = obj.getJSONArray("pointsLevels");
-            for (int i = 0; i < Levels.maxNumberOfLevels; i++){
-                Levels.pointsLevels[i] = array.getInt(i);
+            for (int i = 0; i < pointsLevels.length; i++){
+                pointsLevels[i] = array.getInt(i);
             }
+            saveGameBuilder.setPointsLevels(pointsLevels);
+            
+            
             // maxima dificuldade dos levels
-            if (Levels.difficultyLevels == null){
-                Levels.difficultyLevels = new int[Levels.maxNumberOfLevels];
-            } else if (Levels.difficultyLevels.length  != Levels.maxNumberOfLevels){
-                Levels.difficultyLevels = new int[Levels.maxNumberOfLevels];
-            }
+            int [] difficultyLevels = new int[saveGameBuilder.maxNumberOfLevels];
             array = obj.getJSONArray("difficultyLevels");
-            for (int i = 0; i < Levels.maxNumberOfLevels; i++){
-                Levels.difficultyLevels[i] = array.getInt(i);
+            for (int i = 0; i < pointsLevels.length; i++){
+                difficultyLevels[i] = array.getInt(i);
             }
-
-            Levels.currentLevelNumber = obj.getInt("currentLevelNumber");
-            Game.musicOn = obj.getBoolean("musicOn");
-            Game.volume = obj.getInt("volume");
-            Game.currentDifficulty = obj.getInt("currentDifficulty");
+            saveGameBuilder.setDifficultyLevels(pointsLdifficultyLevelsevels);
+            saveGameBuilder.setMusic(obj.getBoolean("music"));
+            saveGameBuilder.setSound(obj.getBoolean("sound"));
+            saveGameBuilder.setDate(obj.getLong("date"));
+            
+            return saveGameBuilder.build();
+            
         }
         catch (JSONException ex) {
             ex.printStackTrace();
@@ -185,18 +187,19 @@ public class SaveGame {
         return Storage.getString("saveGame");
     }
 
-    public static String getString() {
+    public static String getString(SaveGame saveGame) {
         try {
             JSONObject obj = new JSONObject();
             obj.put("version", SERIAL_VERSION);
-            obj.put("maxNumberOfLevels", Levels.maxNumberOfLevels);
-            obj.put("currentMaxLevel", Levels.currentMaxLevel);
-            obj.put("pointsLevels", new JSONArray(Levels.pointsLevels));
-            obj.put("difficultyLevels", new JSONArray(Levels.difficultyLevels));
-            obj.put("currentLevelNumber", Levels.currentLevelNumber);
-            obj.put("musicOn", Game.musicOn);
-            obj.put("volume", Game.volume);
-            obj.put("currentDifficulty", Game.currentDifficulty);
+            obj.put("maxNumberOfLevels", saveGame.maxNumberOfLevels);
+            obj.put("currentMaxLevel", saveGame.currentMaxLevel);
+            obj.put("currentLevelNumber", saveGame.currentLevelNumber);
+            obj.put("currentDifficulty", saveGame.currentDifficulty);
+            obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
+            obj.put("difficultyLevels", new JSONArray(saveGame.difficultyLevels));
+            obj.put("musicOn", saveGame.music);
+            obj.put("volume", saveGame.sound);
+            obj.put("date", saveGame.date);
             return obj.toString();
         }
         catch (JSONException ex) {
