@@ -39,7 +39,7 @@ public class SaveGame {
     }
     
     
-    public static compareAndMerge(SaveGame sg1, SaveGame sg2){
+    public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sg2){
         int fmaxNumberOfLevels;
         int fcurrentMaxLevel;
         int fcurrentLevelNumber;
@@ -49,7 +49,6 @@ public class SaveGame {
         boolean fmusic;
         boolean fsound;
         long fdate;
-        
         
         fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sg2.maxNumberOfLevels);
         fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sg2.currentMaxLevel);
@@ -61,6 +60,12 @@ public class SaveGame {
         fmusic = sg2.music || sg2.music;
         fmusic = sg2.sound || sg2.sound;
         fdate = getHigher(sg1.date, sg2.date);
+        
+        return new SaveGameBuilder()
+            .
+        
+        
+        
 
     }
     
