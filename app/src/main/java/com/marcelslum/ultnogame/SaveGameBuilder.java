@@ -10,6 +10,7 @@ public class SaveGameBuilder {
     public int[] pointsLevels;
     public boolean music;
     public boolean sound;
+    public long date;
 
     public SaveGameBuilder(){
 
@@ -56,6 +57,7 @@ public class SaveGameBuilder {
     }
 
     public SaveGame build() {
+        date = Calendar.getInstance().getTimeInMillis();
         if (maxNumberOfLevels == null|| currentMaxLevel == null || currentLevelNumber == null || 
             curretDifficulty == null || difficultyLevels == null || pointsLevels == null || 
             music == null || sound == null){
