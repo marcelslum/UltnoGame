@@ -33,6 +33,7 @@ public class Splash {
 
     public static boolean loaderConclude = false;
     public static boolean loadingAchievements = false;
+    public static boolean loadingSaveGame = false;
 
     public static void init(){
         tittle = new Image("tittle",
@@ -193,7 +194,6 @@ public class Splash {
     }
 
     public static void verifySplashState() {
-        Log.e("Splash", "verifyState");
         if (state == MESSAGE_CARREGANDO){
             if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION
             && loaderConclude) {
@@ -201,8 +201,6 @@ public class Splash {
                 timeInitConectando = Utils.getTime();
                 ConnectionHandler.connect();
                 setSplashMessage(MESSAGE_CONECTANDO);
-            } else {
-                Log.e("Splash", "ainda não carregado");
             }
         } else if (state == MESSAGE_CONECTANDO){
             if ((Utils.getTime() - timeInitIntro) > INTRO_DURATION
@@ -213,18 +211,29 @@ public class Splash {
                     Log.e("splash", "conectado ao google");
                     if (MyAchievements.loaded) {
                         Log.e("splash", "achievements carregados");
+                        MyAchievements.loaded = false;
                         loadingAchievements = false;
-                        Log.e("splash", "ativando game state menu");
-                        Log.e("findStateMenu", "5");
-                        Game.setGameState(Game.GAME_STATE_MENU);
+                        if (SaveGame.loaded){
+                            Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
+                            loadingSaveGame = false;
+                            SaveGame.loaded = false;
+                            Game.setGameState(Game.GAME_STATE_MENU);    
+                        } else {
+                            if (!loadingSaveGame){
+                                loadingSaveGame = true;
+                                Log.e("splash", "iniciando carregamento do SaveGame");
+                                SaveGame.load();
+                            }
+                        }
                     } else if (!loadingAchievements) {
                         Log.e("splash", "iniciando carregamento dos achievements");
+                        
                         loadingAchievements = true;
                         new LoadAchievementsAsyncTask().execute("");
                     }
                 } else {
                     Log.e("splash", "ainda não conectado ao google");
-                    if (googleConnectionAttempts < 5) {
+                    if (googleConnectionAttempts < 6) {
                         Log.e("splash", "fazendo nova tentativa");
                         timeInitConectando = Utils.getTime();
                         googleConnectionAttempts += 1;
