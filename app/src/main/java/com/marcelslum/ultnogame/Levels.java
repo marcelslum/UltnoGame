@@ -12,12 +12,6 @@ public class Levels {
     public static final int LEVEL_COMPLETE_HARD = 3;
     public static final int LEVEL_COMPLETE_INSANE = 4;
 
-    public static int maxNumberOfLevels = 100;
-    public static int currentMaxLevel;
-    public static int [] pointsLevels;
-    public static int [] difficultyLevels;
-    public static int currentLevelNumber;
-
     public static Level levelObject;
 
     public static void eraseAllTutorials() {
