@@ -43,10 +43,23 @@ public class SaveGame {
     
     public static load(){
         loaded = false;
-        
-        
+        new LoadFromSnapshotAsyncTask("").execute();
     }
     
+    public static onLoadFromSnapshot(String data){
+        String data2 = loadStringFromLocal();
+        
+        if (!data2.equal(data)){
+            saveGame = mergeReturningHigher(getSaveGameFromJson(data), getSaveGameFromJson(data2))          
+        } else {
+            saveGame = getSaveGameFromJson(data);
+        }
+        loaded = true;
+    }
+    
+    public static onFailLoadFromSnapshot(String data){
+        saveGame = getSaveGameFromJson(loadStringFromLocal());        
+    }
     
     public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sg2){
         int fmaxNumberOfLevels;
