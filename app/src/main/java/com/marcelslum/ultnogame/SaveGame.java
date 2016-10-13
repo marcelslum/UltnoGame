@@ -7,10 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 /**
  * Created by marcel on 12/10/2016.
  */
@@ -18,7 +14,7 @@ import java.util.Map;
 public class SaveGame {
     private static final String TAG = "SaveGame";
     private static final String SERIAL_VERSION = "1.0";
-
+    
     public static void loadFromJson(String json) {
         if (json == null || json.trim().equals("")) return;
 
