@@ -46,8 +46,11 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
             Log.e(TAG, "Error while reading Snapshot.", e);
             data = null;
         }
+        
+        Log.e(TAG, data.toString() + " data " + data);
+        
 
-        if (data != null){
+        if (data != null || data.){
             SaveGame.onLoadFromSnapshot(data.toString());
         } else {
             SaveGame.onFailLoadFromSnapshot();
