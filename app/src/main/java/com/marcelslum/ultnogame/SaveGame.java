@@ -142,7 +142,6 @@ public class SaveGame {
             saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
             saveGameBuilder.setCurretDifficulty(obj.getInt("curretDifficulty"));
             
-            
             // pontuação dos levels
             int [] pointsLevels = new int[saveGameBuilder.maxNumberOfLevels];
             JSONArray array = obj.getJSONArray("pointsLevels");
@@ -151,16 +150,17 @@ public class SaveGame {
             }
             saveGameBuilder.setPointsLevels(pointsLevels);
             
-            
             // maxima dificuldade dos levels
             int [] difficultyLevels = new int[saveGameBuilder.maxNumberOfLevels];
             array = obj.getJSONArray("difficultyLevels");
-            for (int i = 0; i < pointsLevels.length; i++){
+            for (int i = 0; i < difficultyLevels.length; i++){
                 difficultyLevels[i] = array.getInt(i);
             }
-            saveGameBuilder.setDifficultyLevels(pointsLdifficultyLevelsevels);
+            saveGameBuilder.setDifficultyLevels(difficultyLevels);
+            
             saveGameBuilder.setMusic(obj.getBoolean("music"));
             saveGameBuilder.setSound(obj.getBoolean("sound"));
+            
             saveGameBuilder.setDate(obj.getLong("date"));
             
             return saveGameBuilder.build();
