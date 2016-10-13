@@ -13,6 +13,8 @@ public class Levels {
     public static final int LEVEL_COMPLETE_INSANE = 4;
 
     public static Level levelObject;
+    
+    public static final int maxNumberOfLevels = 100;
 
     public static void eraseAllTutorials() {
         if (levelObject != null) {
