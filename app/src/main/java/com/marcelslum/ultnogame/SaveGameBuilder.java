@@ -10,8 +10,6 @@ public class SaveGameBuilder {
     public int[] pointsLevels;
     public boolean music;
     public boolean sound;
-    
-
 
     public SaveGameBuilder(){
 
@@ -58,6 +56,13 @@ public class SaveGameBuilder {
     }
 
     public SaveGame build() {
-        return new SaveGame(this);
+        if (maxNumberOfLevels == null|| currentMaxLevel == null || currentLevelNumber == null || 
+            curretDifficulty == null || difficultyLevels == null || pointsLevels == null || 
+            music == null || sound == null){
+            Log.e(TAG, "Não foi possível criar o SaveGame, em razão de algum dos parâmetros não ter sido definido)/
+            return null;   
+        } else {
+            return new SaveGame(this);
+        }
     }
 }
