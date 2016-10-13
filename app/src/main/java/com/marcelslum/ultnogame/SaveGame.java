@@ -57,7 +57,8 @@ public class SaveGame {
     }
     
     public static onFailLoadFromSnapshot(String data){
-        saveGame = getSaveGameFromJson(loadStringFromLocal());        
+        saveGame = getSaveGameFromJson(loadStringFromLocal());
+        loaded = true;
     }
     
     public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sg2){
