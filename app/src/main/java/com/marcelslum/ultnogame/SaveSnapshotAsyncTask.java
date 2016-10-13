@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * Created by marcel on 12/10/2016.
  */
 
-public class OpenSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshots.OpenSnapshotResult> {
+public class SaveSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshots.OpenSnapshotResult> {
 
     private final static String SNAPSHOT_FILE_NAME = "ultnoSavedGame";
 
