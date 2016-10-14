@@ -74,7 +74,6 @@ public class SaveSnapshotAsyncTask extends AsyncTask<String,Integer,Integer> {
 
             // Save the snapshot.
             SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
-                    .setCoverImage(BitmapFactory.decodeResource(Game.context.getResources(), R.drawable.tittle))
                     .setDescription("Modified data at: " + Calendar.getInstance().getTime())
                     .build();
             Games.Snapshots.commitAndClose(Game.mainActivity.mGoogleApiClient, toWrite, metadataChange);
@@ -85,10 +84,9 @@ public class SaveSnapshotAsyncTask extends AsyncTask<String,Integer,Integer> {
     @Override
     protected void onPostExecute(Integer result){
 
-
-
     }
+
     protected void onProgressUpdate(){
-        //Codigo
+
     }
 }

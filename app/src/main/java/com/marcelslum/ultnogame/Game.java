@@ -283,7 +283,7 @@ public class Game {
         tittle = new Image("tittle",
                 gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.2f,
                 gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.35f * 0.3671875f,
-                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
+                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6228125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
 
         ArrayList<float[]> valuesAnimationTittle = new ArrayList<>();
         valuesAnimationTittle.add(new float[]{0f,1f});
@@ -374,7 +374,7 @@ public class Game {
         float fontSize = gameAreaResolutionY*0.08f;
 
         // -------------------------------------------MENU OPTIONS
-        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.43f, fontSize, font);
+        menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.47f, fontSize, font);
 
         // cria o seletor de dificuldade
         selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
@@ -403,7 +403,7 @@ public class Game {
             }
         });
         final MenuOption menuOptionDificuldade = menuOptions.getMenuOptionByName("dificuldade");
-        selectorDificulty.setPosition(menuOptionDificuldade.x + (menuOptionDificuldade.width), menuOptionDificuldade.y);
+        selectorDificulty.setPosition(menuOptionDificuldade.x + (menuOptionDificuldade.width * 1.2f), menuOptionDificuldade.y);
 
         selectorDificulty.setOnChange(new Selector.OnChange() {
             @Override
@@ -431,8 +431,8 @@ public class Game {
         // cria o seletor de musica
         selectorMusic = new Selector("selectorMusic", 0f,0f, fontSize, "",
                 new String[]{
-                        context.getResources().getString(R.string.nao),
-                        context.getResources().getString(R.string.sim)}, font);
+                        context.getResources().getString(R.string.ligado),
+                        context.getResources().getString(R.string.desligado)}, font);
         menuOptions.addMenuOption("musica", context.getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -460,8 +460,8 @@ public class Game {
         // cria o seletor de sons
         selectorSound = new Selector("selectorSound", 0f,0f, fontSize, "",
                 new String[]{
-                        context.getResources().getString(R.string.nao),
-                        context.getResources().getString(R.string.sim)}, font);
+                        context.getResources().getString(R.string.ligado),
+                        context.getResources().getString(R.string.desligado)}, font);
         menuOptions.addMenuOption("sound", context.getResources().getString(R.string.sons), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -495,7 +495,7 @@ public class Game {
         });
 
         // -------------------------------------------MENU MAIN
-        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.43f, fontSize, font);
+        menuMain = new Menu("menuMain", gameAreaResolutionX/2, gameAreaResolutionY*0.47f, fontSize, font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -541,10 +541,7 @@ public class Game {
         menuMain.addMenuOption("SelecionarNivel", context.getResources().getString(R.string.menuPrincipalAlterarNivel), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-
-                //Log.e("Game", SaveGame.getString());
-                //SaveGame.saveLocal();
-                //new OpenSnapshotAsyncTask().execute("");
+                selectorLevel.setSelectedValue(SaveGame.saveGame.currentLevelNumber - 1);
                 Game.selectorLevel.fromMenu(innerMenu);
             }
         });
@@ -764,6 +761,11 @@ public class Game {
     public static void setGameState(int state){
         Log.e("game", "set game state "+state);
 
+        boolean sameState = false;
+        if (state == gameState){
+            sameState = true;
+        }
+
         gameState = state;
         clearAllMenuEntities();
         if (state == GAME_STATE_INTRO) {
@@ -773,7 +775,9 @@ public class Game {
             Splash.init();
             Splash.display();
         } else if (state == GAME_STATE_OPCOES){
-            activateFrame(200);
+            if (!sameState) {
+                activateFrame(200);
+            }
             tittle.display();
             menuMain.isBlocked = true;
             menuOptions.isBlocked = false;
@@ -782,7 +786,9 @@ public class Game {
         } else if (state == GAME_STATE_MENU){
             initTittle();
             mainActivity.showAdView();
-            activateFrame(200);
+            if (!sameState) {
+                activateFrame(200);
+            }
             Game.bordaB.y = Game.resolutionY;
             menuOptions.block();
             menuInGame.block();
@@ -807,7 +813,9 @@ public class Game {
 
         } else if (state == GAME_STATE_PREPARAR){
             mainActivity.hideAdView();
-            activateFrame(500);
+            if (!sameState) {
+                activateFrame(500);
+            }
             Levels.eraseAllTutorials();
             Levels.levelObject.loadEntities();
             int musicNumber = SaveGame.saveGame.currentLevelNumber - ((int)Math.floor(SaveGame.saveGame.currentLevelNumber / 7)*SaveGame.saveGame.currentLevelNumber);
@@ -945,6 +953,10 @@ public class Game {
             messageInGame.y = gameAreaResolutionY*0.25f;
             messageInGame.display();
         } else if (state == GAME_STATE_VITORIA){
+
+
+            // TODO o que fazer com a animação quando for pausado
+
             stopAndReleaseMusic();
             Sound.play(Sound.soundWin, 1, 1, 0);
             stopAllGameEntities();
@@ -1003,7 +1015,7 @@ public class Game {
                     if (objectivePanel.blueBalls > 0){
                         int points = (int)((float)scorePanel.value * 1.5f);
                         scorePanel.setValue(points, true, 1000, true);
-                        scorePanel.showMessage("x2", 800);
+                        scorePanel.showMessage("+ 50%", 800);
                         objectivePanel.explodeBlueBall();
 
                     } else {
@@ -1075,7 +1087,9 @@ public class Game {
             ).start();
         } else if (state == GAME_STATE_TUTORIAL) {
             mainActivity.hideAdView();
-            activateFrame(500);
+            if (!sameState) {
+                activateFrame(500);
+            }
             Levels.levelObject.loadEntities();
             verifyDead();
         }

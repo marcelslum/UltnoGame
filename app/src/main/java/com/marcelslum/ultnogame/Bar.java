@@ -11,6 +11,76 @@ public class Bar extends Rectangle{
     long startTimeSpecialBallAnim = 0;
     long specialBallAnimDuration = 1000;
     boolean specialBallAnimActive = false;
+    int textureMap = COLOR_BLACK;
+
+    static final int [] UV_MAP = new int[]{0, 72, 144, 216, 288, 360, 432, 504, 576};
+    static final int COLOR_RED = 1;
+    static final int COLOR_BLUE = 2;
+    static final int COLOR_GREEN = 3;
+    static final int COLOR_YELLOW = 4;
+    static final int COLOR_ORANGE = 5;
+    static final int COLOR_PINK = 6;
+    static final int COLOR_PURPLE = 7;
+    static final int COLOR_BLACK = 8;
+
+
+    public void changeTextureMap(int textureMap){
+        if (textureMap == this.textureMap){
+            return;
+        }
+        setTextureMap(textureMap);
+    }
+
+    public void setTextureMap(int textureMap){
+        this.textureMap = textureMap;
+        Utils.x1 = 0f;
+        Utils.x2 = 1f;
+
+        switch (textureMap){
+            case COLOR_RED:
+                Utils.y1 = (UV_MAP[0] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[1] - 0.5f)/1024f;
+                break;
+            case COLOR_BLUE:
+                Utils.y1 = (UV_MAP[1] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[2] - 0.5f)/1024f;
+                break;
+            case COLOR_GREEN:
+                Utils.y1 = (UV_MAP[2] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[3] - 0.5f)/1024f;
+                break;
+            case COLOR_YELLOW:
+                Utils.y1 = (UV_MAP[3] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[4] - 0.5f)/1024f;
+                break;
+            case COLOR_ORANGE:
+                Utils.y1 = (UV_MAP[4] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[5] - 0.5f)/1024f;
+                break;
+            case COLOR_PINK:
+                Utils.y1 = (UV_MAP[5] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[6] - 0.5f)/1024f;
+                break;
+            case COLOR_PURPLE:
+                Utils.y1 = (UV_MAP[6] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[7] - 0.5f)/1024f;
+                break;
+            case COLOR_BLACK:
+                Utils.y1 = (UV_MAP[7] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[8] - 0.5f)/1024f;
+                break;
+            default:
+                Utils.y1 = (UV_MAP[7] + 0.5f)/1024f;
+                Utils.y2 = (UV_MAP[8] - 0.5f)/1024f;
+                break;
+
+        }
+
+        Utils.insertRectangleUvData(uvsData, 0);
+        uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+    }
+
+
 
     Bar(String name, float x, float y, float width, float height){
         super(name, x, y, width, height, Game.BAR_WEIGHT, new Color(0.0f, 0.0f, 0.0f, 1.0f));
@@ -19,33 +89,9 @@ public class Bar extends Rectangle{
         this.textureId = Texture.TEXTURE_BARS;
         this.isCollidable = true;
         this.isSolid = true;
-
         this.setDrawInfo();
     }
 
-    public void insertUvData(float[] array, int startIndex){
-
-        /*
-        array[0 + (startIndex)] = 0f; x//
-        array[1 + (startIndex)] = 1f; y//
-        array[2 + (startIndex)] = 1f; x//
-        array[3 + (startIndex)] = 1f; y//
-        array[4 + (startIndex)] = 1f; x//
-        array[5 + (startIndex)] = 0f; y//
-        array[6 + (startIndex)] = 0f; x//
-        array[7 + (startIndex)] = 0f; y//
-        */
-        //0,7998046875
-
-        array[startIndex] = 0f;
-        array[1 + (startIndex)] = 1-0.4931640625f;
-        array[2 + (startIndex)] = 1f;
-        array[3 + (startIndex)] = 1-0.4931640625f;
-        array[4 + (startIndex)] = 1f;
-        array[5 + (startIndex)] = 1-0.5615234375f;
-        array[6 + (startIndex)] = 0f;
-        array[7 + (startIndex)] = 1-0.5615234375f;
-    }
 
     public void setDrawInfo(){
         verticesData = new float[12];
@@ -57,8 +103,7 @@ public class Bar extends Rectangle{
         indicesBuffer = Utils.generateShortBuffer(this.indicesData);
 
         uvsData = new float[12];
-        insertUvData(this.uvsData, 0);
-        uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        setTextureMap(textureMap);
 
         colorsData = new float[16];
         Utils.insertRectangleColorsData(colorsData, 0, color);
@@ -94,6 +139,8 @@ public class Bar extends Rectangle{
         array[4 + (startIndex)] = (short)(2 + (startValue));
         array[5 + (startIndex)] = (short)(3 + (startValue));
     }
+
+
 
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection) {

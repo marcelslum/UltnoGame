@@ -8,6 +8,8 @@ public class InteractionListener {
     public float width;
     public float height;
     public int frequency;
+    public int frequencyPersistent = 0;
+    public boolean persistentActivated = false;
     public Entity objectAppend;
     public boolean pressedOnVerify;
     public boolean active;
@@ -25,6 +27,10 @@ public class InteractionListener {
         this.objectAppend = objectAppend;
         this.pressedOnVerify = false;
         this.active = false;
+    }
+
+    public void setFrequencyPersistent(int frequencyPersistent){
+        this.frequencyPersistent = frequencyPersistent;
     }
 
     InteractionListener(String name, float x, float y, float width, float height, int frequency, Entity objectAppend, PressListener pressListener){
@@ -58,7 +64,15 @@ public class InteractionListener {
         pressedOnVerify = false;
 
         //if(objectAppend.name=="bottomTextBox")
-          //Log.e("listener", "verificando listener "+x +" "+ y+" "+ width+" "+ height);
+
+        String parentName = "";
+        if (objectAppend.parent != null){
+            parentName = objectAppend.parent.name;
+        }
+
+
+         //Log.e("listener", "verificando listener de "+objectAppend.name + " de " + parentName);
+
 
         for (int i = 0; i < Game.touchEvents.size(); i++) {
             pressedOnVerify = Utils.isPointInsideBounds(
@@ -85,9 +99,15 @@ public class InteractionListener {
                 long actualTime = Utils.getTime();
                 long timeElapsed = actualTime - this.startTime;
                 //Log.e("listener", "timeElapsed "+timeElapsed);
-                if (timeElapsed > (long) frequency) {
+
+
+
+                if (timeElapsed > (long) frequency || (persistentActivated && timeElapsed > (long) frequencyPersistent)) {
+                    if (frequencyPersistent != 0){
+                        persistentActivated = true;
+                    }
                     if (myPressListener != null) {
-                        Log.e("listener", "ativando onpress no listener "+name +" após testar o tempo");
+                        //Log.e("listener", "ativando onpress no listener "+name +" após testar o tempo");
                         myPressListener.onPress();
                     }
                     //console.log("onPress");
@@ -100,10 +120,10 @@ public class InteractionListener {
 
             if (active) {
                 if (myPressListener != null) {
-                    Log.e("listener", "ativando onunpress no listener "+name);
+                    //Log.e("listener", "ativando onunpress no listener "+name);
                     myPressListener.onUnpress();
                 }
-
+                persistentActivated = false;
                 objectAppend.isPressed = false;
                 active = false;
             }

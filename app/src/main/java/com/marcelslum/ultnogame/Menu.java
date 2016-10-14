@@ -9,7 +9,7 @@ class Menu extends Entity{
     public float size;
     public int selectedOption;
     public int optionsIds = 0;
-    public final float bottomPad = 0.1f;
+    public final float bottomPad = 0.12f;
     public Font font;
 
 

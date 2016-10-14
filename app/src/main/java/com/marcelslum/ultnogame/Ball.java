@@ -421,9 +421,27 @@ public class Ball extends Circle{
         }
 
         if(this.collisionBar){
-            if (this.isAlive){
-                // TODO lastObjects.get(this.collisionBarNumber).lineAlphaAnim.start();
-                // TODO lastObjects.get(this.collisionBarNumber).lineColor = this.color;
+
+            Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
+
+            if (isAlive){
+                if (textureMap == COLOR_BALL_RED){
+                    barCollided.changeTextureMap(Bar.COLOR_RED);
+                } else if (textureMap == COLOR_BALL_BLUE){
+                    barCollided.changeTextureMap(Bar.COLOR_BLUE);
+                } else if (textureMap == COLOR_BALL_GREEN){
+                    barCollided.changeTextureMap(Bar.COLOR_GREEN);
+                } else if (textureMap == COLOR_BALL_YELLOW){
+                    barCollided.changeTextureMap(Bar.COLOR_YELLOW);
+                } else if (textureMap == COLOR_BALL_ORANGE){
+                    barCollided.changeTextureMap(Bar.COLOR_ORANGE);
+                } else if (textureMap == COLOR_BALL_PINK){
+                    barCollided.changeTextureMap(Bar.COLOR_PINK);
+                } else if (textureMap == COLOR_BALL_PURPLE){
+                    barCollided.changeTextureMap(Bar.COLOR_PURPLE);
+                } else{
+                    barCollided.changeTextureMap(Bar.COLOR_BLACK);
+                }
             }
 
             float angleToRotate = 0;

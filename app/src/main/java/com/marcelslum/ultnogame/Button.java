@@ -68,6 +68,14 @@ public class Button extends Entity{
         setTextureMap(textureMapUnpressed);
     }
 
+    public void setPersistent(int frequencyPersistent){
+        if (getListener()!= null){
+            InteractionListener listener = getListener();
+            listener.setFrequencyPersistent(frequencyPersistent);
+            listener.frequency = 1000;
+        }
+    }
+
     public void setOnPress(OnPress _onPress){
         onPress = _onPress;
     }

@@ -211,8 +211,10 @@ public class Splash {
                 Log.e("splash", "conectado - verificando conexao com o google");
                 if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()) {
                     Log.e("splash", "conectado ao google");
-                    Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
-                    Storage.init(Game.context, Game.currentPlayerId);
+                    if (Game.currentPlayerId == null) {
+                        Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
+                        Storage.init(Game.context, Game.currentPlayerId);
+                    }
                     if (MyAchievements.loaded) {
                         Log.e("splash", "achievements carregados");
                         MyAchievements.loaded = false;

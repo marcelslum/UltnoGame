@@ -4,7 +4,6 @@
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
     <string name="menuPrincipalIniciar">Jogar o nível</string>
     <string name="menuPrincipalAlterarNivel">Alterar nível</string>
-    <string name="menuPrincipalAlterarVolume">Alterar volume</string>
     <string name="messageMaxScoreLevel">Maior pontução neste nível:</string>
     <string name="nivel">Nível: </string>
     <string name="messageMaxScoreTotal">Pontuação total: </string>
@@ -14,7 +13,7 @@
     <string name="pause">PAUSE</string>
     <string name="continuarJogar">Continuar a jogar</string>
     <string name="continuarDepoisVitoria">Continuar</string>
-    <string name="retornarAoMenuPrincipal">Voltar</string>
+    <string name="retornarAoMenuPrincipal">Voltar ao Menu</string>
     <string name="nivelConcluido1">NÍVEL </string>
     <string name="nivelConcluido2"> CONCLUÍDO</string>
     <string name="menuInGameNivelConcluido1">Jogar o nível</string>
@@ -55,7 +54,7 @@
     <string name="l12t1">Apenas um alvo? Que fácil, não é? Nem tanto...</string>
     <string name="l12t2">Neste nível haverá alguns alvos invisíveis. Destrua todos!</string>
     <string name="options">Opções</string>
-    <string name="dificuldade">Alterar dificuldade</string>
+    <string name="dificuldade">Dificuldade</string>
     <string name="musica">Música</string>
     <string name="sons">Sons do Jogo</string>
     <string name="facil">Fácil</string>
@@ -69,7 +68,6 @@
     <string name="mensagemDificuldadeDificil">Velocidade do jogo: rápida. Pontuação mínima por alvo: 300 pontos.</string>
     <string name="mensagemDificuldadeInsano">Velocidade do jogo: muito rápida. Pontuação mínima por alvo: 500 pontos.</string>
     <string name="conexao">Conectado</string>
-    <string name="nao_conectado1">Dispositivo não conectado. Clique aqui para tentar novamente. Você pode jogar sem conexão, mas as informações de ranking não serão atualizadas.</string>
     <string name="conectando">Conectando...</string>
     <string name="ranking">Ranking</string>
     <string name="rankingObtidoAposVitoria">Ranking atingido:</string>
@@ -102,10 +100,13 @@
     <string name="message_typeface_mono_bold">Typeface mono, bold</string>
     <string name="message_typeface_mono_italic">Typeface mono, italic</string>
     <string name="message_typeface_mono_bold_italic">Typeface mono, bold italic</string>
+
     <string name="conquistas">Conquistas</string>
-    <string name="splash_nao_foi_possivel_conectar1">Conexão com a internet indisponível</string>
+    <string name="splash_nao_foi_possivel_conectar1">Não foi possível estabelecer conexão com a internet</string>
     <string name="splash_nao_foi_possivel_conectar_ao_google">Não foi possível realizar conexão com o Google Play Games</string>
     <string name="splash_clique_aqui">Clique aqui para tentar novamente</string>
+    <string name="ligado">Ligado</string>
+    <string name="desligado">Desligado</string>
 
 
 </resources>

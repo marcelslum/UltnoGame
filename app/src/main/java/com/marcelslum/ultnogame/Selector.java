@@ -80,6 +80,7 @@ public class Selector extends Entity{
                 }
             }
         });
+        arrowUp.setPersistent(50);
         addChild(arrowUp);
 
         arrowDown = new Button("arrowDown", mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
@@ -94,6 +95,7 @@ public class Selector extends Entity{
                 }
             }
         });
+        arrowDown.setPersistent(50);
         addChild(arrowDown);
 
         float arrowBackX;
@@ -180,9 +182,11 @@ public class Selector extends Entity{
     @Override
     public void verifyListener() {
         super.verifyListener();
-        arrowDown.verifyListener();
-        arrowUp.verifyListener();
-        arrowBack.verifyListener();
+        if (!isBlocked) {
+            arrowDown.verifyListener();
+            arrowUp.verifyListener();
+            arrowBack.verifyListener();
+        }
     }
 
     @Override
