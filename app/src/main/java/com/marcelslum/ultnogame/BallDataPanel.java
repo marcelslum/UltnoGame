@@ -27,8 +27,7 @@ public class BallDataPanel extends Entity{
     public void generateRectangles(){
         float  baseHeight = height/5f;
         velocityRectangle = new Rectangle("velocityRectangle", x, y, width * velocityPercent, baseHeight *2f, -1, new Color(1.0f, 0f, 0f, 1.0f));
-        velocityRectangle = new Rectangle("velocityRectangle", x, y + (baseHeight * 3f), width * velocityPercent, baseHeight *2f, -1, new Color(0.0f, 0f, 1.0f, 1.0f));
-
+        angleRectangle = new Rectangle("velocityRectangle", x, y + (baseHeight * 3f), width * velocityPercent, baseHeight *2f, -1, new Color(0.0f, 0f, 1.0f, 1.0f));
     }
 
     void setSize(int width, int height){
