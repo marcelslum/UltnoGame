@@ -537,7 +537,19 @@ public class Ball extends Circle{
                     final_vx =  vx;
                     final_vy =  vy;
                 }
-                Log.e("ball", "finalLen "+Utils.getVectorMagnitude(final_vx, final_vy));
+                          
+                float finalLen = Utils.getVectorMagnitude(final_vx, final_vy);
+                                                    
+                Log.e("ball", "finalLen "+finalLen);
+                
+                float velocityPercentage = (finalLen - minLen)/(maxLen/minLen);
+                          
+                          
+                Game.ballDataPanel.setVelocity();
+                Game.ballDataPanel.setAngle();
+                          
+                          
+                          
             }
             this.accelerate(150, final_vx, final_vy);
         }
@@ -743,8 +755,6 @@ public class Ball extends Circle{
             } while (sameColor == true);
 
             explosionColorsUsed[i] = explodeColor;
-
-            //Log.e("ball", "explodeColor "+i+" "+explodeColor);
             
             Ball ball = new Ball("ball"+i, explodeX, explodeY, explodeRadius, explodeColor);
             ball.program = Game.imageProgram;
