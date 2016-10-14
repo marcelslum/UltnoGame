@@ -68,7 +68,7 @@ public class Splash {
             timeInitConectando = Utils.getTime();
         } else {
             Log.e("splash", "ativando loader");
-            new InitLoaderAyncTask().execute();
+            AsyncsTask.initLoader = new InitLoaderAyncTask().execute();
             setSplashMessage(MESSAGE_CARREGANDO);
             timeInitCarregando = Utils.getTime();
         }
