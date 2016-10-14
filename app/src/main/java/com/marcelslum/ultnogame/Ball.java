@@ -4,8 +4,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class Ball extends Circle{
-
-
+    
     public static final int COLOR_BALL_BLACK = 26;
     public static final int COLOR_BALL_BLUE = 27;
     public static final int COLOR_BALL_GREEN = 28;
@@ -53,10 +52,6 @@ public class Ball extends Circle{
     ArrayList<Ball> ballsCollidedProcessed;
     
     double mass = 0f;
-    
-
-    //todo ????_ball.lastResponseBall = V(0,0);
-    //todo ????_ball.lastObjects = [];
 
     Ball(String name, float x, float y, float radius, int textureMap){
         super(name, x, y, radius, Game.BALL_WEIGHT);
@@ -143,7 +138,6 @@ public class Ball extends Circle{
                 historicPositionY.add(0, y + accumulatedTranslateY + ty);
                 historicPositionY.remove(20);
             }
-
 
             int numberOfParticles;
             for (int i = 0; i < historicPositionX.size(); i++){
@@ -421,7 +415,7 @@ public class Ball extends Circle{
         }
 
         if(this.collisionBar){
-
+            
             Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
 
             if (isAlive){
@@ -503,14 +497,37 @@ public class Ball extends Circle{
                         MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_pisando_no_freio,  1);
                     }
                 } else {
-                    Log.e("ball", "velocidade excede");
+                    Log.e("ball", "velocidade maior que o máximo ou menor que o mínimo);
+                    if (possibleVelocityLen < minLen){
+                        Log.e("ball", "velocidade menor que o mínimo");
+                        vx = vx * scalePorcentage;
+                        vy = vy * scalePorcentage;      
+                        float lenAfter = Utils.getVectorMagnitude(vx, vy);    
+                        Log.e("ball", "Len se aplicado: "+lenAfter+ " minLen: "+minLen);
+                        float scaleToMin = minLen/lenAfter;
+                        Log.e("ball", "scaleToMin: "+scaleToMin);
+                        vx = vx * scaleToMin;
+                        vy = vy * scaleToMin;
+                        Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(vx, vy));      
+                    } else if (possibleVelocityLen > maxLen){
+                        Log.e("ball", "velocidade maior que o máximo");
+                        vx = vx * scalePorcentage;
+                        vy = vy * scalePorcentage;
+                        float lenAfter = Utils.getVectorMagnitude(vx, vy);
+                        Log.e("ball", "Len se aplicado: "+lenAfter+ " maxLen: "+maxLen);
+                        float scaleToMax = maxLen/lenAfter;
+                        Log.e("ball", "scaleToMax: "+scaleToMax);
+                        vx = vx * scaleToMax;
+                        vy = vy * scaleToMax;
+                        Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(vx, vy));   
+                    }
                 }
 
                 Vector possibleVelocityRotate = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
 
                 float testAngle = (float)Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x)));
                 Log.e("ball", "possible angle "+testAngle);
-
+                
                 if (testAngle < maxAngle && testAngle > minAngle){
                     Log.e("ball", "rotacionando ");
                     final_vx =  possibleVelocityRotate.x;
@@ -520,11 +537,7 @@ public class Ball extends Circle{
                     final_vx =  vx;
                     final_vy =  vy;
                 }
-
-
                 Log.e("ball", "finalLen "+Utils.getVectorMagnitude(final_vx, final_vy));
-
-
             }
             this.accelerate(150, final_vx, final_vy);
         }
