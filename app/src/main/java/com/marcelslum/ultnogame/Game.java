@@ -82,6 +82,7 @@ public class Game {
     public static ArrayList<SpecialBall> specialBalls;
 
     public static ScorePanel scorePanel;
+    public static BallDataPanel ballDataPanel;
     public static ObjectivePanel objectivePanel;
 
     public static Edge bordaC;
@@ -1182,6 +1183,7 @@ public class Game {
 
     public static void eraseAllHudEntities() {
         objectivePanel = null;
+        ballDataPanel = null;
         scorePanel = null;
         button1Left = null;
         button1Right = null;
@@ -1271,6 +1273,7 @@ public class Game {
         list.add(button2Left);
         list.add(button2Right);
         list.add(scorePanel);
+        list.add(ballDataPanel);
         list.add(objectivePanel);
         return list;
     }
@@ -1694,6 +1697,7 @@ public class Game {
         if (frame != null)frame.checkTransformations(true);
 
         if (scorePanel != null) scorePanel.checkTransformations(true);
+        if (ballDataPanel != null) ballDataPanel.checkTransformations(true);
         if (objectivePanel != null) objectivePanel.checkTransformations(true);
 
         if (button1Left != null) button1Left.checkTransformations(true);
@@ -1793,7 +1797,8 @@ public class Game {
         if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
         if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
 
-        if (scorePanel != null) scorePanel.prepareRender(matrixView, matrixProjection);
+        if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
+        if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
         if (objectivePanel != null) objectivePanel.prepareRender(matrixView, matrixProjection);
 
         if (button1Left != null) button1Left.prepareRender(matrixView, matrixProjection);
