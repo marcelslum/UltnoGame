@@ -141,8 +141,7 @@ public class MainActivity extends FragmentActivity implements
 
 		    @Override
 		    public void onAdClosed() {
-                Log.e("findStateMenu", "1");
-                Game.setGameState(Game.GAME_STATE_MENU);
+                //Game.setGameState(Game.GAME_STATE_MENU);
                 interstitial.loadAd(adRequest);
 		    }
 
@@ -204,12 +203,12 @@ public class MainActivity extends FragmentActivity implements
     @Override
     protected void onPause() {
         Log.e("MainActivity", "onPause()");
-        super.onPause();
+        SaveGame.save();
         glSurfaceView.onPause();
         if (mAdView != null) {
             mAdView.pause();
         }
-        SaveGame.save();
+        super.onPause();
     }
 
     @Override

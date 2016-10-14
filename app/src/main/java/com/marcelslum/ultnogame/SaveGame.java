@@ -15,6 +15,7 @@ public class SaveGame {
     private static final String TAG = "SaveGame";
     private static final String SERIAL_VERSION = "1.0";
     public static final String SHARED_PREFERENCES_KEY_NAME = "saveGame";
+    static boolean savingSnapshot = false;
     // TODO adicionar informação do usuário
 
     public static SaveGame saveGame;
@@ -53,6 +54,21 @@ public class SaveGame {
         new LoadFromSnapshotAsyncTask().execute();
     }
 
+    public static void saveOnlyLocally(){
+        if (SaveGame.saveGame == null){
+            return;
+        }
+
+        if (Utils.getTime() - lastSave < MIN_TIME_BEFORE_RESAVE) {
+            return;
+        }
+        lastSave = Utils.getTime();
+
+        String saveString = getStringFromSaveGame(saveGame);
+        Log.e(TAG, "Salvando localmente "+saveString);
+        Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
+    }
+
     public static void save(){
 
         if (SaveGame.saveGame == null){
@@ -67,31 +83,30 @@ public class SaveGame {
         String saveString = getStringFromSaveGame(saveGame);
         Log.e(TAG, "Salvando localmente "+saveString);
         Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
-        new SaveSnapshotAsyncTask().execute();
-
+        new SaveSnapshotAsyncTask().execute(saveString);
     }
 
     public static void onLoadFromSnapshot(String data) {
 
         Log.e(TAG, "Snapshot aberto:  " + data);
 
-        String data2;
+        String dataLocal;
         if (Storage.contains(SHARED_PREFERENCES_KEY_NAME)){
             Log.e(TAG, "Pegando dados salvos localmente aberto");
-            data2 = getStringFromLocal();
+            dataLocal = getStringFromLocal();
         } else {
             Log.e(TAG, "Não existem dados salvos localmente");
-            data2 = null;
+            dataLocal = null;
         }
 
 
 
-        if (data2 == null){
+        if (dataLocal == null){
             Log.e(TAG, "Criando saveGame com dados do snapshot");
             saveGame = getSaveGameFromJson(data);
-        } else if (!data2.equals(data)) {
+        } else if (!dataLocal.equals(data)) {
             Log.e(TAG, "Criando saveGame unindo os dois dados");
-            saveGame = mergeReturningHigher(getSaveGameFromJson(data), getSaveGameFromJson(data2));
+            saveGame = mergeReturningHigher(getSaveGameFromJson(data), getSaveGameFromJson(dataLocal));
         } else {
             Log.e(TAG, "Criando saveGame com dados do snapshot, pois ele é igual aos dados locais");
             saveGame = getSaveGameFromJson(data);
@@ -126,7 +141,7 @@ public class SaveGame {
         loaded = true;
     }
 
-    public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sg2) {
+    public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sgLocal) {
         int fmaxNumberOfLevels;
         int fcurrentMaxLevel;
         int fcurrentLevelNumber;
@@ -138,17 +153,17 @@ public class SaveGame {
         boolean fsound;
         long fdate;
 
-        fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sg2.maxNumberOfLevels);
-        fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sg2.currentMaxLevel);
-        fcurrentLevelNumber = getHigher(sg1.currentLevelNumber, sg2.currentLevelNumber);
-        fcurretDifficulty = getHigher(sg1.currentDifficulty, sg2.currentDifficulty);
-        fdifficultyLevels = getHigher(sg1.difficultyLevels, sg2.difficultyLevels);
-        ftutorialLevels = getHigher(sg1.tutorialLevels, sg2.tutorialLevels);
-        fpointsLevels = getHigher(sg1.pointsLevels, sg2.pointsLevels);
+        fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sgLocal.maxNumberOfLevels);
+        fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sgLocal.currentMaxLevel);
+        fcurrentLevelNumber = sgLocal.currentLevelNumber;
+        fcurretDifficulty = sgLocal.currentDifficulty;
+        fdifficultyLevels = getHigher(sg1.difficultyLevels, sgLocal.difficultyLevels);
+        ftutorialLevels = getHigher(sg1.tutorialLevels, sgLocal.tutorialLevels);
+        fpointsLevels = getHigher(sg1.pointsLevels, sgLocal.pointsLevels);
 
-        fmusic = sg2.music || sg2.music;
-        fsound = sg2.sound || sg2.sound;
-        fdate = getHigher(sg1.date, sg2.date);
+        fmusic = sgLocal.music;
+        fsound = sgLocal.sound;
+        fdate = getHigher(sg1.date, sgLocal.date);
 
         return new SaveGameBuilder()
                 .setMaxNumberOfLevels(fmaxNumberOfLevels)

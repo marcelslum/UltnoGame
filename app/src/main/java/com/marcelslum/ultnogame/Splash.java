@@ -2,6 +2,8 @@ package com.marcelslum.ultnogame;
 
 import android.util.Log;
 
+import com.google.android.gms.games.Games;
+
 import java.util.ArrayList;
 
 /**
@@ -10,32 +12,32 @@ import java.util.ArrayList;
 
 public class Splash {
 
-    public static long timeInitIntro;
-    public static long timeInitConectando;
-    public static long timeInitCarregando;
-    public static int googleConnectionAttempts = 0;
+    static long timeInitIntro;
+    private static long timeInitConectando;
+    private static long timeInitCarregando;
+    private static int googleConnectionAttempts = 0;
 
-    public final static long INTRO_DURATION = 5000;
+    private final static long INTRO_DURATION = 5000;
     private final static long INTRO_PARTIAL_DURATION = 1500;
 
-    public static final int MESSAGE_INTERNET_NAO_CONECTADA = 31;
-    public static final int MESSAGE_CONECTANDO = 32;
-    public static final int MESSAGE_CARREGANDO = 33;
-    public static final int AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA = 34;
-    public static final int AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO = 35;
-    public static final int MESSAGE_GOOGLE_NAO_CONECTADO = 36;
+    private static final int MESSAGE_INTERNET_NAO_CONECTADA = 31;
+    private static final int MESSAGE_CONECTANDO = 32;
+    private static final int MESSAGE_CARREGANDO = 33;
+    static final int AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA = 34;
+    private static final int AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO = 35;
+    private static final int MESSAGE_GOOGLE_NAO_CONECTADO = 36;
 
-    public static int state;
+    private static int state;
 
     private static Image tittle;
     private static Text message1;
     private static Text message2;
 
-    public static boolean loaderConclude = false;
-    public static boolean loadingAchievements = false;
-    public static boolean loadingSaveGame = false;
+    static boolean loaderConclude = false;
+    private static boolean loadingAchievements = false;
+    private static boolean loadingSaveGame = false;
 
-    public static void init(){
+    static void init(){
         tittle = new Image("tittle",
                 Game.resolutionX * 0.2f, Game.resolutionY * 0.25f,
                 Game.resolutionX * 0.6f, Game.resolutionX * 0.6f * 0.3671875f,
@@ -85,7 +87,7 @@ public class Splash {
         }
     }
 
-    public static void setSplashMessage(int id){
+    static void setSplashMessage(int id){
         state = id;
         if (id == MESSAGE_CARREGANDO) {
             message1 = new Text("messageLoading",
@@ -177,7 +179,7 @@ public class Splash {
         setGameEntities();
     }
 
-    public static void display() {
+    static void display() {
         tittle.display();
         message1.display();
         if (message2 != null){
@@ -185,7 +187,7 @@ public class Splash {
         }
     }
 
-    public static void render(float[] matrixView, float[] matrixProjection) {
+    static void render(float[] matrixView, float[] matrixProjection) {
         tittle.prepareRender(matrixView, matrixProjection);
         message1.prepareRender(matrixView, matrixProjection);
         if (message2 != null){
@@ -193,7 +195,7 @@ public class Splash {
         }
     }
 
-    public static void verifySplashState() {
+    static void verifySplashState() {
         if (state == MESSAGE_CARREGANDO){
             if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION
             && loaderConclude) {
@@ -209,6 +211,8 @@ public class Splash {
                 Log.e("splash", "conectado - verificando conexao com o google");
                 if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()) {
                     Log.e("splash", "conectado ao google");
+                    Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
+                    Storage.init(Game.context, Game.currentPlayerId);
                     if (MyAchievements.loaded) {
                         Log.e("splash", "achievements carregados");
                         MyAchievements.loaded = false;
@@ -258,7 +262,7 @@ public class Splash {
         }
     }
 
-    public static void notifyClick() {
+    static void notifyClick() {
         if (state == MESSAGE_INTERNET_NAO_CONECTADA || state == MESSAGE_GOOGLE_NAO_CONECTADO) {
             timeInitConectando = Utils.getTime();
             setSplashMessage(MESSAGE_CONECTANDO);

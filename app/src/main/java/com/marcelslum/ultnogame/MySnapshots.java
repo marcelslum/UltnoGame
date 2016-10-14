@@ -18,6 +18,8 @@ import java.util.Calendar;
 public class MySnapshots {
 
     public static String TAG = "MySnapshots";
+    final static String SNAPSHOT_FILE_NAME = "ultno.SavedGame";
+
 
     /**
      * Conflict resolution for when Snapshots are opened.
@@ -62,27 +64,4 @@ public class MySnapshots {
         // Fail, return null.
         return null;
     }
-
-    /**
-     * Generates metadata, takes a screenshot, and performs the write operation for saving a
-     * snapshot.
-     */
-    public static void writeSnapshot(Snapshot snapshot){
-        // Set the data payload for the snapshot.
-        Log.e(TAG, "Salvando na nuvem");
-        snapshot.getSnapshotContents().writeBytes(SaveGame.getStringFromSaveGame(SaveGame.saveGame).getBytes());
-
-        // Save the snapshot.
-        SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
-                .setCoverImage(BitmapFactory.decodeResource(Game.context.getResources(), R.drawable.tittle))
-                .setDescription("Modified data at: " + Calendar.getInstance().getTime())
-                .build();
-        Games.Snapshots.commitAndClose(Game.mainActivity.mGoogleApiClient, snapshot, metadataChange);
-    }
-
-
-
-
-
-
 }

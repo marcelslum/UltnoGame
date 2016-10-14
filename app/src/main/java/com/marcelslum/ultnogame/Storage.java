@@ -6,7 +6,8 @@ import android.util.Log;
 
 public class Storage {
     public static SharedPreferences storage;
-    final static String STORAGE_FILE_NAME = "ultno.marcelslum.ultnogame.storage2";
+    final static String STORAGE_FILE_NAME = "com.marcelslum.ultnogame.storage.";
+    final static String TAG = "STORAGE";
 
     private Storage() {
     }
@@ -45,8 +46,9 @@ public class Storage {
         return storage.contains(key);
     }
     
-    public static void init(Context context) {
-        storage = context.getSharedPreferences(STORAGE_FILE_NAME, 0);
+    public static void init(Context context, String playerId) {
+        Log.e(TAG, "playerId "+playerId);
+        storage = context.getSharedPreferences(STORAGE_FILE_NAME+playerId, 0);
     }
 
         /*

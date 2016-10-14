@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshots.OpenSnapshotResult> {
 
-    private final static String SNAPSHOT_FILE_NAME = "ultnoSavedGame";
+
 
     private static final String TAG = "LoadFromSnapshotAsync";
 
@@ -27,7 +27,7 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
     protected Snapshots.OpenSnapshotResult doInBackground(String... params) {
         Log.e(TAG, "Abrindo Snapshot");
         Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
-                SNAPSHOT_FILE_NAME, true).await();
+                MySnapshots.SNAPSHOT_FILE_NAME, true).await();
         return result;
     }
 

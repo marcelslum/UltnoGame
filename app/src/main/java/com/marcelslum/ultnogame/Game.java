@@ -203,6 +203,7 @@ public class Game {
     public static final int POINTS_INSANE = 500;
 
     public static int maxScoreTotal;
+    public static String currentPlayerId;
 
     private Game() {}
 
@@ -906,6 +907,7 @@ public class Game {
                 if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1] < points) {
                     SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1] = points;
                     setMaxScoreTotal();
+                    SaveGame.save();
                 }
 
             }
@@ -1008,8 +1010,12 @@ public class Game {
                         if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1] < scorePanel.value){
                             SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1] =  scorePanel.value;
                             setMaxScoreTotal();
+                            if (SaveGame.saveGame.currentDifficulty > SaveGame.saveGame.difficultyLevels[SaveGame.saveGame.currentLevelNumber-1]){
+                                SaveGame.saveGame.difficultyLevels[SaveGame.saveGame.currentLevelNumber-1] = SaveGame.saveGame.currentDifficulty;
+                            }
                             // TODO se for o último level não aumentar o nível
                             changeLevel(SaveGame.saveGame.currentLevelNumber + 1);
+                            SaveGame.save();
                         }
                         if (Game.menuWin.isBlocked) {
                             Game.menuWin.appearAndUnblock(800);
@@ -1034,9 +1040,6 @@ public class Game {
                 @Override
                 public void onAnimationEnd() {
                     Sound.play(Sound.soundTextBoxAppear, 1, 1, 0);
-                    if (objectivePanel.blueBalls == 0){
-                        Game.menuWin.appearAndUnblock(800);
-                    }
                 }
             });
 

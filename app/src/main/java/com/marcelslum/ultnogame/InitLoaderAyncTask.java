@@ -12,10 +12,8 @@ public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
         //Game.changeDifficulty(Game.currentDifficulty);
         //Levels.currentLevelNumber = Storage.getActualLevel();
         Game.initTime = Utils.getTime();
-        Storage.init(Game.context);
         Game.initTextures();
         Sound.init();
-
         return 0;
     }
 
