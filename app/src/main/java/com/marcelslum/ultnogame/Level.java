@@ -178,8 +178,6 @@ public class Level {
                 Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.005f, Game.resolutionY * 0.027f);
         Game.objectivePanel.alpha = 0.9f;
 
-
-
         // escolhe o background de acordo com o número do nível
         int back;
         if (SaveGame.saveGame.currentLevelNumber < 9) {
