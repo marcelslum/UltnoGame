@@ -2,11 +2,9 @@ package com.marcelslum.ultnogame;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
+public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
     
     public static final String TAG = "InitLoaderAsyncTask";
-    
-    
     protected Integer doInBackground(Integer... i){
         Log.e(TAG, "doInBackground");
         try {
@@ -17,6 +15,7 @@ public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
             //Game.changeDifficulty(Game.currentDifficulty);
             //Levels.currentLevelNumber = Storage.getActualLevel();
             if (isCancelled()){
+                Log.e(TAG, "cancelado 1");
                 Game.forInitGame = true;
                 return 0;   
             }
@@ -26,6 +25,7 @@ public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
             Game.initTextures();
             
             if (isCancelled()){
+                Log.e(TAG, "cancelado 2");
                 Game.forInitGame = true;
                 return 0;   
             }
@@ -33,11 +33,14 @@ public class InitLoaderAyncTask extends AsyncTask<Integer , Integer, Integer> {
             Sound.init();
             
             if (isCancelled()){
+                Log.e(TAG, "cancelado 3");
                 Game.forInitGame = true;
                 return 0;   
             }
         } catch (Exception e) {
+            Log.e(TAG, "catch");
             Log.e(TAG, "error", e)
+            return 0;
         }
         return 0;
     }
