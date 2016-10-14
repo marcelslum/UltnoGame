@@ -33,8 +33,6 @@ public class MainActivity extends FragmentActivity implements
     public GoogleApiClient mGoogleApiClient;
     AdView mAdView;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.e("mainActivity", "create");
@@ -208,6 +206,7 @@ public class MainActivity extends FragmentActivity implements
         if (mAdView != null) {
             mAdView.pause();
         }
+	AsyncsTasks.cancelAll();   
         super.onPause();
     }
 
