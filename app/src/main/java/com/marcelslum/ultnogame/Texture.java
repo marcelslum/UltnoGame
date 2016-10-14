@@ -37,12 +37,19 @@ public class Texture {
     int id;
     Bitmap bitmap;
     boolean bounded = false;
+    public static final TAG = "Texture";
 
     Texture(int id, String resourceIdentifier){
+        
         this.id = id;
         this.resoureIdentifier = resourceIdentifier;
-        resoureIdentifierId = Game.context.getResources().getIdentifier(this.resoureIdentifier, null, Game.context.getPackageName());
-        bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
+        try {
+            resoureIdentifierId = Game.context.getResources().getIdentifier(this.resoureIdentifier, null, Game.context.getPackageName());
+            bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Uncaught exception", e);
+        }
     }
 
     public static Texture getTextureById(int id){
