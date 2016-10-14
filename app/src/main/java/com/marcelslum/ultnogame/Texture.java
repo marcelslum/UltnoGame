@@ -48,7 +48,7 @@ public class Texture {
             bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
         }
         catch (Exception e) {
-            Log.e(TAG, "Uncaught exception", e);
+            Log.e(TAG, "Erro ao criar a textura", e);
         }
     }
 
