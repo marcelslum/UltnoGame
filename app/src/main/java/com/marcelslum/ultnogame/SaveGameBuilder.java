@@ -1,12 +1,19 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
+import java.util.Calendar;
+
 public class SaveGameBuilder {
+
+    private static final String TAG = "SaveGameBuilder";
 
     public int maxNumberOfLevels;
     public int currentMaxLevel;
     public int currentLevelNumber;
-    public int curretDifficulty;
+    public int currentDifficulty;
     public int[] difficultyLevels;
+    public boolean[] tutorialLevels;
     public int[] pointsLevels;
     public boolean music;
     public boolean sound;
@@ -31,12 +38,17 @@ public class SaveGameBuilder {
         return this;
     }
     
-    public SaveGameBuilder setCurretDifficulty(int curretDifficulty) {
-        this.curretDifficulty = curretDifficulty;
+    public SaveGameBuilder setCurretDifficulty(int currentDifficulty) {
+        this.currentDifficulty = currentDifficulty;
         return this;
     }
     
-    public SaveGameBuilder setDifficultyLevels(int [] pointsLevels) {
+    public SaveGameBuilder setTutorialLevels(boolean [] tutorialLevels) {
+        this.tutorialLevels = tutorialLevels;
+        return this;
+    }
+
+    public SaveGameBuilder setDifficultyLevels(int [] difficultyLevels) {
         this.difficultyLevels = difficultyLevels;
         return this;
     }
@@ -57,22 +69,16 @@ public class SaveGameBuilder {
     }
     
     public SaveGameBuilder setDate(long date){
-        this.date = date;   
+        this.date = date;
+        return this;
     }
     
     public SaveGameBuilder setDate(){
-        this.date = Calendar.getInstance().getTimeInMillis();  
+        this.date = Calendar.getInstance().getTimeInMillis();
+        return this;
     }
 
     public SaveGame build() {
-        
-        if (maxNumberOfLevels == null|| currentMaxLevel == null || currentLevelNumber == null || 
-            curretDifficulty == null || difficultyLevels == null || pointsLevels == null || 
-            music == null || sound == null || date == null){
-            Log.e(TAG, "Não foi possível criar o SaveGame, em razão de algum dos parâmetros não ter sido definido)/
-            return null;   
-        } else {
-            return new SaveGame(this);
-        }
+        return new SaveGame(this);
     }
 }

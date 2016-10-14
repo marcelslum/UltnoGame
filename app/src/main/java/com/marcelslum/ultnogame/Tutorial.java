@@ -36,8 +36,8 @@ public class Tutorial {
         }
     }
 
-    public void show(int soundId, float volume) {
-        Sound.play(soundId, volume, volume, 0);
+    public void show(int soundId) {
+        Sound.play(soundId, 1f, 1f, 0);
         isBlocked = true;
         textBox.alpha = 0f;
 

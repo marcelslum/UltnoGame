@@ -217,6 +217,10 @@ public class Splash {
                             Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
                             loadingSaveGame = false;
                             SaveGame.loaded = false;
+                            Game.initMenus();
+                            Game.initTexts();
+                            Game.initEdges();
+                            Game.changeDifficulty(SaveGame.saveGame.currentDifficulty);
                             Game.setGameState(Game.GAME_STATE_MENU);    
                         } else {
                             if (!loadingSaveGame){

@@ -3,6 +3,8 @@ package com.marcelslum.ultnogame;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 /**
  * Created by marcel on 17/09/2016.
@@ -30,6 +32,8 @@ public abstract class Sound {
     public static MediaPlayer music;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //TODO
     public static void init(){
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -58,7 +62,7 @@ public abstract class Sound {
     }
 
     public static int play(int id, float left, float right, int loop){
-        return soundPool.play(id, left * 0.01f*(float) Game.volume, right * 0.01f * (float) Game.volume, 0, loop, 1);
+        return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
     }
 
 

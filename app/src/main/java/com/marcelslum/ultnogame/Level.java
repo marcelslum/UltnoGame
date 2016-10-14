@@ -119,7 +119,7 @@ public class Level {
         Game.blockAndWaitTouchRelease();
         this.showingTutorial = 0;
         this.tutorials.get(0).textBox.alpha = 0f;
-        this.tutorials.get(0).show(Sound.soundTextBoxAppear, Game.volume);
+        this.tutorials.get(0).show(Sound.soundTextBoxAppear);
     }
 
     public void nextTutorial(){
@@ -147,7 +147,7 @@ public class Level {
                     public void onUnshowAfterAnim2() {
                         //Log.e("level", "onUnshowAfterAnim2");
                         innerLevel.showingTutorial = innerLevel.showingTutorial + 1;
-                        innerLevel.tutorials.get(innerLevel.showingTutorial).show(Sound.soundTextBoxAppear, Game.volume);
+                        innerLevel.tutorials.get(innerLevel.showingTutorial).show(Sound.soundTextBoxAppear);
                     }
                 });
                 tutorials.get(showingTutorial).unshow();
@@ -173,10 +173,10 @@ public class Level {
 
         // escolhe o background de acordo com o número do nível
         int back;
-        if (Levels.currentLevelNumber < 9) {
-            back = Levels.currentLevelNumber;
+        if (SaveGame.saveGame.currentLevelNumber < 9) {
+            back = SaveGame.saveGame.currentLevelNumber;
         } else {
-            back = Levels.currentLevelNumber % 9;
+            back = SaveGame.saveGame.currentLevelNumber % 9;
         }
 
         Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY, back);
@@ -239,21 +239,21 @@ public class Level {
         Game.buttonSound.getListener().height = Game.resolutionY * 0.12f;
 
         Game.buttonSound.alpha = 0.5f;
-        if (Game.volume == 0) {
-            Game.buttonSound.setOff();
-        } else {
+        if (SaveGame.saveGame.sound) {
             Game.buttonSound.setOn();
+        } else {
+            Game.buttonSound.setOff();
         }
 
         Game.buttonSound.setOnOffBehavior(new ButtonOnOff.OnOffBehavior() {
             @Override
             public void onBehavior() {
-                Game.volume = 100;
+                SaveGame.saveGame.sound = true;
             }
 
             @Override
             public void offBehavior() {
-                Game.volume = 0;
+                SaveGame.saveGame.sound = false;
             }
         });
 
@@ -267,19 +267,16 @@ public class Level {
         Game.buttonMusic.getListener().y = Game.resolutionY * 0.86f;
         Game.buttonMusic.getListener().width = Game.gameAreaResolutionX * 0.12f;
         Game.buttonMusic.getListener().height = Game.resolutionY * 0.12f;
-        if (!Game.musicOn) {
-            Game.buttonMusic.setOff();
-        } else {
+        if (SaveGame.saveGame.music) {
             Game.buttonMusic.setOn();
+        } else {
+            Game.buttonMusic.setOff();
         }
 
         Game.buttonMusic.setOnOffBehavior(new ButtonOnOff.OnOffBehavior() {
             @Override
             public void onBehavior() {
-                Game.musicOn = true;
-                if (Game.volume == 0) {
-                    Game.volume = 100;
-                }
+                SaveGame.saveGame.music = true;
                 if (Sound.music != null){
                     Sound.music.setVolume(0.006f* (float) 50, 0.006f* (float) 50);
                     Sound.music.start();
@@ -288,7 +285,7 @@ public class Level {
 
             @Override
             public void offBehavior() {
-                Game.musicOn = false;
+                SaveGame.saveGame.music = false;
                 if (Sound.music != null){
                     Sound.music.pause();
                 }

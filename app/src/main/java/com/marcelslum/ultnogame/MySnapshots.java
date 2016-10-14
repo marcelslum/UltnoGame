@@ -69,7 +69,8 @@ public class MySnapshots {
      */
     public static void writeSnapshot(Snapshot snapshot){
         // Set the data payload for the snapshot.
-        snapshot.getSnapshotContents().writeBytes(SaveGame.getString().getBytes());
+        Log.e(TAG, "Salvando na nuvem");
+        snapshot.getSnapshotContents().writeBytes(SaveGame.getStringFromSaveGame(SaveGame.saveGame).getBytes());
 
         // Save the snapshot.
         SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()

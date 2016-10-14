@@ -11,7 +11,6 @@ public class Storage {
     private Storage() {
     }
 
-    
     public static void setInt(String key, int value){
           SharedPreferences.Editor editor = storage.edit();
           editor.putInt(key, value);
@@ -46,9 +45,11 @@ public class Storage {
         return storage.contains(key);
     }
     
-    public static void initializeStorage(Context context, int maxNumberOfLevels){
-
+    public static void init(Context context) {
         storage = context.getSharedPreferences(STORAGE_FILE_NAME, 0);
+    }
+
+        /*
         for (int i = 0; i < maxNumberOfLevels; i++){
             int levelToTest = i + 1;
             if (!Storage.contains("tutorial"+ levelToTest +"visto")) {
@@ -85,6 +86,7 @@ public class Storage {
                 Levels.difficultyLevels[i] = Levels.LEVEL_NOT_COMPLETED;
             }
         }
+
     }
     
     public static int getMaxLevel(){
@@ -135,5 +137,7 @@ public class Storage {
     public static void setLevelTutorialSaw(int levelNumber, boolean value){
         Storage.setBoolean("tutorial"+ levelNumber +"visto", value);
     }
+
+    */
     
 }

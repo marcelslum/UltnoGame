@@ -14,158 +14,226 @@ import org.json.JSONObject;
 public class SaveGame {
     private static final String TAG = "SaveGame";
     private static final String SERIAL_VERSION = "1.0";
-    public static final SHARED_PREFERENCES_KEY_NAME = "saveGame";
+    public static final String SHARED_PREFERENCES_KEY_NAME = "saveGame";
     // TODO adicionar informação do usuário
-    
+
+    public static SaveGame saveGame;
+    public static long lastSave;
+    public static final int MIN_TIME_BEFORE_RESAVE = 2000;
+
+
     public int maxNumberOfLevels;
     public int currentMaxLevel;
     public int currentLevelNumber;
-    public int curretDifficulty;
+    public int currentDifficulty;
     public int[] difficultyLevels;
     public int[] pointsLevels;
+    public boolean[] tutorialLevels;
     public boolean music;
     public boolean sound;
     public long date;
 
-    public loaded = false;
-    
-    public SaveGame(SaveGameBuilder builder){
-            maxNumberOfLevels = builder.maxNumberOfLevels;
-            currentMaxLevel = builder.currentMaxLevel;
-            currentLevelNumber = builder.currentLevelNumber;
-            curretDifficulty = builder.curretDifficulty;
-            difficultyLevels = builder.difficultyLevels;
-            pointsLevels = builder.pointsLevels;
-            music = builder.music;
-            sound = builder.sound;
-            date = builder.date;
+    public static boolean loaded = false;
+
+    public SaveGame(SaveGameBuilder builder) {
+        maxNumberOfLevels = builder.maxNumberOfLevels;
+        currentMaxLevel = builder.currentMaxLevel;
+        currentLevelNumber = builder.currentLevelNumber;
+        currentDifficulty = builder.currentDifficulty;
+        difficultyLevels = builder.difficultyLevels;
+        pointsLevels = builder.pointsLevels;
+        tutorialLevels = builder.tutorialLevels;
+        music = builder.music;
+        sound = builder.sound;
+        date = builder.date;
     }
-    
-    public static load(){
+
+    public static void load() {
         loaded = false;
-        new LoadFromSnapshotAsyncTask("").execute();
+        new LoadFromSnapshotAsyncTask().execute();
     }
-    
-    public static onLoadFromSnapshot(String data){
-        String data2 = loadStringFromLocal();
-        
-        if (!data2.equal(data)){
-            saveGame = mergeReturningHigher(getSaveGameFromJson(data), getSaveGameFromJson(data2))          
+
+    public static void save(){
+
+        if (SaveGame.saveGame == null){
+            return;
+        }
+
+        if (Utils.getTime() - lastSave < MIN_TIME_BEFORE_RESAVE) {
+            return;
+        }
+        lastSave = Utils.getTime();
+
+        String saveString = getStringFromSaveGame(saveGame);
+        Log.e(TAG, "Salvando localmente "+saveString);
+        Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
+        new SaveSnapshotAsyncTask().execute();
+
+    }
+
+    public static void onLoadFromSnapshot(String data) {
+
+        Log.e(TAG, "Snapshot aberto:  " + data);
+
+        String data2;
+        if (Storage.contains(SHARED_PREFERENCES_KEY_NAME)){
+            Log.e(TAG, "Pegando dados salvos localmente aberto");
+            data2 = getStringFromLocal();
         } else {
+            Log.e(TAG, "Não existem dados salvos localmente");
+            data2 = null;
+        }
+
+
+
+        if (data2 == null){
+            Log.e(TAG, "Criando saveGame com dados do snapshot");
+            saveGame = getSaveGameFromJson(data);
+        } else if (!data2.equals(data)) {
+            Log.e(TAG, "Criando saveGame unindo os dois dados");
+            saveGame = mergeReturningHigher(getSaveGameFromJson(data), getSaveGameFromJson(data2));
+        } else {
+            Log.e(TAG, "Criando saveGame com dados do snapshot, pois ele é igual aos dados locais");
             saveGame = getSaveGameFromJson(data);
         }
         loaded = true;
     }
-    
-    public static onFailLoadFromSnapshot(String data){
-        if (Storage.contains(SHARED_PREFERENCES_KEY_NAME)){
-            saveGame = getSaveGameFromJson(loadStringFromLocal());
+
+    public static void onFailLoadFromSnapshot() {
+        Log.e(TAG, "Não carregou Snapshot");
+        if (Storage.contains(SHARED_PREFERENCES_KEY_NAME)) {
+            Log.e(TAG, "Carregando apenas localmente");
+            saveGame = getSaveGameFromJson(getStringFromLocal());
         } else {
-            
-            
-            int[] fpointsLevels = new int[100];
-            int[] fdifficultyLevels = new int[100];
-            
-            
-            
-            
-         saveGame = SaveGameBuilder()
-            .setMaxNumberOfLevels(MAX_NUMBER_OF_LEVELS)
-            .setCurrentMaxLevel(1)
-            .setCurrentLevelNumber(1)
-            .setCurretDifficulty(Game.DIFFICULTY_EASY)
-            .setDifficultyLevels(fdifficultyLevels)
-            .setPointsLevels(fpointsLevels)
-            .setMusic(true)
-            .setSound(true)
-            .setDate()
-            .build();   
+            Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
+            int[] _pointsLevels = new int[Levels.maxNumberOfLevels];
+            int[] _difficultyLevels = new int[Levels.maxNumberOfLevels];
+            boolean[] _tutorialLevels = new boolean[Levels.maxNumberOfLevels];
+
+            saveGame = new SaveGameBuilder()
+                    .setMaxNumberOfLevels(Levels.maxNumberOfLevels)
+                    .setCurrentMaxLevel(1)
+                    .setCurrentLevelNumber(1)
+                    .setCurretDifficulty(Game.DIFFICULTY_EASY)
+                    .setDifficultyLevels(_pointsLevels)
+                    .setPointsLevels(_difficultyLevels)
+                    .setTutorialLevels(_tutorialLevels)
+                    .setMusic(true)
+                    .setSound(true)
+                    .setDate()
+                    .build();
         }
         loaded = true;
     }
-    
-    public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sg2){
+
+    public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sg2) {
         int fmaxNumberOfLevels;
         int fcurrentMaxLevel;
         int fcurrentLevelNumber;
         int fcurretDifficulty;
         int[] fdifficultyLevels;
         int[] fpointsLevels;
+        boolean[] ftutorialLevels;
         boolean fmusic;
         boolean fsound;
         long fdate;
-        
+
         fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sg2.maxNumberOfLevels);
         fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sg2.currentMaxLevel);
         fcurrentLevelNumber = getHigher(sg1.currentLevelNumber, sg2.currentLevelNumber);
-        fcurretDifficulty = getHigher(sg1.curretDifficulty, sg2.curretDifficulty);
-        fdifficultyLevels = getHiger(sg1.difficultyLevels, sg2.difficultyLevels);
-        fpointsLevels = getHiger(sg1.pointsLevels, sg2.pointsLevels);
-        
+        fcurretDifficulty = getHigher(sg1.currentDifficulty, sg2.currentDifficulty);
+        fdifficultyLevels = getHigher(sg1.difficultyLevels, sg2.difficultyLevels);
+        ftutorialLevels = getHigher(sg1.tutorialLevels, sg2.tutorialLevels);
+        fpointsLevels = getHigher(sg1.pointsLevels, sg2.pointsLevels);
+
         fmusic = sg2.music || sg2.music;
-        fmusic = sg2.sound || sg2.sound;
+        fsound = sg2.sound || sg2.sound;
         fdate = getHigher(sg1.date, sg2.date);
-        
+
         return new SaveGameBuilder()
-            .setMaxNumberOfLevels(fmaxNumberOfLevels)
-            .setCurrentMaxLevel(fcurrentMaxLevel)
-            .setCurrentLevelNumber(fcurrentLevelNumber)
-            .setCurretDifficulty(fcurretDifficulty)
-            .setDifficultyLevels(fdifficultyLevels)
-            .setPointsLevels(fpointsLevels)
-            .setMusic(fmusic)
-            .setSound(fsound)
-            .setDate(fdate)
-            .build();
+                .setMaxNumberOfLevels(fmaxNumberOfLevels)
+                .setCurrentMaxLevel(fcurrentMaxLevel)
+                .setCurrentLevelNumber(fcurrentLevelNumber)
+                .setCurretDifficulty(fcurretDifficulty)
+                .setDifficultyLevels(fdifficultyLevels)
+                .setTutorialLevels(ftutorialLevels)
+                .setPointsLevels(fpointsLevels)
+                .setMusic(fmusic)
+                .setSound(fsound)
+                .setDate(fdate)
+                .build();
     }
-    
-    public static int[] getHiger(int[] array1, int[] array2){
-        int size = getHigher(array1.length(), array2.length());
-        int[] result = new int [size];
+
+
+    public static boolean[] getHigher(boolean[] array1, boolean[] array2) {
+        int size = getHigher(array1.length, array2.length);
+        boolean[] result = new boolean[size];
+        boolean v1;
+        boolean v2;
+        for (int i = 0; i < result.length; i++) {
+            if (array1.length > i) {
+                v1 = array1[i];
+            } else {
+                v1 = false;
+            }
+
+            if (array2.length > i) {
+                v2 = array2[i];
+            } else {
+                v2 = false;
+            }
+
+            result[i] = v1 || v2;
+        }
+        return result;
+    }
+
+    public static int[] getHigher(int[] array1, int[] array2) {
+        int size = getHigher(array1.length, array2.length);
+        int[] result = new int[size];
         int v1;
         int v2;
-        for (int i = 0; i < result.length; i++){
-            if (array1.length > i){
+        for (int i = 0; i < result.length; i++) {
+            if (array1.length > i) {
                 v1 = array1[i];
             } else {
                 v1 = 0;
             }
-            
-            if (array2.length > i){
+
+            if (array2.length > i) {
                 v2 = array2[i];
             } else {
                 v2 = 0;
             }
-            
+
             result[i] = getHigher(v1, v2);
         }
         return result;
     }
-    
-    
-    public static int getHigher(int value1, int value2){
-         if (value1 == value2 || value1 > value2){
-                return value1;
+
+
+    public static int getHigher(int value1, int value2) {
+        if (value1 == value2 || value1 > value2) {
+            return value1;
         } else {
-                return value2;
+            return value2;
         }
     }
-    
-    public static long getHigher(long value1, long value2){
-         if (value1 == value2 || value1 > value2){
-                return value1;
+
+    public static long getHigher(long value1, long value2) {
+        if (value1 == value2 || value1 > value2) {
+            return value1;
         } else {
-                return value2;
+            return value2;
         }
     }
-    
-    
-    
-    public static void getSaveGameFromJson(String json) {
-        if (json == null || json.trim().equals("")) return;
+
+
+    public static SaveGame getSaveGameFromJson(String json) {
+        if (json == null || json.trim().equals("")) return null;
         SaveGameBuilder saveGameBuilder = new SaveGameBuilder();
         try {
-            
+
             JSONObject obj = new JSONObject(json);
             String format = obj.getString("version");
             if (!format.equals(SERIAL_VERSION)) {
@@ -175,51 +243,59 @@ public class SaveGame {
             saveGameBuilder.setMaxNumberOfLevels(obj.getInt("maxNumberOfLevels"));
             saveGameBuilder.setCurrentMaxLevel(obj.getInt("currentMaxLevel"));
             saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
-            saveGameBuilder.setCurretDifficulty(obj.getInt("curretDifficulty"));
-            
+            saveGameBuilder.setCurretDifficulty(obj.getInt("currentDifficulty"));
+
             // pontuação dos levels
-            int [] pointsLevels = new int[saveGameBuilder.maxNumberOfLevels];
+            int[] pointsLevels = new int[saveGameBuilder.maxNumberOfLevels];
             JSONArray array = obj.getJSONArray("pointsLevels");
-            for (int i = 0; i < pointsLevels.length; i++){
+            for (int i = 0; i < pointsLevels.length; i++) {
                 pointsLevels[i] = array.getInt(i);
             }
             saveGameBuilder.setPointsLevels(pointsLevels);
-            
+
             // maxima dificuldade dos levels
-            int [] difficultyLevels = new int[saveGameBuilder.maxNumberOfLevels];
+            int[] difficultyLevels = new int[saveGameBuilder.maxNumberOfLevels];
             array = obj.getJSONArray("difficultyLevels");
-            for (int i = 0; i < difficultyLevels.length; i++){
+            for (int i = 0; i < difficultyLevels.length; i++) {
                 difficultyLevels[i] = array.getInt(i);
             }
             saveGameBuilder.setDifficultyLevels(difficultyLevels);
-            
+
+            // maxima dificuldade dos levels
+            boolean[] tutorialLevels = new boolean[saveGameBuilder.maxNumberOfLevels];
+            array = obj.getJSONArray("tutorialLevels");
+            for (int i = 0; i < tutorialLevels.length; i++) {
+                tutorialLevels[i] = array.getBoolean(i);
+            }
+            saveGameBuilder.setTutorialLevels(tutorialLevels);
+
             saveGameBuilder.setMusic(obj.getBoolean("music"));
             saveGameBuilder.setSound(obj.getBoolean("sound"));
-            
+
             saveGameBuilder.setDate(obj.getLong("date"));
-            
+
             return saveGameBuilder.build();
-            
-        }
-        catch (JSONException ex) {
+
+        } catch (JSONException ex) {
             ex.printStackTrace();
             Log.e(TAG, "Save data has a syntax error: " + json, ex);
             // Initializing with empty stars if the game file is corrupt.
             // NOTE: In your game, you want to try recovering from the snapshot payload.
             // TODO RECUPERAR DADOS DE SAHRED PREFERENCES
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             ex.printStackTrace();
             throw new RuntimeException("Save data has an invalid number in it: " + json, ex);
         }
+
+        return null;
     }
 
-    public static void saveStringOnLocal(){
-        Storage.setString(SHARED_PREFERENCES_FILE_NAME, getStringFromSaveGame(saveGame));
+    public static void saveStringOnLocal() {
+        Storage.setString(SHARED_PREFERENCES_KEY_NAME, getStringFromSaveGame(saveGame));
     }
- 
-    public static String getStringFromLocal(){
-        return Storage.getString(SHARED_PREFERENCES_FILE_NAME);
+
+    public static String getStringFromLocal() {
+        return Storage.getString(SHARED_PREFERENCES_KEY_NAME);
     }
 
     public static String getStringFromSaveGame(SaveGame saveGame) {
@@ -232,36 +308,14 @@ public class SaveGame {
             obj.put("currentDifficulty", saveGame.currentDifficulty);
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
             obj.put("difficultyLevels", new JSONArray(saveGame.difficultyLevels));
-            obj.put("musicOn", saveGame.music);
-            obj.put("volume", saveGame.sound);
+            obj.put("tutorialLevels", new JSONArray(saveGame.tutorialLevels));
+            obj.put("music", saveGame.music);
+            obj.put("sound", saveGame.sound);
             obj.put("date", saveGame.date);
             return obj.toString();
-        }
-        catch (JSONException ex) {
+        } catch (JSONException ex) {
             ex.printStackTrace();
             throw new RuntimeException("Error converting save data to JSON.", ex);
         }
     }
-
-    /*
-    public SaveGame unionWith(SaveGame other) {
-    // TODO - para uso em caso de atualizações, etc
-        SaveGame result = clone();
-        for (String levelName : other.mLevelStars.keySet()) {
-            int existingStars = result.getLevelStars(levelName);
-            int newStars = other.getLevelStars(levelName);
-
-            // only overwrite if number of stars is greater
-            if (newStars > existingStars) {
-                result.setLevelStars(levelName, newStars);
-            }
-
-            // note that this code doesn't preserve mappings from a level to the value 0,
-            // but that is not a problem because, in our semantics, the absence of a mapping
-            // is equivalent to mapping to 0 stars.
-        }
-
-        return result;
-    }
-    */
 }

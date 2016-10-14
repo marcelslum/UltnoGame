@@ -25,6 +25,7 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
     }
     @Override
     protected Snapshots.OpenSnapshotResult doInBackground(String... params) {
+        Log.e(TAG, "Abrindo Snapshot");
         Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
                 SNAPSHOT_FILE_NAME, true).await();
         return result;
@@ -47,16 +48,17 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
             data = null;
         }
         
-        Log.e(TAG, data.toString() + " data " + data);
-        
+        Log.e(TAG, data.toString() + " data " + data + " size "+  data.toString().length());
+        Log.e(TAG, "testando outra fora de conversão" + new String(data) +".");
 
-        if (data != null || data.){
-            SaveGame.onLoadFromSnapshot(data.toString());
-        } else {
+        String stringData = new String(data);
+
+        if (stringData.equals("") || stringData.length() < 20){
             SaveGame.onFailLoadFromSnapshot();
-        }
-        
 
+        } else {
+            SaveGame.onLoadFromSnapshot(stringData);
+        }
     }
     protected void onProgressUpdate(){
         //Codigo

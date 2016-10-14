@@ -209,6 +209,7 @@ public class MainActivity extends FragmentActivity implements
         if (mAdView != null) {
             mAdView.pause();
         }
+        SaveGame.save();
     }
 
     @Override
