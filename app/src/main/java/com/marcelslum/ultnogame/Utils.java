@@ -477,6 +477,7 @@ public abstract class Utils {
         return Game.context.getResources().getString(tag);
     }
 
+
     public static String readRawTextFile(Context ctx, int resId)
     {
         InputStream inputStream = ctx.getResources().openRawResource(resId);

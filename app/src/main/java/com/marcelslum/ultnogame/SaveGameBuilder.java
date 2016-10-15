@@ -14,7 +14,7 @@ public class SaveGameBuilder {
     public int currentDifficulty;
     public int[] difficultyLevels;
     public boolean[] tutorialLevels;
-    public int[] pointsLevels;
+    public long[] pointsLevels;
     public boolean music;
     public boolean sound;
     public long date;
@@ -53,7 +53,7 @@ public class SaveGameBuilder {
         return this;
     }
     
-    public SaveGameBuilder setPointsLevels(int [] pointsLevels) {
+    public SaveGameBuilder setPointsLevels(long [] pointsLevels) {
         this.pointsLevels = pointsLevels;
         return this;
     }

@@ -65,7 +65,7 @@ public class GooglePlayGames {
         }
     }
 
-    public static void submitScore(GoogleApiClient mGoogleApiClient, String id, int value){
+    public static void submitScore(GoogleApiClient mGoogleApiClient, String id, long value){
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             Games.Leaderboards.submitScore(mGoogleApiClient, id, value);
         } else {

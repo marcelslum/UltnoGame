@@ -28,7 +28,7 @@ public class SaveGame {
     public int currentLevelNumber;
     public int currentDifficulty;
     public int[] difficultyLevels;
-    public int[] pointsLevels;
+    public long[] pointsLevels;
     public boolean[] tutorialLevels;
     public boolean music;
     public boolean sound;
@@ -106,7 +106,10 @@ public class SaveGame {
             saveGame = getSaveGameFromJson(data);
         } else if (!dataLocal.equals(data)) {
             Log.e(TAG, "Criando saveGame unindo os dois dados");
+            Log.e(TAG, "dado1 snaps "+data);
+            Log.e(TAG, "dado2 local "+dataLocal);
             saveGame = mergeReturningHigher(getSaveGameFromJson(data), getSaveGameFromJson(dataLocal));
+            Log.e(TAG, "resultado   "+getStringFromSaveGame(saveGame));
         } else {
             Log.e(TAG, "Criando saveGame com dados do snapshot, pois ele é igual aos dados locais");
             saveGame = getSaveGameFromJson(data);
@@ -121,7 +124,7 @@ public class SaveGame {
             saveGame = getSaveGameFromJson(getStringFromLocal());
         } else {
             Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
-            int[] _pointsLevels = new int[Levels.maxNumberOfLevels];
+            long[] _pointsLevels = new long[Levels.maxNumberOfLevels];
             int[] _difficultyLevels = new int[Levels.maxNumberOfLevels];
             boolean[] _tutorialLevels = new boolean[Levels.maxNumberOfLevels];
 
@@ -130,8 +133,8 @@ public class SaveGame {
                     .setCurrentMaxLevel(1)
                     .setCurrentLevelNumber(1)
                     .setCurretDifficulty(Game.DIFFICULTY_EASY)
-                    .setDifficultyLevels(_pointsLevels)
-                    .setPointsLevels(_difficultyLevels)
+                    .setDifficultyLevels(_difficultyLevels)
+                    .setPointsLevels(_pointsLevels)
                     .setTutorialLevels(_tutorialLevels)
                     .setMusic(true)
                     .setSound(true)
@@ -147,7 +150,7 @@ public class SaveGame {
         int fcurrentLevelNumber;
         int fcurretDifficulty;
         int[] fdifficultyLevels;
-        int[] fpointsLevels;
+        long[] fpointsLevels;
         boolean[] ftutorialLevels;
         boolean fmusic;
         boolean fsound;
@@ -226,6 +229,29 @@ public class SaveGame {
         return result;
     }
 
+    public static long[] getHigher(long[] array1, long[] array2) {
+        int size = getHigher(array1.length, array2.length);
+        long[] result = new long[size];
+        long v1;
+        long v2;
+        for (int i = 0; i < result.length; i++) {
+            if (array1.length > i) {
+                v1 = array1[i];
+            } else {
+                v1 = 0;
+            }
+
+            if (array2.length > i) {
+                v2 = array2[i];
+            } else {
+                v2 = 0;
+            }
+
+            result[i] = getHigher(v1, v2);
+        }
+        return result;
+    }
+
 
     public static int getHigher(int value1, int value2) {
         if (value1 == value2 || value1 > value2) {
@@ -261,10 +287,10 @@ public class SaveGame {
             saveGameBuilder.setCurretDifficulty(obj.getInt("currentDifficulty"));
 
             // pontuação dos levels
-            int[] pointsLevels = new int[saveGameBuilder.maxNumberOfLevels];
+            long[] pointsLevels = new long[saveGameBuilder.maxNumberOfLevels];
             JSONArray array = obj.getJSONArray("pointsLevels");
             for (int i = 0; i < pointsLevels.length; i++) {
-                pointsLevels[i] = array.getInt(i);
+                pointsLevels[i] = array.getLong(i);
             }
             saveGameBuilder.setPointsLevels(pointsLevels);
 

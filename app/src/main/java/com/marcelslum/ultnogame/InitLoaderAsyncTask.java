@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
@@ -29,9 +31,12 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
                 Game.forInitGame = true;
                 return 0;   
             }
-            
-            Sound.init();
-            
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // TODO
+                Sound.init();
+            }
+
             if (isCancelled()){
                 Log.e(TAG, "cancelado 3");
                 Game.forInitGame = true;
@@ -39,7 +44,7 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
             }
         } catch (Exception e) {
             Log.e(TAG, "catch");
-            Log.e(TAG, "error", e)
+            Log.e(TAG, "error", e);
             return 0;
         }
         return 0;
@@ -52,6 +57,7 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
     protected void onCancelled(Integer i) {
         Log.e(TAG, "onCancelled");
         Game.forInitGame = true;
+        Splash.loaderConclude = false;
     }
     
     protected void onPostExecute(Integer i) {

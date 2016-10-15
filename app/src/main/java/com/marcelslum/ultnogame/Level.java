@@ -161,18 +161,17 @@ public class Level {
         Game.eraseAllGameEntities();
         Game.quad = new Quadtree(new RectangleM(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY),5,5);
 
-
         Game.scorePanel = new ScorePanel("scorePanel",
-                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.05f, Game.resolutionY * 0.08f);
+                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.08f);
         
-        float scorePanelX = Game.scorePanel.x;
-        float scorePanelWidth = Game.scorePanel.getWidth();
+        float scorePanelX = Game.scorePanel.x + (Game.scorePanel.getWidth()*0.0143f);
+        float scorePanelWidth = Game.scorePanel.getWidth() - + (Game.scorePanel.getWidth()*0.0305f);
         
-        Game.ballDataPanel = new BallDataPanel("ballDataPanel", 
-                                               scorePanelX - (scorePanelWidth/2f), 
-                                               Game.gameAreaResolutionY * 1.05f + Game.resolutionY * 0.08f),
-                                               scorePenalWidth,
-                                               Game.resolutionY * 0.04f);
+        Game.ballDataPanel = new BallDataPanel("ballDataPanel",
+            scorePanelX,
+            Game.gameAreaResolutionY * 1.05f + Game.resolutionY * 0.08f,
+            scorePanelWidth,
+            Game.resolutionY * 0.012f);
 
         Game.objectivePanel = new ObjectivePanel("objectivePanel", this.game,
                 Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.005f, Game.resolutionY * 0.027f);

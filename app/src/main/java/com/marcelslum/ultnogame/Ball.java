@@ -497,7 +497,7 @@ public class Ball extends Circle{
                         MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_pisando_no_freio,  1);
                     }
                 } else {
-                    Log.e("ball", "velocidade maior que o máximo ou menor que o mínimo);
+                    Log.e("ball", "velocidade maior que o máximo ou menor que o mínimo");
                     if (possibleVelocityLen < minLen){
                         Log.e("ball", "velocidade menor que o mínimo");
                         vx = vx * scalePorcentage;
@@ -527,29 +527,32 @@ public class Ball extends Circle{
 
                 float testAngle = (float)Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x)));
                 Log.e("ball", "possible angle "+testAngle);
-                
+
+                float finalAngle;
+
+
                 if (testAngle < maxAngle && testAngle > minAngle){
                     Log.e("ball", "rotacionando ");
                     final_vx =  possibleVelocityRotate.x;
                     final_vy =  possibleVelocityRotate.y;
+                    finalAngle = testAngle;
                 } else {
                     Log.e("ball", " não rotacionando ");
                     final_vx =  vx;
                     final_vy =  vy;
+                    finalAngle = (float)Math.toDegrees(Math.atan2(Math.abs(final_vx), Math.abs(final_vy)));
                 }
-                          
+                Log.e("ball", " final Angle "+ finalAngle);
+
+                Log.e("ball", " min   Angle "+ minAngle);
+                Log.e("ball", " max   Angle "+ maxAngle);
                 float finalLen = Utils.getVectorMagnitude(final_vx, final_vy);
                                                     
                 Log.e("ball", "finalLen "+finalLen);
                 
-                float velocityPercentage = (finalLen - minLen)/(maxLen/minLen);
-                          
-                          
-                Game.ballDataPanel.setVelocity();
-                Game.ballDataPanel.setAngle();
-                          
-                          
-                          
+                float velocityPercentage = (finalLen - minLen)/(maxLen - minLen);
+                float anglePercentage = (finalAngle - minAngle)/(maxAngle - minAngle);
+                Game.ballDataPanel.setData(velocityPercentage, anglePercentage);
             }
             this.accelerate(150, final_vx, final_vy);
         }

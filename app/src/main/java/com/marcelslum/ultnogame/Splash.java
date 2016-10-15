@@ -68,7 +68,7 @@ public class Splash {
             timeInitConectando = Utils.getTime();
         } else {
             Log.e("splash", "ativando loader");
-            AsyncsTask.initLoader = new InitLoaderAyncTask().execute();
+            AsyncTasks.initLoader = new InitLoaderAsyncTask().execute();
             setSplashMessage(MESSAGE_CARREGANDO);
             timeInitCarregando = Utils.getTime();
         }
@@ -153,11 +153,11 @@ public class Splash {
             Log.e("setSplashState", "MESSAGE_INTERNET_NAO_CONECTADA");
             message1.clearAnimations();
             message1 = new Text("messageSplash1",
-                    Game.resolutionX* 0.5f, Game.resolutionY  * 0.75f, Game.resolutionY * 0.06f,
+                    Game.resolutionX* 0.5f, Game.resolutionY  * 0.75f, Game.resolutionY * 0.04f,
                     Game.context.getResources().getString(R.string.splash_nao_foi_possivel_conectar1), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message2 = new Text("messageSplash2",
-                    Game.resolutionX* 0.5f, Game.resolutionY * 0.85f, Game.resolutionY * 0.04f,
+                    Game.resolutionX* 0.5f, Game.resolutionY * 0.85f, Game.resolutionY * 0.035f,
                     Game.context.getResources().getString(R.string.splash_clique_aqui), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message1.display();
@@ -170,7 +170,7 @@ public class Splash {
                     Game.context.getResources().getString(R.string.splash_nao_foi_possivel_conectar_ao_google), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message2 = new Text("messageSplash2",
-                    Game.resolutionX* 0.5f, Game.resolutionY * 0.85f, Game.resolutionY * 0.04f,
+                    Game.resolutionX* 0.5f, Game.resolutionY * 0.85f, Game.resolutionY * 0.035f,
                     Game.context.getResources().getString(R.string.splash_clique_aqui), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message1.display();
@@ -210,8 +210,9 @@ public class Splash {
                 && ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_CONNECTED) {
                 Log.e("splash", "conectado - verificando conexao com o google");
                 if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()) {
-                    Log.e("splash", "conectado ao google");
+
                     if (Game.currentPlayerId == null) {
+                        Log.e("splash", "conectado ao google");
                         Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
                         Storage.init(Game.context, Game.currentPlayerId);
                     }

@@ -75,6 +75,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             return;
         }
 
+        Log.e("GLRenderer", "(re)criando o jogo do zero");
+
         Game.forInitGame = false;
         Splash.loaderConclude = false;
 

@@ -6,6 +6,7 @@ import android.util.Log;
 
 //import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,6 +23,8 @@ import java.util.TimerTask;
 /** * Created by marcel on 01/08/2016.
  */
 public class Game {
+
+    public static final String TAG = "Game";
 
     public static MainActivity mainActivity;
 
@@ -203,7 +206,7 @@ public class Game {
     public static final int POINTS_HARD = 300;
     public static final int POINTS_INSANE = 500;
 
-    public static int maxScoreTotal;
+    public static long maxScoreTotal;
     public static String currentPlayerId;
 
     private Game() {}
@@ -217,7 +220,13 @@ public class Game {
         initPrograms();
         initFont();
 
-        Texture.textures = new ArrayList<>();
+        if (Texture.textures == null) {
+            Texture.textures = new ArrayList<>();
+        } else {
+            Texture.textures.clear();
+        }
+
+        Texture.clear();
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
         Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
 
@@ -266,18 +275,13 @@ public class Game {
     }
 
     public static void initTextures() {
-        if (Texture.textures == null) {
-            Texture.textures = new ArrayList<>();
-        }
+        Log.e(TAG, "initTextures");
         Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
         Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
-
-
-
     }
 
     public static void initTittle(){
@@ -355,7 +359,7 @@ public class Game {
 
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 resolutionX*0.05f, resolutionY*0.84f, resolutionY*0.036f,
-                context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal(), font, new Color(0f, 0f, 0f, 0.5f));
+                context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(getMaxScoreTotal()), font, new Color(0f, 0f, 0f, 0.5f));
 
         bottomTextBox = new TextBoxBuilder("bottomTextBox")
                 .position(resolutionX*0.05f, resolutionY*0.9f)
@@ -808,7 +812,7 @@ public class Game {
             messageMaxScoreTotal.display();
             bottomTextBox.display();
             messageMaxScoreTotal.setText(
-                    context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ getMaxScoreTotal());
+                    context.getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(getMaxScoreTotal()));
 
             ConnectionHandler.verify();
 
@@ -1320,18 +1324,22 @@ public class Game {
     }
 
     public static void setMaxScoreTotal(){
-        int scoreTotal = getMaxScoreTotal();
+        long scoreTotal = getMaxScoreTotal();
         GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), scoreTotal);
         maxScoreTotal = scoreTotal;
     }
 
-    public static int getMaxScoreTotal(){
-        int scoreTotal = 0;
+    public static long getMaxScoreTotal(){
+        //Log.e("Game", "getMaxScoreTotal");
+        long scoreTotal = 0;
         for (int i = 0; i < Levels.maxNumberOfLevels; i++){
             scoreTotal += SaveGame.saveGame.pointsLevels[i];
+            //Log.e("Game", "level "+(i+1)+ " pontos "+SaveGame.saveGame.pointsLevels[i]);
+            //Log.e("Game", "scoreTotal "+scoreTotal);
+
         }
         maxScoreTotal = scoreTotal;
-        Log.e("Game", "score total retornando após calculo "+ scoreTotal);
+        //Log.e("Game", "score total retornando após calculo "+ scoreTotal);
         return scoreTotal;
     }
 
@@ -1370,7 +1378,7 @@ public class Game {
         // alterar texto que mostra o level
         messageCurrentLevel.setText(
             context.getResources().getString(R.string.messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(SaveGame.saveGame.currentLevelNumber) + " - "+
-                    context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ Integer.toString(SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1])
+                    context.getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ NumberFormat.getInstance().format(SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1])
         );
         menuMain.getMenuOptionByName("IniciarJogo").setText(context.getResources().getString(R.string.menuPrincipalIniciar) + " "+SaveGame.saveGame.currentLevelNumber);
     }
@@ -1798,7 +1806,7 @@ public class Game {
         if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
 
         if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
-        if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
+        if (scorePanel != null) scorePanel.prepareRender(matrixView, matrixProjection);
         if (objectivePanel != null) objectivePanel.prepareRender(matrixView, matrixProjection);
 
         if (button1Left != null) button1Left.prepareRender(matrixView, matrixProjection);

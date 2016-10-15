@@ -37,7 +37,13 @@ public class Texture {
     int id;
     Bitmap bitmap;
     boolean bounded = false;
-    public static final TAG = "Texture";
+    public static final String TAG = "Texture";
+
+
+    public static void clear(){
+        textureNames = null;
+        textureNamesUsed = null;
+    }
 
     Texture(int id, String resourceIdentifier){
         

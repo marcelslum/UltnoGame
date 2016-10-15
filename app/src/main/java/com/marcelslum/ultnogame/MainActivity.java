@@ -1,12 +1,10 @@
 package com.marcelslum.ultnogame;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -139,17 +137,17 @@ public class MainActivity extends FragmentActivity implements
 
 		    @Override
 		    public void onAdClosed() {
-                //Game.setGameState(Game.GAME_STATE_MENU);
+                Game.setGameState(Game.GAME_STATE_MENU);
                 interstitial.loadAd(adRequest);
 		    }
 
 		    @Override
 		    public void onAdFailedToLoad(int errorCode) {
                 Log.e("findStateMenu", "2" + "loader conclude "+Splash.loaderConclude);
-                if (Splash.loaderConclude && Game.gameState != Game.GAME_STATE_INTRO) {
-                    Game.setGameState(Game.GAME_STATE_MENU);
-                    return;
-                }
+                //if (Splash.loaderConclude && Game.gameState != Game.GAME_STATE_INTRO) {
+                //    Game.setGameState(Game.GAME_STATE_MENU);
+                //    return;
+                //}
                 interstitial.loadAd(adRequest);
 		    }
 
@@ -206,7 +204,7 @@ public class MainActivity extends FragmentActivity implements
         if (mAdView != null) {
             mAdView.pause();
         }
-	AsyncsTasks.cancelAll();   
+	    AsyncTasks.cancelAll();
         super.onPause();
     }
 
