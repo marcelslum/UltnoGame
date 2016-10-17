@@ -28,29 +28,42 @@ public class LoadAchievementsAsyncTask extends AsyncTask<String,Integer,Integer>
     }
     @Override
     protected Integer doInBackground(String... params) {
-    
+        Log.e(TAG, "doInBackground");
          boolean fullLoad = false;  // set to 'true' to reload all achievements (ignoring cache)
          long waitTime = 60l;    // seconds to wait for achievements to load before timing out
 
          // load achievements
          PendingResult<LoadAchievementsResult> p = Games.Achievements.load(Game.mainActivity.mGoogleApiClient, fullLoad);
-         LoadAchievementsResult r = (LoadAchievementsResult) p.await( waitTime, TimeUnit.SECONDS );
+         LoadAchievementsResult r = p.await( waitTime, TimeUnit.SECONDS);
+
+
+
+
          int status = r.getStatus().getStatusCode();
          if ( status != GamesStatusCodes.STATUS_OK )  {
             r.release();
             return -1;
          }
 
-         // cache the loaded achievements
          AchievementBuffer buf = r.getAchievements();
          int bufSize = buf.getCount();
          for ( int i = 0; i < bufSize; i++ )  {
+             if (isCancelled()){
+                 break;
+             }
             Achievement ach = buf.get( i );
             MyAchievements.add(ach);
          }
          r.release();
          return 0;
     }
+
+    @Override
+    protected void onCancelled(Integer i) {
+        Log.e(TAG, "onCancelled");
+
+    }
+
     @Override
     protected void onPostExecute(Integer result){
         if (result == -1){

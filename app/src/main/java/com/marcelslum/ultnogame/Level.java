@@ -162,16 +162,16 @@ public class Level {
         Game.quad = new Quadtree(new RectangleM(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY),5,5);
 
         Game.scorePanel = new ScorePanel("scorePanel",
-                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.08f);
+                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.07f);
         
         float scorePanelX = Game.scorePanel.x + (Game.scorePanel.getWidth()*0.0143f);
-        float scorePanelWidth = Game.scorePanel.getWidth() - + (Game.scorePanel.getWidth()*0.0305f);
+        float scorePanelWidth = Game.scorePanel.getWidth() - (Game.scorePanel.getWidth()*0.03f);
         
         Game.ballDataPanel = new BallDataPanel("ballDataPanel",
             scorePanelX,
             Game.gameAreaResolutionY * 1.05f + Game.resolutionY * 0.08f,
             scorePanelWidth,
-            Game.resolutionY * 0.012f);
+            Game.resolutionY * 0.014f);
 
         Game.objectivePanel = new ObjectivePanel("objectivePanel", this.game,
                 Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.005f, Game.resolutionY * 0.027f);
@@ -338,7 +338,7 @@ public class Level {
 
             bar.initialX = barX;
             bar.initialY = barY;
-            bar.initialDesireVelocityX = barVelocityX;
+            bar.initialDVX = barVelocityX;
             bar.dvx = barVelocityX;
             if (barsScaleVariationData != null) {
                 bar.setScaleVariation(barsScaleVariationData[i]);
@@ -458,8 +458,8 @@ public class Level {
             ic = i; if (i > this.ballsMinAngle.length - 1) {ic = 0;}
             ball.minAngle = this.ballsMinAngle[ic];
 
-            ball.initialDesireVelocityX = ballVelocityX;
-            ball.initialDesireVelocityY = ballVelocityY;
+            ball.initialDVX = ballVelocityX;
+            ball.initialDVY = ballVelocityY;
 
             ball.initialX = ballX;
             ball.initialY = ballY;
@@ -494,9 +494,9 @@ public class Level {
         private final static float default_ballsVX_BR = 0.0028f;
         private final static float default_ballsVY_BR = 0.004941176f;
         private final static int default_ballTextureMap = Ball.COLOR_BALL_BLACK;
-        private final static float default_ballsAngleToRotate = 2f;
-        private final static float default_ballsMaxAngle = 55f;
-        private final static float default_ballsMinAngle = 35f;
+        private final static float default_ballsAngleToRotate = 5f;//2f;
+        private final static float default_ballsMaxAngle = 90f;//55f;
+        private final static float default_ballsMinAngle = 0f;//35f;
         private final static float default_ballsVelocityVariation = 0.1f;
         private final static float default_ballsVelocityMax_BI = 1.5f;
         private final static float default_ballsVelocityMin_BI = 0.8f;

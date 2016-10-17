@@ -31,9 +31,9 @@ public class LevelLoader {
 
         if (levelNumber >= 2) {
             levelBuilder
-                    .setBallsAngleToRotate_BD_2(4f)
-                    .setBallsMaxAngle_BD_55(2.182f)
-                    .setBallsMinAngle_BD_35(0.857f)
+                    .setBallsAngleToRotate_BD_2(1.5f)//4f
+                    //.setBallsMaxAngle_BD_55(2.182f)
+                    //.setBallsMinAngle_BD_35(0.857f)
                     .setBallsVelocityVariation_BD_0_1(2f)
                     .setBallsVelocityMax_BD_1_5(1.467f)
                     .setBallsVelocityMin_BD_0_8(0.875f)
@@ -57,8 +57,8 @@ public class LevelLoader {
                     .setBallsVX(1.071f)
                     .setBallsVY(1.071f)
                     .setBallsAngleToRotate_BD_2(1f)
-                    .setBallsMaxAngle_BD_55(1f)
-                    .setBallsMinAngle_BD_35(1f)
+                    //.setBallsMaxAngle_BD_55(1f)
+                    //.setBallsMinAngle_BD_35(1f)
                     .setBallsVelocityVariation_BD_0_1(1f)
                     .setBallsVelocityMax_BD_1_5(1f)
                     .setBallsVelocityMin_BD_0_8(1f)
@@ -200,8 +200,8 @@ public class LevelLoader {
 
         if (levelNumber >= 6) {
                 levelBuilder
-                        .setBallsMaxAngle_BD_55(1.0036f)
-                        .setBallsMinAngle_BD_35(0.943f)
+                        //.setBallsMaxAngle_BD_55(1.0036f)
+                        //.setBallsMinAngle_BD_35(0.943f)
                         .setBallsVelocityVariation_BD_0_1(1.1f)
                         .setBallsVelocityMax_BD_1_5(1.6f)
                         .setBallsVelocityMin_BD_0_8(0.938f)
@@ -247,9 +247,9 @@ public class LevelLoader {
         if (levelNumber >= 8) {
                 levelBuilder
                         .setBallsVX(1.214f)
-                        .setBallsVY(1.214f)
-                        .setBallsMaxAngle_BD_55(58f)
-                        .setBallsMinAngle_BD_35(32f);
+                        .setBallsVY(1.214f);
+                        //.setBallsMaxAngle_BD_55(58f)
+                        //.setBallsMinAngle_BD_35(32f);
             if (levelNumber == 8) {
                 levelBuilder
                         .setTargetsMap(

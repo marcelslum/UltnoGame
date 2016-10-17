@@ -70,6 +70,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         Log.e("GLRenderer", "onSurfaceChanged");
+        Log.e("GLRenderer", "forInitGame "+Game.forInitGame);
+        Log.e("GLRenderer", "Game.bordaE  "+(Game.bordaE == null));
         if (!Game.forInitGame && Game.bordaE != null){
             Log.e("GLRenderer", "onSurfaceChanged - apenas resumindo jogo");
             return;

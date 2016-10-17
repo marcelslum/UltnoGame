@@ -3,6 +3,7 @@ package com.marcelslum.ultnogame;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * Created by marcel on 23/09/2016.
@@ -27,6 +28,14 @@ public class InternetConnectionAsyncTask extends AsyncTask<String,Integer,Intege
             return NOT_CONNECTED;
         }
     }
+
+    @Override
+    protected void onCancelled(Integer result) {
+        ConnectionHandler.handleInternetConnection(result);
+    }
+
+
+
     @Override
     protected void onPostExecute(Integer result){
         ConnectionHandler.handleInternetConnection(result);

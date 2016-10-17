@@ -83,7 +83,7 @@ public class SaveGame {
         String saveString = getStringFromSaveGame(saveGame);
         Log.e(TAG, "Salvando localmente "+saveString);
         Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
-        new SaveSnapshotAsyncTask().execute(saveString);
+        AsyncTasks.saveSnapshot = new SaveSnapshotAsyncTask().execute(saveString);
     }
 
     public static void onLoadFromSnapshot(String data) {

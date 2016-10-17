@@ -13,6 +13,10 @@ public class PhysicalObject extends Entity implements Weight{
     public float vy;
     public float dvx;
     public float dvy;
+    public float initialDVX;
+    public float initialDVY;
+    public float initialX;
+    public float initialY;
     public boolean isCollided;
     public ArrayList<CollisionData> collisionsData;
     public boolean accelStarted;
@@ -20,12 +24,13 @@ public class PhysicalObject extends Entity implements Weight{
     public float accelInitialVelocityY;
     public float accelFinalVelocityX;
     public float accelFinalVelocityY;
+    public int accelType;
+    public float accelPercentage;
     public int accelDuration;
     public long accelInitialTime;
-    public float initialDesireVelocityX;
-    public float initialDesireVelocityY;
-    public float initialX;
-    public float initialY;
+
+    public static final int ACCEL_TYPE_LINEAR = 0;
+    public static final int ACCEL_TYPE_EXPONENTIAL = 1;
 
     public RectangleM bounds;
     public RectangleM quadtreeData;
@@ -114,21 +119,25 @@ public class PhysicalObject extends Entity implements Weight{
 
     public void verifyAcceleration(){
         if (this.accelStarted){
-            long elapsedTime = Utils.getTime() - this.accelInitialTime;
-            float porcentage = (float)elapsedTime / (float)this.accelDuration;
+            long elapsedTime = Utils.getTime() - accelInitialTime;
+            accelPercentage = (float)elapsedTime / (float)accelDuration;
 
-            if (porcentage > 1){
-                this.accelStarted = false;
-                this.dvx = this.accelFinalVelocityX;
-                this.dvy = this.accelFinalVelocityY;
+            if (accelPercentage > 1){
+                accelStarted = false;
+                dvx = this.accelFinalVelocityX;
+                dvy = this.accelFinalVelocityY;
             } else {
-                this.dvx = this.accelInitialVelocityX + ((this.accelFinalVelocityX - this.accelInitialVelocityX) * porcentage);
-                this.dvy = this.accelInitialVelocityY + ((this.accelFinalVelocityY - this.accelInitialVelocityY) * porcentage);
+                if (accelType == ACCEL_TYPE_EXPONENTIAL) {
+                    accelPercentage = (float) Math.pow(accelPercentage, 2 * 1.1);
+                }
+                dvx = accelInitialVelocityX + ((accelFinalVelocityX - accelInitialVelocityX) * accelPercentage);
+                dvy = accelInitialVelocityY + ((accelFinalVelocityY - accelInitialVelocityY) * accelPercentage);
             }
         }
     }
 
     public void accelerate(int duration, float x, float y){
+        accelType = ACCEL_TYPE_LINEAR;
         if (this.accelStarted == false){
             this.accelInitialVelocityX = this.accelFinalVelocityX;
             this.accelInitialVelocityY = this.accelFinalVelocityY;
@@ -140,6 +149,17 @@ public class PhysicalObject extends Entity implements Weight{
         this.accelInitialVelocityX = this.dvx;
         this.accelInitialVelocityY = this.dvy;
         this.accelInitialTime = Utils.getTime();
+    }
+
+    public void accelerateFrom(int type, int duration, float initialVX, float initialVY, float finalVX, float finalVY){
+        accelType = type;
+        accelInitialVelocityX = initialVX;
+        accelInitialVelocityY = initialVY;
+        accelFinalVelocityX = finalVX;
+        accelFinalVelocityY = finalVY;
+        accelStarted = true;
+        accelDuration = duration;
+        accelInitialTime = Utils.getTime();
     }
 
     public void clearCollisionData() {

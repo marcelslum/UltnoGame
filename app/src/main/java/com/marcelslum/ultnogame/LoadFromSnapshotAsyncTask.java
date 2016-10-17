@@ -25,6 +25,7 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
     }
     @Override
     protected Snapshots.OpenSnapshotResult doInBackground(String... params) {
+        Log.e(TAG, "doInBackground");
         Log.e(TAG, "Abrindo Snapshot");
         Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
                 MySnapshots.SNAPSHOT_FILE_NAME, true).await();

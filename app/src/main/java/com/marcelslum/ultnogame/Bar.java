@@ -8,6 +8,8 @@ import android.util.Log;
  */
 public class Bar extends Rectangle{
 
+    public static final String TAG = "Bar";
+
     long startTimeSpecialBallAnim = 0;
     long specialBallAnimDuration = 1000;
     boolean specialBallAnimActive = false;
@@ -169,5 +171,38 @@ public class Bar extends Rectangle{
         scale(0.1f, 0.0f);
         startTimeSpecialBallAnim = Utils.getTime();
         specialBallAnimActive = true;
+    }
+
+    public void moveLeft(float timePercentage) {
+        //Log.e(TAG, "moveLeft");
+        if (!accelStarted || (accelStarted && (accelFinalVelocityX > 0f))) {
+            //Log.e(TAG, "initAcceleration");
+            accelerateFrom(PhysicalObject.ACCEL_TYPE_EXPONENTIAL, 2000, -initialDVX, 0f, -initialDVX * 2f, 0f);
+        }
+        verifyAcceleration();
+        //Log.e(TAG, "dvx "+dvx);
+        vx = dvx * timePercentage;
+        translate(vx, 0f);
+        verifyWind();
+    }
+
+    public void moveRight(float timePercentage) {
+        //Log.e(TAG, "moveRight");
+        if (!accelStarted || (accelStarted && (accelFinalVelocityX < 0f))) {
+            //Log.e(TAG, "initAcceleration");
+            accelerateFrom(PhysicalObject.ACCEL_TYPE_EXPONENTIAL, 2000, initialDVX, 0f, initialDVX * 2f, 0f);
+        }
+        verifyAcceleration();
+        //Log.e(TAG, "dvx "+dvx);
+        vx = dvx * timePercentage;
+        translate(vx, 0f);
+        verifyWind();
+    }
+
+    public void stop(){
+        if (accelStarted){
+            accelStarted = false;
+        }
+        vx = 0f;
     }
 }

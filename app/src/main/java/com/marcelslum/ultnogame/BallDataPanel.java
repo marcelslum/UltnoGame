@@ -10,8 +10,8 @@ public class BallDataPanel extends Entity{
 
     Rectangle velocityRectangle;
     Rectangle angleRectangle;
-    float velocityPercent = 1f;
-    float anglePercent = 1f;
+    float velocityPercent = 0f;
+    float anglePercent = 0f;
     public static final String TAG = "BallDataPanel";
 
     float width;
@@ -30,10 +30,9 @@ public class BallDataPanel extends Entity{
     public void generateRectangles(){
         float  baseHeight = height/5f;
 
-        velocityRectangle = new Rectangle("velocityRectangle", x, y, width * velocityPercent, baseHeight *2f, -1, new Color(0.52f, 0.88f, 0.52f, 1f));
-        velocityRectangle.alpha = 0.3f;
-        angleRectangle = new Rectangle("velocityRectangle", x, y + (baseHeight * 3f), width * anglePercent, baseHeight *2f, -1, new Color(0.14f, 0.56f, 0.14f, 1f));
-        angleRectangle.alpha = 0.3f;
+        velocityRectangle = new Rectangle("velocityRectangle", x, y, width * velocityPercent, baseHeight *2f, -1, new Color(0.14f, 0.14f, 0.56f, 0.7f));
+        angleRectangle = new Rectangle("velocityRectangle", x, y + (baseHeight * 3f), width * anglePercent, baseHeight *2f, -1, new Color(0.14f, 0.56f, 0.14f, 0.7f));
+
     }
 
     void setSize(int width, int height){
@@ -42,7 +41,11 @@ public class BallDataPanel extends Entity{
     }
 
     public void render(float[] matrixView, float[] matrixProjection){
+
+
+        velocityRectangle.alpha = this.alpha;
         velocityRectangle.render(matrixView, matrixProjection);
+        angleRectangle.alpha = this.alpha;
         angleRectangle.render(matrixView, matrixProjection);
 
     }
@@ -50,6 +53,15 @@ public class BallDataPanel extends Entity{
     public void setData(float velocityPercentage, float anglePercentage) {
         Log.e(TAG, "velocityPercentage "+velocityPercentage);
         Log.e(TAG, "anglePercentage "+anglePercentage);
+
+        if (velocityPercentage < 0.005f){
+            velocityPercentage = 0.005f;
+        }
+
+        if (anglePercentage < 0.005f){
+            anglePercentage = 0.005f;
+        }
+
         velocityPercent = velocityPercentage;
         anglePercent = anglePercentage;
         generateRectangles();

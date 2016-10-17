@@ -31,59 +31,78 @@ public class SaveSnapshotAsyncTask extends AsyncTask<String,Integer,Integer> {
     }
     @Override
     protected Integer doInBackground(String... save) {
-        Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
-                MySnapshots.SNAPSHOT_FILE_NAME, true).await();
+        if (Game.mainActivity.mGoogleApiClient == null || !Game.mainActivity.mGoogleApiClient.isConnected()) {
+            return -1;
+        }
+            Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
+                    MySnapshots.SNAPSHOT_FILE_NAME, true).await();
 
-        Log.e(TAG, "Salvando na nuvem");
-        Log.e(TAG, "save "+save);
+            Log.e(TAG, "Salvando na nuvem");
+            Log.e(TAG, "save " + save);
 
-        Snapshot toWrite = null;
-        Snapshot mResolvedSnapshot = null;
+            Snapshot toWrite = null;
+            Snapshot mResolvedSnapshot = null;
 
-        Snapshots.OpenSnapshotResult resolveResult = result;
+            Snapshots.OpenSnapshotResult resolveResult = result;
 
-        for (int i = 0; i < 5; i++) {
-            int status = resolveResult.getStatus().getStatusCode();
-            Log.e(TAG, "Save Result status: " + status);
-            if (status == GamesStatusCodes.STATUS_OK) {
-                Log.e(TAG, "Save Result status: " + "STATUS_OK");
-                toWrite = resolveResult.getSnapshot();
-                i += 5;
-            } else if (status == GamesStatusCodes.STATUS_SNAPSHOT_CONTENTS_UNAVAILABLE) {
-                Log.e(TAG, "Save Result status: " + "STATUS_SNAPSHOT_CONTENTS_UNAVAILABLE");
-                toWrite = resolveResult.getSnapshot();
-                i += 5;
-            } else if (status == GamesStatusCodes.STATUS_SNAPSHOT_CONFLICT) {
-                Log.e(TAG, "Save Result status: " + "STATUS_SNAPSHOT_CONFLICT");
-                Snapshot snapshot = resolveResult.getSnapshot();
-                Snapshot conflictSnapshot = result.getConflictingSnapshot();
+            for (int i = 0; i < 5; i++) {
+                int status = resolveResult.getStatus().getStatusCode();
+                Log.e(TAG, "Save Result status: " + status);
+                if (status == GamesStatusCodes.STATUS_OK) {
+                    Log.e(TAG, "Save Result status: " + "STATUS_OK");
+                    toWrite = resolveResult.getSnapshot();
+                    i += 5;
+                } else if (status == GamesStatusCodes.STATUS_SNAPSHOT_CONTENTS_UNAVAILABLE) {
+                    Log.e(TAG, "Save Result status: " + "STATUS_SNAPSHOT_CONTENTS_UNAVAILABLE");
+                    toWrite = resolveResult.getSnapshot();
+                    i += 5;
+                } else if (status == GamesStatusCodes.STATUS_SNAPSHOT_CONFLICT) {
+                    Log.e(TAG, "Save Result status: " + "STATUS_SNAPSHOT_CONFLICT");
+                    Snapshot snapshot = resolveResult.getSnapshot();
+                    Snapshot conflictSnapshot = result.getConflictingSnapshot();
 
-                if (snapshot.getMetadata().getLastModifiedTimestamp() <
-                        conflictSnapshot.getMetadata().getLastModifiedTimestamp()) {
-                    mResolvedSnapshot = conflictSnapshot;
+                    if (snapshot.getMetadata().getLastModifiedTimestamp() <
+                            conflictSnapshot.getMetadata().getLastModifiedTimestamp()) {
+                        mResolvedSnapshot = conflictSnapshot;
+                    }
+
+                    resolveResult = Games.Snapshots.resolveConflict(
+                            Game.mainActivity.mGoogleApiClient, result.getConflictId(), mResolvedSnapshot)
+                            .await();
                 }
-
-                resolveResult = Games.Snapshots.resolveConflict(
-                        Game.mainActivity.mGoogleApiClient, result.getConflictId(), mResolvedSnapshot)
-                        .await();
             }
-        }
 
-        if (toWrite != null) {
-            toWrite.getSnapshotContents().writeBytes(save[0].getBytes());
+            if (toWrite != null) {
+                toWrite.getSnapshotContents().writeBytes(save[0].getBytes());
 
-            // Save the snapshot.
-            SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
-                    .setDescription("Modified data at: " + Calendar.getInstance().getTime())
-                    .build();
-            Games.Snapshots.commitAndClose(Game.mainActivity.mGoogleApiClient, toWrite, metadataChange);
-        }
-        return 1;
+                // Save the snapshot.
+                SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
+                        .setDescription("Modified data at: " + Calendar.getInstance().getTime())
+                        .build();
+                Games.Snapshots.commitAndClose(Game.mainActivity.mGoogleApiClient, toWrite, metadataChange);
+            }
+            return 1;
+
     }
 
     @Override
     protected void onPostExecute(Integer result){
+        Log.e(TAG, "onPostExecute");
 
+        if (Game.mainActivity.isPaused){
+            Log.e(TAG, "onPostExecute isPause");
+            Game.mainActivity.mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    protected void onCancelled(Integer integer) {
+        super.onCancelled(integer);
+        Log.e(TAG, "onCancelled");
+        if (Game.mainActivity.isPaused){
+            Log.e(TAG, "onCancelled isPaused");
+            Game.mainActivity.mGoogleApiClient.disconnect();
+        }
     }
 
     protected void onProgressUpdate(){

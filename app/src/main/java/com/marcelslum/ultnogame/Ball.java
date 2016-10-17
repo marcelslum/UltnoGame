@@ -462,7 +462,7 @@ public class Ball extends Circle{
             vx = this.dvx;
             vy = this.dvy;
 
-            float initialLen = Utils.getVectorMagnitude(initialDesireVelocityX, initialDesireVelocityY);
+            float initialLen = Utils.getVectorMagnitude(initialDVX, initialDVY);
             Log.e("ball", "initialLen "+initialLen);
 
             float maxLen = initialLen * this.velocityMax_BI;
@@ -537,12 +537,43 @@ public class Ball extends Circle{
                     final_vy =  possibleVelocityRotate.y;
                     finalAngle = testAngle;
                 } else {
-                    Log.e("ball", " não rotacionando ");
-                    final_vx =  vx;
-                    final_vy =  vy;
-                    finalAngle = (float)Math.toDegrees(Math.atan2(Math.abs(final_vx), Math.abs(final_vy)));
+                    if (testAngle > maxAngle){
+                        finalAngle = maxAngle;
+                        Log.e("ball", "testAngle > maxAngle");
+                        if (angleToRotate < 0f){
+                            Log.e("ball", "angleToRotate < 0f");
+                            angleToRotate += testAngle - maxAngle;
+                        } else {
+                            Log.e("ball", "angleToRotate > 0f");
+                            angleToRotate -= testAngle - maxAngle;
+                        }
+                    } else if (testAngle < minAngle){
+                        finalAngle = minAngle;
+                        Log.e("ball", "testAngle < minAngle");
+                        if (angleToRotate > 0f){
+                            Log.e("ball", "angleToRotate > 0f");
+                            angleToRotate -= minAngle - testAngle;
+                        } else {
+                            Log.e("ball", "angleToRotate < 0f");
+                            angleToRotate += minAngle - testAngle;
+                        }
+                    } else {
+                        finalAngle = testAngle;
+                    }
+
+                    Log.e("ball", "angleToRotate "+angleToRotate);
+
+                    Vector velocityAdjust = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
+
+                    final_vx =  velocityAdjust.x;
+                    final_vy =  velocityAdjust.y;
+
+
+
                 }
-                Log.e("ball", " final Angle "+ finalAngle);
+
+                // angleToRotate positivo = sentido horário
+
 
                 Log.e("ball", " min   Angle "+ minAngle);
                 Log.e("ball", " max   Angle "+ maxAngle);
@@ -637,7 +668,7 @@ public class Ball extends Circle{
         }
 
 
-        float initialLen = Utils.getVectorMagnitude(initialDesireVelocityX, initialDesireVelocityY);
+        float initialLen = Utils.getVectorMagnitude(initialDVX, initialDVY);
         float maxLen = initialLen * this.velocityMax_BI;
         float minLen = initialLen * this.velocityMin_BI;
 
@@ -698,7 +729,7 @@ public class Ball extends Circle{
         int quantityOfClones = 3;
         float distance = radius * 3;
         
-        float initialDesiredVelocityLen = Utils.getVectorMagnitude(initialDesireVelocityX,initialDesireVelocityY);
+        float initialDesiredVelocityLen = Utils.getVectorMagnitude(initialDVX, initialDVY);
 
         float desiredVelocityLen = Utils.getVectorMagnitude(dvx,dvy);
 
@@ -773,11 +804,17 @@ public class Ball extends Circle{
             ball.velocityMax_BI = velocityMax_BI;
             ball.velocityMin_BI = velocityMin_BI;
 
-            ball.maxAngle = maxAngle;
-            ball.minAngle = minAngle;
+            Log.e("ball", "this.maxAngle "+maxAngle);
+            Log.e("ball", "this.minAngle "+minAngle);
 
-            ball.initialDesireVelocityX = initialDesireVelocityX;
-            ball.initialDesireVelocityY = initialDesireVelocityY;
+            ball.maxAngle = this.maxAngle;
+            ball.minAngle = this.minAngle;
+
+            Log.e("ball", "ball.maxAngle "+ball.maxAngle);
+            Log.e("ball", "ball.minAngle "+ball.minAngle);
+
+            ball.initialDVX = initialDVX;
+            ball.initialDVY = initialDVY;
 
             Game.addBall(ball);
 
