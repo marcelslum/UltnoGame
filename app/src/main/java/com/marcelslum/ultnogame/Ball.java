@@ -455,6 +455,12 @@ public class Ball extends Circle{
                 velocityAdd = true;
                 angleToRotate = this.angleToRotate;
             }
+            
+            Log.e(TAG, "aplicando rotação -  angulo original "+angleToRotate);
+            
+            angleToRotate = (angleToRotate * 0.5f) + (angleToRotate * 0.5f * collisionsData.get(this.collisionBarNumber).object.accelPercentage);
+            Log.e(TAG, "porcentagem da aceleração "+collisionsData.get(this.collisionBarNumber).object.accelPercentage);
+            Log.e(TAG, "angulo final "+angleToRotate);
 
             Log.e("ball", "velocity add "+velocityAdd);
             Log.e("ball", "angleToRotate "+angleToRotate);
@@ -567,9 +573,6 @@ public class Ball extends Circle{
 
                     final_vx =  velocityAdjust.x;
                     final_vy =  velocityAdjust.y;
-
-
-
                 }
 
                 // angleToRotate positivo = sentido horário
