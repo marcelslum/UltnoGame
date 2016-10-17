@@ -24,7 +24,8 @@ public class Bar extends Rectangle{
     static final int COLOR_PINK = 6;
     static final int COLOR_PURPLE = 7;
     static final int COLOR_BLACK = 8;
-
+    
+    Image shine;
 
     public void changeTextureMap(int textureMap){
         if (textureMap == this.textureMap){
@@ -87,11 +88,13 @@ public class Bar extends Rectangle{
     Bar(String name, float x, float y, float width, float height){
         super(name, x, y, width, height, Game.BAR_WEIGHT, new Color(0.0f, 0.0f, 0.0f, 1.0f));
 
-        this.program = Game.imageColorizedProgram;
-        this.textureId = Texture.TEXTURE_BARS;
-        this.isCollidable = true;
-        this.isSolid = true;
-        this.setDrawInfo();
+        program = Game.imageColorizedProgram;
+        textureId = Texture.TEXTURE_BARS;
+        isCollidable = true;
+        isSolid = true;
+        setDrawInfo();
+        shine = new Image("shine", x, y, width, height, int ???, 0f, 1024f, 576f, 648, new Color(0f, 0f, 0f, 0f))
+        shine.alpha = 0f;
     }
 
 
@@ -141,8 +144,19 @@ public class Bar extends Rectangle{
         array[4 + (startIndex)] = (short)(2 + (startValue));
         array[5 + (startIndex)] = (short)(3 + (startValue));
     }
-
-
+    
+    public void checkTransformations(boolean updatePrevious){
+        
+        shine.accumulatedTranslateX += translateX;
+        shine.accumulatedTranslateY += translateY;
+        shine.accumulatedRotate += rotateAngle;    
+        shine.accumulatedScaleX += scaleX;
+        shine.accumulatedScaleY += scaleY;
+        
+        shine.checkTransformations(false)
+                
+        super.checkTransformations();
+}
 
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection) {
@@ -162,9 +176,10 @@ public class Bar extends Rectangle{
             Log.e("bar", "color r "+color.r+ " g "+color.g+ " b "+color.b);
             Utils.insertRectangleColorsData(colorsData, 0, color);
             colorsBuffer = Utils.generateFloatBuffer(colorsData);
+            shine.setColor(new Color(color.r, color.g, color.b, 1.0f));
         }
-
         super.prepareRender(matrixView, matrixProjection);
+        shine.prepareRender(matrixView, matrixProjection);
     }
 
     public void specialBarScale() {
@@ -204,5 +219,27 @@ public class Bar extends Rectangle{
             accelStarted = false;
         }
         vx = 0f;
+    }
+    
+    @Override
+    public void verifyAcceleration(){
+        super.verifyAcceleration();
+        int alphaShineDecrease = -1;
+        int alphaShineIncrease = -1;
+        if (shine.animations != null){
+            for (int i = 0; i < shine.animations.size(); i++){
+                if (shine.animations.get(i).name = "alphaShineDecrease"){
+                    if (shine.animations.get(i).started){
+                       alphaShineDecrease = i;
+                    }
+                } else if (shine.animations.get(i).name = "alphaShineIncrease"){
+                    if (shine.animations.get(i).started){
+                       alphaShineIncrease = i;
+                    }
+                }
+            }
+        }
+        // TODO ajustar o brilho conjutando os dados das animações e do aceleração
+        shine.alpha = accelPercentage;
     }
 }
