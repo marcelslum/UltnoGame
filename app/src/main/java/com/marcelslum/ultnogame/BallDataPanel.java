@@ -12,7 +12,13 @@ public class BallDataPanel extends Entity{
     Rectangle angleRectangle;
     Rectangle velocityNewRectangle;
     Rectangle angleNewRectangle;
-
+    
+    private static final Color COLOR_BAR_GREEN_DARK = new Color (0.2f, 0.5f, 0.49f, 1f);
+    private static final Color COLOR_BAR_GREEN_LIGHT = new Color (0.65f, 0.83f, 0.82f, 1f);
+    private static final Color COLOR_BAR_BLUE_DARK = new Color (0.21f, 0.27f, 0.64f, 1f);
+    private static final Color COLOR_BAR_BLUE_LIGHT = new Color (0.79f, 0.82f, 1f, 1f);
+   
+    
     float velocityPercent = 0f;
     float anglePercent = 0f;
     public static final String TAG = "BallDataPanel";
@@ -28,14 +34,14 @@ public class BallDataPanel extends Entity{
         isMovable = false;
         isSolid = false;
         float  baseHeight = height/5f;
-        velocityRectangle = new Rectangle("velocityRectangle", x, y, width, baseHeight *2f, -1, new Color(0.14f, 0.14f, 0.56f, 0.7f));
-        velocityNewRectangle = new Rectangle("velocityNewRectangle", x, y, width, baseHeight *2f, -1, new Color(0.64f, 0.64f, 0.96f, 0.7f));
+        velocityRectangle = new Rectangle("velocityRectangle", x, y, width, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
+        velocityNewRectangle = new Rectangle("velocityNewRectangle", x, y, width, baseHeight *2f, -1, COLOR_BAR_GREEN_LIGHT);
 
         velocityRectangle.animScaleX = 0;
         velocityNewRectangle.animScaleX = 0;
 
-        angleRectangle = new Rectangle("velocityRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, new Color(0.14f, 0.56f, 0.14f, 0.7f));
-        angleNewRectangle = new Rectangle("angleNewRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, new Color(0.64f, 0.96f, 0.64f, 0.7f));
+        angleRectangle = new Rectangle("velocityRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
+        angleNewRectangle = new Rectangle("angleNewRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_LIGHT);
 
         angleRectangle.animScaleX = 0;
         angleNewRectangle.animScaleX = 0;
