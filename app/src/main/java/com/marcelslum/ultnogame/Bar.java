@@ -24,8 +24,12 @@ public class Bar extends Rectangle{
     static final int COLOR_PINK = 6;
     static final int COLOR_PURPLE = 7;
     static final int COLOR_BLACK = 8;
-    
+
     Image shine;
+    Animation shineDecreaseAfterAccelerate;
+    Animation shineAfterBallCollision;
+    
+
 
     public void changeTextureMap(int textureMap){
         if (textureMap == this.textureMap){
@@ -93,8 +97,11 @@ public class Bar extends Rectangle{
         isCollidable = true;
         isSolid = true;
         setDrawInfo();
-        shine = new Image("shine", x, y, width, height, int ???, 0f, 1024f, 576f, 648, new Color(0f, 0f, 0f, 0f))
+        shine = new Image("shine", x, y, width, height, Texture.TEXTURE_BARS, 0f, 1f, 576f/1024f, 648f/1024f, new Color(1f, 1f, 1f, 1f));
         shine.alpha = 0f;
+        shineDecreaseAfterAccelerate = Utils.createSimpleAnimation(shine, "shineDecreaseAfterAccelerate", "numberForAnimation", 500, 0f, 0f);
+        shineAfterBallCollision = Utils.createAnimation3v(shine, "shineAfterBallCollision", "numberForAnimation2", 1000, 0f, 0, 0.2f, 1f, 1f, 0f, false, true);
+
     }
 
 
@@ -146,16 +153,19 @@ public class Bar extends Rectangle{
     }
     
     public void checkTransformations(boolean updatePrevious){
-        
-        shine.accumulatedTranslateX += translateX;
-        shine.accumulatedTranslateY += translateY;
-        shine.accumulatedRotate += rotateAngle;    
-        shine.accumulatedScaleX += scaleX;
-        shine.accumulatedScaleY += scaleY;
-        
-        shine.checkTransformations(false)
-                
-        super.checkTransformations();
+
+        super.checkTransformations(updatePrevious);
+
+        if (shine != null) {
+            shine.accumulatedTranslateX = accumulatedTranslateX;
+            shine.accumulatedTranslateY = accumulatedTranslateY;
+            shine.accumulatedRotate = accumulatedRotate;
+            shine.accumulatedScaleX = accumulatedScaleX;
+            shine.accumulatedScaleY = accumulatedScaleY;
+
+            shine.positionX = positionX;
+            shine.positionY = positionY;
+        }
 }
 
     @Override
@@ -217,29 +227,44 @@ public class Bar extends Rectangle{
     public void stop(){
         if (accelStarted){
             accelStarted = false;
+            accelPercentage = 0f;
+            shineDecreaseAfterAccelerate.values.get(0)[1] = shine.numberForAnimation;
+            shineDecreaseAfterAccelerate.start();
         }
         vx = 0f;
     }
     
     @Override
-    public void verifyAcceleration(){
-        super.verifyAcceleration();
-        int alphaShineDecrease = -1;
-        int alphaShineIncrease = -1;
-        if (shine.animations != null){
-            for (int i = 0; i < shine.animations.size(); i++){
-                if (shine.animations.get(i).name = "alphaShineDecrease"){
-                    if (shine.animations.get(i).started){
-                       alphaShineDecrease = i;
-                    }
-                } else if (shine.animations.get(i).name = "alphaShineIncrease"){
-                    if (shine.animations.get(i).started){
-                       alphaShineIncrease = i;
-                    }
-                }
+    public void verifyAnimations(){
+        super.verifyAnimations();
+
+
+        boolean edgeCollision = false;
+
+        for (int i = 0; i < collisionsData.size(); i++) {
+            if (collisionsData.get(i).object.name.equals("bordaD") || collisionsData.get(i).object.name.equals("bordaE")) {
+                edgeCollision = true;
             }
         }
-        // TODO ajustar o brilho conjutando os dados das animações e do aceleração
-        shine.alpha = accelPercentage;
+
+        if (edgeCollision) {
+            if (!shineDecreaseAfterAccelerate.started) {
+                shineDecreaseAfterAccelerate.values.get(0)[1] = shine.numberForAnimation;
+                shineDecreaseAfterAccelerate.start();
+            }
+        }
+
+        if (!shineDecreaseAfterAccelerate.started) {
+            shine.alpha = accelPercentage*0.5f;
+            shine.numberForAnimation = accelPercentage;
+        } else {
+            shine.alpha = shine.numberForAnimation *0.5f;
+        }
+        //Log.e(TAG, "shine numberForAnimation "+ shine.numberForAnimation);
+        //Log.e(TAG, "shine numberForAnimation2 "+ shine.numberForAnimation2);
+        shine.alpha += shine.numberForAnimation2 * 0.5f;
+
+        //Log.e(TAG, "shine alpha "+ shine.alpha);
+
     }
 }

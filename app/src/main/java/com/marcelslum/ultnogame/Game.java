@@ -16,7 +16,7 @@ import java.util.TimerTask;
 // TODO verificar arquivo targets.png se está atualizado
 // TODO pausar todos os sons do sound pool quando o jogo fecha
 // TODO voltar ao estado anterior quando o jogo fecha
-
+// TODO pontuaçao muito à direita
 // TODO verificar os listeners ativos
 
 

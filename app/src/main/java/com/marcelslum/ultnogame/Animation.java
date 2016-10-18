@@ -8,27 +8,27 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Animation{
-    Entity targetObject;
+    private Entity targetObject;
     String name;
-    String parameterToAnimate;
-    int duration;
+    private String parameterToAnimate;
+    private int duration;
     ArrayList<float[]> values;
-    float offSet;
-    boolean isInfinite;
-    boolean isFluid;
-    long startTime;
-    int positionNotFluid;
+    private float offSet;
+    private boolean isInfinite;
+    private boolean isFluid;
+    private long startTime;
+    private int positionNotFluid;
     boolean started;
-    float elapsedTime;
-    float percentage;
-    float initialValue;
-    float initialTime;
-    float finalValue;
-    float finalTime;
-    int lastValue;
-    AnimationListener mListener;
-    OnChange onChange;
-    boolean[] isFluidChanged;
+    private float elapsedTime;
+    private float percentage;
+    private float initialValue;
+    private float initialTime;
+    private float finalValue;
+    private float finalTime;
+    private int lastValue;
+    private AnimationListener mListener;
+    private OnChange onChange;
+    private boolean[] isFluidChanged;
 
     public Animation(Entity target, String name, String parameter, int duration, ArrayList<float[]> values, boolean isInfinite, boolean isFluid){
         this.name = name;
@@ -66,17 +66,17 @@ public class Animation{
         //Log.e("Animation", "animation started "+this.started);
     }
 
-    public void stop(){
+    void stop(){
         started = false;
     }
 
-    public void stopAndConclude(){
+    void stopAndConclude(){
         stop();
         targetObject.applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1]);
         fireAnimationEnd();
     }
 
-    public void doAnimation(){
+    void doAnimation(){
 
         this.elapsedTime = Utils.getTime() - this.startTime;
         this.percentage = this.elapsedTime/(float)this.duration;
@@ -129,7 +129,7 @@ public class Animation{
                 for (int v = 0; v < this.values.size(); v++){
                     if (this.percentage >= this.values.get(v)[0])
                     {
-                        if (isFluidChanged[v] == false) {
+                        if (!isFluidChanged[v]) {
 
                             isFluidChanged[v] = true;
                             if (v > this.positionNotFluid) {
@@ -145,7 +145,7 @@ public class Animation{
                 }
             }
         } else {
-            if (this.isInfinite == false){
+            if (!this.isInfinite){
                 this.targetObject.applyAnimation(parameterToAnimate, this.values.get(this.values.size()-1)[1] + this.offSet);
                 this.started = false;
                 this.fireAnimationEnd();
@@ -178,11 +178,11 @@ public class Animation{
         this.onChange = onChange;
     }
 
-    public static interface AnimationListener {
+    public interface AnimationListener {
         void onAnimationEnd();
     }
 
-    public static interface OnChange {
+    public interface OnChange {
         void onChange();
     }
 }

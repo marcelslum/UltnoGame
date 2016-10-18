@@ -2,6 +2,7 @@ package com.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -33,6 +34,8 @@ public class Entity{
     public float accumulatedScaleY = 1f;
 
     public float numberForAnimation;
+    public float numberForAnimation2;
+    public float numberForAnimation3;
 
     public float time = 0f;
     public boolean timeVar = true;
@@ -144,63 +147,82 @@ public class Entity{
         }
         switch (parameter) {
             case "translateX":
-                this.animTranslateX = value;
+                animTranslateX = value;
+                break;
+            case "animTranslateX":
+                animTranslateX = value;
                 break;
             case "translateY":
-                this.animTranslateY = value;
+                animTranslateY = value;
+                break;
+            case "animTranslateY":
+                animTranslateY = value;
                 break;
             case "scaleX":
-                this.animScaleX = value;
+                animScaleX = value;
+                break;
+            case "animScaleX":
+                animScaleX = value;
                 break;
             case "scaleY":
-                this.animScaleY = value;
+                animScaleY = value;
+                break;
+            case "animScaleY":
+                animScaleY = value;
                 break;
             case "alpha":
-                this.alpha = value;
+                alpha = value;
                 break;
             case "numberForAnimation":
-                this.numberForAnimation = value;
+                numberForAnimation = value;
+                break;
+            case "numberForAnimation2":
+                numberForAnimation2 = value;
+                break;
+            case "numberForAnimation3":
+                numberForAnimation3 = value;
+                break;
             case "showPointsState":
                 if (value == 1f){
-                    this.showPointsState = SHOW_POINTS_ON;
+                    showPointsState = SHOW_POINTS_ON;
                 } else {
-                    this.showPointsState = SHOW_POINTS_OFF;
+                    showPointsState = SHOW_POINTS_OFF;
                 }
                 break;
             case "pointsAlpha":
-                this.pointsAlpha = value;
+                pointsAlpha = value;
                 break;
             default:
                 break;
         }
     }
 
-    public void clearAnimations() {
+    void clearAnimations() {
         for (int i = 0; i < animations.size(); i++) {
             if (animations.get(i).started && !this.animations.get(i).name.equals("ballInvencible")){
                 animations.get(i).stopAndConclude();
             }
         }
-        this.animTranslateX = 0;
-        this.animTranslateY = 0;
-        this.animScaleX = 1f;
-        this.animScaleY = 1f;
-        this.alpha = 1;
+        animTranslateX = 0;
+        animTranslateY = 0;
+        animScaleX = 1f;
+        animScaleY = 1f;
+        alpha = 1;
     }
 
-    public void reduceAlpha(int duration, float finalValue){
+    void reduceAlpha(int duration, float finalValue){
         Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue).start();
     }
 
-    public void reduceAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
+    void reduceAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
         Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue, animationListener).start();
     }
 
-    public void increaseAlpha(int duration, float finalValue){
+    void increaseAlpha(int duration, float finalValue){
         Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue).start();
     }
 
-    public void increaseAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
+    void increaseAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
         Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue, animationListener).start();
     }
 
@@ -324,6 +346,12 @@ public class Entity{
             Matrix.multiplyMM(matrixModel, 0, matrixTemp, 0, mRotationMatrix, 0);
             Matrix.translateM(matrixModel, 0, -width/2f, -height/2f, 0);
         }
+
+        if (name == "velocityRectangle"){
+
+            Log.e("Entity", "animScaleX "+animScaleX);
+        }
+
         if (animScaleX != 1f || animScaleY != 1f || accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
             float width = getWidth();
             float height = getHeight();

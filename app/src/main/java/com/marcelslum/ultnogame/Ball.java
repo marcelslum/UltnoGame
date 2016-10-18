@@ -5,24 +5,26 @@ import java.util.ArrayList;
 
 public class Ball extends Circle{
     
-    public static final int COLOR_BALL_BLACK = 26;
-    public static final int COLOR_BALL_BLUE = 27;
-    public static final int COLOR_BALL_GREEN = 28;
-    public static final int COLOR_BALL_RED = 22;
-    public static final int COLOR_BALL_YELLOW = 23;
-    public static final int COLOR_BALL_ORANGE = 24;
-    public static final int COLOR_BALL_PINK = 21;
-    public static final int COLOR_BALL_PURPLE = 25;
+    static final String TAG = "Ball";
+    
+    static final int COLOR_BALL_BLACK = 26;
+    static final int COLOR_BALL_BLUE = 27;
+    static final int COLOR_BALL_GREEN = 28;
+    static final int COLOR_BALL_RED = 22;
+    static final int COLOR_BALL_YELLOW = 23;
+    static final int COLOR_BALL_ORANGE = 24;
+    static final int COLOR_BALL_PINK = 21;
+    static final int COLOR_BALL_PURPLE = 25;
 
-    public float angleToRotate;
-    public float velocityVariation;
-    public float velocityMax_BI;
-    public float velocityMin_BI;
-    public float maxAngle;
-    public float minAngle;
+    float angleToRotate;
+    float velocityVariation;
+    float velocityMax_BI;
+    float velocityMin_BI;
+    float maxAngle;
+    float minAngle;
 
-    public final int timeForExplode = 750;
-    public long initialTimeWaitingExplosion = 0;
+    final int timeForExplode = 750;
+    long initialTimeWaitingExplosion = 0;
 
     public float rotationAngle = 0;
     boolean isInvencible = false;
@@ -417,6 +419,10 @@ public class Ball extends Circle{
         if(this.collisionBar){
             
             Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
+
+
+            barCollided.shineAfterBallCollision.values.get(0)[1] = barCollided.shine.numberForAnimation2;
+            barCollided.shineAfterBallCollision.start();
 
             if (isAlive){
                 if (textureMap == COLOR_BALL_RED){
