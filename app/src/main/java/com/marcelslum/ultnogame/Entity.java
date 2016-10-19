@@ -347,10 +347,10 @@ public class Entity{
             Matrix.translateM(matrixModel, 0, -width/2f, -height/2f, 0);
         }
 
-        if (name == "velocityRectangle"){
+        //if (name == "velocityRectangle"){
 
-            Log.e("Entity", "animScaleX "+animScaleX);
-        }
+            //Log.e("Entity", "animScaleX "+animScaleX);
+        //}
 
         if (animScaleX != 1f || animScaleY != 1f || accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
             float width = getWidth();

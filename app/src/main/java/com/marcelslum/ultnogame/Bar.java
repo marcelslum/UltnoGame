@@ -40,55 +40,70 @@ public class Bar extends Rectangle{
         this.textureMap = textureMap;
         Utils.x1 = 0f;
         Utils.x2 = 1f;
-        
-        
-
         switch (textureMap){
             case COLOR_RED:
                 Utils.y1 = (UV_MAP[0] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[1] - 0.5f)/1024f;
-                shine.color = new Color(0.65f, 0f, 0f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(0.65f, 0f, 0f, 1f);
+                }
                 
                 break;
             case COLOR_BLUE:
                 Utils.y1 = (UV_MAP[1] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[2] - 0.5f)/1024f;
-                shine.color = new Color(0f, 0.04f, 0.69f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(0f, 0.04f, 0.69f, 1f);
+                }
                 break;
             case COLOR_GREEN:
                 Utils.y1 = (UV_MAP[2] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[3] - 0.5f)/1024f;
-                shine.color = new Color(0.02f, 0.41f, 0.10f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(0.02f, 0.41f, 0.10f, 1f);
+                }
                 break;
             case COLOR_YELLOW:
                 Utils.y1 = (UV_MAP[3] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[4] - 0.5f)/1024f;
-                shine.color = new Color(0.74, 0.73f, 0.33f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(0.74f, 0.73f, 0.33f, 1f);
+                }
                 break;
             case COLOR_ORANGE:
                 Utils.y1 = (UV_MAP[4] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[5] - 0.5f)/1024f;
-                shine.color = new Color(0.61, 0.43f, 0.06f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(0.61f, 0.43f, 0.06f, 1f);
+                }
                 break;
             case COLOR_PINK:
                 Utils.y1 = (UV_MAP[5] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[6] - 0.5f)/1024f;
-                shine.color = new Color(0.54f, 0.14f, 0.48f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(0.54f, 0.14f, 0.48f, 1f);
+                }
                 break;
             case COLOR_PURPLE:
                 Utils.y1 = (UV_MAP[6] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[7] - 0.5f)/1024f;
-                shine.color = new Color(0.31f, 0.04f, 0.69f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(0.31f, 0.04f, 0.69f, 1f);
+                }
                 break;
             case COLOR_BLACK:
                 Utils.y1 = (UV_MAP[7] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[8] - 0.5f)/1024f;
-                shine.color = new Color(1f, 1f, 1f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(1f, 1f, 1f, 1f);
+                }
                 break;
             default:
                 Utils.y1 = (UV_MAP[7] + 0.5f)/1024f;
                 Utils.y2 = (UV_MAP[8] - 0.5f)/1024f;
-                shine.color = new Color(1f, 1f, 1f, 1f);
+                if (shine != null) {
+                    shine.color = new Color(1f, 1f, 1f, 1f);
+                }
                 break;
         }
         Utils.insertRectangleUvData(uvsData, 0);
@@ -103,11 +118,12 @@ public class Bar extends Rectangle{
         textureId = Texture.TEXTURE_BARS;
         isCollidable = true;
         isSolid = true;
-        setDrawInfo();
         shine = new Image("shine", x, y, width, height, Texture.TEXTURE_BARS, 0f, 1f, 576f/1024f, 648f/1024f, new Color(1f, 1f, 1f, 1f));
         shine.alpha = 0f;
         shineDecreaseAfterAccelerate = Utils.createSimpleAnimation(shine, "shineDecreaseAfterAccelerate", "numberForAnimation", 500, 0f, 0f);
         shineAfterBallCollision = Utils.createAnimation3v(shine, "shineAfterBallCollision", "numberForAnimation2", 1000, 0f, 0, 0.2f, 1f, 1f, 0f, false, true);
+        setDrawInfo();
+
 
     }
 

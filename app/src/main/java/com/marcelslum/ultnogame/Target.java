@@ -8,23 +8,23 @@ import java.util.ArrayList;
  */
 public class Target extends Rectangle {
 
-    public int [] states;
-    public int currentState;
-    public int special;
+    private int [] states;
+    private int currentState;
+    int special;
+    int pointsToShow;
+    float posYVariation;
     public int type;
-    private int pointsToShow;
-    private int posYVariation;
-    public static final int TARGET_BLACK = 0;
-    public static final int TARGET_GREEN = 1;
-    public static final int TARGET_BLUE = 2;
-    public static final int TARGET_RED = 3;
-    Animation showPointsStateAnim;
-    Animation showPointsAlphaAnim;
-    Animation ghostAlphaAnim;
-    Animation desapearAnim;
+    static final int TARGET_BLACK = 0;
+    static final int TARGET_GREEN = 1;
+    static final int TARGET_BLUE = 2;
+    private static final int TARGET_RED = 3;
+    private Animation showPointsStateAnim;
+    private Animation showPointsAlphaAnim;
+    private Animation ghostAlphaAnim;
+    private Animation desapearAnim;
     private boolean isGhost;
-    Point pointsObject;
-    public final static int POINTS_DURATION = 1000;
+    private Point pointsObject;
+    private final static int POINTS_DURATION = 1000;
     boolean alive = true;
 
     Target(String name, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
@@ -94,17 +94,27 @@ public class Target extends Rectangle {
     }
 
     public void renderPoints(float[] matrixView, float[] matrixProjection){
-        //Log.e("target", "render points ");
-        if (this.pointsObject != null) {
-            this.pointsObject.alpha = this.pointsAlpha;
-            this.pointsObject.render(matrixView, matrixProjection);
+        if (pointsObject != null) {
+            pointsObject.alpha = pointsAlpha;
+            pointsObject.render(matrixView, matrixProjection);
         }
     }
 
     public void showPoints(int points){
 
-        this.pointsToShow = points;
-        this.pointsObject = new Point("points", x + (width/2f),y + (height/2f) ,height * 1.5f);
+        pointsToShow = points;
+
+        float pointsX;
+        if ((x + (width * 1.5f))> Game.gameAreaResolutionX){
+            pointsX = x;
+        } else {
+            pointsX = x + (width/2f);
+        }
+
+        pointsObject = new Point("points", pointsX,y + (height/2f) ,height * 1.5f);
+
+
+
         addChild(pointsObject);
         pointsObject.setValue(points);
 

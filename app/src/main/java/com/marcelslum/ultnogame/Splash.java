@@ -210,7 +210,6 @@ public class Splash {
                 && ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_CONNECTED) {
                 Log.e("splash", "conectado - verificando conexao com o google");
                 if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()) {
-
                     if (Game.currentPlayerId == null) {
                         Log.e("splash", "conectado ao google");
                         Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
