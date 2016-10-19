@@ -474,7 +474,7 @@ public abstract class Utils {
     }
     
     public static String getStringResource(int tag){
-        return Game.context.getResources().getString(tag);
+        return Game.mainActivity.getApplicationContext().getResources().getString(tag);
     }
 
 

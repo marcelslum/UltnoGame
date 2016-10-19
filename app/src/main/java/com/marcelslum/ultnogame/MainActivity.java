@@ -225,13 +225,16 @@ public class MainActivity extends FragmentActivity implements
         if (mAdView != null) {
             mAdView.pause();
         }
+        Sound.pauseAll();
 	    AsyncTasks.cancelAll();
         super.onPause();
     }
 
     @Override
     public void onBackPressed() {
-        if (Game.gameState == Game.GAME_STATE_JOGAR) {
+        if (Game.gameState == Game.GAME_STATE_OPCOES_GAME) {
+            Game.setGameState(Game.GAME_STATE_PAUSE);
+        } else if (Game.gameState == Game.GAME_STATE_JOGAR) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
         } else if (Game.gameState == Game.GAME_STATE_MENU) {
             onPause();

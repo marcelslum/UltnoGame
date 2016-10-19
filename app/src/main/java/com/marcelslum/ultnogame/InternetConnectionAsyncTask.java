@@ -21,7 +21,7 @@ public class InternetConnectionAsyncTask extends AsyncTask<String,Integer,Intege
     @Override
     protected Integer doInBackground(String... params) {
         ConnectivityManager cm = (ConnectivityManager)
-        Game.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                Game.mainActivity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isAvailable() && cm.getActiveNetworkInfo().isConnected()) {
             return CONNECTED;
         } else {

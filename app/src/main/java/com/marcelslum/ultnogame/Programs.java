@@ -13,9 +13,9 @@ public class Programs {
                     "       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
                     "       vv4_Colors = av4_colors;" +
                     "   }";
-    public static final String fs_Wind = Utils.readRawTextFile(Game.context, R.raw.shader_frag_wind);
+    public static final String fs_Wind = Utils.readRawTextFile(Game.mainActivity.getApplicationContext(), R.raw.shader_frag_wind);
 
-    public static final String vs_SolidColor = Utils.readRawTextFile(Game.context, R.raw.shader_frag_solidcolor);
+    public static final String vs_SolidColor = Utils.readRawTextFile(Game.mainActivity.getApplicationContext(), R.raw.shader_frag_solidcolor);
 
             /*
                     "uniform mat4 um4_projection;" +

@@ -106,12 +106,13 @@
     <string name="splash_nao_foi_possivel_conectar_ao_google">Não foi possível realizar conexão com o Google Play Games</string>
     <string name="splash_clique_aqui">Clique aqui para tentar novamente</string>
     <string name="ligado">Ligado</string>
-    <string name="desligado">Desligado</string>
+    <string name="desligado">Deslig.</string>
     <string name="pontuacaoMenor1">Infelizmente você não superou a sua pontuação anterior para este nível, que era de</string>
     <string name="pontuacaoMenor2">pontos.</string>
     <string name="pontuacaoMaior1">Parabéns, você superou a sua pontuação anterior para este nível, que era de</string>
     <string name="pontuacaoIgual">Que coincidência, você fez o mesmo número de pontos do que o recorde anterior para este nível.</string>
     <string name="pontuacaoMaior2">pontos. Clique em Ranking para verificar qual posição você alcançou.</string>
+    <string name="retornar">Voltar</string>
 
 
 </resources>

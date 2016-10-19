@@ -45,7 +45,7 @@ class MenuOption {
     }
 
     public void setOnChoice(OnChoice onChoice) {
-        this.myOnChoice = onChoice;
+        myOnChoice = onChoice;
     }
 
     public void fireOnChoice() {

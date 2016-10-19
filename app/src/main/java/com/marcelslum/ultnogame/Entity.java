@@ -364,6 +364,10 @@ public class Entity{
     public void prepareRender(float[] matrixView, float[] matrixProjection){
         verifyAnimations();
         if (isVisible){
+            if (name == "selectorSound"){
+                Log.e("Entity", "selector sound visible");
+            }
+
             render(matrixView, matrixProjection);
         }
     }

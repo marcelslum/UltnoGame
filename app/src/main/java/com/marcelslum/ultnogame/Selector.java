@@ -3,6 +3,8 @@ package com.marcelslum.ultnogame;
 
 import java.util.ArrayList;
 
+import static com.marcelslum.ultnogame.Game.menuOptions;
+
 /**
  * Created by marcel on 04/08/2016.
  */
@@ -52,17 +54,13 @@ public class Selector extends Entity{
             mainTextWidth = 0f;
         }
 
-
-
         for (int i = 0; i < values.length; i++){
             //Log.e("selector", " "+values[i]);
             textsObjects[i] = new Text("selector"+values[i]+"Text", 0f, y, size, values[i], this.font);
             float width = textsObjects[i].calculateWidth();
             textsObjects[i].setX(mainTextWidth + x - (width/2));
             if (width > maxWidth) maxWidth = width;
-
             addChild(textsObjects[i]);
-
         }
 
         float buttonSize = size*0.90f;
@@ -123,7 +121,6 @@ public class Selector extends Entity{
                 }
             }
         });
-
     }
 
     public void setOnChange(OnChange onChange){
@@ -215,6 +212,7 @@ public class Selector extends Entity{
     }
 
     public void fromMenu(Menu menu){
+
         menuRelated = menu;
         menu.isBlocked = true;
         this.alpha = 0f;

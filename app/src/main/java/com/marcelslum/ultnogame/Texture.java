@@ -50,8 +50,8 @@ public class Texture {
         this.id = id;
         this.resoureIdentifier = resourceIdentifier;
         try {
-            resoureIdentifierId = Game.context.getResources().getIdentifier(this.resoureIdentifier, null, Game.context.getPackageName());
-            bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
+            resoureIdentifierId = Game.mainActivity.getApplicationContext().getResources().getIdentifier(this.resoureIdentifier, null, Game.mainActivity.getApplicationContext().getPackageName());
+            bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
         }
         catch (Exception e) {
             Log.e(TAG, "Erro ao criar a textura", e);
@@ -110,8 +110,8 @@ public class Texture {
 
     public void changeBitmap(String resoureIdentifier){
         this.resoureIdentifier = resoureIdentifier;
-        resoureIdentifierId = Game.context.getResources().getIdentifier(this.resoureIdentifier, null, Game.context.getPackageName());
-        bitmap = BitmapFactory.decodeResource(Game.context.getResources(), resoureIdentifierId);
+        resoureIdentifierId = Game.mainActivity.getApplicationContext().getResources().getIdentifier(this.resoureIdentifier, null, Game.mainActivity.getApplicationContext().getPackageName());
+        bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
 
         if (textureUnit == 0){
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);

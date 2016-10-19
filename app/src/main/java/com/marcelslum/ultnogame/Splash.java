@@ -92,13 +92,13 @@ public class Splash {
         if (id == MESSAGE_CARREGANDO) {
             message1 = new Text("messageLoading",
                     0f, Game.resolutionY * 0.8f, Game.resolutionY * 0.08f,
-                    Game.context.getResources().getString(R.string.splash_carregando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
+                    Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
 
             float w = message1.width;
 
             message1 = new Text("messageLoading",
                     Game.resolutionX * 0.5f - (w / 2), Game.resolutionY * 0.8f, Game.resolutionY * 0.08f,
-                    Game.context.getResources().getString(R.string.splash_carregando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
+                    Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
 
             ArrayList<float[]> valuesAnimationMessageLoading = new ArrayList<>();
             valuesAnimationMessageLoading.add(new float[]{0f, 1f});
@@ -109,11 +109,11 @@ public class Splash {
                 @Override
                 public void onChange() {
                     if (message1.numberForAnimation == 1f) {
-                        message1.setText(Game.context.getResources().getString(R.string.splash_carregando) + ".");
+                        message1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + ".");
                     } else if (message1.numberForAnimation == 2f) {
-                        message1.setText(Game.context.getResources().getString(R.string.splash_carregando) + "..");
+                        message1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + "..");
                     } else if (message1.numberForAnimation == 3f) {
-                        message1.setText(Game.context.getResources().getString(R.string.splash_carregando) + "...");
+                        message1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + "...");
                     }
                 }
             });
@@ -122,13 +122,13 @@ public class Splash {
         } else  if (id == MESSAGE_CONECTANDO) {
             message1 = new Text("messageConnecting",
                     0f, Game.resolutionY * 0.8f, Game.resolutionY * 0.08f,
-                    Game.context.getResources().getString(R.string.splash_conectando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
+                    Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_conectando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
 
             float w = message1.width;
 
             message1 = new Text("messageConnecting",
                     Game.resolutionX * 0.5f - (w / 2), Game.resolutionY * 0.8f, Game.resolutionY * 0.08f,
-                    Game.context.getResources().getString(R.string.splash_conectando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
+                    Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_conectando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
 
             ArrayList<float[]> valuesAnimationMessageLoading = new ArrayList<>();
             valuesAnimationMessageLoading.add(new float[]{0f, 1f});
@@ -139,11 +139,11 @@ public class Splash {
                 @Override
                 public void onChange() {
                     if (message1.numberForAnimation == 1f) {
-                        message1.setText(Game.context.getResources().getString(R.string.splash_conectando) + ".");
+                        message1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_conectando) + ".");
                     } else if (message1.numberForAnimation == 2f) {
-                        message1.setText(Game.context.getResources().getString(R.string.splash_conectando) + "..");
+                        message1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_conectando) + "..");
                     } else if (message1.numberForAnimation == 3f) {
-                        message1.setText(Game.context.getResources().getString(R.string.splash_conectando) + "...");
+                        message1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_conectando) + "...");
                     }
                 }
             });
@@ -154,11 +154,11 @@ public class Splash {
             message1.clearAnimations();
             message1 = new Text("messageSplash1",
                     Game.resolutionX* 0.5f, Game.resolutionY  * 0.75f, Game.resolutionY * 0.04f,
-                    Game.context.getResources().getString(R.string.splash_nao_foi_possivel_conectar1), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
+                    Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_nao_foi_possivel_conectar1), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message2 = new Text("messageSplash2",
                     Game.resolutionX* 0.5f, Game.resolutionY * 0.85f, Game.resolutionY * 0.035f,
-                    Game.context.getResources().getString(R.string.splash_clique_aqui), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
+                    Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_clique_aqui), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message1.display();
             message2.display();
@@ -167,11 +167,11 @@ public class Splash {
             message1.clearAnimations();
             message1 = new Text("messageSplash1",
                     Game.resolutionX* 0.5f, Game.resolutionY * 0.75f, Game.resolutionY * 0.04f,
-                    Game.context.getResources().getString(R.string.splash_nao_foi_possivel_conectar_ao_google), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
+                    Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_nao_foi_possivel_conectar_ao_google), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message2 = new Text("messageSplash2",
                     Game.resolutionX* 0.5f, Game.resolutionY * 0.85f, Game.resolutionY * 0.035f,
-                    Game.context.getResources().getString(R.string.splash_clique_aqui), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
+                    Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_clique_aqui), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
             message1.display();
             message2.display();
@@ -213,7 +213,7 @@ public class Splash {
                     if (Game.currentPlayerId == null) {
                         Log.e("splash", "conectado ao google");
                         Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
-                        Storage.init(Game.context, Game.currentPlayerId);
+                        Storage.init(Game.mainActivity.getApplicationContext(), Game.currentPlayerId);
                     }
                     if (MyAchievements.loaded) {
                         Log.e("splash", "achievements carregados");

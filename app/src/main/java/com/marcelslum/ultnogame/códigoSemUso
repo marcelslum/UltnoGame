@@ -1,4 +1,75 @@
+
+
+// BOTÃO SOM
+        Game.buttonSound = new ButtonOnOff("buttonSound", Game.gameAreaResolutionX * 0.34f,
+                Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        Game.buttonSound.textureMapUnpressed = 9;
+        Game.buttonSound.textureMapPressed = 10;
+        Game.buttonSound.getListener().x = Game.gameAreaResolutionX * 0.32f;
+        Game.buttonSound.getListener().y = Game.resolutionY * 0.86f;
+        Game.buttonSound.getListener().width = Game.gameAreaResolutionX * 0.12f;
+        Game.buttonSound.getListener().height = Game.resolutionY * 0.12f;
+
+        Game.buttonSound.alpha = 0.5f;
+        if (SaveGame.saveGame.sound) {
+            Game.buttonSound.setOn();
+        } else {
+            Game.buttonSound.setOff();
+        }
+
+        Game.buttonSound.setOnOffBehavior(new ButtonOnOff.OnOffBehavior() {
+            @Override
+            public void onBehavior() {
+                SaveGame.saveGame.sound = true;
+            }
+
+            @Override
+            public void offBehavior() {
+                SaveGame.saveGame.sound = false;
+            }
+        });
+
+        // BOTÃO MUSICA
+        Game.buttonMusic = new ButtonOnOff("buttonMusic",Game.gameAreaResolutionX * 0.61f,
+                Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        Game.buttonMusic.textureMapUnpressed = 2;
+        Game.buttonMusic.textureMapPressed = 1;
+        Game.buttonMusic.alpha = 0.5f;
+        Game.buttonMusic.getListener().x = Game.gameAreaResolutionX * 0.58f;
+        Game.buttonMusic.getListener().y = Game.resolutionY * 0.86f;
+        Game.buttonMusic.getListener().width = Game.gameAreaResolutionX * 0.12f;
+        Game.buttonMusic.getListener().height = Game.resolutionY * 0.12f;
+        if (SaveGame.saveGame.music) {
+            Game.buttonMusic.setOn();
+        } else {
+            Game.buttonMusic.setOff();
+        }
+
+        Game.buttonMusic.setOnOffBehavior(new ButtonOnOff.OnOffBehavior() {
+            @Override
+            public void onBehavior() {
+                SaveGame.saveGame.music = true;
+                if (Sound.music != null){
+                    Sound.music.setVolume(0.006f* (float) 50, 0.006f* (float) 50);
+                    Sound.music.start();
+                }
+            }
+
+            @Override
+            public void offBehavior() {
+                SaveGame.saveGame.music = false;
+                if (Sound.music != null){
+                    Sound.music.pause();
+                }
+            }
+        });
+
+
+
+---------------------
 package com.marcelslum.ultnogame;
+
+
 
 import android.app.Activity;
 import android.content.Intent;

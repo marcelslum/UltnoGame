@@ -42,7 +42,6 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         Log.e("GLRenderer", "create");
         mContext = c;
         mLastTime = System.currentTimeMillis() + 100;
-        Game.context = mContext;
     }
 
     public void onPause() {
