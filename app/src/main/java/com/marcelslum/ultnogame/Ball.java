@@ -592,7 +592,7 @@ public class Ball extends Circle{
                 
                 float velocityPercentage = (finalLen - minLen)/(maxLen - minLen);
                 float anglePercentage = (finalAngle - minAngle)/(maxAngle - minAngle);
-                Game.ballDataPanel.setData(velocityPercentage, anglePercentage);
+                Game.ballDataPanel.setData(velocityPercentage, anglePercentage, true);
             }
             this.accelerate(150, final_vx, final_vy);
         }

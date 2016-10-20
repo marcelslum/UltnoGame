@@ -50,6 +50,8 @@ public class BallDataPanel extends Entity{
 
     public void render(float[] matrixView, float[] matrixProjection){
 
+        //Log.e("BallDataPanel", "render");
+
         velocityNewRectangle.alpha = this.alpha;
         velocityNewRectangle.render(matrixView, matrixProjection);
         velocityRectangle.alpha = this.alpha;
@@ -80,7 +82,7 @@ public class BallDataPanel extends Entity{
         angleNewRectangle.animTranslateX = -(width - (width * angleNewRectangle.animScaleX))/2f;
     }
 
-    public void setData(float velocityPercentage, float anglePercentage) {
+    public void setData(float velocityPercentage, float anglePercentage, boolean animationOn) {
 
         float previousVelocityPercent = velocityPercent;
         float previousAnglePercent = anglePercent;
@@ -111,14 +113,15 @@ public class BallDataPanel extends Entity{
             Utils.createSimpleAnimation(velocityNewRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
             
         }
-        
-        
-        if (anglePercent > previousAnglePercent){
-            angleNewRectangle.animScaleX = anglePercent;
-            Utils.createSimpleAnimation(angleRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
-        } else {
-            angleRectangle.animScaleX = anglePercent;
-            Utils.createSimpleAnimation(angleNewRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
+
+        if (animationOn) {
+            if (anglePercent > previousAnglePercent) {
+                angleNewRectangle.animScaleX = anglePercent;
+                Utils.createSimpleAnimation(angleRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
+            } else {
+                angleRectangle.animScaleX = anglePercent;
+                Utils.createSimpleAnimation(angleNewRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
+            }
         }
     }
 }

@@ -557,6 +557,15 @@ public class Entity{
         this.animations.add(animation);
     }
 
+    public Animation getAnimationByName(String name){
+        for (int i = 0; i < animations.size(); i++){
+            if (animations.get(i).name == name){
+                return animations.get(i);
+            }
+        }
+        return null;
+    }
+
     public void setListener(InteractionListener interactionListenerListener){
         listener = interactionListenerListener;
     }

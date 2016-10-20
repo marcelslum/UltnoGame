@@ -22,16 +22,27 @@
     <string name="Jogar">Play</string>
     <string name="l1t1">Mova a barra utilizando os botões abaixo. Vamos lá, pode testar!</string>
     <string name="l1t2">Não deixe a bola cair.</string>
-    <string name="l1t3">Elimine os alvos acertendo-os com a bola.</string>
+    <string name="l1t3">Acerte os alvos com a bola.</string>
     <string name="l1t4">A pontuação de cada alvo depende do nível de dificuldade escolhido. No nível fácil, por exemplo, cada alvo valerá 100 pontos.</string>
     <string name="l1t5">Elimine todos os alvos para completar o nível.</string>
     <string name="l1t6">Mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
     <string name="l1t7">Vamos lá! Pressione a flecha para iniciar a contagem regressiva.</string>
     
-    <string name="l2t1">Você pode alterar a direção e a velocidade da bola.</string>
-    <string name="l2t2">Atinja a bola com a barra se movimentando na direção contrária. Isso fará com que a velocidade e o deslocamento horizonal da bola aumentem.</string>
-    <string name="l2t3">Ao contrário, se a bola for atingida com a barra se movimentando na mesma direção, a velocidade irá diminuir, assim como o deslocamento horizontal.</string>
-    <string name="l2t4">Neste nível, vamos exagerar um pouquinho esse comportamento da bola. Tente aplicar o que aprendeu.</string>
+    <string name="l2t1">É possível alterar a velocidade e a direção da bola.</string>
+    <string name="l2t2">Você pode atingir a bola com a barra se movimentando na direção oposta.</string>
+    <string name="l2t3">Isso fará com que a velocidade da bola aumente.</string>
+    <string name="l2t4">Observe que o painel abaixo exibe uma barra verde, que mostra o que ocorre com a velocidade.</string>
+    <string name="l2t5">Existe um limite mínimo e máximo para a velocidade da bola, que muda conforme o nível.</string>
+    <string name="l2t6">Use o painel para acompanhar quando a velocidade atinge seu limite mínimo ou máximo.</string>
+    <string name="l2t7">Observe também o que acontece com o ângulo da bola.</string>
+    <string name="l2t8">Nessa situação, o ângulo da bola em relação à barra está diminuindo.</string>
+    <string name="l2t9">O que ocorre com o ângulo também pode ser acompanhado no painel abaixo, através da barra azul.</string>
+    <string name="l2t10">Agora a situação mudou.</string>
+    <string name="l2t11">A barra está se movimentando na mesma direção em relação à bola.</string>
+    <string name="l2t12">Isso faz com que a a velocidade da bola diminua.</string>
+    <string name="l2t13">Já o ângulo da bola em relação à barra aumentará.</string>
+    <string name="l2t14">Neste nível, vamos exagerar um pouquinho esse comportamento.</string>
+    <string name="l2t15">Uso o que aprendeu para controlar melhor a bola e direcioná-la aos alvos.</string>
     
     <string name="l4t1">Neste nível, haverá um obstáculo inquebrável.</string>
     

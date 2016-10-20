@@ -372,7 +372,7 @@ public class Game {
             MenuOption menuOptionMusicMain = menuOptions.getMenuOptionByName("music");
             selectorMusic.setPosition(menuOptionMusicMain.x + (menuOptionMusicMain.width*2.0f), menuOptionMusicMain.y);
             MenuOption menuOptionSoundMain = menuOptions.getMenuOptionByName("sound");
-            selectorSound.setPosition(menuOptionSoundMain.x + (menuOptionSoundMain.width*2.0f), menuOptionSoundMain.y);
+            selectorSound.setPosition(menuOptionSoundMain.x + (menuOptionSoundMain.width/2.0f), menuOptionSoundMain.y);
 
             Log.e(TAG, "selector sound position "+(menuOptionSoundMain.x + (menuOptionSoundMain.width*2.0f)) + " e " +menuOptionSoundMain.y);
 
@@ -382,7 +382,7 @@ public class Game {
             selectorMusic.setPosition(menuOptionMusicInGame.x + ((menuOptionMusicInGame.width)*2.0f), menuOptionMusicInGame.y);
             MenuOption menuOptionSoundInGame = menuInGameOptions.getMenuOptionByName("sound");
             selectorSound.setPosition(menuOptionSoundInGame.x + (menuOptionSoundInGame.width*2.0f), menuOptionSoundInGame.y);
-            Log.e(TAG, "selector sound position "+(menuOptionSoundInGame.x + (menuOptionSoundInGame.width*2.0f)) + " e " +menuOptionSoundInGame.y);
+            Log.e(TAG, "selector sound position "+(menuOptionSoundInGame.x + (menuOptionSoundInGame.width/2.0f)) + " e " +menuOptionSoundInGame.y);
         }
     }
 
@@ -680,7 +680,7 @@ public class Game {
             }
         });
 
-        menuOptions.addMenuOption("retornar", getContext().getResources().getString(R.string.retornar), new MenuOption.OnChoice() {
+        menuInGameOptions.addMenuOption("retornar", getContext().getResources().getString(R.string.retornar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 setGameState(GAME_STATE_PAUSE);
