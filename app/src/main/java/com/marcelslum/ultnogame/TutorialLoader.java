@@ -296,7 +296,7 @@ public class TutorialLoader {
                                         Utils.createAnimation4v(Game.balls.get(0), "translateX", "translateX", 3000,
                                             0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.4f, 1f, gX*0.4f, true, true).start();
                                         Utils.createAnimation4v(Game.balls.get(0), "translateY", "translateY", 3000,
-                                            0f, 0f, 0.25f, gY*0.245f, 0.5f, -gY*0.3f, 1f, -gY*0.3f, true, true).start();
+                                            0f, 0f, 0.25f, gY*0.245f, 0.5f, -gY*0.25f, 1f, -gY*0.25f, true, true).start();
                                         Utils.createAnimation3v(Game.bars.get(0), "translateX", "translateX", 3000,
                                             0f, 0f, 0.5f, -gX*0.4f, 1f, -gX*0.4f, true, true).start();
 
@@ -446,7 +446,18 @@ public class TutorialLoader {
                                             .text(Utils.getStringResource(R.string.l2t8))
                                             .withoutArrow()
                                             .build()
-                            ).build()
+                            )
+                        .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
+                                @Override
+                                public void onShowBeforeAnim() {
+                                    Game.imageTutorialDown = new Image(
+                                        "anguloDown", gx*0.4f, (gy * 0.975) - (gx * 0.1), gx * 0.20, gx * 0.1, Texture.bar, 1f/1024f, 255f/1024f, 897f/1024f, 1023f/1024f);
+                                    Game.imageTutorialDown.display();
+                                }
+                            })
+                        
+                        
+                        .build()
                     );
 
                     // L2T9
@@ -485,6 +496,7 @@ public class TutorialLoader {
                                         }
                                     });
                                     Game.ballDataPanel.setData(0.0f, 0.0f, false);
+                                    Game.imageTutorialDown.clearDisplay();
                                 }
                             })
                             .build()
@@ -520,7 +532,7 @@ public class TutorialLoader {
                                 Utils.createAnimation4v(Game.balls.get(0), "translateX", "translateX", 3000,
                                     0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.2f, 1f, gX*0.2f, true, true).start();
                                 Utils.createAnimation4v(Game.balls.get(0), "translateY", "translateY", 3000,
-                                    0f, 0f, 0.25f, gY*0.245f, 0.5f, gY*0.15f, 1f, gY*0.15f, true, true).start();
+                                    0f, 0f, 0.25f, gY*0.245f, 0.5f, gY*0.12f, 1f, gY*0.12f, true, true).start();
                                 Utils.createAnimation3v(Game.bars.get(0), "translateX", "translateX", 3000,
                                     0f, 0f, 0.5f, gX*0.4f, 1f, gX*0.4f, true, true).start();
                                 }
@@ -583,11 +595,21 @@ public class TutorialLoader {
                                 .build()
                         )
                     
+                        .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
+                                    @Override
+                                    public void onShowBeforeAnim() {
+                                        Game.imageTutorialDown = new Image(
+                                            "anguloUp", gx*0.4f, (gy * 0.975) - (gx * 0.1), gx * 0.20, gx * 0.1, Texture.bar, 1f/1024f, 255f/1024f, 769f/1024f, 895f/1024f);
+                                        Game.imageTutorialDown.display();
+                                    }
+                                })
+                    
                         .onUnshowAfterAnim(new Tutorial.OnUnshowAfterAnim() {
                                 @Override
                                 public void onUnshowAfterAnim() {
                                     Game.balls.get(0).clearAnimations();
                                     Game.bars.get(0).clearAnimations();
+                                    Game.imageTutorialDown.clearDisplay();
                                 }
                             })
                         .build()
