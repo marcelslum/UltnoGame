@@ -105,6 +105,9 @@ public class Game {
     static Text messageSplash1;
     static Text messageSplash2;
     private static TextBox bottomTextBox;
+    
+    private static Image imageTutorialTop;
+    private static Image imageTutorialDown;
 
     // quadtree objects
     static Quadtree quad;
@@ -1782,6 +1785,9 @@ public class Game {
         if (button1Right != null) button1Right.checkTransformations(true);
         if (button2Left != null) button2Left.checkTransformations(true);
         if (button2Right != null) button2Right.checkTransformations(true);
+        
+        if (imageTutorialDown != null) imageTutorialDown.checkTransformations(true);
+        if (imageTutorialTop != null) imageTutorialTop.checkTransformations(true);
 
         for (int i = 0; i < messages.size(); i++){
             messages.get(i).checkTransformations(true);
@@ -1792,6 +1798,8 @@ public class Game {
         if (background != null) {
             background.prepareRender(matrixView, matrixProjection);
         }
+        
+        if (imageTutorialDown != null) imageTutorialDown.prepareRender(matrixView, matrixProjection);
         
         for (int i = 0; i < balls.size(); i++){
             if (balls.get(i).ballParticleGenerator != null){
@@ -1883,6 +1891,9 @@ public class Game {
         if (button2Right != null) button2Right.prepareRender(matrixView, matrixProjection);
 
         bottomTextBox.prepareRender(matrixView, matrixProjection);
+        
+        if (imageTutorialTop != null) imageTutorialTop.prepareRender(matrixView, matrixProjection);
+        
 
         for (int i = 0; i < messages.size(); i++){
             messages.get(i).prepareRender(matrixView, matrixProjection);
