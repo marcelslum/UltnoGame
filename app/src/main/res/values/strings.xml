@@ -31,18 +31,18 @@
     <string name="l2t1">É possível alterar a velocidade e a direção da bola.</string>
     <string name="l2t2">Você pode atingir a bola com a barra se movimentando na direção oposta.</string>
     <string name="l2t3">Isso fará com que a velocidade da bola aumente.</string>
-    <string name="l2t4">Observe que o painel abaixo exibe uma barra verde, que mostra o que ocorre com a velocidade.</string>
-    <string name="l2t5">Existe um limite mínimo e máximo para a velocidade da bola, que muda conforme o nível.</string>
+    <string name="l2t4">No painel abaixo, há uma barra verde, que indica o que ocorre com a velocidade.</string>
+    <string name="l2t5">Existe um limite mínimo e máximo para a velocidade da bola.</string>
     <string name="l2t6">Use o painel para acompanhar quando a velocidade atinge seu limite mínimo ou máximo.</string>
     <string name="l2t7">Observe também o que acontece com o ângulo da bola.</string>
-    <string name="l2t8">Nessa situação, o ângulo da bola em relação à barra está diminuindo.</string>
+    <string name="l2t8">Ao atingir a barra, o ângulo em relação ao eixo horizontal diminui.</string>
     <string name="l2t9">O que ocorre com o ângulo também pode ser acompanhado no painel abaixo, através da barra azul.</string>
-    <string name="l2t10">Agora a situação mudou.</string>
+    <string name="l2t10">Agora veja o acontece na situação contrária.</string>
     <string name="l2t11">A barra está se movimentando na mesma direção em relação à bola.</string>
     <string name="l2t12">Isso faz com que a a velocidade da bola diminua.</string>
-    <string name="l2t13">Já o ângulo da bola em relação à barra aumentará.</string>
+    <string name="l2t13">E o ângulo da bola aumente em relação ao eixo horizontal.</string>
     <string name="l2t14">Neste nível, vamos exagerar um pouquinho esse comportamento.</string>
-    <string name="l2t15">Uso o que aprendeu para controlar melhor a bola e direcioná-la aos alvos.</string>
+    <string name="l2t15">Uso o que aprendeu para controlar melhor a bola e acertar os alvos.</string>
     
     <string name="l4t1">Neste nível, haverá um obstáculo inquebrável.</string>
     
