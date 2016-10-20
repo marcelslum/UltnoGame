@@ -52,14 +52,14 @@ public class BallDataPanel extends Entity{
 
         //Log.e("BallDataPanel", "render");
 
-        velocityNewRectangle.alpha = this.alpha;
+        velocityNewRectangle.alpha = alpha;
         velocityNewRectangle.render(matrixView, matrixProjection);
-        velocityRectangle.alpha = this.alpha;
+        velocityRectangle.alpha = alpha;
         velocityRectangle.render(matrixView, matrixProjection);
 
-        angleNewRectangle.alpha = this.alpha;
+        angleNewRectangle.alpha = alpha;
         angleNewRectangle.render(matrixView, matrixProjection);
-        angleRectangle.alpha = this.alpha;
+        angleRectangle.alpha = alpha;
         angleRectangle.render(matrixView, matrixProjection);
 
 
