@@ -175,6 +175,7 @@ public class Animation{
     }
 
     public void setOnChangeNotFluid(OnChange onChange) {
+        isFluid = false;
         this.onChange = onChange;
     }
 

@@ -217,12 +217,10 @@ public class Splash {
                     }
                     if (MyAchievements.loaded) {
                         Log.e("splash", "achievements carregados");
-                        MyAchievements.loaded = false;
                         loadingAchievements = false;
                         if (SaveGame.loaded){
                             Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
                             loadingSaveGame = false;
-                            SaveGame.loaded = false;
                             Game.initMenus();
                             Game.initTexts();
                             Game.initEdges();
@@ -234,8 +232,11 @@ public class Splash {
                                 Log.e("splash", "iniciando carregamento do SaveGame");
                                 SaveGame.load();
                             }
+
+                            Log.e("splash", "ainda carregando SaveGame");
+
                         }
-                    } else if (!loadingAchievements) {
+                    } else if (!loadingAchievements){
                         Log.e("splash", "iniciando carregamento dos achievements");
                         
                         loadingAchievements = true;

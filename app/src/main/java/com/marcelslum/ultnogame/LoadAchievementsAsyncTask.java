@@ -36,9 +36,6 @@ public class LoadAchievementsAsyncTask extends AsyncTask<String,Integer,Integer>
          PendingResult<LoadAchievementsResult> p = Games.Achievements.load(Game.mainActivity.mGoogleApiClient, fullLoad);
          LoadAchievementsResult r = p.await( waitTime, TimeUnit.SECONDS);
 
-
-
-
          int status = r.getStatus().getStatusCode();
          if ( status != GamesStatusCodes.STATUS_OK )  {
             r.release();
@@ -61,7 +58,7 @@ public class LoadAchievementsAsyncTask extends AsyncTask<String,Integer,Integer>
     @Override
     protected void onCancelled(Integer i) {
         Log.e(TAG, "onCancelled");
-
+        MyAchievements.loaded = false;
     }
 
     @Override

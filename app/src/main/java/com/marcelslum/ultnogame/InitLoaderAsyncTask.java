@@ -24,7 +24,7 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
             
             Game.initTime = Utils.getTime();
             
-            Game.initTextures();
+            Texture.init();
             
             if (isCancelled()){
                 Log.e(TAG, "cancelado 2");

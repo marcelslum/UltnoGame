@@ -8,6 +8,7 @@ import com.google.android.gms.games.snapshot.Snapshot;
 import com.google.android.gms.games.snapshot.Snapshots;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by marcel on 12/10/2016.
@@ -27,18 +28,34 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
     protected Snapshots.OpenSnapshotResult doInBackground(String... params) {
         Log.e(TAG, "doInBackground");
         Log.e(TAG, "Abrindo Snapshot");
+
+        if (!Game.mainActivity.mGoogleApiClient.isConnected()){
+            Log.e(TAG, "Google não conectado, retornando nulo");
+            return null;
+        }
+
+
         Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
-                MySnapshots.SNAPSHOT_FILE_NAME, true).await();
+                MySnapshots.SNAPSHOT_FILE_NAME, true).await(5000L, TimeUnit.MILLISECONDS);
         return result;
     }
 
     @Override
     protected void onPostExecute(Snapshots.OpenSnapshotResult result){
+        Log.e(TAG, "returning onPostExecute()");
 
         if (!result.getStatus().isSuccess()) {
             Log.e(TAG, "Error while loading: " + result.getStatus().getStatusCode());
+            SaveGame.onFailLoadFromSnapshot();
             return;
         }
+
+        if (result == null){
+            Log.e(TAG, "result nulo ");
+            SaveGame.onFailLoadFromSnapshot();
+            return;
+        }
+
 
         Snapshot snapshot = result.getSnapshot();
         byte[] data;

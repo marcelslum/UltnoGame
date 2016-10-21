@@ -47,34 +47,26 @@ public class BallDataPanel extends Entity{
         angleNewRectangle.animScaleX = 0;
     }
 
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection){
 
-    public void render(float[] matrixView, float[] matrixProjection){
-
-        //Log.e("BallDataPanel", "render");
+        verifyAnimations();
 
         velocityNewRectangle.alpha = alpha;
-        velocityNewRectangle.render(matrixView, matrixProjection);
+        velocityNewRectangle.prepareRender(matrixView, matrixProjection);
         velocityRectangle.alpha = alpha;
-        velocityRectangle.render(matrixView, matrixProjection);
+        velocityRectangle.prepareRender(matrixView, matrixProjection);
 
         angleNewRectangle.alpha = alpha;
-        angleNewRectangle.render(matrixView, matrixProjection);
+        angleNewRectangle.prepareRender(matrixView, matrixProjection);
         angleRectangle.alpha = alpha;
-        angleRectangle.render(matrixView, matrixProjection);
-
-
+        angleRectangle.prepareRender(matrixView, matrixProjection);
 
     }
 
     @Override
     public void verifyAnimations() {
         super.verifyAnimations();
-
-        velocityRectangle.verifyAnimations();
-        velocityNewRectangle.verifyAnimations();
-
-        angleRectangle.verifyAnimations();
-        angleNewRectangle.verifyAnimations();
 
         velocityRectangle.animTranslateX = -(width - (width * velocityRectangle.animScaleX))/2f;
         velocityNewRectangle.animTranslateX = -(width - (width * velocityNewRectangle.animScaleX))/2f;
@@ -104,14 +96,18 @@ public class BallDataPanel extends Entity{
         velocityPercent = velocityPercentage;
         anglePercent = anglePercentage;
 
-        
-        if (velocityPercent > previousVelocityPercent){
-            velocityNewRectangle.animScaleX = velocityPercent;
-            Utils.createSimpleAnimation(velocityRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
+
+        if (animationOn) {
+            if (velocityPercent > previousVelocityPercent) {
+                velocityNewRectangle.animScaleX = velocityPercent;
+                Utils.createSimpleAnimation(velocityRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
+            } else {
+                velocityRectangle.animScaleX = velocityPercent;
+                Utils.createSimpleAnimation(velocityNewRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
+            }
         } else {
+            velocityNewRectangle.animScaleX = velocityPercent;
             velocityRectangle.animScaleX = velocityPercent;
-            Utils.createSimpleAnimation(velocityNewRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
-            
         }
 
         if (animationOn) {
@@ -122,6 +118,9 @@ public class BallDataPanel extends Entity{
                 angleRectangle.animScaleX = anglePercent;
                 Utils.createSimpleAnimation(angleNewRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
             }
+        } else {
+            angleNewRectangle.animScaleX = anglePercent;
+            angleRectangle.animScaleX = anglePercent;
         }
     }
 }

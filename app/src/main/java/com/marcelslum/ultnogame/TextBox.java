@@ -83,7 +83,7 @@ public class TextBox extends Entity{
                     }
                     stringToTest = stringToTest + " " + splitedString[elementToAdd];
                     elementToAdd += 1;
-                } while (widthOfText < (width*0.95f) && (splitedString.length+1) > elementToAdd && contador < limite);
+                } while (widthOfText < (width*0.9f) && (splitedString.length+1) > elementToAdd && contador < limite);
                 //Log.e("textBox", "adicionando texto: "+lastText.text);
                 texts.add(lastText);
                 //Log.e("textBox", "elementToAdd "+elementToAdd);

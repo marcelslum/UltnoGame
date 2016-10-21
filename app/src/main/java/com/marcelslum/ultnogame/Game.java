@@ -13,6 +13,7 @@ import java.util.TimerTask;
 
 // TODO erro: jogo trava quando se aperta os dois botões de flecha ao mesmo tempo: resolvido
 // TODO verificar os listeners ativos
+// TODO colocar timeout em todos os awaits...
 
 
 /** * Created by marcel on 01/08/2016.
@@ -106,8 +107,8 @@ public class Game {
     static Text messageSplash2;
     private static TextBox bottomTextBox;
     
-    private static Image imageTutorialTop;
-    private static Image imageTutorialDown;
+    static Image imageTutorialTop;
+    static Image imageTutorialDown;
 
     // quadtree objects
     static Quadtree quad;
@@ -271,15 +272,7 @@ public class Game {
         Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000);
     }
 
-    public static void initTextures() {
-        Log.e(TAG, "initTextures");
-        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
-    }
+
 
     public static void initTittle(){
         tittle = new Image("tittle",
