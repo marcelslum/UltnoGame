@@ -70,7 +70,7 @@ public class TextBox extends Entity{
                     contador += 1;
                     textForMeasure = new Text("text"+contador, 0f, 0f, size, stringToTest, Game.font, textColor);
                     widthOfText = textForMeasure.calculateWidth();
-                    if (widthOfText > (width*0.95f)) {
+                    if (widthOfText > (width*0.9f)) {
                         elementToAdd -= 1;
                         stringToTest = splitedString[elementToAdd];
                         elementToAdd += 1;
@@ -100,7 +100,7 @@ public class TextBox extends Entity{
         for (int i = 0; i < this.texts.size(); i++){
             this.texts.get(i).x = textX;
             this.texts.get(i).y = textY;
-            textY += size + textPadding;
+            textY += (size + textPadding);
             addChild(this.texts.get(i));
         }
 

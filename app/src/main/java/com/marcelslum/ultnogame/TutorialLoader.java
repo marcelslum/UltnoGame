@@ -23,8 +23,8 @@ public class TutorialLoader {
         final float gX = Game.gameAreaResolutionX;
         final float gY = Game.gameAreaResolutionY;
         float size = gX*0.035f;
-        float width = gX*0.7f;
-        float x = gX*0.15f;
+        float width = gX*0.78f;
+        float x = gX*0.1f;
         float y = gY*0.2f;
 
         switch (levelNumber){
@@ -46,6 +46,7 @@ public class TutorialLoader {
                                         Game.balls.get(0).clearDisplay();
                                         Game.balls.get(0).isMovable = false;
                                         Game.bars.get(0).isMovable = true;
+
                                     }
                                 }
                             )
@@ -249,7 +250,7 @@ public class TutorialLoader {
                     // L2T1
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
-                                new TextBoxBuilder("textoBox1")
+                                new TextBoxBuilder("textBox1")
                                     .position(x, y)
                                     .width(width)
                                     .size(size)
@@ -260,10 +261,11 @@ public class TutorialLoader {
                             .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
                                 @Override
                                 public void onShowBeforeAnim() {
+                                        Game.bars.get(0).isMovable = false;
                                         Game.balls.get(0).isMovable = false;
                                         Game.balls.get(0).x = gX * 0.3f;
                                         Game.balls.get(0).y = gY * 0.72f;
-                                        Game.bars.get(0).x = gX * 0.56f;
+                                        Game.bars.get(0).x = gX * 0.62f;
                                     }
                                 }
                             )
@@ -273,9 +275,9 @@ public class TutorialLoader {
                     // L2T2
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
-                                new TextBoxBuilder("textoBox2")
-                                    .position(x, y*0.25f)
-                                    .width(width*1.25f)
+                                new TextBoxBuilder("textBox2")
+                                    .position(x, y)
+                                    .width(width)
                                     .size(size)
                                     .text(Utils.getStringResource( R.string.l2t2))
                                     .withoutArrow()
@@ -285,7 +287,7 @@ public class TutorialLoader {
                                 @Override
                                 public void onShowBeforeAnim() {
                                         Game.balls.get(0).x = gX * 0.3f;
-                                        Game.balls.get(0).y = gY * 0.72f;
+                                        Game.balls.get(0).y = gY * 0.73f;
                                     }
                                 }
                             )
@@ -296,9 +298,9 @@ public class TutorialLoader {
                                         Utils.createAnimation4v(Game.balls.get(0), "translateX", "translateX", 3000,
                                             0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.6f, 1f, gX*0.6f, true, true).start();
                                         Utils.createAnimation4v(Game.balls.get(0), "translateY", "translateY", 3000,
-                                            0f, 0f, 0.25f, gY*0.245f, 0.5f, gY*0.02f, 1f, gY*0.02f, true, true).start();
+                                            0f, 0f, 0.25f, gY*0.244f, 0.5f, -gY*0.32f, 1f, -gY*0.32f, true, true).start();
                                         Utils.createAnimation3v(Game.bars.get(0), "translateX", "translateX", 3000,
-                                            0f, 0f, 0.5f, -gX*0.4f, 1f, -gX*0.4f, true, true).start();
+                                            0f, 0f, 0.5f, -gX*0.5f, 1f, -gX*0.5f, true, true).start();
 
                                         Game.ballDataPanel.clearDisplay();
                                         Animation animForPanel = Utils.createAnimation3v(Game.balls.get(0), "numberForAnimation", "numberForAnimation", 3000,
@@ -324,9 +326,9 @@ public class TutorialLoader {
                     // L2T3
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
-                                    new TextBoxBuilder("textoBox3")
-                                            .position(x, y*0.25f)
-                                            .width(width*1.25f)
+                                    new TextBoxBuilder("textBox3")
+                                            .position(x*0.5f, y)
+                                            .width(width)
                                             .size(size)
                                             .text(Utils.getStringResource(R.string.l2t3))
                                             .withoutArrow()
@@ -337,9 +339,9 @@ public class TutorialLoader {
                     // L2T4
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
-                                    new TextBoxBuilder("textoBox4")
-                                            .position(x, y*0.25f)
-                                            .width(width*1.25f)
+                                    new TextBoxBuilder("textBox4")
+                                            .position(x, y)
+                                            .width(width)
                                             .size(size)
                                             .text(Utils.getStringResource( R.string.l2t4))
                                             .withArrow(gX *0.5f, gY *0.95f)
@@ -353,6 +355,12 @@ public class TutorialLoader {
                                     Utils.createAnimation3v(Game.ballDataPanel, "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.1f, 1f, 1f, true, true).start();
                                 }
                             })
+                            .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
+                                @Override
+                                public void onUnshowBeforeAnim() {
+                                    Game.ballDataPanel.clearAnimations();
+                                }
+                            })
                             .build()
                     );
 
@@ -360,8 +368,8 @@ public class TutorialLoader {
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textBox5")
-                                            .position(x, y*0.25f)
-                                            .width(width*1.25f)
+                                            .position(x, y)
+                                            .width(width)
                                             .size(size)
                                             .text(Utils.getStringResource( R.string.l2t5))
                                             .withoutArrow()
@@ -371,9 +379,6 @@ public class TutorialLoader {
                             .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                                 @Override
                                 public void onShowAfterAnim() {
-
-
-                                    Game.ballDataPanel.clearAnimations();
 
                                     // desliga a animação do painel em relação à bola
                                     Game.balls.get(0).getAnimationByName("numberForAnimation").setOnChangeNotFluid(new Animation.OnChange() {
@@ -391,11 +396,11 @@ public class TutorialLoader {
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textoBox6")
-                                            .position(x, y*0.25f)
-                                            .width(width*1.25f)
+                                            .position(x, y)
+                                            .width(width)
                                             .size(size)
                                             .text(Utils.getStringResource(R.string.l2t6))
-                                            .withoutArrow()
+                                            .withArrow(gX *0.5f, gY *0.95f)
                                             .build()
                             )
                             .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
@@ -437,8 +442,8 @@ public class TutorialLoader {
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textoBox7")
-                                            .position(x, y*0.25f)
-                                            .width(width*1.25f)
+                                            .position(x, y)
+                                            .width(width)
                                             .size(size)
                                             .text(Utils.getStringResource(R.string.l2t7))
                                             .withoutArrow()
@@ -451,9 +456,9 @@ public class TutorialLoader {
                     // L2T8
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
-                                    new TextBoxBuilder("textoBox8")
-                                            .position(x, y*0.25f)
-                                            .width(width*1.25f)
+                                    new TextBoxBuilder("textBox8")
+                                            .position(x, y)
+                                            .width(width)
                                             .size(size)
                                             .text(Utils.getStringResource(R.string.l2t8))
                                             .withoutArrow()
@@ -463,11 +468,17 @@ public class TutorialLoader {
                                 @Override
                                 public void onShowBeforeAnim() {
                                     Game.imageTutorialDown = new Image(
-                                        "anguloDown", gX*0.39f, (gY * 0.975f) - (gX * 0.1f), gX * 0.20f, gX * 0.1f, Texture.TEXTURE_BARS, 1f/1024f, 255f/1024f, 898f/1024f, 1023f/1024f);
+                                        "anguloDown", gX*0.348f, (gY * 0.975f) - (gX * 0.1f), gX * 0.20f, gX * 0.1f, Texture.TEXTURE_BARS, 1f/1024f, 255f/1024f, 898f/1024f, 1023f/1024f);
                                     Game.imageTutorialDown.display();
+                                    Utils.createAnimation3v(Game.imageTutorialDown, "alpha", "alpha", 1500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, true).start();
                                 }
                             })
-                        
+                        .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
+                            @Override
+                            public void onUnshowBeforeAnim() {
+                                Game.imageTutorialDown = null;
+                            }
+                        })
                         
                         .build()
                     );
@@ -476,11 +487,11 @@ public class TutorialLoader {
                     Levels.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textoBox9")
-                                            .position(x, y*0.25f)
-                                            .width(width*1.25f)
+                                            .position(x, y)
+                                            .width(width)
                                             .size(size)
                                             .text(Utils.getStringResource(R.string.l2t9))
-                                            .withoutArrow()
+                                            .withArrow(gX *0.5f, gY *0.95f)
                                             .build()
                             )
                             .onShowBeforeAnim(new Tutorial.OnShowBeforeAnim() {
@@ -508,7 +519,6 @@ public class TutorialLoader {
                                         }
                                     });
                                     Game.ballDataPanel.setData(0.0f, 0.0f, false);
-                                    Game.imageTutorialDown.clearDisplay();
                                 }
                             })
                             .build()
@@ -519,9 +529,9 @@ public class TutorialLoader {
                 // L2T10
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBoxBuilder("textoBox10")
-                                .position(x, y*0.25f)
-                                .width(width*1.25f)
+                            new TextBoxBuilder("textBox10")
+                                    .position(x, y)
+                                .width(width)
                                 .size(size)
                                 .text(Utils.getStringResource( R.string.l2t10))
                                 .withoutArrow()
@@ -542,7 +552,7 @@ public class TutorialLoader {
                             @Override
                             public void onShowAfterAnim() {
                                 Utils.createAnimation4v(Game.balls.get(0), "translateX", "translateX", 3000,
-                                    0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.2f, 1f, gX*0.2f, true, true).start();
+                                    0f, 0f, 0.25f, gX*0.15f, 0.5f, gX*0.198f, 1f, gX*0.198f, true, true).start();
                                 Utils.createAnimation4v(Game.balls.get(0), "translateY", "translateY", 3000,
                                     0f, 0f, 0.25f, gY*0.245f, 0.5f, gY*0.12f, 1f, gY*0.12f, true, true).start();
                                 Utils.createAnimation3v(Game.bars.get(0), "translateX", "translateX", 3000,
@@ -569,7 +579,7 @@ public class TutorialLoader {
                 // L2T11
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBoxBuilder("textoBox11")
+                            new TextBoxBuilder("textBox11")
                                 .position(x, y)
                                 .width(width)
                                 .size(size)
@@ -611,30 +621,31 @@ public class TutorialLoader {
                                     @Override
                                     public void onShowBeforeAnim() {
                                         Game.imageTutorialDown = new Image(
-                                                "anguloUp", gX*0.38f, (gY * 0.975f) - (gX * 0.1f), gX * 0.20f, gX * 0.1f, Texture.TEXTURE_BARS, 1f/1024f, 255f/1024f, 770f/1024f, 895f/1024f);
+                                                "anguloUp", gX*0.348f, (gY * 0.975f) - (gX * 0.1f), gX * 0.20f, gX * 0.1f, Texture.TEXTURE_BARS, 1f/1024f, 255f/1024f, 770f/1024f, 895f/1024f);
                                         Game.imageTutorialDown.display();
+                                        Utils.createAnimation3v(Game.imageTutorialDown, "alpha", "alpha", 1500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, true).start();
                                     }
-                                })
-                    
-                        .onUnshowAfterAnim(new Tutorial.OnUnshowAfterAnim() {
-                                @Override
-                                public void onUnshowAfterAnim() {
-                                    Game.balls.get(0).clearAnimations();
-                                    Game.bars.get(0).clearAnimations();
-                                    Game.imageTutorialDown.clearDisplay();
-                                }
-                            })
+                        })
+                        .onUnshowBeforeAnim(new Tutorial.OnUnshowBeforeAnim() {
+                            @Override
+                            public void onUnshowBeforeAnim() {
+                                Game.imageTutorialDown = null;
+                                Game.balls.get(0).clearAnimations();
+                                Game.bars.get(0).clearAnimations();
+                            }
+                        })
+
                         .build()
                 );
                 
                 // L2T14
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBoxBuilder("textoBox4")
-                                .position(x, y)
+                            new TextBoxBuilder("textBox14")
+                                .position(x*0.5f, y)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(R.string.l2t4))
+                                .text(Utils.getStringResource(R.string.l2t14))
                                 .withoutArrow()
                                 .build()
                         )
@@ -644,11 +655,11 @@ public class TutorialLoader {
                 // L2T15
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
-                            new TextBoxBuilder("textoBox4")
+                            new TextBoxBuilder("textBox15")
                                 .position(x, y)
                                 .width(width)
                                 .size(size)
-                                .text(Utils.getStringResource(R.string.l2t4))
+                                .text(Utils.getStringResource(R.string.l2t15))
                                         .withoutArrow()
                                 .build()
                         )
@@ -680,7 +691,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox1")
-                                .position(x*0.5f, y*2f)
+                                .position(x, y)
                                 .width(width)
                                 .size(size)
                                 .text(Utils.getStringResource( R.string.l7t1))
@@ -741,7 +752,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox1")
-                                .position(x*0.5f, y*2f)
+                                .position(x, y)
                                 .width(width)
                                 .size(size)
                                 .text(Utils.getStringResource( R.string.l9t1))
@@ -901,7 +912,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox4")
-                                        .position(x*0.5f, y*2.5f)
+                                        .position(x, y)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t4))
@@ -934,7 +945,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox6")
-                                        .position(x*0.5f, y*2f)
+                                        .position(x, y)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t6))
@@ -953,7 +964,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox7")
-                                        .position(x*0.5f, y*2f)
+                                        .position(x, y)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t7))
@@ -973,7 +984,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox8")
-                                        .position(x*0.5f, y*2f)
+                                        .position(x, y)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t8))
@@ -988,7 +999,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox9")
-                                        .position(x*0.5f, y*2.5f)
+                                        .position(x, y)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t9))
@@ -1051,7 +1062,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox10")
-                                        .position(x*0.5f, y*2.5f)
+                                        .position(x, y*2.5f)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t10))
@@ -1065,7 +1076,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox11")
-                                        .position(x*0.5f, y*2.5f)
+                                        .position(x, y*2.5f)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t11))
@@ -1114,7 +1125,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox12")
-                                        .position(x*0.5f, y*2.5f)
+                                        .position(x, y*2.5f)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t12))
@@ -1172,7 +1183,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox13")
-                                        .position(x*0.5f, y*2.5f)
+                                        .position(x, y*2.5f)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t13))
@@ -1186,7 +1197,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox14")
-                                        .position(x*0.5f, y*2.5f)
+                                        .position(x, y*2.5f)
                                         .width(width)
                                         .size(size)
                                         .text(Utils.getStringResource( R.string.l9t14))

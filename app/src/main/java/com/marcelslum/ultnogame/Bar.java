@@ -222,6 +222,10 @@ public class Bar extends Rectangle{
     }
 
     public void moveLeft(float timePercentage) {
+        if (!isMovable){
+            return;
+        }
+
         //Log.e(TAG, "moveLeft");
         if (!accelStarted || (accelStarted && (accelFinalVelocityX > 0f))) {
             //Log.e(TAG, "initAcceleration");
@@ -235,6 +239,9 @@ public class Bar extends Rectangle{
     }
 
     public void moveRight(float timePercentage) {
+        if (!isMovable){
+            return;
+        }
         //Log.e(TAG, "moveRight");
         if (!accelStarted || (accelStarted && (accelFinalVelocityX < 0f))) {
             //Log.e(TAG, "initAcceleration");

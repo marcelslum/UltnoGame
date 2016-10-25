@@ -12,6 +12,8 @@ public class BallDataPanel extends Entity{
     Rectangle angleRectangle;
     Rectangle velocityNewRectangle;
     Rectangle angleNewRectangle;
+    Rectangle endVelocity;
+    Rectangle endAngle;
     
     private static final Color COLOR_BAR_GREEN_DARK = new Color (0.2f, 0.5f, 0.49f, 1f);
     private static final Color COLOR_BAR_GREEN_LIGHT = new Color (0.65f, 0.83f, 0.82f, 1f);
@@ -37,14 +39,20 @@ public class BallDataPanel extends Entity{
         velocityRectangle = new Rectangle("velocityRectangle", x, y, width, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
         velocityNewRectangle = new Rectangle("velocityNewRectangle", x, y, width, baseHeight *2f, -1, COLOR_BAR_GREEN_LIGHT);
 
-        velocityRectangle.animScaleX = 0;
-        velocityNewRectangle.animScaleX = 0;
 
-        angleRectangle = new Rectangle("velocityRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
+
+        velocityRectangle.animScaleX = 0.008f;
+        velocityNewRectangle.animScaleX = 0.008f;
+
+        angleRectangle = new Rectangle("angleRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
         angleNewRectangle = new Rectangle("angleNewRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_LIGHT);
 
-        angleRectangle.animScaleX = 0;
-        angleNewRectangle.animScaleX = 0;
+        angleRectangle.animScaleX = 0.008f;
+        angleNewRectangle.animScaleX = 0.008f;
+
+        float markSize =  width*0.008f;
+        endVelocity = new Rectangle("velocityRectangle", x + width - markSize, y, markSize, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
+        endAngle = new Rectangle("velocityRectangle", x + width - markSize, y + (baseHeight * 3f), markSize, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
     }
 
     @Override
@@ -61,6 +69,11 @@ public class BallDataPanel extends Entity{
         angleNewRectangle.prepareRender(matrixView, matrixProjection);
         angleRectangle.alpha = alpha;
         angleRectangle.prepareRender(matrixView, matrixProjection);
+
+        endVelocity.alpha = alpha;
+        endVelocity.prepareRender(matrixView, matrixProjection);
+        endAngle.alpha = alpha;
+        endAngle.prepareRender(matrixView, matrixProjection);
 
     }
 
@@ -79,11 +92,11 @@ public class BallDataPanel extends Entity{
         float previousVelocityPercent = velocityPercent;
         float previousAnglePercent = anglePercent;
 
-        Log.e(TAG, "previousVelocityPercent "+previousVelocityPercent);
-        Log.e(TAG, "previousAnglePercent "+previousAnglePercent);
+        //Log.e(TAG, "previousVelocityPercent "+previousVelocityPercent);
+        //Log.e(TAG, "previousAnglePercent "+previousAnglePercent);
 
-        Log.e(TAG, "velocityPercentage "+velocityPercentage);
-        Log.e(TAG, "anglePercentage "+anglePercentage);
+        //Log.e(TAG, "velocityPercentage "+velocityPercentage);
+        //Log.e(TAG, "anglePercentage "+anglePercentage);
 
         if (velocityPercentage < 0.005f){
             velocityPercentage = 0.005f;

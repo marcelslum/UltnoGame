@@ -164,8 +164,8 @@ public class Level {
         Game.scorePanel = new ScorePanel("scorePanel",
                 Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.07f);
         
-        float scorePanelX = Game.scorePanel.x + (Game.scorePanel.getWidth()*0.0143f);
-        float scorePanelWidth = Game.scorePanel.getWidth() - (Game.scorePanel.getWidth()*0.028f);
+        float scorePanelX = Game.scorePanel.x + (Game.scorePanel.getWidth()*0.014f);
+        float scorePanelWidth = Game.scorePanel.getWidth() - (Game.scorePanel.getWidth()*0.035f);
         
         Game.ballDataPanel = new BallDataPanel("ballDataPanel",
             scorePanelX,

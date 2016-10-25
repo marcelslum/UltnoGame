@@ -14,6 +14,7 @@ import java.util.TimerTask;
 // TODO erro: jogo trava quando se aperta os dois botões de flecha ao mesmo tempo: resolvido
 // TODO verificar os listeners ativos
 // TODO colocar timeout em todos os awaits...
+// TODO colocar uma barra ao final do data panel
 
 
 /** * Created by marcel on 01/08/2016.
