@@ -28,7 +28,9 @@ public class BallParticleGenerator extends Entity {
 
     // recebe a posição central do circulo
   public void generate(float x, float y, float radius, int quantityOfParticles){
-        
+
+        // TODO criar pool de particulas
+
         for (int i = 0; i < quantityOfParticles;i++) {
             float vx = Utils.getRandonFloat(-0.4f, 0.4f);
             float vy = Utils.getRandonFloat(-0.4f, 0.4f);
@@ -52,7 +54,6 @@ public class BallParticleGenerator extends Entity {
 
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection){
-
         if (isActive && particlesArray.size() > 0) {
             updateDrawInfo();
             //Log.e("ballParticleGenerator", "render");
@@ -61,7 +62,13 @@ public class BallParticleGenerator extends Entity {
     }
 
     private void updateDrawInfo() {
-        initializeData(12*particlesArray.size(), 6*particlesArray.size(), 8*particlesArray.size(), 16*particlesArray.size());
+        boolean createBuffers = false;
+
+
+        if (colorsData == null || particlesArray.size() != (colorsData.length/16)){
+            initializeData(12*particlesArray.size(), 6*particlesArray.size(), 8*particlesArray.size(), 16*particlesArray.size());
+            createBuffers = true;
+        }
 
         for (int i = 0; i < particlesArray.size();i++) {
             //Log.e("particle", "updateDraw da particula "+i);
@@ -79,9 +86,11 @@ public class BallParticleGenerator extends Entity {
 
             //Log.e("ballParticleGenerator", " "+p.x+" "+p.y+" "+p.size);
 
-            Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0.1f, 0.1f, 0.1f, p.alpha));
-            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
+            if (createBuffers) {
+                Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0.1f, 0.1f, 0.1f, p.alpha));
+                Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+                Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
+            }
         }
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         indicesBuffer = Utils.generateShortBuffer(indicesData);

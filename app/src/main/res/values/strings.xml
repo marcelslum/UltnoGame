@@ -54,7 +54,7 @@
     <string name="l9t4">Mas atenção, você NÃO precisa manter todas elas vivas.</string>
     <string name="l9t5">Para saber quantas bolas salvar, verifique o painel abaixo.</string>
     <string name="l9t6">No centro, é representada, através de bolas pretas, a quantidade mínima de bolas que deverão permanecer vivas</string>
-    <string name="l9t7">Neste level, portanto, você deverá manter viva pelo menos uma bola.</string>
+    <string name="l9t7">Neste nivel, portanto, você deverá manter viva pelo menos uma bola.</string>
     <string name="l9t8">A quantidade de bolas que poderão ser perdidas é representada no painel por bolas azuis.</string>
     <string name="l9t9">Na situação atual, portanto, você poderá perder até três bolas.</string>
     <string name="l9t10">No entanto, a manutenção de bolas extras traz algumas vantagens.</string>
@@ -67,7 +67,7 @@
     <string name="options">Opções</string>
     <string name="dificuldade">Dificuldade</string>
     <string name="musica">Música</string>
-    <string name="sons">Sons do Jogo</string>
+    <string name="sons">Sons</string>
     <string name="facil">Fácil</string>
     <string name="normal">Normal</string>
     <string name="dificil">Difícil</string>

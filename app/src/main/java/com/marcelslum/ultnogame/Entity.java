@@ -365,7 +365,7 @@ public class Entity{
         verifyAnimations();
         if (isVisible){
             if (name == "selectorSound"){
-                Log.e("Entity", "selector sound visible");
+                //Log.e("Entity", "selector sound visible");
             }
             render(matrixView, matrixProjection);
         }

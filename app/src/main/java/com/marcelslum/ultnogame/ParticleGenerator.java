@@ -59,6 +59,7 @@ public class ParticleGenerator extends Entity {
     }
 
     private void updateDrawInfo() {
+        boolean ended = true;
         for (int i = 0; i < numberOfParticles;i++) {
             //Log.e("particle", "updateDraw da particula "+i);
             Particle p = particlesArray.get(i);
@@ -68,11 +69,19 @@ public class ParticleGenerator extends Entity {
             p.vy += p.velocity_variation_y;
             p.alpha -= p.alpha_decay;
             if(p.alpha < 0f) p.alpha = 0f;
+
+            if (p.alpha > 0f){
+                ended = false;
+            }
+
             Utils.insertRectangleVerticesData(this.verticesData, i * 12, p.x, p.x + p.size, p.y, p.y + p.size, 0f);
             Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
         }
         verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
         colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        if (ended){
+            isActive = false;
+        }
     }
 
 

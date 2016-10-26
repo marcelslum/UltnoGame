@@ -15,6 +15,8 @@ public class Ball extends Circle{
     static final int COLOR_BALL_ORANGE = 24;
     static final int COLOR_BALL_PINK = 21;
     static final int COLOR_BALL_PURPLE = 25;
+    public ParticleGenerator particleGenerator;
+    public BallParticleGenerator ballParticleGenerator;
 
     float angleToRotate;
     float velocityVariation;
@@ -44,7 +46,6 @@ public class Ball extends Circle{
     boolean collisionOtherBall = false;
     int collisionBarNumber = -1;
     boolean verifyAppendsIsFreeBall = false;
-    BallParticleGenerator ballParticleGenerator;
     private int alarmId;
     
     public float lastResponseBallX = 0f;
@@ -164,6 +165,29 @@ public class Ball extends Circle{
     public void clearParticles(){
         historicPositionX.clear();
         historicPositionY.clear();
+    }
+
+    @Override
+    public void checkTransformations(boolean updatePrevious) {
+        if (ballParticleGenerator != null && ballParticleGenerator.isActive){
+            ballParticleGenerator.checkTransformations(updatePrevious);
+        }
+
+        if (particleGenerator != null && particleGenerator.isActive){
+            particleGenerator.checkTransformations(updatePrevious);
+        }
+        super.checkTransformations(updatePrevious);
+    }
+
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection) {
+        if (ballParticleGenerator != null && ballParticleGenerator.isActive){
+            ballParticleGenerator.prepareRender(matrixView, matrixProjection);
+        }
+        if (particleGenerator != null && particleGenerator.isActive){
+            particleGenerator.prepareRender(matrixView, matrixProjection);
+        }
+        super.prepareRender(matrixView, matrixProjection);
     }
 
     public void onCollision(){
@@ -725,7 +749,7 @@ public class Ball extends Circle{
         clearAnimations();
         ParticleGenerator pg = new ParticleGenerator("explode", x + accumulatedTranslateX, y + accumulatedTranslateY,
                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2, Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3);
-        Game.particleGenerator.add(pg);
+        particleGenerator = pg;
         pg.activate();
 
         Sound.soundPool.stop(alarmId);

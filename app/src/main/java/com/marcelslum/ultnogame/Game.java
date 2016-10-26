@@ -73,8 +73,6 @@ public class Game {
     static ArrayList<Selector> selectors;
     static ArrayList<InteractionListener> interactionListeners;
     static ArrayList<TextBox> textBoxes;
-    static ArrayList<ParticleGenerator> particleGenerator;
-    static ArrayList<BallParticleGenerator> ballParticleGenerator;
     static ArrayList<Message> messages;
     static ArrayList<Line> lines;
     public static Background background;
@@ -256,8 +254,6 @@ public class Game {
         touchEvents = new ArrayList<>();
         texts = new ArrayList<>();
         interactionListeners = new ArrayList<>();
-        particleGenerator = new ArrayList<>();
-        ballParticleGenerator = new ArrayList<>();
         bars = new ArrayList<>();
         menus = new ArrayList<>();
         selectors = new ArrayList<>();
@@ -369,7 +365,7 @@ public class Game {
             MenuOption menuOptionMusicMain = menuOptions.getMenuOptionByName("music");
             selectorMusic.setPosition(menuOptionMusicMain.x + (menuOptionMusicMain.width*2.0f), menuOptionMusicMain.y);
             MenuOption menuOptionSoundMain = menuOptions.getMenuOptionByName("sound");
-            selectorSound.setPosition(menuOptionSoundMain.x + (menuOptionSoundMain.width/2.0f), menuOptionSoundMain.y);
+            selectorSound.setPosition(menuOptionSoundMain.x + (menuOptionSoundMain.width*2.0f), menuOptionSoundMain.y);
 
             Log.e(TAG, "selector sound position "+(menuOptionSoundMain.x + (menuOptionSoundMain.width*2.0f)) + " e " +menuOptionSoundMain.y);
 
@@ -379,7 +375,7 @@ public class Game {
             selectorMusic.setPosition(menuOptionMusicInGame.x + ((menuOptionMusicInGame.width)*2.0f), menuOptionMusicInGame.y);
             MenuOption menuOptionSoundInGame = menuInGameOptions.getMenuOptionByName("sound");
             selectorSound.setPosition(menuOptionSoundInGame.x + (menuOptionSoundInGame.width*2.0f), menuOptionSoundInGame.y);
-            Log.e(TAG, "selector sound position "+(menuOptionSoundInGame.x + (menuOptionSoundInGame.width/2.0f)) + " e " +menuOptionSoundInGame.y);
+            Log.e(TAG, "selector sound position "+(menuOptionSoundInGame.x + (menuOptionSoundInGame.width*2.0f)) + " e " +menuOptionSoundInGame.y);
         }
     }
 
@@ -445,7 +441,7 @@ public class Game {
 
         // cria o seletor de musica
         selectorMusic = new Selector("selectorMusic", 0f,0f, fontSize, "",
-                new String[]{getContext().getResources().getString(R.string.ligado), getContext().getResources().getString(R.string.desligado)}, font);
+                new String[]{getContext().getResources().getString(R.string.desligado), getContext().getResources().getString(R.string.ligado)}, font);
         menuOptions.addMenuOption("music", getContext().getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -470,9 +466,7 @@ public class Game {
 
         // cria o seletor de sons
         selectorSound = new Selector("selectorSound", 0f,0f, fontSize, "",
-                new String[]{
-                        getContext().getResources().getString(R.string.ligado),
-                        getContext().getResources().getString(R.string.desligado)}, font);
+                new String[]{getContext().getResources().getString(R.string.desligado), getContext().getResources().getString(R.string.ligado)}, font);
 
         menuOptions.addMenuOption("sound", getContext().getResources().getString(R.string.sons), new MenuOption.OnChoice() {
             @Override
@@ -827,6 +821,7 @@ public class Game {
             menuInGame.block();
             menuInGame.clearDisplay();
             menuInGameOptions.appearAndUnblock(100);
+            messageInGame.display();
         } else if (state == GAME_STATE_MENU){
             ConnectionHandler.menuConnectionAttempts = 0;
             if (!sameState) {
@@ -1091,6 +1086,7 @@ public class Game {
                         scorePanel.showMessage("+ 50%", 800);
                         objectivePanel.explodeBlueBall();
                     } else {
+                        objectivePanel.clearExplosions();
                         if (Game.menuWin.isBlocked) {
                             Game.menuWin.appearAndUnblock(800);
                         }
@@ -1698,12 +1694,6 @@ public class Game {
         }
 
         for (int i = 0; i < balls.size(); i++){
-            if (balls.get(i).ballParticleGenerator != null){
-                balls.get(i).ballParticleGenerator.checkTransformations(true);
-            }
-        }
-
-        for (int i = 0; i < balls.size(); i++){
             balls.get(i).checkTransformations(true);
         }
 
@@ -1723,10 +1713,6 @@ public class Game {
             if (targets.get(i).showPointsState == Entity.SHOW_POINTS_ON){
                 targets.get(i).checkTransformations(true);
             }
-        }
-
-        for (int i = 0; i < particleGenerator.size(); i++){
-            particleGenerator.get(i).checkTransformations(true);
         }
 
         for (int i = 0; i < windows.size(); i++){
@@ -1794,12 +1780,6 @@ public class Game {
         }
         
         if (imageTutorialDown != null) imageTutorialDown.prepareRender(matrixView, matrixProjection);
-        
-        for (int i = 0; i < balls.size(); i++){
-            if (balls.get(i).ballParticleGenerator != null){
-                balls.get(i).ballParticleGenerator.prepareRender(matrixView, matrixProjection);
-            }
-        }
     
         for (int i = 0; i < balls.size(); i++){
             balls.get(i).prepareRender(matrixView, matrixProjection);
@@ -1821,10 +1801,6 @@ public class Game {
             if (targets.get(i).showPointsState == Entity.SHOW_POINTS_ON){
                 targets.get(i).renderPoints(matrixView, matrixProjection);
             }
-        }
-
-        for (int i = 0; i < particleGenerator.size(); i++){
-            particleGenerator.get(i).prepareRender(matrixView, matrixProjection);
         }
 
         for (int i = 0; i < windows.size(); i++){

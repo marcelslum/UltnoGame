@@ -1,5 +1,8 @@
 package com.marcelslum.ultnogame;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class ObjectivePanel extends Entity{
 
     public float size;
@@ -12,6 +15,7 @@ public class ObjectivePanel extends Entity{
     public int blackBalls;
     public int blueBalls;
     public float lastXBall;
+    public ArrayList<ParticleGenerator> particleGenerators;
 
     ObjectivePanel(String name, Game game, float x, float y, float size) {
         super(name, x, y);
@@ -28,6 +32,31 @@ public class ObjectivePanel extends Entity{
         minBallsAlive = 2;
         ballsInvencible = 1;
         setValues(ballsAlive, minBallsAlive, ballsInvencible);
+        particleGenerators = new ArrayList<>();
+    }
+
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection) {
+        super.prepareRender(matrixView, matrixProjection);
+        if (isVisible) {
+            for (int i = 0; i < particleGenerators.size(); i++) {
+                if (particleGenerators.get(i).isActive){
+                    particleGenerators.get(i).prepareRender(matrixView, matrixProjection);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void checkTransformations(boolean updatePrevious) {
+        super.checkTransformations(updatePrevious);
+        if (particleGenerators != null) {
+            for (int i = 0; i < particleGenerators.size(); i++) {
+                if (particleGenerators.get(i).isActive) {
+                    particleGenerators.get(i).checkTransformations(updatePrevious);
+                }
+            }
+        }
     }
 
     public void setValues(int ballsAlive, int minBallsAlive, int ballsInvencible) {
@@ -115,7 +144,7 @@ public class ObjectivePanel extends Entity{
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4, 
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5, 
                                 Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6);
-                            Game.particleGenerator.add(pg);
+                            particleGenerators.add(pg);
                             pg.activate();
         }
     }
@@ -154,5 +183,9 @@ public class ObjectivePanel extends Entity{
             Utils.x1 = 0.751f;
             Utils.x2 = 0.9995f;
         }
+    }
+
+    public void clearExplosions() {
+        particleGenerators.clear();
     }
 }

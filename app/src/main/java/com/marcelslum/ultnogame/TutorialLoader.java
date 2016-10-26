@@ -675,7 +675,7 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox1")
-                                .position(x*0.1f, y*0.1f)
+                                .position(x, y*2f)
                                 .width(width)
                                 .size(size)
                                     .text(Utils.getStringResource( R.string.l4t1))
@@ -1100,8 +1100,11 @@ public class TutorialLoader {
                                         animPoints.setOnChangeNotFluid(new Animation.OnChange() {
                                             @Override
                                             public void onChange() {
+                                                if (Game.balls.get(4).numberForAnimation == 2f){
+                                                    Game.scorePanel.setValue(0, false, 0, false);
+                                                }
                                                 if (Game.balls.get(4).numberForAnimation == 1f){
-                                                    Game.scorePanel.setValue(800, false, 1000, true);
+                                                    Game.scorePanel.setValue(800, true, 1000, false);
                                                     Game.targets.get(37).showPoints(800);
                                                 }
                                             }
@@ -1141,7 +1144,7 @@ public class TutorialLoader {
                                             }
                                         }
 
-                                        Game.scorePanel.setValue(10000, true, 1000, true);
+                                        Game.scorePanel.setValue(10000, true, 1000, false);
 
                                     ArrayList<float[]> valuesScoreAnim = new ArrayList<>();
                                         valuesScoreAnim.add(new float[]{0f,5f});
