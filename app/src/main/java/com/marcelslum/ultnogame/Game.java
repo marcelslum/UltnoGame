@@ -227,6 +227,11 @@ public class Game {
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
         Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
 
+
+        Texture.init();
+
+
+
         Game.frame = new Rectangle("frame", 0f, 0f, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
         Game.frame.clearDisplay();
         Game.frame.alpha = 0f;
@@ -866,17 +871,17 @@ public class Game {
             if (musicNumber == 1){
                 Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
             } else if (musicNumber == 2){
-                Sound.music = MediaPlayer.create(getContext(), R.raw.music2);
+                Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
             } else if (musicNumber == 3){
-                Sound.music = MediaPlayer.create(getContext(), R.raw.music3);
+                Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
             } else if (musicNumber == 4){
-                Sound.music = MediaPlayer.create(getContext(), R.raw.music4);
+                Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
             } else if (musicNumber == 5){
-                Sound.music = MediaPlayer.create(getContext(), R.raw.music5);
+                Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
             } else if (musicNumber == 6){
-                Sound.music = MediaPlayer.create(getContext(), R.raw.music6);
+                Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
             } else{
-                Sound.music = MediaPlayer.create(getContext(), R.raw.music7);
+                Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
             }
 
             Sound.music.setVolume(0.5f, 0.5f);

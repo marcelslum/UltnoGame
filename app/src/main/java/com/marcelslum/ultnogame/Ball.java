@@ -132,21 +132,19 @@ public class Ball extends Circle{
     public void translate(float tx, float ty) {
         super.translate(tx, ty);
         if (isMovable && isFree){
-            if (historicPositionX.size() < 20){
+            if (historicPositionX.size() < 7){
                 historicPositionX.add(x + accumulatedTranslateX + tx);
                 historicPositionY.add(y + accumulatedTranslateY + ty);
             } else {
                 historicPositionX.add(0, x + accumulatedTranslateX + tx);
-                historicPositionX.remove(20);
+                historicPositionX.remove(7);
                 historicPositionY.add(0, y + accumulatedTranslateY + ty);
-                historicPositionY.remove(20);
+                historicPositionY.remove(7);
             }
 
             int numberOfParticles;
             for (int i = 0; i < historicPositionX.size(); i++){
                 if (i == 0){
-                    numberOfParticles = 5;
-                } else if (i == 0){
                     numberOfParticles = 4;
                 } else if (i == 2){
                     numberOfParticles = 3;
@@ -215,16 +213,19 @@ public class Ball extends Circle{
             Log.e("ball", collisionsData.get(i).object.name +" rX "+ collisionsData.get(i).responseX +" rY "+ collisionsData.get(i).responseY +" nX "+ collisionsData.get(i).normalX +" nY "+ collisionsData.get(i).normalY+" isRepeated "+collisionsData.get(i).isRepeated);
 
             if (collisionsData.get(i).object.name.equals("bordaB") && !collisionsData.get(i).isRepeated){
-                this.collisionBordaB = true;
+                collisionBordaB = true;
+                setDead();
+                return;
+
             }
             
             if (collisionsData.get(i).object.name.equals("bar") && !collisionsData.get(i).isRepeated){
-                this.collisionBar = true;
-                this.collisionBarNumber = i;
+                collisionBar = true;
+                collisionBarNumber = i;
             }
             
             if (collisionsData.get(i).object.name.equals("target") && !collisionsData.get(i).isRepeated){
-                this.collisionTarget = true;
+                collisionTarget = true;
             }
         
             // verifica se obstáculo esta crescendo e, se a velocidade for maior que a da bola, impulsiona-a
@@ -344,7 +345,7 @@ public class Ball extends Circle{
             float iDvy = dvy;
             dvx *= (1+impulsion);
             dvy *= (1+impulsion);
-            this.accelerate(500, iDvx, iDvy);
+            accelerate(500, iDvx, iDvy);
         }
 
         
@@ -894,6 +895,7 @@ public class Ball extends Circle{
                 self.isVisible = false;
             }
         });
+        Sound.play(Sound.soundBallFall, 1, 1, 0);
         this.isSolid = false;
         this.isCollidable = false;
         this.isMovable = false;

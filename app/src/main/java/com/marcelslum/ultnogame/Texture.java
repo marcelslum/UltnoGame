@@ -45,7 +45,6 @@ public class Texture {
         textureNamesUsed = null;
     }
 
-
     public static void init() {
         Log.e(TAG, "initTextures");
         Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
@@ -55,7 +54,6 @@ public class Texture {
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
     }
-
 
     Texture(int id, String resourceIdentifier){
         
@@ -68,6 +66,8 @@ public class Texture {
         catch (Exception e) {
             Log.e(TAG, "Erro ao criar a textura", e);
         }
+
+        bind();
     }
 
     public static Texture getTextureById(int id){
@@ -142,10 +142,12 @@ public class Texture {
         // Load the bitmap into the bound texture.
         Log.e("texture", "troca textura "+id+ " texture unit "+textureUnit);
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+
+        bitmap.recycle();
     }
 
     public int bind(){
-        
+
         if (textureNames == null){
             int[] maxTextureUnits = new int[1];
             GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS, maxTextureUnits, 0);
@@ -173,6 +175,15 @@ public class Texture {
             return textureUnit;
         }
 
+        if (bitmap.isRecycled() || bitmap == null){
+            try {
+                bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
+            }
+            catch (Exception e) {
+                Log.e(TAG, "Erro ao criar a textura", e);
+            }
+        }
+
         textureUnit = getFreeTextureUnit();
         Log.e("texture", "texture id "+id +" novo textureId "+textureUnit);
 
@@ -197,6 +208,9 @@ public class Texture {
 
         Log.e("texture", "nova textura "+id);
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+
+        bitmap.recycle();
+
         return textureUnit;
     }
 }

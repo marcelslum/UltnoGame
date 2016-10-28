@@ -54,6 +54,10 @@ public class MainActivity extends FragmentActivity implements
         Log.e("mainActivity", "create");
         super.onCreate(savedInstanceState);
 
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        Log.e(TAG, "maxMemory "+maxMemory);
+
         mResolvingError = savedInstanceState != null
                 && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
 
