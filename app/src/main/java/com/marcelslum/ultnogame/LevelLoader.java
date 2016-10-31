@@ -247,7 +247,7 @@ public class LevelLoader {
         if (levelNumber >= 8) {
                 levelBuilder
                         .setBallsVX(1.214f)
-                        .setBallsVY(1.214f);
+                        .setBallsVY(1.214f)
                         .setBallsMaxAngle_BD_55(1.055f)
                         .setBallsMinAngle_BD_35(0.914f);
             if (levelNumber == 8) {

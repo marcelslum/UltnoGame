@@ -14,11 +14,15 @@ public class BallDataPanel extends Entity{
     Rectangle angleNewRectangle;
     Rectangle endVelocity;
     Rectangle endAngle;
+
+    Rectangle backVelocityRectangle;
+    Rectangle backAngleRectangle;
     
     private static final Color COLOR_BAR_GREEN_DARK = new Color (0.2f, 0.5f, 0.49f, 1f);
     private static final Color COLOR_BAR_GREEN_LIGHT = new Color (0.65f, 0.83f, 0.82f, 1f);
     private static final Color COLOR_BAR_BLUE_DARK = new Color (0.21f, 0.27f, 0.64f, 1f);
     private static final Color COLOR_BAR_BLUE_LIGHT = new Color (0.79f, 0.82f, 1f, 1f);
+    private static final Color COLOR_BACK = new Color (0.2f, 0.2f, 0.2f, 0.5f);
    
     
     float velocityPercent = 0f;
@@ -47,12 +51,17 @@ public class BallDataPanel extends Entity{
         angleRectangle = new Rectangle("angleRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
         angleNewRectangle = new Rectangle("angleNewRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_LIGHT);
 
+        backVelocityRectangle = new Rectangle("backVelocityRectangle", x, y, width, baseHeight *2f, -1, COLOR_BACK);
+        backAngleRectangle = new Rectangle("backAngleRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BACK);
+
+
         angleRectangle.animScaleX = 0.008f;
         angleNewRectangle.animScaleX = 0.008f;
 
         float markSize =  width*0.008f;
         endVelocity = new Rectangle("velocityRectangle", x + width - markSize, y, markSize, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
         endAngle = new Rectangle("velocityRectangle", x + width - markSize, y + (baseHeight * 3f), markSize, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
+
     }
 
     @Override
@@ -74,6 +83,11 @@ public class BallDataPanel extends Entity{
         endVelocity.prepareRender(matrixView, matrixProjection);
         endAngle.alpha = alpha;
         endAngle.prepareRender(matrixView, matrixProjection);
+
+        backVelocityRectangle.alpha = alpha;
+        backVelocityRectangle.prepareRender(matrixView, matrixProjection);
+        backAngleRectangle.alpha = alpha;
+        backAngleRectangle.prepareRender(matrixView, matrixProjection);
 
     }
 

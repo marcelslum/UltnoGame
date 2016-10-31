@@ -82,8 +82,6 @@ public class BallParticleGenerator extends Entity {
             if(p.alpha < 0f) p.alpha = 0f;
             
             Utils.insertRectangleVerticesData(verticesData, i * 12, p.x - p.size/2f, p.x + p.size/2f, p.y- p.size/2f, p.y + p.size/2f, 0f);
-
-
             //Log.e("ballParticleGenerator", " "+p.x+" "+p.y+" "+p.size);
 
             if (createBuffers) {
@@ -92,6 +90,7 @@ public class BallParticleGenerator extends Entity {
                 Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
             }
         }
+
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         indicesBuffer = Utils.generateShortBuffer(indicesData);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);

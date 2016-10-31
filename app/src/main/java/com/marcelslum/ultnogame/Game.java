@@ -368,19 +368,15 @@ public class Game {
     public static void repositionSelectors(int gameState){
         if (gameState == GAME_STATE_OPCOES){
             MenuOption menuOptionMusicMain = menuOptions.getMenuOptionByName("music");
-            selectorMusic.setPosition(menuOptionMusicMain.x + (menuOptionMusicMain.width*2.0f), menuOptionMusicMain.y);
+            selectorMusic.setPosition(menuOptionMusicMain.x + (menuOptionMusicMain.width*1.5f), menuOptionMusicMain.y);
             MenuOption menuOptionSoundMain = menuOptions.getMenuOptionByName("sound");
-            selectorSound.setPosition(menuOptionSoundMain.x + (menuOptionSoundMain.width*2.0f), menuOptionSoundMain.y);
-
-            Log.e(TAG, "selector sound position "+(menuOptionSoundMain.x + (menuOptionSoundMain.width*2.0f)) + " e " +menuOptionSoundMain.y);
-
+            selectorSound.setPosition(menuOptionSoundMain.x + (menuOptionSoundMain.width*2.2f), menuOptionSoundMain.y);
 
         } else if (gameState == GAME_STATE_OPCOES_GAME){
             MenuOption menuOptionMusicInGame = menuInGameOptions.getMenuOptionByName("music");
-            selectorMusic.setPosition(menuOptionMusicInGame.x + ((menuOptionMusicInGame.width)*2.0f), menuOptionMusicInGame.y);
+            selectorMusic.setPosition(menuOptionMusicInGame.x + ((menuOptionMusicInGame.width)*1.5f), menuOptionMusicInGame.y);
             MenuOption menuOptionSoundInGame = menuInGameOptions.getMenuOptionByName("sound");
-            selectorSound.setPosition(menuOptionSoundInGame.x + (menuOptionSoundInGame.width*2.0f), menuOptionSoundInGame.y);
-            Log.e(TAG, "selector sound position "+(menuOptionSoundInGame.x + (menuOptionSoundInGame.width*2.0f)) + " e " +menuOptionSoundInGame.y);
+            selectorSound.setPosition(menuOptionSoundInGame.x + (menuOptionSoundInGame.width*2.2f), menuOptionSoundInGame.y);
         }
     }
 
