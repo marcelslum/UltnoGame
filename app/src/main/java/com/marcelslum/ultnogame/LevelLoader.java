@@ -171,7 +171,7 @@ public class LevelLoader {
         if (levelNumber >= 5) {
             levelBuilder
                         .setBallsX_B1(0.2f)
-                        .setBallsY_B1(0.45f)   // ALTERAR NA PLANILHA
+                        .setBallsY_B1(0.45f)
                         .setBallsVX(1.143f)
                         .setBallsVY(1.143f)
                         .setObstaclesQuantity(2)
@@ -200,8 +200,8 @@ public class LevelLoader {
 
         if (levelNumber >= 6) {
                 levelBuilder
-                        //.setBallsMaxAngle_BD_55(1.0036f)
-                        //.setBallsMinAngle_BD_35(0.943f)
+                        .setBallsMaxAngle_BD_55(1.0036f)
+                        .setBallsMinAngle_BD_35(0.943f)
                         .setBallsVelocityVariation_BD_0_1(1.1f)
                         .setBallsVelocityMax_BD_1_5(1.6f)
                         .setBallsVelocityMin_BD_0_8(0.938f)
@@ -248,8 +248,8 @@ public class LevelLoader {
                 levelBuilder
                         .setBallsVX(1.214f)
                         .setBallsVY(1.214f);
-                        //.setBallsMaxAngle_BD_55(58f)
-                        //.setBallsMinAngle_BD_35(32f);
+                        .setBallsMaxAngle_BD_55(1.055f)
+                        .setBallsMinAngle_BD_35(0.914f);
             if (levelNumber == 8) {
                 levelBuilder
                         .setTargetsMap(
