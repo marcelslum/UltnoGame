@@ -304,8 +304,8 @@ public class LevelLoader {
                         .setObstaclesQuantity(2)
                         .setObstaclesX(     0.425f,     0.425f)
                         .setObstaclesY(     0.1206f,      0.29f)
-                        .setObstaclesHeight(0.15f,      0.15f)
-                        .setObstaclesWidth( 0.044f,      0.044f)
+                        .setObstaclesHeight(0.044f,      0.044f)
+                        .setObstaclesWidth(0.15f ,      0.15f)
                         .setWindowsQuantity(0);
             }
         }
