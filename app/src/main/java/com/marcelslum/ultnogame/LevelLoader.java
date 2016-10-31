@@ -286,11 +286,7 @@ public class LevelLoader {
 
         if (levelNumber >= 10) {
             if (levelNumber == 10) {
-                float obstaclesPosX = 0.105f;
-                float[] opa = new float[4];
-                for (int i = 0; i < opa.length; i++) {
-                    opa[i] = obstaclesPosX + ((float) i * 0.185f);
-                }
+                
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -305,11 +301,11 @@ public class LevelLoader {
                                         {1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1}
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(5)
-                        .setObstaclesX(     opa[0],     opa[0],     opa[1],     opa[1],     opa[2],     opa[2],     opa[3],     opa[3])
-                        .setObstaclesY(     0.12f,      0.29f,      0.12f,      0.29f,      0.12f,      0.29f,      0.12f,      0.29f)
-                        .setObstaclesHeight(0.05f,      0.06f,      0.05f,      0.06f,      0.05f,      0.06f,      0.05f,      0.06f)
-                        .setObstaclesWidth( 0.02f,      0.2f,       0.2f,       0.2f,       0.2f,       0.2f,       0.2f,       0.2f)
+                        .setObstaclesQuantity(2)
+                        .setObstaclesX(     0.425f,     0.425f)
+                        .setObstaclesY(     0.1206f,      0.29f)
+                        .setObstaclesHeight(0.15f,      0.15f)
+                        .setObstaclesWidth( 0.044f,      0.044f)
                         .setWindowsQuantity(0);
             }
         }
