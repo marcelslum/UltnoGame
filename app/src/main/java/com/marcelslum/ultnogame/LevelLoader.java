@@ -383,10 +383,25 @@ public class LevelLoader {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
-                                 // TODO
+                                        {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+                                        {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+                                        {0, 0, 0, 2, 0, 4, 0, 2, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 7, 4, 7, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 6, 5, 6, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 5, 6, 5, 0, 0, 0, 0},
+                                        {7, 0, 0, 0, 5, 5, 5, 0, 0, 0, 7},
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(0)
+                        .setObstaclesQuantity(2)
+                        .setObstaclesX(     0.425f,     0.425f)
+                        .setObstaclesY(     0.1206f,      0.29f)
+                        .setObstaclesHeight(0.044f,      0.044f)
+                        .setObstaclesWidth(0.15f ,      0.15f)
                         .setWindowsQuantity(0);
             }
         }
