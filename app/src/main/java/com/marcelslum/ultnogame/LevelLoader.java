@@ -398,14 +398,13 @@ public class LevelLoader {
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(2)
-                        .setObstaclesX(     0.425f,     0.425f)
-                        .setObstaclesY(     0.1206f,      0.29f)
-                        .setObstaclesHeight(0.044f,      0.044f)
-                        .setObstaclesWidth(0.15f ,      0.15f)
+                        .setObstaclesX(0.00225f, 0.63575f)
+                        .setObstaclesY(0.3380882353f,      0.3380882353f)
+                        .setObstaclesHeight(0.1652941176f,      0.1652941176f)
+                        .setObstaclesWidth(0.361f,      0.361f)
                         .setWindowsQuantity(0);
             }
         }
-
         Levels.levelObject = levelBuilder.build();
     }
 }
