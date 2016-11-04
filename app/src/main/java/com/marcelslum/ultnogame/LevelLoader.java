@@ -379,6 +379,11 @@ public class LevelLoader {
         }
 
         if (levelNumber >= 14) {
+            
+           levelBuilder
+                .setBallsX_B1(0.06f)
+                .setBallsY_B1(0.41f);
+            
             if (levelNumber == 14) {
                 levelBuilder
                         .setTargetsMap(
@@ -405,6 +410,40 @@ public class LevelLoader {
                         .setWindowsQuantity(0);
             }
         }
+        
+        if (levelNumber >= 15) {
+            
+           levelBuilder
+                .setBallsX_B1(0.06f)
+                .setBallsY_B1(0.41f);
+            
+            if (levelNumber == 15) {
+                levelBuilder
+                        .setTargetsMap(
+                                new int[][]{
+                                        {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+                                        {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+                                        {0, 0, 0, 2, 0, 4, 0, 2, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 7, 4, 7, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 6, 5, 6, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 5, 6, 5, 0, 0, 0, 0},
+                                        {7, 0, 0, 0, 5, 5, 5, 0, 0, 0, 7},
+                                })
+                        .setTargetsStates(new int[]{0, 1, 2, 3})
+                        .setObstaclesQuantity(2)
+                        .setObstaclesX(0.00225f, 0.63575f)
+                        .setObstaclesY(0.3380882353f,      0.3380882353f)
+                        .setObstaclesHeight(0.1652941176f,      0.1652941176f)
+                        .setObstaclesWidth(0.361f,      0.361f)
+                        .setWindowsQuantity(0);
+            }
+        }
+        
         Levels.levelObject = levelBuilder.build();
     }
 }
