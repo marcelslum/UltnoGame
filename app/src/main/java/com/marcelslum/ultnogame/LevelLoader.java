@@ -421,29 +421,34 @@ public class LevelLoader {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
-                                        {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-                                        {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-                                        {0, 0, 0, 2, 0, 4, 0, 2, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 7, 4, 7, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 6, 5, 6, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 5, 6, 5, 0, 0, 0, 0},
-                                        {7, 0, 0, 0, 5, 5, 5, 0, 0, 0, 7},
+                                        {1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
+                                        {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+                                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                        {4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {1, 0, 2, 1, 0, 0, 0, 1, 2, 0, 1},
+                                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                        {1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
+                                        {3, 0, 0, 3, 0, 0, 0, 3, 0, 0, 3}
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
-                        .setObstaclesQuantity(2)
-                        .setObstaclesX(0.00225f, 0.63575f)
-                        .setObstaclesY(0.3380882353f,      0.3380882353f)
-                        .setObstaclesHeight(0.1652941176f,      0.1652941176f)
-                        .setObstaclesWidth(0.361f,      0.361f)
+                        .setObstaclesQuantity(1)
+                        .setObstaclesX(0.333f)
+                        .setObstaclesY(0.43529f)
+                        .setObstaclesHeight(0.0735294118f)
+                        .setObstaclesWidth(0.333f)
+                        .setObstaclesPositionVariation(
+                                new PositionVariationDataBuilder()
+                                        .setIsActive(true)
+                                        .setMaxX(0.99f)
+                                        .setMinX(0.01f)
+                                        .setMaxY(0.8f)
+                                        .setMinY(0.01f)
+                                        .setxVelocity(0.001f)
+                                        .setyVelocity(0))
                         .setWindowsQuantity(0);
             }
         }
-        
         Levels.levelObject = levelBuilder.build();
     }
 }
