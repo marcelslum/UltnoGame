@@ -1208,6 +1208,9 @@ public class Game {
         }
         for (Bar b : bars){
             b.isMovable = false;
+            if (b.scaleVariationData != null){
+              b.stopScaleVariation();
+            }
         }
 
 

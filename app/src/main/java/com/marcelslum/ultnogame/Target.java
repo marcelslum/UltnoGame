@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -16,6 +18,9 @@ public class Target extends Rectangle {
     public int type;
     static final int TARGET_BLACK = 0;
     static final int TARGET_GREEN = 1;
+
+
+
     static final int TARGET_BLUE = 2;
     private static final int TARGET_RED = 3;
     private Animation showPointsStateAnim;
@@ -27,8 +32,16 @@ public class Target extends Rectangle {
     private final static int POINTS_DURATION = 1000;
     boolean alive = true;
 
+    @Override
+    public void render(float[] matrixView, float[] matrixProjection) {
+        float normalAlpha = alpha;
+        alpha = normalAlpha * ghostAlpha;
+        super.render(matrixView, matrixProjection);
+        alpha = normalAlpha;
+    }
+
     Target(String name, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
-        super(name, x, y, width, height, Game.OBSTACLES_WEIGHT, new Color(0,0,0,1));
+        super(name, x, y, width, height, Game.TARGET_WEIGHT, new Color(0,0,0,1));
         this.states = states;
         this.currentState = currentState;
         this.special = special;
@@ -38,7 +51,15 @@ public class Target extends Rectangle {
         isMovable = false;
         isGhost = ghost;
 
-        this.setDrawInfo();
+        if (isGhost){
+            ghostAlpha = 0f;
+        } else {
+            ghostAlpha = 1f;
+        }
+
+        setDrawInfo();
+
+        final Target self = this;
 
         ArrayList<float[]> valuesAnimationShowPoints = new ArrayList<>();
         valuesAnimationShowPoints.add(new float[]{0f,1f});
@@ -61,7 +82,6 @@ public class Target extends Rectangle {
         valuesAnimation.add(new float[]{0.4f,0f});
         valuesAnimation.add(new float[]{1f,0f});
         desapearAnim = new Animation(this, "desapear", "alpha", 1000, valuesAnimation, false, true);
-        final Target self = this;
         desapearAnim .setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
@@ -140,8 +160,8 @@ public class Target extends Rectangle {
         this.currentState -= 1;
 
         // O alvo especial não tem estado, uma vez atingido ele ativa sua habilidade especial.
-        if (this.special != 0){
-            this.currentState = 0;
+        if (special != 0){
+            currentState = 0;
         }
 
         if (currentState == 0){
@@ -152,31 +172,27 @@ public class Target extends Rectangle {
 
         showPoints(points);
 
-
-        //Log.e("target", "4");
-        if (this.isGhost){
-            if (this.ghostAlphaAnim != null) {
-                this.ghostAlphaAnim.start();
+        if (isGhost){
+            if (ghostAlphaAnim != null) {
+                Log.e("target", "ghostanimstarted");
+                ghostAlphaAnim.start();
             }
-
-            if (this.states[this.currentState] == 0){
-                this.isCollidable = false;
-                this.isMovable = false;
-                this.isSolid = false;
+            if (states[this.currentState] == 0){
+                isCollidable = false;
+                isMovable = false;
+                isSolid = false;
             }
         } else if (this.currentState != -1){
-
-            if (this.states[this.currentState] == 0){
-                this.isCollidable = false;
-                this.isMovable = false;
-                this.isSolid = false;
-
-                //Log.e("target", "5");
-                this.desapearAnim.start();
-                //Log.e("target", "6");
+            if (states[this.currentState] == 0){
+                isCollidable = false;
+                isMovable = false;
+                isSolid = false;
+                desapearAnim.start();
             }
         }
     }
+
+
 
     public void setType(){
         if (currentState == -1){
@@ -199,11 +215,6 @@ public class Target extends Rectangle {
     }
 
     public void setUvInfo(int type){
-        //0 - 206
-        // 208 -414
-        // 416 - 622
-        // 624 - 830
-
         if (type == TARGET_RED){
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
         } else if (type == TARGET_BLUE){
@@ -214,7 +225,6 @@ public class Target extends Rectangle {
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
         }
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
-
     }
 
     public void setDrawInfo(){

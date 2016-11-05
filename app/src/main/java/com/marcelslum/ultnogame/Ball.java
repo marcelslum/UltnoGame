@@ -512,7 +512,13 @@ public class Ball extends Circle{
             float final_vx  = vx;
             float final_vy  = vy;
 
-            if (angleToRotate != 0){
+            if (angleToRotate == 0) {
+                float finalLen = Utils.getVectorMagnitude(final_vx, final_vy);
+                float velocityPercentage = (finalLen - minLen)/(maxLen - minLen);
+                float finalAngle = (float)Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx)));
+                float anglePercentage = (finalAngle - minAngle)/(maxAngle - minAngle);
+                Game.ballDataPanel.setData(velocityPercentage, anglePercentage, false);
+            } else {
                 if (velocityAdd == true){
                     scalePorcentage +=this.velocityVariation;
                 } else  {

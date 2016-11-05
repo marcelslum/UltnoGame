@@ -19,7 +19,7 @@ public class GooglePlayGames {
     private static final int REQUEST_ACHIEVEMENTS = 2001;
     private static final int REQUEST_LEADERBOARD = 3001;
 
-    public static void showAchievements(GoogleApiClient mGoogleApiClient, FragmentActivity fragmentActivity) {
+    public static void showAchievements(GoogleApiClient mGoogleApiClient, MainActivity fragmentActivity) {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             // Call a Play Games services API method, for example:
             Intent intent = Games.Achievements.getAchievementsIntent(mGoogleApiClient);
@@ -31,7 +31,7 @@ public class GooglePlayGames {
         }
     }
 
-    public static void showLeaderboards(GoogleApiClient mGoogleApiClient, FragmentActivity fragmentActivity) {
+    public static void showLeaderboards(GoogleApiClient mGoogleApiClient, MainActivity fragmentActivity) {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             fragmentActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
                     Game.mainActivity.getResources().getString(R.string.leaderboard_ranking)), REQUEST_LEADERBOARD);

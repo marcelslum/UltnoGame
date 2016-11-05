@@ -67,6 +67,7 @@ public class Entity{
     private InteractionListener listener;
 
     public float pointsAlpha;
+    public float ghostAlpha;
     public int showPointsState = SHOW_POINTS_OFF;
 
     public SatCircle circleData;
@@ -115,7 +116,6 @@ public class Entity{
     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
         if (verticesSize > 0){
             if (this.verticesData == null || this.verticesData.length != verticesSize){
-                //Log.e("entity", "criando vertices data de "+this.name + " com o tamanho "+verticesSize);
                 this.verticesData = new float[verticesSize];                
             }
         }
@@ -191,6 +191,9 @@ public class Entity{
                 break;
             case "pointsAlpha":
                 pointsAlpha = value;
+                break;
+            case "ghostAlpha":
+                ghostAlpha = value;
                 break;
             default:
                 break;
@@ -364,9 +367,6 @@ public class Entity{
     public void prepareRender(float[] matrixView, float[] matrixProjection){
         verifyAnimations();
         if (isVisible){
-            if (name == "selectorSound"){
-                //Log.e("Entity", "selector sound visible");
-            }
             render(matrixView, matrixProjection);
         }
     }
@@ -378,10 +378,10 @@ public class Entity{
 
         setMatrixModel();
 
-        GLES20.glUseProgram(this.program.get());
+        GLES20.glUseProgram(program.get());
 
         // get handle to vertex shader's vPosition member and add vertices
-        int av4_verticesHandle = GLES20.glGetAttribLocation(this.program.get(), "av4_vertices");
+        int av4_verticesHandle = GLES20.glGetAttribLocation(program.get(), "av4_vertices");
         GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, this.verticesBuffer);
         GLES20.glEnableVertexAttribArray(av4_verticesHandle);
         //Log.e("render", " ");
@@ -389,7 +389,7 @@ public class Entity{
         int av2_uvHandle = -1;
         if (this.textureId != -1) {
             // Get handle to texture coordinates location and load the texture uvs
-            av2_uvHandle = GLES20.glGetAttribLocation(this.program.get(), "av2_uv");
+            av2_uvHandle = GLES20.glGetAttribLocation(program.get(), "av2_uv");
             GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, this.uvsBuffer);
             GLES20.glEnableVertexAttribArray(av2_uvHandle);
         }
@@ -397,26 +397,26 @@ public class Entity{
         int av4_colorsHandle = -1;
         if (this.colorsBuffer != null){
             //Log.e("tag "+this.name, "tem cor");
-            av4_colorsHandle = GLES20.glGetAttribLocation(this.program.get(), "av4_colors" );
+            av4_colorsHandle = GLES20.glGetAttribLocation(program.get(), "av4_colors" );
             GLES20.glVertexAttribPointer ( av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, this.colorsBuffer);
             GLES20.glEnableVertexAttribArray ( av4_colorsHandle );
         }
 
-        int uf_alphaHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_alpha");
-        GLES20.glUniform1f(uf_alphaHandle, this.alpha);
+        int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
+        GLES20.glUniform1f(uf_alphaHandle, alpha);
         
         // Get handle to shape's transformation matrix and add our matrix
-        int um4_projectionHandle = GLES20.glGetUniformLocation(this.program.get(), "um4_projection");
+        int um4_projectionHandle = GLES20.glGetUniformLocation(program.get(), "um4_projection");
         GLES20.glUniformMatrix4fv(um4_projectionHandle, 1, false, matrixProjection, 0);
         //Log.e("render", " ");
 
         // Get handle to shape's transformation matrix and add our matrix
-        int um4_viewHandle = GLES20.glGetUniformLocation(this.program.get(), "um4_view");
+        int um4_viewHandle = GLES20.glGetUniformLocation(program.get(), "um4_view");
         GLES20.glUniformMatrix4fv(um4_viewHandle, 1, false, matrixView, 0);
         //Log.e("render", " ");
 
         // Get handle to shape's transformation matrix and add our matrix
-        int um4_modelHandle = GLES20.glGetUniformLocation(this.program.get(), "um4_model");
+        int um4_modelHandle = GLES20.glGetUniformLocation(program.get(), "um4_model");
         GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, this.matrixModel, 0);
         //Log.e("render", " ");
 

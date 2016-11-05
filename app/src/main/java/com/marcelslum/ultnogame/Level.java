@@ -117,9 +117,9 @@ public class Level {
     
     public void showFirstTutorial(){
         Game.blockAndWaitTouchRelease();
-        this.showingTutorial = 0;
-        this.tutorials.get(0).textBox.alpha = 0f;
-        this.tutorials.get(0).show(Sound.soundTextBoxAppear);
+        showingTutorial = 0;
+        tutorials.get(0).textBox.alpha = 0f;
+        tutorials.get(0).show(Sound.soundTextBoxAppear);
     }
 
     public void nextTutorial(){
@@ -127,7 +127,7 @@ public class Level {
         Log.e("level", "showingTutorial "+showingTutorial);
         final Level innerLevel = this;
         Game.blockAndWaitTouchRelease();
-        if (this.tutorials.get(this.showingTutorial).isBlocked == false){
+        if (tutorials.get(this.showingTutorial).isBlocked == false){
             Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
             if (showingTutorial + 1 == this.tutorials.size()){
 
@@ -262,7 +262,7 @@ public class Level {
             float barHeight = Game.gameAreaResolutionY * barsHeight_BR[i];
 
             float barVelocityX = Game.gameAreaResolutionX * barsVX_BR[i] * Game.difficultyVelocityBarMultiplicator;
-            float barVelocityY = Game.gameAreaResolutionY * barsVY_BR[i] * Game.difficultyVelocityBarMultiplicator;
+            //float barVelocityY = Game.gameAreaResolutionY * barsVY_BR[i] * Game.difficultyVelocityBarMultiplicator;
 
             //Game.barsDesiredVelocityX[i] = barVelocityX;
             //Game.barsDesiredVelocityY[i] = barVelocityY;
@@ -327,7 +327,7 @@ public class Level {
                 if (obstaclesScaleVariationData.length > i) {
                     obstacle.setScaleVariation(obstaclesScaleVariationData[i]);
                     obstacle.scaleVariationData.heightVelocity *= Game.difficultyVelocityObstacleMultiplicator;
-                    obstacle.scaleVariationData.heightVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                    obstacle.scaleVariationData.widthVelocity *= Game.difficultyVelocityObstacleMultiplicator;
                 }
             }
             if (obstaclesPositionVariationData != null) {
@@ -336,6 +336,8 @@ public class Level {
                     obstacle.setPositionVariation(obstaclesPositionVariationData[i]);
                     obstacle.positionVariationData.xVelocity *= Game.difficultyVelocityObstacleMultiplicator;
                     obstacle.positionVariationData.yVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                    obstacle.stopPositionVariation();
+                    obstacle.stopScaleVariation();
                 }
             }
             Game.addObstacle(obstacle);
@@ -356,9 +358,12 @@ public class Level {
         }
 
         int numberOfBallsInvencible = 0;
+
         for (int i = 0; i < this.ballsQuantity; i++){
+
             int ic = i; if (i > this.ballsX_BR.length - 1) {ic = 0;}
             float ballX = Game.gameAreaResolutionX * this.ballsX_BR[ic];
+
             ic = i; if (i > this.ballsY_BR.length - 1) {ic = 0;}
             float ballY = Game.gameAreaResolutionY * this.ballsY_BR[ic];
 
@@ -385,9 +390,9 @@ public class Level {
             ball.velocityVariation = this.ballsVelocityVariation[ic];
 
             ic = i; if (i > this.ballsVelocityMax_BI.length - 1) {ic = 0;}
-            ball.velocityMax_BI = ballsVelocityMax_BI[ic] * Game.difficultyVelocityBallMultiplicator;
+            ball.velocityMax_BI = ballsVelocityMax_BI[ic];
             ic = i; if (i > this.ballsVelocityMin_BI.length - 1) {ic = 0;}
-            ball.velocityMin_BI = ballsVelocityMin_BI[ic] * Game.difficultyVelocityBallMultiplicator;
+            ball.velocityMin_BI = ballsVelocityMin_BI[ic];
 
             ic = i; if (i > this.ballsMaxAngle.length - 1) {ic = 0;}
             ball.maxAngle = this.ballsMaxAngle[ic];
