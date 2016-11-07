@@ -23,7 +23,7 @@
     <string name="l1t1">Mova a barra utilizando os botões abaixo. Vamos lá, pode testar!</string>
     <string name="l1t2">Não deixe a bola cair.</string>
     <string name="l1t3">Acerte os alvos com a bola.</string>
-    <string name="l1t4">A pontuação de cada alvo depende do nível de dificuldade escolhido. No nível fácil, por exemplo, cada alvo valerá 100 pontos.</string>
+    <string name="l1t4">A pontuação de cada alvo depende do nível de dificuldade escolhido: 30, 50, 70 ou 100 pontos para os níveis fácil, normal, difícil e insano.</string>
     <string name="l1t5">Elimine todos os alvos para completar o nível.</string>
     <string name="l1t6">Mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
     <string name="l1t7">Vamos lá! Pressione a flecha para iniciar a contagem regressiva.</string>
@@ -58,7 +58,11 @@
     <string name="l9t8">A quantidade de bolas que poderão ser perdidas é representada no painel por bolas azuis.</string>
     <string name="l9t9">Na situação atual, portanto, você poderá perder até três bolas.</string>
     <string name="l9t10">No entanto, a manutenção de bolas extras traz algumas vantagens.</string>
-    <string name="l9t11">A cada alvo atingido, a pontuação dobra para cada bola extra viva. Neste caso, a pontuação será 100 x 2 x 2 x 2, o que resulta em 800 pontos.</string>
+    <string name="l9t11f">Para cada bola extra viva, a pontuação é dobrado. Neste caso, cada alvo valerá 30 x 2 x 2 x 2 = 240 pontos.</string>
+    <string name="l9t11n">Para cada bola extra viva, a pontuação é dobrado. Neste caso, cada alvo valerá 50 x 2 x 2 x 2 = 400 pontos.</string>
+    <string name="l9t11d">Para cada bola extra viva, a pontuação é dobrado. Neste caso, cada alvo valerá 70 x 2 x 2 x 2 = 560 pontos.</string>
+    <string name="l9t11i">Para cada bola extra viva, a pontuação é dobrado. Neste caso, cada alvo valerá 100 x 2 x 2 x 2 = 800 pontos.</string>
+
     <string name="l9t12">Além disso, ao final do nível, bolas extras vivas trarão pontos extras.</string>
     <string name="l9t13">Portanto, tente manter as bolas extras vivas.</string>
     <string name="l9t14">Mas chega de papo furado. Você quer ação, não é mesmo?</string>

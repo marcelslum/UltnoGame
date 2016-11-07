@@ -371,10 +371,10 @@ public class Level {
             float radius = Game.gameAreaResolutionY * this.ballsRadius_BR[ic];
 
             ic = i; if (i > this.ballsVX_BR.length - 1) {ic = 0;}
-            float ballVelocityX = Game.gameAreaResolutionX * this.ballsVX_BR[ic];
+            float ballVelocityX = Game.gameAreaResolutionX * this.ballsVX_BR[ic] * Game.difficultyVelocityBallMultiplicator;
 
             ic = i; if (i > this.ballsVY_BR.length - 1) {ic = 0;}
-            float ballVelocityY = Game.gameAreaResolutionY * this.ballsVY_BR[ic];
+            float ballVelocityY = Game.gameAreaResolutionY * this.ballsVY_BR[ic] * Game.difficultyVelocityBallMultiplicator;
 
             ic = i; if (i > this.ballsInvencible.length - 1) {ic = 0;}
             if (this.ballsInvencible[ic]){
@@ -438,9 +438,9 @@ public class Level {
         private final static float default_ballsAngleToRotate = 2f;
         private final static float default_ballsMaxAngle = 55f;
         private final static float default_ballsMinAngle = 35f;
-        private final static float default_ballsVelocityVariation = 0.1f;
-        private final static float default_ballsVelocityMax_BI = 1.5f;
-        private final static float default_ballsVelocityMin_BI = 0.8f;
+        private final static float default_ballsVelocityVariation = 0.07f;
+        private final static float default_ballsVelocityMax_BI = 1.35f;
+        private final static float default_ballsVelocityMin_BI = 0.75f;
         private final static int default_barsQuantity = 1;
         private final static float default_barsWidth_BR = 0.22f;
         private final static float default_barsHeight_BR = 0.0175f;
@@ -590,7 +590,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsVelocityMax_BD_1_5(float... _ballsVelocityMax_BI) {
+        public LevelBuilder setBallsVelocityMax_BD_1_3(float... _ballsVelocityMax_BI) {
             ballsVelocityMax_BI = new float[_ballsVelocityMax_BI.length];
             for (int i = 0; i < _ballsVelocityMax_BI.length; i++){
                 ballsVelocityMax_BI[i] = _ballsVelocityMax_BI[i] * default_ballsVelocityMax_BI;
@@ -598,7 +598,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsVelocityMin_BD_0_8(float... _ballsVelocityMin_BI) {
+        public LevelBuilder setBallsVelocityMin_BD_0_6(float... _ballsVelocityMin_BI) {
             ballsVelocityMin_BI = new float[_ballsVelocityMin_BI.length];
             for (int i = 0; i < _ballsVelocityMin_BI.length; i++){
                 ballsVelocityMin_BI[i] = _ballsVelocityMin_BI[i] * default_ballsVelocityMin_BI;

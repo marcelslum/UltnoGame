@@ -573,7 +573,6 @@ public class Ball extends Circle{
 
                 float finalAngle;
 
-
                 if (testAngle < maxAngle && testAngle > minAngle){
                     Log.e("ball", "rotacionando ");
                     final_vx =  possibleVelocityRotate.x;
@@ -613,7 +612,6 @@ public class Ball extends Circle{
                 }
 
                 // angleToRotate positivo = sentido horário
-
 
                 Log.e("ball", " min   Angle "+ minAngle);
                 Log.e("ball", " max   Angle "+ maxAngle);

@@ -1072,14 +1072,25 @@ public class TutorialLoader {
                                 .build()
                 );
 
-                // L6T11
+                // L9T11
+                String textL9T11;
+                if (SaveGame.saveGame.currentDifficulty == Game.DIFFICULTY_EASY){
+                    textL9T11 = Utils.getStringResource(R.string.l9t11f);
+                } else if (SaveGame.saveGame.currentDifficulty == Game.DIFFICULTY_NORMAL){
+                    textL9T11 = Utils.getStringResource(R.string.l9t11n);
+                } else if (SaveGame.saveGame.currentDifficulty == Game.DIFFICULTY_HARD){
+                    textL9T11 = Utils.getStringResource(R.string.l9t11d);
+                } else{
+                    textL9T11 = Utils.getStringResource(R.string.l9t11i);
+                }
+
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox11")
                                         .position(x, y*2.5f)
                                         .width(width)
                                         .size(size)
-                                        .text(Utils.getStringResource( R.string.l9t11))
+                                        .text(textL9T11)
                                         .withoutArrow()
                                         .build()
                                 )

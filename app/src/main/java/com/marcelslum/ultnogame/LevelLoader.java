@@ -35,8 +35,8 @@ public class LevelLoader {
                     //.setBallsMaxAngle_BD_55(2.182f)
                     //.setBallsMinAngle_BD_35(0.857f)
                     .setBallsVelocityVariation_BD_0_1(2f)
-                    .setBallsVelocityMax_BD_1_5(1.467f)
-                    .setBallsVelocityMin_BD_0_8(0.875f)
+                    .setBallsVelocityMax_BD_1_3(1.467f)
+                    .setBallsVelocityMin_BD_0_6(0.875f)
                     .setBarsWidth_BD_0_22(1.364f)
                     .setBarsX_B1(0.35f)
                     .setBarsVX_BD_0_0045(1.222f);
@@ -60,8 +60,8 @@ public class LevelLoader {
                     //.setBallsMaxAngle_BD_55(1f)
                     //.setBallsMinAngle_BD_35(1f)
                     .setBallsVelocityVariation_BD_0_1(1f)
-                    .setBallsVelocityMax_BD_1_5(1f)
-                    .setBallsVelocityMin_BD_0_8(1f)
+                    .setBallsVelocityMax_BD_1_3(1f)
+                    .setBallsVelocityMin_BD_0_6(1f)
                     .setBarsWidth_BD_0_22(0.909f)
                     .setBarsX_B1(0.3f)
                     .setBarsVX_BD_0_0045(1.111f);
@@ -203,8 +203,8 @@ public class LevelLoader {
                         .setBallsMaxAngle_BD_55(1.0036f)
                         .setBallsMinAngle_BD_35(0.943f)
                         .setBallsVelocityVariation_BD_0_1(1.1f)
-                        .setBallsVelocityMax_BD_1_5(1.6f)
-                        .setBallsVelocityMin_BD_0_8(0.938f)
+                        .setBallsVelocityMax_BD_1_3(1.6f)
+                        .setBallsVelocityMin_BD_0_6(0.938f)
                         .setBarsWidth_BD_0_22(0.773f);
             if (levelNumber == 6) {
                 levelBuilder
@@ -571,6 +571,14 @@ public class LevelLoader {
                         .setObstaclesWidth(0.0833f, 0.0833f)
                         .setObstaclesHeight(0.1764705882f, 0.1764705882f)
                         .setObstaclesPositionVariation(
+                                new PositionVariationDataBuilder()
+                                        .setIsActive(true)
+                                        .setMaxX(0.99f)
+                                        .setMinX(0.01f)
+                                        .setMaxY(0.9f)
+                                        .setMinY(0.01f)
+                                        .setxVelocity(0f)
+                                        .setyVelocity(0.00125f),
                                 new PositionVariationDataBuilder()
                                         .setIsActive(true)
                                         .setMaxX(0.99f)

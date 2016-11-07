@@ -32,16 +32,16 @@ public class Game {
     static float difficultyVelocityObstacleMultiplicator;
     static float difficultyVelocityBallMultiplicator;
     static final float BAR_EASY = 0.9f;
-    static final float BALL_EASY = 0.9f;
-    static final float OBSTACLE_EASY = 0.9f;
+    static final float BALL_EASY = 0.8f;
+    static final float OBSTACLE_EASY = 0.8f;
     static final float BAR_NORMAL = 1f;
     static final float BALL_NORMAL = 1f;
     static final float OBSTACLE_NORMAL = 1f;
     static final float BAR_HARD = 1.3f;
     static final float BALL_HARD = 1.3f;
     static final float OBSTACLE_HARD = 1.2f;
-    static final float BAR_INSANE = 1.6f;
-    static final float BALL_INSANE = 1.6f;
+    static final float BAR_INSANE = 1.5f;
+    static final float BALL_INSANE = 1.5f;
     static final float OBSTACLE_INSANE = 1.4f;
 
     static final int BALL_WEIGHT = 1;
@@ -198,10 +198,10 @@ public class Game {
 
     static final long TIME_FOR_POINTS_DECAY = 3000;
     public static final int POINTS_DECAY = 10;
-    public static final int POINTS_EASY = 100;
-    public static final int POINTS_NORMAL = 200;
-    public static final int POINTS_HARD = 300;
-    public static final int POINTS_INSANE = 500;
+    public static final int POINTS_EASY = 30;
+    public static final int POINTS_NORMAL = 50;
+    public static final int POINTS_HARD = 70;
+    public static final int POINTS_INSANE = 100;
 
     public static long maxScoreTotal;
     public static String currentPlayerId;
