@@ -325,21 +325,26 @@ public class Level {
             if (obstaclesScaleVariationData != null) {
                 //Log.e("level", "setting obstacle scale variation data");
                 if (obstaclesScaleVariationData.length > i) {
-                    obstacle.setScaleVariation(obstaclesScaleVariationData[i]);
-                    obstacle.scaleVariationData.heightVelocity *= Game.difficultyVelocityObstacleMultiplicator;
-                    obstacle.scaleVariationData.widthVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                    if (obstaclesScaleVariationData[i] != null) {
+                        obstacle.setScaleVariation(obstaclesScaleVariationData[i]);
+                        obstacle.scaleVariationData.heightVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                        obstacle.scaleVariationData.widthVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                    }
                 }
+                obstacle.stopScaleVariation();
             }
             if (obstaclesPositionVariationData != null) {
                 //Log.e("level", "setting obstacle scale variation data");
                 if (obstaclesPositionVariationData.length > i) {
-                    obstacle.setPositionVariation(obstaclesPositionVariationData[i]);
-                    obstacle.positionVariationData.xVelocity *= Game.difficultyVelocityObstacleMultiplicator;
-                    obstacle.positionVariationData.yVelocity *= Game.difficultyVelocityObstacleMultiplicator;
-                    obstacle.stopPositionVariation();
-                    obstacle.stopScaleVariation();
+                    if (obstaclesPositionVariationData[i] != null) {
+                        obstacle.setPositionVariation(obstaclesPositionVariationData[i]);
+                        obstacle.positionVariationData.xVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                        obstacle.positionVariationData.yVelocity *= Game.difficultyVelocityObstacleMultiplicator;
+                    }
                 }
+                obstacle.stopPositionVariation();
             }
+
             Game.addObstacle(obstacle);
         }
         

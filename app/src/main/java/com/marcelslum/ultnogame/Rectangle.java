@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Rectangle extends PhysicalObject {
@@ -142,12 +144,14 @@ public class Rectangle extends PhysicalObject {
         if (positionVariationData != null) {
             positionVariationData.isActive = false;
         }
+        isFree = true;
     }
 
     public void initPositionVariation(){
         if (positionVariationData != null) {
             positionVariationData.isActive = true;
         }
+        isFree = true;
     }
     
 
@@ -190,12 +194,16 @@ public class Rectangle extends PhysicalObject {
                 }
             }
         }
-        
 
         if (scaleVariationData != null){
             ScaleVariationData s = scaleVariationData;
             if (s.isActive){
+                //Log.e("rectangle", "scaleVariationData isActive");
+                //Log.e("rectangle", "scaleVariationData velocity "+s.widthVelocity);
                 if (s.widthVelocity > 0f){
+
+                    //Log.e("rectangle", "scaleX befor "+scaleX);
+                    //Log.e("rectangle", "s.increaseWidth "+s.increaseWidth);
                     if (s.increaseWidth){
                         scaleX += s.widthVelocity;
                         if (accumulatedScaleX + scaleX > ((width*s.maxWidth_BI)/width)){
@@ -209,6 +217,7 @@ public class Rectangle extends PhysicalObject {
                             s.increaseWidth = true;
                         }
                     }
+                    //Log.e("rectangle", "scaleX after "+scaleX);
                 }
 
                 if (s.heightVelocity > 0f){
