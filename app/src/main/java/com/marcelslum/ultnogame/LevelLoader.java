@@ -57,8 +57,8 @@ public class LevelLoader {
                     .setBallsVX(1.071f)
                     .setBallsVY(1.071f)
                     .setBallsAngleToRotate_BD_2(1f)
-                    //.setBallsMaxAngle_BD_55(1f)
-                    //.setBallsMinAngle_BD_35(1f)
+                    .setBallsMaxAngle_BD_55(1f)
+                    .setBallsMinAngle_BD_35(1f)
                     .setBallsVelocityVariation_BD_0_1(1f)
                     .setBallsVelocityMax_BD_1_3(1f)
                     .setBallsVelocityMin_BD_0_6(1f)
@@ -622,6 +622,112 @@ public class LevelLoader {
             }
         }
 
+        if (levelNumber >= 18) {
+            levelBuilder
+                    .setBallsX_B1(0.2f)
+                    .setBallsY_B1(0.7f);
+            if (levelNumber == 18) {
+                levelBuilder
+                        .setTargetsMap(
+                                new int[][]{
+                                        {1, 0, 0, 1, 0, 2, 0, 1, 0, 0, 1},
+                                        {0, 0, 1, 0, 0, 2, 0, 0, 1, 0, 0},
+                                        {1, 0, 0, 1, 0, 2, 0, 1, 0, 0, 1},
+                                        {0, 0, 1, 0, 0, 4, 0, 0, 1, 0, 0},
+                                        {1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1},
+                                        {1, 0, 1, 1, 0, 3, 0, 1, 1, 0, 1},
+                                        {1, 0, 1, 1, 0, 3, 0, 1, 1, 0, 1},
+                                        {0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
+                                        {0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
+                                })
+                        .setTargetsStates(new int[]{0, 1, 2, 3})
+                        .setObstaclesQuantity(2)
+                        .setObstaclesX(0.1176466667f, 0.8428633333f)
+                        .setObstaclesY(0.1952676471f, 0.1952676471f)
+                        .setObstaclesWidth(0.0416666667f, 0.0416666667f)
+                        .setObstaclesHeight(0.0882352941f, 0.0882352941f)
+                        .setObstaclesScaleVariation(
+                                new ScaleVariationDataBuilder()
+                                        .setIsActive(true)
+                                        .setIncreaseWidth(true)
+                                        .setIncreaseHeight(false)
+                                        .setWidthVelocity(0.012f)
+                                        .setHeightVelocity(0f)
+                                        .setMinWidth_BI(1f)
+                                        .setMaxWidth_BI(100000f)
+                                        .setMinHeight_BI(1f)
+                                        .setMaxHeight_BI(1f),
+                                new ScaleVariationDataBuilder()
+                                        .setIsActive(true)
+                                        .setIncreaseWidth(true)
+                                        .setIncreaseHeight(false)
+                                        .setWidthVelocity(0.012f)
+                                        .setHeightVelocity(0f)
+                                        .setMinWidth_BI(1f)
+                                        .setMaxWidth_BI(100000f)
+                                        .setMinHeight_BI(1f)
+                                        .setMaxHeight_BI(1f)
+                        )
+                        .setWindowsQuantity(0);
+            }
+        }
+
+        if (levelNumber >= 19) {
+            levelBuilder
+                    .setBallsX_B1(0.2f)
+                    .setBallsY_B1(0.7f);
+            if (levelNumber == 19) {
+                levelBuilder
+                        .setTargetsMap(
+                                new int[][]{
+                                        {0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
+                                        {1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1},
+                                        {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                                        {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                                        {0, 1, 0, 1, 2, 0, 2, 1, 0, 1, 0},
+                                        {1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
+                                        {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                        {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                                })
+                        .setTargetsStates(new int[]{0, 1, 2, 3})
+                        .setObstaclesQuantity(0)
+                        .setWindType(Level.WIND_TYPE_RIGHT)
+                        .setWindowsQuantity(0);
+            }
+        }
+
+        if (levelNumber >= 20) {
+            levelBuilder
+                    .setBallsX_B1(0.2f)
+                    .setBallsY_B1(0.7f);
+            if (levelNumber == 20) {
+                levelBuilder
+                        .setTargetsMap(
+                                new int[][]{
+                                        {0, 2, 1, 1, 1, 4, 1, 1, 1, 2, 1},
+                                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 1, 1, 1, 1, 3, 1, 1, 1, 1, 0},
+                                })
+                        .setTargetsStates(new int[]{0, 1, 2, 3})
+                        .setObstaclesQuantity(0)
+                        .setWindType(Level.WIND_TYPE_LEFT)
+                        .setWindowsQuantity(0);
+            }
+        }
+
         if (levelNumber >= 21) {
             if (levelNumber == 21) {
                 levelBuilder
@@ -656,8 +762,8 @@ public class LevelLoader {
                                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                        {7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7},
-                                        {0, 7, 0, 0, 0, 7, 0, 0, 0, 7, 0},
+                                        {5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5},
+                                        {0, 5, 0, 0, 0, 7, 0, 0, 0, 5, 0},
                                 })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0)
@@ -698,6 +804,49 @@ public class LevelLoader {
                         .setWindowsQuantity(0);
             }
         }
+
+        if (levelNumber >= 23) {
+
+            levelBuilder
+                .setBallsQuantity(2)
+                .setBallsRadius_BD_0_01(1f, 1f)
+                .setBallsX_B1(0.1f, 0.9f)
+                .setBallsY_B1(0.55f, 0.55f)
+                .setBallsVX(1.214f)
+                .setBallsVY(1.214f)
+                .setBallsAngleToRotate_BD_2(1.1f)
+                .setBallsMaxAngle_BD_55(1.1f)
+                .setBallsMinAngle_BD_35(1.055f)
+                .setBallsVelocityVariation_BD_0_1(0.1f)
+                .setBallsVelocityMax_BD_1_3(1f)
+                .setBallsVelocityMin_BD_0_6(1f)
+                .setBarsWidth_BD_0_22(0.909f)
+        if (levelNumber == 24) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+                            })
+                    .setTargetsStates(new int[]{0, 1, 2, 3})
+                    .setObstaclesQuantity(2)
+                    .setObstaclesX(0.00225f, 0.63575f)
+                    .setObstaclesY(0.3380882353f,      0.3380882353f)
+                    .setObstaclesHeight(0.1652941176f,      0.1652941176f)
+                    .setObstaclesWidth(0.361f,      0.361f)
+                    .setWindType(Level.WIND_TYPE_LEFT)
+                    .setWindowsQuantity(0);
+        }
+    }
 
 
         Levels.levelObject = levelBuilder.build();
