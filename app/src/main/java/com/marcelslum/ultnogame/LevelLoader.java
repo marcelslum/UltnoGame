@@ -464,7 +464,7 @@ public class LevelLoader {
 
         if (levelNumber >= 15) {
             levelBuilder
-                    .setBallsX_B1(0.2f)
+                    .setBallsX_B1(0.3f)
                     .setBallsY_B1(0.7f);
             if (levelNumber == 15) {
                 levelBuilder
@@ -577,10 +577,10 @@ public class LevelLoader {
                                 new int[][]{
                                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                         {1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1},
+                                        {0, 0, 3, 4, 0, 0, 0, 0, 0, 0, 1},
                                         {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1},
-                                        {1, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0},
+                                        {1, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1},
@@ -634,16 +634,17 @@ public class LevelLoader {
                                         {0, 0, 1, 0, 0, 2, 0, 0, 1, 0, 0},
                                         {1, 0, 0, 1, 0, 2, 0, 1, 0, 0, 1},
                                         {0, 0, 1, 0, 0, 4, 0, 0, 1, 0, 0},
-                                        {1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1},
+                                        {1, 0, 1, 1, 1, 4, 1, 1, 1, 0, 1},
                                         {1, 0, 1, 1, 0, 3, 0, 1, 1, 0, 1},
                                         {1, 0, 1, 1, 0, 3, 0, 1, 1, 0, 1},
                                         {0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
                                         {0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
                                 })
+
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(2)
                         .setObstaclesX(0.1176466667f, 0.8428633333f)
-                        .setObstaclesY(0.1952676471f, 0.1952676471f)
+                        .setObstaclesY(0.4158558824f, 0.4158558824f)
                         .setObstaclesWidth(0.0416666667f, 0.0416666667f)
                         .setObstaclesHeight(0.0882352941f, 0.0882352941f)
                         .setObstaclesScaleVariation(
@@ -651,22 +652,22 @@ public class LevelLoader {
                                         .setIsActive(true)
                                         .setIncreaseWidth(true)
                                         .setIncreaseHeight(false)
-                                        .setWidthVelocity(0.012f)
-                                        .setHeightVelocity(0f)
+                                        .setWidthVelocity(0f)
+                                        .setHeightVelocity(0.012f)
                                         .setMinWidth_BI(1f)
-                                        .setMaxWidth_BI(100000f)
+                                        .setMaxWidth_BI(1f)
                                         .setMinHeight_BI(1f)
-                                        .setMaxHeight_BI(1f),
+                                        .setMaxHeight_BI(100000f),
                                 new ScaleVariationDataBuilder()
                                         .setIsActive(true)
                                         .setIncreaseWidth(true)
                                         .setIncreaseHeight(false)
-                                        .setWidthVelocity(0.012f)
-                                        .setHeightVelocity(0f)
+                                        .setWidthVelocity(0f)
+                                        .setHeightVelocity(0.012f)
                                         .setMinWidth_BI(1f)
-                                        .setMaxWidth_BI(100000f)
+                                        .setMaxWidth_BI(1f)
                                         .setMinHeight_BI(1f)
-                                        .setMaxHeight_BI(1f)
+                                        .setMaxHeight_BI(100000f)
                         )
                         .setWindowsQuantity(0);
             }
@@ -820,7 +821,8 @@ public class LevelLoader {
                 .setBallsVelocityVariation_BD_0_1(0.1f)
                 .setBallsVelocityMax_BD_1_3(1f)
                 .setBallsVelocityMin_BD_0_6(1f)
-                .setBarsWidth_BD_0_22(0.909f)
+                .setBarsWidth_BD_0_22(0.909f);
+
         if (levelNumber == 24) {
             levelBuilder
                     .setTargetsMap(

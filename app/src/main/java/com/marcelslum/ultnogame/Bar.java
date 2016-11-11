@@ -236,6 +236,7 @@ public class Bar extends Rectangle{
         vx = dvx * timePercentage;
         translate(vx, 0f);
         verifyWind();
+
     }
 
     public void moveRight(float timePercentage) {
@@ -262,6 +263,7 @@ public class Bar extends Rectangle{
             shineDecreaseAfterAccelerate.start();
         }
         vx = 0f;
+        verifyWind();
     }
     
     @Override

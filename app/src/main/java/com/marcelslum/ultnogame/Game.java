@@ -1490,8 +1490,6 @@ public class Game {
                     } else {
                         bars.get(0).stop();
                     }
-                    bars.get(0).translate(bars.get(0).vx, 0);
-                    bars.get(0).verifyWind();
                 }
                 if (bars.size() == 2) {
                     if (button1Left.isPressed && !button1Right.isPressed) {
@@ -1501,8 +1499,6 @@ public class Game {
                     } else {
                         bars.get(0).stop();
                     }
-                    bars.get(0).translate(bars.get(0).vx, 0);
-                    bars.get(0).verifyWind();
 
                     if (button2Left.isPressed) {
                         bars.get(1).moveLeft(timePercentage);
@@ -1511,10 +1507,7 @@ public class Game {
                     } else {
                         bars.get(1).stop();
                     }
-
-
                 }
-
             }
 
             // verifica se a bola especial tocou a barra

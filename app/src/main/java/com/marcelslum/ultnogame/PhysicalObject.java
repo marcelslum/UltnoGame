@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -87,7 +89,7 @@ public class PhysicalObject extends Entity implements Weight{
     
     public void verifyWind(){
         Wind w = Game.wind;
-        float windForce = 0.15f;
+        float windForce = 0.18f;
         if (w != null){
             if (w.isActive){
                 if (translateX != 0f) {
@@ -107,10 +109,13 @@ public class PhysicalObject extends Entity implements Weight{
                         }
                     }
                 } else {
+
+                    Log.e("PhysicalObject","nome "+name+"   - dvx "+dvx );
+
                     if (w.rightDirection) {
-                        translateX = dvx*0.2f;
+                        translateX = Math.abs(dvx) * windForce;
                     } else {
-                        translateX = -dvx*0.2f;
+                        translateX = -Math.abs(dvx) * windForce;
                     }
                 }
             }
