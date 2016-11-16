@@ -287,6 +287,7 @@ public class Level {
         float targetY;
 
         Log.e("level", "targetsMap.length "+targetsMap.length);
+        int contador = 0;
         for (int iY = 0; iY < targetsMap.length;iY++){
             for (int iX = 0; iX < targetsMap[iY].length; iX++) {
                 if (targetsMap[iY][iX] != 0) {
@@ -297,19 +298,22 @@ public class Level {
                             (iY * ((Game.gameAreaResolutionY * targetHeight_BR) +
                                     (Game.gameAreaResolutionX * targetsDistance_BR)));
 
-                    Game.addTarget(
-                            new TargetBuilder()
-                                    .name("target")
-                                    .game(game)
-                                    .x(targetX)
-                                    .y(targetY)
-                                    .width(targetWidth)
-                                    .height(targetHeight)
-                                    .weight(Game.TARGET_WEIGHT)
-                                    .type(targetsMap[iY][iX])
-                                    .states(targetsStates)
-                                    .build()
-                    );
+                    Target t = new TargetBuilder()
+                            .name("target")
+                            .game(game)
+                            .x(targetX)
+                            .y(targetY)
+                            .width(targetWidth)
+                            .height(targetHeight)
+                            .weight(Game.TARGET_WEIGHT)
+                            .type(targetsMap[iY][iX])
+                            .states(targetsStates)
+                            .build();
+
+                    Log.e("Game", "target "+contador +": "+t.x + " " + t.y);
+
+                    Game.addTarget(t);
+                    contador += 1;
                 }
             }
         }
@@ -413,13 +417,23 @@ public class Level {
             ball.dvx = ballVelocityX;
             ball.dvy = ballVelocityY;
 
-            ic = i; if (i > ballsTargetsAppend.size() - 1) {ic = 0;}
-            for (int ta = 0; ta < ballsTargetsAppend.get(ic).length; ta++){
-                if (ball.targetsAppend == null){
-                    ball.targetsAppend = new ArrayList<>();
+            if (ball.targetsAppend == null){
+                ball.targetsAppend = new ArrayList<>();
+            } else {
+                ball.targetsAppend.clear();
+            }
+
+            if (ballsTargetsAppend != null && ballsTargetsAppend.size() > 0) {
+                ic = i;
+                if (i > ballsTargetsAppend.size() - 1) {
+                    ic = 0;
                 }
-                Log.e("Level", "adicionando target "+ballsTargetsAppend.get(ic)[ta]+ " à bola " + ic);
-                ball.targetsAppend.add(game.targets.get(ballsTargetsAppend.get(ic)[ta]));
+                for (int ta = 0; ta < ballsTargetsAppend.get(ic).length; ta++) {
+                    Log.e("Level", "adicionando target " + ballsTargetsAppend.get(ic)[ta] + " à bola " + ic);
+                    Target t = game.targets.get(ballsTargetsAppend.get(ic)[ta]);
+                    Log.e("Level", t.x + " - " + t.y);
+                    ball.targetsAppend.add(t);
+                }
             }
 
 

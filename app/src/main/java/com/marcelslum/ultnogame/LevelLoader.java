@@ -9,8 +9,14 @@ public class LevelLoader {
     public static void loadLevel(int levelNumber) {
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
         levelBuilder
-                .setBallsX_B1(0.3f)
-                .setBallsY_B1(0.3f)
+                .setBallsQuantity(2)
+                .setBallsTargetsAppend(new ArrayList<int[]>())
+                .setBallsX_B1(0.3f, 0.5f) // 0.3f
+                .setBallsFree(true, true)
+                .setBallsVX(0.5f,-0.5f) // retirar
+                .setBallsVY(0.5f,-0.5f) // retirar
+                .setBallsY_B1(0.3f, 0.6f) // 0.3f
+                .setBallsRadius_BD_0_01(2f) // retirar
                 .setBarsX_B1(0.3f)
                 .setTargetsWidth(0.0895f)
                 .setTargetsHeight(0.04f)
@@ -33,9 +39,9 @@ public class LevelLoader {
 
         if (levelNumber >= 2) {
             levelBuilder
-                    .setBallsAngleToRotate_BD_2(1.5f)//4f
-                    //.setBallsMaxAngle_BD_55(2.182f)
-                    //.setBallsMinAngle_BD_35(0.857f)
+                    .setBallsAngleToRotate_BD_2(4f)//4f
+                    .setBallsMaxAngle_BD_55(2.182f)
+                    .setBallsMinAngle_BD_35(0.857f)
                     .setBallsVelocityVariation_BD_0_1(2f)
                     .setBallsVelocityMax_BD_1_3(1.467f)
                     .setBallsVelocityMin_BD_0_6(0.875f)
@@ -881,7 +887,7 @@ public class LevelLoader {
                                         {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
                                         {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                                        {1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1},
+                                        {1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1},
                                         {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
                                         {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
                                         {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
