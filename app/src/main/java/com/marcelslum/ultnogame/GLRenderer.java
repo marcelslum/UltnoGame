@@ -176,6 +176,13 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         } else {
             Game.verifyTouchBlock();
             Game.verifyListeners();
+
+            if (elapsed > (long)(frameDuration*2)){
+                Log.e("GLRenderer", "frame muito longo, reduzindo de " + elapsed + " para " + (frameDuration*2));
+                elapsed = (long) frameDuration*2;
+            }
+
+
             Game.simulate(elapsed, frameDuration);
             Game.render(matrixView, matrixProjection);
         }

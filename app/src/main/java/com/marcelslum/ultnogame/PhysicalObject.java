@@ -110,7 +110,7 @@ public class PhysicalObject extends Entity implements Weight{
                     }
                 } else {
 
-                    Log.e("PhysicalObject","nome "+name+"   - dvx "+dvx );
+                    //Log.e("PhysicalObject","nome "+name+"   - dvx "+dvx );
 
                     if (w.rightDirection) {
                         translateX = Math.abs(dvx) * windForce;

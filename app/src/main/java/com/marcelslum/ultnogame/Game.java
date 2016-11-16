@@ -1624,11 +1624,28 @@ public class Game {
             background.move(1);
             verifyDead();
             verifyPointsDecay();
+            verifyTargetsAppend();
         } else if(gameState == GAME_STATE_VITORIA){
             background.move(3);
         }
         if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
             verifyWin();
+        }
+    }
+
+    static void verifyTargetsAppend(){
+        for (int b = 0; b < balls.size(); b++){
+            Ball ball = balls.get(b);
+            if (!ball.isFree){
+                if (ball.targetsAppend != null) {
+                    for (int ia = 0; ia < ball.targetsAppend.size(); ia++) {
+                        if (!ball.targetsAppend.get(ia).alive) {
+                            ball.isFree = true;
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 

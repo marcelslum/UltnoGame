@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import java.util.ArrayList;
+
 /**
  * Created by marcel on 02/08/2016.
  */
@@ -806,11 +808,12 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 23) {
+        if (levelNumber >= 24) {
 
             levelBuilder
                 .setBallsQuantity(2)
                 .setBallsRadius_BD_0_01(1f, 1f)
+                .setBallsInvencible(false, true)
                 .setBallsX_B1(0.1f, 0.9f)
                 .setBallsY_B1(0.55f, 0.55f)
                 .setBallsVX(1.214f)
@@ -840,15 +843,64 @@ public class LevelLoader {
                                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
                             })
                     .setTargetsStates(new int[]{0, 1, 2, 3})
-                    .setObstaclesQuantity(2)
-                    .setObstaclesX(0.00225f, 0.63575f)
-                    .setObstaclesY(0.3380882353f,      0.3380882353f)
-                    .setObstaclesHeight(0.1652941176f,      0.1652941176f)
-                    .setObstaclesWidth(0.361f,      0.361f)
-                    .setWindType(Level.WIND_TYPE_LEFT)
+                    .setObstaclesQuantity(0)
+                    .setWindType(Level.WIND_TYPE_NO)
                     .setWindowsQuantity(0);
         }
     }
+
+        if (levelNumber >= 25) {
+
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{55, 63, 64, 70, 71, 78});
+            targetsAppend.add(new int[]{61, 68, 69, 75, 76, 84});
+
+            levelBuilder
+                    .setBallsQuantity(3)
+                    .setBallsRadius_BD_0_01(1f, 1f, 1f)
+                    .setBallsInvencible(false, true, true)
+                    .setBallsFree(true, false, false)
+                    .setBallsX_B1(0.1f, 0.1375f, 0.8615f)
+                    .setBallsY_B1(0.58f, 0.4198529412f, 0.4198529412f)
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setBallsVX(1.214f)
+                    .setBallsVY(1.214f)
+                    .setBallsAngleToRotate_BD_2(1.1f)
+                    .setBallsMaxAngle_BD_55(1.1f)
+                    .setBallsMinAngle_BD_35(1.055f)
+                    .setBallsVelocityVariation_BD_0_1(0.1f)
+                    .setBallsVelocityMax_BD_1_3(1f)
+                    .setBallsVelocityMin_BD_0_6(1f)
+                    .setBarsWidth_BD_0_22(0.909f);
+
+            if (levelNumber == 25) {
+                levelBuilder
+                        .setTargetsMap(
+                                new int[][]{
+                                        {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                                        {1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1},
+                                        {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                        {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
+                                        {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
+                                        {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                        {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                        {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+                                        {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+                                        {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                        {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+
+                                })
+                        .setTargetsStates(new int[]{0, 1, 2, 3})
+                        .setObstaclesQuantity(0)
+                        .setWindType(Level.WIND_TYPE_NO)
+                        .setWindowsQuantity(0);
+            }
+        }
 
 
         Levels.levelObject = levelBuilder.build();

@@ -40,12 +40,10 @@ public class Ball extends Circle{
     boolean isAlive = true;
     boolean listenForExplosion = false;
     ArrayList<Target> targetsAppend;
-    boolean collisionBordaB = false;
     boolean collisionBar = false;
     boolean collisionTarget = false;
     boolean collisionOtherBall = false;
     int collisionBarNumber = -1;
-    boolean verifyAppendsIsFreeBall = false;
     private int alarmId;
     
     public float lastResponseBallX = 0f;
@@ -76,7 +74,7 @@ public class Ball extends Circle{
     }
 
     public void setInvencible() {
-
+            isInvencible = true;
           ArrayList<float[]> valuesInvencible = new ArrayList<>();
                 valuesInvencible.add(new float[]{0f,1f});
                 valuesInvencible.add(new float[]{0.2f,2f});
@@ -193,7 +191,6 @@ public class Ball extends Circle{
         lastResponseBallX = 0f;
         lastResponseBallY = 0f;
         impulsion = 0f;
-        collisionBordaB = false;
         collisionBar = false;
         collisionBarNumber = 0;
         collisionTarget = false;
@@ -212,8 +209,7 @@ public class Ball extends Circle{
 
             Log.e("ball", collisionsData.get(i).object.name +" rX "+ collisionsData.get(i).responseX +" rY "+ collisionsData.get(i).responseY +" nX "+ collisionsData.get(i).normalX +" nY "+ collisionsData.get(i).normalY+" isRepeated "+collisionsData.get(i).isRepeated);
 
-            if (collisionsData.get(i).object.name.equals("bordaB") && !collisionsData.get(i).isRepeated){
-                collisionBordaB = true;
+            if (collisionsData.get(i).object.name.equals("bordaB") && !collisionsData.get(i).isRepeated && !isInvencible){
                 setDead();
                 return;
 
@@ -633,6 +629,7 @@ public class Ball extends Circle{
                 Game.ballCollidedFx = 40;
                 Target target = (Target)collisionsData.get(i).object;
                 target.onBallCollision();
+
                 Game.resetTimeForPointsDecay();
                 if (target.special == 1 && !listenForExplosion){
                     waitForExplosion();
@@ -875,7 +872,7 @@ public class Ball extends Circle{
         } else if (random < (0.125 * 2)) {
             color = COLOR_BALL_GREEN;
         } else if (random < (0.125 * 3)) {
-            color = COLOR_BALL_RED;
+            color = COLOR_BALL_BLACK;
         } else if (random < (0.125 * 4)) {
             color = COLOR_BALL_YELLOW;
         } else if (random < (0.125 * 5)) {

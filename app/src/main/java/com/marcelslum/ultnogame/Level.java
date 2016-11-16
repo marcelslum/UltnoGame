@@ -31,7 +31,7 @@ public class Level {
     public float[] ballsVelocityVariation;
     public float[] ballsVelocityMax_BI;
     public float[] ballsVelocityMin_BI;
-    public ArrayList<ArrayList<Target>> ballsTargetsAppend;
+    public ArrayList<int[]> ballsTargetsAppend;
     public boolean[] ballsFree;
     public int barsQuantity;
     public float[] barsWidth_BR;
@@ -413,10 +413,15 @@ public class Level {
             ball.dvx = ballVelocityX;
             ball.dvy = ballVelocityY;
 
-            ic = i; if (i > this.ballsTargetsAppend.size() - 1) {ic = 0;}
-            for (int t = 0; t < this.ballsTargetsAppend.size(); t++){
-                ball.targetsAppend = this.ballsTargetsAppend.get(ic);
+            ic = i; if (i > ballsTargetsAppend.size() - 1) {ic = 0;}
+            for (int ta = 0; ta < ballsTargetsAppend.get(ic).length; ta++){
+                if (ball.targetsAppend == null){
+                    ball.targetsAppend = new ArrayList<>();
+                }
+                Log.e("Level", "adicionando target "+ballsTargetsAppend.get(ic)[ta]+ " à bola " + ic);
+                ball.targetsAppend.add(game.targets.get(ballsTargetsAppend.get(ic)[ta]));
             }
+
 
             ic = i; if (i > this.ballsFree.length - 1) {ic = 0;}
             ball.isFree = this.ballsFree[ic];
@@ -467,7 +472,7 @@ public class Level {
         private static float[] ballsVelocityVariation = new float[]{default_ballsVelocityVariation};
         private static float[] ballsVelocityMax_BI = new float[]{default_ballsVelocityMax_BI};
         private static float[] ballsVelocityMin_BI = new float[]{default_ballsVelocityMin_BI};
-        private static ArrayList<ArrayList<Target>> ballsTargetsAppend = new ArrayList<ArrayList<Target>>();
+        private static ArrayList<int[]> ballsTargetsAppend = new ArrayList<int[]>();
         private static boolean[] ballsFree = new boolean[]{true};
         private static int barsQuantity = default_barsQuantity;
         private static float[] barsWidth_BR = new float[]{default_barsWidth_BR};
@@ -611,7 +616,7 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsTargetsAppend(ArrayList<ArrayList<Target>> _ballsTargetsAppend) {
+        public LevelBuilder setBallsTargetsAppend(ArrayList<int[]> _ballsTargetsAppend) {
             ballsTargetsAppend = _ballsTargetsAppend;
             return this;
         }
