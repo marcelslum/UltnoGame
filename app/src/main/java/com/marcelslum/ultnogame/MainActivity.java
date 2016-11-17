@@ -341,8 +341,6 @@ public class MainActivity extends FragmentActivity implements
             if (Game.gameState != Game.GAME_STATE_INTRO){
                 Game.setGameState(Game.GAME_STATE_INTRO);
             }
-
-
         }
     }
 

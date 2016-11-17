@@ -434,8 +434,6 @@ public class Ball extends Circle{
         if(this.collisionBar){
             
             Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
-
-
             barCollided.shineAfterBallCollision.values.get(0)[1] = barCollided.shine.numberForAnimation2;
             barCollided.shineAfterBallCollision.start();
 
@@ -486,16 +484,16 @@ public class Ball extends Circle{
             Log.e("ball", "velocity add "+velocityAdd);
             Log.e("ball", "angleToRotate "+angleToRotate);
             
-            vx = this.dvx;
-            vy = this.dvy;
+            vx = dvx;
+            vy = dvy;
 
             float initialLen = Utils.getVectorMagnitude(initialDVX, initialDVY);
             Log.e("ball", "initialLen "+initialLen);
 
-            float maxLen = initialLen * this.velocityMax_BI;
+            float maxLen = initialLen * velocityMax_BI;
             Log.e("ball", "maxLen "+maxLen);
 
-            float minLen = initialLen * this.velocityMin_BI;
+            float minLen = initialLen * velocityMin_BI;
             Log.e("ball", "minLen "+minLen);
             float scalePorcentage = 1f;
 
@@ -510,9 +508,9 @@ public class Ball extends Circle{
                 Game.ballDataPanel.setData(velocityPercentage, anglePercentage, false);
             } else {
                 if (velocityAdd == true){
-                    scalePorcentage +=this.velocityVariation;
+                    scalePorcentage +=velocityVariation;
                 } else  {
-                    scalePorcentage -=this.velocityVariation;
+                    scalePorcentage -=velocityVariation;
                 }
 
                 float possibleVelocityLen = Utils.getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
@@ -654,7 +652,7 @@ public class Ball extends Circle{
     }
 
     public void checkDesireVelocity(){
-
+        // quadrantes invertidos no eixo y
         Log.e("ball", "teste de angulo ---------------");
         double angle = Math.toDegrees(Math.atan2(dvy, dvx));
         Log.e("ball", "angle " + angle);
@@ -663,25 +661,34 @@ public class Ball extends Circle{
             angle = 360d-(angle * -1d);
         }
 
-        double testAngle = angle;
-        if (testAngle > 90d) {
-            testAngle %= 90d;
+        float thisMinAngle = minAngle;
+        float thisMaxAngle = maxAngle;
+
+        if (angle > 90d && angle < 180d){
+            // 2o quadrante, invertendo os angulos maximo e minimo para o calculo
+            thisMinAngle = 180 - maxAngle;
+            thisMaxAngle = 180 - minAngle;
+        } else if (angle > 180d && angle < 270d){
+            thisMinAngle = minAngle + 180;
+            thisMaxAngle = maxAngle + 180;
+        } else if (angle > 270d && angle < 360d){
+            // 4o quadrante, invertendo os angulos maximo e minimo para o calculo
+            thisMinAngle = 360 - maxAngle;
+            thisMaxAngle = 360 - minAngle;
         }
 
-        //TODO quando o angulo está num quadrante da esquerda, nao está considerando corretamente
+        Log.e("ball", "this minAngle " + thisMinAngle + "this maxAngle "+thisMaxAngle);
 
-        Log.e("ball", "testAngle " + testAngle);
+        Log.e("ball", "testAngle " + angle);
         Log.e("ball", "minAngle " + minAngle);
         Log.e("ball", "maxAngle " + maxAngle);
 
-
         double angleToRotate = 0d;
-        if (testAngle < minAngle) {
-            angleToRotate = minAngle - testAngle;
+        if (angle < minAngle) {
+            angleToRotate = minAngle - angle;
             Log.e("ball", "angulo menor que o esperado, rotacao de " + angleToRotate);
-
-        } else if (testAngle > maxAngle) {
-            angleToRotate = maxAngle - testAngle;
+        } else if (angle > maxAngle) {
+            angleToRotate = maxAngle - angle;
             Log.e("ball", "angulo maior que o esperado, rotacao de " + angleToRotate);
         }
 
@@ -704,7 +711,6 @@ public class Ball extends Circle{
         float minLen = initialLen * this.velocityMin_BI;
 
         float actualLen = Utils.getVectorMagnitude(dvx, dvy);
-
 
         if (actualLen > maxLen){
             Log.e("ball", "ajustando velocidade - diminuindo");
