@@ -209,7 +209,7 @@ public class Ball extends Circle{
 
             if (collisionsData.get(i).object.name.equals("bordaB") && !collisionsData.get(i).isRepeated && !isInvencible){
                 //setDead();
-                return;
+                //return;
 
             }
             
@@ -218,7 +218,7 @@ public class Ball extends Circle{
                 collisionBarNumber = i;
             }
         
-            // verifica se obstáculo esta crescendo e, se a velocidade for maior que a da bola, impulsiona-a
+            // verifica se obstáculo esta crescendo e, se a velocidade for maior que a da bola, gera nela uma impulsão
             if (collisionsData.get(i).object.name.equals("obstacle") && !collisionsData.get(i).isRepeated){
                 Obstacle o = (Obstacle)collisionsData.get(i).object;
                 if (o.scaleVariationData != null){
@@ -352,21 +352,33 @@ public class Ball extends Circle{
                         lastResponseBallX = 0f;
                     }
                 } else if(collisionsData.size() > 1 && !collisionOtherBall){
+                    Log.e("ball", "lidando com dois objetos colididos");
+
+                    Log.e("ball", "antes da analise");
+                    Log.e("ball", "lastResponseBallX "+lastResponseBallX);
+                    Log.e("ball", "lastResponseBallY "+lastResponseBallY);
+
                     boolean oppositeX = false;
                     boolean oppositeY = false;
                     int signalX = 0;
                     int signalY = 0;
                     for (int i = 0; i < collisionsData.size(); i++){
                         if (collisionsData.get(i).responseX > 0){
+                                Log.e("ball", "collisionsData.get(i).responseX > 0");
                             if (signalX == 0){
+                                Log.e("ball", "signalX == 0");
                                 signalX = 1;
-                            } else if (signalX == -1 && !oppositeY){
+                            } else if (signalX == -1 && !oppositeX){
+                                Log.e("ball", "signalX == -1 && !oppositeY");
                                 oppositeX = true;
                             }
                         } else if (collisionsData.get(i).responseX < 0){
+                            Log.e("ball", "ollisionsData.get(i).responseX < 0");
                             if (signalX == 0){
+                                Log.e("ball", "signalX == 0");
                                 signalX = -1;
-                            } else if (signalX == 1 && !oppositeY){
+                            } else if (signalX == 1 && !oppositeX){
+                                Log.e("ball", "signalX == 1 && !opposite");
                                 oppositeX = true;
                             }
                         }
@@ -391,6 +403,10 @@ public class Ball extends Circle{
                     if (oppositeY){
                         lastResponseBallY = 0f;
                     }
+                    Log.e("ball", "após analise");
+                    Log.e("ball", "lastResponseBallX "+lastResponseBallX);
+                    Log.e("ball", "lastResponseBallY "+lastResponseBallY);
+
                 }
             }
         }
@@ -680,15 +696,13 @@ public class Ball extends Circle{
         Log.e("ball", "this minAngle " + thisMinAngle + "this maxAngle "+thisMaxAngle);
 
         Log.e("ball", "testAngle " + angle);
-        Log.e("ball", "minAngle " + minAngle);
-        Log.e("ball", "maxAngle " + maxAngle);
 
         double angleToRotate = 0d;
-        if (angle < minAngle) {
-            angleToRotate = minAngle - angle;
+        if (angle < thisMinAngle) {
+            angleToRotate = thisMinAngle - angle;
             Log.e("ball", "angulo menor que o esperado, rotacao de " + angleToRotate);
-        } else if (angle > maxAngle) {
-            angleToRotate = maxAngle - angle;
+        } else if (angle > thisMaxAngle) {
+            angleToRotate = thisMaxAngle - angle;
             Log.e("ball", "angulo maior que o esperado, rotacao de " + angleToRotate);
         }
 

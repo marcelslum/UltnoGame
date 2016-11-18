@@ -16,7 +16,7 @@ public class LevelLoader {
                 .setBallsVX(0.5f,-0.5f) // retirar
                 .setBallsVY(0.5f,-0.5f) // retirar
                 .setBallsY_B1(0.3f, 0.6f) // 0.3f
-                .setBallsRadius_BD_0_01(2f) // retirar
+                .setBallsRadius_BD_0_01(3f) // retirar
                 .setBarsX_B1(0.3f)
                 .setTargetsWidth(0.0895f)
                 .setTargetsHeight(0.04f)
