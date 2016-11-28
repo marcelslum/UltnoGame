@@ -11,11 +11,6 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
         Log.e(TAG, "doInBackground");
         try {
             Game.initData();
-            //Storage.initializeStorage(Game.context, Levels.maxNumberOfLevels);
-            //Levels.currentMaxLevel = Storage.getMaxLevel();
-            //Game.currentDifficulty = Storage.getDificulty();
-            //Game.changeDifficulty(Game.currentDifficulty);
-            //Levels.currentLevelNumber = Storage.getActualLevel();
             if (isCancelled()){
                 Log.e(TAG, "cancelado 1");
                 Game.forInitGame = true;
@@ -23,9 +18,6 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
             }
             
             Game.initTime = Utils.getTime();
-            
-            //Texture.init();
-            
             if (isCancelled()){
                 Log.e(TAG, "cancelado 2");
                 Game.forInitGame = true;

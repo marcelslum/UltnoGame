@@ -26,7 +26,7 @@
     <string name="l1t4">A pontuação de cada alvo depende do nível de dificuldade escolhido: 30, 50, 70 ou 100 pontos para os níveis fácil, normal, difícil e insano.</string>
     <string name="l1t5">Elimine todos os alvos para completar o nível.</string>
     <string name="l1t6">Mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
-    <string name="l1t7">Vamos lá! Pressione a flecha para iniciar a contagem regressiva.</string>
+    <string name="l1t7">Vamos iniciar a contagem regressiva.</string>
     
     <string name="l2t1">É possível alterar a velocidade e a direção da bola.</string>
     <string name="l2t2">Você pode atingir a bola com a barra se movimentando na direção oposta.</string>
@@ -41,7 +41,7 @@
     <string name="l2t11">A barra está se movimentando na mesma direção em relação à bola.</string>
     <string name="l2t12">Isso faz com que a a velocidade da bola diminua.</string>
     <string name="l2t13">E o ângulo da bola aumente em relação ao eixo horizontal.</string>
-    <string name="l2t14">Neste nível, vamos exagerar um pouquinho esse comportamento.</string>
+    <string name="l2t14">Neste nível, vamos exagerar um pouco esse comportamento.</string>
     <string name="l2t15">Use o que aprendeu para controlar a bola e acertar os alvos mais rapidamente.</string>
     
     <string name="l4t1">Neste nível, haverá um obstáculo inquebrável.</string>
@@ -66,7 +66,11 @@
     <string name="l9t12">Além disso, ao final do nível, bolas extras vivas trarão pontos extras.</string>
     <string name="l9t13">Portanto, tente manter as bolas extras vivas.</string>
     <string name="l9t14">Mas chega de papo furado. Você quer ação, não é mesmo?</string>
-    <string name="l12t1">Apenas um alvo? Que fácil, não é?</string>
+    <string name="l12t1">Os obstáculos podem variar de posição.</string>
+    <string name="l16t1">Os obstáculos também podem mudar de tamanho.</string>
+    <string name="l19t1">Nesse nível, há vento para a direita. Será que isso influenciará em algum coisa?</string>
+    <string name="l20t1">Pareçe que o vento mudou de direção.</string>
+    <string name="l21t1">Apenas um alvo? Há algo de estranho nesse nível...</string>
     <string name="options">Opções</string>
     <string name="dificuldade">Dificuldade</string>
     <string name="musica">Música</string>

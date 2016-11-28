@@ -148,7 +148,6 @@ public class TutorialLoader {
                                 .width(width)
                                 .size(size)
                                 .text(Utils.getStringResource( R.string.l1t4))
-                                .withArrow(gX *0.49f, gY *0.95f)
                                 .build()
                         )
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
@@ -174,7 +173,6 @@ public class TutorialLoader {
                                 .width(width)
                                 .size(size)
                                 .text(Utils.getStringResource( R.string.l1t5))
-                                .withArrow(gX *0.5f, gY *0.95f)
                                 .build()
                         )
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
@@ -675,11 +673,11 @@ public class TutorialLoader {
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox1")
-                                .position(x, y*2f)
+                                .position(x, y*2.2f)
                                 .width(width)
                                 .size(size)
                                     .text(Utils.getStringResource( R.string.l4t1))
-                                .withArrow(gX*0.5f, gY*0.35f)
+                                .withArrow(gX*0.5f, gY*0.34f)
                                 .build()
                         )
                         .build()
@@ -1193,7 +1191,7 @@ public class TutorialLoader {
                                 .build()
                 );
 
-                // L6T13
+                // L9T13
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox13")
@@ -1221,6 +1219,83 @@ public class TutorialLoader {
                                 .build()
                 );
                 break;
+
+
+            case 12:
+                // L12T1
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox1")
+                                        .position(x, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l12t1))
+                                        .build()
+                        )
+                                .build()
+                );
+                break;
+
+            case 16:
+                // L16T1
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox1")
+                                        .position(x, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l16t1))
+                                        .build()
+                        )
+                                .build()
+                );
+                break;
+
+            case 19:
+                // L19T1
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox1")
+                                        .position(x, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l19t1))
+                                        .build()
+                        )
+                                .build()
+                );
+                break;
+
+            case 20:
+                // L20T1
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox1")
+                                        .position(x, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l20t1))
+                                        .build()
+                        )
+                                .build()
+                );
+                break;
+
+            case 21:
+                // L21T1
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox1")
+                                        .position(x, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l21t1))
+                                        .build()
+                        )
+                                .build()
+                );
+                break;
+
         }
     }
 }

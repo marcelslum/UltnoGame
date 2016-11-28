@@ -15,7 +15,6 @@ import com.google.android.gms.games.achievement.Achievements;
  */
 public class GooglePlayGames {
 
-    private static GooglePlayGames ourInstance = new GooglePlayGames();
     private static final int REQUEST_ACHIEVEMENTS = 2001;
     private static final int REQUEST_LEADERBOARD = 3001;
 

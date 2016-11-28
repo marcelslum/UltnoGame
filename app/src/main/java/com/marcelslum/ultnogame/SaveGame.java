@@ -15,13 +15,10 @@ public class SaveGame {
     private static final String TAG = "SaveGame";
     private static final String SERIAL_VERSION = "1.0";
     public static final String SHARED_PREFERENCES_KEY_NAME = "saveGame";
-    static boolean savingSnapshot = false;
-    // TODO adicionar informação do usuário
 
     public static SaveGame saveGame;
     public static long lastSave;
     public static final int MIN_TIME_BEFORE_RESAVE = 2000;
-
 
     public int maxNumberOfLevels;
     public int currentMaxLevel;

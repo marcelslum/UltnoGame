@@ -158,6 +158,9 @@ public class Ball extends Circle{
     }
 
     public void clearParticles(){
+        if (ballParticleGenerator != null) {
+            ballParticleGenerator.isActive = false;
+        }
         historicPositionX.clear();
         historicPositionY.clear();
     }
@@ -208,8 +211,8 @@ public class Ball extends Circle{
             Log.e("ball", collisionsData.get(i).object.name +" rX "+ collisionsData.get(i).responseX +" rY "+ collisionsData.get(i).responseY +" nX "+ collisionsData.get(i).normalX +" nY "+ collisionsData.get(i).normalY+" isRepeated "+collisionsData.get(i).isRepeated);
 
             if (collisionsData.get(i).object.name.equals("bordaB") && !collisionsData.get(i).isRepeated && !isInvencible){
-                //setDead();
-                //return;
+                setDead();
+                return;
 
             }
             
@@ -622,6 +625,8 @@ public class Ball extends Circle{
                 float finalLen = Utils.getVectorMagnitude(final_vx, final_vy);
                                                     
                 Log.e("ball", "finalLen "+finalLen);
+
+                // TODO considerar dado anterior da bola
                 
                 float velocityPercentage = (finalLen - minLen)/(maxLen - minLen);
                 float anglePercentage = (finalAngle - minAngle)/(maxAngle - minAngle);
@@ -913,6 +918,11 @@ public class Ball extends Circle{
             }
         });
         Sound.play(Sound.soundBallFall, 1, 1, 0);
+
+        if (listenForExplosion){
+            Sound.soundPool.stop(alarmId);
+        }
+
         this.isSolid = false;
         this.isCollidable = false;
         this.isMovable = false;

@@ -9,14 +9,14 @@ public class LevelLoader {
     public static void loadLevel(int levelNumber) {
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
         levelBuilder
-                .setBallsQuantity(2)
+                .setBallsQuantity(1)
                 .setBallsTargetsAppend(new ArrayList<int[]>())
-                .setBallsX_B1(0.3f, 0.5f) // 0.3f
+                .setBallsX_B1(0.1f, 0.5f) // 0.3f
                 .setBallsFree(true, true)
-                .setBallsVX(0.5f,-0.5f) // retirar
-                .setBallsVY(0.5f,-0.5f) // retirar
+                //.setBallsVX(0.5f,-0.5f) // retirar
+                //.setBallsVY(0.5f,-0.5f) // retirar
                 .setBallsY_B1(0.3f, 0.6f) // 0.3f
-                .setBallsRadius_BD_0_01(3f) // retirar
+                //.setBallsRadius_BD_0_01(3f) // retirar
                 .setBarsX_B1(0.3f)
                 .setTargetsWidth(0.0895f)
                 .setTargetsHeight(0.04f)

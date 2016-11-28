@@ -227,10 +227,7 @@ public class Game {
         Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
         Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
 
-
         Texture.init();
-
-
 
         Game.frame = new Rectangle("frame", 0f, 0f, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
         Game.frame.clearDisplay();
@@ -1177,6 +1174,9 @@ public class Game {
     private static void freeAllGameEntities() {
         for (Ball b : balls){
             b.isMovable = true;
+            if (b.ballParticleGenerator != null) {
+                b.ballParticleGenerator.isActive = true;
+            }
         }
         for (Bar b : bars){
             b.isMovable = true;
