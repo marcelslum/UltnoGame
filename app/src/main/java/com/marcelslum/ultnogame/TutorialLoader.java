@@ -1296,6 +1296,61 @@ public class TutorialLoader {
                 );
                 break;
 
+            case 24:
+                // L24T1
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox1")
+                                        .position(x*0.25f, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l24t1))
+                                        .build()
+                        )
+                                .build()
+                );
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox2")
+                                        .position(x*0.25f, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l24t2))
+                                        .withArrow(gX*0.8f, gY*0.55f)
+                                        .build()
+                        )
+                                .build()
+                );
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox3")
+                                        .position(x*0.5f, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l24t3))
+                                        .withArrow(gX*0.45f, gY*0.97f)
+                                        .build()
+                        )
+                                .build()
+                );
+                break;
+
+            case 25:
+                // L25T1
+                Levels.levelObject.tutorials.add(
+                        new Tutorial.TutorialBuilder(
+                                new TextBoxBuilder("textBox1")
+                                        .position(x, y)
+                                        .width(width)
+                                        .size(size)
+                                        .text(Utils.getStringResource( R.string.l25t1))
+                                        .build()
+                        )
+                                .build()
+                );
+                break;
+
+
         }
     }
 }
