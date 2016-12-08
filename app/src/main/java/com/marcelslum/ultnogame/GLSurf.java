@@ -68,7 +68,7 @@ public class GLSurf extends GLSurfaceView {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
 
-                //Log.e("GLSurf", "ACTION_DOWN "+ pointerId);
+                Log.e("GLSurf", "ACTION_DOWN "+ pointerId);
                 //Log.e("GLSurf", "ACTION_DOWN "+ pointerId);
                 // We have a new pointer. Lets add it to the list of pointers
 
@@ -80,30 +80,28 @@ public class GLSurf extends GLSurfaceView {
                 for (int size = event.getPointerCount(), i = 0; i < size; i++) {
                     for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
                         if (Game.touchEvents.get(i2).id == event.getPointerId(i)) {
-
-                            //Log.e("GLSurf", "ACTION_MOVE "+ event.getPointerId(i));
-
-
-                            Game.touchEvents.get(i2).x = event.getX(i)-screenOffSetX;
-                            Game.touchEvents.get(i2).y = event.getY(i)-screenOffSetY;
+                            Game.touchEvents.get(i2).move(event.getX(i)-screenOffSetX, event.getY(i)-screenOffSetY);
                         }
                     }
                 }
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
-                //Log.e("GLSurf", "action up"+ event.getPointerId(pointerId));
+                Log.e("GLSurf", "action up"+ event.getPointerId(pointerId));
 
                 for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
                     if (Game.touchEvents.get(i2).id == event.getPointerId(pointerId)) {
-                        Game.touchEvents.remove(i2);
+
+                        Game.touchEvents.get(i2).setType(TouchEvent.TOUCH_TYPE_UP);
+
+                        //Game.touchEvents.remove(i2);
                     }
                 }
                 break;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                //Log.e("GLSurf", "action up"+ event.getPointerId(pointerId));
+                Log.e("GLSurf", "action up"+ event.getPointerId(pointerId));
 
                 Game.touchEvents.clear();
                 break;

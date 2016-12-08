@@ -204,7 +204,7 @@ public class Level {
 
         // BOTÃO 1 ESQUERDA
         float x = Game.resolutionX * 0.03f;
-        Game.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        Game.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         Game.button1Left.setTextureMap(19);
         Game.button1Left.textureMapUnpressed = 19;
         Game.button1Left.textureMapPressed = 18;
@@ -212,7 +212,7 @@ public class Level {
 
         // BOTÃO 2 DIREITA
         x = Game.resolutionX * 0.87f;
-        Game.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        Game.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         Game.button2Right.setTextureMap(20);
         Game.button2Right.textureMapUnpressed = 20;
         Game.button2Right.textureMapPressed = 17;
@@ -220,7 +220,7 @@ public class Level {
         if (this.barsQuantity > 1) {
             // BOTÃO 1 DIREITA
             x = Game.resolutionX * 0.18f;
-            Game.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+            Game.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
             Game.button1Right.setTextureMap(20);
             Game.button1Right.textureMapUnpressed = 20;
             Game.button1Right.textureMapPressed = 17;
@@ -228,7 +228,7 @@ public class Level {
 
             // BOTÃO 2 ESQUERDA
             x = Game.resolutionX * 0.72f;
-            Game.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+            Game.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
             Game.button2Left.setTextureMap(19);
             Game.button2Left.textureMapUnpressed = 19;
             Game.button2Left.textureMapPressed = 18;

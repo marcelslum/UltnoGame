@@ -2,7 +2,7 @@
     <string name="app_name">Ultno</string>
     <string name="menuTutorialExibirTutorial">Exibir o tutorial do nível </string>
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
-    <string name="menuPrincipalIniciar">Jogar o nível</string>
+    <string name="menuPrincipalIniciar">Jogar</string>
     <string name="menuPrincipalAlterarNivel">Alterar nível</string>
     <string name="messageMaxScoreLevel">Maior pontução neste nível:</string>
     <string name="nivel">Nível: </string>

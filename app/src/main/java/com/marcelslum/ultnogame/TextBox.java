@@ -123,7 +123,7 @@ public class TextBox extends Entity{
         }
         
         if (isHaveArrowContinue){
-            arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, textY - textPadding, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS, 3f);
+            arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, textY - textPadding, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS, 3f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
             arrowContinuar.setTextureMap(14);
             arrowContinuar.textureMapUnpressed = 14;
             arrowContinuar.textureMapPressed = 6;

@@ -105,6 +105,9 @@ public class Game {
     static Text messageSplash1;
     static Text messageSplash2;
     private static TextBox bottomTextBox;
+
+    public static MenuIcon worldMenu;
+    public static MenuIcon levelMenu;
     
     static Image imageTutorialTop;
     static Image imageTutorialDown;
@@ -143,6 +146,8 @@ public class Game {
     public final static int GAME_STATE_OPCOES =  17;
     public final static int GAME_STATE_INTRO =  18;
     public final static int GAME_STATE_OPCOES_GAME =  19;
+    public final static int GAME_STATE_SELECAO_MUNDO =  20;
+    public final static int GAME_STATE_SELECAO_LEVEL =  21;
 
     public final static int DIFFICULTY_EASY = 0;
     public final static int DIFFICULTY_NORMAL = 1;
@@ -379,10 +384,59 @@ public class Game {
 
 
     public static void initMenus(){
+
+        worldMenu = new MenuIcon("worldMenu", 0f, resolutionY * 0.3f, resolutionY * 0.4f);
+        worldMenu.addOption(1, Texture.TEXTURE_ICONS, 1, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                setGameState(GAME_STATE_SELECAO_LEVEL);
+            }
+        });
+
+        worldMenu.addOption(2, Texture.TEXTURE_ICONS, 1, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                setGameState(GAME_STATE_SELECAO_LEVEL);
+            }
+        });
+
+        worldMenu.addOption(3, Texture.TEXTURE_ICONS, 1, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                setGameState(GAME_STATE_SELECAO_LEVEL);
+            }
+        });
+
+        worldMenu.addOption(4, Texture.TEXTURE_ICONS, 1, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                setGameState(GAME_STATE_SELECAO_LEVEL);
+            }
+        });
+
+        worldMenu.addOption(5, Texture.TEXTURE_ICONS, 1, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                setGameState(GAME_STATE_SELECAO_LEVEL);
+            }
+        });
+
+
+        levelMenu = new MenuIcon("levelMenu", 10, 10, 100);
+
+        levelMenu.addOption(1, Texture.TEXTURE_ICONS, 1, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                setGameState(GAME_STATE_MENU);
+            }
+        });
+
         float fontSize = gameAreaResolutionY*0.08f;
 
         // -------------------------------------------MENU OPTIONS
         menuOptions = new Menu("menuOptions", gameAreaResolutionX/2, gameAreaResolutionY*0.47f, fontSize, font);
+
+        /*
 
         // cria o seletor de dificuldade
         selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
@@ -436,6 +490,8 @@ public class Game {
                 setBottomText("");
             }
         });
+
+        */
 
         // cria o seletor de musica
         selectorMusic = new Selector("selectorMusic", 0f,0f, fontSize, "",
@@ -502,12 +558,15 @@ public class Game {
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
-        menuMain.addMenuOption("IniciarJogo", getContext().getResources().getString(R.string.menuPrincipalIniciar) + " "+SaveGame.saveGame.currentLevelNumber, new MenuOption.OnChoice() {
+        menuMain.addMenuOption("IniciarJogo", getContext().getResources().getString(R.string.menuPrincipalIniciar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerMenu.block();
                 Game.blockAndWaitTouchRelease();
                 Game.clearAllMenuEntities();
+                Game.setGameState(GAME_STATE_SELECAO_MUNDO);
+
+                /*
                 LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
                 TutorialLoader.loadTutorial(SaveGame.saveGame.currentLevelNumber);
                 if (Levels.levelObject.tutorials.size() > 0) {
@@ -527,9 +586,13 @@ public class Game {
                 } else {
                     Game.setGameState(GAME_STATE_PREPARAR);
                 }
+
+                */
             }
         });
 
+
+        /*
         // prepara os valores para o seletor de nível
         String [] levels = new String [Levels.maxNumberOfLevels-1];
         for (int i = 0; i < Levels.maxNumberOfLevels-1; i++){
@@ -558,6 +621,8 @@ public class Game {
                 Game.changeLevel(Game.selectorLevel.selectedValue+1);
             }
         });
+
+        */
 
         // adiciona a opção de acessar as opções do jogo
         menuMain.addMenuOption("options", getContext().getResources().getString(R.string.options), new MenuOption.OnChoice() {
@@ -804,7 +869,14 @@ public class Game {
         repositionSelectors(state);
         gameState = state;
         clearAllMenuEntities();
-        if (state == GAME_STATE_INTRO) {
+
+        if (state == GAME_STATE_SELECAO_MUNDO){
+            worldMenu.display();
+            worldMenu.unblock();
+        } else if (state == GAME_STATE_SELECAO_LEVEL) {
+            levelMenu.display();
+            levelMenu.unblock();
+        } else if (state == GAME_STATE_INTRO) {
             mainActivity.hideAdView();
             ConnectionHandler.internetState = ConnectionHandler.INTERNET_STATE_NOT_CONNECTED;
             Splash.timeInitIntro = Utils.getTime();
@@ -834,6 +906,9 @@ public class Game {
             Game.bordaB.y = Game.resolutionY;
             menuOptions.block();
             menuInGame.block();
+            worldMenu.block();
+            levelMenu.block();
+
             stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();
@@ -1317,6 +1392,8 @@ public class Game {
         ArrayList<Entity> list = new ArrayList<>();
         list.add(menuMain);
         list.add(menuOptions);
+        list.add(worldMenu);
+        list.add(levelMenu);
         list.add(menuInGameOptions);
         list.add(selectorLevel);
         list.add(selectorDificulty);
@@ -1836,6 +1913,8 @@ public class Game {
         if (selectorLevel != null) selectorLevel.prepareRender(matrixView, matrixProjection);
 
         if (menuOptions != null)menuOptions.prepareRender(matrixView, matrixProjection);
+        if (worldMenu != null)worldMenu.prepareRender(matrixView, matrixProjection);
+        if (levelMenu != null)levelMenu.prepareRender(matrixView, matrixProjection);
         if (menuInGameOptions != null)menuInGameOptions.prepareRender(matrixView, matrixProjection);
         if (selectorDificulty != null)selectorDificulty.prepareRender(matrixView, matrixProjection);
         if (selectorMusic != null)selectorMusic.prepareRender(matrixView, matrixProjection);
@@ -1895,6 +1974,7 @@ public class Game {
     }
 
     static void verifyListeners() {
+
         if (!isBlocked) {
             for (int i = 0; i < interactionListeners.size(); i++) {
                 interactionListeners.get(i).verify();
@@ -1906,6 +1986,8 @@ public class Game {
         if (menuTutorial != null) menuTutorial.verifyListener();
         if (selectorLevel != null) selectorLevel.verifyListener();
         if (menuOptions != null)menuOptions.verifyListener();
+        if (worldMenu != null)worldMenu.verifyListener();
+        if (levelMenu != null)levelMenu.verifyListener();
         if (menuInGameOptions != null)menuInGameOptions.verifyListener();
         if (selectorDificulty != null)selectorDificulty.verifyListener();
         if (selectorMusic != null)selectorMusic.verifyListener();
@@ -1915,11 +1997,18 @@ public class Game {
                 Levels.levelObject.tutorials.get(Levels.levelObject.showingTutorial).textBox.verifyListener();
             }
         }
-        if (button1Left != null) button1Left.verifyListener();;
+        if (button1Left != null) button1Left.verifyListener();
         if (button1Right != null) button1Right.verifyListener();
         if (button2Left != null) button2Left.verifyListener();
         if (button2Right != null) button2Right.verifyListener();
         if (bottomTextBox != null) bottomTextBox.verifyListener();
+
+        // elimina os touchevents que tiverem o UP ativado, ou seja, que já foram considerados nesta passagem
+        for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
+            if (Game.touchEvents.get(i2).upState == TouchEvent.UP_STATE_ACTIVATED) {
+                Game.touchEvents.remove(i2);
+            }
+        }
     }
 
     static public Context getContext(){

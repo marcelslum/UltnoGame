@@ -11,11 +11,20 @@ public class InteractionListener {
     public int frequencyPersistent = 0;
     public boolean persistentActivated = false;
     public Entity objectAppend;
-    public boolean pressedOnVerify;
     public boolean active;
-    public boolean onPress;
     public long startTime;
     public PressListener myPressListener;
+    public MoveListener myMoveListener;
+
+    public int mode;
+
+    public static final int MODE_EMPTY = 0;
+    public static final int MODE_PRESS = 1;
+    public static final int MODE_MOVE_DOWN = 2;
+    public static final int MODE_MOVE = 3;
+    public static final int MODE_MOVE_UP = 4;
+
+    public static final String TAG = "InteractionListener";
 
     InteractionListener(String name, float x, float y, float width, float height, int frequency, Entity objectAppend) {
         this.name = name;
@@ -25,8 +34,8 @@ public class InteractionListener {
         this.height = height;
         this.frequency = frequency;
         this.objectAppend = objectAppend;
-        this.pressedOnVerify = false;
-        this.active = false;
+        active = false;
+        mode = MODE_EMPTY;
     }
 
     public void setFrequencyPersistent(int frequencyPersistent){
@@ -41,9 +50,9 @@ public class InteractionListener {
         this.height = height;
         this.frequency = frequency;
         this.objectAppend = objectAppend;
-        this.pressedOnVerify = false;
-        this.active = false;
-        this.myPressListener = pressListener;
+        active = false;
+        mode = MODE_EMPTY;
+        setPressListener(pressListener);
     }
 
     public void verify() {
@@ -61,31 +70,40 @@ public class InteractionListener {
             return;
         }
 
-        pressedOnVerify = false;
-
-        //if(objectAppend.name=="bottomTextBox")
-
-        String parentName = "";
-        if (objectAppend.parent != null){
-            parentName = objectAppend.parent.name;
-        }
-
-
-         //Log.e("listener", "verificando listener de "+objectAppend.name + " de " + parentName);
-
+        boolean pressedOnVerify = false;
+        TouchEvent touch = null;
 
         for (int i = 0; i < Game.touchEvents.size(); i++) {
+             touch = Game.touchEvents.get(i);
+
             pressedOnVerify = Utils.isPointInsideBounds(
-                    Game.touchEvents.get(i).x,
-                    Game.touchEvents.get(i).y,
+                    touch.x,
+                    touch.y,
                     x, y, width, height);
+
             if (pressedOnVerify) {
-                //Log.e("interaction", " pressed "+ this.name);
+                if (myMoveListener == null){
+                    if (!touch.moved){
+                        Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
+                        mode = MODE_PRESS;
+                    }
+                } else {
+                    // se está escutando o movimento mas o botão foi solto sem se movimentar
+                    if (touch.type == TouchEvent.TOUCH_TYPE_UP && !touch.moved) {
+                        mode = MODE_PRESS;
+                    } else if (touch.type == TouchEvent.TOUCH_TYPE_DOWN) {
+                        mode = MODE_MOVE_DOWN;
+                    } else if (touch.type == TouchEvent.TOUCH_TYPE_MOVE) {
+                        mode = MODE_MOVE;
+                    } else if (touch.type == TouchEvent.TOUCH_TYPE_UP && touch.moved) {
+                        mode = MODE_MOVE_UP;
+                    }
+                }
                 break;
             }
         }
 
-        if (pressedOnVerify) {
+        if (mode == MODE_PRESS) {
             if (!active) {
                 active = true;
 
@@ -99,9 +117,6 @@ public class InteractionListener {
                 long actualTime = Utils.getTime();
                 long timeElapsed = actualTime - this.startTime;
                 //Log.e("listener", "timeElapsed "+timeElapsed);
-
-
-
                 if (timeElapsed > (long) frequency || (persistentActivated && timeElapsed > (long) frequencyPersistent)) {
                     if (frequencyPersistent != 0){
                         persistentActivated = true;
@@ -114,18 +129,24 @@ public class InteractionListener {
                     startTime = actualTime;
                 }
             }
+        } else if (mode == MODE_MOVE_DOWN) {
+            objectAppend.isPressed = true;
+            startTime = Utils.getTime();
+            myMoveListener.onMoveDown();
+        } else if (mode == MODE_MOVE) {
+            myMoveListener.onMove(touch, startTime);
+        } else if (mode == MODE_MOVE_UP) {
+            myMoveListener.onMoveUp(touch, startTime);
         }
 
         if (!pressedOnVerify) {
-
             if (active) {
-                if (myPressListener != null) {
-                    //Log.e("listener", "ativando onunpress no listener "+name);
-                    myPressListener.onUnpress();
-                }
                 persistentActivated = false;
                 objectAppend.isPressed = false;
                 active = false;
+                if (myPressListener != null) {
+                    myPressListener.onUnpress();
+                }
             }
         }
 
@@ -133,6 +154,10 @@ public class InteractionListener {
 
     public void setPressListener(PressListener listener) {
         myPressListener = listener;
+    }
+
+    public void setMoveListener(MoveListener listener) {
+        myMoveListener = listener;
     }
 
     public void setPositionAndSize(float x, float y, float frameWidth, float height) {
@@ -147,6 +172,11 @@ public class InteractionListener {
         void onUnpress();
     }
 
+    public interface MoveListener {
+        void onMoveDown();
+        void onMove(TouchEvent touch, long startTime);
+        void onMoveUp(TouchEvent touch, long startTime);
+    }
 }
 
 

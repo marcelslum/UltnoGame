@@ -406,6 +406,7 @@ public class Ball extends Circle{
                     if (oppositeY){
                         lastResponseBallY = 0f;
                     }
+
                     Log.e("ball", "após analise");
                     Log.e("ball", "lastResponseBallX "+lastResponseBallX);
                     Log.e("ball", "lastResponseBallY "+lastResponseBallY);

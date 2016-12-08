@@ -66,7 +66,7 @@ public class Selector extends Entity{
         float buttonSize = size*0.90f;
         final Selector innerSelector = this;
 
-        arrowUp = new Button("arrowUp", mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        arrowUp = new Button("arrowUp", mainTextWidth + x - (buttonSize/2), y -(buttonSize*1.1f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         arrowUp.setTextureMap(16);
         arrowUp.textureMapUnpressed = 16;
         arrowUp.textureMapPressed = 8;
@@ -81,7 +81,7 @@ public class Selector extends Entity{
         arrowUp.setPersistent(50);
         addChild(arrowUp);
 
-        arrowDown = new Button("arrowDown", mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        arrowDown = new Button("arrowDown", mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.2f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
         arrowDown.textureMapPressed = 7;
@@ -103,7 +103,7 @@ public class Selector extends Entity{
             arrowBackX = x - (buttonSize * 1.5f);
         }
 
-        arrowBack = new Button("arrowBack", arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);
+        arrowBack = new Button("arrowBack", arrowBackX, y + (((size*1.1f)- buttonSize) / 2), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         arrowBack.setTextureMap(13);
         arrowBack.textureMapUnpressed = 13;
         arrowBack.textureMapPressed = 5;

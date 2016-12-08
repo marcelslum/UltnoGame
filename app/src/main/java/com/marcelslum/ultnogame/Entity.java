@@ -502,8 +502,6 @@ public class Entity{
 
     public void verifyListener(){
 
-
-
         if (isBlocked){
             return;
         }

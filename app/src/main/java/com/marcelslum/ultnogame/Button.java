@@ -13,8 +13,12 @@ public class Button extends Entity{
     int textureMapPressed;
     int textureMapUnpressed;
     int textureMap;
+    int buttonType;
 
-    Button(String name, float x, float y, float width, float height, int textureUnit, float listenerScale) {
+    public static final int BUTTON_TYPE_BUTTONS_AND_BALLS = 1;
+    public static final int BUTTON_TYPE_256 = 2;
+
+    Button(String name, float x, float y, float width, float height, int textureUnit, float listenerScale, int buttonType) {
         super(name, x, y);
         this.height = height;
         this.width = width;
@@ -22,6 +26,7 @@ public class Button extends Entity{
         isVisible = true;
         isMovable = false;
         isSolid =  false;
+        this.buttonType = buttonType;
 
         this.textureId = textureUnit;
         program = Game.imageProgram;
@@ -52,7 +57,7 @@ public class Button extends Entity{
             }
         ));
     }
-    
+
     public void setTextureMap(int _textureMap){
         textureMap = _textureMap;
         setDrawInfo();
@@ -96,12 +101,16 @@ public class Button extends Entity{
         initializeData(12, 6, 12, 0);
 
         Utils.insertRectangleVerticesData(verticesData, 0, 0f, width, 0f, height, 0f);
-        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
+        verticesBuffer = Utils.generateFloatBuffer(verticesData);
 
-        Utils.insertRectangleIndicesData(this.indicesData, 0, 0);
-        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
+        Utils.insertRectangleIndicesData(indicesData, 0, 0);
+        indicesBuffer = Utils.generateShortBuffer(indicesData);
 
-        Utils.insertRectangleUvDataButtonsAndBalls(this.uvsData, 0, textureMap);
-        this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        if (buttonType == BUTTON_TYPE_BUTTONS_AND_BALLS) {
+            Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
+        } else {
+            Utils.insertRectangleUvData256(uvsData, 0, textureMap);
+        }
+        uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
 }

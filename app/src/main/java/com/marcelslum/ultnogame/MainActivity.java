@@ -138,6 +138,7 @@ public class MainActivity extends FragmentActivity implements
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
                 .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
+                .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
                 .build();
         mAdView.loadAd(adRequestBanner);
 
@@ -149,7 +150,8 @@ public class MainActivity extends FragmentActivity implements
 		    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
 		    .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
             .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
-		    .build();
+            .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
+            .build();
 		interstitial.loadAd(adRequest);
 		interstitial.setAdListener(new AdListener() {
 		    @Override
