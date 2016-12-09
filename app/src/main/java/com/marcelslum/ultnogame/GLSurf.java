@@ -77,6 +77,8 @@ public class GLSurf extends GLSurfaceView {
 
             case MotionEvent.ACTION_MOVE: // a pointer was moved
 
+                Log.e("GLSurf", "ACTION_MOVE "+ pointerId);
+
                 for (int size = event.getPointerCount(), i = 0; i < size; i++) {
                     for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
                         if (Game.touchEvents.get(i2).id == event.getPointerId(i)) {
@@ -87,22 +89,19 @@ public class GLSurf extends GLSurfaceView {
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
+            case MotionEvent.ACTION_UP:
                 Log.e("GLSurf", "action up"+ event.getPointerId(pointerId));
 
                 for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
                     if (Game.touchEvents.get(i2).id == event.getPointerId(pointerId)) {
-
                         Game.touchEvents.get(i2).setType(TouchEvent.TOUCH_TYPE_UP);
-
-                        //Game.touchEvents.remove(i2);
                     }
                 }
                 break;
 
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                Log.e("GLSurf", "action up"+ event.getPointerId(pointerId));
 
+            case MotionEvent.ACTION_CANCEL:
+                Log.e("GLSurf", "ACTION_CANCEL "+ event.getPointerId(pointerId));
                 Game.touchEvents.clear();
                 break;
             }

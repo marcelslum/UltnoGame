@@ -103,9 +103,59 @@ public class MenuIcon extends Entity{
             }
         });
 
+        button.setMoveListener(new InteractionListener.MoveListener() {
+            @Override
+            public void onMoveDown() {
+                Log.e(TAG, "onMoveDown");
+            }
+
+            @Override
+            public void onMove(TouchEvent touch, long startTime) {
+                Log.e(TAG, "onMove");
+                innerMenuIcon.move(touch.x - touch.previousX);
+            }
+
+            @Override
+            public void onMoveUp(TouchEvent touch, long startTime) {
+                Log.e(TAG, "onMoveUp");
+            }
+        });
+
         icons.add(button);
         addChild(button);
 
+    }
+
+    private void move(float iconTranslateX) {
+        Log.e(TAG, "movendo "+ iconTranslateX);
+
+        float padd = size * 0.1f;
+
+        Button lastIcon = icons.get(icons.size()-1);
+        if (lastIcon.positionX + size + iconTranslateX < Game.resolutionX - padd){
+            iconTranslateX = (Game.resolutionX - padd) - (lastIcon.positionX + size);
+            Log.e(TAG, "ultimo icone na borda - iconTranslateX "+iconTranslateX);
+        }
+
+
+
+        for (int i = 0; i < icons.size(); i++){
+            Button icon = icons.get(i);
+            icon.translate(iconTranslateX, 0f);
+
+
+
+            if (i == 0){
+                if (icon.positionX + iconTranslateX > padd){
+                    icon.translate(padd - icon.positionX, 0f);
+                    Log.e(TAG, "primeiro icone maior que padd");
+                    Log.e(TAG, "icon.positionX "+ icon.positionX);
+                    Log.e(TAG, "iconTranslateX "+ iconTranslateX);
+                    Log.e(TAG, "padd "+ padd);
+                    return;
+                }
+            }
+        }
     }
 
     @Override

@@ -64,7 +64,7 @@ public class Entity{
     public Entity parent;
     public ArrayList<Entity> childs;
     public ArrayList<Animation> animations;
-    private InteractionListener listener;
+    public InteractionListener listener;
 
     public float pointsAlpha;
     public float ghostAlpha;

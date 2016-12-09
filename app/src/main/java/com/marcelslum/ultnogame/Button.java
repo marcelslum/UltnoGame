@@ -58,6 +58,12 @@ public class Button extends Entity{
         ));
     }
 
+    public void setMoveListener(InteractionListener.MoveListener moveListener){
+        if (listener != null){
+            listener.setMoveListener(moveListener);
+        }
+    }
+
     public void setTextureMap(int _textureMap){
         textureMap = _textureMap;
         setDrawInfo();

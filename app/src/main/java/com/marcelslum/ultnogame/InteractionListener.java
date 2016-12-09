@@ -23,6 +23,7 @@ public class InteractionListener {
     public static final int MODE_MOVE_DOWN = 2;
     public static final int MODE_MOVE = 3;
     public static final int MODE_MOVE_UP = 4;
+    public boolean moveDownActivated = false;
 
     public static final String TAG = "InteractionListener";
 
@@ -74,28 +75,37 @@ public class InteractionListener {
         TouchEvent touch = null;
 
         for (int i = 0; i < Game.touchEvents.size(); i++) {
-             touch = Game.touchEvents.get(i);
+
+            touch = Game.touchEvents.get(i);
+
+            //Log.e(TAG, "Touch Event dentro de verify de " + objectAppend.name + " type " + touch.type);
 
             pressedOnVerify = Utils.isPointInsideBounds(
-                    touch.x,
-                    touch.y,
-                    x, y, width, height);
+                touch.x,
+                touch.y,
+                x, y, width, height);
 
             if (pressedOnVerify) {
                 if (myMoveListener == null){
+                    //Log.e(TAG, "SEM MOVE_LISTENER");
                     if (!touch.moved){
-                        Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
+                        //Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
                         mode = MODE_PRESS;
                     }
                 } else {
+                    //Log.e(TAG, "COM MOVE_LISTENER");
                     // se está escutando o movimento mas o botão foi solto sem se movimentar
                     if (touch.type == TouchEvent.TOUCH_TYPE_UP && !touch.moved) {
+                        //Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_UP && !touch.moved");
                         mode = MODE_PRESS;
                     } else if (touch.type == TouchEvent.TOUCH_TYPE_DOWN) {
+                        //Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_DOWN");
                         mode = MODE_MOVE_DOWN;
                     } else if (touch.type == TouchEvent.TOUCH_TYPE_MOVE) {
+                        //Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_MOVE");
                         mode = MODE_MOVE;
                     } else if (touch.type == TouchEvent.TOUCH_TYPE_UP && touch.moved) {
+                        //Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_UP && touch.moved");
                         mode = MODE_MOVE_UP;
                     }
                 }
@@ -103,13 +113,26 @@ public class InteractionListener {
             }
         }
 
+        if (!pressedOnVerify) {
+            if (active) {
+                persistentActivated = false;
+                moveDownActivated = false;
+                objectAppend.isPressed = false;
+                active = false;
+                if (myPressListener != null) {
+                    myPressListener.onUnpress();
+                }
+                //Log.e(TAG, "Alterando para MODE_EMPTY");
+            }
+            mode = MODE_EMPTY;
+        }
+
         if (mode == MODE_PRESS) {
+            //Log.e(TAG, "mode press "+objectAppend.name);
             if (!active) {
                 active = true;
-
                 objectAppend.isPressed = true;
                 startTime = Utils.getTime();
-                //console.log("onPress ", this.name);
                 if (myPressListener != null) {
                     myPressListener.onPress();
                 }
@@ -130,25 +153,24 @@ public class InteractionListener {
                 }
             }
         } else if (mode == MODE_MOVE_DOWN) {
-            objectAppend.isPressed = true;
-            startTime = Utils.getTime();
-            myMoveListener.onMoveDown();
+            if (!moveDownActivated) {
+                moveDownActivated = true;
+                //Log.e(TAG, "mode down " + objectAppend.name);
+                objectAppend.isPressed = true;
+                startTime = Utils.getTime();
+                myMoveListener.onMoveDown();
+            }
         } else if (mode == MODE_MOVE) {
+            //Log.e(TAG, "mode move "+objectAppend.name);
             myMoveListener.onMove(touch, startTime);
         } else if (mode == MODE_MOVE_UP) {
+            //Log.e(TAG, "mode move up "+objectAppend.name);
             myMoveListener.onMoveUp(touch, startTime);
+            mode = MODE_EMPTY;
         }
 
-        if (!pressedOnVerify) {
-            if (active) {
-                persistentActivated = false;
-                objectAppend.isPressed = false;
-                active = false;
-                if (myPressListener != null) {
-                    myPressListener.onUnpress();
-                }
-            }
-        }
+
+
 
     }
 

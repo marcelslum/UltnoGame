@@ -1821,6 +1821,8 @@ public class Game {
         if (selectorLevel != null) selectorLevel.checkTransformations(true);
 
         if (menuOptions != null)menuOptions.checkTransformations(true);
+        if (worldMenu != null)worldMenu.checkTransformations(true);
+        if (levelMenu != null)levelMenu.checkTransformations(true);
         if (menuInGameOptions != null)menuInGameOptions.checkTransformations(true);
         if (selectorDificulty != null)selectorDificulty.checkTransformations(true);
         if (selectorMusic != null)selectorMusic.checkTransformations(true);
@@ -2005,7 +2007,7 @@ public class Game {
 
         // elimina os touchevents que tiverem o UP ativado, ou seja, que já foram considerados nesta passagem
         for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
-            if (Game.touchEvents.get(i2).upState == TouchEvent.UP_STATE_ACTIVATED) {
+            if (Game.touchEvents.get(i2).type == TouchEvent.TOUCH_TYPE_UP) {
                 Game.touchEvents.remove(i2);
             }
         }
