@@ -135,6 +135,7 @@
     <string name="pontuacaoIgual">Que coincidência, você fez o mesmo número de pontos do que o recorde anterior para este nível.</string>
     <string name="pontuacaoMaior2">pontos. Clique em Ranking para verificar qual posição você alcançou.</string>
     <string name="retornar">Voltar</string>
+    <string name="messageStarsTotal">=</string>
 
 
 </resources>

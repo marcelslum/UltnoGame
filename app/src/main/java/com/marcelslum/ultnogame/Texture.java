@@ -48,12 +48,12 @@ public class Texture {
 
     public static void init() {
         Log.e(TAG, "initTextures");
-        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesebolas2"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesbolasestrelas"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/barra4"));
         Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1c"));
         Texture.textures.add(new Texture(Texture.TEXTURE_ICONS, "drawable/icones_levels"));
     }
 

@@ -267,8 +267,8 @@ public class Bar extends Rectangle{
     }
     
     @Override
-    public void verifyAnimations(){
-        super.verifyAnimations();
+    public void checkAnimations(){
+        super.checkAnimations();
 
 
         boolean edgeCollision = false;

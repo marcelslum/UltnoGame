@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 /**
  * Created by marcel on 14/10/2016.
  */
@@ -9,13 +7,15 @@ import android.util.Log;
 public class BallDataPanel extends Entity{
 
     Rectangle velocityRectangle;
+    Rectangle backVelocityRectangle;
+
     Rectangle angleRectangle;
     Rectangle velocityNewRectangle;
     Rectangle angleNewRectangle;
     Rectangle endVelocity;
     Rectangle endAngle;
 
-    Rectangle backVelocityRectangle;
+
     Rectangle backAngleRectangle;
     
     private static final Color COLOR_BAR_GREEN_DARK = new Color (0.2f, 0.5f, 0.49f, 1f);
@@ -67,7 +67,7 @@ public class BallDataPanel extends Entity{
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection){
 
-        verifyAnimations();
+        checkAnimations();
 
         velocityNewRectangle.alpha = alpha;
         velocityNewRectangle.prepareRender(matrixView, matrixProjection);
@@ -92,8 +92,8 @@ public class BallDataPanel extends Entity{
     }
 
     @Override
-    public void verifyAnimations() {
-        super.verifyAnimations();
+    public void checkAnimations() {
+        super.checkAnimations();
 
         velocityRectangle.animTranslateX = -(width - (width * velocityRectangle.animScaleX))/2f;
         velocityNewRectangle.animTranslateX = -(width - (width * velocityNewRectangle.animScaleX))/2f;

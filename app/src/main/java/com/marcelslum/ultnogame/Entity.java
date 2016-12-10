@@ -2,7 +2,6 @@ package com.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -12,6 +11,8 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Entity{
+
+    public final static String TAG = "Entity";
     final public static int SHOW_POINTS_ON = 1;
     final public static int SHOW_POINTS_OFF = 0;
 
@@ -20,8 +21,8 @@ public class Entity{
     public float y;
     public float positionX;
     public float positionY;
-    public float previousX;
-    public float previousY;
+    public float previousPositionX;
+    public float previousPositionY;
     public float rotateAngle = 0f;
     public float translateX = 0f;
     public float translateY = 0f;
@@ -106,8 +107,8 @@ public class Entity{
         this.name = name;
         this.x = x;
         this.y = y;
-        previousX = x;
-        previousY = y;
+        previousPositionX = x;
+        previousPositionY = y;
         animations = new ArrayList<>();
         childs = new ArrayList<>();
         checkTransformations(false);
@@ -229,29 +230,26 @@ public class Entity{
         Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue, animationListener).start();
     }
 
-
-    // TODO renomear para checkAnimations()
-    public void verifyAnimations() {
-        if (this.parent != null) {
+    public void checkAnimations() {
+        if (parent != null) {
             return;
         }
-        if (this.childs != null) {
-            for (int i = 0; i < this.childs.size(); i++) {
-                for (int a = 0; a < this.childs.get(i).animations.size(); a++) {
+        if (childs != null) {
+            for (int i = 0; i < childs.size(); i++) {
+                for (int a = 0; a < childs.get(i).animations.size(); a++) {
                     //console.log(child.animations[a].name, " ", child.animations[a].started);
-                    if (this.childs.get(i).animations.get(a).started) {
-                        this.display();
-                        this.childs.get(i).animations.get(a).doAnimation();
+                    if (childs.get(i).animations.get(a).started) {
+                        childs.get(i).animations.get(a).doAnimation();
                     }
                 }
             }
         }
 
-        for (int i = 0; i < this.animations.size(); i++) {
+        for (int i = 0; i < animations.size(); i++) {
             //Log.e("entity", "animation started " + this.animations.get(i).started + " na entidade "+this.name);
-            if (this.animations.get(i).started) {
+            if (animations.get(i).started) {
                 //Log.e("entity", "animation started na entidade "+this.name);
-                this.animations.get(i).doAnimation();
+                animations.get(i).doAnimation();
             }
         }
     }
@@ -270,9 +268,7 @@ public class Entity{
         this.scaleY = scaleY;
     }
     
-    
     public void checkTransformations(boolean updatePrevious){
-
         for (int i = 0; i < childs.size(); i++) {
             childs.get(i).checkTransformations(updatePrevious);
         }
@@ -296,9 +292,8 @@ public class Entity{
         }
 
         if (updatePrevious) {
-            // TODO renomear para previousPositionX;
-            previousX = positionX;
-            previousY = positionY;
+            previousPositionX = positionX;
+            previousPositionY = positionY;
         }
         
         // TODO considerar rotação?
@@ -365,7 +360,7 @@ public class Entity{
     }
 
     public void prepareRender(float[] matrixView, float[] matrixProjection){
-        verifyAnimations();
+        checkAnimations();
         if (isVisible){
             render(matrixView, matrixProjection);
         }
@@ -375,6 +370,10 @@ public class Entity{
 
         //if (name == "specialBall") {
             //Log.e("entity", "rendering wind");}
+
+        if (!isVisible){
+            return;
+        }
 
         setMatrixModel();
 
@@ -501,7 +500,6 @@ public class Entity{
     }
 
     public void verifyListener(){
-
         if (isBlocked){
             return;
         }
@@ -541,7 +539,7 @@ public class Entity{
     }
 
     public void clearDisplay(){
-        this.isVisible = false;
+        isVisible = false;
     }
 
     public void addAnimation(Animation animation){

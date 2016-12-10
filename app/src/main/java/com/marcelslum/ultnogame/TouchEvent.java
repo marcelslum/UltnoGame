@@ -18,9 +18,6 @@ public class TouchEvent {
     public int type;
     public boolean moved;
 
-
-
-
     public TouchEvent(int id, float x, float y) {
         this.x = x;
         this.y = y;

@@ -108,24 +108,24 @@ public abstract class Collision {
                             quantityPassagens = 1;
                         }
 
-                        //Log.e("Game", " a.previousX "+a.previousX);
-                        //Log.e("Game", " a.previousY "+a.previousY);
-                        //Log.e("Game", " b.previousX "+b.previousX);
-                        //Log.e("Game", " b.previousY "+b.previousY);
+                        //Log.e("Game", " a.previousPositionX "+a.previousPositionX);
+                        //Log.e("Game", " a.previousPositionY "+a.previousPositionY);
+                        //Log.e("Game", " b.previousPositionX "+b.previousPositionX);
+                        //Log.e("Game", " b.previousPositionY "+b.previousPositionY);
 
-                        float aPreviousX = a.previousX;
-                        float aPreviousY = a.previousY;
-                        float bPreviousX = b.previousX;
-                        float bPreviousY = b.previousY;
+                        float aPreviousX = a.previousPositionX;
+                        float aPreviousY = a.previousPositionY;
+                        float bPreviousX = b.previousPositionX;
+                        float bPreviousY = b.previousPositionY;
 
                         //if (b.name == "obstacle"){
                         //    Log.e("game", " x"+ this.polygon2.pos.x);
                         //}
 
-                        //Log.e("Game", " a.previousX 2"+aPreviousX);
-                        //Log.e("Game", " a.previousY 2"+aPreviousY);
-                        //Log.e("Game", " b.previousX 2"+bPreviousX);
-                        //Log.e("Game", " b.previousY 2"+bPreviousY);
+                        //Log.e("Game", " a.previousPositionX 2"+aPreviousX);
+                        //Log.e("Game", " a.previousPositionY 2"+aPreviousY);
+                        //Log.e("Game", " b.previousPositionX 2"+bPreviousX);
+                        //Log.e("Game", " b.previousPositionY 2"+bPreviousY);
 
                         // Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
@@ -161,7 +161,7 @@ public abstract class Collision {
 
                             aPosAConsiderarX = aPreviousX + (aDiferencaPosicaoX * porcentagemAplicadaNaPassagem);
                             aPosAConsiderarY = aPreviousY + (aDiferencaPosicaoY * porcentagemAplicadaNaPassagem);
-                            //Log.e("Game", "passagem "+ip+" a.previousY "+ aPreviousY +" aDiferencaPosicaoX "+aDiferencaPosicaoX +  " porcentagemAplicadaNaPassagem "+porcentagemAplicadaNaPassagem);
+                            //Log.e("Game", "passagem "+ip+" a.previousPositionY "+ aPreviousY +" aDiferencaPosicaoX "+aDiferencaPosicaoX +  " porcentagemAplicadaNaPassagem "+porcentagemAplicadaNaPassagem);
                             //Log.e("Game", "passagem "+ip+" aPosAConsiderarX "+ aPosAConsiderarX +" aPosAConsiderarY "+aPosAConsiderarY);
                             //Log.e("Game", "a.y"+aPosAConsiderarY + " b.y"+bPosAConsiderarY);
 

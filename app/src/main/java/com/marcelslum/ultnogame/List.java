@@ -225,7 +225,7 @@ public class List extends Entity{
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection) {
 
-        verifyAnimations();
+        checkAnimations();
         if (!isVisible) {
             return;
         }

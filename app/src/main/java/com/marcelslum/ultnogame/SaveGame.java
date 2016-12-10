@@ -26,10 +26,12 @@ public class SaveGame {
     public int currentDifficulty;
     public int[] difficultyLevels;
     public long[] pointsLevels;
+    public int[] starsLevels;
     public boolean[] tutorialLevels;
     public boolean music;
     public boolean sound;
     public long date;
+
 
     public static boolean loaded = false;
 
@@ -40,6 +42,7 @@ public class SaveGame {
         currentDifficulty = builder.currentDifficulty;
         difficultyLevels = builder.difficultyLevels;
         pointsLevels = builder.pointsLevels;
+        starsLevels = builder.starsLevels;
         tutorialLevels = builder.tutorialLevels;
         music = builder.music;
         sound = builder.sound;
@@ -96,8 +99,6 @@ public class SaveGame {
             dataLocal = null;
         }
 
-
-
         if (dataLocal == null){
             Log.e(TAG, "Criando saveGame com dados do snapshot");
             saveGame = getSaveGameFromJson(data);
@@ -122,6 +123,7 @@ public class SaveGame {
         } else {
             Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
             long[] _pointsLevels = new long[Levels.maxNumberOfLevels];
+            int[] _starsLevels = new int[Levels.maxNumberOfLevels];
             int[] _difficultyLevels = new int[Levels.maxNumberOfLevels];
             boolean[] _tutorialLevels = new boolean[Levels.maxNumberOfLevels];
 
@@ -132,6 +134,7 @@ public class SaveGame {
                     .setCurretDifficulty(Game.DIFFICULTY_EASY)
                     .setDifficultyLevels(_difficultyLevels)
                     .setPointsLevels(_pointsLevels)
+                    .setStarsLevels(_starsLevels)
                     .setTutorialLevels(_tutorialLevels)
                     .setMusic(true)
                     .setSound(true)
@@ -148,6 +151,7 @@ public class SaveGame {
         int fcurretDifficulty;
         int[] fdifficultyLevels;
         long[] fpointsLevels;
+        int[] fstarsLevels;
         boolean[] ftutorialLevels;
         boolean fmusic;
         boolean fsound;
@@ -160,6 +164,7 @@ public class SaveGame {
         fdifficultyLevels = getHigher(sg1.difficultyLevels, sgLocal.difficultyLevels);
         ftutorialLevels = getHigher(sg1.tutorialLevels, sgLocal.tutorialLevels);
         fpointsLevels = getHigher(sg1.pointsLevels, sgLocal.pointsLevels);
+        fstarsLevels = getHigher(sg1.starsLevels, sgLocal.starsLevels);
 
         fmusic = sgLocal.music;
         fsound = sgLocal.sound;
@@ -173,6 +178,7 @@ public class SaveGame {
                 .setDifficultyLevels(fdifficultyLevels)
                 .setTutorialLevels(ftutorialLevels)
                 .setPointsLevels(fpointsLevels)
+                .setStarsLevels(fstarsLevels)
                 .setMusic(fmusic)
                 .setSound(fsound)
                 .setDate(fdate)
@@ -291,6 +297,23 @@ public class SaveGame {
             }
             saveGameBuilder.setPointsLevels(pointsLevels);
 
+            // stars dos levels
+            int[] starsLevels = new int[saveGameBuilder.maxNumberOfLevels];
+
+            try {
+                JSONArray arrayStars = obj.getJSONArray("starsLevels");
+                for (int i = 0; i < starsLevels.length; i++) {
+                    starsLevels[i] = arrayStars.getInt(i);
+                }
+            } catch(JSONException e)
+            {
+                for (int i = 0; i < starsLevels.length; i++) {
+                    starsLevels[i] = 0;
+                }
+            }
+
+            saveGameBuilder.setStarsLevels(starsLevels);
+
             // maxima dificuldade dos levels
             int[] difficultyLevels = new int[saveGameBuilder.maxNumberOfLevels];
             array = obj.getJSONArray("difficultyLevels");
@@ -345,6 +368,7 @@ public class SaveGame {
             obj.put("currentLevelNumber", saveGame.currentLevelNumber);
             obj.put("currentDifficulty", saveGame.currentDifficulty);
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
+            obj.put("starsLevels", new JSONArray(saveGame.starsLevels));
             obj.put("difficultyLevels", new JSONArray(saveGame.difficultyLevels));
             obj.put("tutorialLevels", new JSONArray(saveGame.tutorialLevels));
             obj.put("music", saveGame.music);

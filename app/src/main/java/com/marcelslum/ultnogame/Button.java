@@ -69,6 +69,14 @@ public class Button extends Entity{
         setDrawInfo();
     }
 
+    @Override
+    public void translate(float translateX, float translateY) {
+        super.translate(translateX, translateY);
+        if (listener != null){
+            listener.translate(translateX, translateY);
+        }
+    }
+
     public void setPressed() {
         isPressed = true;
         setTextureMap(textureMapPressed);

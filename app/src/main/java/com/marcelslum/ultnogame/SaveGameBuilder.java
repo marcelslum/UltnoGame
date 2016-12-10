@@ -15,9 +15,11 @@ public class SaveGameBuilder {
     public int[] difficultyLevels;
     public boolean[] tutorialLevels;
     public long[] pointsLevels;
+    public int[] starsLevels;
     public boolean music;
     public boolean sound;
     public long date;
+
 
     public SaveGameBuilder(){
 
@@ -55,6 +57,11 @@ public class SaveGameBuilder {
     
     public SaveGameBuilder setPointsLevels(long [] pointsLevels) {
         this.pointsLevels = pointsLevels;
+        return this;
+    }
+
+    public SaveGameBuilder setStarsLevels(int [] starsLevels) {
+        this.starsLevels = starsLevels;
         return this;
     }
     

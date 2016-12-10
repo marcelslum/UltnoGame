@@ -198,7 +198,7 @@ public abstract class Utils {
 
     public static void insertRectangleUvData256(float[] array, int startIndex, int textureMap){
 
-        float [] data = new float [] {0f, 256f, 512f, 712f, 1024f};
+        float [] data = new float [] {0f, 256f, 512f, 768f, 1024f};
 
         if (textureMap < 5){
             Utils.y1 = (data[0] + 2f)/1024f;

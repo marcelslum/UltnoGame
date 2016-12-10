@@ -39,6 +39,15 @@ public class Image extends Entity{
         colorsBuffer = Utils.generateFloatBuffer(colorsData);
     }
 
+    public void setUvData(float x1, float x2, float y1, float y2){
+        this.x1 = x1;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+        Utils.insertRectangleUvData(uvsData, 0, x1, x2, y1, y2);
+        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+    }
+
     public void setDrawInfo(){
         if (this.color == null) {
             initializeData(12, 6, 8, 0);
