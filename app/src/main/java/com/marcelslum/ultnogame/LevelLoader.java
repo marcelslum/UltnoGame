@@ -32,7 +32,8 @@ public class LevelLoader {
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(
                     new int[][]{
-                            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                            //{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
                     })
                     .setTargetsStates(new int[]{0, 1});
         }

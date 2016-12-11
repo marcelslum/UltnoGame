@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Ultno</string>
-    <string name="menuTutorialExibirTutorial">Exibir o tutorial do nível </string>
+    <string name="menuTutorialExibirTutorial">Exibir o tutorial</string>
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
     <string name="menuPrincipalIniciar">Jogar</string>
     <string name="menuPrincipalAlterarNivel">Alterar nível</string>
@@ -13,7 +13,6 @@
     <string name="pause">PAUSE</string>
     <string name="continuarJogar">Continuar a jogar</string>
     <string name="continuarDepoisVitoria">Continuar</string>
-    <string name="retornarAoMenuPrincipal">Voltar ao Menu</string>
     <string name="nivelConcluido1">NÍVEL </string>
     <string name="nivelConcluido2"> CONCLUÍDO</string>
     <string name="menuInGameNivelConcluido1">Jogar o nível</string>
@@ -136,6 +135,14 @@
     <string name="pontuacaoMaior2">pontos. Clique em Ranking para verificar qual posição você alcançou.</string>
     <string name="retornar">Voltar</string>
     <string name="messageStarsTotal">=</string>
+    <string name="iniciar_jogo">Iniciar</string>
+    <string name="messageMenuObjetivo">Objetivos do nível:</string>
+    <string name="messageMenuSelecaoMundo">Selecione um grupo:</string>
+    <string name="messageMenuSelecaoLevel">Selecione um nível:</string>
+    <string name="mensagem_jogar">Jogar!</string>
+    <string name="sairDoJogo">Sair do jogo</string>
+    <string name="retornarAoMenuPrincipal">Voltar</string>
+    <string name="messageMenuTutorial">Escolha uma opção:</string>
 
 
 </resources>

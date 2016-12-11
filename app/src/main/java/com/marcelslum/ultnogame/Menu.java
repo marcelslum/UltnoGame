@@ -9,7 +9,7 @@ class Menu extends Entity{
     public float size;
     public int selectedOption;
     public int optionsIds = 0;
-    public final float bottomPad = 0.12f;
+    public final float bottomPad = 0.2f;
     public Font font;
 
 
@@ -47,6 +47,7 @@ class Menu extends Entity{
             });
         }
     }
+
 
     public void toSelector(Selector selector, String selectedValue){
         Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);

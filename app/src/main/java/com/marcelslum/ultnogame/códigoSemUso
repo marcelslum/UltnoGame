@@ -1,5 +1,97 @@
 
 
+        /*
+        // prepara os valores para o seletor de nível
+        String [] levels = new String [Levels.maxNumberOfLevels-1];
+        for (int i = 0; i < Levels.maxNumberOfLevels-1; i++){
+            levels[i] = Integer.toString(i+1);
+        }
+
+        // cria o seletor de nível
+        selectorLevel = new Selector("selectorLevel", 0f,0f, fontSize, "", levels, font);
+        selectorLevel.setSelectedValue(SaveGame.saveGame.currentLevelNumber - 1);
+
+        // adiciona a opção de selecionar nível
+        menuMain.addMenuOption("SelecionarNivel", getContext().getResources().getString(R.string.menuPrincipalAlterarNivel), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                selectorLevel.setSelectedValue(SaveGame.saveGame.currentLevelNumber - 1);
+                Game.selectorLevel.fromMenu(innerMenu);
+            }
+        });
+
+        // ajusta a posição do seletor de nível
+        MenuOption menuOptionSelectLevel = menuMain.getMenuOptionByName("SelecionarNivel");
+        selectorLevel.setPosition(menuOptionSelectLevel.x + (menuOptionSelectLevel.width), menuOptionSelectLevel.y);
+        selectorLevel.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                Game.changeLevel(Game.selectorLevel.selectedValue+1);
+            }
+        });
+
+        */
+
+
+        /*
+
+        // cria o seletor de dificuldade
+        selectorDificulty = new Selector("selectorDificulty", 0f,0f, fontSize, "",
+                new String[]{getContext().getResources().getString(R.string.facil),
+                        getContext().getResources().getString(R.string.normal),
+                        getContext().getResources().getString(R.string.dificil),
+                        getContext().getResources().getString(R.string.insano)
+                }, font);
+        menuOptions.addMenuOption("dificuldade", getContext().getResources().getString(R.string.dificuldade), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.selectorDificulty.fromMenu(Game.menuOptions);
+                if (SaveGame.saveGame.currentDifficulty == DIFFICULTY_EASY){
+                    selectorDificulty.setSelectedValue(0);
+                    setBottomText(getContext().getResources().getString(R.string.mensagemDificuldadeFacil));
+                } else if (SaveGame.saveGame.currentDifficulty == DIFFICULTY_NORMAL){
+                    selectorDificulty.setSelectedValue(1);
+                    setBottomText(getContext().getResources().getString(R.string.mensagemDificuldadeNormal));
+                } else if (SaveGame.saveGame.currentDifficulty == DIFFICULTY_HARD){
+                    selectorDificulty.setSelectedValue(2);
+                    setBottomText(getContext().getResources().getString(R.string.mensagemDificuldadeDificil));
+                } else if (SaveGame.saveGame.currentDifficulty == DIFFICULTY_INSANE){
+                    selectorDificulty.setSelectedValue(3);
+                    setBottomText(getContext().getResources().getString(R.string.mensagemDificuldadeInsano));
+                }
+            }
+        });
+
+        final MenuOption menuOptionDificuldade = menuOptions.getMenuOptionByName("dificuldade");
+        selectorDificulty.setPosition(menuOptionDificuldade.x + (menuOptionDificuldade.width * 1.2f), menuOptionDificuldade.y);
+
+        selectorDificulty.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                Game.changeDifficulty(selectorDificulty.selectedValue);
+                if (selectorDificulty.selectedValue == 0){
+                    setBottomText(getContext().getResources().getString(R.string.mensagemDificuldadeFacil));
+                } else if (selectorDificulty.selectedValue == 1){
+                    setBottomText(getContext().getResources().getString(R.string.mensagemDificuldadeNormal));
+                } else if (selectorDificulty.selectedValue == 2){
+                    setBottomText(getContext().getResources().getString(R.string.mensagemDificuldadeDificil));
+                } else if (selectorDificulty.selectedValue == 3){
+                    setBottomText(getContext().getResources().getString(R.string.mensagemDificuldadeInsano));
+                }
+            }
+        });
+
+        selectorDificulty.setOnConclude(new Selector.OnConclude() {
+            @Override
+            public void onConclude() {
+                setBottomText("");
+            }
+        });
+
+        */
+
+
+
 // BOTÃO SOM
         Game.buttonSound = new ButtonOnOff("buttonSound", Game.gameAreaResolutionX * 0.34f,
                 Game.resolutionY * 0.89f, Game.resolutionY * 0.06f, Game.resolutionY * 0.06f, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f);

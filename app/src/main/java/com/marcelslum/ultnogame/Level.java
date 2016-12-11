@@ -116,7 +116,6 @@ public class Level {
     }
     
     public void showFirstTutorial(){
-        Game.blockAndWaitTouchRelease();
         showingTutorial = 0;
         tutorials.get(0).textBox.alpha = 0f;
         tutorials.get(0).show(Sound.soundTextBoxAppear);

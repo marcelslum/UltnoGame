@@ -51,63 +51,24 @@ public class TextBox extends Entity{
         }
         this.text = text;
         
-        Text textForMeasure = new Text("text", 0f, 0f, size, text, Game.font, textColor);
-        float widthOfText = textForMeasure.calculateWidth();
-
-        // subdivide o texto em partes, conforme width máximo
-        if (widthOfText > this.width) {
-            String [] splitedString = text.split(" ");
-            String stringToTest = splitedString[0];
-
-            int elementToAdd = 1;
-            Text lastText = new Text("text", 0f, 0f, size, ".", Game.font, textColor);
-
-            int limite = 100;
-            int contador = 0;
-
-            do {
-                do {
-                    contador += 1;
-                    textForMeasure = new Text("text"+contador, 0f, 0f, size, stringToTest, Game.font, textColor);
-                    widthOfText = textForMeasure.calculateWidth();
-                    if (widthOfText > (width*0.9f)) {
-                        elementToAdd -= 1;
-                        stringToTest = splitedString[elementToAdd];
-                        elementToAdd += 1;
-                        break;
-                    }
-                    lastText = textForMeasure;
-                    if (elementToAdd > (splitedString.length-1)){
-                        elementToAdd += 1;
-                        break;
-                    }
-                    stringToTest = stringToTest + " " + splitedString[elementToAdd];
-                    elementToAdd += 1;
-                } while (widthOfText < (width*0.9f) && (splitedString.length+1) > elementToAdd && contador < limite);
-                //Log.e("textBox", "adicionando texto: "+lastText.text);
-                texts.add(lastText);
-                //Log.e("textBox", "elementToAdd "+elementToAdd);
-
-            } while ((splitedString.length+1) > elementToAdd && contador < limite);
-        } else {
-            texts.add(textForMeasure);
-        }
+        texts = Text.splitStringAtMaxWidth(text, Game.font, textColor, size, width * 0.9f);
 
         float textPadding = size * padding;
-        float textY = this.y + (textPadding * 4);
-        float textX = this.x + (textPadding * 4);
 
-        for (int i = 0; i < this.texts.size(); i++){
-            this.texts.get(i).x = textX;
-            this.texts.get(i).y = textY;
-            textY += (size + textPadding);
-            addChild(this.texts.get(i));
+        Text.doLinesWithStringCollection(texts, y + (textPadding * 4), size, textPadding, false);
+
+        float textX = x + (textPadding * 4);
+        for (int i = 0; i < texts.size(); i++){
+            texts.get(i).x = textX;
+            addChild(texts.get(i));
         }
 
+        float lastTextY = texts.get(texts.size() - 1).y;
+
         if (isHaveArrowContinue) {
-            height = textY - y + (textPadding * 6);
+            height = lastTextY - y + (textPadding * 6);
         } else {
-            height = textY - y + (textPadding * 3);
+            height = lastTextY - y + (textPadding * 3);
         }
 
         frameWidth = width + (textPadding*6);
@@ -123,7 +84,7 @@ public class TextBox extends Entity{
         }
         
         if (isHaveArrowContinue){
-            arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, textY - textPadding, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS, 3f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+            arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, lastTextY - textPadding, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS, 3f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
             arrowContinuar.setTextureMap(14);
             arrowContinuar.textureMapUnpressed = 14;
             arrowContinuar.textureMapPressed = 6;

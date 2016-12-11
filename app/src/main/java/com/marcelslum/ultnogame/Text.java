@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import java.util.ArrayList;
+
 public class Text extends Entity{
 
     public final static int TEXT_ALIGN_LEFT = 0;
@@ -298,5 +300,72 @@ public class Text extends Entity{
             }
             contador += 1;
         }
+    }
+
+    public static void doLinesWithStringCollection(ArrayList<Text> texts, float y, float size, float padd, boolean topPadd){
+
+        float textY = y;
+
+        if (topPadd){
+            textY += padd;
+        }
+
+        for (int i = 0; i < texts.size(); i++){
+            texts.get(i).y = textY;
+            textY += (size + padd);
+        }
+
+    }
+
+
+
+    public static ArrayList<Text> splitStringAtMaxWidth(String text, Font font, Color color, float size, float maxWidth){
+
+        ArrayList<Text> returnText = new ArrayList<>();
+
+        Text textForMeasure = new Text("text", 0f, 0f, size, text, font, color);
+        float widthOfText = textForMeasure.calculateWidth();
+
+        if (widthOfText > maxWidth) {
+
+            String [] splitedString = text.split(" ");
+            String stringToTest = splitedString[0];
+
+            int elementToAdd = 1;
+            Text lastText = new Text("text", 0f, 0f, size, ".", font, color);
+
+            int limite = 100;
+            int contador = 0;
+
+            do {
+                do {
+                    contador += 1;
+                    textForMeasure = new Text("text"+contador, 0f, 0f, size, stringToTest, font, color);
+                    widthOfText = textForMeasure.calculateWidth();
+                    if (widthOfText > (maxWidth*0.9f)) {
+                        elementToAdd -= 1;
+                        stringToTest = splitedString[elementToAdd];
+                        elementToAdd += 1;
+                        break;
+                    }
+                    lastText = textForMeasure;
+                    if (elementToAdd > (splitedString.length-1)){
+                        elementToAdd += 1;
+                        break;
+                    }
+                    stringToTest = stringToTest + " " + splitedString[elementToAdd];
+                    elementToAdd += 1;
+                } while (widthOfText < (maxWidth*0.9f) && (splitedString.length+1) > elementToAdd && contador < limite);
+                //Log.e("textBox", "adicionando texto: "+lastText.text);
+                returnText.add(lastText);
+                //Log.e("textBox", "elementToAdd "+elementToAdd);
+
+            } while ((splitedString.length+1) > elementToAdd && contador < limite);
+
+        } else {
+            returnText.add(textForMeasure);
+        }
+
+        return returnText;
     }
 }

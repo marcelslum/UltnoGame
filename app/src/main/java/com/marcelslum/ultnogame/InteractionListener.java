@@ -78,7 +78,7 @@ public class InteractionListener {
 
             touch = Game.touchEvents.get(i);
 
-            Log.e(TAG, "Touch Event dentro de verify do objeto " + objectAppend.name + " type " + touch.type);
+            //Log.e(TAG, "Touch Event dentro de verify do objeto " + objectAppend.name + " type " + touch.type);
 
             pressedOnVerify = Utils.isPointInsideBounds(
                 touch.x,
@@ -122,7 +122,6 @@ public class InteractionListener {
                 if (myPressListener != null) {
                     myPressListener.onUnpress();
                 }
-                Log.e(TAG, "Alterando para MODE_EMPTY");
             }
             mode = MODE_EMPTY;
         }
@@ -159,6 +158,7 @@ public class InteractionListener {
                 objectAppend.isPressed = true;
                 startTime = Utils.getTime();
                 myMoveListener.onMoveDown();
+
             }
         } else if (mode == MODE_MOVE) {
             Log.e(TAG, "mode move "+objectAppend.name);
