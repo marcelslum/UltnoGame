@@ -452,7 +452,9 @@ public class Ball extends Circle{
         }
 
         if(this.collisionBar){
-            
+            ///////////////////////////////////////////////////
+            Game.messagesStars.show();
+
             Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
             barCollided.shineAfterBallCollision.values.get(0)[1] = barCollided.shine.numberForAnimation2;
             barCollided.shineAfterBallCollision.start();

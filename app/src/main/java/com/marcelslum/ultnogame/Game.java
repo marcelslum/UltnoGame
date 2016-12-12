@@ -80,6 +80,7 @@ public class Game {
     static ArrayList<TextBox> textBoxes;
     static ArrayList<Message> messages;
     static ArrayList<Line> lines;
+    static MessageStar messagesStars;
     public static Background background;
     static Wind wind;
     static ArrayList<SpecialBall> specialBalls;
@@ -326,7 +327,11 @@ public class Game {
 
 
     public static void initTexts(){
+
         initTittle();
+
+        messagesStars = new MessageStar("messageStar", gameAreaResolutionY*0.05f);
+
         messageGameOver = new Text("messageGameOver",
                 gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.17f,
                 getContext().getResources().getString(R.string.messageGameOver), font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
@@ -1839,6 +1844,7 @@ public class Game {
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         messageStarsTotal.prepareRender(matrixView, matrixProjection);
         starForMessage.prepareRender(matrixView, matrixProjection);
+        messagesStars.prepareRender(matrixView, matrixProjection);
 
 
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
