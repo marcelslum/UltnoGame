@@ -6,12 +6,13 @@ public class MessageStar extends Entity {
     float size;
     boolean isShowing;
     boolean newShowing;
+    String newShowingText;
 
 
     public MessageStar(String name, float size) {
         super(name, Game.resolutionX * 0.87f, Game.resolutionX * 0.1f);
         this.size = size;
-        text = new Text("text", x + (size * 1.2f), y, size, " +1", Game.font, new Color(0.3f, 0.3f, 0.3f, 1f));
+        text = new Text("text", x + (size * 1.2f), y, size, "+1", Game.font, new Color(0.3f, 0.3f, 0.3f, 1f));
 
         star = new Image("star", x, y, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS,
                 (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
@@ -22,13 +23,16 @@ public class MessageStar extends Entity {
         newShowing = false;
     }
 
-    public void show(){
+    public void show(String textToShow){
         if (!isShowing){
             isShowing = true;
         } else {
             newShowing = true;
+            newShowingText = textToShow;
             return;
         }
+
+        text.setText(textToShow);
 
         display();
         star.alpha = 1f;
@@ -44,13 +48,14 @@ public class MessageStar extends Entity {
         final Animation b6 = Utils.createAnimation2v(text, "alpha", "alpha", 2000, 0f, 1f, 1f, 0f, false, true);
 
         final MessageStar ms = this;
+        final String innerNewShowingText = newShowingText;
 
         b4.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
                 if (ms.newShowing){
                     ms.newShowing = false;
-                    ms.show();
+                    ms.show(innerNewShowingText);
                 } else {
                     ms.isShowing = false;
                     clearDisplay();
@@ -71,7 +76,7 @@ public class MessageStar extends Entity {
                 b4.start();
                 b5.start();
                 b6.start();
-                Sound.play(Sound.soundSuccess1, 1, 1, 100);
+                Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
             }
         });
         a.start();

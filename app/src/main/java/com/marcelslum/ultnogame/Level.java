@@ -160,6 +160,10 @@ public class Level {
         Game.eraseAllGameEntities();
         Game.quad = new Quadtree(new RectangleM(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY),5,5);
 
+        Game.messageTime = new Text("messageTime",
+                Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.9f, Game.resolutionY*0.08f,"00:00", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
+        Game.messageTime.alpha = 0.5f;
+
         Game.scorePanel = new ScorePanel("scorePanel",
                 Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.07f);
         

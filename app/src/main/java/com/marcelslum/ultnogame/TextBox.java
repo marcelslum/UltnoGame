@@ -64,11 +64,10 @@ public class TextBox extends Entity{
         }
 
         float lastTextY = texts.get(texts.size() - 1).y;
-
         if (isHaveArrowContinue) {
-            height = lastTextY - y + (textPadding * 6);
+            height = lastTextY - y + size + (textPadding * 6);
         } else {
-            height = lastTextY - y + (textPadding * 3);
+            height = lastTextY - y + size + (textPadding * 3);
         }
 
         frameWidth = width + (textPadding*6);

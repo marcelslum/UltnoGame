@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 
 public class LevelsGroupData {
+    int textureUnit;
+    int textureMap;
     int starsToUnlock;
     int conqueredStars;
     String name;
@@ -21,10 +23,15 @@ public class LevelsGroupData {
         this.name = name;
         this.firstLevel = firstLevel;
         this.finalLevel = finalLevel;
+        this.textureUnit = textureUnit;
+        this.textureMap = textureMap;
         isLocked = true;
     }
 
     public void addLevel(String name, int number, int textureUnit, int textureMap){
+        if (levelsData == null){
+            levelsData = new ArrayList<>();
+        }
         levelsData.add(new LevelData(name, number, textureUnit, textureMap));
     }
 

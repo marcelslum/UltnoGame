@@ -141,19 +141,16 @@ public class MenuIcon extends Entity{
         }
     }
 
-    public void addText(int number, String name, String text, float textSize, float paddFromBottom){
+    public void addText(int number, String name, String text, float textSize, float paddFromBottom, Color color){
         float padd = size * 0.1f;
 
-        int numberOfTextsAlreadyAdded = texts.size();
-        if (number == 2){
-            numberOfTextsAlreadyAdded = texts2.size();
-        }
+        int numberOfIconsAdded = icons.size();
 
-        float positionX = x + padd + (numberOfTextsAlreadyAdded * size * 1.1f);
+        float positionX = x + padd + ((numberOfIconsAdded - 1) * size * 1.1f);
         float centerPosition = positionX + (size/2);
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
-        Text t = new Text(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, new Color(0f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
+        Text t = new Text(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
         if (number == 1){
             texts.add(t);
         } else {
@@ -175,7 +172,7 @@ public class MenuIcon extends Entity{
         childs.add(g);
     }
 
-    public void addOption(int id, int textureUnit, int textureMap, Animation.AnimationListener onSelect){
+    public void addOption(int id, int textureUnit, int textureMap, Animation.AnimationListener onSelect, boolean optionBlocked){
         float padd = size * 0.1f;
         if (listener == null){
             final MenuIcon innerMenuIcon = this;
@@ -220,6 +217,7 @@ public class MenuIcon extends Entity{
         final Button innerButton = button;
         final MenuIcon innerMenuIcon = this;
         final Animation.AnimationListener innerOnSelect = onSelect;
+        final boolean innerOptionBlocked = optionBlocked;
         button.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
@@ -228,9 +226,13 @@ public class MenuIcon extends Entity{
                     //Log.e(TAG, "press cancelado");
                 } else {
 
+                    if (!innerOptionBlocked){
+                        innerMenuIcon.blockAllIcons();
+                    }
+
                     Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                     //Log.e(TAG, "press botão do menu");
-                    innerMenuIcon.blockAllIcons();
+
                     ArrayList<float[]> valuesAnimation = new ArrayList<>();
                     valuesAnimation.add(new float[]{0f, 1f});
                     valuesAnimation.add(new float[]{0.07f, 0.82f});
@@ -240,6 +242,7 @@ public class MenuIcon extends Entity{
                     animScaleX.start();
 
                     Animation animScaleY = new Animation(innerButton, "encolherY", "scaleY", 401, valuesAnimation, false, true);
+
                     animScaleY.setAnimationListener(innerOnSelect);
                     animScaleY.start();
 
