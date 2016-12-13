@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.marcelslum.ultnogame.R.string.messageCurrentLevel;
-
 // TODO verificar os listeners ativos
 // TODO colocar timeout em todos os awaits...
 // TODO colocar uma barra ao final do data panel
@@ -29,6 +27,7 @@ public class Game {
     static boolean forInitGame;
 
     static int basePoints;
+    /*
     static float difficultyVelocityBarMultiplicator;
     static float difficultyVelocityObstacleMultiplicator;
     static float difficultyVelocityBallMultiplicator;
@@ -44,6 +43,7 @@ public class Game {
     static final float BAR_INSANE = 1.5f;
     static final float BALL_INSANE = 1.5f;
     static final float OBSTACLE_INSANE = 1.4f;
+    */
 
     static final int BALL_WEIGHT = 1;
     static final int BORDA_WEIGHT = 10;
@@ -57,7 +57,7 @@ public class Game {
     static Menu menuInGame;
     static Menu menuInGameOptions;
     static Menu menuTutorial;
-    static Menu menuWin;
+    //static Menu menuWin;
     static Menu menuObjectives;
     static Selector selectorLevel;
     static Selector selectorDificulty;
@@ -65,7 +65,9 @@ public class Game {
     static Selector selectorSound;
     static Button buttonReturn;
     static Button buttonContinue;
-    static ObjectivesLevel objectivesLevel;
+    static LevelGoalsPanel levelGoalsPanel;
+
+    public static ArrayList<LevelsGroupData> levelsGroupData;
 
     static ArrayList<Target> targets;
     static ArrayList<Ball> balls;
@@ -87,7 +89,7 @@ public class Game {
 
     static ScorePanel scorePanel;
     static BallDataPanel ballDataPanel;
-    static ObjectivePanel objectivePanel;
+    static BallGoalsPanel ballGoalsPanel;
 
     private static Edge bordaC;
     static Edge bordaE;
@@ -138,9 +140,6 @@ public class Game {
 
     static int ballCollidedFx = 0;
 
-    // savegame
-    public static SaveGame saveGame;
-    
     // options
     public static boolean isBlocked;
     
@@ -163,10 +162,10 @@ public class Game {
     public final static int GAME_STATE_MENU_TUTORIAL =  24;
     public final static int GAME_STATE_INTERSTITIAL =  25;
 
-    public final static int DIFFICULTY_EASY = 0;
-    public final static int DIFFICULTY_NORMAL = 1;
-    public final static int DIFFICULTY_HARD = 2;
-    public final static int DIFFICULTY_INSANE = 3;
+    //public final static int DIFFICULTY_EASY = 0;
+    //public final static int DIFFICULTY_NORMAL = 1;
+    //public final static int DIFFICULTY_HARD = 2;
+    //public final static int DIFFICULTY_INSANE = 3;
 
     final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
     final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
@@ -217,13 +216,14 @@ public class Game {
 
     static final long TIME_FOR_POINTS_DECAY = 3000;
     public static final int POINTS_DECAY = 10;
-    public static final int POINTS_EASY = 30;
-    public static final int POINTS_NORMAL = 50;
-    public static final int POINTS_HARD = 70;
-    public static final int POINTS_INSANE = 100;
+    //public static final int POINTS_EASY = 30;
+    //public static final int POINTS_NORMAL = 50;
+    //public static final int POINTS_HARD = 70;
+    //public static final int POINTS_INSANE = 100;
 
     public static long maxScoreTotal;
     public static String currentPlayerId;
+    public static int totalConqueredStars;
 
     private Game() {}
 
@@ -406,17 +406,7 @@ public class Game {
         }
     }
 
-    public static void initMenus(){
-
-        float fontSize = gameAreaResolutionY*0.08f;
-
-        objectivesLevel = new ObjectivesLevel("objectivesLevel", resolutionX * 0.24f, resolutionY * 0.2f, resolutionX * 0.025f, resolutionX * 0.79f);
-        objectivesLevel.addLine(1, true, "este é um teste para ver se a linha é dividida corretamente");
-        objectivesLevel.addLine(2, true, "este é um teste para ver se a segunda linha é dividida corretamente");
-        objectivesLevel.addLine(3, true, "este é um teste para ver se a terceira linha é dividida corretamente, pois é a mais longa de todas as linhas");
-        objectivesLevel.addLine(4, true, "este é um teste para ver se a quarta linha é dividida corretamente");
-        objectivesLevel.addLine(5, true, "este é um teste para ver se a quinta linha é dividida corretamente");
-
+    public static void initButtons(){
         float buttonSize = resolutionX * 0.05f;
         buttonReturn = new Button("buttonReturn", buttonSize*0.5f, resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         buttonReturn.setTextureMap(13);
@@ -461,8 +451,22 @@ public class Game {
                 }
             }
         });
+    }
 
-        worldMenu = new MenuIcon("worldMenu", 0f, resolutionY * 0.3f, resolutionY * 0.4f);
+
+    public void updateConqueredStars(){
+        for (int i = 0; i < SaveGame.saveGame.maxNumberOfLevels; i++){
+
+        }
+
+
+    }
+
+    public static void initLevelsData(){
+
+        LevelsGroupData l = new LevelsGroupData("Início", 1, 3, 0, SaveGame.saveGame.starsLevels)
+
+
 
         for (int i = 0; i < 11; i++){
             worldMenu.addOption(i, Texture.TEXTURE_ICONS, 1, new Animation.AnimationListener() {
@@ -472,6 +476,25 @@ public class Game {
                 }
             });
         }
+
+
+    }
+
+
+    public static void initMenus(){
+
+        float fontSize = gameAreaResolutionY*0.08f;
+
+        levelGoalsPanel = new LevelGoalsPanel("levelGoalsPanel", resolutionX * 0.24f, resolutionY * 0.2f, resolutionX * 0.025f, resolutionX * 0.79f);
+        levelGoalsPanel.addLine(1, true, "este é um teste para ver se a linha é dividida corretamente");
+        levelGoalsPanel.addLine(2, true, "este é um teste para ver se a segunda linha é dividida corretamente");
+        levelGoalsPanel.addLine(3, true, "este é um teste para ver se a terceira linha é dividida corretamente, pois é a mais longa de todas as linhas");
+        levelGoalsPanel.addLine(4, true, "este é um teste para ver se a quarta linha é dividida corretamente");
+        levelGoalsPanel.addLine(5, true, "este é um teste para ver se a quinta linha é dividida corretamente");
+
+        worldMenu = new MenuIcon("worldMenu", 0f, resolutionY * 0.3f, resolutionY * 0.4f);
+
+
 
         for (int i = 0; i < 11; i++){
             worldMenu.addText(1, "texto1 "+i, "texto1 "+i,resolutionY * 0.04f, resolutionY * 0.01f);
@@ -735,7 +758,6 @@ public class Game {
     static void initFont(){
         font = new Font(Texture.TEXTURE_FONT,textProgram);
     }
-
     static void addBall(Ball ball){
         balls.add(ball);
     }
@@ -760,6 +782,7 @@ public class Game {
     static void addMessage(Message message){
         messages.add(message);
     }
+
     static void addInteracionListener(InteractionListener listener) {
         if (interactionListeners == null){
             interactionListeners = new ArrayList<InteractionListener>();
@@ -800,7 +823,7 @@ public class Game {
             buttonReturn.display();
             buttonReturn.unblock();
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
-            objectivesLevel.appear();
+            levelGoalsPanel.appear();
             messageMenu.display();
             messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             buttonContinue.display();
@@ -1058,7 +1081,7 @@ public class Game {
 
             // calcula a pontuação final, de acordo com a quantidade de bolas azuis
             int pointsTotal = scorePanel.value;
-            for (int i = 0; i < objectivePanel.blueBalls; i++) {
+            for (int i = 0; i < ballGoalsPanel.blueBalls; i++) {
                 pointsTotal *= 1.5;
             }
 
@@ -1071,9 +1094,11 @@ public class Game {
                 setMaxScoreTotal();
             }
 
+            /*
             if (SaveGame.saveGame.currentDifficulty > SaveGame.saveGame.difficultyLevels[SaveGame.saveGame.currentLevelNumber-1]){
                 SaveGame.saveGame.difficultyLevels[SaveGame.saveGame.currentLevelNumber-1] = SaveGame.saveGame.currentDifficulty;
             }
+            */
 
             // TODO se for o último level não aumentar o nível
             //changeLevel(SaveGame.saveGame.currentLevelNumber + 1);
@@ -1090,17 +1115,17 @@ public class Game {
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    if (objectivePanel.blueBalls > 0){
+                    if (ballGoalsPanel.blueBalls > 0){
                         int points = (int)((float)scorePanel.value * 1.5f);
                         scorePanel.setValue(points, true, 1000, true);
                         scorePanel.showMessage("+ 50%", 800);
-                        objectivePanel.explodeBlueBall();
-                    } else if (!objectivesLevel.isVisible){
-                        Utils.createSimpleAnimation(objectivePanel, "translateX", "translateX", 2000, 0f, gameAreaResolutionX*2f).start();
-                        objectivePanel.clearExplosions();
-                        objectivesLevel.appearGray();
-                    } else if (objectivesLevel.gray) {
-                        objectivesLevel.shineLines();
+                        ballGoalsPanel.explodeBlueBall();
+                    } else if (!levelGoalsPanel.isVisible){
+                        Utils.createSimpleAnimation(ballGoalsPanel, "translateX", "translateX", 2000, 0f, gameAreaResolutionX*2f).start();
+                        ballGoalsPanel.clearExplosions();
+                        levelGoalsPanel.appearGray();
+                    } else if (levelGoalsPanel.gray) {
+                        levelGoalsPanel.shineLines();
                     } else{
                         buttonContinue.display();
                         buttonContinue.unblock();
@@ -1140,9 +1165,9 @@ public class Game {
             messageInGame.setText(getContext().getResources().getString(R.string.nivelConcluido1)+ " " + getContext().getResources().getString(R.string.nivelConcluido2));
             messageInGame.display();
 
-            Utils.createSimpleAnimation(objectivePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY*0.1f).start();
-            Utils.createSimpleAnimation(objectivePanel, "scaleX", "scaleX", 2000, 1f, 1.8f).start();
-            Utils.createSimpleAnimation(objectivePanel, "scaleY", "scaleY", 2000, 1f, 1.8f).start();
+            Utils.createSimpleAnimation(ballGoalsPanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY*0.1f).start();
+            Utils.createSimpleAnimation(ballGoalsPanel, "scaleX", "scaleX", 2000, 1f, 1.8f).start();
+            Utils.createSimpleAnimation(ballGoalsPanel, "scaleY", "scaleY", 2000, 1f, 1.8f).start();
             Utils.createSimpleAnimation(scorePanel, "scaleX", "scaleX", 2000, 1f, 1.5f).start();
             Utils.createSimpleAnimation(scorePanel, "scaleY", "scaleY", 2000, 1f, 1.5f).start();
             Utils.createSimpleAnimation(scorePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY * 0.05f, new Animation.AnimationListener() {
@@ -1256,7 +1281,7 @@ public class Game {
     }
 
     public static void eraseAllHudEntities() {
-        objectivePanel = null;
+        ballGoalsPanel = null;
         ballDataPanel = null;
         scorePanel = null;
         button1Left = null;
@@ -1313,7 +1338,7 @@ public class Game {
         list.add(button2Right);
         list.add(scorePanel);
         list.add(ballDataPanel);
-        list.add(objectivePanel);
+        list.add(ballGoalsPanel);
         return list;
     }
 
@@ -1392,6 +1417,7 @@ public class Game {
         return starsTotal;
     }
 
+    /*
     static void changeDifficulty(int selectedValue) {
         if (selectedValue == 0){
             basePoints = POINTS_EASY;
@@ -1420,6 +1446,7 @@ public class Game {
         }
         SaveGame.saveGame.currentDifficulty = selectedValue;
     }
+    */
 
     private static void changeLevel(int level) {
         SaveGame.saveGame.currentLevelNumber = level;
@@ -1671,7 +1698,7 @@ public class Game {
                 }
             }
         }
-        objectivePanel.setValues(ballsNotInvencibleAlive + ballsInvencible, Levels.levelObject.minBallsAlive, ballsInvencible);
+        ballGoalsPanel.setValues(ballsNotInvencibleAlive + ballsInvencible, Levels.levelObject.minBallsAlive, ballsInvencible);
         if (Levels.levelObject.minBallsAlive > ballsNotInvencibleAlive){
             setGameState(GAME_STATE_DERROTA);
         }
@@ -1723,7 +1750,7 @@ public class Game {
         if (menuOptions != null)menuOptions.checkTransformations(true);
         if (worldMenu != null)worldMenu.checkTransformations(true);
         if (levelMenu != null)levelMenu.checkTransformations(true);
-        if (objectivesLevel != null)objectivesLevel.checkTransformations(true);
+        if (levelGoalsPanel != null) levelGoalsPanel.checkTransformations(true);
         if (menuInGameOptions != null)menuInGameOptions.checkTransformations(true);
         if (selectorDificulty != null)selectorDificulty.checkTransformations(true);
         if (selectorMusic != null)selectorMusic.checkTransformations(true);
@@ -1755,7 +1782,7 @@ public class Game {
 
         if (scorePanel != null) scorePanel.checkTransformations(true);
         if (ballDataPanel != null) ballDataPanel.checkTransformations(true);
-        if (objectivePanel != null) objectivePanel.checkTransformations(true);
+        if (ballGoalsPanel != null) ballGoalsPanel.checkTransformations(true);
 
         if (button1Left != null) button1Left.checkTransformations(true);
         if (button1Right != null) button1Right.checkTransformations(true);
@@ -1821,7 +1848,7 @@ public class Game {
         if (menuOptions != null)menuOptions.prepareRender(matrixView, matrixProjection);
         if (worldMenu != null)worldMenu.prepareRender(matrixView, matrixProjection);
         if (levelMenu != null)levelMenu.prepareRender(matrixView, matrixProjection);
-        if (objectivesLevel != null)objectivesLevel.prepareRender(matrixView, matrixProjection);
+        if (levelGoalsPanel != null) levelGoalsPanel.prepareRender(matrixView, matrixProjection);
         if (buttonReturn != null)buttonReturn.prepareRender(matrixView, matrixProjection);
         if (buttonContinue != null)buttonContinue.prepareRender(matrixView, matrixProjection);
         if (menuInGameOptions != null)menuInGameOptions.prepareRender(matrixView, matrixProjection);
@@ -1854,7 +1881,7 @@ public class Game {
 
         if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
         if (scorePanel != null) scorePanel.prepareRender(matrixView, matrixProjection);
-        if (objectivePanel != null) objectivePanel.prepareRender(matrixView, matrixProjection);
+        if (ballGoalsPanel != null) ballGoalsPanel.prepareRender(matrixView, matrixProjection);
 
         if (button1Left != null) button1Left.prepareRender(matrixView, matrixProjection);
         if (button1Right != null) button1Right.prepareRender(matrixView, matrixProjection);
@@ -1897,7 +1924,7 @@ public class Game {
         if (menuOptions != null)menuOptions.verifyListener();
         if (worldMenu != null)worldMenu.verifyListener();
         if (levelMenu != null)levelMenu.verifyListener();
-        // objectivesLevel não precisa de listener???
+        // levelGoalsPanel não precisa de listener???
         if (buttonReturn != null)buttonReturn.verifyListener();
         if (buttonContinue != null)buttonContinue.verifyListener();
         if (menuInGameOptions != null)menuInGameOptions.verifyListener();
@@ -1929,7 +1956,7 @@ public class Game {
         list.add(menuOptions);
         list.add(worldMenu);
         list.add(levelMenu);
-        list.add(objectivesLevel);
+        list.add(levelGoalsPanel);
         list.add(buttonReturn);
         list.add(buttonContinue);
         list.add(menuInGameOptions);

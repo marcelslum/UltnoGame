@@ -21,10 +21,10 @@ public class SaveGame {
     public static final int MIN_TIME_BEFORE_RESAVE = 2000;
 
     public int maxNumberOfLevels;
-    public int currentMaxLevel;
+    //public int currentMaxLevel;
     public int currentLevelNumber;
-    public int currentDifficulty;
-    public int[] difficultyLevels;
+    //public int currentDifficulty;
+    //public int[] difficultyLevels;
     public long[] pointsLevels;
     public int[] starsLevels;
     public boolean[] tutorialLevels;
@@ -37,10 +37,10 @@ public class SaveGame {
 
     public SaveGame(SaveGameBuilder builder) {
         maxNumberOfLevels = builder.maxNumberOfLevels;
-        currentMaxLevel = builder.currentMaxLevel;
         currentLevelNumber = builder.currentLevelNumber;
-        currentDifficulty = builder.currentDifficulty;
-        difficultyLevels = builder.difficultyLevels;
+        //currentMaxLevel = builder.currentMaxLevel;
+        //currentDifficulty = builder.currentDifficulty;
+        //difficultyLevels = builder.difficultyLevels;
         pointsLevels = builder.pointsLevels;
         starsLevels = builder.starsLevels;
         tutorialLevels = builder.tutorialLevels;
@@ -124,15 +124,15 @@ public class SaveGame {
             Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
             long[] _pointsLevels = new long[Levels.maxNumberOfLevels];
             int[] _starsLevels = new int[Levels.maxNumberOfLevels];
-            int[] _difficultyLevels = new int[Levels.maxNumberOfLevels];
+            //int[] _difficultyLevels = new int[Levels.maxNumberOfLevels];
             boolean[] _tutorialLevels = new boolean[Levels.maxNumberOfLevels];
 
             saveGame = new SaveGameBuilder()
                     .setMaxNumberOfLevels(Levels.maxNumberOfLevels)
-                    .setCurrentMaxLevel(1)
+                    //.setCurrentMaxLevel(1)
                     .setCurrentLevelNumber(1)
-                    .setCurretDifficulty(Game.DIFFICULTY_EASY)
-                    .setDifficultyLevels(_difficultyLevels)
+                    //.setCurretDifficulty(Game.DIFFICULTY_EASY)
+                    //.setDifficultyLevels(_difficultyLevels)
                     .setPointsLevels(_pointsLevels)
                     .setStarsLevels(_starsLevels)
                     .setTutorialLevels(_tutorialLevels)
@@ -146,10 +146,10 @@ public class SaveGame {
 
     public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sgLocal) {
         int fmaxNumberOfLevels;
-        int fcurrentMaxLevel;
+        //int fcurrentMaxLevel;
         int fcurrentLevelNumber;
-        int fcurretDifficulty;
-        int[] fdifficultyLevels;
+        //int fcurretDifficulty;
+        //int[] fdifficultyLevels;
         long[] fpointsLevels;
         int[] fstarsLevels;
         boolean[] ftutorialLevels;
@@ -158,10 +158,10 @@ public class SaveGame {
         long fdate;
 
         fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sgLocal.maxNumberOfLevels);
-        fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sgLocal.currentMaxLevel);
+        //fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sgLocal.currentMaxLevel);
         fcurrentLevelNumber = sgLocal.currentLevelNumber;
-        fcurretDifficulty = sgLocal.currentDifficulty;
-        fdifficultyLevels = getHigher(sg1.difficultyLevels, sgLocal.difficultyLevels);
+        //fcurretDifficulty = sgLocal.currentDifficulty;
+        //fdifficultyLevels = getHigher(sg1.difficultyLevels, sgLocal.difficultyLevels);
         ftutorialLevels = getHigher(sg1.tutorialLevels, sgLocal.tutorialLevels);
         fpointsLevels = getHigher(sg1.pointsLevels, sgLocal.pointsLevels);
         fstarsLevels = getHigher(sg1.starsLevels, sgLocal.starsLevels);
@@ -172,10 +172,10 @@ public class SaveGame {
 
         return new SaveGameBuilder()
                 .setMaxNumberOfLevels(fmaxNumberOfLevels)
-                .setCurrentMaxLevel(fcurrentMaxLevel)
+                //.setCurrentMaxLevel(fcurrentMaxLevel)
                 .setCurrentLevelNumber(fcurrentLevelNumber)
-                .setCurretDifficulty(fcurretDifficulty)
-                .setDifficultyLevels(fdifficultyLevels)
+                //.setCurretDifficulty(fcurretDifficulty)
+                //.setDifficultyLevels(fdifficultyLevels)
                 .setTutorialLevels(ftutorialLevels)
                 .setPointsLevels(fpointsLevels)
                 .setStarsLevels(fstarsLevels)
@@ -183,6 +183,7 @@ public class SaveGame {
                 .setSound(fsound)
                 .setDate(fdate)
                 .build();
+
     }
 
 
@@ -285,9 +286,9 @@ public class SaveGame {
             }
 
             saveGameBuilder.setMaxNumberOfLevels(obj.getInt("maxNumberOfLevels"));
-            saveGameBuilder.setCurrentMaxLevel(obj.getInt("currentMaxLevel"));
+            //saveGameBuilder.setCurrentMaxLevel(obj.getInt("currentMaxLevel"));
             saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
-            saveGameBuilder.setCurretDifficulty(obj.getInt("currentDifficulty"));
+            //saveGameBuilder.setCurretDifficulty(obj.getInt("currentDifficulty"));
 
             // pontuação dos levels
             long[] pointsLevels = new long[saveGameBuilder.maxNumberOfLevels];
@@ -315,14 +316,16 @@ public class SaveGame {
             saveGameBuilder.setStarsLevels(starsLevels);
 
             // maxima dificuldade dos levels
+            /*
             int[] difficultyLevels = new int[saveGameBuilder.maxNumberOfLevels];
             array = obj.getJSONArray("difficultyLevels");
             for (int i = 0; i < difficultyLevels.length; i++) {
                 difficultyLevels[i] = array.getInt(i);
             }
             saveGameBuilder.setDifficultyLevels(difficultyLevels);
+            */
 
-            // maxima dificuldade dos levels
+
             boolean[] tutorialLevels = new boolean[saveGameBuilder.maxNumberOfLevels];
             array = obj.getJSONArray("tutorialLevels");
             for (int i = 0; i < tutorialLevels.length; i++) {
@@ -364,12 +367,12 @@ public class SaveGame {
             JSONObject obj = new JSONObject();
             obj.put("version", SERIAL_VERSION);
             obj.put("maxNumberOfLevels", saveGame.maxNumberOfLevels);
-            obj.put("currentMaxLevel", saveGame.currentMaxLevel);
+            //obj.put("currentMaxLevel", saveGame.currentMaxLevel);
             obj.put("currentLevelNumber", saveGame.currentLevelNumber);
-            obj.put("currentDifficulty", saveGame.currentDifficulty);
+            //obj.put("currentDifficulty", saveGame.currentDifficulty);
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
             obj.put("starsLevels", new JSONArray(saveGame.starsLevels));
-            obj.put("difficultyLevels", new JSONArray(saveGame.difficultyLevels));
+            //obj.put("difficultyLevels", new JSONArray(saveGame.difficultyLevels));
             obj.put("tutorialLevels", new JSONArray(saveGame.tutorialLevels));
             obj.put("music", saveGame.music);
             obj.put("sound", saveGame.sound);

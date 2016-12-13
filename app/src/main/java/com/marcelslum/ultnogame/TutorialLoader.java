@@ -933,7 +933,7 @@ public class TutorialLoader {
                         .onShowAfterAnim(new Tutorial.OnShowAfterAnim() {
                             @Override
                             public void onShowAfterAnim() {
-                                Game.objectivePanel.setValues(4, 1, 0);
+                                Game.ballGoalsPanel.setValues(4, 1, 0);
                             }
                         })
                         .build()
@@ -1031,13 +1031,13 @@ public class TutorialLoader {
                                             @Override
                                             public void onChange() {
                                                 if (Game.balls.get(2).numberForAnimation == 4f){
-                                                    Game.objectivePanel.setValues(4, 1, 0);
+                                                    Game.ballGoalsPanel.setValues(4, 1, 0);
                                                 } else if (Game.balls.get(2).numberForAnimation == 3f){
-                                                    Game.objectivePanel.setValues(3, 1, 0);
+                                                    Game.ballGoalsPanel.setValues(3, 1, 0);
                                                 } else if (Game.balls.get(2).numberForAnimation == 2f) {
-                                                    Game.objectivePanel.setValues(2, 1, 0);
+                                                    Game.ballGoalsPanel.setValues(2, 1, 0);
                                                 } else if (Game.balls.get(2).numberForAnimation == 1f) {
-                                                    Game.objectivePanel.setValues(1, 1, 0);
+                                                    Game.ballGoalsPanel.setValues(1, 1, 0);
                                                 }
                                             }
                                         });
@@ -1050,7 +1050,7 @@ public class TutorialLoader {
                                         Game.balls.get(2).clearAnimations();
                                         Game.balls.get(3).clearAnimations();
                                         Game.balls.get(4).clearAnimations();
-                                        Game.objectivePanel.setValues(4, 1, 0);
+                                        Game.ballGoalsPanel.setValues(4, 1, 0);
                                     }
                                 })
                                 .build()
@@ -1071,7 +1071,10 @@ public class TutorialLoader {
                 );
 
                 // L9T11
-                String textL9T11;
+                String textL9T11 = Utils.getStringResource(R.string.l9t11f);;
+                // TODO definir pontuação
+
+                /*
                 if (SaveGame.saveGame.currentDifficulty == Game.DIFFICULTY_EASY){
                     textL9T11 = Utils.getStringResource(R.string.l9t11f);
                 } else if (SaveGame.saveGame.currentDifficulty == Game.DIFFICULTY_NORMAL){
@@ -1081,6 +1084,7 @@ public class TutorialLoader {
                 } else{
                     textL9T11 = Utils.getStringResource(R.string.l9t11i);
                 }
+                */
 
                 Levels.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
@@ -1170,17 +1174,17 @@ public class TutorialLoader {
                                             if (Game.balls.get(4).numberForAnimation == 4f){
                                                 Game.scorePanel.setValue(7500, true, 1000, true);
                                                 Game.scorePanel.showMessage("+ 50%", 1000);
-                                                Game.objectivePanel.setValues(3, 1, 0);
+                                                Game.ballGoalsPanel.setValues(3, 1, 0);
                                                 Game.balls.get(3).clearDisplay();
                                             } else if (Game.balls.get(4).numberForAnimation == 3f){
                                                 Game.scorePanel.setValue(11125, true, 1000, true);
                                                 Game.scorePanel.showMessage("+ 50%", 1000);
-                                                Game.objectivePanel.setValues(2, 1, 0);
+                                                Game.ballGoalsPanel.setValues(2, 1, 0);
                                                 Game.balls.get(2).clearDisplay();
                                             } else if (Game.balls.get(4).numberForAnimation == 2f){
                                                 Game.scorePanel.setValue(16875, true, 1000, true);
                                                 Game.scorePanel.showMessage("+ 50%", 1000);
-                                                Game.objectivePanel.setValues(1, 1, 0);
+                                                Game.ballGoalsPanel.setValues(1, 1, 0);
                                                 Game.balls.get(1).clearDisplay();
                                             }
                                         }

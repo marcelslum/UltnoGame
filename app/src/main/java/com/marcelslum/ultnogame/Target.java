@@ -92,8 +92,8 @@ public class Target extends Rectangle {
 
     public void onBallCollision(){
         int points = Game.basePoints;
-        if (Game.objectivePanel.blueBalls > 0) {
-            for (int i = 0; i < Game.objectivePanel.blueBalls; i++) {
+        if (Game.ballGoalsPanel.blueBalls > 0) {
+            for (int i = 0; i < Game.ballGoalsPanel.blueBalls; i++) {
                 points *= 2;
             }
         }

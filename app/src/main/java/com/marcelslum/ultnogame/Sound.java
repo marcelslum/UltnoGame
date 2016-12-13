@@ -29,6 +29,8 @@ public abstract class Sound {
     public static int soundTextBoxAppear;
     public static int soundBarSize;
     public static int soundWind;
+    public static int soundSuccess1;
+    public static int soundSuccess2;
     public static MediaPlayer music;
 
 
@@ -58,7 +60,8 @@ public abstract class Sound {
         soundTextBoxAppear = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.textboxappear, 1);
         soundBarSize = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bar, 1);
         soundWind = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.wind, 1);
-
+        soundSuccess1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success1, 1);
+        soundSuccess2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success2, 1);
     }
 
     public static int play(int id, float left, float right, int loop){

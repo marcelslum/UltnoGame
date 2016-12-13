@@ -3,7 +3,7 @@ package com.marcelslum.ultnogame;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class ObjectivePanel extends Entity{
+public class BallGoalsPanel extends Entity{
 
     public float size;
     public int value;
@@ -17,7 +17,7 @@ public class ObjectivePanel extends Entity{
     public float lastXBall;
     public ArrayList<ParticleGenerator> particleGenerators;
 
-    ObjectivePanel(String name, Game game, float x, float y, float size) {
+    BallGoalsPanel(String name, Game game, float x, float y, float size) {
         super(name, x, y);
         initialX = x;
         initialY = y;

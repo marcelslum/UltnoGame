@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by marcel on 10/12/2016.
  */
 
-public class ObjectivesLevel extends Entity{
+public class LevelGoalsPanel extends Entity{
 
     public float size;
     ArrayList<Line> lines;
@@ -14,7 +14,7 @@ public class ObjectivesLevel extends Entity{
     float maxTextWidth;
     boolean gray;
 
-    ObjectivesLevel(String name, float x, float y, float size, float maxTextWidth) {
+    LevelGoalsPanel(String name, float x, float y, float size, float maxTextWidth) {
         super(name, x, y);
         this.size = size;
         lines = new ArrayList<>();
@@ -82,9 +82,9 @@ public class ObjectivesLevel extends Entity{
         }
     }
 
-
     public void shineLines() {
         if (gray) {
+            Sound.play(Sound.soundSuccess2, 1, 1, 1);
             gray = false;
             for (int l = 0; l < lines.size(); l++) {
                 if (lines.get(l).shineStars) {

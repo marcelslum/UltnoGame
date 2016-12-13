@@ -22,7 +22,6 @@ public class SaveGameBuilder {
 
 
     public SaveGameBuilder(){
-
     }
 
     public SaveGameBuilder setMaxNumberOfLevels(int maxNumberOfLevels) {
@@ -30,18 +29,12 @@ public class SaveGameBuilder {
         return this;
     }
     
-    public SaveGameBuilder setCurrentMaxLevel(int currentMaxLevel) {
-        this.currentMaxLevel = currentMaxLevel;
-        return this;
-    }
+    //public SaveGameBuilder setCurrentMaxLevel(int currentMaxLevel) {this.currentMaxLevel = currentMaxLevel;return this;}
+    //public SaveGameBuilder setCurretDifficulty(int currentDifficulty) {this.currentDifficulty = currentDifficulty;return this;}
+    //public SaveGameBuilder setDifficultyLevels(int [] difficultyLevels) {this.difficultyLevels = difficultyLevels;return this;}
     
     public SaveGameBuilder setCurrentLevelNumber(int currentLevelNumber) {
         this.currentLevelNumber = currentLevelNumber;
-        return this;
-    }
-    
-    public SaveGameBuilder setCurretDifficulty(int currentDifficulty) {
-        this.currentDifficulty = currentDifficulty;
         return this;
     }
     
@@ -50,11 +43,6 @@ public class SaveGameBuilder {
         return this;
     }
 
-    public SaveGameBuilder setDifficultyLevels(int [] difficultyLevels) {
-        this.difficultyLevels = difficultyLevels;
-        return this;
-    }
-    
     public SaveGameBuilder setPointsLevels(long [] pointsLevels) {
         this.pointsLevels = pointsLevels;
         return this;
