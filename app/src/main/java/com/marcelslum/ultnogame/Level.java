@@ -64,7 +64,22 @@ public class Level {
     public float specialBallPercentage = 0.0f;
     public float windType;
 
+    public static Level levelObject;
+    public static LevelGoals levelGoalsObject;
+
+    public static final int maxNumberOfLevels = 100;
+
+    public static void eraseAllTutorials() {
+        if (levelObject != null) {
+            for (int i = 0; i < levelObject.tutorials.size(); i++) {
+                levelObject.tutorials.get(i).textBox = null;
+                levelObject.tutorials.clear();
+            }
+        }
+    }
+
     private Level(){
+
         this.ballsQuantity = LevelBuilder.ballsQuantity;
         this.minBallsAlive = LevelBuilder.minBallsAlive;
         this.ballsRadius_BR = LevelBuilder.ballsRadius_BR;
@@ -112,7 +127,6 @@ public class Level {
         this.specialBallPercentage = LevelBuilder.specialBallPercentage;
         this.windType = LevelBuilder.windType;
         this.tutorials = new ArrayList<>();
-
     }
     
     public void showFirstTutorial(){
@@ -162,7 +176,7 @@ public class Level {
 
         Game.messageTime = new Text("messageTime",
                 Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.85f, Game.resolutionY*0.055f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
-        Game.messageTime.alpha = 0.5f;
+        Game.messageTime.alpha = 0.7f;
 
         Game.scorePanel = new ScorePanel("scorePanel",
                 Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.07f);
@@ -284,8 +298,8 @@ public class Level {
             }
         }
 
-        float targetWidth = Game.gameAreaResolutionX * Levels.levelObject.targetWidth_BR;
-        float targetHeight = Game.gameAreaResolutionY * Levels.levelObject.targetHeight_BR;
+        float targetWidth = Game.gameAreaResolutionX * levelObject.targetWidth_BR;
+        float targetHeight = Game.gameAreaResolutionY * levelObject.targetHeight_BR;
         float targetX;
         float targetY;
 
@@ -520,9 +534,15 @@ public class Level {
         private static float[] windowsVelocity;
         private static float specialBallPercentage;
         private static int windType = Level.WIND_TYPE_NO;
+        private static ArrayList<LevelGoal> levelGoals;
 
         public LevelBuilder setBallsQuantity(int _ballsQuantity) {
             ballsQuantity = _ballsQuantity;
+            return this;
+        }
+
+        public LevelBuilder setLevelGoals(ArrayList<LevelGoal> levelGoals) {
+            this.levelGoals = levelGoals;
             return this;
         }
 

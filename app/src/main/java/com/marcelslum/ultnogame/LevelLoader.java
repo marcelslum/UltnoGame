@@ -962,7 +962,7 @@ public class LevelLoader {
         }
 
 
-        Levels.levelObject = levelBuilder.build();
+        Level.levelObject = levelBuilder.build();
     }
 }
 /*

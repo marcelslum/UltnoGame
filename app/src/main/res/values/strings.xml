@@ -146,6 +146,46 @@
     <string name="message_sem_estrelas">Grupo bloqueado. Sem estrelas suficientes</string>
     <string name="tenha">Tenha</string>
     <string name="estrelas">estrelas</string>
+    <string name="levelGoal0">Finalize o nível.</string>
+    <string name="levelGoal1a">Termine o nível em menos de</string>
+    <string name="levelGoal1b">segundos.</string>
+    <string name="levelGoal2">Faça a bola atingir o máximo de sua velocidade.</string>
+    <string name="levelGoal4">Faça a bola atingir o mínimo de sua velocidade.</string>
+    <string name="levelGoal3a">Acelere a bola utilizando-se do movimento da barra por</string>
+    <string name="levelGoal3b">vezes.</string>
+    <string name="levelGoal5a">Desacelere a bola utilizando-se do movimento da barra por</string>
+    <string name="levelGoal5b">vezes.</string>
+    <string name="levelGoal17">Termine o nível sem alterar a velocidade da bola através do movimento da barra.</string>
+    <string name="levelGoal18a">Altere a velocidade da bola utilizando-se da barra por</string>
+    <string name="levelGoal18b">vezes seguidas.</string>
+    <string name="levelGoal6">Faça a bola atingir seu ângulo máximo em relação à barra (eixo horizontal).</string>
+    <string name="levelGoal7">Faça a bola atingir seu ângulo mínimo em relação à barra (eixo horizontal).</string>
+    <string name="levelGoal8a">Diminua o ângulo da bola em relação à barra (eixo horizontal) por</string>
+    <string name="levelGoal8b">vezes.</string>
+    <string name="levelGoal9a">Aumente o ângulo da bola em relação à barra (eixo horizontal) </string>
+    <string name="levelGoal9b">vezes.</string>
+    <string name="levelGoal11a">Ter ao menos</string>
+    <string name="levelGoal11b">bolas vivas em algum momento.</string>
+    <string name="levelGoal12a">Manter ao menos</string>
+    <string name="levelGoal12b">bolas vivas por</string>
+    <string name="levelGoal12c">segundos.</string>
+    <string name="levelGoal13a">Fazer com que duas bolas colidam por</string>
+    <string name="levelGoal13b">vezes.</string>
+    <string name="levelGoal14">Atinjir a bola com a barra em sua velocidade máxima.</string>
+    <string name="levelGoal15a">Atinjir um obstáculo com a bola por</string>
+    <string name="levelGoal15b">vezes.</string>
+    <string name="levelGoal16a">Evitar que o vento carregue a barra por mais de</string>
+    <string name="levelGoal16b">segundos.</string>
+    <string name="levelGoal3m">bola acelerada:</string>
+    <string name="levelGoal5m">Bola desacelerada:</string>
+    <string name="levelGoal18m">Velocidade da bola alterada:</string>
+    <string name="levelGoal8m">Ângulo diminuído:</string>
+    <string name="levelGoal9m">Ângulo aumentado</string>
+    <string name="levelGoal11m">Bolas vivas:</string>
+    <string name="levelGoal12m">Bolas vivas:</string>
+    <string name="levelGoal13m">Colisão entre bolas:</string>
+    <string name="levelGoal15m">Obstáculo atingido:</string>
+    <string name="tempo_gasto">Tempo gasto:</string>
 
 
 </resources>

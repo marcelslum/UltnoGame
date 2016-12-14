@@ -38,14 +38,12 @@ public class MessageStar extends Entity {
         star.alpha = 1f;
         text.alpha = 1f;
 
-        final Animation b1 = Utils.createAnimation2v(star, "translateY2", "translateY", 2000, 0f, 0f, 1f, -Game.resolutionX * 0.05f, false, true);
-        final Animation b2 = Utils.createAnimation2v(star, "translateX", "translateX", 2000, 0f, 0f, 1f, Game.resolutionX * 0.05f, false, true);
+        final Animation b1 = Utils.createAnimation2v(star, "translateY2", "translateY", 1500, 0f, 0f, 1f, -Game.resolutionX * 0.05f, false, true);
+        final Animation b2 = Utils.createAnimation2v(star, "translateX2", "translateX", 1500, 0f, 0f, 1f, Game.resolutionX * 0.05f, false, true);
 
-        final Animation b3 = Utils.createAnimation2v(text, "translateY2", "translateY", 2000, 0f, 0f, 1f, -Game.resolutionX * 0.05f, false, true);
-        final Animation b4 = Utils.createAnimation2v(text, "translateX", "translateX", 2000, 0f, 0f, 1f, Game.resolutionX * 0.05f, false, true);
+        final Animation b3 = Utils.createAnimation2v(text, "translateY2", "translateY", 1500, 0f, 0f, 1f, -Game.resolutionX * 0.05f, false, true);
+        final Animation b4 = Utils.createAnimation2v(text, "translateX2", "translateX", 1500, 0f, 0f, 1f, Game.resolutionX * 0.05f, false, true);
 
-        final Animation b5 = Utils.createAnimation2v(star, "alpha", "alpha", 2000, 0f, 1f, 1f, 0f, false, true);
-        final Animation b6 = Utils.createAnimation2v(text, "alpha", "alpha", 2000, 0f, 1f, 1f, 0f, false, true);
 
         final MessageStar ms = this;
         final String innerNewShowingText = newShowingText;
@@ -63,7 +61,7 @@ public class MessageStar extends Entity {
             }
         });
 
-        Animation a = Utils.createAnimation2v(star, "translateY", "translateY", 250, 0f, -Game.resolutionX * 0.2f, 1f, 0f, false, true);
+        Animation a = Utils.createAnimation2v(star, "translateY", "animTranslateY", 500, 0f, -Game.resolutionX * 0.2f, 1f, 0f, false, true);
         a.setAnimationListener(new Animation.AnimationListener() {
 
             //TODO tocar som da moeda caindo
@@ -74,13 +72,11 @@ public class MessageStar extends Entity {
                 b2.start();
                 b3.start();
                 b4.start();
-                b5.start();
-                b6.start();
                 Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
             }
         });
         a.start();
-        Utils.createAnimation2v(text, "translateY", "translateY", 250, 0f, -Game.resolutionX * 0.2f, 1f, 0f, false, true).start();
+        Utils.createAnimation2v(text, "translateY", "animTranslateY", 500, 0f, -Game.resolutionX * 0.2f, 1f, 0f, false, true).start();
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {

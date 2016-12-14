@@ -30,7 +30,7 @@ public class TutorialLoader {
         switch (levelNumber){
             case 1:
                     // L1T1
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                     .position(x, y)
@@ -54,7 +54,7 @@ public class TutorialLoader {
                     );
 
                     // L1T2
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox2")
                                 .position(x, y)
@@ -107,7 +107,7 @@ public class TutorialLoader {
                         .build()
                     );
                     // L1T3
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox3")
                                 .position(x, y*2.5f)
@@ -141,7 +141,7 @@ public class TutorialLoader {
                     );
 
                     // L1T4
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox4")
                                 .position(x, y*1.5f)
@@ -166,7 +166,7 @@ public class TutorialLoader {
                     );
 
                     // L1T5
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox5")
                                 .position(x, y*2f)
@@ -200,7 +200,7 @@ public class TutorialLoader {
                         }
                     };
 
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox6")
                                 .position(x, y*2f)
@@ -221,7 +221,7 @@ public class TutorialLoader {
                     );
 
                     // L1T7
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox7")
                                 .position(x, y*2f)
@@ -246,7 +246,7 @@ public class TutorialLoader {
                 
                     case 2:
                     // L2T1
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                     .position(x, y)
@@ -271,7 +271,7 @@ public class TutorialLoader {
                     );
 
                     // L2T2
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox2")
                                     .position(x, y)
@@ -322,7 +322,7 @@ public class TutorialLoader {
                     );
 
                     // L2T3
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textBox3")
                                             .position(x*0.5f, y)
@@ -335,7 +335,7 @@ public class TutorialLoader {
                     );
 
                     // L2T4
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textBox4")
                                             .position(x, y)
@@ -363,7 +363,7 @@ public class TutorialLoader {
                     );
 
                     // L2T5
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textBox5")
                                             .position(x, y)
@@ -391,7 +391,7 @@ public class TutorialLoader {
                     );
 
                     // L2T6
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textoBox6")
                                             .position(x, y)
@@ -437,7 +437,7 @@ public class TutorialLoader {
                     );
 
                     // L2T7
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textoBox7")
                                             .position(x, y)
@@ -452,7 +452,7 @@ public class TutorialLoader {
                     );
 
                     // L2T8
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textBox8")
                                             .position(x, y)
@@ -482,7 +482,7 @@ public class TutorialLoader {
                     );
 
                     // L2T9
-                    Levels.levelObject.tutorials.add(
+                    Level.levelObject.tutorials.add(
                             new Tutorial.TutorialBuilder(
                                     new TextBoxBuilder("textoBox9")
                                             .position(x, y)
@@ -525,7 +525,7 @@ public class TutorialLoader {
 
                 
                 // L2T10
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox10")
                                     .position(x, y)
@@ -575,7 +575,7 @@ public class TutorialLoader {
                 );
                 
                 // L2T11
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox11")
                                 .position(x, y)
@@ -589,7 +589,7 @@ public class TutorialLoader {
                 );
                 
                 // L2T12
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox12")
                                 .position(x, y)
@@ -604,7 +604,7 @@ public class TutorialLoader {
                 
                 
                 // L2T13
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox13")
                                 .position(x, y)
@@ -637,7 +637,7 @@ public class TutorialLoader {
                 );
                 
                 // L2T14
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox14")
                                 .position(x*0.5f, y)
@@ -651,7 +651,7 @@ public class TutorialLoader {
                 );
 
                 // L2T15
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox15")
                                 .position(x, y)
@@ -670,7 +670,7 @@ public class TutorialLoader {
                 
                 case 4:
                 // L4T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox1")
                                 .position(x, y*2.2f)
@@ -686,7 +686,7 @@ public class TutorialLoader {
                 
                 case 7:
                 // L7T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textBox1")
                                 .position(x, y)
@@ -747,7 +747,7 @@ public class TutorialLoader {
                 
                 case 9:
                 // L9T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox1")
                                 .position(x, y)
@@ -761,7 +761,7 @@ public class TutorialLoader {
                 );
                 
                 // L9T2
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox2")
                                 .position(x*0.5f, y*2f)
@@ -775,7 +775,7 @@ public class TutorialLoader {
                 );
                 
                 // L9T3
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                             new TextBoxBuilder("textoBox3")
                                 .position(x*0.5f, y*2.5f)
@@ -907,7 +907,7 @@ public class TutorialLoader {
                         .build()
                 );
                 // L9T4
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox4")
                                         .position(x, y)
@@ -920,7 +920,7 @@ public class TutorialLoader {
                                 .build()
                 );
                 // L9T5
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox5")
                                         .position(x*0.5f, y*2f)
@@ -940,7 +940,7 @@ public class TutorialLoader {
                 );
 
                 // L6T6
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox6")
                                         .position(x, y)
@@ -959,7 +959,7 @@ public class TutorialLoader {
                                 .build()
                 );
                 // L6T7
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox7")
                                         .position(x, y)
@@ -979,7 +979,7 @@ public class TutorialLoader {
                 );
 
                 // L6T8
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox8")
                                         .position(x, y)
@@ -994,7 +994,7 @@ public class TutorialLoader {
 
 
                 // L6T9
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox9")
                                         .position(x, y)
@@ -1057,7 +1057,7 @@ public class TutorialLoader {
                 );
 
                 // L6T10
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox10")
                                         .position(x, y*2.5f)
@@ -1086,7 +1086,7 @@ public class TutorialLoader {
                 }
                 */
 
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox11")
                                         .position(x, y*2.5f)
@@ -1138,7 +1138,7 @@ public class TutorialLoader {
                 );
 
                 // L6T12
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox12")
                                         .position(x, y*2.5f)
@@ -1196,7 +1196,7 @@ public class TutorialLoader {
                 );
 
                 // L9T13
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox13")
                                         .position(x, y*2.5f)
@@ -1210,7 +1210,7 @@ public class TutorialLoader {
                 );
 
                 // L6T14
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textoBox14")
                                         .position(x, y*2.5f)
@@ -1227,7 +1227,7 @@ public class TutorialLoader {
 
             case 12:
                 // L12T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                         .position(x, y)
@@ -1242,7 +1242,7 @@ public class TutorialLoader {
 
             case 16:
                 // L16T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                         .position(x, y)
@@ -1257,7 +1257,7 @@ public class TutorialLoader {
 
             case 19:
                 // L19T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                         .position(x, y)
@@ -1272,7 +1272,7 @@ public class TutorialLoader {
 
             case 20:
                 // L20T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                         .position(x, y)
@@ -1287,7 +1287,7 @@ public class TutorialLoader {
 
             case 21:
                 // L21T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                         .position(x, y)
@@ -1302,7 +1302,7 @@ public class TutorialLoader {
 
             case 24:
                 // L24T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                         .position(x*0.25f, y)
@@ -1313,7 +1313,7 @@ public class TutorialLoader {
                         )
                                 .build()
                 );
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox2")
                                         .position(x*0.25f, y)
@@ -1325,7 +1325,7 @@ public class TutorialLoader {
                         )
                                 .build()
                 );
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox3")
                                         .position(x*0.5f, y)
@@ -1341,7 +1341,7 @@ public class TutorialLoader {
 
             case 25:
                 // L25T1
-                Levels.levelObject.tutorials.add(
+                Level.levelObject.tutorials.add(
                         new Tutorial.TutorialBuilder(
                                 new TextBoxBuilder("textBox1")
                                         .position(x, y)

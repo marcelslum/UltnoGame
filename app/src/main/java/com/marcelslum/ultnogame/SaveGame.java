@@ -122,13 +122,13 @@ public class SaveGame {
             saveGame = getSaveGameFromJson(getStringFromLocal());
         } else {
             Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
-            long[] _pointsLevels = new long[Levels.maxNumberOfLevels];
-            int[] _starsLevels = new int[Levels.maxNumberOfLevels];
-            //int[] _difficultyLevels = new int[Levels.maxNumberOfLevels];
-            boolean[] _tutorialLevels = new boolean[Levels.maxNumberOfLevels];
+            long[] _pointsLevels = new long[Level.maxNumberOfLevels];
+            int[] _starsLevels = new int[Level.maxNumberOfLevels];
+            //int[] _difficultyLevels = new int[Level.maxNumberOfLevels];
+            boolean[] _tutorialLevels = new boolean[Level.maxNumberOfLevels];
 
             saveGame = new SaveGameBuilder()
-                    .setMaxNumberOfLevels(Levels.maxNumberOfLevels)
+                    .setMaxNumberOfLevels(Level.maxNumberOfLevels)
                     //.setCurrentMaxLevel(1)
                     .setCurrentLevelNumber(1)
                     //.setCurretDifficulty(Game.DIFFICULTY_EASY)

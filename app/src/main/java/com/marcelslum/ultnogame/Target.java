@@ -102,8 +102,8 @@ public class Target extends Rectangle {
     }
 
     public void verifySpecialBall(){
-        if (Levels.levelObject.specialBallPercentage > 0f){
-            if (Utils.getRandonFloat(0.0f, 1.0f) < Levels.levelObject.specialBallPercentage){
+        if (Level.levelObject.specialBallPercentage > 0f){
+            if (Utils.getRandonFloat(0.0f, 1.0f) < Level.levelObject.specialBallPercentage){
                 if (Game.specialBalls.size()<2) {
                     SpecialBall sb = new SpecialBall("specialBall", positionX + (width/2f), positionY + (height/2f), (height/2f));
                     sb.dvy = Game.bars.get(0).dvx *0.4f;

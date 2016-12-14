@@ -53,6 +53,26 @@ public class LevelGoalsPanel extends Entity{
 
     public void appear() {
         display();
+        float firstY = lines.get(0).texts.get(0).y;
+        if (firstY < y + size*0.66f) {
+            float lastY = lines.get(lines.size() - 1).texts.get(lines.get(lines.size() - 1).texts.size() - 1).y;
+            if (lastY - firstY < Game.gameAreaResolutionY) {
+                float translateY = (Game.gameAreaResolutionY - (lastY - firstY) - y) / 4f;
+                for (int l = 0; l < lines.size(); l++) {
+                    for (int i = 0; i < lines.get(l).texts.size(); i++) {
+                        Text t = lines.get(l).texts.get(i);
+                        t.y += translateY;
+                    }
+                }
+
+                for (int l = 0; l < lines.size(); l++) {
+                    for (int i = 0; i < lines.get(l).stars.size(); i++) {
+                        Image star = lines.get(l).stars.get(i);
+                        star.y += translateY;
+                    }
+                }
+            }
+        }
 
         for (int l = 0; l < lines.size(); l++) {
             for (int i = 0; i < lines.get(l).texts.size(); i++) {
@@ -87,27 +107,29 @@ public class LevelGoalsPanel extends Entity{
             Sound.play(Sound.soundSuccess2, 0.5f, 0.5f, 0);
             gray = false;
             for (int l = 0; l < lines.size(); l++) {
-                if (lines.get(l).shineStars) {
-                    for (int i = 0; i < lines.get(l).stars.size(); i++) {
-                        Image star = lines.get(l).stars.get(i);
+                if (Level.levelObject.levelGoalsObject.levelGoals.get(l).achieved) {
+                   if (lines.get(l).shineStars) {
+                        for (int i = 0; i < lines.get(l).stars.size(); i++) {
+                            Image star = lines.get(l).stars.get(i);
 
-                        final Animation a2 = Utils.createAnimation2v(star, "scaleX2", "scaleX", 250, 0f, 0f, 1f, 1f, false, true);
-                        final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size*0.5f, 1f, 0f, false, true);
+                            final Animation a2 = Utils.createAnimation2v(star, "scaleX2", "scaleX", 250, 0f, 0f, 1f, 1f, false, true);
+                            final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size * 0.5f, 1f, 0f, false, true);
 
-                        final Line innerLine = lines.get(l);
+                            final Line innerLine = lines.get(l);
 
-                        Animation a = Utils.createAnimation2v(star, "scaleX", "scaleX", 250, 0f, 1f, 1f, 0f, false, true);
-                        Animation ab = Utils.createAnimation2v(star, "translateX", "translateX", 250, 0f, 0f, 1f, size*0.5f, false, true);
-                        a.setAnimationListener(new Animation.AnimationListener() {
-                            @Override
-                            public void onAnimationEnd() {
-                                innerLine.changeShineStars(true);
-                                a2.start();
-                                ab2.start();
-                            }
-                        });
-                        a.start();
-                        ab.start();
+                            Animation a = Utils.createAnimation2v(star, "scaleX", "scaleX", 250, 0f, 1f, 1f, 0f, false, true);
+                            Animation ab = Utils.createAnimation2v(star, "translateX", "translateX", 250, 0f, 0f, 1f, size * 0.5f, false, true);
+                            a.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationEnd() {
+                                    innerLine.changeShineStars(true);
+                                    a2.start();
+                                    ab2.start();
+                                }
+                            });
+                            a.start();
+                            ab.start();
+                        }
                     }
                 }
             }
