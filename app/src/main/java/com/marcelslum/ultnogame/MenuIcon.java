@@ -22,6 +22,9 @@ public class MenuIcon extends Entity{
     boolean desacelerationActivated = false;
     float lastMovement;
     private boolean cancelNextPress;
+    Rectangle beggining;
+    Rectangle ending;
+
 
 
     public MenuIcon(String name, float x, float y, float size) {
@@ -31,12 +34,22 @@ public class MenuIcon extends Entity{
         texts2 = new ArrayList<>();
         graph = new ArrayList<>();
         this.size = size;
+
+        float padd = size * 0.1f;
+
+        beggining = new Rectangle("beginning", 0, y, padd * 0.5f, size, 0, new Color(0.4f, 0.4f, 0.4f, 1f));
+        beggining.alpha = 0f;
+        addChild(beggining);
+        ending = new Rectangle("ending", Game.resolutionX - (padd * 0.5f), y, padd * 0.5f, size, 0, new Color(0.4f, 0.4f, 0.4f, 1f));
+        ending.alpha = 0f;
+        addChild(ending);
+
     }
 
     @Override
     public void render(float[] matrixView, float[] matrixProjection){
         //Log.e("menu", "render MenuIcon");
-        checkAnimations();
+        //checkAnimations();
 
         if (!isVisible){
             return;
@@ -55,6 +68,10 @@ public class MenuIcon extends Entity{
         for (int i = 0; i < graph.size();i++){
             graph.get(i).render(matrixView, matrixProjection);
         }
+
+        beggining.render(matrixView, matrixProjection);
+        ending.render(matrixView, matrixProjection);
+
     }
 
     public void blockAllIcons(){
@@ -176,7 +193,7 @@ public class MenuIcon extends Entity{
         float padd = size * 0.1f;
         if (listener == null){
             final MenuIcon innerMenuIcon = this;
-            setListener(new InteractionListener(this.name, x, y, Game.resolutionX, size, 5000, this));
+            setListener(new InteractionListener(this.name, x, y, Game.resolutionX, size*1.25f, 5000, this));
             listener.setPressListener(new InteractionListener.PressListener() {
                 @Override
                 public void onPress() {}
@@ -311,6 +328,7 @@ public class MenuIcon extends Entity{
             if (desacelerationActivated){
                 desacelerationActivated = false;
             }
+            Utils.createSimpleAnimation(ending, "alpha", "alpha", 1200, 1f, 0f).start();
         }
 
         Button firstIcon = icons.get(0);
@@ -320,6 +338,7 @@ public class MenuIcon extends Entity{
             if (desacelerationActivated){
                 desacelerationActivated = false;
             }
+            Utils.createSimpleAnimation(beggining, "alpha", "alpha", 1200, 1f, 0f).start();
         }
 
         for (int i = 0; i < icons.size(); i++){

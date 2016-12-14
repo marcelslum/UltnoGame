@@ -53,6 +53,10 @@ public class Vector{
         return this;
     }
 
+    public static float distanceBetweenTwoPoints(float x1, float y1, float x2, float y2){
+        return (float)Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
     // Normalize this vector.  (make it have length of `1`)
     public Vector normalize(){
         float d = this.len();

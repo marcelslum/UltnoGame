@@ -88,14 +88,17 @@ public class InteractionListener {
             if (pressedOnVerify) {
                 if (myMoveListener == null){
                     Log.e(TAG, "SEM MOVE_LISTENER");
-                    if (!touch.moved){
-                        Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
-                        mode = MODE_PRESS;
-                    }
+                    Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
+                    mode = MODE_PRESS;
+
                 } else {
                     Log.e(TAG, "COM MOVE_LISTENER");
                     // se está escutando o movimento mas o botão foi solto sem se movimentar
-                    if (touch.type == TouchEvent.TOUCH_TYPE_UP && !touch.moved) {
+
+                    float distance = Vector.distanceBetweenTwoPoints(touch.initialX, touch.initialY, touch.x, touch.y);
+                    Log.e(TAG, "distance= "+distance);
+
+                    if (touch.type == TouchEvent.TOUCH_TYPE_UP && (!touch.moved || distance < 50f)){
                         Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_UP && !touch.moved");
                         mode = MODE_PRESS;
                     } else if (touch.type == TouchEvent.TOUCH_TYPE_DOWN) {
@@ -122,8 +125,13 @@ public class InteractionListener {
                 if (myPressListener != null) {
                     myPressListener.onUnpress();
                 }
+                mode = MODE_EMPTY;
             }
-            mode = MODE_EMPTY;
+            if (myMoveListener != null){
+                mode = MODE_EMPTY;
+            }
+
+
         }
 
         if (mode == MODE_PRESS) {

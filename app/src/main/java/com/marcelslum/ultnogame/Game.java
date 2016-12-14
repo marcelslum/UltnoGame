@@ -390,7 +390,6 @@ public class Game {
                 .isHaveArrowContinue(false)
                 .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
                 .build();
-
     }
 
     public static void repositionSelectors(int gameState){
@@ -481,6 +480,7 @@ public class Game {
 
 
     public static void initLevelsData(){
+
         levelsGroupData = new ArrayList<>();
         LevelsGroupData l = new LevelsGroupData("Início", 1, 3, 0, getLevelsConqueredStars(1, 3), Texture.TEXTURE_ICONS, 1);
         l.addLevel("Nível 1", 1, Texture.TEXTURE_ICONS, 1);
@@ -488,10 +488,50 @@ public class Game {
         l.addLevel("Nível 3", 3, Texture.TEXTURE_ICONS, 3);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Obstáculos", 4, 6, 7, getLevelsConqueredStars(4, 6), Texture.TEXTURE_ICONS, 2);
-        l.addLevel("Nível 1", 1, Texture.TEXTURE_ICONS, 4);
-        l.addLevel("Nível 2", 2, Texture.TEXTURE_ICONS, 5);
-        l.addLevel("Nível 3", 3, Texture.TEXTURE_ICONS, 6);
+        l = new LevelsGroupData("Obstáculos", 4, 6, 7, getLevelsConqueredStars(4, 8), Texture.TEXTURE_ICONS, 4);
+        l.addLevel("Nível 4", 4, Texture.TEXTURE_ICONS, 4);
+        l.addLevel("Nível 5", 5, Texture.TEXTURE_ICONS, 5);
+        l.addLevel("Nível 6", 6, Texture.TEXTURE_ICONS, 6);
+        levelsGroupData.add(l);
+
+        l = new LevelsGroupData("Cores", 7, 8, 10, getLevelsConqueredStars(4, 8), Texture.TEXTURE_ICONS, 7);
+        l.addLevel("Nível 7", 7, Texture.TEXTURE_ICONS, 7);
+        l.addLevel("Nível 8", 8, Texture.TEXTURE_ICONS, 8);
+        levelsGroupData.add(l);
+
+        l = new LevelsGroupData("Explosão", 9, 11, 15, getLevelsConqueredStars(9, 11), Texture.TEXTURE_ICONS, 9);
+        l.addLevel("Nível 9", 9, Texture.TEXTURE_ICONS, 9);
+        l.addLevel("Nível 10", 10, Texture.TEXTURE_ICONS, 10);
+        l.addLevel("Nível 11", 11, Texture.TEXTURE_ICONS, 11);
+        levelsGroupData.add(l);
+
+        l = new LevelsGroupData("Roda", 12, 15, 20, getLevelsConqueredStars(12, 15), Texture.TEXTURE_ICONS, 12);
+        l.addLevel("Nível 12", 12, Texture.TEXTURE_ICONS, 12);
+        l.addLevel("Nível 13", 13, Texture.TEXTURE_ICONS, 13);
+        l.addLevel("Nível 14", 14, Texture.TEXTURE_ICONS, 14);
+        l.addLevel("Nível 15", 15, Texture.TEXTURE_ICONS, 15);
+        levelsGroupData.add(l);
+
+        l = new LevelsGroupData("Elástico", 16, 18, 20, getLevelsConqueredStars(16, 18), Texture.TEXTURE_ICONS, 13);
+        l.addLevel("Nível 16", 16, Texture.TEXTURE_ICONS, 1);
+        l.addLevel("Nível 17", 17, Texture.TEXTURE_ICONS, 2);
+        l.addLevel("Nível 18", 18, Texture.TEXTURE_ICONS, 3);
+        levelsGroupData.add(l);
+
+        l = new LevelsGroupData("Vento", 19, 20, 25, getLevelsConqueredStars(19, 20), Texture.TEXTURE_ICONS, 14);
+        l.addLevel("Nível 19", 19, Texture.TEXTURE_ICONS, 1);
+        l.addLevel("Nível 20", 20, Texture.TEXTURE_ICONS, 2);
+        levelsGroupData.add(l);
+
+        l = new LevelsGroupData("Fantasma", 21, 23, 30, getLevelsConqueredStars(21, 23), Texture.TEXTURE_ICONS, 15);
+        l.addLevel("Nível 21", 21, Texture.TEXTURE_ICONS, 1);
+        l.addLevel("Nível 22", 22, Texture.TEXTURE_ICONS, 2);
+        l.addLevel("Nível 23", 23, Texture.TEXTURE_ICONS, 3);
+        levelsGroupData.add(l);
+
+        l = new LevelsGroupData("Invencibilidade", 24, 25, 35, getLevelsConqueredStars(24, 25), Texture.TEXTURE_ICONS, 16);
+        l.addLevel("Nível 24", 24, Texture.TEXTURE_ICONS, 1);
+        l.addLevel("Nível 25", 25, Texture.TEXTURE_ICONS, 2);
         levelsGroupData.add(l);
     }
 
