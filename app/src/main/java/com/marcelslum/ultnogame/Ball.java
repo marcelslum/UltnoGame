@@ -546,22 +546,28 @@ public class Ball extends Circle{
                 Game.ballDataPanel.setData(velocityPercentage, anglePercentage, false);
                 Level.levelObject.levelGoalsObject.notifyNotSpeedChange();
             } else {
-                if (velocityAdd == true){
-                    scalePorcentage += velocityVariation;
-                    Level.levelObject.levelGoalsObject.acelerate();
 
+                float velocityScalePorcentage = ((maxLen - minLen) * velocityVariation)/(maxLen - minLen);
+                Log.e("ball", "velocityScalePorcentage antes "+velocityScalePorcentage);
+                velocityScalePorcentage *= 1 + (percentageOfBarAccelerationApplied * 0.5f);
+                Log.e("ball", "percentageOfBarAccelerationApplied "+percentageOfBarAccelerationApplied);
+                Log.e("ball", "velocityScalePorcentage depois "+velocityScalePorcentage);
+
+                if (velocityAdd == true){
+                    scalePorcentage += velocityScalePorcentage;
+                    Level.levelObject.levelGoalsObject.acelerate();
                 } else  {
-                    scalePorcentage -= velocityVariation;
+                    scalePorcentage -= velocityScalePorcentage;
                     Level.levelObject.levelGoalsObject.decelerate();
                 }
 
-                float possibleVelocityLen = Utils.getVectorMagnitude(vx * scalePorcentage * percentageOfBarAccelerationApplied, vy * scalePorcentage * percentageOfBarAccelerationApplied);
+                float possibleVelocityLen = Utils.getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
                 Log.e("ball", "possibleVelocityLen");
 
                 if (possibleVelocityLen > minLen && possibleVelocityLen < maxLen){
                     Log.e("ball", "ajustando velocidade maior ou menor");
-                    vx = vx * scalePorcentage * percentageOfBarAccelerationApplied;
-                    vy = vy * scalePorcentage * percentageOfBarAccelerationApplied;
+                    vx = vx * scalePorcentage;
+                    vy = vy * scalePorcentage;
 
                     // achievemntAcelerador
                     if (velocityAdd) {
@@ -574,8 +580,8 @@ public class Ball extends Circle{
                     if (possibleVelocityLen < minLen){
                         Level.levelObject.levelGoalsObject.decelerateMinimun();
                         Log.e("ball", "velocidade menor que o mínimo");
-                        vx = vx * scalePorcentage * percentageOfBarAccelerationApplied;
-                        vy = vy * scalePorcentage * percentageOfBarAccelerationApplied;
+                        vx = vx * scalePorcentage;
+                        vy = vy * scalePorcentage;
                         float lenAfter = Utils.getVectorMagnitude(vx, vy);    
                         Log.e("ball", "Len se aplicado: "+lenAfter+ " minLen: "+minLen);
                         float scaleToMin = minLen/lenAfter;
@@ -586,8 +592,8 @@ public class Ball extends Circle{
                     } else if (possibleVelocityLen > maxLen){
                         Level.levelObject.levelGoalsObject.accelerateMaximun();
                         Log.e("ball", "velocidade maior que o máximo");
-                        vx = vx * scalePorcentage * percentageOfBarAccelerationApplied;
-                        vy = vy * scalePorcentage * percentageOfBarAccelerationApplied;
+                        vx = vx * scalePorcentage;
+                        vy = vy * scalePorcentage;
                         float lenAfter = Utils.getVectorMagnitude(vx, vy);
                         Log.e("ball", "Len se aplicado: "+lenAfter+ " maxLen: "+maxLen);
                         float scaleToMax = maxLen/lenAfter;

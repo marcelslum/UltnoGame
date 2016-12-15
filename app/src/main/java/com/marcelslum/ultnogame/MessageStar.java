@@ -12,9 +12,9 @@ public class MessageStar extends Entity {
     public MessageStar(String name, float size) {
         super(name, Game.resolutionX * 0.87f, Game.resolutionX * 0.1f);
         this.size = size;
-        text = new Text("text", x + (size * 1.2f), y, size, "+1", Game.font, new Color(0.3f, 0.3f, 0.3f, 1f));
+        text = new Text("textMessageStar", x + (size * 1.2f), y, size, "+1", Game.font, new Color(0.3f, 0.3f, 0.3f, 1f));
 
-        star = new Image("star", x, y, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS,
+        star = new Image("starMessageStar", x, y, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS,
                 (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
         addChild(text);
         addChild(star);
@@ -32,6 +32,7 @@ public class MessageStar extends Entity {
             return;
         }
 
+        clearAnimations();
         text.setText(textToShow);
 
         display();
@@ -43,6 +44,9 @@ public class MessageStar extends Entity {
 
         final Animation b3 = Utils.createAnimation2v(text, "translateY2", "translateY", 1500, 0f, 0f, 1f, -Game.resolutionX * 0.05f, false, true);
         final Animation b4 = Utils.createAnimation2v(text, "translateX2", "translateX", 1500, 0f, 0f, 1f, Game.resolutionX * 0.05f, false, true);
+
+        final Animation b5 = Utils.createAnimation2v(star, "alpha", "alpha", 1500, 0f, 1f, 1f, 0f, false, true);
+        final Animation b6 = Utils.createAnimation2v(text, "alpha", "alpha", 1500, 0f, 1f, 1f, 0f, false, true);
 
 
         final MessageStar ms = this;

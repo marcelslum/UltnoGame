@@ -53,6 +53,10 @@ public class LevelGoalsPanel extends Entity{
 
     public void appear() {
         display();
+        Sound.play(Sound.soundTextBoxAppear, 0.5f, 0.5f, 0);
+
+
+        //Sound.play(Sound.soundMenuIconDrop, 1, 1, 0);
         float firstY = lines.get(0).texts.get(0).y;
         if (firstY < y + size*0.66f) {
             float lastY = lines.get(lines.size() - 1).texts.get(lines.get(lines.size() - 1).texts.size() - 1).y;

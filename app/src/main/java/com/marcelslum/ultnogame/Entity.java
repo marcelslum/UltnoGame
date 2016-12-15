@@ -2,6 +2,7 @@ package com.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -212,6 +213,10 @@ public class Entity{
         animScaleX = 1f;
         animScaleY = 1f;
         alpha = 1;
+
+        for (int i = 0; i < childs.size(); i++){
+            childs.get(i).clearAnimations();
+        }
     }
 
     void reduceAlpha(int duration, float finalValue){
@@ -368,7 +373,9 @@ public class Entity{
 
     public void render(float[] matrixView, float[] matrixProjection) {
 
-        //if (name == "specialBall") {
+        //if (name == "starMessageStar") {
+            //Log.e("entity", "translateX " + animTranslateX);
+        //}
             //Log.e("entity", "rendering wind");}
 
         if (!isVisible){

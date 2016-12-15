@@ -1071,7 +1071,7 @@ public class Game {
 
             mainActivity.hideAdView();
             if (!sameState) {
-                activateFrame(1000);
+                activateFrame(2000);
             }
             Level.eraseAllTutorials();
             Level.levelObject.loadEntities();
@@ -1084,15 +1084,16 @@ public class Game {
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
                 values.add(new float[]{0f,3f});
-                values.add(new float[]{0.25f,2f});
-                values.add(new float[]{0.5f,1f});
-                values.add(new float[]{0.75f,0f});
+                values.add(new float[]{0.2f,3f});
+                values.add(new float[]{0.4f,2f});
+                values.add(new float[]{0.6f,1f});
+                values.add(new float[]{0.8f,0f});
             final Text innerMessagePreparation = messagePreparation;
             messagePreparation.setText("3");
             messagePreparation.display();
             Sound.play(Sound.soundCounter, 1, 1, 0);
 
-            Animation anim = new Animation(messagePreparation, "messagePreparation", "numberForAnimation", 4000, values, false, false);
+            Animation anim = new Animation(messagePreparation, "messagePreparation", "numberForAnimation", 5000, values, false, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
@@ -1208,14 +1209,20 @@ public class Game {
 
             Level.levelObject.levelGoalsObject.setFinish(stopTimeOfLevelPlay());
 
-            messageTime.setText(getContext().getResources().getString(R.string.tempo_gasto) + " " + messageTime.text);
-
-            float width = messageTime.getWidth();
-
-            Utils.createSimpleAnimation(messageTime, "translateX", "translateX", 2000, 0f, - (messageTime.x - (width * 0.6f))).start();
-            Utils.createSimpleAnimation(messageTime, "scaleX", "scaleX", 2000, 1f, 0.7f).start();
-            Utils.createSimpleAnimation(messageTime, "scaleY", "scaleY", 2000, 0f, 0.7f).start();
-            Utils.createSimpleAnimation(messageTime, "translateY", "translateY", 2000, 0f, Game.resolutionY * 0.18f).start();
+            Animation anim = Utils.createSimpleAnimation(messageTime, "translateX", "translateX", 800, 0f, -resolutionX*2f);
+            anim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    messageTime.setText(getContext().getResources().getString(R.string.tempo_gasto) + " " + messageTime.text);
+                    messageTime.x = resolutionX * 0.05f;
+                    messageTime.y = resolutionY * 0.95f;
+                    messageTime.animTranslateX = 0f;
+                    messageTime.animScaleX = 0.7f;
+                    messageTime.animScaleY = 0.7f;
+                    Utils.createSimpleAnimation(messageTime, "translateX", "translateX", 800, -resolutionX, 0f);
+                }
+            });
+            anim.start();
 
             // TODO o que fazer com a animação quando for pausado
             stopAndReleaseMusic();
@@ -1248,8 +1255,8 @@ public class Game {
             valuesAnimVitoria.add(new float[]{0.2f,2f});
             valuesAnimVitoria.add(new float[]{0.5f,3f});
             valuesAnimVitoria.add(new float[]{0.7f,4f});
-            Animation anim = new Animation(messageInGame, "messageInGameColor", "numberForAnimation", 3000, valuesAnimVitoria, true, false);
-            anim.setOnChangeNotFluid(new Animation.OnChange() {
+            Animation anim2 = new Animation(messageInGame, "messageInGameColor", "numberForAnimation", 3000, valuesAnimVitoria, true, false);
+            anim2.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
                     if (messageInGame.numberForAnimation == 1f){
@@ -1263,7 +1270,7 @@ public class Game {
                     }
                 }
             });
-            anim.start();
+            anim2.start();
             //
 
             // calcula a pontuação final, de acordo com a quantidade de bolas azuis

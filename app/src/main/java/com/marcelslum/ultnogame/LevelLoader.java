@@ -41,7 +41,7 @@ public class LevelLoader {
         if (levelNumber >= 2) {
             levelBuilder
                     .setBallsAngleToRotate_BD_2(4f)//4f
-                    .setBallsMaxAngle_BD_55(2.182f)
+                    .setBallsMaxAngle_BD_55(1.2f)
                     .setBallsMinAngle_BD_35(0.857f)
                     .setBallsVelocityVariation_BD_0_1(2f)
                     .setBallsVelocityMax_BD_1_3(1.467f)

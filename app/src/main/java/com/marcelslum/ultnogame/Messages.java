@@ -35,8 +35,21 @@ public class Messages extends Entity {
 
         textObject.isVisible = true;
 
-        Utils.createAnimation4v(textObject, "translateX", "translateX", 2500,
-                0f, Game.resolutionX, 0.1f, 0f, 0.9f, 0f, 1f, Game.resolutionX, false, true).start();
+        Sound.play(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
+
+        Animation anim1 = Utils.createAnimation3v(textObject, "translateX", "translateX", 2225,
+                0f, Game.resolutionX, 0.1f, 0f, 0.9f, 0f, false, true);
+        anim1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                Utils.createAnimation2v(textObject, "translateX", "translateX", 225,
+                        0f, 0f, 1f,  Game.resolutionX, false, true).start();
+
+                Sound.play(Sound.soundTextBoxAppear, 0.1f, 0.1f, 0);
+            }
+        });
+        anim1.start();
+
         Utils.createSimpleAnimation(textObject, "alpha", "alpha", 2500, 1f, 0.5f, new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
