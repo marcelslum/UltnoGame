@@ -28,8 +28,9 @@ public class LevelGoals {
         timesOfBallReachedWithMaximunBarSpped += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.REACH_BALL_WITH_MAXIMUN_BAR_SPEED && timesOfBallReachedWithMaximunBarSpped == lg.value){
+            if (lg.type == LevelGoal.REACH_BALL_WITH_MAXIMUN_BAR_SPEED && timesOfBallReachedWithMaximunBarSpped == lg.value && !lg.achieved){
                 lg.setAchieved();
+                Game.messages.showMessage(lg.messageText);
             }
         }
     }
@@ -37,8 +38,9 @@ public class LevelGoals {
     public void notifyBallsAlive(int number, int time){
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.KEEP_N_LIVING_BALLS && lg.value == number){
+            if (lg.type == LevelGoal.KEEP_N_LIVING_BALLS && lg.value == number && !lg.achieved){
                 lg.setAchieved();
+                Game.messages.showMessage(lg.messageText + " " + lg.value);
             }
 
             if (lg.type == LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS && !lg.achieved){
@@ -49,6 +51,7 @@ public class LevelGoals {
                     } else {
                         if (time - firstTimeLivingBalls >= lg.value2){
                             lg.setAchieved();
+                            Game.messages.showMessage(lg.messageText + " " + lg.value);
                         }
                     }
                 } else {
@@ -65,9 +68,10 @@ public class LevelGoals {
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.HIT_OBSTACLE_N_TIMES){
-                if (timesOfObstacleHit == lg.value) {
+                if (timesOfObstacleHit == lg.value && !lg.achieved) {
                     lg.setAchieved();
-                } else if (timesOfObstacleHit < lg.value){
+                    Game.messages.showMessage(lg.messageText+" "+lg.value);
+                } else if (timesOfObstacleHit < lg.value && !lg.achieved){
                     Game.messages.showMessage(lg.messageText + " " + timesOfObstacleHit+" / "+lg.value);
                 }
             }
@@ -78,15 +82,13 @@ public class LevelGoals {
         timesOfCollisionBetweenBalls += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.CAUSE_N_COLLISIONS_BETWEEN_BALLS){
+            if (lg.type == LevelGoal.CAUSE_N_COLLISIONS_BETWEEN_BALLS && !lg.achieved){
                 if (timesOfCollisionBetweenBalls == lg.value) {
                     lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText+" "+lg.value);
                 } else if (timesOfCollisionBetweenBalls < lg.value){
                     Game.messages.showMessage(lg.messageText + " " + timesOfCollisionBetweenBalls+" / "+lg.value);
                 }
-
-
-                lg.setAchieved();
             }
         }
     }
@@ -94,15 +96,15 @@ public class LevelGoals {
     public void setFinish(int seconds){
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.JUST_FINISH){
+            if (lg.type == LevelGoal.JUST_FINISH && !lg.achieved){
                 lg.setAchieved();
             }
 
-            if (lg.type == LevelGoal.FINISH_IN_N_SECONDS && seconds <= lg.value){
+            if (lg.type == LevelGoal.FINISH_IN_N_SECONDS && seconds <= lg.value && !lg.achieved){
                 lg.setAchieved();
             }
 
-            if (lg.type == LevelGoal.FINISH_LEVEL_WITHOUT_CHANGE_SPEED && timesOfAccelerate == 0 && timesOfDecelerate == 0){
+            if (lg.type == LevelGoal.FINISH_LEVEL_WITHOUT_CHANGE_SPEED && timesOfAccelerate == 0 && timesOfDecelerate == 0 && !lg.achieved){
                 lg.setAchieved();
             }
         }
@@ -111,8 +113,9 @@ public class LevelGoals {
     public void reachMaximunAngle(){
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.REACH_MAXIMUN_ANGLE){
+            if (lg.type == LevelGoal.REACH_MAXIMUN_ANGLE && !lg.achieved){
                 lg.setAchieved();
+                Game.messages.showMessage(lg.messageText);
             }
         }
     }
@@ -120,8 +123,9 @@ public class LevelGoals {
     public void reachMinimunAngle(){
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.REACH_MINIMUN_ANGLE){
+            if (lg.type == LevelGoal.REACH_MINIMUN_ANGLE && !lg.achieved){
                 lg.setAchieved();
+                Game.messages.showMessage(lg.messageText);
             }
         }
     }
@@ -130,9 +134,10 @@ public class LevelGoals {
         timesOfAngleIncrease += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.INCREASE_ANGLE_N_TIMES){
+            if (lg.type == LevelGoal.INCREASE_ANGLE_N_TIMES && !lg.achieved){
                 if (timesOfAngleIncrease == lg.value) {
                     lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
                 } else if (timesOfAngleIncrease < lg.value){
                     Game.messages.showMessage(lg.messageText + " " + timesOfAngleIncrease+" / "+lg.value);
                 }
@@ -144,10 +149,11 @@ public class LevelGoals {
         timesOfAngleDecrease += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.DECREASE_ANGLE_N_TIMES){
+            if (lg.type == LevelGoal.DECREASE_ANGLE_N_TIMES && !lg.achieved){
                 if (timesOfAngleDecrease == lg.value) {
                     lg.setAchieved();
-                } else if (timesOfAngleDecrease < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesOfAngleDecrease < lg.value && !lg.achieved){
                     Game.messages.showMessage(lg.messageText + " " + timesOfAngleDecrease+" / "+lg.value);
                 }
             }
@@ -157,8 +163,9 @@ public class LevelGoals {
     public void accelerateMaximun(){
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.ACCELERATE_MAXIMUN){
+            if (lg.type == LevelGoal.ACCELERATE_MAXIMUN && !lg.achieved){
                 lg.setAchieved();
+                Game.messages.showMessage(lg.messageText);
             }
         }
     }
@@ -166,8 +173,9 @@ public class LevelGoals {
     public void decelerateMinimun(){
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.DECELERATE_MINIMUN){
+            if (lg.type == LevelGoal.DECELERATE_MINIMUN && !lg.achieved){
                 lg.setAchieved();
+                Game.messages.showMessage(lg.messageText);
             }
         }
     }
@@ -180,7 +188,7 @@ public class LevelGoals {
         timesOfAccelerate += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.ACCELERATE_N_TIMES){
+            if (lg.type == LevelGoal.ACCELERATE_N_TIMES && !lg.achieved){
                 if (timesOfAccelerate == lg.value) {
                     Game.messages.showMessage(lg.messageText + " " + timesOfAccelerate+" / "+lg.value);
                     lg.setAchieved();
@@ -196,7 +204,7 @@ public class LevelGoals {
         timesOfDecelerate += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.DECELERATE_N_TIMES){
+            if (lg.type == LevelGoal.DECELERATE_N_TIMES && !lg.achieved){
                 if (timesOfDecelerate == lg.value) {
                     Game.messages.showMessage(lg.messageText + " " + timesOfDecelerate+" / "+lg.value);
                     lg.setAchieved();
@@ -212,9 +220,10 @@ public class LevelGoals {
         timesOfChangeBallSpeedInARow += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.CHANGE_BALL_SPEED_N_TIMES_IN_A_ROW){
+            if (lg.type == LevelGoal.CHANGE_BALL_SPEED_N_TIMES_IN_A_ROW && !lg.achieved){
                 if (timesOfChangeBallSpeedInARow == lg.value) {
                     lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
                 } else if (timesOfChangeBallSpeedInARow < lg.value){
                     Game.messages.showMessage(lg.messageText + " " + timesOfChangeBallSpeedInARow+" / "+lg.value);
                 }
@@ -237,5 +246,19 @@ public class LevelGoals {
             stars = 5;
         }
         return stars;
+    }
+
+    public void clearAchievements() {
+        for (int i = 0; i < levelGoals.size(); i++){
+            levelGoals.get(i).achieved = false;
+            timesOfAngleDecrease = 0;
+            timesOfAngleIncrease = 0;
+            timesOfAccelerate = 0;
+            timesOfDecelerate = 0;
+            timesOfChangeBallSpeedInARow = 0;
+            timesOfObstacleHit = 0;
+            timesOfCollisionBetweenBalls = 0;
+            timesOfBallReachedWithMaximunBarSpped = 0;
+        }
     }
 }

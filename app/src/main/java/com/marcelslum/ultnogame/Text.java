@@ -319,11 +319,11 @@ public class Text extends Entity{
 
 
 
-    public static ArrayList<Text> splitStringAtMaxWidth(String text, Font font, Color color, float size, float maxWidth){
+    public static ArrayList<Text> splitStringAtMaxWidth(String name, String text, Font font, Color color, float size, float maxWidth){
 
         ArrayList<Text> returnText = new ArrayList<>();
 
-        Text textForMeasure = new Text("text", 0f, 0f, size, text, font, color);
+        Text textForMeasure = new Text(name, 0f, 0f, size, text, font, color);
         float widthOfText = textForMeasure.calculateWidth();
 
         if (widthOfText > maxWidth) {
@@ -364,6 +364,10 @@ public class Text extends Entity{
 
         } else {
             returnText.add(textForMeasure);
+        }
+
+        for (int i = 0; i < returnText.size(); i++){
+            returnText.get(i).name = name + "line" + i;
         }
 
         return returnText;

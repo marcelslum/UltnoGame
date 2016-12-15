@@ -986,6 +986,7 @@ public class Game {
 
             for (int i = 0; i < Level.levelGoalsObject.levelGoals.size(); i++){
                 LevelGoal lg = Level.levelGoalsObject.levelGoals.get(i);
+
                 levelGoalsPanel.addLine(lg.numberOfStars, true, lg.text);
             }
             levelGoalsPanel.appear();
@@ -1065,13 +1066,16 @@ public class Game {
 
         } else if (state == GAME_STATE_PREPARAR){
 
+
+            Level.levelGoalsObject.clearAchievements();
+
             timeOfLevelPlay = 0;
             secondsOfLevelPlay = 0;
             lastSeconds = 0;
 
             mainActivity.hideAdView();
             if (!sameState) {
-                activateFrame(2000);
+                activateFrame(2500);
             }
             Level.eraseAllTutorials();
             Level.levelObject.loadEntities();
@@ -1083,21 +1087,28 @@ public class Game {
             Sound.music.setLooping(true);
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
-                values.add(new float[]{0f,3f});
-                values.add(new float[]{0.2f,3f});
-                values.add(new float[]{0.4f,2f});
-                values.add(new float[]{0.6f,1f});
-                values.add(new float[]{0.8f,0f});
+                values.add(new float[]{0f,5f});
+                values.add(new float[]{0.1666f,4f});
+                values.add(new float[]{0.3333f,3f});
+                values.add(new float[]{0.5f,2f});
+                values.add(new float[]{0.6666f,1f});
+                values.add(new float[]{0.8333f,0f});
             final Text innerMessagePreparation = messagePreparation;
-            messagePreparation.setText("3");
+            messagePreparation.setText("5");
             messagePreparation.display();
             Sound.play(Sound.soundCounter, 1, 1, 0);
 
-            Animation anim = new Animation(messagePreparation, "messagePreparation", "numberForAnimation", 5000, values, false, false);
+            Animation anim = new Animation(messagePreparation, "messagePreparation", "numberForAnimation", 6000, values, false, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
-                    if (innerMessagePreparation.numberForAnimation == 2f){
+                    if (innerMessagePreparation.numberForAnimation == 4f){
+                        Sound.play(Sound.soundCounter, 1, 1, 0);
+                        innerMessagePreparation.setText("4");
+                    } else if (innerMessagePreparation.numberForAnimation == 3f){
+                        Sound.play(Sound.soundCounter, 1, 1, 0);
+                        innerMessagePreparation.setText("3");
+                    } else if (innerMessagePreparation.numberForAnimation == 2f){
                         Sound.play(Sound.soundCounter, 1, 1, 0);
                         innerMessagePreparation.setText("2");
                     } else if (innerMessagePreparation.numberForAnimation == 1f) {
@@ -1201,8 +1212,9 @@ public class Game {
                 messageInGame.setText(getContext().getResources().getString(R.string.pause));
                 messageInGame.increaseAlpha(100, 1f);
                 messageInGame.y = gameAreaResolutionY * 0.25f;
-                messageInGame.display();
+
             }
+                messageInGame.display();
                 menuInGame.appearAndUnblock(300);
 
         } else if (state == GAME_STATE_VITORIA){
@@ -1213,13 +1225,10 @@ public class Game {
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
-                    messageTime.setText(getContext().getResources().getString(R.string.tempo_gasto) + " " + messageTime.text);
-                    messageTime.x = resolutionX * 0.05f;
-                    messageTime.y = resolutionY * 0.95f;
-                    messageTime.animTranslateX = 0f;
-                    messageTime.animScaleX = 0.7f;
-                    messageTime.animScaleY = 0.7f;
-                    Utils.createSimpleAnimation(messageTime, "translateX", "translateX", 800, -resolutionX, 0f);
+                    String previousText = messageTime.text;
+                    messageTime = new Text("messageTime",
+                            Game.resolutionX*0.01f, Game.resolutionY*0.95f, Game.resolutionY*0.04f,getContext().getResources().getString(R.string.tempo_gasto) + " " + previousText, Game.font, new Color(0.1f, 0.1f, 0.1f, 1f));
+                    Utils.createSimpleAnimation(messageTime, "translateX", "translateX", 800, -resolutionX, 0f).start();
                 }
             });
             anim.start();

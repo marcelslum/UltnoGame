@@ -86,7 +86,17 @@ public class LevelGoal{
     }
 
     public void setMessageText(){
-        if (type == ACCELERATE_N_TIMES){
+        if (type == ACCELERATE_MAXIMUN){
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal2m);
+        } else if (type == DECELERATE_MINIMUN){
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal4m);
+        } else if (type == REACH_MAXIMUN_ANGLE){
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal6m);
+        } else if (type == REACH_MINIMUN_ANGLE){
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal7m);
+        } else if (type == REACH_BALL_WITH_MAXIMUN_BAR_SPEED){
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal14m);
+        } else if (type == ACCELERATE_N_TIMES){
             messageText = Game.getContext().getResources().getString(R.string.levelGoal3m);
         } else if (type == DECELERATE_N_TIMES){
             messageText = Game.getContext().getResources().getString(R.string.levelGoal5m);
@@ -97,13 +107,13 @@ public class LevelGoal{
         } else if (type == INCREASE_ANGLE_N_TIMES){
             messageText = Game.getContext().getResources().getString(R.string.levelGoal9m);
         } else if (type == KEEP_N_LIVING_BALLS){
-            Game.getContext().getResources().getString(R.string.levelGoal11m);
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal11m);
         } else if (type == KEEP_N_LIVING_BALLS_FOR_N_SECONDS){
-            Game.getContext().getResources().getString(R.string.levelGoal12m);
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal12m);
         } else if (type == CAUSE_N_COLLISIONS_BETWEEN_BALLS){
-            Game.getContext().getResources().getString(R.string.levelGoal13m);
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal13m);
         } else if (type == HIT_OBSTACLE_N_TIMES){
-            Game.getContext().getResources().getString(R.string.levelGoal15m);
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal15m);
         } else if (type == PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS){
 
         }

@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Messages extends Entity {
@@ -14,12 +16,15 @@ public class Messages extends Entity {
         int childToReplace = -1;
         for (int i = 0; i < childs.size(); i++) {
             if (childs.get(i).isVisible) {
-                numberOfActiveTexts += 0;
+                numberOfActiveTexts += 1;
             } else {
                 childToReplace = i;
                 break;
             }
         }
+
+
+        Log.e("messages", "numberOfActiveTexts "+numberOfActiveTexts);
 
         final Text textObject;
         if (childToReplace != -1){
@@ -38,13 +43,12 @@ public class Messages extends Entity {
         Sound.play(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
 
         Animation anim1 = Utils.createAnimation3v(textObject, "translateX", "translateX", 2225,
-                0f, Game.resolutionX, 0.1f, 0f, 0.9f, 0f, false, true);
+                0f, Game.resolutionX, 0.1f, 0f, 0.9f, -Game.resolutionX * 0.05f, false, true);
         anim1.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
                 Utils.createAnimation2v(textObject, "translateX", "translateX", 225,
-                        0f, 0f, 1f,  Game.resolutionX, false, true).start();
-
+                        0f, -Game.resolutionX * 0.05f, 1f,  Game.resolutionX, false, true).start();
                 Sound.play(Sound.soundTextBoxAppear, 0.1f, 0.1f, 0);
             }
         });

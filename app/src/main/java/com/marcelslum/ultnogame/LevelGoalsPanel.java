@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -23,12 +25,15 @@ public class LevelGoalsPanel extends Entity{
     }
 
     public void addLine(int quantityOfStars, boolean shineStars, String text){
+
+        Log.e("LevelGoalsPanel", "adicionando nova linha "+ text);
+
         float textY = y;
         if (lines.size()> 0) {
             textY = lines.get(lines.size()-1).getBottomY();
         }
         textY += size*0.6f;
-        Line l = new Line(quantityOfStars, text, x, textY, textColor, size, maxTextWidth, shineStars);
+        Line l = new Line(lines.size(), quantityOfStars, text, x, textY, textColor, size, maxTextWidth, shineStars);
         lines.add(l);
         for (int i = 0; i < l.texts.size(); i++){
             addChild(l.texts.get(i));
@@ -148,11 +153,11 @@ public class LevelGoalsPanel extends Entity{
         ArrayList<Image> stars;
         float y;
 
-        Line(int quantityOfStars, String text, float textX, float y, Color textColor, float size, float maxWidth, boolean shineStars) {
+        Line(int numberForName, int quantityOfStars, String text, float textX, float y, Color textColor, float size, float maxWidth, boolean shineStars) {
             this.quantityOfStars = quantityOfStars;
             this.y = y;
             this.shineStars = shineStars;
-            texts = Text.splitStringAtMaxWidth(text, Game.font, textColor, size, maxWidth);
+            texts = Text.splitStringAtMaxWidth("line"+String.valueOf(numberForName), text, Game.font, textColor, size, maxWidth);
             Text.doLinesWithStringCollection(texts, y, size, size * 0.2f, false);
 
             for (int i = 0; i < texts.size(); i++) {

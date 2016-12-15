@@ -372,11 +372,10 @@ public class Entity{
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {
-
-        //if (name == "starMessageStar") {
-            //Log.e("entity", "translateX " + animTranslateX);
+        //if (name == "messageTime") {
+        //Log.e("entity", "translateX " + animTranslateX);
         //}
-            //Log.e("entity", "rendering wind");}
+        //Log.e("entity", "rendering wind");}
 
         if (!isVisible){
             return;

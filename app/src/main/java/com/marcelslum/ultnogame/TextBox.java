@@ -51,7 +51,7 @@ public class TextBox extends Entity{
         }
         this.text = text;
         
-        texts = Text.splitStringAtMaxWidth(text, Game.font, textColor, size, width * 0.9f);
+        texts = Text.splitStringAtMaxWidth(name, text, Game.font, textColor, size, width * 0.9f);
 
         float textPadding = size * padding;
 
