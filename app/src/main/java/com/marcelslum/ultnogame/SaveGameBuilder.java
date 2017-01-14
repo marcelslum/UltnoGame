@@ -19,9 +19,21 @@ public class SaveGameBuilder {
     public boolean music;
     public boolean sound;
     public long date;
+    public boolean newGroupsSeen;
+    public int lastStars;
 
 
     public SaveGameBuilder(){
+    }
+
+    public SaveGameBuilder setLastStars(int lastStars) {
+        this.lastStars = lastStars;
+        return this;
+    }
+
+    public SaveGameBuilder setNewGroupsSeen(boolean newGroupsSeen) {
+        this.newGroupsSeen = newGroupsSeen;
+        return this;
     }
 
     public SaveGameBuilder setMaxNumberOfLevels(int maxNumberOfLevels) {

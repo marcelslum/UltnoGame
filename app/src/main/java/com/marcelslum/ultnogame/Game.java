@@ -541,18 +541,33 @@ public class Game {
         worldMenu.icons.clear();
         worldMenu.texts.clear();
         worldMenu.texts2.clear();
+        worldMenu.innerTexts.clear();
         worldMenu.graph.clear();
 
         updateConqueredStars();
 
+
+        if (SaveGame.saveGame.newGroupsSeen){
+            if (SaveGame.saveGame.lastStars != conqueredStarsTotal){
+                SaveGame.saveGame.newGroupsSeen = false;
+            }
+        }
+
+
         for (int i = 0; i < levelsGroupData.size(); i++){
+
             final LevelsGroupData lgd = levelsGroupData.get(i);
 
             if (conqueredStarsTotal >= lgd.starsToUnlock){
-
                 worldMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
+
+                        if (!SaveGame.saveGame.newGroupsSeen){
+                            SaveGame.saveGame.newGroupsSeen = true;
+                            SaveGame.saveGame.lastStars = conqueredStarsTotal;
+                        }
+
                         currentLevelsGroupDataSelected = lgd;
                         setGameState(GAME_STATE_SELECAO_LEVEL);
                     }
@@ -560,6 +575,12 @@ public class Game {
 
                 worldMenu.addText(1, lgd.name, lgd.name, resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
                 worldMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_BAR);
+
+                if (!SaveGame.saveGame.newGroupsSeen){
+                    if (SaveGame.saveGame.lastStars < lgd.starsToUnlock){
+                        worldMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), resolutionY * 0.035f, resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+                    }
+                }
 
                 int cStars = getLevelsConqueredStars(lgd.firstLevel, lgd.finalLevel);
                 Log.e(TAG, "cStars of world "+ 1 + ": "+ cStars);
@@ -1137,6 +1158,8 @@ public class Game {
                 Sound.music.start();
             }
 
+            messagesStars.reset();
+
             for (int i = 0; i < bars.size(); i++) {
                 if (bars.get(i).scaleVariationData != null){
                     bars.get(i).initScaleVariation();
@@ -1158,6 +1181,16 @@ public class Game {
         } else if (state == GAME_STATE_DERROTA){
             stopAndReleaseMusic();
             Sound.play(Sound.soundGameOver, 1, 1, 0);
+
+
+            int totalStars = 0;
+            for (int i = 0; i < Level.levelObject.levelGoalsObject.levelGoals.size(); i++){
+                if (Level.levelObject.levelGoalsObject.levelGoals.get(i).achieved){
+                    totalStars += Level.levelObject.levelGoalsObject.levelGoals.get(i).numberOfStars;
+                }
+            }
+
+            messagesStars.showAndGoAllGray(totalStars);
 
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);

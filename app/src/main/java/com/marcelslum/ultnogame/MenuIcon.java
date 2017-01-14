@@ -16,6 +16,8 @@ public class MenuIcon extends Entity{
     ArrayList<Button> icons;
     ArrayList<Text> texts;
     ArrayList<Text> texts2;
+    ArrayList<Text> innerTexts;
+
     ArrayList<MenuIconGraph> graph;
     float size;
     private static final String TAG = "MenuIcon";
@@ -32,6 +34,7 @@ public class MenuIcon extends Entity{
         icons = new ArrayList<>();
         texts = new ArrayList<>();
         texts2 = new ArrayList<>();
+        innerTexts = new ArrayList<>();
         graph = new ArrayList<>();
         this.size = size;
 
@@ -64,6 +67,9 @@ public class MenuIcon extends Entity{
         }
         for (int i = 0; i < texts2.size();i++){
             texts2.get(i).render(matrixView, matrixProjection);
+        }
+        for (int i = 0; i < innerTexts.size();i++){
+            innerTexts.get(i).render(matrixView, matrixProjection);
         }
         for (int i = 0; i < graph.size();i++){
             graph.get(i).render(matrixView, matrixProjection);
@@ -98,6 +104,9 @@ public class MenuIcon extends Entity{
         }
         for (int i = 0; i < texts2.size();i++){
             texts2.get(i).display();
+        }
+        for (int i = 0; i < innerTexts.size();i++){
+            innerTexts.get(i).display();
         }
         for (int i = 0; i < graph.size();i++){
             graph.get(i).display();
@@ -138,6 +147,10 @@ public class MenuIcon extends Entity{
             graph.get(i).alpha = 0f;
             graph.get(i).increaseAlpha(1200, 1f);
         }
+        for (int i = 0; i < innerTexts.size(); i++) {
+            innerTexts.get(i).alpha = 0f;
+            innerTexts.get(i).increaseAlpha(1200, 1f);
+        }
 
     }
 
@@ -154,6 +167,9 @@ public class MenuIcon extends Entity{
         }
         for (int i = 0; i < texts2.size();i++){
             texts2.get(i).clearDisplay();
+        }
+        for (int i = 0; i < innerTexts.size();i++){
+            innerTexts.get(i).clearDisplay();
         }
         for (int i = 0; i < graph.size();i++){
             graph.get(i).clearDisplay();
@@ -178,6 +194,23 @@ public class MenuIcon extends Entity{
         }
         addChild(t);
     }
+
+    public void addInnerText(String name, String text, float textSize, float paddFromBottom, Color color){
+        float padd = size * 0.1f;
+
+        int numberOfIconsAdded = icons.size();
+
+        float positionX = x + padd + ((numberOfIconsAdded - 1) * size * 1.1f);
+        float centerPosition = positionX + (size/2);
+        //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
+
+        Text t = new Text(name, centerPosition, y + size - paddFromBottom - textSize, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+        innerTexts.add(t);
+        Utils.createAnimation3v(t, "alphaOscilation", "alpha", 3000, 0f, 1f, 0.7f, 0.5f, 1f, 1f, true, true).start();
+        addChild(t);
+    }
+
+
 
     public void addGraph(String name, float paddFromBottom, float height, int type){
         float padd = size * 0.1f;
@@ -353,6 +386,10 @@ public class MenuIcon extends Entity{
 
         for (int i = 0; i < texts2.size(); i++){
             texts2.get(i).translate(iconTranslateX, 0f);
+        }
+
+        for (int i = 0; i < innerTexts.size(); i++){
+            innerTexts.get(i).translate(iconTranslateX, 0f);
         }
 
         for (int i = 0; i < graph.size(); i++){

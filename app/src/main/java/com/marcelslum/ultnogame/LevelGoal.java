@@ -142,7 +142,16 @@ public class LevelGoal{
 
     public void setAchieved(){
         achieved = true;
-        Game.messagesStars.show("+"+String.valueOf(numberOfStars));
+
+        int totalStars = 0;
+
+        for (int i = 0; i < Level.levelObject.levelGoalsObject.levelGoals.size(); i++){
+            if (Level.levelObject.levelGoalsObject.levelGoals.get(i).achieved){
+                totalStars += Level.levelObject.levelGoalsObject.levelGoals.get(i).numberOfStars;
+            }
+        }
+
+        Game.messagesStars.show(totalStars, numberOfStars);
     }
 
 }

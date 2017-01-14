@@ -1,90 +1,138 @@
 package com.marcelslum.ultnogame;
 
+import java.util.ArrayList;
+
 public class MessageStar extends Entity {
-    Text text;
-    Image star;
+    ArrayList<Image> stars;
     float size;
     boolean isShowing;
     boolean newShowing;
-    String newShowingText;
+    int nextTotalStars;
+    int nextNewStars;
 
 
     public MessageStar(String name, float size) {
-        super(name, Game.resolutionX * 0.87f, Game.resolutionX * 0.1f);
+        super(name, Game.resolutionX - (size * 1.4f), Game.resolutionX * 0.05f);
         this.size = size;
-        text = new Text("textMessageStar", x + (size * 1.2f), y, size, "+1", Game.font, new Color(0.3f, 0.3f, 0.3f, 1f));
+        stars = new ArrayList<>();
 
-        star = new Image("starMessageStar", x, y, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS,
-                (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
-        addChild(text);
-        addChild(star);
+        for (int i = 0; i < 5; i++){
+            Image star = new Image("starMessageStar"+i, x,
+                    y + ((4 - i) * size * 1.2f),
+                    size, size, Texture.TEXTURE_BUTTONS_AND_BALLS,
+                    (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+            stars.add(star);
+            addChild(star);
+        }
         isVisible = false;
         isShowing = false;
         newShowing = false;
     }
 
-    public void show(String textToShow){
+    public void showAndGoAllGray(int totalStars){
+        clearAnimations();
+        display();
+        for (int i = 0; i < 5; i++){
+            stars.get(i).clearAnimations();
+        }
+
+        for (int i = 0; i < totalStars; i++){
+            stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+        }
+
+
+        for (int i = 0; i < 5; i++) {
+            final Image star = stars.get(i);
+
+            final Animation a2 = Utils.createAnimation2v(star, "scaleX2", "scaleX", 250, 0f, 0f, 1f, 1f, false, true);
+            final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size * 0.5f, 1f, 0f, false, true);
+
+            Animation a = Utils.createAnimation4v(star, "scaleX", "scaleX", 750, 0f, 1f, 0.33f, 1f, 0.66f, 1f, 1f, 0f, false, true);
+            Animation ab;
+            if (i < totalStars) {
+                ab = Utils.createAnimation4v(star, "translateX", "translateX", 750, 0f, Game.resolutionX * 0.5f, 0.33f + (1 * 0.02f), 0f, 0.66f, 0f, 1f, size * 0.5f, false, true);
+                a.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        a2.start();
+                        ab2.start();
+                        star.setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+                    }
+                });
+            } else {
+                ab = Utils.createAnimation4v(star, "translateX", "translateX", 750, 0f, Game.resolutionX * 0.5f, 0.33f + (1 * 0.02f), 0f, 0.66f, 0f, 1f, 0f, false, true);
+            }
+            a.start();
+            ab.start();
+        }
+    }
+
+
+    public void show(int totalStars, int newStars){
         if (!isShowing){
             isShowing = true;
+            Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
         } else {
             newShowing = true;
-            newShowingText = textToShow;
+            nextTotalStars = totalStars;
+            nextNewStars = newStars;
             return;
         }
 
         clearAnimations();
-        text.setText(textToShow);
 
         display();
-        star.alpha = 1f;
-        text.alpha = 1f;
 
-        final Animation b1 = Utils.createAnimation2v(star, "translateY2", "translateY", 1500, 0f, 0f, 1f, -Game.resolutionX * 0.05f, false, true);
-        final Animation b2 = Utils.createAnimation2v(star, "translateX2", "translateX", 1500, 0f, 0f, 1f, Game.resolutionX * 0.05f, false, true);
+        for (int i = 0; i < 5; i++){
+            stars.get(i).clearAnimations();
+        }
 
-        final Animation b3 = Utils.createAnimation2v(text, "translateY2", "translateY", 1500, 0f, 0f, 1f, -Game.resolutionX * 0.05f, false, true);
-        final Animation b4 = Utils.createAnimation2v(text, "translateX2", "translateX", 1500, 0f, 0f, 1f, Game.resolutionX * 0.05f, false, true);
+        for (int i = 0; i < totalStars; i++){
+            stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+        }
 
-        final Animation b5 = Utils.createAnimation2v(star, "alpha", "alpha", 1500, 0f, 1f, 1f, 0f, false, true);
-        final Animation b6 = Utils.createAnimation2v(text, "alpha", "alpha", 1500, 0f, 1f, 1f, 0f, false, true);
-
+        for (int i = 0; i < newStars; i++){
+            Utils.createAnimation3v(stars.get(totalStars - 1 - i), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.7f, 1f, 1f, true, false).start();
+        }
 
         final MessageStar ms = this;
-        final String innerNewShowingText = newShowingText;
+        final int innerNextTotalStars = nextTotalStars;
+        final int innerNextNewStars = nextNewStars;
 
-        b4.setAnimationListener(new Animation.AnimationListener() {
+        final Animation anim = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX * 0.5f, 0.2f, 0f,  0.8f,0f,  1f, Game.resolutionX, false, true);
+        anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
                 if (ms.newShowing){
                     ms.newShowing = false;
-                    ms.show(innerNewShowingText);
+                    ms.show(innerNextTotalStars, innerNextNewStars);
                 } else {
                     ms.isShowing = false;
                     clearDisplay();
                 }
             }
         });
+        anim.start();
+        Utils.createAnimation4v(stars.get(1), "translateX1", "translateX", 2000, 0f,
+                Game.resolutionX * 0.5f, 0.2f + (1 * 0.01f), 0f,  0.8f + (1 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+        Utils.createAnimation4v(stars.get(2), "translateX2", "translateX", 2000, 0f,
+                Game.resolutionX * 0.5f, 0.2f + (2 * 0.01f), 0f,  0.8f + (2 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+        Utils.createAnimation4v(stars.get(3), "translateX3", "translateX", 2000, 0f,
+                Game.resolutionX * 0.5f, 0.2f + (3 * 0.01f), 0f,  0.8f + (3 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+        Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
+                Game.resolutionX * 0.5f, 0.2f + (4 * 0.01f), 0f,  0.8f + (4 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
 
-        Animation a = Utils.createAnimation2v(star, "translateY", "animTranslateY", 500, 0f, -Game.resolutionX * 0.2f, 1f, 0f, false, true);
-        a.setAnimationListener(new Animation.AnimationListener() {
-
-            //TODO tocar som da moeda caindo
-
-            @Override
-            public void onAnimationEnd() {
-                b1.start();
-                b2.start();
-                b3.start();
-                b4.start();
-                Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
-            }
-        });
-        a.start();
-        Utils.createAnimation2v(text, "translateY", "animTranslateY", 500, 0f, -Game.resolutionX * 0.2f, 1f, 0f, false, true).start();
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {
-        text.render(matrixView, matrixProjection);
-        star.render(matrixView, matrixProjection);
+        for (int i = 0; i < 5; i++){
+            stars.get(i).render(matrixView, matrixProjection);
+        }
+    }
+
+    public void reset() {
+        for (int i = 0; i < 5; i++){
+            stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+        }
     }
 }

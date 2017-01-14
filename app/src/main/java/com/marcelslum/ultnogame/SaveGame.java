@@ -21,16 +21,15 @@ public class SaveGame {
     public static final int MIN_TIME_BEFORE_RESAVE = 2000;
 
     public int maxNumberOfLevels;
-    //public int currentMaxLevel;
     public int currentLevelNumber;
-    //public int currentDifficulty;
-    //public int[] difficultyLevels;
     public long[] pointsLevels;
     public int[] starsLevels;
     public boolean[] tutorialLevels;
     public boolean music;
     public boolean sound;
     public long date;
+    public int lastStars;
+    public boolean newGroupsSeen;
 
 
     public static boolean loaded = false;
@@ -38,15 +37,15 @@ public class SaveGame {
     public SaveGame(SaveGameBuilder builder) {
         maxNumberOfLevels = builder.maxNumberOfLevels;
         currentLevelNumber = builder.currentLevelNumber;
-        //currentMaxLevel = builder.currentMaxLevel;
-        //currentDifficulty = builder.currentDifficulty;
-        //difficultyLevels = builder.difficultyLevels;
         pointsLevels = builder.pointsLevels;
         starsLevels = builder.starsLevels;
         tutorialLevels = builder.tutorialLevels;
+
         music = builder.music;
         sound = builder.sound;
         date = builder.date;
+        lastStars = builder.lastStars;
+        newGroupsSeen = builder.newGroupsSeen;
     }
 
     public static void load() {
@@ -136,6 +135,8 @@ public class SaveGame {
                     .setPointsLevels(_pointsLevels)
                     .setStarsLevels(_starsLevels)
                     .setTutorialLevels(_tutorialLevels)
+                    .setNewGroupsSeen(true)
+                    .setLastStars(0)
                     .setMusic(true)
                     .setSound(true)
                     .setDate()
@@ -156,6 +157,8 @@ public class SaveGame {
         boolean fmusic;
         boolean fsound;
         long fdate;
+        boolean fnewGroupsSeen;
+        int flastStars;
 
         fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sgLocal.maxNumberOfLevels);
         //fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sgLocal.currentMaxLevel);
@@ -165,6 +168,8 @@ public class SaveGame {
         ftutorialLevels = getHigher(sg1.tutorialLevels, sgLocal.tutorialLevels);
         fpointsLevels = getHigher(sg1.pointsLevels, sgLocal.pointsLevels);
         fstarsLevels = getHigher(sg1.starsLevels, sgLocal.starsLevels);
+        flastStars = getHigher(sg1.lastStars, sgLocal.lastStars);
+        fnewGroupsSeen = sg1.newGroupsSeen || sgLocal.newGroupsSeen;
 
         fmusic = sgLocal.music;
         fsound = sgLocal.sound;
@@ -172,18 +177,16 @@ public class SaveGame {
 
         return new SaveGameBuilder()
                 .setMaxNumberOfLevels(fmaxNumberOfLevels)
-                //.setCurrentMaxLevel(fcurrentMaxLevel)
                 .setCurrentLevelNumber(fcurrentLevelNumber)
-                //.setCurretDifficulty(fcurretDifficulty)
-                //.setDifficultyLevels(fdifficultyLevels)
                 .setTutorialLevels(ftutorialLevels)
                 .setPointsLevels(fpointsLevels)
                 .setStarsLevels(fstarsLevels)
                 .setMusic(fmusic)
                 .setSound(fsound)
                 .setDate(fdate)
+                .setLastStars(flastStars)
+                .setNewGroupsSeen(fnewGroupsSeen)
                 .build();
-
     }
 
 
@@ -286,9 +289,7 @@ public class SaveGame {
             }
 
             saveGameBuilder.setMaxNumberOfLevels(obj.getInt("maxNumberOfLevels"));
-            //saveGameBuilder.setCurrentMaxLevel(obj.getInt("currentMaxLevel"));
             saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
-            //saveGameBuilder.setCurretDifficulty(obj.getInt("currentDifficulty"));
 
             // pontuação dos levels
             long[] pointsLevels = new long[saveGameBuilder.maxNumberOfLevels];
@@ -313,18 +314,20 @@ public class SaveGame {
                 }
             }
 
-            saveGameBuilder.setStarsLevels(starsLevels);
-
-            // maxima dificuldade dos levels
-            /*
-            int[] difficultyLevels = new int[saveGameBuilder.maxNumberOfLevels];
-            array = obj.getJSONArray("difficultyLevels");
-            for (int i = 0; i < difficultyLevels.length; i++) {
-                difficultyLevels[i] = array.getInt(i);
+            try {
+                saveGameBuilder.setLastStars(obj.getInt("lastStars"));
+            } catch(JSONException e) {
+                saveGameBuilder.setLastStars(0);
             }
-            saveGameBuilder.setDifficultyLevels(difficultyLevels);
-            */
 
+            try {
+                saveGameBuilder.setNewGroupsSeen(obj.getBoolean("newGroupsSeen"));
+            } catch(JSONException e) {
+                saveGameBuilder.setNewGroupsSeen(true);
+            }
+
+
+            saveGameBuilder.setStarsLevels(starsLevels);
 
             boolean[] tutorialLevels = new boolean[saveGameBuilder.maxNumberOfLevels];
             array = obj.getJSONArray("tutorialLevels");
@@ -354,10 +357,6 @@ public class SaveGame {
         return null;
     }
 
-    public static void saveStringOnLocal() {
-        Storage.setString(SHARED_PREFERENCES_KEY_NAME, getStringFromSaveGame(saveGame));
-    }
-
     public static String getStringFromLocal() {
         return Storage.getString(SHARED_PREFERENCES_KEY_NAME);
     }
@@ -367,13 +366,12 @@ public class SaveGame {
             JSONObject obj = new JSONObject();
             obj.put("version", SERIAL_VERSION);
             obj.put("maxNumberOfLevels", saveGame.maxNumberOfLevels);
-            //obj.put("currentMaxLevel", saveGame.currentMaxLevel);
             obj.put("currentLevelNumber", saveGame.currentLevelNumber);
-            //obj.put("currentDifficulty", saveGame.currentDifficulty);
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
             obj.put("starsLevels", new JSONArray(saveGame.starsLevels));
-            //obj.put("difficultyLevels", new JSONArray(saveGame.difficultyLevels));
             obj.put("tutorialLevels", new JSONArray(saveGame.tutorialLevels));
+            obj.put("lastStars", saveGame.lastStars);
+            obj.put("newGroupsSeen", saveGame.newGroupsSeen);
             obj.put("music", saveGame.music);
             obj.put("sound", saveGame.sound);
             obj.put("date", saveGame.date);
