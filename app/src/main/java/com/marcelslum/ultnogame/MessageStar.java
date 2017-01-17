@@ -44,13 +44,14 @@ public class MessageStar extends Entity {
         for (int i = 0; i < 5; i++) {
             final Image star = stars.get(i);
 
-            final Animation a2 = Utils.createAnimation2v(star, "scaleX2", "scaleX", 250, 0f, 0f, 1f, 1f, false, true);
-            final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size * 0.5f, 1f, 0f, false, true);
-
-            Animation a = Utils.createAnimation4v(star, "scaleX", "scaleX", 750, 0f, 1f, 0.33f, 1f, 0.66f, 1f, 1f, 0f, false, true);
             Animation ab;
             if (i < totalStars) {
                 ab = Utils.createAnimation4v(star, "translateX", "translateX", 750, 0f, Game.resolutionX * 0.5f, 0.33f + (1 * 0.02f), 0f, 0.66f, 0f, 1f, size * 0.5f, false, true);
+
+                final Animation a2 = Utils.createAnimation2v(star, "scaleX2", "scaleX", 250, 0f, 0f, 1f, 1f, false, true);
+                final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size * 0.5f, 1f, 0f, false, true);
+
+                Animation a = Utils.createAnimation4v(star, "scaleX", "scaleX", 750, 0f, 1f, 0.33f, 1f, 0.66f, 1f, 1f, 0f, false, true);
                 a.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
@@ -59,10 +60,11 @@ public class MessageStar extends Entity {
                         star.setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
                     }
                 });
+                a.start();
+
             } else {
                 ab = Utils.createAnimation4v(star, "translateX", "translateX", 750, 0f, Game.resolutionX * 0.5f, 0.33f + (1 * 0.02f), 0f, 0.66f, 0f, 1f, 0f, false, true);
             }
-            a.start();
             ab.start();
         }
     }
@@ -92,7 +94,7 @@ public class MessageStar extends Entity {
         }
 
         for (int i = 0; i < newStars; i++){
-            Utils.createAnimation3v(stars.get(totalStars - 1 - i), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.7f, 1f, 1f, true, false).start();
+            Utils.createAnimation3v(stars.get(totalStars - 1 - i), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, false).start();
         }
 
         final MessageStar ms = this;

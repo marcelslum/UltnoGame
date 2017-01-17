@@ -111,9 +111,11 @@ public class LevelGoalsPanel extends Entity{
         }
     }
 
-    public void shineLines() {
+    public void shineLines(boolean playSound) {
         if (gray) {
-            Sound.play(Sound.soundSuccess2, 0.5f, 0.5f, 0);
+            if (playSound) {
+                Sound.play(Sound.soundSuccess2, 0.5f, 0.5f, 0);
+            }
             gray = false;
             for (int l = 0; l < lines.size(); l++) {
                 if (Level.levelObject.levelGoalsObject.levelGoals.get(l).achieved) {
@@ -143,6 +145,18 @@ public class LevelGoalsPanel extends Entity{
                 }
             }
         }
+    }
+
+    public void appearGrayAndShine() {
+        appearGray();
+        final LevelGoalsPanel inner = this;
+
+        Utils.createSimpleAnimation(this, "Timer", "Timer", 800, 1f, 1f, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                inner.shineLines(false);
+            }
+        }).start();
     }
 
 

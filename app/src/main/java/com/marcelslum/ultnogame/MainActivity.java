@@ -246,8 +246,11 @@ public class MainActivity extends FragmentActivity implements
             onPause();
             moveTaskToBack(true);
         } else if (Game.gameState != Game.GAME_STATE_INTRO){
-            Log.e("findStateMenu", "2");
             Game.setGameState(Game.GAME_STATE_MENU);
+        } else if (Game.gameState != Game.GAME_STATE_PAUSE){
+            Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
+        } else if (Game.gameState != Game.GAME_STATE_OBJETIVO_PAUSE){
+            Game.setGameState(Game.GAME_STATE_PAUSE);
         }
     }
 

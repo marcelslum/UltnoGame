@@ -56,6 +56,7 @@ public class Game {
     static Menu menuOptions;
     static Menu menuInGame;
     static Menu menuInGameOptions;
+    static Menu menuGameOver;
     static Menu menuTutorial;
     //static Menu menuWin;
     static Menu menuObjectives;
@@ -64,6 +65,7 @@ public class Game {
     static Selector selectorMusic;
     static Selector selectorSound;
     static Button buttonReturn;
+    static Button buttonReturnObjectivesPause;
     static Button buttonContinue;
     static LevelGoalsPanel levelGoalsPanel;
 
@@ -168,6 +170,7 @@ public class Game {
     public final static int GAME_STATE_RESULTADO_LEVEL =  23;
     public final static int GAME_STATE_MENU_TUTORIAL =  24;
     public final static int GAME_STATE_INTERSTITIAL =  25;
+    public final static int GAME_STATE_OBJETIVO_PAUSE =  26;
 
     //public final static int DIFFICULTY_EASY = 0;
     //public final static int DIFFICULTY_NORMAL = 1;
@@ -422,6 +425,21 @@ public class Game {
                 } else if (Game.gameState == GAME_STATE_SELECAO_MUNDO){setGameState(GAME_STATE_MENU);
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_LEVEL){setGameState(GAME_STATE_SELECAO_LEVEL);
                 } else if (Game.gameState == GAME_STATE_MENU_TUTORIAL){setGameState(GAME_STATE_OBJETIVO_LEVEL);
+                } else if (Game.gameState == GAME_STATE_OBJETIVO_PAUSE){setGameState(GAME_STATE_PAUSE);
+                }
+            }
+        });
+
+        buttonReturnObjectivesPause = new Button("buttonReturnObjectivesPause", buttonSize*0.5f, gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        buttonReturnObjectivesPause.setTextureMap(13);
+        buttonReturnObjectivesPause.textureMapUnpressed = 13;
+        buttonReturnObjectivesPause.textureMapPressed = 5;
+        buttonReturnObjectivesPause.setOnPress(new Button.OnPress() {
+            @Override
+            public void onPress() {
+                Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                if (Game.gameState == GAME_STATE_OBJETIVO_PAUSE){
+                    setGameState(GAME_STATE_PAUSE);
                 }
             }
         });
@@ -767,18 +785,29 @@ public class Game {
             }
         });
 
+        // ----------------------------------------------------MENU GAME OVER
+        menuGameOver = new Menu("menuGameOver",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, fontSize, font);
 
-        // ----------------------------------------------------MENU WIN
-        /*
-        menuWin = new Menu("menuWin",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, fontSize, font);
-        menuWin.addMenuOption("Continuar", getContext().getResources().getString(R.string.continuarDepoisVitoria), new MenuOption.OnChoice() {
+        // adiciona a opção continuar
+        menuGameOver.addMenuOption("Continuar", getContext().getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                Game.menuGameOver.block();
+                Game.blockAndWaitTouchRelease();
+                LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+                Game.menuInGame.clearDisplay();
+                Game.setGameState(GAME_STATE_PREPARAR);
+            }
+        });
 
+        // adiciona a opção de voltar ao menu principal
+        menuGameOver.addMenuOption("RetornarAoMenuPrincipal", getContext().getResources().getString(R.string.sairDoJogo), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
                 setGameState(GAME_STATE_INTERSTITIAL);
             }
         });
-        */
+
 
         // ----------------------------------------------------MENU IN GAME
         menuInGame = new Menu("menuInGame",gameAreaResolutionX*0.5f, gameAreaResolutionY*0.5f, fontSize, font);
@@ -789,11 +818,7 @@ public class Game {
             public void onChoice() {
                 Game.menuInGame.block();
                 Game.blockAndWaitTouchRelease();
-                if (Game.gameState == GAME_STATE_DERROTA){
-                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                    Game.menuInGame.clearDisplay();
-                    Game.setGameState(GAME_STATE_PREPARAR);
-                } else if (Game.gameState == GAME_STATE_PAUSE){
+                if (Game.gameState == GAME_STATE_PAUSE){
                     Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
                     Game.increaseAllGameEntitiesAlpha(500);
                     Game.messageInGame.reduceAlpha(500,0f);
@@ -803,6 +828,18 @@ public class Game {
                             Game.setGameState(GAME_STATE_JOGAR);
                         }
                     });
+                }
+            }
+        });
+
+        // adiciona a opção de mostrar objetivos
+        menuInGame.addMenuOption("objetivos", getContext().getResources().getString(R.string.objetivos), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.menuInGame.block();
+                Game.blockAndWaitTouchRelease();
+                if (Game.gameState == GAME_STATE_PAUSE){
+                    Game.setGameState(GAME_STATE_OBJETIVO_PAUSE);
                 }
             }
         });
@@ -988,6 +1025,9 @@ public class Game {
         gameState = state;
         Game.blockAndWaitTouchRelease();
         clearAllMenuEntities();
+        if (messagesStars != null) {
+            messagesStars.clearDisplay();
+        }
         timeOfLevelPlayBlocked = true;
 
         if (state == GAME_STATE_INTERSTITIAL){
@@ -1017,6 +1057,12 @@ public class Game {
             buttonContinue.unblock();
             buttonReturn.unblock();
             buttonReturn.display();
+        } else if (state == GAME_STATE_OBJETIVO_PAUSE){
+            levelGoalsPanel.appearGrayAndShine();
+            messageMenu.display();
+            messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
+            buttonReturnObjectivesPause.unblock();
+            buttonReturnObjectivesPause.display();
         } else if (state == GAME_STATE_SELECAO_MUNDO){
             updateWorldMenu();
             worldMenu.appear();
@@ -1158,6 +1204,7 @@ public class Game {
                 Sound.music.start();
             }
 
+
             messagesStars.reset();
 
             for (int i = 0; i < bars.size(); i++) {
@@ -1179,6 +1226,7 @@ public class Game {
 
             freeAllGameEntities();
         } else if (state == GAME_STATE_DERROTA){
+
             stopAndReleaseMusic();
             Sound.play(Sound.soundGameOver, 1, 1, 0);
 
@@ -1194,7 +1242,7 @@ public class Game {
 
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
-            menuInGame.appearAndUnblock(1000);
+            menuGameOver.appearAndUnblock(1000);
             messageGameOver.display();
 
             if (scorePanel.value > 0) {
@@ -1209,6 +1257,9 @@ public class Game {
                 }
             }
         } else if (state == GAME_STATE_PAUSE){
+            buttonReturnObjectivesPause.block();
+            buttonReturnObjectivesPause.clearDisplay();
+
 
             stopTimeOfLevelPlay();
 
@@ -1366,7 +1417,7 @@ public class Game {
                         ballGoalsPanel.clearExplosions();
                         levelGoalsPanel.appearGray();
                     } else if (levelGoalsPanel.gray) {
-                        levelGoalsPanel.shineLines();
+                        levelGoalsPanel.shineLines(true);
                     } else{
                         buttonContinue.display();
                         buttonContinue.unblock();
@@ -1993,6 +2044,7 @@ public class Game {
 
         if (menuMain != null) menuMain.checkTransformations(true);
         if (menuInGame != null) menuInGame.checkTransformations(true);
+        if (menuGameOver != null) menuGameOver.checkTransformations(true);
         if (menuTutorial != null) menuTutorial.checkTransformations(true);
         if (menuObjectives != null) menuObjectives.checkTransformations(true);
         if (selectorLevel != null) selectorLevel.checkTransformations(true);
@@ -2090,7 +2142,7 @@ public class Game {
         
         if (menuMain != null) menuMain.prepareRender(matrixView, matrixProjection);
         if (menuInGame != null) menuInGame.prepareRender(matrixView, matrixProjection);
-        //if (menuWin != null) menuWin.prepareRender(matrixView, matrixProjection);
+        if (menuGameOver != null) menuGameOver.prepareRender(matrixView, matrixProjection);
         if (menuTutorial != null) menuTutorial.prepareRender(matrixView, matrixProjection);
         if (menuObjectives != null) menuObjectives.prepareRender(matrixView, matrixProjection);
         if (selectorLevel != null) selectorLevel.prepareRender(matrixView, matrixProjection);
@@ -2099,8 +2151,6 @@ public class Game {
         if (worldMenu != null)worldMenu.prepareRender(matrixView, matrixProjection);
         if (levelMenu != null)levelMenu.prepareRender(matrixView, matrixProjection);
         if (levelGoalsPanel != null) levelGoalsPanel.prepareRender(matrixView, matrixProjection);
-        if (buttonReturn != null)buttonReturn.prepareRender(matrixView, matrixProjection);
-        if (buttonContinue != null)buttonContinue.prepareRender(matrixView, matrixProjection);
         if (menuInGameOptions != null)menuInGameOptions.prepareRender(matrixView, matrixProjection);
         if (selectorDificulty != null)selectorDificulty.prepareRender(matrixView, matrixProjection);
         if (selectorMusic != null)selectorMusic.prepareRender(matrixView, matrixProjection);
@@ -2121,7 +2171,7 @@ public class Game {
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
         starForMessage.prepareRender(matrixView, matrixProjection);
-        messagesStars.prepareRender(matrixView, matrixProjection);
+        if (messagesStars != null) messagesStars.prepareRender(matrixView, matrixProjection);
 
         if (messageTime != null) messageTime.prepareRender(matrixView, matrixProjection);
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
@@ -2137,6 +2187,10 @@ public class Game {
         if (button1Right != null) button1Right.prepareRender(matrixView, matrixProjection);
         if (button2Left != null) button2Left.prepareRender(matrixView, matrixProjection);
         if (button2Right != null) button2Right.prepareRender(matrixView, matrixProjection);
+
+        if (buttonReturn != null)buttonReturn.prepareRender(matrixView, matrixProjection);
+        if (buttonReturnObjectivesPause != null)buttonReturnObjectivesPause.prepareRender(matrixView, matrixProjection);
+        if (buttonContinue != null)buttonContinue.prepareRender(matrixView, matrixProjection);
 
         bottomTextBox.prepareRender(matrixView, matrixProjection);
         
@@ -2163,7 +2217,7 @@ public class Game {
         }
         if (menuMain != null) menuMain.verifyListener();
         if (menuInGame != null) menuInGame.verifyListener();
-        //if (menuWin != null) menuWin.verifyListener();
+        if (menuGameOver != null) menuGameOver.verifyListener();
         if (menuTutorial != null) menuTutorial.verifyListener();
         if (menuObjectives != null) menuObjectives.verifyListener();
         if (selectorLevel != null) selectorLevel.verifyListener();
@@ -2172,6 +2226,7 @@ public class Game {
         if (levelMenu != null)levelMenu.verifyListener();
         // levelGoalsPanel não precisa de listener???
         if (buttonReturn != null)buttonReturn.verifyListener();
+        if (buttonReturnObjectivesPause != null)buttonReturnObjectivesPause.verifyListener();
         if (buttonContinue != null)buttonContinue.verifyListener();
         if (menuInGameOptions != null)menuInGameOptions.verifyListener();
         if (selectorDificulty != null)selectorDificulty.verifyListener();
@@ -2204,6 +2259,7 @@ public class Game {
         list.add(levelMenu);
         list.add(levelGoalsPanel);
         list.add(buttonReturn);
+        list.add(buttonReturnObjectivesPause);
         list.add(buttonContinue);
         list.add(menuInGameOptions);
         list.add(selectorLevel);
@@ -2212,7 +2268,7 @@ public class Game {
         list.add(selectorSound);
         list.add(selectorLevel);
         list.add(menuInGame);
-        //list.add(menuWin);
+        list.add(menuGameOver);
         list.add(menuTutorial);
         list.add(menuObjectives);
         list.add(tittle);
