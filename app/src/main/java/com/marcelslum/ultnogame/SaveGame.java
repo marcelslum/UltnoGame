@@ -24,7 +24,7 @@ public class SaveGame {
     public int currentLevelNumber;
     public long[] pointsLevels;
     public int[] starsLevels;
-    public boolean[] tutorialLevels;
+    public boolean[] tutorialsViwed;
     public boolean music;
     public boolean sound;
     public long date;
@@ -39,7 +39,7 @@ public class SaveGame {
         currentLevelNumber = builder.currentLevelNumber;
         pointsLevels = builder.pointsLevels;
         starsLevels = builder.starsLevels;
-        tutorialLevels = builder.tutorialLevels;
+        tutorialsViwed = builder.tutorialsViwed;
 
         music = builder.music;
         sound = builder.sound;
@@ -123,18 +123,14 @@ public class SaveGame {
             Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
             long[] _pointsLevels = new long[Level.maxNumberOfLevels];
             int[] _starsLevels = new int[Level.maxNumberOfLevels];
-            //int[] _difficultyLevels = new int[Level.maxNumberOfLevels];
-            boolean[] _tutorialLevels = new boolean[Level.maxNumberOfLevels];
+            boolean[] _tutorialsViwed = new boolean[Game.numberOfTutorials];
 
             saveGame = new SaveGameBuilder()
                     .setMaxNumberOfLevels(Level.maxNumberOfLevels)
-                    //.setCurrentMaxLevel(1)
                     .setCurrentLevelNumber(1)
-                    //.setCurretDifficulty(Game.DIFFICULTY_EASY)
-                    //.setDifficultyLevels(_difficultyLevels)
                     .setPointsLevels(_pointsLevels)
                     .setStarsLevels(_starsLevels)
-                    .setTutorialLevels(_tutorialLevels)
+                    .setTutorialsViwed(_tutorialsViwed)
                     .setNewGroupsSeen(true)
                     .setLastStars(0)
                     .setMusic(true)
@@ -147,13 +143,10 @@ public class SaveGame {
 
     public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sgLocal) {
         int fmaxNumberOfLevels;
-        //int fcurrentMaxLevel;
         int fcurrentLevelNumber;
-        //int fcurretDifficulty;
-        //int[] fdifficultyLevels;
         long[] fpointsLevels;
         int[] fstarsLevels;
-        boolean[] ftutorialLevels;
+        boolean[] ftutorialsViwed;
         boolean fmusic;
         boolean fsound;
         long fdate;
@@ -161,11 +154,8 @@ public class SaveGame {
         int flastStars;
 
         fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sgLocal.maxNumberOfLevels);
-        //fcurrentMaxLevel = getHigher(sg1.currentMaxLevel, sgLocal.currentMaxLevel);
         fcurrentLevelNumber = sgLocal.currentLevelNumber;
-        //fcurretDifficulty = sgLocal.currentDifficulty;
-        //fdifficultyLevels = getHigher(sg1.difficultyLevels, sgLocal.difficultyLevels);
-        ftutorialLevels = getHigher(sg1.tutorialLevels, sgLocal.tutorialLevels);
+        ftutorialsViwed = getHigher(sg1.tutorialsViwed, sgLocal.tutorialsViwed);
         fpointsLevels = getHigher(sg1.pointsLevels, sgLocal.pointsLevels);
         fstarsLevels = getHigher(sg1.starsLevels, sgLocal.starsLevels);
         flastStars = getHigher(sg1.lastStars, sgLocal.lastStars);
@@ -178,7 +168,7 @@ public class SaveGame {
         return new SaveGameBuilder()
                 .setMaxNumberOfLevels(fmaxNumberOfLevels)
                 .setCurrentLevelNumber(fcurrentLevelNumber)
-                .setTutorialLevels(ftutorialLevels)
+                .setTutorialsViwed(ftutorialsViwed)
                 .setPointsLevels(fpointsLevels)
                 .setStarsLevels(fstarsLevels)
                 .setMusic(fmusic)
@@ -329,12 +319,12 @@ public class SaveGame {
 
             saveGameBuilder.setStarsLevels(starsLevels);
 
-            boolean[] tutorialLevels = new boolean[saveGameBuilder.maxNumberOfLevels];
+            boolean[] tutorialsViwed = new boolean[Game.numberOfTutorials];
             array = obj.getJSONArray("tutorialLevels");
-            for (int i = 0; i < tutorialLevels.length; i++) {
-                tutorialLevels[i] = array.getBoolean(i);
+            for (int i = 0; i < tutorialsViwed.length; i++) {
+                tutorialsViwed[i] = array.getBoolean(i);
             }
-            saveGameBuilder.setTutorialLevels(tutorialLevels);
+            saveGameBuilder.setTutorialsViwed(tutorialsViwed);
 
             saveGameBuilder.setMusic(obj.getBoolean("music"));
             saveGameBuilder.setSound(obj.getBoolean("sound"));
@@ -369,7 +359,7 @@ public class SaveGame {
             obj.put("currentLevelNumber", saveGame.currentLevelNumber);
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
             obj.put("starsLevels", new JSONArray(saveGame.starsLevels));
-            obj.put("tutorialLevels", new JSONArray(saveGame.tutorialLevels));
+            obj.put("tutorialsViwed", new JSONArray(saveGame.tutorialsViwed));
             obj.put("lastStars", saveGame.lastStars);
             obj.put("newGroupsSeen", saveGame.newGroupsSeen);
             obj.put("music", saveGame.music);

@@ -9,11 +9,8 @@ public class SaveGameBuilder {
     private static final String TAG = "SaveGameBuilder";
 
     public int maxNumberOfLevels;
-    public int currentMaxLevel;
     public int currentLevelNumber;
-    public int currentDifficulty;
-    public int[] difficultyLevels;
-    public boolean[] tutorialLevels;
+    public boolean[] tutorialsViwed;
     public long[] pointsLevels;
     public int[] starsLevels;
     public boolean music;
@@ -50,8 +47,8 @@ public class SaveGameBuilder {
         return this;
     }
     
-    public SaveGameBuilder setTutorialLevels(boolean [] tutorialLevels) {
-        this.tutorialLevels = tutorialLevels;
+    public SaveGameBuilder setTutorialsViwed(boolean [] tutorialViwed) {
+        this.tutorialsViwed = tutorialsViwed;
         return this;
     }
 

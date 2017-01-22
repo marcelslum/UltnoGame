@@ -90,7 +90,7 @@ public class TextBox extends Entity{
             arrowContinuar.setOnPress(new Button.OnPress() {
                 @Override
                 public void onPress() {
-                    Level.levelObject.nextTutorial();
+                    //TODO tirar a arrowcontinue???????????
                 }
             });
             addChild(arrowContinuar);

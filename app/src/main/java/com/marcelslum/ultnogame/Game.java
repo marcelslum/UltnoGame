@@ -27,6 +27,8 @@ public class Game {
     static boolean forInitGame;
 
     static int basePoints = 10;
+
+    static int numberOfTutorials = 20;
     /*
     static float difficultyVelocityBarMultiplicator;
     static float difficultyVelocityObstacleMultiplicator;
@@ -50,6 +52,15 @@ public class Game {
     static final int OBSTACLES_WEIGHT = 7;
     static final int TARGET_WEIGHT = 10;
     static final int BAR_WEIGHT = 8;
+
+    static final int TUTORIAL_INSTRUCOES_INICIAIS = 0;
+    static final int TUTORIAL_VELOCIDADE = 1;
+    static final int TUTORIAL_OBSTACULO = 2;
+    static final int TUTORIAL_EXPLOSAO = 3;
+    static int currentTutorial;
+    static Tutorial currentTutorialObject;
+    static Image tutorialImage;
+    static TextBox tutorialTextBox;
 
     // entities
     static Menu menuMain;
@@ -461,19 +472,19 @@ public class Game {
                 if (Game.gameState == GAME_STATE_VITORIA){
                     setGameState(GAME_STATE_INTERSTITIAL);
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_LEVEL){
-                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                    TutorialLoader.loadTutorial(SaveGame.saveGame.currentLevelNumber);
-                    if (Level.levelObject.tutorials.size() > 0) {
-                        if (!SaveGame.saveGame.tutorialLevels[SaveGame.saveGame.currentLevelNumber - 1]) {
-                            SaveGame.saveGame.tutorialLevels[SaveGame.saveGame.currentLevelNumber - 1] = true;
-                            Level.levelObject.loadEntities();
-                            Game.setGameState(GAME_STATE_TUTORIAL);
-                        } else {
-                            Game.setGameState(GAME_STATE_MENU_TUTORIAL);
-                        }
+                    int levelNumber = SaveGame.saveGame.currentLevelNumber;
+                    currentTutorial = 0;
+                    if (levelNumber > 0 && levelNumber < 4){
+                        currentTutorial = TUTORIAL_INSTRUCOES_INICIAIS;
+                    }
+                    if (!SaveGame.saveGame.tutorialsViwed[currentTutorial]){
+                        Game.setGameState(GAME_STATE_TUTORIAL);
                     } else {
+                        Level.levelObject.loadEntities();
                         Game.setGameState(GAME_STATE_PREPARAR);
                     }
+                } else if (Game.gameState == GAME_STATE_TUTORIAL){
+                        currentTutorialObject.next();
                 }
             }
         });
@@ -674,7 +685,6 @@ public class Game {
             levelMenu.graph.get(i).setPercentage(percentage);
         }
     }
-
 
     public static void initMenus(){
 
@@ -945,7 +955,6 @@ public class Game {
     static void addText(Text text){
         texts.add(text);
     }
-
     static void addInteracionListener(InteractionListener listener) {
         if (interactionListeners == null){
             interactionListeners = new ArrayList<InteractionListener>();
@@ -960,17 +969,13 @@ public class Game {
         //Log.e("game", " adicionando listener "+listener.name);
         interactionListeners.add(listener);
     }
-
-
     public static int stopTimeOfLevelPlay(){
         timeOfLevelPlayBlocked = true;
         return secondsOfLevelPlay;
     }
-
     public static void resumeTimeOfLevelPlay(){
         timeOfLevelPlayBlocked = false;
     }
-
     public static void updateTimeOfLevelPlay(long timeElapsed){
         if (timeOfLevelPlayBlocked){
             return;
@@ -1015,8 +1020,6 @@ public class Game {
             }
         }
     }
-
-
     public static void blockAndWaitTouchRelease(){isBlocked = true;}
 
     public static void setGameState(int state){
@@ -1128,7 +1131,6 @@ public class Game {
             stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();
-            Level.eraseAllTutorials();
             messageSplash1.clearDisplay();
             if (messageSplash2 != null) {
                 messageSplash2.clearDisplay();
@@ -1156,7 +1158,6 @@ public class Game {
             if (!sameState) {
                 activateFrame(2500);
             }
-            Level.eraseAllTutorials();
             Level.levelObject.loadEntities();
             int musicNumber = SaveGame.saveGame.currentLevelNumber - ((int)Math.floor(SaveGame.saveGame.currentLevelNumber / 7)*SaveGame.saveGame.currentLevelNumber);
             //if (musicNumber == 1){
@@ -1549,9 +1550,18 @@ public class Game {
         } else if (state == GAME_STATE_TUTORIAL) {
             mainActivity.hideAdView();
             if (!sameState) {
-                activateFrame(500);
+                activateFrame(1000);
             }
-            Level.levelObject.showFirstTutorial();
+
+            if (currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS) {
+                Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.05f,
+                        resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                        (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+                currentTutorialObject = new Tutorial();
+                currentTutorialObject.addFrame(i1, "este é um teste para ver se está aparecendo direito o texto do primeiro tutorial",
+                resolutionX * 0.5f, resolutionX * 0.05f);
+            }
+            currentTutorialObject.showFirst();
         }
     }
 
@@ -1900,7 +1910,7 @@ public class Game {
         }
 
         // atualiza os dados da entidade, aplicando todas as transformações setadas
-        verifyTransformations();
+        checkTransformations();
 
         if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
             // atualiza posição das windows
@@ -2079,7 +2089,7 @@ public class Game {
         }
     }
     
-    static void verifyTransformations(){
+    static void checkTransformations(){
 
         if (wind != null){
             wind.checkTransformations(true);
@@ -2133,16 +2143,13 @@ public class Game {
 
         if (tittle != null) tittle.checkTransformations(true);
 
-        if (gameState == GAME_STATE_TUTORIAL){
-            if (Level.levelObject.tutorials.size() >  Level.levelObject.showingTutorial){
-                Level.levelObject.tutorials.get(Level.levelObject.showingTutorial).textBox.checkTransformations(true);
-            }
-        }
+        if (tutorialImage != null) tutorialImage.checkTransformations(true);
+        if (tutorialTextBox != null) tutorialTextBox.checkTransformations(true);
+
 
         messageGameOver.checkTransformations(true);
         messagePreparation.checkTransformations(true);
         messageInGame.checkTransformations(true);
-        //messageCurrentLevel.checkTransformations(true);
         messageMaxScoreTotal.checkTransformations(true);
         messageConqueredStarsTotal.checkTransformations(true);
         starForMessage.checkTransformations(true);
@@ -2168,8 +2175,6 @@ public class Game {
         if (imageTutorialTop != null) imageTutorialTop.checkTransformations(true);
 
         if (messages != null) messages.checkTransformations(true);
-
-
     }
 
     static void render(float[] matrixView, float[] matrixProjection){
@@ -2230,17 +2235,13 @@ public class Game {
         if (selectorSound != null)selectorSound.prepareRender(matrixView, matrixProjection);
         if (tittle != null) {tittle.prepareRender(matrixView, matrixProjection);}
 
-        if (gameState == GAME_STATE_TUTORIAL){
-            if (Level.levelObject.tutorials.size() >  Level.levelObject.showingTutorial){
-                Level.levelObject.tutorials.get(Level.levelObject.showingTutorial).textBox.prepareRender(matrixView, matrixProjection);
-            }
-        }
+        if (tutorialImage != null) tutorialImage.prepareRender(matrixView, matrixProjection);
+        if (tutorialTextBox != null) tutorialTextBox.prepareRender(matrixView, matrixProjection);
 
         messageGameOver.prepareRender(matrixView, matrixProjection);
         messagePreparation.prepareRender(matrixView, matrixProjection);
         messageInGame.prepareRender(matrixView, matrixProjection);
         messageMenu.prepareRender(matrixView, matrixProjection);
-        //messageCurrentLevel.prepareRender(matrixView, matrixProjection);
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
         starForMessage.prepareRender(matrixView, matrixProjection);
@@ -2306,11 +2307,7 @@ public class Game {
         if (selectorDificulty != null)selectorDificulty.verifyListener();
         if (selectorMusic != null)selectorMusic.verifyListener();
         if (selectorSound != null)selectorSound.verifyListener();
-        if (gameState == GAME_STATE_TUTORIAL){
-            if (Level.levelObject.tutorials.size() >  Level.levelObject.showingTutorial){
-                Level.levelObject.tutorials.get(Level.levelObject.showingTutorial).textBox.verifyListener();
-            }
-        }
+
         if (button1Left != null) button1Left.verifyListener();
         if (button1Right != null) button1Right.verifyListener();
         if (button2Left != null) button2Left.verifyListener();
@@ -2332,6 +2329,8 @@ public class Game {
         list.add(worldMenu);
         list.add(levelMenu);
         list.add(levelGoalsPanel);
+        list.add(tutorialImage);// TODO ????
+        list.add(tutorialTextBox);// TODO ????
         list.add(buttonReturn);
         list.add(buttonReturnObjectivesPause);
         list.add(buttonContinue);

@@ -10,12 +10,11 @@ import java.util.ArrayList;
  */
 public class Level {
 
+    public static Game game;
+    public int tutorialAttached;
     public static final int WIND_TYPE_NO = 0;
     public static final int WIND_TYPE_RIGHT = 1;
     public static final int WIND_TYPE_LEFT = 2;
-    ArrayList<Tutorial> tutorials;
-    int showingTutorial = -1;
-    public Game game;
     public int ballsQuantity;
     public int minBallsAlive;
     public float[] ballsRadius_BR;
@@ -64,22 +63,13 @@ public class Level {
     public float specialBallPercentage = 0.0f;
     public float windType;
 
+
     public static Level levelObject;
     public static LevelGoals levelGoalsObject;
 
     public static final int maxNumberOfLevels = 100;
 
-    public static void eraseAllTutorials() {
-        if (levelObject != null) {
-            for (int i = 0; i < levelObject.tutorials.size(); i++) {
-                levelObject.tutorials.get(i).textBox = null;
-                levelObject.tutorials.clear();
-            }
-        }
-    }
-
     private Level(){
-
         this.ballsQuantity = LevelBuilder.ballsQuantity;
         this.minBallsAlive = LevelBuilder.minBallsAlive;
         this.ballsRadius_BR = LevelBuilder.ballsRadius_BR;
@@ -126,48 +116,7 @@ public class Level {
         this.windowsVelocity = LevelBuilder.windowsVelocity;
         this.specialBallPercentage = LevelBuilder.specialBallPercentage;
         this.windType = LevelBuilder.windType;
-        this.tutorials = new ArrayList<>();
-    }
-    
-    public void showFirstTutorial(){
-        showingTutorial = 0;
-        tutorials.get(0).textBox.alpha = 0f;
-        tutorials.get(0).show(Sound.soundTextBoxAppear);
-    }
-
-    public void nextTutorial(){
-        Log.e("level", "nextTutorial");
-        Log.e("level", "showingTutorial "+showingTutorial);
-        final Level innerLevel = this;
-        Game.blockAndWaitTouchRelease();
-        if (tutorials.get(this.showingTutorial).isBlocked == false){
-            Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
-            if (showingTutorial + 1 == this.tutorials.size()){
-
-                Log.e("level", "ultimo tutorail, setando preparar");
-
-                this.tutorials.get(this.showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
-                    @Override
-                    public void onUnshowAfterAnim2() {
-                        Game.setGameState(Game.GAME_STATE_PREPARAR);
-                    }
-                });
-                this.tutorials.get(this.showingTutorial).unshow();
-            } else {
-                Log.e("level", "showingTutorial "+showingTutorial);
-                tutorials.get(showingTutorial).setOnUnshowAfterAnim2(new Tutorial.OnUnshowAfterAnim2() {
-                    @Override
-                    public void onUnshowAfterAnim2() {
-                        //Log.e("level", "onUnshowAfterAnim2");
-                        innerLevel.showingTutorial = innerLevel.showingTutorial + 1;
-                        innerLevel.tutorials.get(innerLevel.showingTutorial).show(Sound.soundTextBoxAppear);
-                    }
-                });
-                tutorials.get(showingTutorial).unshow();
-
-                //Log.e("level", "showingTutorial depois"+showingTutorial);
-            }
-        }
+        this.tutorialAttached = LevelBuilder.tutorialAttached;
     }
 
     public void loadEntities() {
@@ -536,6 +485,12 @@ public class Level {
         private static float specialBallPercentage;
         private static int windType = Level.WIND_TYPE_NO;
         private static ArrayList<LevelGoal> levelGoals;
+        public static int tutorialAttached;
+
+        public LevelBuilder setTutorialAttached(int _tutorialAttached) {
+            tutorialAttached = _tutorialAttached;
+            return this;
+        }
 
         public LevelBuilder setBallsQuantity(int _ballsQuantity) {
             ballsQuantity = _ballsQuantity;
