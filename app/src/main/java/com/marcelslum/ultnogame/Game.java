@@ -122,7 +122,6 @@ public class Game {
     private static Text messageGameOver;
     private static Text messagePreparation;
     private static Text messageInGame;
-    //private static Text messageCurrentLevel;
     private static Text messageMaxScoreTotal;
     private static Text messageConqueredStarsTotal;
     private static Image starForMessage;
@@ -138,6 +137,7 @@ public class Game {
 
     public static MenuIcon worldMenu;
     public static MenuIcon levelMenu;
+    public static MenuIcon tutorialMenu;
 
     public static LevelsGroupData currentLevelsGroupDataSelected;
     
@@ -178,7 +178,6 @@ public class Game {
     public final static int GAME_STATE_SELECAO_MUNDO =  20;
     public final static int GAME_STATE_SELECAO_LEVEL =  21;
     public final static int GAME_STATE_OBJETIVO_LEVEL =  22;
-    public final static int GAME_STATE_RESULTADO_LEVEL =  23;
     public final static int GAME_STATE_MENU_TUTORIAL =  24;
     public final static int GAME_STATE_INTERSTITIAL =  25;
     public final static int GAME_STATE_OBJETIVO_PAUSE =  26;
@@ -310,8 +309,6 @@ public class Game {
         Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000);
     }
 
-
-
     public static void initTittle(){
         tittle = new Image("tittle",
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.2f,
@@ -344,7 +341,6 @@ public class Game {
         animTittle.start();
 
     }
-
 
     public static void initTexts(){
 
@@ -441,9 +437,9 @@ public class Game {
                 if (Game.gameState == GAME_STATE_SELECAO_LEVEL){setGameState(GAME_STATE_SELECAO_MUNDO);
                 } else if (Game.gameState == GAME_STATE_SELECAO_MUNDO){setGameState(GAME_STATE_MENU);
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_LEVEL){setGameState(GAME_STATE_SELECAO_LEVEL);
-                } else if (Game.gameState == GAME_STATE_MENU_TUTORIAL){setGameState(GAME_STATE_OBJETIVO_LEVEL);
+                } else if (Game.gameState == GAME_STATE_MENU_TUTORIAL){setGameState(GAME_STATE_MENU);
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_PAUSE){setGameState(GAME_STATE_PAUSE);
-                }
+                } else if (Game.gameState == GAME_STATE_TUTORIAL){currentTutorialObject.previous();}
             }
         });
 
@@ -480,7 +476,6 @@ public class Game {
                     if (!SaveGame.saveGame.tutorialsViwed[currentTutorial]){
                         Game.setGameState(GAME_STATE_TUTORIAL);
                     } else {
-                        Level.levelObject.loadEntities();
                         Game.setGameState(GAME_STATE_PREPARAR);
                     }
                 } else if (Game.gameState == GAME_STATE_TUTORIAL){
@@ -489,7 +484,6 @@ public class Game {
             }
         });
     }
-
 
     public static int updateConqueredStars(){
         int numberOfStars = 0;
@@ -513,7 +507,6 @@ public class Game {
         }
         return numberOfStars;
     }
-
 
     public static void initLevelsData(){
 
@@ -581,13 +574,11 @@ public class Game {
 
         updateConqueredStars();
 
-
         if (SaveGame.saveGame.newGroupsSeen){
             if (SaveGame.saveGame.lastStars != conqueredStarsTotal){
                 SaveGame.saveGame.newGroupsSeen = false;
             }
         }
-
 
         for (int i = 0; i < levelsGroupData.size(); i++){
 
@@ -650,6 +641,13 @@ public class Game {
         levelMenu.texts2.clear();
         levelMenu.graph.clear();
 
+
+        for (int i = 0; i < levelsGroupData.size(); i++){
+
+
+        }
+
+
         if (currentLevelsGroupDataSelected == null){
             currentLevelsGroupDataSelected = levelsGroupData.get(0);
         }
@@ -686,6 +684,53 @@ public class Game {
         }
     }
 
+    public static void updateTutorialMenu(){
+        tutorialMenu.icons.clear();
+        tutorialMenu.texts.clear();
+        tutorialMenu.texts2.clear();
+        tutorialMenu.graph.clear();
+
+        if (conqueredStarsTotal >= levelsGroupData.get(0).starsToUnlock){
+            tutorialMenu.addOption(0, Texture.TEXTURE_TUTORIAL_ICONS, 1, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    currentTutorial = TUTORIAL_INSTRUCOES_INICIAIS;
+                    setGameState(GAME_STATE_TUTORIAL);
+                }
+            }, false);
+
+            tutorialMenu.addText(1, getContext().getResources().getString(R.string.tutorial1Tittle), getContext().getResources().getString(R.string.tutorial1Tittle),
+                    resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+        }
+
+        if (currentLevelsGroupDataSelected == null){
+            currentLevelsGroupDataSelected = levelsGroupData.get(0);
+        }
+
+
+        for (int i = 0; i < currentLevelsGroupDataSelected.levelsData.size(); i++){
+            final LevelsGroupData.LevelData ld = currentLevelsGroupDataSelected.levelsData.get(i);
+
+            levelMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
+
+            float percentage = 0f;
+            float starsOfLevel = SaveGame.saveGame.starsLevels[ld.number-1];
+            if (starsOfLevel == 1){
+                percentage = 0.2f;
+            } else if (starsOfLevel == 2){
+                percentage = 0.4f;
+            } else if (starsOfLevel == 3){
+                percentage = 0.6f;
+            } else if (starsOfLevel == 4){
+                percentage = 0.8f;
+            } else if (starsOfLevel == 5){
+                percentage = 1f;
+            }
+
+            levelMenu.graph.get(i).setPercentage(percentage);
+        }
+    }
+
     public static void initMenus(){
 
         float fontSize = gameAreaResolutionY*0.08f;
@@ -695,6 +740,8 @@ public class Game {
 
         levelMenu = new MenuIcon("levelMenu", 0f, resolutionY * 0.3f, resolutionY * 0.4f);
         updateLevelMenu();
+
+        tutorialMenu = new MenuIcon("tutorialMenu", 0f, resolutionY * 0.3f, resolutionY * 0.4f);
 
         // -------------------------------------------MENU OBJETIVOS
         //menuObjectives = new Menu("menuObjectives", resolutionX*0.5f, resolutionY*0.87f, fontSize, font);
@@ -788,16 +835,21 @@ public class Game {
             @Override
             public void onChoice() {
                 GooglePlayGames.showAchievements(mainActivity.mGoogleApiClient, mainActivity);
-
-                //setGameState(GAME_STATE_RANKING);
             }
         });
 
         menuMain.addMenuOption("ranking", getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                //setGameState(GAME_STATE_RANKING);
                 GooglePlayGames.showLeaderboards(mainActivity.mGoogleApiClient, mainActivity);
+            }
+        });
+
+        menuMain.addMenuOption("tutorial", getContext().getResources().getString(R.string.tutoriais), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                setGameState(GAME_STATE_MENU_TUTORIAL);
+
             }
         });
 
@@ -900,16 +952,7 @@ public class Game {
             }
         });
 
-        // ----------------------MENU TUTORIAL
-        menuTutorial = new Menu("menuTutorial", gameAreaResolutionX/2, gameAreaResolutionY/2, fontSize, font);
-        menuTutorial.addMenuOption("exibirTutorial", getContext().getResources().getString(R.string.menuTutorialExibirTutorial), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {Game.setGameState(GAME_STATE_TUTORIAL);}
-        });
-        menuTutorial.addMenuOption("PularTutorial", getContext().getResources().getString(R.string.menuTutorialPularTutorial), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {Game.setGameState(GAME_STATE_PREPARAR);}
-        });
+
     }
 
     public static void initPrograms(){
@@ -1069,7 +1112,7 @@ public class Game {
             messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             buttonReturnObjectivesPause.unblock();
             buttonReturnObjectivesPause.display();
-        } else if (state == GAME_STATE_SELECAO_MUNDO){
+        } else if (state == GAME_STATE_SELECAO_MUNDO) {
             updateWorldMenu();
             worldMenu.appear();
             messageMenu.display();
@@ -1078,12 +1121,15 @@ public class Game {
             buttonReturn.unblock();
             starForMessage.display();
             messageConqueredStarsTotal.display();
-
-            messageConqueredStarsTotal.y =  resolutionY*0.15f;
-            starForMessage.y = resolutionY*0.15f;
-
-
-
+            messageConqueredStarsTotal.y = resolutionY * 0.15f;
+            starForMessage.y = resolutionY * 0.15f;
+        } else if (state == GAME_STATE_MENU_TUTORIAL){
+            messageMenu.display();
+            messageMenu.setText(getContext().getResources().getString(R.string.messageMenuTutorial));
+            updateTutorialMenu();
+            tutorialMenu.appear();
+            buttonReturn.display();
+            buttonReturn.unblock();
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
             updateLevelMenu();
             levelMenu.appear();
@@ -1150,6 +1196,11 @@ public class Game {
 
             Level.levelGoalsObject.clearAchievements();
 
+            buttonContinue.clearDisplay();
+            buttonContinue.block();
+            buttonReturn.clearDisplay();
+            buttonReturn.block();
+
             timeOfLevelPlay = 0;
             secondsOfLevelPlay = 0;
             lastSeconds = 0;
@@ -1158,6 +1209,9 @@ public class Game {
             if (!sameState) {
                 activateFrame(2500);
             }
+
+
+            LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
             Level.levelObject.loadEntities();
             int musicNumber = SaveGame.saveGame.currentLevelNumber - ((int)Math.floor(SaveGame.saveGame.currentLevelNumber / 7)*SaveGame.saveGame.currentLevelNumber);
             //if (musicNumber == 1){
@@ -1548,21 +1602,45 @@ public class Game {
                 }
             ).start();
         } else if (state == GAME_STATE_TUTORIAL) {
-            mainActivity.hideAdView();
+            if (previousState == GAME_STATE_MENU_TUTORIAL) {
+                Log.e(TAG, "limpando menu tutorial");
+                messageMenu.clearDisplay();
+                tutorialMenu.clearDisplay();
+                tutorialMenu.block();
+            }
             if (!sameState) {
-                activateFrame(1000);
+                activateFrame(500);
             }
 
-            if (currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS) {
-                Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.05f,
-                        resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
-                        (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
-                currentTutorialObject = new Tutorial();
-                currentTutorialObject.addFrame(i1, "este é um teste para ver se está aparecendo direito o texto do primeiro tutorial",
-                resolutionX * 0.5f, resolutionX * 0.05f);
+            mainActivity.hideAdView();
+
+            loadTutorial();
+            if (previousState == GAME_STATE_MENU_TUTORIAL) {
+                currentTutorialObject.showFirst(true);
+            } else {
+                currentTutorialObject.showFirst(false);
             }
-            currentTutorialObject.showFirst();
         }
+    }
+
+    public static void loadTutorial(){
+        if (currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS) {
+            Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.05f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+
+            Image i2 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.05f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+
+            currentTutorialObject = new Tutorial();
+            currentTutorialObject.addFrame(i1, "este é um teste para ver se está aparecendo direito o texto do primeiro tutorial",
+                    resolutionX * 0.5f, resolutionX * 0.03f);
+
+            currentTutorialObject.addFrame(i2, "este é um teste para ver se está aparecendo direito o texto do primeiro tutorial",
+                    resolutionX * 0.5f, resolutionX * 0.03f);
+        }
+
     }
 
     public static void stopAndReleaseMusic(){
@@ -1795,37 +1873,6 @@ public class Game {
         return scoreTotal;
     }
 
-    /*
-    static void changeDifficulty(int selectedValue) {
-        if (selectedValue == 0){
-            basePoints = POINTS_EASY;
-            SaveGame.saveGame.currentDifficulty = DIFFICULTY_EASY;
-            difficultyVelocityBarMultiplicator = BAR_EASY;
-            difficultyVelocityObstacleMultiplicator = OBSTACLE_EASY;
-            difficultyVelocityBallMultiplicator = BALL_EASY;
-        } else if (selectedValue == 1){
-            basePoints = POINTS_NORMAL;
-            SaveGame.saveGame.currentDifficulty = DIFFICULTY_NORMAL;
-            difficultyVelocityBarMultiplicator = BAR_NORMAL;
-            difficultyVelocityObstacleMultiplicator = OBSTACLE_NORMAL;
-            difficultyVelocityBallMultiplicator = BALL_NORMAL;
-        } else if (selectedValue == 2){
-            basePoints = POINTS_HARD;
-            SaveGame.saveGame.currentDifficulty = DIFFICULTY_HARD;
-            difficultyVelocityBarMultiplicator = BAR_HARD;
-            difficultyVelocityObstacleMultiplicator = OBSTACLE_HARD;
-            difficultyVelocityBallMultiplicator = BALL_HARD;
-        } else if (selectedValue == 3){
-            basePoints = POINTS_INSANE;
-            SaveGame.saveGame.currentDifficulty = DIFFICULTY_INSANE;
-            difficultyVelocityBarMultiplicator = BAR_INSANE;
-            difficultyVelocityObstacleMultiplicator = OBSTACLE_INSANE;
-            difficultyVelocityBallMultiplicator = BALL_INSANE;
-        }
-        SaveGame.saveGame.currentDifficulty = selectedValue;
-    }
-    */
-
     private static void changeLevel(int level) {
         SaveGame.saveGame.currentLevelNumber = level;
     }
@@ -1863,7 +1910,7 @@ public class Game {
         }
 
         // atualiza posição da barra
-        if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
+        if (gameState == GAME_STATE_JOGAR) {
                 float timePercentage = (float) elapsed / frameDuration;
             if (bars != null) {
                 if (bars.size() == 1) {
@@ -1912,7 +1959,7 @@ public class Game {
         // atualiza os dados da entidade, aplicando todas as transformações setadas
         checkTransformations();
 
-        if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
+        if (gameState == GAME_STATE_JOGAR) {
             // atualiza posição das windows
             for (int i = 0; i < windows.size(); i++){
                 if (windows.get(i).isActive){
@@ -1971,7 +2018,7 @@ public class Game {
         }
         
         // verifica a colisão da barra
-        if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
+        if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < 2; i++) {
                 Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true);
                 Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true);
@@ -1983,11 +2030,6 @@ public class Game {
                 Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true);
                 Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true);
             }
-            quad.clear();
-        }
-        
-        // limpa o quadtree, preparando o próximo frame
-        if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
             quad.clear();
         }
 
@@ -2013,7 +2055,7 @@ public class Game {
         } else if(gameState == GAME_STATE_VITORIA){
             background.move(3);
         }
-        if (gameState == GAME_STATE_JOGAR || gameState == GAME_STATE_TUTORIAL) {
+        if (gameState == GAME_STATE_JOGAR) {
             verifyWin();
         }
     }
@@ -2135,6 +2177,7 @@ public class Game {
         if (menuOptions != null)menuOptions.checkTransformations(true);
         if (worldMenu != null)worldMenu.checkTransformations(true);
         if (levelMenu != null)levelMenu.checkTransformations(true);
+        if (tutorialMenu != null)tutorialMenu.checkTransformations(true);
         if (levelGoalsPanel != null) levelGoalsPanel.checkTransformations(true);
         if (menuInGameOptions != null)menuInGameOptions.checkTransformations(true);
         if (selectorDificulty != null)selectorDificulty.checkTransformations(true);
@@ -2228,6 +2271,7 @@ public class Game {
         if (menuOptions != null)menuOptions.prepareRender(matrixView, matrixProjection);
         if (worldMenu != null)worldMenu.prepareRender(matrixView, matrixProjection);
         if (levelMenu != null)levelMenu.prepareRender(matrixView, matrixProjection);
+        if (tutorialMenu != null)tutorialMenu.prepareRender(matrixView, matrixProjection);
         if (levelGoalsPanel != null) levelGoalsPanel.prepareRender(matrixView, matrixProjection);
         if (menuInGameOptions != null)menuInGameOptions.prepareRender(matrixView, matrixProjection);
         if (selectorDificulty != null)selectorDificulty.prepareRender(matrixView, matrixProjection);
@@ -2299,6 +2343,7 @@ public class Game {
         if (menuOptions != null)menuOptions.verifyListener();
         if (worldMenu != null)worldMenu.verifyListener();
         if (levelMenu != null)levelMenu.verifyListener();
+        if (tutorialMenu != null)tutorialMenu.verifyListener();
         // levelGoalsPanel não precisa de listener???
         if (buttonReturn != null)buttonReturn.verifyListener();
         if (buttonReturnObjectivesPause != null)buttonReturnObjectivesPause.verifyListener();
@@ -2328,6 +2373,7 @@ public class Game {
         list.add(menuOptions);
         list.add(worldMenu);
         list.add(levelMenu);
+        list.add(tutorialMenu);
         list.add(levelGoalsPanel);
         list.add(tutorialImage);// TODO ????
         list.add(tutorialTextBox);// TODO ????

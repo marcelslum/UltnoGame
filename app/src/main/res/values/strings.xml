@@ -134,7 +134,7 @@
     <string name="mensagem_jogar">Jogar!</string>
     <string name="sairDoJogo">Sair do jogo</string>
     <string name="retornarAoMenuPrincipal">Voltar</string>
-    <string name="messageMenuTutorial">Escolha uma opção:</string>
+    <string name="messageMenuTutorial">Tutoriais disponíveis:</string>
     <string name="message_sem_estrelas">Grupo bloqueado. Sem estrelas suficientes</string>
     <string name="tenha">Tenha</string>
     <string name="estrelas">estrelas</string>
@@ -185,6 +185,8 @@
     <string name="levelGoal14m">Barra na velocidade máxima</string>
     <string name="novo">Novo</string>
     <string name="objetivos">Objetivos</string>
+    <string name="tutoriais">Tutoriais</string>
+    <string name="tutorial1Tittle">Início</string>
 
 
 </resources>

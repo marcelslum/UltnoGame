@@ -1,4 +1,39 @@
 
+/*
+    static void changeDifficulty(int selectedValue) {
+        if (selectedValue == 0){
+            basePoints = POINTS_EASY;
+            SaveGame.saveGame.currentDifficulty = DIFFICULTY_EASY;
+            difficultyVelocityBarMultiplicator = BAR_EASY;
+            difficultyVelocityObstacleMultiplicator = OBSTACLE_EASY;
+            difficultyVelocityBallMultiplicator = BALL_EASY;
+        } else if (selectedValue == 1){
+            basePoints = POINTS_NORMAL;
+            SaveGame.saveGame.currentDifficulty = DIFFICULTY_NORMAL;
+            difficultyVelocityBarMultiplicator = BAR_NORMAL;
+            difficultyVelocityObstacleMultiplicator = OBSTACLE_NORMAL;
+            difficultyVelocityBallMultiplicator = BALL_NORMAL;
+        } else if (selectedValue == 2){
+            basePoints = POINTS_HARD;
+            SaveGame.saveGame.currentDifficulty = DIFFICULTY_HARD;
+            difficultyVelocityBarMultiplicator = BAR_HARD;
+            difficultyVelocityObstacleMultiplicator = OBSTACLE_HARD;
+            difficultyVelocityBallMultiplicator = BALL_HARD;
+        } else if (selectedValue == 3){
+            basePoints = POINTS_INSANE;
+            SaveGame.saveGame.currentDifficulty = DIFFICULTY_INSANE;
+            difficultyVelocityBarMultiplicator = BAR_INSANE;
+            difficultyVelocityObstacleMultiplicator = OBSTACLE_INSANE;
+            difficultyVelocityBallMultiplicator = BALL_INSANE;
+        }
+        SaveGame.saveGame.currentDifficulty = selectedValue;
+    }
+    */
+
+    ____________________________________
+
+
+
 package com.marcelslum.ultnogame;
 
 import java.util.ArrayList;

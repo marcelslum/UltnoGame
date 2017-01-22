@@ -47,7 +47,7 @@ public class SaveGameBuilder {
         return this;
     }
     
-    public SaveGameBuilder setTutorialsViwed(boolean [] tutorialViwed) {
+    public SaveGameBuilder setTutorialsViwed(boolean [] tutorialsViwed) {
         this.tutorialsViwed = tutorialsViwed;
         return this;
     }

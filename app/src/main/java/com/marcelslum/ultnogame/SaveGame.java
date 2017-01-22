@@ -40,7 +40,6 @@ public class SaveGame {
         pointsLevels = builder.pointsLevels;
         starsLevels = builder.starsLevels;
         tutorialsViwed = builder.tutorialsViwed;
-
         music = builder.music;
         sound = builder.sound;
         date = builder.date;
@@ -271,7 +270,6 @@ public class SaveGame {
         if (json == null || json.trim().equals("")) return null;
         SaveGameBuilder saveGameBuilder = new SaveGameBuilder();
         try {
-
             JSONObject obj = new JSONObject(json);
             String format = obj.getString("version");
             if (!format.equals(SERIAL_VERSION)) {
@@ -320,11 +318,23 @@ public class SaveGame {
             saveGameBuilder.setStarsLevels(starsLevels);
 
             boolean[] tutorialsViwed = new boolean[Game.numberOfTutorials];
-            array = obj.getJSONArray("tutorialLevels");
             for (int i = 0; i < tutorialsViwed.length; i++) {
-                tutorialsViwed[i] = array.getBoolean(i);
+                tutorialsViwed[i] = false;
             }
+
+            try {
+                array = obj.getJSONArray("tutorialViewed");
+                for (int i = 0; i < tutorialsViwed.length; i++) {
+                    tutorialsViwed[i] = array.getBoolean(i);
+                }
+            } catch(JSONException e) {
+                for (int i = 0; i < tutorialsViwed.length; i++) {
+                    tutorialsViwed[i] = false;
+                }
+            }
+
             saveGameBuilder.setTutorialsViwed(tutorialsViwed);
+
 
             saveGameBuilder.setMusic(obj.getBoolean("music"));
             saveGameBuilder.setSound(obj.getBoolean("sound"));
