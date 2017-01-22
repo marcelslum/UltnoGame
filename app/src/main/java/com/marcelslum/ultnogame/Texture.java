@@ -22,9 +22,10 @@ public class Texture {
     public final static int TEXTURE_NUMBERS_EXPLOSION_OBSTACLE = 5;
     public final static int TEXTURE_TITTLE = 6;
     public final static int TEXTURE_SPECIAL_BALL = 7;
-    public final static int TEXTURE_ICONS = 8;
+    public final static int TEXTURE_LEVEL_ICONS = 8;
     public final static int TEXTURE_TUTORIAL1 = 9;
     public final static int TEXTURE_TUTORIAL_ICONS = 10;
+    public final static int TEXTURE_GROUP_ICONS = 11;
 
 
     public static int MAX_TEXTURES = 8;
@@ -57,9 +58,10 @@ public class Texture {
         Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1c"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_ICONS, "drawable/icones_levels"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_LEVEL_ICONS, "drawable/icones_levels"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/icones_grupos"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_GROUP_ICONS, "drawable/icones_grupos"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL1, "drawable/tutoriais1"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/icones_levels"));
     }
 
     Texture(int id, String resourceIdentifier){

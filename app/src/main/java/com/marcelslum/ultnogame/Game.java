@@ -54,7 +54,7 @@ public class Game {
     static final int BAR_WEIGHT = 8;
 
     static final int TUTORIAL_INSTRUCOES_INICIAIS = 0;
-    static final int TUTORIAL_VELOCIDADE = 1;
+    static final int TUTORIAL_INICIO = 1;
     static final int TUTORIAL_OBSTACULO = 2;
     static final int TUTORIAL_EXPLOSAO = 3;
     static int currentTutorial;
@@ -135,7 +135,7 @@ public class Game {
     static boolean timeOfLevelPlayBlocked = true;
     static long lastSeconds = 0;
 
-    public static MenuIcon worldMenu;
+    public static MenuIcon groupMenu;
     public static MenuIcon levelMenu;
     public static MenuIcon tutorialMenu;
 
@@ -175,7 +175,7 @@ public class Game {
     public final static int GAME_STATE_OPCOES =  17;
     public final static int GAME_STATE_INTRO =  18;
     public final static int GAME_STATE_OPCOES_GAME =  19;
-    public final static int GAME_STATE_SELECAO_MUNDO =  20;
+    public final static int GAME_STATE_SELECAO_GRUPO =  20;
     public final static int GAME_STATE_SELECAO_LEVEL =  21;
     public final static int GAME_STATE_OBJETIVO_LEVEL =  22;
     public final static int GAME_STATE_MENU_TUTORIAL =  24;
@@ -434,8 +434,8 @@ public class Game {
             @Override
             public void onPress() {
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
-                if (Game.gameState == GAME_STATE_SELECAO_LEVEL){setGameState(GAME_STATE_SELECAO_MUNDO);
-                } else if (Game.gameState == GAME_STATE_SELECAO_MUNDO){setGameState(GAME_STATE_MENU);
+                if (Game.gameState == GAME_STATE_SELECAO_LEVEL){setGameState(GAME_STATE_SELECAO_GRUPO);
+                } else if (Game.gameState == GAME_STATE_SELECAO_GRUPO){setGameState(GAME_STATE_MENU);
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_LEVEL){setGameState(GAME_STATE_SELECAO_LEVEL);
                 } else if (Game.gameState == GAME_STATE_MENU_TUTORIAL){setGameState(GAME_STATE_MENU);
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_PAUSE){setGameState(GAME_STATE_PAUSE);
@@ -511,66 +511,66 @@ public class Game {
     public static void initLevelsData(){
 
         levelsGroupData = new ArrayList<>();
-        LevelsGroupData l = new LevelsGroupData("Início", 1, 3, 0, getLevelsConqueredStars(1, 3), Texture.TEXTURE_ICONS, 1);
-        l.addLevel("Nível 1", 1, Texture.TEXTURE_ICONS, 1);
-        l.addLevel("Nível 2", 2, Texture.TEXTURE_ICONS, 2);
-        l.addLevel("Nível 3", 3, Texture.TEXTURE_ICONS, 3);
+        LevelsGroupData l = new LevelsGroupData("Início", 1, 3, 0, getLevelsConqueredStars(1, 3), Texture.TEXTURE_GROUP_ICONS, 1);
+        l.addLevel("Nível 1", 1, Texture.TEXTURE_LEVEL_ICONS, 1);
+        l.addLevel("Nível 2", 2, Texture.TEXTURE_LEVEL_ICONS, 2);
+        l.addLevel("Nível 3", 3, Texture.TEXTURE_LEVEL_ICONS, 3);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Obstáculos", 4, 6, 7, getLevelsConqueredStars(4, 8), Texture.TEXTURE_ICONS, 4);
-        l.addLevel("Nível 4", 4, Texture.TEXTURE_ICONS, 4);
-        l.addLevel("Nível 5", 5, Texture.TEXTURE_ICONS, 5);
-        l.addLevel("Nível 6", 6, Texture.TEXTURE_ICONS, 6);
+        l = new LevelsGroupData("Obstáculos", 4, 6, 7, getLevelsConqueredStars(4, 8), Texture.TEXTURE_GROUP_ICONS, 2);
+        l.addLevel("Nível 4", 4, Texture.TEXTURE_LEVEL_ICONS, 4);
+        l.addLevel("Nível 5", 5, Texture.TEXTURE_LEVEL_ICONS, 5);
+        l.addLevel("Nível 6", 6, Texture.TEXTURE_LEVEL_ICONS, 6);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Cores", 7, 8, 10, getLevelsConqueredStars(4, 8), Texture.TEXTURE_ICONS, 7);
-        l.addLevel("Nível 7", 7, Texture.TEXTURE_ICONS, 7);
-        l.addLevel("Nível 8", 8, Texture.TEXTURE_ICONS, 8);
+        l = new LevelsGroupData("Cores", 7, 8, 10, getLevelsConqueredStars(4, 8), Texture.TEXTURE_GROUP_ICONS, 3);
+        l.addLevel("Nível 7", 7, Texture.TEXTURE_LEVEL_ICONS, 7);
+        l.addLevel("Nível 8", 8, Texture.TEXTURE_LEVEL_ICONS, 8);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Explosão", 9, 11, 15, getLevelsConqueredStars(9, 11), Texture.TEXTURE_ICONS, 9);
-        l.addLevel("Nível 9", 9, Texture.TEXTURE_ICONS, 9);
-        l.addLevel("Nível 10", 10, Texture.TEXTURE_ICONS, 10);
-        l.addLevel("Nível 11", 11, Texture.TEXTURE_ICONS, 11);
+        l = new LevelsGroupData("Explosão", 9, 11, 15, getLevelsConqueredStars(9, 11), Texture.TEXTURE_GROUP_ICONS, 3);
+        l.addLevel("Nível 9", 9, Texture.TEXTURE_LEVEL_ICONS, 9);
+        l.addLevel("Nível 10", 10, Texture.TEXTURE_LEVEL_ICONS, 10);
+        l.addLevel("Nível 11", 11, Texture.TEXTURE_LEVEL_ICONS, 11);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Roda", 12, 15, 20, getLevelsConqueredStars(12, 15), Texture.TEXTURE_ICONS, 12);
-        l.addLevel("Nível 12", 12, Texture.TEXTURE_ICONS, 12);
-        l.addLevel("Nível 13", 13, Texture.TEXTURE_ICONS, 13);
-        l.addLevel("Nível 14", 14, Texture.TEXTURE_ICONS, 14);
-        l.addLevel("Nível 15", 15, Texture.TEXTURE_ICONS, 15);
+        l = new LevelsGroupData("Roda", 12, 15, 20, getLevelsConqueredStars(12, 15), Texture.TEXTURE_GROUP_ICONS, 3);
+        l.addLevel("Nível 12", 12, Texture.TEXTURE_LEVEL_ICONS, 12);
+        l.addLevel("Nível 13", 13, Texture.TEXTURE_LEVEL_ICONS, 13);
+        l.addLevel("Nível 14", 14, Texture.TEXTURE_LEVEL_ICONS, 14);
+        l.addLevel("Nível 15", 15, Texture.TEXTURE_LEVEL_ICONS, 15);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Elástico", 16, 18, 20, getLevelsConqueredStars(16, 18), Texture.TEXTURE_ICONS, 13);
-        l.addLevel("Nível 16", 16, Texture.TEXTURE_ICONS, 1);
-        l.addLevel("Nível 17", 17, Texture.TEXTURE_ICONS, 2);
-        l.addLevel("Nível 18", 18, Texture.TEXTURE_ICONS, 3);
+        l = new LevelsGroupData("Elástico", 16, 18, 20, getLevelsConqueredStars(16, 18), Texture.TEXTURE_GROUP_ICONS, 3);
+        l.addLevel("Nível 16", 16, Texture.TEXTURE_LEVEL_ICONS, 1);
+        l.addLevel("Nível 17", 17, Texture.TEXTURE_LEVEL_ICONS, 2);
+        l.addLevel("Nível 18", 18, Texture.TEXTURE_LEVEL_ICONS, 3);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Vento", 19, 20, 25, getLevelsConqueredStars(19, 20), Texture.TEXTURE_ICONS, 14);
-        l.addLevel("Nível 19", 19, Texture.TEXTURE_ICONS, 1);
-        l.addLevel("Nível 20", 20, Texture.TEXTURE_ICONS, 2);
+        l = new LevelsGroupData("Vento", 19, 20, 25, getLevelsConqueredStars(19, 20), Texture.TEXTURE_GROUP_ICONS, 3);
+        l.addLevel("Nível 19", 19, Texture.TEXTURE_LEVEL_ICONS, 1);
+        l.addLevel("Nível 20", 20, Texture.TEXTURE_LEVEL_ICONS, 2);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Fantasma", 21, 23, 30, getLevelsConqueredStars(21, 23), Texture.TEXTURE_ICONS, 15);
-        l.addLevel("Nível 21", 21, Texture.TEXTURE_ICONS, 1);
-        l.addLevel("Nível 22", 22, Texture.TEXTURE_ICONS, 2);
-        l.addLevel("Nível 23", 23, Texture.TEXTURE_ICONS, 3);
+        l = new LevelsGroupData("Fantasma", 21, 23, 30, getLevelsConqueredStars(21, 23), Texture.TEXTURE_GROUP_ICONS, 3);
+        l.addLevel("Nível 21", 21, Texture.TEXTURE_LEVEL_ICONS, 1);
+        l.addLevel("Nível 22", 22, Texture.TEXTURE_LEVEL_ICONS, 2);
+        l.addLevel("Nível 23", 23, Texture.TEXTURE_LEVEL_ICONS, 3);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Invencibilidade", 24, 25, 35, getLevelsConqueredStars(24, 25), Texture.TEXTURE_ICONS, 16);
-        l.addLevel("Nível 24", 24, Texture.TEXTURE_ICONS, 1);
-        l.addLevel("Nível 25", 25, Texture.TEXTURE_ICONS, 2);
+        l = new LevelsGroupData("Invencibilidade", 24, 25, 35, getLevelsConqueredStars(24, 25), Texture.TEXTURE_GROUP_ICONS, 3);
+        l.addLevel("Nível 24", 24, Texture.TEXTURE_LEVEL_ICONS, 1);
+        l.addLevel("Nível 25", 25, Texture.TEXTURE_LEVEL_ICONS, 2);
         levelsGroupData.add(l);
     }
 
-    public static void updateWorldMenu(){
+    public static void updateGroupMenu(){
 
-        worldMenu.icons.clear();
-        worldMenu.texts.clear();
-        worldMenu.texts2.clear();
-        worldMenu.innerTexts.clear();
-        worldMenu.graph.clear();
+        groupMenu.icons.clear();
+        groupMenu.texts.clear();
+        groupMenu.texts2.clear();
+        groupMenu.innerTexts.clear();
+        groupMenu.graph.clear();
 
         updateConqueredStars();
 
@@ -585,7 +585,7 @@ public class Game {
             final LevelsGroupData lgd = levelsGroupData.get(i);
 
             if (conqueredStarsTotal >= lgd.starsToUnlock){
-                worldMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
+                groupMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
 
@@ -599,12 +599,12 @@ public class Game {
                     }
                 }, false);
 
-                worldMenu.addText(1, lgd.name, lgd.name, resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
-                worldMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_BAR);
+                groupMenu.addText(1, lgd.name, lgd.name, resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+                groupMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_BAR);
 
                 if (!SaveGame.saveGame.newGroupsSeen){
                     if (SaveGame.saveGame.lastStars < lgd.starsToUnlock){
-                        worldMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), resolutionY * 0.035f, resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+                        groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), resolutionY * 0.035f, resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
                     }
                 }
 
@@ -616,21 +616,21 @@ public class Game {
 
                 Log.e(TAG, "percentage of world "+ 1 + ": "+ percentage);
 
-                worldMenu.graph.get(worldMenu.graph.size() - 1).setPercentage(percentage);
+                groupMenu.graph.get(groupMenu.graph.size() - 1).setPercentage(percentage);
             }
 
             if (conqueredStarsTotal < lgd.starsToUnlock){
 
-                worldMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
+                groupMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         setBottomText(getContext().getResources().getString(R.string.message_sem_estrelas), 2000);
                     }
                 }, true);
 
-                worldMenu.icons.get(i).alpha = 0.2f;
-                worldMenu.addText(1, lgd.name, lgd.name, resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.7f, 0.7f, 0.7f, 1f));
-                worldMenu.addText(2, lgd.name+"2", getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + getContext().getResources().getString(R.string.estrelas), resolutionY * 0.03f, resolutionY * 0.07f, new Color(0.5f, 0.5f, 0.5f, 1f));
+                groupMenu.icons.get(i).alpha = 0.2f;
+                groupMenu.addText(1, lgd.name, lgd.name, resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.7f, 0.7f, 0.7f, 1f));
+                groupMenu.addText(2, lgd.name+"2", getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + getContext().getResources().getString(R.string.estrelas), resolutionY * 0.03f, resolutionY * 0.07f, new Color(0.5f, 0.5f, 0.5f, 1f));
             }
         }
     }
@@ -699,7 +699,18 @@ public class Game {
                 }
             }, false);
 
-            tutorialMenu.addText(1, getContext().getResources().getString(R.string.tutorial1Tittle), getContext().getResources().getString(R.string.tutorial1Tittle),
+            tutorialMenu.addText(1, "instruções", getContext().getResources().getString(R.string.tutorial1Tittle),
+                    resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+
+            tutorialMenu.addOption(1, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    currentTutorial = TUTORIAL_INICIO;
+                    setGameState(GAME_STATE_TUTORIAL);
+                }
+            }, false);
+
+            tutorialMenu.addText(1, "jogo", getContext().getResources().getString(R.string.tutorial2Tittle),
                     resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
         }
 
@@ -735,8 +746,8 @@ public class Game {
 
         float fontSize = gameAreaResolutionY*0.08f;
 
-        worldMenu = new MenuIcon("worldMenu", 0f, resolutionY * 0.3f, resolutionY * 0.4f);
-        updateWorldMenu();
+        groupMenu = new MenuIcon("groupMenu", 0f, resolutionY * 0.3f, resolutionY * 0.4f);
+        updateGroupMenu();
 
         levelMenu = new MenuIcon("levelMenu", 0f, resolutionY * 0.3f, resolutionY * 0.4f);
         updateLevelMenu();
@@ -819,7 +830,14 @@ public class Game {
                 innerMenu.block();
                 Game.blockAndWaitTouchRelease();
                 Game.clearAllMenuEntities();
-                Game.setGameState(GAME_STATE_SELECAO_MUNDO);
+
+                if (!SaveGame.saveGame.tutorialsViwed[0]){
+                    currentTutorial = 0;
+                    setGameState(GAME_STATE_TUTORIAL);
+                } else {
+                    setGameState(GAME_STATE_SELECAO_GRUPO);
+                }
+
             }
         });
 
@@ -1112,9 +1130,9 @@ public class Game {
             messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             buttonReturnObjectivesPause.unblock();
             buttonReturnObjectivesPause.display();
-        } else if (state == GAME_STATE_SELECAO_MUNDO) {
-            updateWorldMenu();
-            worldMenu.appear();
+        } else if (state == GAME_STATE_SELECAO_GRUPO) {
+            updateGroupMenu();
+            groupMenu.appear();
             messageMenu.display();
             messageMenu.setText(getContext().getResources().getString(R.string.messageMenuSelecaoMundo));
             buttonReturn.display();
@@ -1171,7 +1189,7 @@ public class Game {
             Game.bordaB.y = Game.resolutionY;
             menuOptions.block();
             menuInGame.block();
-            worldMenu.block();
+            groupMenu.block();
             levelMenu.block();
 
             stopAndReleaseMusic();
@@ -1624,21 +1642,93 @@ public class Game {
     }
 
     public static void loadTutorial(){
-        if (currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS) {
-            Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.05f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
-                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
 
-            Image i2 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.05f,
+        float textBoxY = resolutionX * 0.48f;
+        float textBoxSize = resolutionX * 0.03f;
+
+        if (currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS) {
+            Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
                     resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
 
-            currentTutorialObject = new Tutorial();
-            currentTutorialObject.addFrame(i1, "este é um teste para ver se está aparecendo direito o texto do primeiro tutorial",
-                    resolutionX * 0.5f, resolutionX * 0.03f);
+            Image i2 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
 
-            currentTutorialObject.addFrame(i2, "este é um teste para ver se está aparecendo direito o texto do primeiro tutorial",
-                    resolutionX * 0.5f, resolutionX * 0.03f);
+            Image i3 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
+
+            currentTutorialObject = new Tutorial();
+
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t1),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t2),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t3),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t4),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t5),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t6),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t7),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t8),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t9),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t10),
+                    textBoxY, textBoxSize);
+
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t11),
+                    textBoxY, textBoxSize);
+
+        } else if (currentTutorial == TUTORIAL_INICIO) {
+
+
+            Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
+
+            Image i2 = new Image("i2", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (512f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
+
+            Image i3 = new Image("i3", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (512f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
+
+            Image i4 = new Image("i4", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (768f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f);
+
+            Image i5 = new Image("i5", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (768f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f);
+
+            currentTutorialObject = new Tutorial();
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t1), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t2), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t3), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t4), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t5), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t6), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t7), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t8), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t9), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t10), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t11), textBoxY, textBoxSize);
         }
 
     }
@@ -2175,7 +2265,7 @@ public class Game {
         if (selectorLevel != null) selectorLevel.checkTransformations(true);
 
         if (menuOptions != null)menuOptions.checkTransformations(true);
-        if (worldMenu != null)worldMenu.checkTransformations(true);
+        if (groupMenu != null) groupMenu.checkTransformations(true);
         if (levelMenu != null)levelMenu.checkTransformations(true);
         if (tutorialMenu != null)tutorialMenu.checkTransformations(true);
         if (levelGoalsPanel != null) levelGoalsPanel.checkTransformations(true);
@@ -2269,7 +2359,7 @@ public class Game {
         if (selectorLevel != null) selectorLevel.prepareRender(matrixView, matrixProjection);
 
         if (menuOptions != null)menuOptions.prepareRender(matrixView, matrixProjection);
-        if (worldMenu != null)worldMenu.prepareRender(matrixView, matrixProjection);
+        if (groupMenu != null) groupMenu.prepareRender(matrixView, matrixProjection);
         if (levelMenu != null)levelMenu.prepareRender(matrixView, matrixProjection);
         if (tutorialMenu != null)tutorialMenu.prepareRender(matrixView, matrixProjection);
         if (levelGoalsPanel != null) levelGoalsPanel.prepareRender(matrixView, matrixProjection);
@@ -2341,7 +2431,7 @@ public class Game {
         if (menuObjectives != null) menuObjectives.verifyListener();
         if (selectorLevel != null) selectorLevel.verifyListener();
         if (menuOptions != null)menuOptions.verifyListener();
-        if (worldMenu != null)worldMenu.verifyListener();
+        if (groupMenu != null) groupMenu.verifyListener();
         if (levelMenu != null)levelMenu.verifyListener();
         if (tutorialMenu != null)tutorialMenu.verifyListener();
         // levelGoalsPanel não precisa de listener???
@@ -2371,7 +2461,7 @@ public class Game {
         ArrayList<Entity> list = new ArrayList<>();
         list.add(menuMain);
         list.add(menuOptions);
-        list.add(worldMenu);
+        list.add(groupMenu);
         list.add(levelMenu);
         list.add(tutorialMenu);
         list.add(levelGoalsPanel);

@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -53,15 +51,26 @@ public class Tutorial {
 
     public void show(){
         if (frames.size() > currentFrame){
-            Game.tutorialImage = frames.get(currentFrame).image;
+
+            if (currentFrame != 0) {
+                if (frames.get(currentFrame).image != frames.get(currentFrame-1).image) {
+                    Game.tutorialImage = frames.get(currentFrame).image;
+                    Game.tutorialImage.alpha = 0;
+                    Game.tutorialImage.display();
+                    Game.tutorialImage.increaseAlpha(500, 1f);
+                }
+            } else {
+                Game.tutorialImage = frames.get(currentFrame).image;
+                Game.tutorialImage.alpha = 0;
+                Game.tutorialImage.display();
+                Game.tutorialImage.increaseAlpha(500, 1f);
+            }
+
             Game.tutorialTextBox = frames.get(currentFrame).textBox;
-            Game.tutorialImage.alpha = 0;
             Game.tutorialTextBox.alpha = 0;
-            Game.tutorialImage.display();
             Game.tutorialTextBox.display();
             Game.tutorialTextBox.clearAnimations();
             Utils.createSimpleAnimation(Game.tutorialTextBox, "translateX", "translateX", 500, Game.resolutionX*2f, 0f).start();
-            Game.tutorialImage.increaseAlpha(500, 1f);
 
             Game.buttonContinue.display();
             Game.buttonContinue.unblock();
@@ -82,7 +91,11 @@ public class Tutorial {
             if (showingFromMenu){
                 Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
             } else {
-                Game.setGameState(Game.GAME_STATE_PREPARAR);
+                if (Game.currentTutorial == 0) {
+                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                } else {
+                    Game.setGameState(Game.GAME_STATE_PREPARAR);
+                }
             }
 
 

@@ -19,6 +19,21 @@
     <string name="jogarONivel">Jogar o nível </string>
     <string name="proximaInstrucao">Próxima instrução</string>
     <string name="Jogar">Play</string>
+
+    <string name="t1t1">Bem vindo! Os níveis estão divididos em grupos.</string>
+    <string name="t1t2">Cada grupo necessita de um determinado número de estrelas para estar disponível.</string>
+    <string name="t1t3">Colete estrelas para desbloquear novos grupos contendo novos níveis.</string>
+    <string name="t1t4">Em cada nível, é possível coletar no máximo 5 estrelas.</string>
+    <string name="t1t5">É possível acompanhar quantas estrelas foram coletadas em cada nível.</string>
+    <string name="t1t6">No menu de grupo, é possível verificar qual a porcentagem de estrelas foram coletadas em seus níveis.</string>
+    <string name="t1t7">Para coletar estrelas, é necessário cumprir os objetivos de cada nível.</string>
+    <string name="t1t8">Além de desbloquear novos níveis, coletar estrelas concede pontos extras ao completar um nível.</string>
+    <string name="t1t9">Você pode jogar um nível quantas vezes quiser para tentar melhorar a quantidade de estrelas e de pontos conquistados.</string>
+    <string name="t1t10">Não se preocupe, o número de estrelas e de pontos conquistados não serão perdidos ao repetir um nível.</string>
+    <string name="t1t11">No entanto, a cada jogada, você deverá cumprir novamente os objetivos para melhorar sua marca.</string>
+
+
+
     <string name="l1t1">Mova a barra utilizando os botões abaixo. Vamos lá, pode testar!</string>
     <string name="l1t2">Não deixe a bola cair.</string>
     <string name="l1t3">Acerte os alvos com a bola.</string>
@@ -186,7 +201,8 @@
     <string name="novo">Novo</string>
     <string name="objetivos">Objetivos</string>
     <string name="tutoriais">Tutoriais</string>
-    <string name="tutorial1Tittle">Início</string>
+    <string name="tutorial1Tittle">Instruções iniciais</string>
+    <string name="tutorial2Tittle">Primeiro jogo</string>
 
 
 </resources>

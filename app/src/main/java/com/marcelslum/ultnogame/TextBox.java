@@ -50,8 +50,11 @@ public class TextBox extends Entity{
             childs.clear();
         }
         this.text = text;
-        
-        texts = Text.splitStringAtMaxWidth(name, text, Game.font, textColor, size, width * 0.9f);
+
+        float widthToSplit = width * 0.9f;
+        if (!isHaveArrowContinue) {widthToSplit = width;}
+
+        texts = Text.splitStringAtMaxWidth(name, text, Game.font, textColor, size, widthToSplit);
 
         float textPadding = size * padding;
 
