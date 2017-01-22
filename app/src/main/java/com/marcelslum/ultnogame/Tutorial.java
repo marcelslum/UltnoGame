@@ -3,38 +3,54 @@ package com.marcelslum.ultnogame;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by marcel on 07/08/2016.
  */
 public class Tutorial {
 
-    OnShowBeforeAnim onShowBeforeAnim;
-    OnShowAfterAnim onShowAfterAnim;
-    OnUnshowBeforeAnim onUnshowBeforeAnim;
-    OnUnshowAfterAnim2 onUnshowAfterAnim2;
-    OnUnshowAfterAnim onUnshowAfterAnim;
-    TextBox textBox;
-    boolean isBlocked;
+    public ArrayList<Frame> frames;
+    int currentFrame;
 
-    private Tutorial(TutorialBuilder builder){
-        this.textBox = builder.textBox;
-        
-        if (builder.onShowBeforeAnim != null){
-            this.onShowBeforeAnim = builder.onShowBeforeAnim;
-        }
-        
-        if (builder.onShowAfterAnim != null){
-            this.onShowAfterAnim = builder.onShowAfterAnim;
-        }
-        
-        if (builder.onUnshowBeforeAnim != null){
-            this.onUnshowBeforeAnim = builder.onUnshowBeforeAnim;
-        }
-        
-        if (builder.onUnshowAfterAnim != null){
-            this.onUnshowAfterAnim = builder.onUnshowAfterAnim;
+
+    public Tutorial(){
+        frames = new ArrayList<>();
+    }
+
+    public void addFrame(Image image, String text, float y, float size){
+        frames.add(new Frame(image, text, y, size));
+
+    }
+
+
+
+    public class Frame{
+        Text text;
+        Image image;
+        TextBox textBox;
+        Frame(Image image, String text, float y, float size){
+            textBox = new TextBoxBuilder("textBox")
+                    .position(Game.resolutionX * 0.5f, y)
+                    .width(Game.resolutionX * 0.9f)
+                    .size(size)
+                    .text(text)
+                    .withoutArrow()
+                    .isHaveFrame(false)
+                    .build();
+
+            this.image = image;
         }
     }
+
+
+
+
+
+
+
+
+
 
     public void show(int soundId) {
         Sound.play(soundId, 1f, 1f, 0);

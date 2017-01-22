@@ -11,8 +11,8 @@ public class MessageStar extends Entity {
     int nextNewStars;
 
 
-    public MessageStar(String name, float size) {
-        super(name, Game.resolutionX - (size * 1.4f), Game.resolutionX * 0.05f);
+    public MessageStar(String name, float size, float x, float y) {
+        super(name, x, y);
         this.size = size;
         stars = new ArrayList<>();
 
@@ -70,7 +70,7 @@ public class MessageStar extends Entity {
     }
 
 
-    public void show(int totalStars, int newStars){
+    public void show(int totalStars, int newStars, boolean stay){
         if (!isShowing){
             isShowing = true;
             Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
@@ -81,12 +81,13 @@ public class MessageStar extends Entity {
             return;
         }
 
-        clearAnimations();
-
         display();
+
+        clearAnimations();
 
         for (int i = 0; i < 5; i++){
             stars.get(i).clearAnimations();
+            stars.get(i).translateX = Game.resolutionX;
         }
 
         for (int i = 0; i < totalStars; i++){
@@ -101,28 +102,55 @@ public class MessageStar extends Entity {
         final int innerNextTotalStars = nextTotalStars;
         final int innerNextNewStars = nextNewStars;
 
-        final Animation anim = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX * 0.5f, 0.2f, 0f,  0.8f,0f,  1f, Game.resolutionX, false, true);
-        anim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd() {
-                if (ms.newShowing){
-                    ms.newShowing = false;
-                    ms.show(innerNextTotalStars, innerNextNewStars);
-                } else {
-                    ms.isShowing = false;
-                    clearDisplay();
+        if (stay){
+
+            Sound.play(Sound.soundTextBoxAppear, 0.5f, 0.5f, 0);
+
+
+            Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX, 0.2f, 0f, 0.8f, 0f, 0f, 0f, false, true).start();
+
+            isShowing = false;
+
+            Utils.createAnimation4v(stars.get(1), "translateX1", "translateX", 2000, 0f,
+                    Game.resolutionX, 0.2f + (1 * 0.01f), 0f,  0.8f + (1 * 0.01f),0f,  1f, 0, false, true).start();
+            Utils.createAnimation4v(stars.get(2), "translateX2", "translateX", 2000, 0f,
+                    Game.resolutionX, 0.2f + (2 * 0.01f), 0f,  0.8f + (2 * 0.01f),0f,  1f, 0, false, true).start();
+            Utils.createAnimation4v(stars.get(3), "translateX3", "translateX", 2000, 0f,
+                    Game.resolutionX, 0.2f + (3 * 0.01f), 0f,  0.8f + (3 * 0.01f),0f,  1f, 0, false, true).start();
+            Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
+                    Game.resolutionX, 0.2f + (4 * 0.01f), 0f,  0.8f + (4 * 0.01f),0f,  1f, 0, false, true).start();
+
+
+        } else {
+
+            Animation anim = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX * 0.5f, 0.2f, 0f, 0.8f, 0f, 1f, Game.resolutionX, false, true);
+            anim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    if (ms.newShowing) {
+                        ms.newShowing = false;
+                        ms.show(innerNextTotalStars, innerNextNewStars, false);
+                    } else {
+                        ms.isShowing = false;
+                        clearDisplay();
+                    }
                 }
-            }
-        });
-        anim.start();
-        Utils.createAnimation4v(stars.get(1), "translateX1", "translateX", 2000, 0f,
-                Game.resolutionX * 0.5f, 0.2f + (1 * 0.01f), 0f,  0.8f + (1 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
-        Utils.createAnimation4v(stars.get(2), "translateX2", "translateX", 2000, 0f,
-                Game.resolutionX * 0.5f, 0.2f + (2 * 0.01f), 0f,  0.8f + (2 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
-        Utils.createAnimation4v(stars.get(3), "translateX3", "translateX", 2000, 0f,
-                Game.resolutionX * 0.5f, 0.2f + (3 * 0.01f), 0f,  0.8f + (3 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
-        Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
-                Game.resolutionX * 0.5f, 0.2f + (4 * 0.01f), 0f,  0.8f + (4 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+            });
+            anim.start();
+
+            Utils.createAnimation4v(stars.get(1), "translateX1", "translateX", 2000, 0f,
+                    Game.resolutionX * 0.5f, 0.2f + (1 * 0.01f), 0f,  0.8f + (1 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+            Utils.createAnimation4v(stars.get(2), "translateX2", "translateX", 2000, 0f,
+                    Game.resolutionX * 0.5f, 0.2f + (2 * 0.01f), 0f,  0.8f + (2 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+            Utils.createAnimation4v(stars.get(3), "translateX3", "translateX", 2000, 0f,
+                    Game.resolutionX * 0.5f, 0.2f + (3 * 0.01f), 0f,  0.8f + (3 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+            Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
+                    Game.resolutionX * 0.5f, 0.2f + (4 * 0.01f), 0f,  0.8f + (4 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+
+
+        }
+
+
 
     }
 

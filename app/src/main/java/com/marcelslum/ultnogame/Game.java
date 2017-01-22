@@ -58,7 +58,6 @@ public class Game {
     static Menu menuInGameOptions;
     static Menu menuGameOver;
     static Menu menuTutorial;
-    //static Menu menuWin;
     static Menu menuObjectives;
     static Selector selectorLevel;
     static Selector selectorDificulty;
@@ -84,7 +83,8 @@ public class Game {
     static ArrayList<TextBox> textBoxes;
     static Messages messages;
     static ArrayList<Line> lines;
-    static MessageStar messagesStars;
+    static MessageStar messageStars;
+    static MessageStarWin messageStarsWin;
     public static Background background;
     static Wind wind;
     static ArrayList<SpecialBall> specialBalls;
@@ -264,12 +264,15 @@ public class Game {
     public static void activateFrame(int duration){
         frame.display();
         frame.alpha = 1f;
-        frame.reduceAlpha(duration, 0f, new Animation.AnimationListener() {
+
+        Animation anim = Utils.createAnimation4v(frame, "alpha", "alpha", duration, 0f, 1f, 0.25f, 1f, 0.5f, 0.7f, 1f, 0f, false, true);
+        anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
                 frame.clearDisplay();
             }
         });
+        anim.start();
     }
 
     public static void initData(){
@@ -336,7 +339,10 @@ public class Game {
 
         initTittle();
 
-        messagesStars = new MessageStar("messageStar", gameAreaResolutionY*0.05f);
+        float messageStarsSize = gameAreaResolutionY*0.05f;
+        messageStars = new MessageStar("messageStar", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
+
+        messageStarsWin = new MessageStarWin("messageStar", messageStarsSize, Game.resolutionX * 0.5f, gameAreaResolutionY*0.25f);
 
         messageGameOver = new Text("messageGameOver",
                 gameAreaResolutionX*0.5f, gameAreaResolutionY*0.2f, gameAreaResolutionY*0.17f,
@@ -1025,21 +1031,19 @@ public class Game {
         gameState = state;
         Game.blockAndWaitTouchRelease();
         clearAllMenuEntities();
-        if (messagesStars != null) {
-            messagesStars.clearDisplay();
+        if (messageStars != null) {
+            messageStars.clearDisplay();
         }
+
+        if (messageStarsWin != null) {
+            messageStarsWin.clearDisplay();
+        }
+
+
         timeOfLevelPlayBlocked = true;
 
         if (state == GAME_STATE_INTERSTITIAL){
             mainActivity.showInterstitial();
-        } else if (state == GAME_STATE_MENU_TUTORIAL){
-            activateFrame(200);
-            messageMenu.display();
-            messageMenu.setText(getContext().getResources().getString(R.string.messageMenuTutorial));
-            Game.menuTutorial.getMenuOptionByName("exibirTutorial").setText(getContext().getResources().getString(R.string.menuTutorialExibirTutorial));
-            Game.menuTutorial.appearAndUnblock(10);
-            buttonReturn.display();
-            buttonReturn.unblock();
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
@@ -1047,10 +1051,9 @@ public class Game {
 
             for (int i = 0; i < Level.levelGoalsObject.levelGoals.size(); i++){
                 LevelGoal lg = Level.levelGoalsObject.levelGoals.get(i);
-
                 levelGoalsPanel.addLine(lg.numberOfStars, true, lg.text);
             }
-            levelGoalsPanel.appear();
+            levelGoalsPanel.appearGray();
             messageMenu.display();
             messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             buttonContinue.display();
@@ -1072,6 +1075,12 @@ public class Game {
             buttonReturn.unblock();
             starForMessage.display();
             messageConqueredStarsTotal.display();
+
+            messageConqueredStarsTotal.y =  resolutionY*0.15f;
+            starForMessage.y = resolutionY*0.15f;
+
+
+
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
             updateLevelMenu();
             levelMenu.appear();
@@ -1081,6 +1090,10 @@ public class Game {
             buttonReturn.unblock();
             starForMessage.display();
             messageConqueredStarsTotal.display();
+
+            messageConqueredStarsTotal.y =  resolutionY*0.15f;
+            starForMessage.y = resolutionY*0.15f;
+
         } else if (state == GAME_STATE_INTRO) {
             mainActivity.hideAdView();
             ConnectionHandler.internetState = ConnectionHandler.INTERNET_STATE_NOT_CONNECTED;
@@ -1132,7 +1145,6 @@ public class Game {
             ConnectionHandler.verify();
 
         } else if (state == GAME_STATE_PREPARAR){
-
 
             Level.levelGoalsObject.clearAchievements();
 
@@ -1205,7 +1217,7 @@ public class Game {
             }
 
 
-            messagesStars.reset();
+            messageStars.reset();
 
             for (int i = 0; i < bars.size(); i++) {
                 if (bars.get(i).scaleVariationData != null){
@@ -1238,7 +1250,7 @@ public class Game {
                 }
             }
 
-            messagesStars.showAndGoAllGray(totalStars);
+            messageStars.showAndGoAllGray(totalStars);
 
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
@@ -1305,6 +1317,9 @@ public class Game {
 
             Level.levelObject.levelGoalsObject.setFinish(stopTimeOfLevelPlay());
 
+            messageConqueredStarsTotal.y =  resolutionY*0.21f;
+            starForMessage.y = resolutionY*0.21f;
+
             Animation anim = Utils.createSimpleAnimation(messageTime, "translateX", "translateX", 800, 0f, -resolutionX*2f);
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -1364,45 +1379,32 @@ public class Game {
                 }
             });
             anim2.start();
-            //
 
-            // calcula a pontuação final, de acordo com a quantidade de bolas azuis
+            final int previousStars = SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1];
+            final int newStars = Level.levelGoalsObject.getStarsAchieved();
+
+            // calcula a pontuação final, de acordo com a quantidade de bolas azuis e estrelas
             int pointsTotal = scorePanel.value;
             for (int i = 0; i < ballGoalsPanel.blueBalls; i++) {
                 pointsTotal *= 1.5;
             }
+            pointsTotal *= 1f + (0.1f * (float)newStars);
 
-            Log.e("game", "points total calculado antes "+pointsTotal);
-
-            // salva os dados
+            // salva os dados dos pontos e estrelas
             final long previousPoints = SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1];
             if (previousPoints < pointsTotal) {
                 SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] = pointsTotal;
                 setMaxScoreTotal();
             }
-
-
-            // TODO atualizar codigo que conta quantas estrelas foram adquiridas durante o nivel
-            SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1] = Level.levelGoalsObject.getStarsAchieved();
-            updateConqueredStars();
-
-            /*
-            if (SaveGame.saveGame.currentDifficulty > SaveGame.saveGame.difficultyLevels[SaveGame.saveGame.currentLevelNumber-1]){
-                SaveGame.saveGame.difficultyLevels[SaveGame.saveGame.currentLevelNumber-1] = SaveGame.saveGame.currentDifficulty;
+            if (previousStars < newStars) {
+                SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1] = newStars;
             }
-            */
-
-            // TODO se for o último level não aumentar o nível
-            //changeLevel(SaveGame.saveGame.currentLevelNumber + 1);
 
             GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), pointsTotal);
-
             SaveGame.save();
 
             // verifica a quantidade de bolas azuis, e atualiza a pontuação
             Timer timer = new Timer();
-
-            //final int actualPoints = pointsTotal;
 
             TimerTask timerTask = new TimerTask() {
                 @Override
@@ -1418,10 +1420,83 @@ public class Game {
                         levelGoalsPanel.appearGray();
                     } else if (levelGoalsPanel.gray) {
                         levelGoalsPanel.shineLines(true);
+                        if (newStars > previousStars) {
+                            messageStarsWin.show(newStars, newStars - previousStars, true);
+                        }
+
+                        if (newStars > 0) {
+                            int points = (int) ((float) scorePanel.value * (1f + (0.1f * (float)newStars)));
+                            scorePanel.setValue(points, true, 1000, true);
+                            if (newStars == 1) scorePanel.showMessage("+ 10%", 800);
+                            if (newStars == 2) scorePanel.showMessage("+ 20%", 800);
+                            if (newStars == 3) scorePanel.showMessage("+ 30%", 800);
+                            if (newStars == 4) scorePanel.showMessage("+ 40%", 800);
+                            if (newStars == 5) scorePanel.showMessage("+ 50%", 800);
+                        }
+
+
                     } else{
+
+
+                        starForMessage.alpha = 0f;
+                        messageConqueredStarsTotal.alpha = 0f;
+                        starForMessage.increaseAlpha(500, 1f);
+                        messageConqueredStarsTotal.increaseAlpha(500, 1f);
+                        starForMessage.display();
+                        messageConqueredStarsTotal.display();
+
+                        final int starsDiference = newStars - previousStars;
+
+                        ArrayList<float[]> valuesAnim = new ArrayList<>();
+                        valuesAnim.add(new float[]{0f,0f});
+                        valuesAnim.add(new float[]{0.5f,1f});
+                        valuesAnim.add(new float[]{0.57f,2f});
+                        valuesAnim.add(new float[]{0.64f,3f});
+                        valuesAnim.add(new float[]{0.71f,4f});
+                        valuesAnim.add(new float[]{0.78f,5f});
+                        valuesAnim.add(new float[]{1f,6f});
+
+                        Animation animMessageConqueredStarsTotal = new Animation(messageConqueredStarsTotal, "numberForAnimation", "numberForAnimation", 2500, valuesAnim, false, false);
+                        animMessageConqueredStarsTotal.setOnChangeNotFluid(new Animation.OnChange() {
+                            @Override
+                            public void onChange() {
+                                if (messageConqueredStarsTotal.numberForAnimation == 1f){
+                                    if (starsDiference > 0){
+                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 1));
+                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                                    }
+                                } else if (messageConqueredStarsTotal.numberForAnimation == 2f) {
+                                    if (starsDiference > 1){
+                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 2));
+                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                                    }
+                                } else if (messageConqueredStarsTotal.numberForAnimation == 3f) {
+                                    if (starsDiference > 2){
+                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 3));
+                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                                    }
+                                } else if (messageConqueredStarsTotal.numberForAnimation == 4f) {
+                                    if (starsDiference > 3){
+                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 4));
+                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                                    }
+                                } else if (messageConqueredStarsTotal.numberForAnimation == 5f) {
+                                    if (starsDiference > 4){
+                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 5));
+                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                                    }
+                                }
+                            }
+                        });
+                        animMessageConqueredStarsTotal.start();
+
                         buttonContinue.display();
                         buttonContinue.unblock();
-
                         /*
                         if (previousPoints != 0){
                             String textToShow;
@@ -1476,8 +1551,6 @@ public class Game {
             if (!sameState) {
                 activateFrame(500);
             }
-            Level.levelObject.loadEntities();
-            verifyDead();
             Level.levelObject.showFirstTutorial();
         }
     }
@@ -2171,7 +2244,8 @@ public class Game {
         messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
         starForMessage.prepareRender(matrixView, matrixProjection);
-        if (messagesStars != null) messagesStars.prepareRender(matrixView, matrixProjection);
+        if (messageStars != null) messageStars.prepareRender(matrixView, matrixProjection);
+        if (messageStarsWin != null) messageStarsWin.prepareRender(matrixView, matrixProjection);
 
         if (messageTime != null) messageTime.prepareRender(matrixView, matrixProjection);
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
@@ -2276,7 +2350,6 @@ public class Game {
         list.add(messagePreparation);
         list.add(messageInGame);
         list.add(messageMenu);
-        //list.add(messageCurrentLevel);
         list.add(messageMaxScoreTotal);
         list.add(messageConqueredStarsTotal);
         list.add(starForMessage);

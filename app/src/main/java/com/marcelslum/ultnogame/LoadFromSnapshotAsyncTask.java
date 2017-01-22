@@ -77,6 +77,13 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
         } else {
             SaveGame.onLoadFromSnapshot(stringData);
         }
+
+        // TODO retirar ao final
+        SaveGame.saveGame.starsLevels[0] = 0;
+        SaveGame.save();
+
+
+
     }
     protected void onProgressUpdate(){
         //Codigo

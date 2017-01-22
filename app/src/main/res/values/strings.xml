@@ -78,16 +78,8 @@
     <string name="dificuldade">Dificuldade</string>
     <string name="musica">Música</string>
     <string name="sons">Sons</string>
-    <string name="facil">Fácil</string>
-    <string name="normal">Normal</string>
-    <string name="dificil">Difícil</string>
-    <string name="insano">Insano</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
-    <string name="mensagemDificuldadeFacil">Velocidade do jogo: lenta. Pontuação mínima por alvo: 100 pontos.</string>
-    <string name="mensagemDificuldadeNormal">Velocidade do jogo: normal. Pontuação mínima por alvo: 200 pontos.</string>
-    <string name="mensagemDificuldadeDificil">Velocidade do jogo: rápida. Pontuação mínima por alvo: 300 pontos.</string>
-    <string name="mensagemDificuldadeInsano">Velocidade do jogo: muito rápida. Pontuação mínima por alvo: 500 pontos.</string>
     <string name="conexao">Conectado</string>
     <string name="conectando">Conectando...</string>
     <string name="ranking">Ranking</string>

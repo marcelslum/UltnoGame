@@ -151,7 +151,7 @@ public class LevelGoal{
             }
         }
 
-        Game.messagesStars.show(totalStars, numberOfStars);
+        Game.messageStars.show(totalStars, numberOfStars, false);
     }
 
 }

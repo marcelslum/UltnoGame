@@ -32,6 +32,7 @@ public abstract class Sound {
     public static int soundSuccess1;
     public static int soundSuccess2;
     public static int soundMenuIconDrop;
+    public static int soundStarsUp;
     public static MediaPlayer music;
 
 
@@ -64,6 +65,7 @@ public abstract class Sound {
         soundSuccess1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success1, 1);
         soundSuccess2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success2, 1);
         soundMenuIconDrop = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuicondrop, 1);
+        soundStarsUp = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.starsup, 1);
     }
 
     public static int play(int id, float left, float right, int loop){
