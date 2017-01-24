@@ -55,7 +55,7 @@ public class Ball extends Circle{
 
     Ball(String name, float x, float y, float radius, int textureMap){
         super(name, x, y, radius, Game.BALL_WEIGHT);
-        textureId = Texture.TEXTURE_BUTTONS_AND_BALLS;
+        textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
         program = Game.imageProgram;
         this.textureMap = textureMap;
         ballsCollidedProcessed = new ArrayList<>();
@@ -882,7 +882,7 @@ public class Ball extends Circle{
             
             Ball ball = new Ball("ball", explodeX, explodeY, explodeRadius, explodeColor);
             ball.program = Game.imageProgram;
-            ball.textureId = Texture.TEXTURE_BUTTONS_AND_BALLS;
+            ball.textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
 
             ball.dvx = 0f;
             ball.dvy = 0f;

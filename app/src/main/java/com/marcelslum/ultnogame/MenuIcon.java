@@ -329,9 +329,9 @@ public class MenuIcon extends Entity{
     }
     
     // primeiro icone é número 0
-    public void getPositionXFromIconNumber(int number){
+    public float getPositionXFromIconNumber(int number){
         float padd = size * 0.1f;
-        return x + padd + ((number-1) * size * 1.1f);    
+        return x + padd + ((number-1) * size * 1.1f);
     }
 
     @Override
@@ -360,7 +360,7 @@ public class MenuIcon extends Entity{
         }
     }
     
-    private void moveToIcon(iconNumber){
+    private void moveToIcon(int iconNumber){
         for (int i = 0; i < icons.size(); i++){
             icons.get(i).accumulatedTranslateX = 0f;
         }
@@ -382,7 +382,7 @@ public class MenuIcon extends Entity{
             graph.get(i).accumulatedTranslateX = 0f;
         }
         
-         if (icons.size > iconNumber){
+         if (icons.size() > iconNumber){
             move(getPositionXFromIconNumber(iconNumber));
         }
     }

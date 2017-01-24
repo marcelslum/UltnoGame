@@ -14,18 +14,20 @@ import java.util.ArrayList;
  */
 public class Texture {
 
-    public final static int TEXTURE_BUTTONS_AND_BALLS = 0;
+    public final static int TEXTURE_BUTTONS_BALLS_STARS = 0;
     public final static int TEXTURE_FONT = 1;
     public final static int TEXTURE_TARGETS = 2;
     public final static int TEXTURE_BARS = 3;
     public final static int TEXTURE_BACKGROUND = 4;
-    public final static int TEXTURE_NUMBERS_EXPLOSION_OBSTACLE = 5;
+    public final static int TEXTURE_NUMBERS_EXPLOSION = 5;
     public final static int TEXTURE_TITTLE = 6;
     public final static int TEXTURE_SPECIAL_BALL = 7;
     public final static int TEXTURE_LEVEL_ICONS = 8;
-    public final static int TEXTURE_TUTORIAL1 = 9;
-    public final static int TEXTURE_TUTORIAL_ICONS = 10;
-    public final static int TEXTURE_GROUP_ICONS = 11;
+    public final static int TEXTURE_TUTORIALS1 = 9;
+    public final static int TEXTURE_TUTORIALS2 = 10;
+    public final static int TEXTURE_TUTORIAL_ICONS = 11;
+    public final static int TEXTURE_GROUP_ICONS = 12;
+
 
 
     public static int MAX_TEXTURES = 8;
@@ -52,16 +54,17 @@ public class Texture {
 
     public static void init() {
         Log.e(TAG, "initTextures");
-        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_AND_BALLS, "drawable/botoesbolasestrelas"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_BALLS_STARS, "drawable/buttons_balls_stars"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/barra4"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION_OBSTACLE, "drawable/numbers_explosion5"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/bolaespecial2"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION, "drawable/numbers_explosion"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/special_ball"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1c"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_LEVEL_ICONS, "drawable/icones_levels"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/icones_grupos"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_GROUP_ICONS, "drawable/icones_grupos"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL1, "drawable/tutoriais1"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_LEVEL_ICONS, "drawable/level_icons"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/group_icons"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_GROUP_ICONS, "drawable/group_icons"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS1, "drawable/tutorials1"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS2, "drawable/tutorials2"));
     }
 
     Texture(int id, String resourceIdentifier){

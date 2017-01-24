@@ -42,7 +42,7 @@
     
     
     
-    <string name="t2t1">Vamos aprender os comandos e instruções básicas do jogo.</string>
+    <string name="t2t1">Antes de jogar, vamos aprender os comandos e instruções básicas do jogo.</string>
     <string name="t2t2">Mova a barra para a esquerda e para a direita apertando um dos botões localizados nas extremidades inferiores da tela.</string>
     <string name="t2t3">Não deixe a bola cair.</string>
     <string name="t2t4">Atinja os alvos com a bola para eliminá-los. Cada alvo valerá 10 pontos.</string>
@@ -64,28 +64,28 @@
     <string name="t3t1">A partir de agora, os níveis poderão ter obstáculos indestrutíveis.</string>
     
     <string name="t4t1">Nos próximos níveis, haverá alvos de cores diferentes.</string>
-    <string name="t4t2">Os alvos verdes passarão pela cor azul e preta antes de serem quebrados.</string>
-    <string name="t4t3">Os alvos azuis, por sua vez, deverão ser transformados em pretos antes de poderem ser quebrados.</string>
+    <string name="t4t2">Os alvos verdes, quanto atingidos, serão transformados em alvos azuis.</string>
+    <string name="t4t3">Já os alvos azuis passarão pela cor preta antes de poderem ser destruídos.</string>
     
     <string name="t5t1">Agora a coisa vai ficar um pouco mais complexa.</string>
     <string name="t5t2">Haverá, nos próximos níveis, alvos de cor vermelha.</string>
     <string name="t5t3">A bola que atinjir este alvo explodirá, dando origem a quatro novas bolas.</string>
     <string name="t5t4">Mas atenção, você não precisa manter as quatro bolas vivas.</string>
-    <string name="t5t5">Ao menos por enquanto, apenas uma bola, de qualquer cor, deve ser mantida viva.</string>
+    <string name="t5t5">Nos próximos níveis, ao menos uma bola deve ser mantida viva.</string>
     <string name="t5t6">A quantidade de bolas a serem salvas e a quantidade de bolas que podem ser perdidas é representada no painel.</string>
     <string name="t5t7">Em preto, aparece a quantidade de bolas que devem permanecer vivas.</string>
     <string name="t5t8">Em azul, a quantidade de bolas que podem ser perdidas.</string>
-    <string name="t5t9">Lembre-se, tanto faz a cor da bola que irá permanecer.</string>
+    <string name="t5t9">Não se preocupe com as cores das bolas, tanto faz a cor da bola que permanecerá viva.</string>
     <string name="t5t10">Além da vantagem óbvia de poder atingir mais alvos ao mesmo tempo, a manutenção de bolas trás outros benefícios.</string>
     <string name="t5t11">Para cada bola extra viva, a pontuação ao atingir um alvo é dobrada.</string>
-    <string name="t5t12">Além disso, ao final do nível, bolas extras vivas darão ainda mais pontos extras.</string>
-    <string name="t5t13">Portanto, procure manter as bolas extras vivas o máximo de tempo possível.</string>
-    
+    <string name="t5t12">Além disso, ao completar o nível, bolas extras vivas darão ainda mais pontos extras.</string>
+    <string name="t5t13">Portanto, procure manter as bolas extras o máximo de tempo possível.</string>
+
     <string name="t6t1">A partir de agora, a posição dos obstáculos pode mudar. Fique atento. </string>
     <string name="t7t1">Nos próximos níveis, o tamanho dos obstáculos também pode variar. </string>
-    
+
     <string name="t8t1">Veja se consegue lidar com o vento, que influenciará na velocidade da bola e da barra. </string>
-    
+
     <string name="t9t1">Níveis muitos fáceis? Fique atento para algumas coisas escondidas.</string>
     
     
@@ -112,27 +112,6 @@
     <string name="app_misconfigured">app_misconfigured</string>
     <string name="sign_in_failed">sign_in_failed</string>
     <string name="license_failed">license_failed</string>
-
-
-    <string name="message_default">Default normal</string>
-    <string name="message_default_bold">Default bold</string>
-    <string name="message_default_italic">Default italic</string>
-    <string name="message_default_bold_italic">Default bold italic</string>
-
-    <string name="message_typeface_sans">Typeface sans, normal</string>
-    <string name="message_typeface_sans_bold">Typeface sans, bold</string>
-    <string name="message_typeface_sans_italic">Typeface sans, italic</string>
-    <string name="message_typeface_sans_bold_italic">Typeface sans, bold italic</string>
-
-    <string name="message_typeface_serif">Typeface serif, normal</string>
-    <string name="message_typeface_serif_bold">Typeface serif, bold</string>
-    <string name="message_typeface_serif_italic">Typeface serif, italic</string>
-    <string name="message_typeface_serif_bold_italic">Typeface serif, bold italic</string>
-
-    <string name="message_typeface_mono">Typeface mono, normal</string>
-    <string name="message_typeface_mono_bold">Typeface mono, bold</string>
-    <string name="message_typeface_mono_italic">Typeface mono, italic</string>
-    <string name="message_typeface_mono_bold_italic">Typeface mono, bold italic</string>
 
     <string name="conquistas">Conquistas</string>
     <string name="splash_nao_foi_possivel_conectar1">Não foi possível estabelecer conexão com a internet</string>
@@ -206,8 +185,10 @@
     <string name="novo">Novo</string>
     <string name="objetivos">Objetivos</string>
     <string name="tutoriais">Tutoriais</string>
-    <string name="tutorial1Tittle">Instruções iniciais</string>
-    <string name="tutorial2Tittle">Primeiro jogo</string>
-
+    <string name="tutorial1Tittle">Instruções gerais</string>
+    <string name="tutorial2Tittle">Jogar</string>
+    <string name="tutorial3Tittle">Obstáculo</string>
+    <string name="tutorial4Tittle">Cores</string>
+    <string name="tutorial5Tittle">Explosão</string>
 
 </resources>

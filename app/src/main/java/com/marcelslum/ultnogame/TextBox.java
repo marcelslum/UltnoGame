@@ -88,7 +88,7 @@ public class TextBox extends Entity{
         }
         
         if (isHaveArrowContinue){
-            arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, lastTextY - textPadding, size, size, Texture.TEXTURE_BUTTONS_AND_BALLS, 3f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+            arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, lastTextY - textPadding, size, size, Texture.TEXTURE_BUTTONS_BALLS_STARS, 3f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
             arrowContinuar.setTextureMap(14);
             arrowContinuar.textureMapUnpressed = 14;
             arrowContinuar.textureMapPressed = 6;
@@ -166,7 +166,7 @@ public class TextBox extends Entity{
     public void appendMiniArrow(float arrowX, float arrowY){
         isHaveMiniArrow = true;
         float arrowSize = size * 2f;
-        miniArrow = new Image("miniArrow", arrowX - arrowSize, arrowY, arrowSize, arrowSize, Texture.TEXTURE_BUTTONS_AND_BALLS,
+        miniArrow = new Image("miniArrow", arrowX - arrowSize, arrowY, arrowSize, arrowSize, Texture.TEXTURE_BUTTONS_BALLS_STARS,
                 (128f + 2.5f) / 1024f, (256f - 2.5f) / 1024f, (128f + 2.5f) / 1024f, (256f - 2.5f) / 1024f);
     }
     
@@ -174,8 +174,8 @@ public class TextBox extends Entity{
     public void animateMiniArrow(float initialTranslateX, float difference){
         if (miniArrow != null){
             
-        final Animationa a2 = Utils.createAnimation4v(miniArrow, "animArrowTX", "translateX", 5000, 0f, 0f, 0.3f, -difference/1.3f, 0.7f, difference, 1f, 0f, true, true);
-        final Animationa a3 = Utils.createAnimation4v(miniArrow, "animArrowTY", "translateY", 3200, 0f,0f, 0.2f,difference/2f, 0.7f,-difference, 1f,0, true, true);
+        final Animation a2 = Utils.createAnimation4v(miniArrow, "animArrowTX", "translateX", (int)(8000*Utils.getRandonFloat(0.7f, 1.3f)), 0f, 0f, 0.3f, -difference/(1+Utils.getRandonFloat(1f, 2f)), 0.7f, difference/(1+Utils.getRandonFloat(1f, 2f)), 1f, 0f, true, true);
+        final Animation a3 = Utils.createAnimation4v(miniArrow, "animArrowTY", "translateY", (int)(6000*Utils.getRandonFloat(0.7f, 1.3f)), 0f,0f, 0.2f,difference/(1+Utils.getRandonFloat(1f, 2f)), 0.7f,-difference/(1+Utils.getRandonFloat(1f, 2f)), 1f,0, true, true);
             
         Animation anim = Utils.createSimpleAnimation(miniArrow, "translateX", "translateX", 500, initialTranslateX, 0f, new Animation.AnimationListener() {
                     @Override
@@ -184,7 +184,9 @@ public class TextBox extends Entity{
                         a3.start();
                     }
                 });
-        anim.start();   
+        anim.start();
+
+        Utils.createSimpleAnimation(miniArrow, "translateY", "translateY", 500, -initialTranslateX, 0f).start();
         }
     }
 

@@ -1,7 +1,6 @@
 package com.marcelslum.ultnogame;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class BallGoalsPanel extends Entity{
 
@@ -26,7 +25,7 @@ public class BallGoalsPanel extends Entity{
         isCollidable = false;
         isVisible = true;
         alpha = 1;
-        this.textureId = Texture.TEXTURE_BUTTONS_AND_BALLS;
+        this.textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
         this.program = Game.imageProgram;
         ballsAlive = 4;
         minBallsAlive = 2;

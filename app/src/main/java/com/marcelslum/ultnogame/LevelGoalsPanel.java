@@ -183,10 +183,10 @@ public class LevelGoalsPanel extends Entity{
             float starX = x - (size * 2f);
             for (int i = 0; i < quantityOfStars; i++) {
                 if (shineStars) {
-                    im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURE_BUTTONS_AND_BALLS,
+                    im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURE_BUTTONS_BALLS_STARS,
                             (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
                 } else {
-                    im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURE_BUTTONS_AND_BALLS,
+                    im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURE_BUTTONS_BALLS_STARS,
                             (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
                 }
                 stars.add(im);

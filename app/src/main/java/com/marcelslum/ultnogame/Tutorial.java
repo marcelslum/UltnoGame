@@ -38,18 +38,18 @@ public class Tutorial {
     public void showFirst(boolean fromMenu){
         showingFromMenu = fromMenu;
         currentFrame = 0;
-        show();
+        show(true);
     }
 
     public void next(){
         currentFrame += 1;
-        show();
+        show(true);
     }
 
     public void previous(){
         currentFrame -= 1;
         if (currentFrame >= 0) {
-            show();
+            show(false);
         } else {
             if (showingFromMenu){
                 Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
@@ -59,15 +59,25 @@ public class Tutorial {
         }
     }
 
-    public void show(){
+    public void show(boolean forward){
         if (frames.size() > currentFrame){
-
             if (currentFrame != 0) {
-                if (frames.get(currentFrame).image != frames.get(currentFrame-1).image) {
-                    Game.tutorialImage = frames.get(currentFrame).image;
-                    Game.tutorialImage.alpha = 0;
-                    Game.tutorialImage.display();
-                    Game.tutorialImage.increaseAlpha(500, 1f);
+                if (forward) {
+                    if (frames.get(currentFrame).image != frames.get(currentFrame - 1).image) {
+                        Game.tutorialImage = frames.get(currentFrame).image;
+                        Game.tutorialImage.alpha = 0;
+                        Game.tutorialImage.display();
+                        Game.tutorialImage.increaseAlpha(500, 1f);
+                    }
+                } else {
+                    if (frames.size() >= currentFrame + 1) {
+                        if (frames.get(currentFrame).image != frames.get(currentFrame + 1).image) {
+                            Game.tutorialImage = frames.get(currentFrame).image;
+                            Game.tutorialImage.alpha = 0;
+                            Game.tutorialImage.display();
+                            Game.tutorialImage.increaseAlpha(500, 1f);
+                        }
+                    }
                 }
             } else {
                 Game.tutorialImage = frames.get(currentFrame).image;

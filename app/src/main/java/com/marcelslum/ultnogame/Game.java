@@ -386,7 +386,7 @@ public class Game {
                 resolutionX*0.9f, resolutionY*0.15f, resolutionY*0.05f,
                 getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(conqueredStarsTotal), font, new Color(0f, 0f, 0f, 0.5f));
 
-        starForMessage = new Image("frame", resolutionX*0.85f, resolutionY*0.15f, resolutionY*0.05f, resolutionY*0.05f, Texture.TEXTURE_BUTTONS_AND_BALLS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
+        starForMessage = new Image("frame", resolutionX*0.85f, resolutionY*0.15f, resolutionY*0.05f, resolutionY*0.05f, Texture.TEXTURE_BUTTONS_BALLS_STARS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
 
         bottomTextBox = new TextBoxBuilder("bottomTextBox")
                 .position(resolutionX*0.05f, resolutionY*0.9f)
@@ -417,7 +417,7 @@ public class Game {
 
     public static void initButtons(){
         float buttonSize = resolutionX * 0.05f;
-        buttonReturn = new Button("buttonReturn", buttonSize*0.5f, resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        buttonReturn = new Button("buttonReturn", buttonSize*0.5f, resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         buttonReturn.setTextureMap(13);
         buttonReturn.textureMapUnpressed = 13;
         buttonReturn.textureMapPressed = 5;
@@ -434,7 +434,7 @@ public class Game {
             }
         });
 
-        buttonReturnObjectivesPause = new Button("buttonReturnObjectivesPause", buttonSize*0.5f, gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        buttonReturnObjectivesPause = new Button("buttonReturnObjectivesPause", buttonSize*0.5f, gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         buttonReturnObjectivesPause.setTextureMap(13);
         buttonReturnObjectivesPause.textureMapUnpressed = 13;
         buttonReturnObjectivesPause.textureMapPressed = 5;
@@ -448,7 +448,7 @@ public class Game {
             }
         });
 
-        buttonContinue = new Button("buttonContinue", resolutionX - buttonSize*1.5f, resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        buttonContinue = new Button("buttonContinue", resolutionX - buttonSize*1.5f, resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         buttonContinue.setTextureMap(14);
         buttonContinue.textureMapUnpressed = 14;
         buttonContinue.textureMapPressed = 6;
@@ -693,37 +693,56 @@ public class Game {
                 }
             }, false);
 
-            tutorialMenu.addText(1, "jogo", getContext().getResources().getString(R.string.tutorial2Tittle),
+            tutorialMenu.addText(1, "jogar", getContext().getResources().getString(R.string.tutorial2Tittle),
                     resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
         }
 
-        if (currentLevelsGroupDataSelected == null){
-            currentLevelsGroupDataSelected = levelsGroupData.get(0);
+
+        if (conqueredStarsTotal >= levelsGroupData.get(1).starsToUnlock){
+            tutorialMenu.addOption(2, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    currentTutorial = Tutorial.TUTORIAL_OBSTACULO;
+                    setGameState(GAME_STATE_TUTORIAL);
+                }
+            }, false);
+
+            tutorialMenu.addText(1, "obstaculo", getContext().getResources().getString(R.string.tutorial3Tittle),
+                    resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+
         }
 
+        if (conqueredStarsTotal >= levelsGroupData.get(2).starsToUnlock){
+            tutorialMenu.addOption(3, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    currentTutorial = Tutorial.TUTORIAL_CORES;
+                    setGameState(GAME_STATE_TUTORIAL);
+                }
+            }, false);
 
-        for (int i = 0; i < currentLevelsGroupDataSelected.levelsData.size(); i++){
-            final LevelsGroupData.LevelData ld = currentLevelsGroupDataSelected.levelsData.get(i);
+            tutorialMenu.addText(1, "cores", getContext().getResources().getString(R.string.tutorial4Tittle),
+                    resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
 
-            levelMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
-
-            float percentage = 0f;
-            float starsOfLevel = SaveGame.saveGame.starsLevels[ld.number-1];
-            if (starsOfLevel == 1){
-                percentage = 0.2f;
-            } else if (starsOfLevel == 2){
-                percentage = 0.4f;
-            } else if (starsOfLevel == 3){
-                percentage = 0.6f;
-            } else if (starsOfLevel == 4){
-                percentage = 0.8f;
-            } else if (starsOfLevel == 5){
-                percentage = 1f;
-            }
-
-            levelMenu.graph.get(i).setPercentage(percentage);
         }
-    }
+
+        if (conqueredStarsTotal >= levelsGroupData.get(3).starsToUnlock){
+            tutorialMenu.addOption(4, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    currentTutorial = Tutorial.TUTORIAL_EXPLOSAO;
+                    setGameState(GAME_STATE_TUTORIAL);
+                }
+            }, false);
+
+            tutorialMenu.addText(1, "explosao", getContext().getResources().getString(R.string.tutorial5Tittle),
+                    resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+
+        }
+}
+
+
+
 
     public static void initMenus(){
 
@@ -952,8 +971,6 @@ public class Game {
                 setGameState(GAME_STATE_PAUSE);
             }
         });
-
-
     }
 
     public static void initPrograms(){
@@ -1631,15 +1648,15 @@ public class Game {
 
         if (currentTutorial == Tutorial.TUTORIAL_INSTRUCOES_INICIAIS) {
             Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS1,
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
 
             Image i2 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS1,
                     (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
 
             Image i3 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS1,
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
 
             currentTutorialObject = new Tutorial();
@@ -1705,23 +1722,23 @@ public class Game {
 
 
             Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS1,
                     (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
 
             Image i2 = new Image("i2", resolutionX * 0.05f, resolutionX * 0.025f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS1,
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (512f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
 
             Image i3 = new Image("i3", resolutionX * 0.05f, resolutionX * 0.025f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS1,
                     (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (512f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
 
             Image i4 = new Image("i4", resolutionX * 0.05f, resolutionX * 0.025f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS1,
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (768f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f);
 
             Image i5 = new Image("i5", resolutionX * 0.05f, resolutionX * 0.025f,
-                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIAL1,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS1,
                     (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (768f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f);
 
             currentTutorialObject = new Tutorial();
@@ -1743,8 +1760,50 @@ public class Game {
             currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t16), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t17), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t18), textBoxY, textBoxSize);
-        }
 
+        } else if (currentTutorial == Tutorial.TUTORIAL_OBSTACULO) {
+
+            Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS2,
+                    (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+            currentTutorialObject = new Tutorial();
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t3t1), textBoxY, textBoxSize, resolutionX * 0.46f, resolutionY * 0.46f);
+
+        } else if (currentTutorial == Tutorial.TUTORIAL_CORES) {
+
+            Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS2,
+                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+            currentTutorialObject = new Tutorial();
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t4t1), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t4t2), textBoxY, textBoxSize, resolutionX * 0.15f, resolutionY * 0.2f);
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t4t3), textBoxY, textBoxSize, resolutionX * 0.46f, resolutionY * 0.2f);
+
+        } else if (currentTutorial == Tutorial.TUTORIAL_EXPLOSAO) {
+
+            Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS2,
+                    (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
+
+            Image i2 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
+                    resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS2,
+                    (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
+            currentTutorialObject = new Tutorial();
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t5t1), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t5t2), textBoxY, textBoxSize, resolutionX * 0.15f, resolutionY * 0.15f);
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t5t3), textBoxY, textBoxSize, resolutionX * 0.78f, resolutionY * 0.35f);
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t5t4), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t5), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t6), textBoxY, textBoxSize, resolutionX * 0.23f, resolutionY * 0.6f);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t7), textBoxY, textBoxSize, resolutionX * 0.17f, resolutionY * 0.6f);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t8), textBoxY, textBoxSize, resolutionX * 0.25f, resolutionY * 0.6f);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t9), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t10), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t11), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t12), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t13), textBoxY, textBoxSize);
+
+        }
     }
 
     public static void stopAndReleaseMusic(){

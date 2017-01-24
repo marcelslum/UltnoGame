@@ -37,7 +37,7 @@ public class MenuIconGraph extends Entity{
             stars = new ArrayList<>();
             float sizeStars = width / 5f;
             for (int i = 0; i < 5; i++) {
-                Image im = new Image("star"+i, x + (sizeStars * i), y, sizeStars, sizeStars, Texture.TEXTURE_BUTTONS_AND_BALLS,
+                Image im = new Image("star"+i, x + (sizeStars * i), y, sizeStars, sizeStars, Texture.TEXTURE_BUTTONS_BALLS_STARS,
                         (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
                 stars.add(im);
                 addChild(im);

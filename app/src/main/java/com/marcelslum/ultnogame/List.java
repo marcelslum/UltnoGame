@@ -40,7 +40,7 @@ public class List extends Entity{
         float buttonSize = size*0.90f;
         final List innerList = this;
 
-        arrowUp = new Button("arrowUp", x + width - size, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        arrowUp = new Button("arrowUp", x + width - size, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         arrowUp.setTextureMap(16);
         arrowUp.textureMapUnpressed = 16;
         arrowUp.textureMapPressed = 8;
@@ -54,7 +54,7 @@ public class List extends Entity{
         });
         addChild(arrowUp);
 
-        arrowDown = new Button("arrowDown", x + width - size, y + height - size*2, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        arrowDown = new Button("arrowDown", x + width - size, y + height - size*2, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         arrowDown.setTextureMap(15);
         arrowDown.textureMapUnpressed = 15;
         arrowDown.textureMapPressed = 7;
@@ -68,7 +68,7 @@ public class List extends Entity{
         });
         addChild(arrowDown);
 
-        arrowBack = new Button("arrowBack", x, y + height - size, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_AND_BALLS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        arrowBack = new Button("arrowBack", x, y + height - size, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         arrowBack.setTextureMap(13);
         arrowBack.textureMapUnpressed = 13;
         arrowBack.textureMapPressed = 5;
