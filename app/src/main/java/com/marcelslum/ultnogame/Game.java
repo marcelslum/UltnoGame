@@ -1733,14 +1733,15 @@ public class Game {
             currentTutorialObject.addFrame(i4, getContext().getResources().getString(R.string.t2t7), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i4, getContext().getResources().getString(R.string.t2t8), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i4, getContext().getResources().getString(R.string.t2t9), textBoxY, textBoxSize, resolutionX * 0.5f, resolutionY * 0.68f);
-            currentTutorialObject.addFrame(i4, getContext().getResources().getString(R.string.t2t10), textBoxY, textBoxSize, resolutionX * 0.43f, resolutionY * 0.63f);
-            currentTutorialObject.addFrame(i4, getContext().getResources().getString(R.string.t2t11), textBoxY, textBoxSize, resolutionX * 0.43f, resolutionY * 0.65f);
+            currentTutorialObject.addFrame(i4, getContext().getResources().getString(R.string.t2t10), textBoxY, textBoxSize, resolutionX * 0.43f, resolutionY * 0.62f);
+            currentTutorialObject.addFrame(i4, getContext().getResources().getString(R.string.t2t11), textBoxY, textBoxSize, resolutionX * 0.43f, resolutionY * 0.66f);
             currentTutorialObject.addFrame(i4, getContext().getResources().getString(R.string.t2t12), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t13), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t14), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t15), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t16), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t17), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i5, getContext().getResources().getString(R.string.t2t18), textBoxY, textBoxSize);
         }
 
     }
