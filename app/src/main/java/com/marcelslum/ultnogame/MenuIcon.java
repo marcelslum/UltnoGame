@@ -225,7 +225,7 @@ public class MenuIcon extends Entity{
     }
 
     public void addOption(int id, int textureUnit, int textureMap, Animation.AnimationListener onSelect, boolean optionBlocked){
-        float padd = size * 0.1f;
+        
         if (listener == null){
             final MenuIcon innerMenuIcon = this;
             setListener(new InteractionListener(this.name, x, y, Game.resolutionX, size*1.25f, 5000, this));
@@ -261,7 +261,7 @@ public class MenuIcon extends Entity{
 
         }
 
-        float positionX = x + padd + (icons.size() * size * 1.1f);
+        float positionX = getPositionXFromIconNumber(icons.size()+1);
         Button button = new Button(Integer.toString(id), positionX, y, size, size, textureUnit, 1, Button.BUTTON_TYPE_256);
         button.setTextureMap(textureMap);
         button.textureMapUnpressed = textureMap;
@@ -324,6 +324,12 @@ public class MenuIcon extends Entity{
         addChild(button);
 
     }
+    
+    // primeiro icone é número 0
+    public void getPositionXFromIconNumber(int number){
+        float padd = size * 0.1f;
+        return x + padd + ((number-1) * size * 1.1f);    
+    }
 
     @Override
     public void checkTransformations(boolean updatePrevious) {
@@ -352,8 +358,29 @@ public class MenuIcon extends Entity{
     }
     
     private void moveToIcon(iconNumber){
-        if (icons.size > iconNumber){
-            move(icons.get(iconNumber).positionX);
+        for (int i = 0; i < icons.size(); i++){
+            icons.get(i).accumulatedTranslateX = 0f;
+        }
+        
+        for (int i = 0; i < texts.size(); i++){
+            texts.get(i).accumulatedTranslateX = 0f;
+        }
+
+        for (int i = 0; i < texts2.size(); i++){
+            texts2.get(i).accumulatedTranslateX = 0f;
+        }
+
+        for (int i = 0; i < innerTexts.size(); i++){
+            innerTexts.get(i).accumulatedTranslateX = 0f;
+        }
+
+        for (int i = 0; i < graph.size(); i++){
+            //Log.e(TAG, "ativando translate do graph " + i);
+            graph.get(i).accumulatedTranslateX = 0f;
+        }
+        
+         if (icons.size > iconNumber){
+            move(getPositionXFromIconNumber(iconNumber));
         }
     }
 
