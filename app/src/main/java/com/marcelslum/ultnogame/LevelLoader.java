@@ -28,7 +28,8 @@ public class LevelLoader {
                 .setWindType(Level.WIND_TYPE_NO)
                 .setSpecialBallPercentage0_1(0f)
                 .setObstaclesQuantity(0)
-                .setWindowsQuantity(0);
+                .setWindowsQuantity(0)
+                .setTutorialAttached(Tutorial.TUTORIAL_INICIO);
         if (levelNumber == 1) {
             levelBuilder.setTargetsMap(
                     new int[][]{
@@ -36,6 +37,7 @@ public class LevelLoader {
                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
                     })
                     .setTargetsStates(new int[]{0, 1});
+
         }
 
         if (levelNumber >= 2) {
@@ -116,7 +118,8 @@ public class LevelLoader {
                     .setBallsVY(1.071f)
                     .setBallsAngleToRotate_BD_2(1.1f)
                     .setBarsWidth_BD_0_22(0.818f)
-                    .setBarsVX_BD_0_0045(1.111f);
+                    .setBarsVX_BD_0_0045(1.111f)
+                    .setTutorialAttached(Tutorial.TUTORIAL_OBSTACULO);
             if (levelNumber == 4) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
@@ -187,7 +190,8 @@ public class LevelLoader {
                         .setObstaclesX(0.35f, 0.5f)
                         .setObstaclesY(0.0925f, 0.2597f)
                         .setObstaclesWidth(0.15f, 0.15f)
-                        .setObstaclesHeight(0.035f, 0.035f);
+                        .setObstaclesHeight(0.035f, 0.035f)
+                        .setTutorialAttached(Tutorial.TUTORIAL_OBSTACULO);
             if (levelNumber == 5) {
                 levelBuilder
                         .setTargetsMap(
@@ -240,6 +244,8 @@ public class LevelLoader {
         }
 
         if (levelNumber >= 7) {
+                levelBuilder
+                        .setTutorialAttached(Tutorial.TUTORIAL_CORES);
             if (levelNumber == 7) {
                 levelBuilder
                         .setTargetsMap(
@@ -278,6 +284,8 @@ public class LevelLoader {
         }
 
         if (levelNumber >= 9) {
+                levelBuilder
+                        .setTutorialAttached(Tutorial.TUTORIAL_EXPLOSAO);
             if (levelNumber == 9) {
                 levelBuilder
                         .setTargetsMap(

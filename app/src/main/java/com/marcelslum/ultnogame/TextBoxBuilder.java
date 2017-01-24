@@ -12,6 +12,7 @@ public class TextBoxBuilder {
     public float y;
     public final String name;
     public boolean isHaveArrow;
+    public boolean isHaveMiniArrow;
     public boolean isHaveFrame;
     public boolean isHaveArrowContinue;
     public float arrowX;
@@ -58,6 +59,13 @@ public class TextBoxBuilder {
 
     public TextBoxBuilder withArrow(float arrowX, float arrowY){
         this.isHaveArrow = true;
+        this.arrowX = arrowX;
+        this.arrowY = arrowY;
+        return this;
+    }
+
+    public TextBoxBuilder withMiniArrow(float arrowX, float arrowY){
+        this.isHaveMiniArrow = true;
         this.arrowX = arrowX;
         this.arrowY = arrowY;
         return this;

@@ -176,13 +176,13 @@ public class Text extends Entity{
                     };
 
             uv[0] = x;
-            uv[1] = y2;
+            uv[1] = y2 + 0.001f;
             uv[2] = x;
-            uv[3] = y;
+            uv[3] = y - 0.001f;
             uv[4] = x2;
-            uv[5] = y;
+            uv[5] = y - 0.001f;
             uv[6] = x2;
-            uv[7] = y2;
+            uv[7] = y2 + 0.001f;
 
             short[] inds = {0, 1, 2, 0, 2, 3};
 

@@ -16,11 +16,13 @@ public class TextBox extends Entity{
     public String text;
     public float padding = 0.2f;
     public boolean isHaveArrow = false;
-    public boolean isHaveFrame = true;
-    public boolean isHaveArrowContinue = true;
+    public boolean isHaveFrame = false;
+    public boolean isHaveMiniArrow = false;
+    public boolean isHaveArrowContinue = false;
     public Button arrowContinuar;
     public Color textColor = new Color(0f, 0f, 0f, 0.9f);
     public Line arrow;
+    public Image miniArrow;
     public float arrowX;
     public float arrowY;
     public Entity frame;
@@ -35,6 +37,7 @@ public class TextBox extends Entity{
         isHaveArrow = builder.isHaveArrow;
         isHaveFrame = builder.isHaveFrame;
         isHaveArrowContinue = builder.isHaveArrowContinue;
+        isHaveMiniArrow = builder.isHaveMiniArrow;
         arrowX = builder.arrowX;
         arrowY = builder.arrowY;
         texts = new ArrayList<>();
@@ -76,7 +79,6 @@ public class TextBox extends Entity{
         frameWidth = width + (textPadding*6);
 
         if (isHaveFrame){
-
             if (frameType == TextBoxBuilder.FRAME_TYPE_IMAGE) {
                 frame = new Image("frame", x, y, frameWidth, height, Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f / 1024f);
             } else if (frameType == TextBoxBuilder.FRAME_TYPE_SOLID) {
@@ -122,6 +124,10 @@ public class TextBox extends Entity{
         if (isHaveArrow){
             appendArrow(arrowX, arrowY);
         }
+
+        if (isHaveMiniArrow){
+            appendMiniArrow(arrowX, arrowY);
+        }
     }
 
     public void setOnPress(OnPress _onPress){
@@ -157,6 +163,15 @@ public class TextBox extends Entity{
     }
 
 
+    public void appendMiniArrow(float arrowX, float arrowY){
+        isHaveMiniArrow = true;
+        float arrowSize = size * 2f;
+        miniArrow = new Image("miniArrow", arrowX - arrowSize, arrowY, arrowSize, arrowSize, Texture.TEXTURE_BUTTONS_AND_BALLS,
+                (128f + 2.5f) / 1024f, (256f - 2.5f) / 1024f, (128f + 2.5f) / 1024f, (256f - 2.5f) / 1024f);
+
+    }
+
+
     public void appendArrow(float arrowX, float arrowY){
         isHaveArrow = true;
         float initialX;
@@ -186,6 +201,10 @@ public class TextBox extends Entity{
     public void render(float[] matrixView, float[] matrixProjection){
         if (isHaveArrow && arrow != null){
             arrow.prepareRender(matrixView, matrixProjection);
+        }
+
+        if (isHaveMiniArrow && miniArrow != null){
+            miniArrow.prepareRender(matrixView, matrixProjection);
         }
 
         if (isHaveFrame){

@@ -43,7 +43,7 @@
     <string name="t2t9">Observe também que o que ocorre com a velocidade e o ângulo pode ser acompanhado pelo painel abaixo.</string>
     <string name="t2t10">A barra verde representa a velocidade da bola, que, nesse caso, esta aumentando.</string>
     <string name="t2t11">A barra azul, por sua vez, representa o ângulo, que, nesse caso, está diminuindo.</string>
-    <string name="t2t12">A velocidade e o ângulo possuem limites máximo e mínimo.</string>
+    <string name="t2t12">A velocidade e o ângulo possuem limites máximo e mínimo, dados que também podem ser vistos no painel.</string>
     <string name="t2t13">Vejamos agora o que ocorre na situação contrária.</string>
     <string name="t2t14">Desta vez, a bola e a barra estão se movimentando na mesma direção.</string>
     <string name="t2t15">Isso faz com que a velocidade da bola diminua.</string>

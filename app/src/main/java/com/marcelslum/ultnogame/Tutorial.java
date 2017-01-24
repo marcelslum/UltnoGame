@@ -12,13 +12,23 @@ public class Tutorial {
     int currentFrame;
     boolean showingFromMenu;
 
+    static final int TUTORIAL_INSTRUCOES_INICIAIS = 0;
+    static final int TUTORIAL_INICIO = 1;
+    static final int TUTORIAL_OBSTACULO = 2;
+    static final int TUTORIAL_CORES = 3;
+    static final int TUTORIAL_EXPLOSAO = 4;
+
 
     public Tutorial(){
         frames = new ArrayList<>();
     }
 
     public void addFrame(Image image, String text, float y, float size){
-        frames.add(new Frame(image, text, y, size));
+        frames.add(new Frame(image, text, y, size, -1f, -1f));
+    }
+
+    public void addFrame(Image image, String text, float y, float size, float arrowX, float arrowY){
+        frames.add(new Frame(image, text, y, size, arrowX, arrowY));
     }
 
     public void clear(){
@@ -91,7 +101,7 @@ public class Tutorial {
             if (showingFromMenu){
                 Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
             } else {
-                if (Game.currentTutorial == 0) {
+                if (Game.currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS) {
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                 } else {
                     Game.setGameState(Game.GAME_STATE_PREPARAR);
@@ -106,17 +116,21 @@ public class Tutorial {
         Text text;
         Image image;
         TextBox textBox;
-        Frame(Image image, String text, float y, float size){
-            textBox = new TextBoxBuilder("textBox")
-                    .position(Game.resolutionX * 0.1f, y)
-                    .width(Game.resolutionX * 0.8f)
-                    .size(size)
-                    .text(text)
-                    .withoutArrow()
-                    .isHaveFrame(false)
-                    .isHaveArrowContinue(false)
-                    .build();
+        Frame(Image image, String text, float y, float size, float arrowX, float arrowY){
+            TextBoxBuilder b = new TextBoxBuilder("textBox")
+                .position(Game.resolutionX * 0.1f, y)
+                .width(Game.resolutionX * 0.8f)
+                .size(size)
+                .text(text)
+                .isHaveFrame(false)
+                .isHaveArrowContinue(false);
 
+            if (arrowX == -1f) {
+                b.withoutArrow();
+            } else {
+                b.withMiniArrow(arrowX, arrowY);
+            }
+            textBox = b.build();
             this.image = image;
         }
     }
