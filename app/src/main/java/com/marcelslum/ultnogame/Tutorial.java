@@ -81,6 +81,8 @@ public class Tutorial {
             Game.tutorialTextBox.display();
             Game.tutorialTextBox.clearAnimations();
             Utils.createSimpleAnimation(Game.tutorialTextBox, "translateX", "translateX", 500, Game.resolutionX*2f, 0f).start();
+            
+            Game.tutorialTextBox.animateMiniArrow(Game.resolutionX*1.5f, Game.tutorialTextBox.size * 0.5f);
 
             Game.buttonContinue.display();
             Game.buttonContinue.unblock();
