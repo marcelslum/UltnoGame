@@ -31,33 +31,35 @@
     <string name="t1t9">Em cada nível, é possível coletar no máximo 5 estrelas.</string>
     <string name="t1t10">Neste primeiro nível, por exemplo, foi coletada apenas uma estrela.</string>
     <string name="t1t11">No menu de grupo, é possível verificar qual a porcentagem de estrelas foram coletadas em todos os níveis do grupo.</string>
-    <string name="t1t12">Para coletar estrelas, é necessário cumprir alguns objetivos, que mudarão a cada nível.</string>
-    <string name="t1t13">Cada objetivo poderá render até 5 estrelas, sendo que soma das estrelas de todos os objetivos será 5.</string>
-    <string name="t1t14">As estrelas são contabilizadas somente quando o nível é finalizado.</string>
-    <string name="t1t15">É possível jogar novamente um nível já finalizado para tentar melhorar a quantidade de estrelas e pontos adquiridos.</string>
-    <string name="t1t16">A cada nova tentativa, você começará o nível sem nenhuma estrela, ou seja, sem nenhum objetivo completo.</string>
-    <string name="t1t17">Mas não se preocupe, você não perderá as estrelas já contabilizadas em tentativas anteriores.</string>
-    <string name="t1t18">Vamos começar?</string>
+    <string name="t1t12">Para coletar estrelas, é necessário cumprir alguns objetivos, que poderão mudar a cada nível.</string>
+    <string name="t1t13">Além de desbloquear novos níveis, coletar estrelas concede pontos extras ao finalizar o nível.</string>
+    <string name="t1t14">Cada objetivo poderá render até 5 estrelas, sendo que soma das estrelas de todos os objetivos será 5.</string>
+    <string name="t1t15">As estrelas são contabilizadas somente quando o nível é finalizado.</string>
+    <string name="t1t16">É possível jogar novamente um nível já finalizado para tentar melhorar a quantidade de estrelas e pontos adquiridos.</string>
+    <string name="t1t17">A cada nova tentativa, você começará o nível sem nenhuma estrela, ou seja, sem nenhum objetivo completo.</string>
+    <string name="t1t18">Mas não se preocupe, você não perderá as estrelas já contabilizadas em tentativas anteriores.</string>
+    <string name="t1t19">Vamos começar?</string>
     
     
     
     <string name="t2t1">Vamos aprender os comandos e instruções básicas do jogo.</string>
-    <string name="t2t2">Mova a barra apertando um dos botões localizados nas extremidades inferiores da tela.</string>
+    <string name="t2t2">Mova a barra para a esquerda e para a direita apertando um dos botões localizados nas extremidades inferiores da tela.</string>
     <string name="t2t3">Não deixe a bola cair.</string>
     <string name="t2t4">Atinja os alvos com a bola para eliminá-los. Cada alvo valerá 10 pontos.</string>
     <string name="t2t5">Elimine todos os alvos para completar o nível, mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
     <string name="t2t6">Através do controle da barra, é possível alterar a direção e a velocidade da bola.</string>
     <string name="t2t7">Ao atingir a bola com a barra se movimentando na direção contrária, a velocidade da bola aumentará</string>
     <string name="t2t8">Já o ângulo da bola em relação à barra será reduzido.</string>
-    <string name="t2t9">Observe também que o que ocorre com a velocidade e o ângulo pode ser acompanhado pelo painel abaixo.</string>
+    <string name="t2t9">O que ocorre com a velocidade e o ângulo da bola pode ser acompanhado por este painel </string>
     <string name="t2t10">A barra verde representa a velocidade da bola, que, nesse caso, esta aumentando.</string>
     <string name="t2t11">A barra azul, por sua vez, representa o ângulo, que, nesse caso, está diminuindo.</string>
-    <string name="t2t12">A velocidade e o ângulo possuem limites máximo e mínimo, dados que também podem ser vistos no painel.</string>
+    <string name="t2t12">A velocidade e o ângulo possuem valores máximos e mínimos.</string>
     <string name="t2t13">Vejamos agora o que ocorre na situação contrária.</string>
     <string name="t2t14">Desta vez, a bola e a barra estão se movimentando na mesma direção.</string>
     <string name="t2t15">Isso faz com que a velocidade da bola diminua.</string>
     <string name="t2t16">E o ângulo em relação à barra aumente.</string>
     <string name="t2t17">Use o que aprendeu para controlar a bola e acertar os alvos mais rapidamente.</string>
+    <string name="t2t18">Vamos jogar?</string>
     
     <string name="t3t1">A partir de agora, os níveis poderão ter obstáculos indestrutíveis.</string>
     
