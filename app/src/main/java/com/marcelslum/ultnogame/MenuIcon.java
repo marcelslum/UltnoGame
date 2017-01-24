@@ -26,8 +26,7 @@ public class MenuIcon extends Entity{
     private boolean cancelNextPress;
     Rectangle beggining;
     Rectangle ending;
-
-
+    public int iconNumberToShow = -1;
 
     public MenuIcon(String name, float x, float y, float size) {
         super(name, x, y);
@@ -114,6 +113,10 @@ public class MenuIcon extends Entity{
     }
 
     public void appear(){
+        
+        if (iconNumberToShow != -1){
+            moveToIcon(iconNumberToShow);
+        }
         
         Sound.play(Sound.soundMenuIconDrop, 0.5f, 0.5f, 0);
         blockAllIcons();
