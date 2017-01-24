@@ -1645,35 +1645,59 @@ public class Game {
 
             currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t1),
                     textBoxY, textBoxSize);
-
+            
             currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t2),
-                    textBoxY, textBoxSize, resolutionX * 0.5f, resolutionY * 0.6f);
-
+                    textBoxY, textBoxSize);
+            
             currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t3),
-                    textBoxY, textBoxSize, resolutionX * 0.8f, resolutionY * 0.13f);
-
-            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t4),
-                    textBoxY, textBoxSize, resolutionX * 0.2f, resolutionY * 0.6f);
-
-            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t5),
-                    textBoxY, textBoxSize, resolutionX * 0.2f, resolutionY * 0.6f);
-
+                    textBoxY, textBoxSize);
+            
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t4),
+                    textBoxY, textBoxSize);
+            
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t5),
+                    textBoxY, textBoxSize, resolutionX * 0.2f, resolutionY * 0.5f);
+            
             currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t6),
+                    textBoxY, textBoxSize, resolutionX * 0.5f, resolutionY * 0.5f);
+            
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t7),
+                    textBoxY, textBoxSize, resolutionX * 0.8f, resolutionY * 0.14f);
+            
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t8),
+                    textBoxY, textBoxSize);          
+            
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t9),
+                    textBoxY, textBoxSize);
+            
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t10),
                     textBoxY, textBoxSize, resolutionX * 0.2f, resolutionY * 0.6f);
 
-            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t7),
+            currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t1t11),
+                    textBoxY, textBoxSize, resolutionX * 0.2f, resolutionY * 0.6f);
+
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t12),
                     textBoxY, textBoxSize, resolutionX * 0.2f, resolutionY * 0.4f);
 
-            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t8),
-                    textBoxY, textBoxSize, resolutionX * 0.6f, resolutionY * 0.6f);
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t13),
+                    textBoxY, textBoxSize, resolutionX * 0.65f, resolutionY * 0.65f);
 
-            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t9),
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t14),
                     textBoxY, textBoxSize);
-
-            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t10),
+            
+            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t15),
                     textBoxY, textBoxSize);
-
-            currentTutorialObject.addFrame(i3, getContext().getResources().getString(R.string.t1t11),
+            
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t16),
+                    textBoxY, textBoxSize);
+            
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t17),
+                    textBoxY, textBoxSize);
+            
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t18),
+                    textBoxY, textBoxSize);
+            
+            currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t1t19),
                     textBoxY, textBoxSize);
 
         } else if (currentTutorial == Tutorial.TUTORIAL_INICIO) {
