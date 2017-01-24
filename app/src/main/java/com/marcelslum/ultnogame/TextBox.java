@@ -168,7 +168,24 @@ public class TextBox extends Entity{
         float arrowSize = size * 2f;
         miniArrow = new Image("miniArrow", arrowX - arrowSize, arrowY, arrowSize, arrowSize, Texture.TEXTURE_BUTTONS_AND_BALLS,
                 (128f + 2.5f) / 1024f, (256f - 2.5f) / 1024f, (128f + 2.5f) / 1024f, (256f - 2.5f) / 1024f);
-
+    }
+    
+    
+    public void animateMiniArrow(float initialTranslateX, float difference){
+        if (miniArrow != null){
+            
+        final Animationa a2 = Utils.createAnimation4v(miniArrow, "animArrowTX", "translateX", 5000, 0f, 0f, 0.3f, -difference/1.3f, 0.7f, difference, 1f, 0f, true, true);
+        final Animationa a3 = Utils.createAnimation4v(miniArrow, "animArrowTY", "translateY", 3200, 0f,0f, 0.2f,difference/2f, 0.7f,-difference, 1f,0, true, true);
+            
+        Animation anim = Utils.createSimpleAnimation(miniArrow, "translateX", "translateX", 500, initialTranslateX, 0f, new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        a2.start();
+                        a3.start();
+                    }
+                });
+        anim.start();   
+        }
     }
 
 
