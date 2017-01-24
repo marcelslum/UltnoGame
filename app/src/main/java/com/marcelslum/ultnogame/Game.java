@@ -592,7 +592,8 @@ public class Game {
 
                 if (!SaveGame.saveGame.newGroupsSeen){
                     if (SaveGame.saveGame.lastStars < lgd.starsToUnlock){
-                        groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), resolutionY * 0.035f, resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+                        groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), resolutionY * 0.05f, resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+                        groupMenu.iconNumberToShow = i;
                     }
                 }
 
