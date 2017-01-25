@@ -599,7 +599,7 @@ public class Game {
                 groupMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_BAR);
 
                 groupMenu.addText(2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
-                        resolutionY * 0.03f, resolutionY * 0.09f, new Color(0.25f, 0.25f, 0.25f, 1f));
+                        resolutionY * 0.03f, resolutionY * 0.09f, new Color(0.35f, 0.35f, 0.35f, 1f));
 
                 if (!SaveGame.saveGame.newGroupsSeen){
                     if (SaveGame.saveGame.lastStars < lgd.starsToUnlock){
@@ -661,7 +661,7 @@ public class Game {
             levelMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
 
             levelMenu.addText(2, ld.name+"2",  (int)SaveGame.saveGame.pointsLevels[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),
-                    resolutionY * 0.03f, resolutionY * 0.2f, new Color(0.25f, 0.25f, 0.25f, 1f));
+                    resolutionY * 0.03f, resolutionY * 0.2f, new Color(0.35f, 0.35f, 0.35f, 1f));
 
             float percentage = 0f;
             float starsOfLevel = SaveGame.saveGame.starsLevels[ld.number-1];
