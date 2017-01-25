@@ -190,5 +190,6 @@
     <string name="tutorial3Tittle">Obstáculo</string>
     <string name="tutorial4Tittle">Cores</string>
     <string name="tutorial5Tittle">Explosão</string>
+    <string name="pontos">pontos</string>
 
 </resources>

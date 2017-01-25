@@ -588,7 +588,18 @@ public class Game {
                 }, false);
 
                 groupMenu.addText(1, lgd.name, lgd.name, resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+
+
+                int totalPoints = 0;
+                for (int i2 = 0; i2 < lgd.levelsData.size(); i2++){
+                    totalPoints += (int)SaveGame.saveGame.pointsLevels[lgd.levelsData.get(i2).number - 1];
+                }
+
+
                 groupMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_BAR);
+
+                groupMenu.addText(2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
+                        resolutionY * 0.03f, resolutionY * 0.09f, new Color(0.25f, 0.25f, 0.25f, 1f));
 
                 if (!SaveGame.saveGame.newGroupsSeen){
                     if (SaveGame.saveGame.lastStars < lgd.starsToUnlock){
@@ -648,6 +659,9 @@ public class Game {
 
             levelMenu.addText(1, ld.name, ld.name,resolutionY * 0.04f, resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
             levelMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
+
+            levelMenu.addText(2, ld.name+"2",  (int)SaveGame.saveGame.pointsLevels[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),
+                    resolutionY * 0.03f, resolutionY * 0.28f, new Color(0.25f, 0.25f, 0.25f, 1f));
 
             float percentage = 0f;
             float starsOfLevel = SaveGame.saveGame.starsLevels[ld.number-1];
@@ -1774,7 +1788,7 @@ public class Game {
             Image i1 = new Image("i1", resolutionX * 0.05f, resolutionX * 0.025f,
                     resolutionX * 0.9f, resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS2,
                     (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
-            currentTutorialObject = new Tutorial();
+            currentTutorialObject = new Tutorial();//
             currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t4t1), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t4t2), textBoxY, textBoxSize, resolutionX * 0.15f, resolutionY * 0.2f);
             currentTutorialObject.addFrame(i1, getContext().getResources().getString(R.string.t4t3), textBoxY, textBoxSize, resolutionX * 0.46f, resolutionY * 0.2f);
@@ -1802,7 +1816,6 @@ public class Game {
             currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t11), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t12), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i2, getContext().getResources().getString(R.string.t5t13), textBoxY, textBoxSize);
-
         }
     }
 
