@@ -430,7 +430,8 @@ public class Game {
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_LEVEL){setGameState(GAME_STATE_SELECAO_LEVEL);
                 } else if (Game.gameState == GAME_STATE_MENU_TUTORIAL){setGameState(GAME_STATE_MENU);
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_PAUSE){setGameState(GAME_STATE_PAUSE);
-                } else if (Game.gameState == GAME_STATE_TUTORIAL){currentTutorialObject.previous();}
+                } else if (Game.gameState == GAME_STATE_TUTORIAL){
+                    currentTutorialObject.previous();}
             }
         });
 
@@ -499,56 +500,120 @@ public class Game {
     public static void initLevelsData(){
 
         levelsGroupData = new ArrayList<>();
-        LevelsGroupData l = new LevelsGroupData("Início", 1, 3, 0, getLevelsConqueredStars(1, 3), Texture.TEXTURE_GROUP_ICONS, 1);
-        l.addLevel("Nível 1", 1, Texture.TEXTURE_LEVEL_ICONS, 1);
-        l.addLevel("Nível 2", 2, Texture.TEXTURE_LEVEL_ICONS, 2);
-        l.addLevel("Nível 3", 3, Texture.TEXTURE_LEVEL_ICONS, 3);
+
+        int nl = 1;
+
+        int levelsQuantity = 4;
+        LevelsGroupData l = new LevelsGroupData("Início", nl, nl+levelsQuantity-1, 0, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 1);
+            // ---------- LEVEL1
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
+            // ---------- LEVEL2
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+            // ---------- LEVEL3
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 3);
+            // ---------- LEVEL4
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 3);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Obstáculos", 4, 6, 7, getLevelsConqueredStars(4, 8), Texture.TEXTURE_GROUP_ICONS, 2);
-        l.addLevel("Nível 4", 4, Texture.TEXTURE_LEVEL_ICONS, 4);
-        l.addLevel("Nível 5", 5, Texture.TEXTURE_LEVEL_ICONS, 5);
-        l.addLevel("Nível 6", 6, Texture.TEXTURE_LEVEL_ICONS, 6);
+        levelsQuantity = 3;
+        l = new LevelsGroupData("Obstáculos", nl, nl+levelsQuantity-1, 7, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 2);
+            // ---------- LEVEL5
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 4);
+            // ---------- LEVEL6
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 5);
+            // ---------- LEVEL7
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 6);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Cores", 7, 8, 10, getLevelsConqueredStars(4, 8), Texture.TEXTURE_GROUP_ICONS, 3);
-        l.addLevel("Nível 7", 7, Texture.TEXTURE_LEVEL_ICONS, 7);
-        l.addLevel("Nível 8", 8, Texture.TEXTURE_LEVEL_ICONS, 8);
+        levelsQuantity = 2;
+        l = new LevelsGroupData("Cores", nl, nl+levelsQuantity-1, 10, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            // ---------- LEVEL8
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 7);
+            // ---------- LEVEL9
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 8);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Explosão", 9, 11, 15, getLevelsConqueredStars(9, 11), Texture.TEXTURE_GROUP_ICONS, 3);
-        l.addLevel("Nível 9", 9, Texture.TEXTURE_LEVEL_ICONS, 9);
-        l.addLevel("Nível 10", 10, Texture.TEXTURE_LEVEL_ICONS, 10);
-        l.addLevel("Nível 11", 11, Texture.TEXTURE_LEVEL_ICONS, 11);
+        levelsQuantity = 3;
+        l = new LevelsGroupData("Explosão", nl, nl+levelsQuantity-1, 15, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            // ---------- LEVEL10
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 9);
+            // ---------- LEVEL11
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 10);
+            // ---------- LEVEL12
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 11);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Roda", 12, 15, 20, getLevelsConqueredStars(12, 15), Texture.TEXTURE_GROUP_ICONS, 3);
-        l.addLevel("Nível 12", 12, Texture.TEXTURE_LEVEL_ICONS, 12);
-        l.addLevel("Nível 13", 13, Texture.TEXTURE_LEVEL_ICONS, 13);
-        l.addLevel("Nível 14", 14, Texture.TEXTURE_LEVEL_ICONS, 14);
-        l.addLevel("Nível 15", 15, Texture.TEXTURE_LEVEL_ICONS, 15);
+        levelsQuantity = 4;
+        l = new LevelsGroupData("Roda", nl, nl+levelsQuantity-1, 20, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            // ---------- LEVEL13
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 12);
+            // ---------- LEVEL14
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 13);
+            // ---------- LEVEL15
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 14);
+            // ---------- LEVEL16
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 15);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Elástico", 16, 18, 20, getLevelsConqueredStars(16, 18), Texture.TEXTURE_GROUP_ICONS, 3);
-        l.addLevel("Nível 16", 16, Texture.TEXTURE_LEVEL_ICONS, 1);
-        l.addLevel("Nível 17", 17, Texture.TEXTURE_LEVEL_ICONS, 2);
-        l.addLevel("Nível 18", 18, Texture.TEXTURE_LEVEL_ICONS, 3);
+        levelsQuantity = 3;
+        l = new LevelsGroupData("Elástico", nl, nl+levelsQuantity-1, 20, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            // ---------- LEVEL17
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
+            // ---------- LEVEL18
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+            // ---------- LEVEL19
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 3);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Vento", 19, 20, 25, getLevelsConqueredStars(19, 20), Texture.TEXTURE_GROUP_ICONS, 3);
-        l.addLevel("Nível 19", 19, Texture.TEXTURE_LEVEL_ICONS, 1);
-        l.addLevel("Nível 20", 20, Texture.TEXTURE_LEVEL_ICONS, 2);
+        levelsQuantity = 2;
+        l = new LevelsGroupData("Vento", nl, nl+levelsQuantity-1, 25, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            // ---------- LEVEL20
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
+            // ---------- LEVEL21
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Fantasma", 21, 23, 30, getLevelsConqueredStars(21, 23), Texture.TEXTURE_GROUP_ICONS, 3);
-        l.addLevel("Nível 21", 21, Texture.TEXTURE_LEVEL_ICONS, 1);
-        l.addLevel("Nível 22", 22, Texture.TEXTURE_LEVEL_ICONS, 2);
-        l.addLevel("Nível 23", 23, Texture.TEXTURE_LEVEL_ICONS, 3);
+        levelsQuantity = 3;
+        l = new LevelsGroupData("Fantasma", nl, nl+levelsQuantity-1, 30, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            // ---------- LEVEL22
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
+            // ---------- LEVEL23
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+            // ---------- LEVEL24
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 3);
         levelsGroupData.add(l);
 
-        l = new LevelsGroupData("Invencibilidade", 24, 25, 35, getLevelsConqueredStars(24, 25), Texture.TEXTURE_GROUP_ICONS, 3);
-        l.addLevel("Nível 24", 24, Texture.TEXTURE_LEVEL_ICONS, 1);
-        l.addLevel("Nível 25", 25, Texture.TEXTURE_LEVEL_ICONS, 2);
+        levelsQuantity = 2;
+        l = new LevelsGroupData("Invencibilidade", nl, nl+levelsQuantity-1, 35, getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            // ---------- LEVEL25
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
+            // ---------- LEVEL26
+            nl += 1;
+            l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
         levelsGroupData.add(l);
     }
 
@@ -661,7 +726,7 @@ public class Game {
             levelMenu.addGraph("graph "+i, resolutionY * 0.06f, resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
 
             levelMenu.addText(2, ld.name+"2",  (int)SaveGame.saveGame.pointsLevels[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),
-                    resolutionY * 0.03f, resolutionY * 0.2f, new Color(0.35f, 0.35f, 0.35f, 1f));
+                    resolutionY * 0.03f, resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f));
 
             float percentage = 0f;
             float starsOfLevel = SaveGame.saveGame.starsLevels[ld.number-1];
@@ -727,7 +792,7 @@ public class Game {
         }
 
         if (conqueredStarsTotal >= levelsGroupData.get(2).starsToUnlock){
-            tutorialMenu.addOption(3, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
+            tutorialMenu.addOption(3, Texture.TEXTURE_TUTORIAL_ICONS, 4, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     currentTutorial = Tutorial.TUTORIAL_CORES;
@@ -741,7 +806,7 @@ public class Game {
         }
 
         if (conqueredStarsTotal >= levelsGroupData.get(3).starsToUnlock){
-            tutorialMenu.addOption(4, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
+            tutorialMenu.addOption(4, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     currentTutorial = Tutorial.TUTORIAL_EXPLOSAO;
@@ -754,9 +819,6 @@ public class Game {
 
         }
 }
-
-
-
 
     public static void initMenus(){
 

@@ -173,18 +173,21 @@ public class TextBox extends Entity{
     
     public void animateMiniArrow(float initialTranslateX, float difference){
         if (miniArrow != null){
-            
-        final Animation a2 = Utils.createAnimation4v(miniArrow, "animArrowTX", "translateX", (int)(8000*Utils.getRandonFloat(0.7f, 1.3f)), 0f, 0f, 0.3f, -difference/(1+Utils.getRandonFloat(1f, 2f)), 0.7f, difference/(1+Utils.getRandonFloat(1f, 2f)), 1f, 0f, true, true);
-        final Animation a3 = Utils.createAnimation4v(miniArrow, "animArrowTY", "translateY", (int)(6000*Utils.getRandonFloat(0.7f, 1.3f)), 0f,0f, 0.2f,difference/(1+Utils.getRandonFloat(1f, 2f)), 0.7f,-difference/(1+Utils.getRandonFloat(1f, 2f)), 1f,0, true, true);
-            
-        Animation anim = Utils.createSimpleAnimation(miniArrow, "translateX", "translateX", 800, initialTranslateX, 0f, new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        a2.start();
-                        a3.start();
-                    }
-                });
-        anim.start();
+            final Animation a2 = Utils.createAnimation4v(miniArrow, "animArrowTX", "translateX",
+                    (int)(6000*Utils.getRandonFloat(0.7f, 1.3f)), 0f, 0f, 0.3f,
+                    -difference/(1+Utils.getRandonFloat(1f, 2f)), 0.7f, difference/(1+Utils.getRandonFloat(1f, 2f)), 1f, 0f, true, true);
+            final Animation a3 = Utils.createAnimation4v(miniArrow, "animArrowTY", "translateY",
+                    (int)(5000*Utils.getRandonFloat(0.7f, 1.3f)), 0f,0f, 0.2f,
+                    difference/(1+Utils.getRandonFloat(1f, 2f)), 0.7f,-difference/(1+Utils.getRandonFloat(1f, 2f)), 1f,0, true, true);
+            Animation anim = Utils.createSimpleAnimation(miniArrow, "translateX", "translateX", 800, -initialTranslateX, 0f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            a2.start();
+                            a3.start();
+                        }
+                    });
+            anim.start();
+            Utils.createSimpleAnimation(miniArrow, "translateY", "translateY", 800, initialTranslateX/3f, 0f).start();
 
 
         }

@@ -167,6 +167,13 @@
     <string name="levelGoal15b">vez(es)</string>
     <string name="levelGoal16a">Evitar que o vento carregue a barra por mais de</string>
     <string name="levelGoal16b">segundo(s)</string>
+
+    <string name="levelGoal19a">Acelere a bola utilizando o movimento da barra por</string>
+    <string name="levelGoal19b">vezes seguidas</string>
+
+    <string name="levelGoal20a">Acelere a bola utilizando o movimento da barra por</string>
+    <string name="levelGoal20b">vezes seguidas</string>
+
     <string name="levelGoal3m">Bola acelerada:</string>
     <string name="levelGoal5m">Bola desacelerada:</string>
     <string name="levelGoal18m">Velocidade da bola alterada:</string>

@@ -54,7 +54,12 @@ public class Tutorial {
             if (showingFromMenu){
                 Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
             } else {
-                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                if (Game.currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS){
+                    Game.setGameState(Game.GAME_STATE_MENU);
+                } else {
+                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                }
+
             }
         }
     }
@@ -111,16 +116,16 @@ public class Tutorial {
             Game.tutorialTextBox.clearDisplay();
 
             if (showingFromMenu){
+                SaveGame.saveGame.tutorialsViwed[Game.currentTutorial] = true;
                 Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
             } else {
+                SaveGame.saveGame.tutorialsViwed[Game.currentTutorial] = true;
                 if (Game.currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS) {
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                 } else {
                     Game.setGameState(Game.GAME_STATE_PREPARAR);
                 }
             }
-
-
         }
     }
 

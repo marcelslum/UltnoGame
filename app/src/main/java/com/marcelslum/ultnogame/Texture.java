@@ -46,7 +46,6 @@ public class Texture {
     boolean bounded = false;
     public static final String TAG = "Texture";
 
-
     public static void clear(){
         textureNames = null;
         textureNamesUsed = null;
@@ -61,14 +60,13 @@ public class Texture {
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/special_ball"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1c"));
         Texture.textures.add(new Texture(Texture.TEXTURE_LEVEL_ICONS, "drawable/level_icons"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/group_icons"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/tutorial_icons"));
         Texture.textures.add(new Texture(Texture.TEXTURE_GROUP_ICONS, "drawable/group_icons"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS1, "drawable/tutorials1"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS2, "drawable/tutorials2"));
     }
 
     Texture(int id, String resourceIdentifier){
-        
         this.id = id;
         this.resoureIdentifier = resourceIdentifier;
         try {
@@ -78,7 +76,6 @@ public class Texture {
         catch (Exception e) {
             Log.e(TAG, "Erro ao criar a textura", e);
         }
-
         bind();
     }
 
@@ -90,7 +87,6 @@ public class Texture {
                 if (!textures.get(i).bounded){
                     textures.get(i).bind();
                 }
-
                 return textures.get(i);
             }
         }

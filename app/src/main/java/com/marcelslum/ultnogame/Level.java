@@ -422,16 +422,16 @@ public class Level {
         private final static float default_ballsRadius_BR = 0.012f;
         private final static float default_ballsX_BR = 1f;
         private final static float default_ballsY_BR = 1f;
-        private final static float default_ballsVX_BR = 0.0028f;
-        private final static float default_ballsVY_BR = 0.004941176f;
+        private final static float default_ballsVX_BR = 0.0025f;
+        private final static float default_ballsVY_BR = 0.0044117647f;
         private final static int default_ballTextureMap = Ball.COLOR_BALL_BLACK;
-        private final static float default_ballsAngleToRotate = 3f;
+        private final static float default_ballsAngleToRotate = 2f;
         // TODO alterar na tabela o valor do angulo
-        private final static float default_ballsMaxAngle = 55f;
-        private final static float default_ballsMinAngle = 35f;
-        private final static float default_ballsVelocityVariation = 0.07f;
+        private final static float default_ballsMaxAngle = 52f;
+        private final static float default_ballsMinAngle = 38f;
+        private final static float default_ballsVelocityVariation = 0.06f;
         private final static float default_ballsVelocityMax_BI = 1.35f;
-        private final static float default_ballsVelocityMin_BI = 0.75f;
+        private final static float default_ballsVelocityMin_BI = 0.8f;
         private final static int default_barsQuantity = 1;
         private final static float default_barsWidth_BR = 0.22f;
         private final static float default_barsHeight_BR = 0.0175f;

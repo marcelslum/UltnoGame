@@ -7,16 +7,16 @@ import java.util.ArrayList;
  */
 public class LevelLoader {
     public static void loadLevel(int levelNumber) {
+
+        int numberForLevelCreation = 1; // ---------- LEVEL1
+
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
         levelBuilder
                 .setBallsQuantity(1)
                 .setBallsTargetsAppend(new ArrayList<int[]>())
-                .setBallsX_B1(0.1f, 0.5f) // 0.3f
-                .setBallsFree(true, true)
-                //.setBallsVX(0.5f,-0.5f) // retirar
-                //.setBallsVY(0.5f,-0.5f) // retirar
-                .setBallsY_B1(0.3f, 0.6f) // 0.3f
-                //.setBallsRadius_BD_0_01(3f) // retirar
+                .setBallsX_B1(0.1f)
+                .setBallsY_B1(0.3f)
+                .setBallsFree(true)
                 .setBarsX_B1(0.3f)
                 .setTargetsWidth(0.0895f)
                 .setTargetsHeight(0.04f)
@@ -30,28 +30,26 @@ public class LevelLoader {
                 .setObstaclesQuantity(0)
                 .setWindowsQuantity(0)
                 .setTutorialAttached(Tutorial.TUTORIAL_INICIO);
-        if (levelNumber == 1) {
+        if (levelNumber == numberForLevelCreation) {
             levelBuilder.setTargetsMap(
                     new int[][]{
-                            //{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
-                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+                        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                     })
                     .setTargetsStates(new int[]{0, 1});
 
         }
 
-        if (levelNumber >= 2) {
+        numberForLevelCreation += 1; // ---------- LEVEL2
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
-                    .setBallsAngleToRotate_BD_2(4f)//4f
-                    .setBallsMaxAngle_BD_55(1.2f)
-                    .setBallsMinAngle_BD_35(0.857f)
-                    .setBallsVelocityVariation_BD_0_1(2f)
-                    .setBallsVelocityMax_BD_1_3(1.467f)
-                    .setBallsVelocityMin_BD_0_6(0.875f)
-                    .setBarsWidth_BD_0_22(1.364f)
-                    .setBarsX_B1(0.35f)
-                    .setBarsVX_BD_0_0045(1.222f);
-            if (levelNumber == 2) {
+                    .setBallsX_B1(0.3f)
+                    .setBallsVX(1.04f)
+                    .setBallsVY(1.04f)
+                    .setBallsVelocityVariation_BD_0_1(1.042f)
+                    .setBallsVelocityMax_BD_1_3(1.007f)
+                    .setBarsVX_BD_0_0045(1.022f);
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
                                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -61,32 +59,29 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 3) {
+        numberForLevelCreation += 1; // ---------- LEVEL3
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.2f)
                     .setBallsY_B1(0.4f)
-                    .setBallsVX(1.071f)
-                    .setBallsVY(1.071f)
-                    .setBallsAngleToRotate_BD_2(1f)
-                    .setBallsMaxAngle_BD_55(1f)
-                    .setBallsMinAngle_BD_35(1f)
-                    .setBallsVelocityVariation_BD_0_1(1f)
-                    .setBallsVelocityMax_BD_1_3(1f)
-                    .setBallsVelocityMin_BD_0_6(1f)
+                    .setBallsVX(1.08f)
+                    .setBallsVY(1.08f)
+                    .setBallsMaxAngle_BD_55(1.058f)
+                    .setBallsMinAngle_BD_35(0.921f)
+                    .setBallsVelocityVariation_BD_0_1(1.083f)
+                    .setBallsVelocityMax_BD_1_3(1.015f)
                     .setBarsWidth_BD_0_22(0.909f)
-                    .setBarsX_B1(0.3f)
                     .setBarsVX_BD_0_0045(1.111f);
-            if (levelNumber == 3) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
-                            {0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
-                            {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-                            {0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
-                            {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
-                            {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
-                            {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-                            {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
-                            {1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0},
+                            {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+                            {0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0},
+                            {0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0},
+                            {0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0},
+                            {0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
                         })
                         .setTargetsStates(new int[]{0, 1, 2, 3})
                         .setObstaclesQuantity(0);
@@ -103,13 +98,41 @@ public class LevelLoader {
                         //        .setWidthVelocity(0.002f)
                         //        .setMinWidth_BI(0.5f)
                         //        .setMaxWidth_BI(2f));
-
-
-
             }
         }
 
-        if (levelNumber >= 4) {
+        numberForLevelCreation += 1; // ---------- LEVEL4
+
+        if (levelNumber >= numberForLevelCreation) {
+            levelBuilder
+                    .setBallsVX(1.120f)
+                    .setBallsVY(1.120f)
+                    .setBallsAngleToRotate_BD_2(1.050f)
+                    .setBallsVelocityVariation_BD_0_1(1.125f)
+                    .setBallsVelocityMax_BD_1_3(1.022f)
+                    .setBarsWidth_BD_0_22(0.818f)
+                    .setBarsVX_BD_0_0045(1.111f);
+            if (levelNumber == numberForLevelCreation) {
+                levelBuilder.setTargetsMap(
+                        new int[][]{
+                                {0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0},
+                                {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                {0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                                {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                                {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
+                                {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+                                {1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0},
+                        })
+                        .setTargetsStates(new int[]{0, 1, 2, 3})
+                        .setObstaclesQuantity(0);
+            }
+        }
+
+
+        numberForLevelCreation += 1; // ---------- LEVEL5
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsQuantity(1)
                     .setBallsX_B1(0.1f)
@@ -120,7 +143,7 @@ public class LevelLoader {
                     .setBarsWidth_BD_0_22(0.818f)
                     .setBarsVX_BD_0_0045(1.111f)
                     .setTutorialAttached(Tutorial.TUTORIAL_OBSTACULO);
-            if (levelNumber == 4) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder.setTargetsMap(
                         new int[][]{
                                 {0,1,0,1,0,1,0,1,0,1,0},
@@ -179,8 +202,9 @@ public class LevelLoader {
             }
         }
 
+        numberForLevelCreation += 1; // ---------- LEVEL6
 
-        if (levelNumber >= 5) {
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                         .setBallsX_B1(0.2f)
                         .setBallsY_B1(0.45f)
@@ -192,7 +216,7 @@ public class LevelLoader {
                         .setObstaclesWidth(0.15f, 0.15f)
                         .setObstaclesHeight(0.035f, 0.035f)
                         .setTutorialAttached(Tutorial.TUTORIAL_OBSTACULO);
-            if (levelNumber == 5) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -211,7 +235,9 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 6) {
+        numberForLevelCreation += 1; // ---------- LEVEL7
+
+        if (levelNumber >= numberForLevelCreation) {
                 levelBuilder
                         .setBallsMaxAngle_BD_55(1.0036f)
                         .setBallsMinAngle_BD_35(0.943f)
@@ -219,7 +245,7 @@ public class LevelLoader {
                         .setBallsVelocityMax_BD_1_3(1.6f)
                         .setBallsVelocityMin_BD_0_6(0.938f)
                         .setBarsWidth_BD_0_22(0.773f);
-            if (levelNumber == 6) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -243,10 +269,12 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 7) {
+        numberForLevelCreation += 1; // ---------- LEVEL8
+
+        if (levelNumber >= numberForLevelCreation) {
                 levelBuilder
                         .setTutorialAttached(Tutorial.TUTORIAL_CORES);
-            if (levelNumber == 7) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -259,13 +287,15 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 8) {
+        numberForLevelCreation += 1; // ---------- LEVEL9
+
+        if (levelNumber >= numberForLevelCreation) {
                 levelBuilder
                         .setBallsVX(1.214f)
                         .setBallsVY(1.214f)
                         .setBallsMaxAngle_BD_55(1.055f)
                         .setBallsMinAngle_BD_35(0.914f);
-            if (levelNumber == 8) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -283,10 +313,12 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 9) {
+        numberForLevelCreation += 1; // ---------- LEVEL10
+
+        if (levelNumber >= numberForLevelCreation) {
                 levelBuilder
                         .setTutorialAttached(Tutorial.TUTORIAL_EXPLOSAO);
-            if (levelNumber == 9) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -301,8 +333,10 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 10) {
-            if (levelNumber == 10) {
+        numberForLevelCreation += 1; // ---------- LEVEL11
+
+        if (levelNumber >= numberForLevelCreation) {
+            if (levelNumber == numberForLevelCreation) {
                 
                 levelBuilder
                         .setTargetsMap(
@@ -327,9 +361,11 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 11) {
+        numberForLevelCreation += 1; // ---------- LEVEL12
+
+        if (levelNumber >= numberForLevelCreation) {
                 levelBuilder.setBarsVX_BD_0_0045(1.133f);
-            if (levelNumber == 11) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder = new Level.LevelBuilder()
                         .setTargetsMap(
                                 new int[][]{
@@ -351,11 +387,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 12) {
+        numberForLevelCreation += 1; // ---------- LEVEL13
+
+        if (levelNumber >= numberForLevelCreation) {
            levelBuilder
                 .setBallsX_B1(0.015f)
                 .setBallsY_B1(0.55f);
-            if (levelNumber == 12) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -388,11 +426,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 13) {
+        numberForLevelCreation += 1; // ---------- LEVEL14
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.127f)
                     .setBallsY_B1(0.5f);
-            if (levelNumber == 13) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -438,11 +478,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 14) {
+        numberForLevelCreation += 1; // ---------- LEVEL15
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.2f)
                     .setBallsY_B1(0.7f);
-            if (levelNumber == 14) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -479,11 +521,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 15) {
+        numberForLevelCreation += 1; // ---------- LEVEL16
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.3f)
                     .setBallsY_B1(0.7f);
-            if (levelNumber == 15) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -529,11 +573,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 16) {
+        numberForLevelCreation += 1; // ---------- LEVEL17
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.2f)
                     .setBallsY_B1(0.7f);
-            if (levelNumber == 16) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -584,11 +630,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 17) {
+        numberForLevelCreation += 1; // ---------- LEVEL18
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.2f)
                     .setBallsY_B1(0.7f);
-            if (levelNumber == 17) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -639,11 +687,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 18) {
+        numberForLevelCreation += 1; // ---------- LEVEL19
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.2f)
                     .setBallsY_B1(0.7f);
-            if (levelNumber == 18) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -690,11 +740,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 19) {
+        numberForLevelCreation += 1; // ---------- LEVEL20
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.2f)
                     .setBallsY_B1(0.7f);
-            if (levelNumber == 19) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -719,11 +771,13 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 20) {
+        numberForLevelCreation += 1; // ---------- LEVEL21
+
+        if (levelNumber >= numberForLevelCreation) {
             levelBuilder
                     .setBallsX_B1(0.2f)
                     .setBallsY_B1(0.7f);
-            if (levelNumber == 20) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -746,8 +800,10 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 21) {
-            if (levelNumber == 21) {
+        numberForLevelCreation += 1; // ---------- LEVEL22
+
+        if (levelNumber >= numberForLevelCreation) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -764,8 +820,10 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 22) {
-            if (levelNumber == 22) {
+        numberForLevelCreation += 1; // ---------- LEVEL23
+
+        if (levelNumber >= numberForLevelCreation) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -789,13 +847,15 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 23) {
+        numberForLevelCreation += 1; // ---------- LEVEL24
+
+        if (levelNumber >= numberForLevelCreation) {
 
             levelBuilder
                     .setBallsX_B1(0.06f)
                     .setBallsY_B1(0.55f);
 
-            if (levelNumber == 23) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -823,7 +883,9 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 24) {
+        numberForLevelCreation += 1; // ---------- LEVEL25
+
+        if (levelNumber >= numberForLevelCreation) {
 
             levelBuilder
                 .setBallsQuantity(2)
@@ -841,7 +903,7 @@ public class LevelLoader {
                 .setBallsVelocityMin_BD_0_6(1f)
                 .setBarsWidth_BD_0_22(0.909f);
 
-        if (levelNumber == 24) {
+        if (levelNumber == numberForLevelCreation) {
             levelBuilder
                     .setTargetsMap(
                             new int[][]{
@@ -863,8 +925,9 @@ public class LevelLoader {
                     .setWindowsQuantity(0);
         }
     }
+        numberForLevelCreation += 1; // ---------- LEVEL26
 
-        if (levelNumber >= 25) {
+        if (levelNumber >= numberForLevelCreation) {
 
             ArrayList<int[]> targetsAppend = new ArrayList<>();
             targetsAppend.add(new int[]{});
@@ -889,7 +952,7 @@ public class LevelLoader {
                     .setBallsVelocityMin_BD_0_6(1f)
                     .setBarsWidth_BD_0_22(0.909f);
 
-            if (levelNumber == 25) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -917,7 +980,9 @@ public class LevelLoader {
             }
         }
 
-        if (levelNumber >= 26) {
+        numberForLevelCreation += 1; // ---------- LEVEL27
+
+        if (levelNumber >= numberForLevelCreation) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
             targetsAppend.add(new int[]{});
             targetsAppend.add(new int[]{55, 63, 64, 70, 71, 78});
@@ -941,7 +1006,7 @@ public class LevelLoader {
                     .setBallsVelocityMin_BD_0_6(1f)
                     .setBarsWidth_BD_0_22(0.909f);
 
-            if (levelNumber == 26) {
+            if (levelNumber == numberForLevelCreation) {
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{
@@ -968,6 +1033,52 @@ public class LevelLoader {
                         .setWindowsQuantity(0);
             }
         }
+
+        numberForLevelCreation += 1; // ---------- LEVEL28
+
+        numberForLevelCreation += 1; // ---------- LEVEL29
+
+        numberForLevelCreation += 1; // ---------- LEVEL30
+
+        numberForLevelCreation += 1; // ---------- LEVEL31
+
+        numberForLevelCreation += 1; // ---------- LEVEL32
+
+        numberForLevelCreation += 1; // ---------- LEVEL33
+
+        numberForLevelCreation += 1; // ---------- LEVEL34
+
+        numberForLevelCreation += 1; // ---------- LEVEL35
+
+        numberForLevelCreation += 1; // ---------- LEVEL36
+
+        numberForLevelCreation += 1; // ---------- LEVEL37
+
+        numberForLevelCreation += 1; // ---------- LEVEL38
+
+        numberForLevelCreation += 1; // ---------- LEVEL39
+
+        numberForLevelCreation += 1; // ---------- LEVEL40
+
+        numberForLevelCreation += 1; // ---------- LEVEL41
+
+        numberForLevelCreation += 1; // ---------- LEVEL42
+
+        numberForLevelCreation += 1; // ---------- LEVEL43
+
+        numberForLevelCreation += 1; // ---------- LEVEL44
+
+        numberForLevelCreation += 1; // ---------- LEVEL45
+
+        numberForLevelCreation += 1; // ---------- LEVEL46
+
+        numberForLevelCreation += 1; // ---------- LEVEL47
+
+        numberForLevelCreation += 1; // ---------- LEVEL48
+
+        numberForLevelCreation += 1; // ---------- LEVEL49
+
+        numberForLevelCreation += 1; // ---------- LEVEL50
 
 
         Level.levelObject = levelBuilder.build();
