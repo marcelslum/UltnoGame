@@ -623,6 +623,7 @@ public class Game {
                 SaveGame.saveGame.newGroupsSeen = false;
             }
         }
+        
 
         for (int i = 0; i < levelsGroupData.size(); i++){
 
@@ -1613,14 +1614,56 @@ public class Game {
                 }
             ).start();
         } else if (state == GAME_STATE_VITORIA_COMPLEMENTACAO) {
+                        
             
+            buttonContinue.clearDisplay();
+            buttonContinue.block();
+            
+            // TODO reduzir alpha de todas as entidades do jogo e apaga-las, para liberar memoria
+                        
             groupsUnblocked.clear();
             
-            if (newStars > previousStars)
-                conqueredStarsTotal
+            int newStarsTotal = conqueredStarsTotal + starsDiference;
+            
+            if (newStars > previousStars){
+                float groupsUnblockedSize = resolutionX * 0.2f;
+                float groupsUnblockedPadd = resolutionX * 0.02f;
+                
+                for (int i = 0; i < levelsGroupData.size(); i++){
+                   final LevelsGroupData lgd = levelsGroupData.get(i);
+                   if (lgd.starsToUnlock > conqueredStarsTotal && lgd.starsToUnlock <= newStarsTotal){
+                           groupsUnblocked.add(new Image("groupsUnblocked"+i, 0f, 
+                           resolutionY * 0.6f, 
+                           groupsUnblockedSize, groupsUnblockedSize, 
+                           lgd.textureUnit,Utils.getUvData256(lgd.textureMap);
+                       );
+
+                   }   
+                }
+                          
+                int numberOfGroupsUnblocked = grousUnblocked.size();
+                if (numberOfGroupsUnblocked > 0){   
+                    
+                    float initX = (numberOfGroupsUnblocked * groupsUnblockedSize) + ((numberOfGroupsUnblocked-1)*groupsUnblockedPadd);
+                    
+                    for (int i = 0; i < numberOfGroupsUnblocked; i ++){
+                        numberOfGroupsUnblocked.get(i).x = initX + (i * groupsUnblockedPadd) + (i * groupsUnblockedSize);
+                    }
                     
                     
+                    float halfDifference = ((groupsUnblockedSize * 1.2f) - groupsUnblockedSize)/2f;
                     
+                    
+                    for (int i = 0; i < numberOfGroupsUnblocked; i ++){
+                        Image gu = numberOfGroupsUnblocked.get(i);
+                        gu.display();
+                        Utils.createAnimation4v(gu, "alpha", "alpha", 3000, 0f, 0.5f, 0.333f, 0.5f, 0.41625, 1f, 1f, 0f, false, true).start();
+                        Utils.createAnimation5v(gu, "translateX", "translateX", 3000, 0f, -resolutionX * 1.5, 0.333f, 0f, 0.41625, -halfDifference, 0.5f, 0f, 1f, 0f, false, true).start();
+                        Utils.createAnimation5v(gu, "translateY", "translateY", 3000, 0f, 0f, 0.333f, 0f, 0.41625, halfDifference, 0.5f, 0f, 1f, 0f, false, true).start();
+                        Utils.createAnimation5v(gu, "scaleX", "scaleX", 3000, 0f, 1f, 0.333f, 1f, 0.41625, 1.2f, 0.5f, 1f, 1f, 1f, false, true).start();
+                        Utils.createAnimation5v(gu, "scaleY", "scaleY", 3000, 0f, 1f, 0.333f, 1f, 0.41625, 1.2f, 0.5f, 1f, 1f, 1f, false, true).start();
+                    }                                       
+                }                         
             }
                 
                 currentLevelIcon.display();
@@ -1687,7 +1730,8 @@ public class Game {
                     new Animation.AnimationListener() {
                             @Override
                             public void onAnimationEnd() {
-                            
+                                buttonContinue.display();
+                                buttonContinue.unblock();
                             }
                     }
                 )
