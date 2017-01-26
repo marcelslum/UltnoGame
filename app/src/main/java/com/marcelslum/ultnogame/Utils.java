@@ -232,6 +232,46 @@ public abstract class Utils {
     }
     
     
+    
+   public static void getUvData256(int textureMap){
+       
+        float [] data = new float [] {0f, 256f, 512f, 768f, 1024f};
+       
+        if (textureMap < 5){
+            Utils.y1 = (data[0] + 2f)/1024f;
+            Utils.y2 = (data[1] - 2f)/1024f;
+        } else if (textureMap < 9){
+            Utils.y1 = (data[1] + 2f)/1024f;
+            Utils.y2 = (data[2] - 2f)/1024f;
+        } else if (textureMap < 13){
+            Utils.y1 = (data[2] + 2f)/1024f;
+            Utils.y2 = (data[3] - 2f)/1024f;
+        } else if (textureMap < 17){
+            Utils.y1 = (data[3] + 2f)/1024f;
+            Utils.y2 = (data[4] - 2f)/1024f;
+        }
+
+        if (textureMap == 1 || textureMap == 5 || textureMap == 9 || textureMap == 13){
+            Utils.x1 = (data[0] + 2f)/1024f;
+            Utils.x2 = (data[1] - 2f)/1024f;
+        } else if (textureMap == 2 || textureMap == 6 || textureMap == 10 || textureMap == 14){
+            Utils.x1 = (data[1] + 2f)/1024f;
+            Utils.x2 = (data[2] - 2f)/1024f;
+        } else if (textureMap == 3 || textureMap == 7 || textureMap == 11 || textureMap == 15){
+            Utils.x1 = (data[2] + 2f)/1024f;
+            Utils.x2 = (data[3] - 2f)/1024f;
+        } else if (textureMap == 4 || textureMap == 8 || textureMap == 12 || textureMap == 16){
+            Utils.x1 = (data[3] + 2f)/1024f;
+            Utils.x2 = (data[4] - 2f)/1024f;
+        }
+       
+       return new float[]{Utils.x1, Utils.x2, Utils.y1, Utils.y2};
+       
+    }
+    
+    
+    
+    
     public static void insertRectangleUvDataButtonsAndBalls(float[] array, int startIndex, int textureMap){
         
         if (textureMap < 9){
