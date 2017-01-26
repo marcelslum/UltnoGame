@@ -449,6 +449,8 @@ public class Game {
             public void onPress() {
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == GAME_STATE_VITORIA){
+                    setGameState(GAME_STATE_VITORIA_COMPLEMENTACAO); 
+                } else   if (Game.gameState == GAME_STATE_VITORIA_COMPLEMENTACAO){
                     setGameState(GAME_STATE_INTERSTITIAL);
                 } else if (Game.gameState == GAME_STATE_OBJETIVO_LEVEL){
                     LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
@@ -1614,8 +1616,6 @@ public class Game {
                 }
             ).start();
         } else if (state == GAME_STATE_VITORIA_COMPLEMENTACAO) {
-                        
-            
             buttonContinue.clearDisplay();
             buttonContinue.block();
             
