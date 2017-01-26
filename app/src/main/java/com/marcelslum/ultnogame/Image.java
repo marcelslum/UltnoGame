@@ -18,6 +18,19 @@ public class Image extends Entity{
         this.program = Game.imageProgram;
         setDrawInfo();
     }
+    
+        Image(String name, float x, float y, float width, float height, int textureUnit, float[] uvData){
+        super(name, x, y);
+        this.width = width;
+        this.height = height;
+        this.textureId = textureUnit;
+        this.x1 = uvData[0]
+        this.x2 = uvData[1];
+        this.y1 = uvData[2];
+        this.y2 = uvData[3];
+        this.program = Game.imageProgram;
+        setDrawInfo();
+    }
 
     Image(String name, float x, float y, float width, float height, int textureId, float x1, float x2, float y1, float y2, Color color){
         super(name, x, y);
