@@ -29,24 +29,10 @@ public class Game {
     static int basePoints = 10;
 
     static int numberOfTutorials = 20;
-    /*
-    static float difficultyVelocityBarMultiplicator;
-    static float difficultyVelocityObstacleMultiplicator;
-    static float difficultyVelocityBallMultiplicator;
-    static final float BAR_EASY = 0.9f;
-    static final float BALL_EASY = 0.8f;
-    static final float OBSTACLE_EASY = 0.8f;
-    static final float BAR_NORMAL = 1f;
-    static final float BALL_NORMAL = 1f;
-    static final float OBSTACLE_NORMAL = 1f;
-    static final float BAR_HARD = 1.3f;
-    static final float BALL_HARD = 1.3f;
-    static final float OBSTACLE_HARD = 1.2f;
-    static final float BAR_INSANE = 1.5f;
-    static final float BALL_INSANE = 1.5f;
-    static final float OBSTACLE_INSANE = 1.4f;
-    */
-
+    
+    static int newStars;
+    static int previousStars;
+    
     static final int BALL_WEIGHT = 1;
     static final int BORDA_WEIGHT = 10;
     static final int OBSTACLES_WEIGHT = 7;
@@ -125,6 +111,7 @@ public class Game {
     static Text messageSplash2;
     static Text messageTime;
     private static TextBox bottomTextBox;
+    
 
     static long timeOfLevelPlay = 0;
     static int secondsOfLevelPlay = 0;
@@ -134,6 +121,9 @@ public class Game {
     public static MenuIcon groupMenu;
     public static MenuIcon levelMenu;
     public static MenuIcon tutorialMenu;
+    
+    public static ArrayList<Image> groupsUnblocked;
+    public static Image currentLevelIcon;
 
     public static LevelsGroupData currentLevelsGroupDataSelected;
     
@@ -177,6 +167,7 @@ public class Game {
     public final static int GAME_STATE_MENU_TUTORIAL =  24;
     public final static int GAME_STATE_INTERSTITIAL =  25;
     public final static int GAME_STATE_OBJETIVO_PAUSE =  26;
+    public final static int GAME_STATE_VITORIA_COMPLEMENTACAO =  27;
 
     final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
     final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
@@ -718,6 +709,12 @@ public class Game {
                 @Override
                 public void onAnimationEnd() {
                     SaveGame.saveGame.currentLevelNumber = ld.number;
+                    float size = resolutionX * 0.4f;
+                    currentLevelIcon = new Image("currentLevelIcon", (resolutionX * 0.5f) - size * 0.5f, 
+                         resolutionY * 0.2f, 
+                         size, size, 
+                         ld.textureUnit,Utils.getUvData256(ld.textureMap)
+                    );                         
                     setGameState(GAME_STATE_OBJETIVO_LEVEL);
                 }
             }, false);
@@ -1287,7 +1284,6 @@ public class Game {
             ConnectionHandler.verify();
 
         } else if (state == GAME_STATE_PREPARAR){
-
             Level.levelGoalsObject.clearAchievements();
 
             buttonContinue.clearDisplay();
@@ -1569,9 +1565,7 @@ public class Game {
                         levelGoalsPanel.appearGray();
                     } else if (levelGoalsPanel.gray) {
                         levelGoalsPanel.shineLines(true);
-                        if (newStars > previousStars) {
-                            messageStarsWin.show(newStars, newStars - previousStars, true);
-                        }
+
 
                         if (newStars > 0) {
                             int points = (int) ((float) scorePanel.value * (1f + (0.1f * (float)newStars)));
@@ -1582,86 +1576,9 @@ public class Game {
                             if (newStars == 4) scorePanel.showMessage("+ 40%", 800);
                             if (newStars == 5) scorePanel.showMessage("+ 50%", 800);
                         }
-
-
                     } else{
-
-
-                        starForMessage.alpha = 0f;
-                        messageConqueredStarsTotal.alpha = 0f;
-                        starForMessage.increaseAlpha(500, 1f);
-                        messageConqueredStarsTotal.increaseAlpha(500, 1f);
-                        starForMessage.display();
-                        messageConqueredStarsTotal.display();
-
-                        final int starsDiference = newStars - previousStars;
-
-                        ArrayList<float[]> valuesAnim = new ArrayList<>();
-                        valuesAnim.add(new float[]{0f,0f});
-                        valuesAnim.add(new float[]{0.5f,1f});
-                        valuesAnim.add(new float[]{0.57f,2f});
-                        valuesAnim.add(new float[]{0.64f,3f});
-                        valuesAnim.add(new float[]{0.71f,4f});
-                        valuesAnim.add(new float[]{0.78f,5f});
-                        valuesAnim.add(new float[]{1f,6f});
-
-                        Animation animMessageConqueredStarsTotal = new Animation(messageConqueredStarsTotal, "numberForAnimation", "numberForAnimation", 2500, valuesAnim, false, false);
-                        animMessageConqueredStarsTotal.setOnChangeNotFluid(new Animation.OnChange() {
-                            @Override
-                            public void onChange() {
-                                if (messageConqueredStarsTotal.numberForAnimation == 1f){
-                                    if (starsDiference > 0){
-                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
-                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 1));
-                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
-                                    }
-                                } else if (messageConqueredStarsTotal.numberForAnimation == 2f) {
-                                    if (starsDiference > 1){
-                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
-                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 2));
-                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
-                                    }
-                                } else if (messageConqueredStarsTotal.numberForAnimation == 3f) {
-                                    if (starsDiference > 2){
-                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
-                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 3));
-                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
-                                    }
-                                } else if (messageConqueredStarsTotal.numberForAnimation == 4f) {
-                                    if (starsDiference > 3){
-                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
-                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 4));
-                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
-                                    }
-                                } else if (messageConqueredStarsTotal.numberForAnimation == 5f) {
-                                    if (starsDiference > 4){
-                                        messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
-                                                "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 5));
-                                        Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
-                                    }
-                                }
-                            }
-                        });
-                        animMessageConqueredStarsTotal.start();
-
                         buttonContinue.display();
                         buttonContinue.unblock();
-                        /*
-                        if (previousPoints != 0){
-                            String textToShow;
-                            if (actualPoints < previousPoints){
-                                textToShow = mainActivity.getResources().getString(R.string.pontuacaoMenor1)
-                                        + " " + NumberFormat.getInstance().format(previousPoints) + " " + mainActivity.getResources().getString(R.string.pontuacaoMenor2);
-                            } else if (actualPoints > previousPoints) {
-                                textToShow = mainActivity.getResources().getString(R.string.pontuacaoMaior1)
-                                        + " " + NumberFormat.getInstance().format(previousPoints) + " " + mainActivity.getResources().getString(R.string.pontuacaoMaior2);
-
-                            } else {
-                                textToShow = mainActivity.getResources().getString(R.string.pontuacaoIgual);
-                            }
-                            setBottomText(textToShow);
-                        }
-                        */
                         cancel();
                     }
                 }
@@ -1695,6 +1612,89 @@ public class Game {
                 }
                 }
             ).start();
+        } else if (state == GAME_STATE_VITORIA_COMPLEMENTACAO) {
+            
+            groupsUnblocked.clear();
+            
+            if (newStars > previousStars)
+                conqueredStarsTotal
+                    
+                    
+                    
+            }
+                
+                currentLevelIcon.display();
+                    
+                messageStarsWin.show(newStars, newStars - previousStars, true);
+            
+                starForMessage.alpha = 0f;
+                messageConqueredStarsTotal.alpha = 0f;
+                starForMessage.increaseAlpha(500, 1f);
+                messageConqueredStarsTotal.increaseAlpha(500, 1f);
+                starForMessage.display();
+                messageConqueredStarsTotal.display();
+
+                final int starsDiference = newStars - previousStars;
+
+                ArrayList<float[]> valuesAnim = new ArrayList<>();
+                valuesAnim.add(new float[]{0f,0f});
+                valuesAnim.add(new float[]{0.5f,1f});
+                valuesAnim.add(new float[]{0.57f,2f});
+                valuesAnim.add(new float[]{0.64f,3f});
+                valuesAnim.add(new float[]{0.71f,4f});
+                valuesAnim.add(new float[]{0.78f,5f});
+                valuesAnim.add(new float[]{1f,6f});
+
+                Animation animMessageConqueredStarsTotal = new Animation(messageConqueredStarsTotal, "numberForAnimation", "numberForAnimation", 2500, valuesAnim, false, false);
+                animMessageConqueredStarsTotal.setOnChangeNotFluid(new Animation.OnChange() {
+                    @Override
+                    public void onChange() {
+                        if (messageConqueredStarsTotal.numberForAnimation == 1f){
+                            if (starsDiference > 0){
+                                messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                        "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 1));
+                                Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            }
+                        } else if (messageConqueredStarsTotal.numberForAnimation == 2f) {
+                            if (starsDiference > 1){
+                                messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                        "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 2));
+                                Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            }
+                        } else if (messageConqueredStarsTotal.numberForAnimation == 3f) {
+                            if (starsDiference > 2){
+                                messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                        "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 3));
+                                Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            }
+                        } else if (messageConqueredStarsTotal.numberForAnimation == 4f) {
+                            if (starsDiference > 3){
+                                messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                        "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 4));
+                                Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            }
+                        } else if (messageConqueredStarsTotal.numberForAnimation == 5f) {
+                            if (starsDiference > 4){
+                                messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+                                        "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal + 5));
+                                Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            }
+                        }
+                    }
+                });
+            
+                animMessageConqueredStarsTotal.setOnAnimationEnd(
+                    new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                            
+                            }
+                    }
+                )
+            
+                animMessageConqueredStarsTotal.start();
+            
+        }  
         } else if (state == GAME_STATE_TUTORIAL) {
             if (previousState == GAME_STATE_MENU_TUTORIAL) {
                 Log.e(TAG, "limpando menu tutorial");
