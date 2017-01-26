@@ -251,6 +251,10 @@ public class MainActivity extends FragmentActivity implements
             Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
         } else if (Game.gameState != Game.GAME_STATE_OBJETIVO_PAUSE){
             Game.setGameState(Game.GAME_STATE_PAUSE);
+        } else if (Game.gameState != Game.GAME_STATE_VITORIA){
+            Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
+        } else if (Game.gameState != Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
+            Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
         }
     }
 
