@@ -3,9 +3,6 @@ package com.marcelslum.ultnogame;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
-
-//import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -15,9 +12,6 @@ import java.util.TimerTask;
 // TODO colocar timeout em todos os awaits...
 // TODO colocar uma barra ao final do data panel
 
-
-/** * Created by marcel on 01/08/2016.
- */
 public class Game {
 
     static final String TAG = "Game";
@@ -347,6 +341,12 @@ public class Game {
         if (messageStarsWin != null) {
             messageStarsWin.clearDisplay();
         }
+        
+        currentLevelIcon.clearDisplay();
+        groupsUnblocked.clear();
+        
+        
+        
 
 
         TimeHandle.timeOfLevelPlayBlocked = true;
@@ -801,8 +801,23 @@ public class Game {
                     ScoreHandle.scorePanel.clearAnimations();
                 }
             });
-
-            // TODO reduzir alpha de todas as entidades do jogo e apaga-las, para liberar memoria
+            
+            
+            MessageHandle.messageTime.reduceAlpha(500, 0f, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    MessageHandle.messageTime.clearDisplay();
+                    MessageHandle.messageTime.alpha = 1f;
+                    MessageHandle.messageTime.clearAnimations();
+                }
+            });
+            
+            if (ButtonHandle.button1Left != null) ButtonHandle.button1Left.clearDisplay();
+            if (ButtonHandle.button2Left != null) ButtonHandle.button2Left.clearDisplay();
+            if (ButtonHandle.button1Right != null) ButtonHandle.button1Right.clearDisplay();
+            if (ButtonHandle.button2Right != null) ButtonHandle.button2Right.clearDisplay();
+           
+            MessageHandle.messageInGame.display();
 
             groupsUnblocked.clear();
 
@@ -917,8 +932,6 @@ public class Game {
                     ButtonHandle.buttonContinue.display();
                     ButtonHandle.buttonContinue.unblock();
                 }
-            });
-
             animMessageConqueredStarsTotal.start();
 
         } else if (state == GAME_STATE_TUTORIAL) {
