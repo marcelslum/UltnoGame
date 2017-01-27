@@ -80,7 +80,33 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
 
         // TODO retirar ao final
         SaveGame.saveGame.starsLevels[0] = 0;
+        SaveGame.saveGame.starsLevels[1] = 0;
+        SaveGame.saveGame.starsLevels[2] = 0;
+        SaveGame.saveGame.starsLevels[3] = 0;
+        SaveGame.saveGame.starsLevels[4] = 0;
+        SaveGame.saveGame.starsLevels[5] = 0;
+        SaveGame.saveGame.starsLevels[6] = 0;
+        SaveGame.saveGame.starsLevels[7] = 0;
+        SaveGame.saveGame.starsLevels[8] = 0;
+        SaveGame.saveGame.starsLevels[9] = 0;
+        SaveGame.saveGame.starsLevels[10] = 0;
+        SaveGame.saveGame.starsLevels[11] = 0;
+        SaveGame.saveGame.starsLevels[12] = 0;
+        SaveGame.saveGame.starsLevels[13] = 0;
+        SaveGame.saveGame.starsLevels[14] = 0;
+        SaveGame.saveGame.starsLevels[15] = 0;
+        SaveGame.saveGame.starsLevels[16] = 0;
+        SaveGame.saveGame.starsLevels[17] = 0;
+        SaveGame.saveGame.starsLevels[18] = 0;
+        SaveGame.saveGame.starsLevels[19] = 0;
+        SaveGame.saveGame.starsLevels[20] = 0;
+
+        SaveGame.saveGame.tutorialsViwed[0] = true;
+        SaveGame.saveGame.tutorialsViwed[1] = true;
+
         SaveGame.save();
+
+
 
 
 

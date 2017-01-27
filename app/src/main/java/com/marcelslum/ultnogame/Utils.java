@@ -233,7 +233,7 @@ public abstract class Utils {
     
     
     
-   public static void getUvData256(int textureMap){
+   public static float[] getUvData256(int textureMap){
        
         float [] data = new float [] {0f, 256f, 512f, 768f, 1024f};
        

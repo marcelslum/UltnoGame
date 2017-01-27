@@ -7,6 +7,10 @@ import java.util.ArrayList;
  */
 
 public class LevelsGroupData {
+
+
+    public static ArrayList<LevelsGroupData> levelsGroupData;
+
     int textureUnit;
     int textureMap;
     int starsToUnlock;
@@ -47,5 +51,15 @@ public class LevelsGroupData {
             this.textureUnit=textureUnit;
             this.textureMap=textureMap;
         }
+    }
+
+    public static int getLevelsConqueredStars(int minLevel, int maxLevel){
+        int numberOfStars = 0;
+        for (int i = 0; i < SaveGame.saveGame.maxNumberOfLevels; i++){
+            if (i + 1 >= minLevel && i + 1 <= maxLevel) {
+                numberOfStars += SaveGame.saveGame.starsLevels[i];
+            }
+        }
+        return numberOfStars;
     }
 }

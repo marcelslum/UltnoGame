@@ -24,7 +24,7 @@ public class Image extends Entity{
         this.width = width;
         this.height = height;
         this.textureId = textureUnit;
-        this.x1 = uvData[0]
+        this.x1 = uvData[0];
         this.x2 = uvData[1];
         this.y1 = uvData[2];
         this.y2 = uvData[3];

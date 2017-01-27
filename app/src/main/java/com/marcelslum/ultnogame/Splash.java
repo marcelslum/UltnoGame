@@ -79,11 +79,11 @@ public class Splash {
 
     private static void setGameEntities() {
         Game.tittle = tittle;
-        Game.messageSplash1 = message1;
+        MessageHandle.messageSplash1 = message1;
         if (message2 != null) {
-            Game.messageSplash2 = message2;
+            MessageHandle.messageSplash2 = message2;
         } else {
-            Game.messageSplash2 = null;
+            MessageHandle.messageSplash2 = null;
         }
     }
 
@@ -221,11 +221,12 @@ public class Splash {
                         if (SaveGame.loaded){
                             Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
                             loadingSaveGame = false;
-                            Game.initLevelsData();
-                            Game.initMenus();
-                            Game.initTexts();
+                            LevelDataLoader.initLevelsData();
+                            MenuHandle.initMenus();
+                            Game.initTittle();
+                            MessageHandle.initMessages();
                             Game.initEdges();
-                            Game.initButtons();
+                            ButtonHandle.initButtons();
 
                             //Game.changeDifficulty(SaveGame.saveGame.currentDifficulty);
                             Game.setGameState(Game.GAME_STATE_MENU);    

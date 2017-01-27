@@ -54,7 +54,7 @@ public class ConnectionHandler {
         }
         /*
         if (result == InternetConnectionAsyncTask.ATTEMPT && internetState != INTERNET_STATE_CONNECTED){
-            setBottomText(context.getResources().getString(R.string.conectando));
+            setBottomMessage(context.getResources().getString(R.string.conectando));
             return;
         }
 
@@ -64,7 +64,7 @@ public class ConnectionHandler {
         final TimerTask task2 = new TimerTask() {
             @Override
             public void run() {
-                setBottomText("");
+                setBottomMessage("");
             }
         };
 
@@ -75,13 +75,13 @@ public class ConnectionHandler {
                     if (internetState != INTERNET_STATE_CONNECTED) {
                         internetState = INTERNET_STATE_CONNECTED;
                         Log.e("game", "internetConnection connected");
-                        setBottomText(context.getResources().getString(R.string.conexao));
+                        setBottomMessage(context.getResources().getString(R.string.conexao));
                         timer.schedule(task2, 1500);
                     }
                 } else if (fresult == InternetConnectionAsyncTask.NOT_CONNECTED){
                     Log.e("game", "internetConnection not connected");
                     internetState = INTERNET_STATE_NOT_CONNECTED;
-                    setBottomText(context.getResources().getString(R.string.nao_conectado1));
+                    setBottomMessage(context.getResources().getString(R.string.nao_conectado1));
                 }
             }
         };
