@@ -18,6 +18,7 @@ public class MessageHandle {
     static Text messageSplash1;
     static Text messageSplash2;
     static Text messageTime;
+    static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
 
 
@@ -33,7 +34,12 @@ public class MessageHandle {
                 Game.getContext().getResources().getString(R.string.messageGameOver), Game.font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
         messageMenu = new Text("messageMenu",
-                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.145f, Game.gameAreaResolutionY*0.1f, ".", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f));
+                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.145f, Game.gameAreaResolutionY*0.08f, ".", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f));
+        
+        messageGroupsUnblocked = = new Text("messageGroupsUnblocked",
+                Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.65f, Game.gameAreaResolutionY*0.1f,
+                Game.getContext().getResources().getString(R.string.messageGroupsUnblocked), 
+                Game.font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
         ArrayList<float[]> valuesAnimationGameOver = new ArrayList<>();
         valuesAnimationGameOver.add(new float[]{0f,1f});
