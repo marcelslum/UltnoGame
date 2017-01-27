@@ -1643,10 +1643,12 @@ public class Game {
         list.add(MessageHandle.messagePreparation);
         list.add(MessageHandle.messageInGame);
         list.add(MessageHandle.messageMenu);
+        list.add(MessageHandle.messageGroupsUnblocked);
         list.add(MessageHandle.messageMaxScoreTotal);
         list.add(MessageHandle.messageConqueredStarsTotal);
         list.add(MessageHandle.starForMessage);
         list.add(MessageHandle.bottomTextBox);
+        
         return list;
     }
 
