@@ -843,7 +843,11 @@ public class Game {
 
                 int numberOfGroupsUnblocked = groupsUnblocked.size();
                 if (numberOfGroupsUnblocked > 0){
-
+                    
+                    messageGroupsUnblocked.display();
+                    Utils.createSimpleAnimation(messageGroupsUnblocked, "translateX", "translateX", 500, -gameAreaResolutionX*1.5f, 0f).start();           
+                    Sound.play(Sound.soundTextBoxAppear, 1, 1, 0)
+                    
                     float initX = (resolutionX * 0.5f) - (((numberOfGroupsUnblocked * groupsUnblockedSize) + ((numberOfGroupsUnblocked-1)*groupsUnblockedPadd))/2f);
 
                     for (int i = 0; i < numberOfGroupsUnblocked; i ++){
@@ -858,8 +862,8 @@ public class Game {
                         Image gu = groupsUnblocked.get(i);
                         gu.display();
                         //Utils.createAnimation4v(gu, "alpha", "alpha", 3000, 0f, 0.5f, 0.333f, 0.5f, 0.41625f, 1f, 1f, 1f, false, true).start();
-                        Utils.createAnimation5v(gu, "translateX", "translateX", 3000, 0f, groupsUnblockedSize/2f, 0.5f, 0f, 0.6f, -halfDifference, 0.75f, 0f, 1f, 0f, false, true).start();
-                        Utils.createAnimation5v(gu, "translateY", "translateY", 3000, 0f, -groupsUnblockedSize/2f, 0.5f, 0f, 0.6f, halfDifference, 0.75f, 0f, 1f, 0f, false, true).start();
+                        Utils.createAnimation5v(gu, "translateX", "translateX", 1000, 0f, groupsUnblockedSize/2f, 0.5f, 0f, 0.6f, -halfDifference, 0.75f, 0f, 1f, 0f, false, true).start();
+                        Utils.createAnimation5v(gu, "translateY", "translateY", 1000, 0f, -groupsUnblockedSize/2f, 0.5f, 0f, 0.6f, halfDifference, 0.75f, 0f, 1f, 0f, false, true).start();
                         Utils.createAnimation5v(gu, "scaleX", "scaleX", 1000, 0f, 0f, 0.5f, 1f, 0.6f, 1.2f, 0.75f, 1f, 1f, 1f, false, true).start();
                         Utils.createAnimation5v(gu, "scaleY", "scaleY", 1000, 0f, 0f, 0.5f, 1f, 0.6f, 1.2f, 0.75f, 1f, 1f, 1f, false, true).start();
                     }
@@ -1435,6 +1439,7 @@ public class Game {
         MessageHandle.messageConqueredStarsTotal.checkTransformations(true);
         MessageHandle.starForMessage.checkTransformations(true);
         MessageHandle.bottomTextBox.checkTransformations(true);
+        MessageHandle.messageGroupsUnblocked.checkTransformations(true);
 
         if (bordaE != null)bordaE.checkTransformations(true);
         if (bordaD != null)bordaD.checkTransformations(true);
@@ -1533,6 +1538,7 @@ public class Game {
         MessageHandle.messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         MessageHandle.messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
         MessageHandle.starForMessage.prepareRender(matrixView, matrixProjection);
+        MessageHandle.messageGroupsUnblocked.prepareRender(matrixView, matrixProjection);
         if (messageStars != null) messageStars.prepareRender(matrixView, matrixProjection);
         if (messageStarsWin != null) messageStarsWin.prepareRender(matrixView, matrixProjection);
 
