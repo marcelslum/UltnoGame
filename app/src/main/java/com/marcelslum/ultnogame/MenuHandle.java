@@ -124,10 +124,10 @@ public class MenuHandle {
                 @Override
                 public void onAnimationEnd() {
                     SaveGame.saveGame.currentLevelNumber = ld.number;
-                    float size = Game.resolutionX * 0.25f;
+                    float size = Game.resolutionX * 0.17f;
 
                     Game.currentLevelIcon = new Image("Game.currentLevelIcon", (Game.resolutionX * 0.5f) - size * 0.5f,
-                            Game.resolutionY * 0.1f,
+                            Game.resolutionY * 0.3f,
                             size, size,
                             ld.textureUnit,Utils.getUvData256(ld.textureMap)
                     );
