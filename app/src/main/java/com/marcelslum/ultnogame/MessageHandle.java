@@ -26,7 +26,7 @@ public class MessageHandle {
         float messageStarsSize = Game.gameAreaResolutionY*0.05f;
         Game.messageStars = new MessageStar("messageStar", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
 
-        Game.messageStarsWin = new MessageStarWin("messageStar", messageStarsSize, Game.resolutionX * 0.5f, Game.gameAreaResolutionY*0.25f);
+        Game.messageStarsWin = new MessageStarWin("messageStar", messageStarsSize, Game.resolutionX * 0.5f, Game.gameAreaResolutionY*0.55f);
 
         messageGameOver = new Text("messageGameOver",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.2f, Game.gameAreaResolutionY*0.17f,
