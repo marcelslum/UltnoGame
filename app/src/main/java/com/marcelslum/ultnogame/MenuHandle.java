@@ -30,10 +30,10 @@ public class MenuHandle {
         groupMenu.innerTexts.clear();
         groupMenu.graph.clear();
 
-        StarsHandle.updateConqueredStars();
+        StarsHandler.updateConqueredStars();
 
         if (SaveGame.saveGame.newGroupsSeen){
-            if (SaveGame.saveGame.lastStars != StarsHandle.conqueredStarsTotal){
+            if (SaveGame.saveGame.lastStars != StarsHandler.conqueredStarsTotal){
                 SaveGame.saveGame.newGroupsSeen = false;
             }
         }
@@ -43,14 +43,14 @@ public class MenuHandle {
 
             final LevelsGroupData lgd = LevelsGroupData.levelsGroupData.get(i);
 
-            if (StarsHandle.conqueredStarsTotal >= lgd.starsToUnlock){
+            if (StarsHandler.conqueredStarsTotal >= lgd.starsToUnlock){
                 groupMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
 
                         if (!SaveGame.saveGame.newGroupsSeen){
                             SaveGame.saveGame.newGroupsSeen = true;
-                            SaveGame.saveGame.lastStars = StarsHandle.conqueredStarsTotal;
+                            SaveGame.saveGame.lastStars = StarsHandler.conqueredStarsTotal;
                         }
 
                         Game.currentLevelsGroupDataSelected = lgd;
@@ -90,12 +90,12 @@ public class MenuHandle {
                 groupMenu.graph.get(groupMenu.graph.size() - 1).setPercentage(percentage);
             }
 
-            if (StarsHandle.conqueredStarsTotal < lgd.starsToUnlock){
+            if (StarsHandler.conqueredStarsTotal < lgd.starsToUnlock){
 
                 groupMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
-                        MessageHandle.setBottomMessage(Game.getContext().getResources().getString(R.string.message_sem_estrelas), 2000);
+                        MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_sem_estrelas), 2000);
                     }
                 }, true);
 
@@ -124,10 +124,10 @@ public class MenuHandle {
                 @Override
                 public void onAnimationEnd() {
                     SaveGame.saveGame.currentLevelNumber = ld.number;
-                    float size = Game.resolutionX * 0.17f;
+                    float size = Game.resolutionX * 0.21f;
 
                     Game.currentLevelIcon = new Image("Game.currentLevelIcon", (Game.resolutionX * 0.5f) - size * 0.5f,
-                            Game.resolutionY * 0.3f,
+                            Game.resolutionY * 0.2f,
                             size, size,
                             ld.textureUnit,Utils.getUvData256(ld.textureMap)
                     );
@@ -166,7 +166,7 @@ public class MenuHandle {
         tutorialMenu.texts2.clear();
         tutorialMenu.graph.clear();
 
-        if (StarsHandle.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(0).starsToUnlock){
+        if (StarsHandler.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(0).starsToUnlock){
             tutorialMenu.addOption(0, Texture.TEXTURE_TUTORIAL_ICONS, 1, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
@@ -191,7 +191,7 @@ public class MenuHandle {
         }
 
 
-        if (StarsHandle.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(1).starsToUnlock){
+        if (StarsHandler.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(1).starsToUnlock){
             tutorialMenu.addOption(2, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
@@ -205,7 +205,7 @@ public class MenuHandle {
 
         }
 
-        if (StarsHandle.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(2).starsToUnlock){
+        if (StarsHandler.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(2).starsToUnlock){
             tutorialMenu.addOption(3, Texture.TEXTURE_TUTORIAL_ICONS, 4, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
@@ -219,7 +219,7 @@ public class MenuHandle {
 
         }
 
-        if (StarsHandle.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(3).starsToUnlock){
+        if (StarsHandler.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(3).starsToUnlock){
             tutorialMenu.addOption(4, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
@@ -399,7 +399,7 @@ public class MenuHandle {
                 if (Game.gameState == GAME_STATE_PAUSE){
                     Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
                     Game.increaseAllGameEntitiesAlpha(500);
-                    MessageHandle.messageInGame.reduceAlpha(500,0f);
+                    MessagesHandler.messageInGame.reduceAlpha(500,0f);
                     menuInGame.reduceAlpha(500,0f, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {

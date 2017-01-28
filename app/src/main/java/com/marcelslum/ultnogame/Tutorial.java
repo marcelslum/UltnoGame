@@ -105,19 +105,19 @@ public class Tutorial {
             
             tutorialTextBox.animateMiniArrow(Game.resolutionX*1.5f, tutorialTextBox.size * 0.5f);
 
-            ButtonHandle.buttonContinue.display();
-            ButtonHandle.buttonContinue.unblock();
-            ButtonHandle.buttonReturn.display();
-            ButtonHandle.buttonReturn.unblock();
+            ButtonHandler.buttonContinue.display();
+            ButtonHandler.buttonContinue.unblock();
+            ButtonHandler.buttonReturn.display();
+            ButtonHandler.buttonReturn.unblock();
 
             Sound.play(Sound.soundTextBoxAppear, 0.5f, 0.5f, 0);
 
         } else {
 
-            ButtonHandle.buttonContinue.clearDisplay();
-            ButtonHandle.buttonContinue.block();
-            ButtonHandle.buttonReturn.clearDisplay();
-            ButtonHandle.buttonReturn.block();
+            ButtonHandler.buttonContinue.clearDisplay();
+            ButtonHandler.buttonContinue.block();
+            ButtonHandler.buttonReturn.clearDisplay();
+            ButtonHandler.buttonReturn.block();
             tutorialImage.clearDisplay();
             tutorialTextBox.clearDisplay();
 

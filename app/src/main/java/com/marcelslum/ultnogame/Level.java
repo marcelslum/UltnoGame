@@ -123,9 +123,9 @@ public class Level {
         Game.eraseAllGameEntities();
         Game.quad = new Quadtree(new RectangleM(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY),5,5);
 
-        MessageHandle.messageTime = new Text("messageTime",
+        MessagesHandler.messageTime = new Text("messageTime",
                 Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.85f, Game.resolutionY*0.055f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
-        MessageHandle.messageTime.alpha = 0.7f;
+        MessagesHandler.messageTime.alpha = 0.7f;
 
         ScoreHandle.scorePanel = new ScorePanel("scorePanel",
                 Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.07f);
@@ -170,34 +170,34 @@ public class Level {
 
         // BOTÃO 1 ESQUERDA
         float x = Game.resolutionX * 0.03f;
-        ButtonHandle.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
-        ButtonHandle.button1Left.setTextureMap(19);
-        ButtonHandle.button1Left.textureMapUnpressed = 19;
-        ButtonHandle.button1Left.textureMapPressed = 18;
-        ButtonHandle.button1Left.alpha = 0.7f;
+        ButtonHandler.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        ButtonHandler.button1Left.setTextureMap(19);
+        ButtonHandler.button1Left.textureMapUnpressed = 19;
+        ButtonHandler.button1Left.textureMapPressed = 18;
+        ButtonHandler.button1Left.alpha = 0.7f;
 
         // BOTÃO 2 DIREITA
         x = Game.resolutionX * 0.87f;
-        ButtonHandle.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
-        ButtonHandle.button2Right.setTextureMap(20);
-        ButtonHandle.button2Right.textureMapUnpressed = 20;
-        ButtonHandle.button2Right.textureMapPressed = 17;
+        ButtonHandler.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        ButtonHandler.button2Right.setTextureMap(20);
+        ButtonHandler.button2Right.textureMapUnpressed = 20;
+        ButtonHandler.button2Right.textureMapPressed = 17;
 
         if (this.barsQuantity > 1) {
             // BOTÃO 1 DIREITA
             x = Game.resolutionX * 0.18f;
-            ButtonHandle.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
-            ButtonHandle.button1Right.setTextureMap(20);
-            ButtonHandle.button1Right.textureMapUnpressed = 20;
-            ButtonHandle.button1Right.textureMapPressed = 17;
-            ButtonHandle.button1Right.alpha = 0.7f;
+            ButtonHandler.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+            ButtonHandler.button1Right.setTextureMap(20);
+            ButtonHandler.button1Right.textureMapUnpressed = 20;
+            ButtonHandler.button1Right.textureMapPressed = 17;
+            ButtonHandler.button1Right.alpha = 0.7f;
 
             // BOTÃO 2 ESQUERDA
             x = Game.resolutionX * 0.72f;
-            ButtonHandle.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
-            ButtonHandle.button2Left.setTextureMap(19);
-            ButtonHandle.button2Left.textureMapUnpressed = 19;
-            ButtonHandle.button2Left.textureMapPressed = 18;
+            ButtonHandler.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+            ButtonHandler.button2Left.setTextureMap(19);
+            ButtonHandler.button2Left.textureMapUnpressed = 19;
+            ButtonHandler.button2Left.textureMapPressed = 18;
         }
 
         InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea111", 0f, 0f,

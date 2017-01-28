@@ -140,9 +140,9 @@ public class BallGoalsPanel extends Entity{
             
             ParticleGenerator pg = new ParticleGenerator("explode",
                                 initialX + animTranslateX + ((lastXBall)*animScaleX), y + animTranslateY + ((size/2f)*animScaleY),
-                                Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4, 
-                                Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5, 
-                                Game.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6);
+                                Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4,
+                                Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5,
+                                Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6);
                             particleGenerators.add(pg);
                             pg.activate();
         }

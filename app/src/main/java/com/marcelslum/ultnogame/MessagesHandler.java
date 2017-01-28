@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Created by marcel on 26/01/2017.
  */
 
-public class MessageHandle {
+public class MessagesHandler {
     public static Text messageInGame;
     static Text messageMenu;
     static Text messageGameOver;
@@ -20,14 +20,16 @@ public class MessageHandle {
     static Text messageTime;
     static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
+    static MessageStar messageStars;
+    static MessageStarWin messageStarsWin;
 
 
     public static void initMessages(){
 
         float messageStarsSize = Game.gameAreaResolutionY*0.05f;
-        Game.messageStars = new MessageStar("messageStar", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
+        messageStars = new MessageStar("messageStar", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
 
-        Game.messageStarsWin = new MessageStarWin("messageStar", messageStarsSize, Game.resolutionX * 0.5f, Game.gameAreaResolutionY*0.55f);
+        messageStarsWin = new MessageStarWin("messageStar", messageStarsSize, Game.resolutionX * 0.5f, Game.gameAreaResolutionY*0.62f);
 
         messageGameOver = new Text("messageGameOver",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.2f, Game.gameAreaResolutionY*0.17f,
@@ -36,8 +38,8 @@ public class MessageHandle {
         messageMenu = new Text("messageMenu",
                 Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.145f, Game.gameAreaResolutionY*0.08f, ".", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f));
         
-        messageGroupsUnblocked = = new Text("messageGroupsUnblocked",
-                Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.65f, Game.gameAreaResolutionY*0.1f,
+        messageGroupsUnblocked = new Text("messageGroupsUnblocked",
+                Game.gameAreaResolutionX*0.5f, Game.resolutionY*0.6f, Game.gameAreaResolutionY*0.08f,
                 Game.getContext().getResources().getString(R.string.messageGroupsUnblocked), 
                 Game.font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
@@ -76,7 +78,7 @@ public class MessageHandle {
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
                 Game.resolutionX*0.9f, Game.resolutionY*0.15f, Game.resolutionY*0.05f,
-                Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandle.conqueredStarsTotal), Game.font, new Color(0f, 0f, 0f, 0.5f));
+                Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(0f, 0f, 0f, 0.5f));
 
         starForMessage = new Image("frame", Game.resolutionX*0.85f, Game.resolutionY*0.15f, Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURE_BUTTONS_BALLS_STARS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
 

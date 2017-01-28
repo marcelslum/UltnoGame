@@ -6,7 +6,7 @@ import java.text.NumberFormat;
  * Created by marcel on 26/01/2017.
  */
 
-public class StarsHandle {
+public class StarsHandler {
 
 
     public static int conqueredStarsTotal;
@@ -19,8 +19,8 @@ public class StarsHandle {
             numberOfStars += SaveGame.saveGame.starsLevels[i];
         }
         conqueredStarsTotal = numberOfStars;
-        if (MessageHandle.messageConqueredStarsTotal != null) {
-            MessageHandle.messageConqueredStarsTotal.setText(Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
+        if (MessagesHandler.messageConqueredStarsTotal != null) {
+            MessagesHandler.messageConqueredStarsTotal.setText(Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                     "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal));
         }
         return numberOfStars;

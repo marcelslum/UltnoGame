@@ -28,6 +28,33 @@ public class Texture {
     public final static int TEXTURE_TUTORIAL_ICONS = 11;
     public final static int TEXTURE_GROUP_ICONS = 12;
 
+    final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
+    final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
+    final static int TEXTURE_MAP_NUMBERS_SCORE3 = 3;
+    final static int TEXTURE_MAP_NUMBERS_SCORE4 = 4;
+    final static int TEXTURE_MAP_NUMBERS_SCORE5 = 5;
+    final static int TEXTURE_MAP_NUMBERS_SCORE6 = 6;
+    final static int TEXTURE_MAP_NUMBERS_SCORE7 = 7;
+    final static int TEXTURE_MAP_NUMBERS_SCORE8 = 8;
+    final static int TEXTURE_MAP_NUMBERS_SCORE9 = 9;
+    final static int TEXTURE_MAP_NUMBERS_SCORE0 = 10;
+    final static int TEXTURE_MAP_NUMBERS_POINT1 = 11;
+    final static int TEXTURE_MAP_NUMBERS_POINT2 = 12;
+    final static int TEXTURE_MAP_NUMBERS_POINT3 = 13;
+    final static int TEXTURE_MAP_NUMBERS_POINT4 = 14;
+    final static int TEXTURE_MAP_NUMBERS_POINT5 = 15;
+    final static int TEXTURE_MAP_NUMBERS_POINT6 = 16;
+    final static int TEXTURE_MAP_NUMBERS_POINT7 = 17;
+    final static int TEXTURE_MAP_NUMBERS_POINT8 = 18;
+    final static int TEXTURE_MAP_NUMBERS_POINT9 = 19;
+    final static int TEXTURE_MAP_NUMBERS_POINT0 = 20;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1 = 21;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2 = 22;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3 = 23;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4 = 24;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5 = 25;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6 = 26;
+    final static int TEXTURE_MAP_NUMBERS_EXPLODE_BALL = 27;
 
 
     public static int MAX_TEXTURES = 8;

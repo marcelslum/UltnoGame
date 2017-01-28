@@ -29,6 +29,7 @@ public class Animation{
     private AnimationListener mListener;
     private OnChange onChange;
     private boolean[] isFluidChanged;
+    private ArrayList<Entity> attachedEntities;
 
     public Animation(Entity target, String name, String parameter, int duration, ArrayList<float[]> values, boolean isInfinite, boolean isFluid){
         this.name = name;
@@ -70,9 +71,22 @@ public class Animation{
         started = false;
     }
 
+    void addAttachedEntities(Entity e){
+        if (attachedEntities == null){
+            attachedEntities = new ArrayList<>();
+        }
+        attachedEntities.add(e);
+    }
+
     void stopAndConclude(){
         stop();
         targetObject.applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1]);
+
+        if (attachedEntities != null){
+            for (int i = 0; i < attachedEntities.size(); i++){
+                attachedEntities.get(i).applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1]);
+            }
+        }
         fireAnimationEnd();
     }
 
@@ -122,6 +136,12 @@ public class Animation{
 
                     //Log.e("Animation", "aplicando animação na entidade "+this.targetObject.name+ " para o valor "+ (value + addValue));
                     this.targetObject.applyAnimation(parameterToAnimate, value + addValue);
+
+                    if (attachedEntities != null){
+                        for (int i = 0; i < attachedEntities.size(); i++){
+                            attachedEntities.get(i).applyAnimation(parameterToAnimate, value + addValue);
+                        }
+                    }
                 }
 
             } else { // if is not fluid
@@ -136,9 +156,15 @@ public class Animation{
                                 this.positionNotFluid = v;
                             }
                             this.targetObject.applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet);
+
+                            if (attachedEntities != null) {
+                                for (int i = 0; i < attachedEntities.size(); i++) {
+                                    attachedEntities.get(i).applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet);
+                                }
+                            }
                             if (this.onChange != null) {
-                                //Log.e("animation", "animation onChange fired");
-                                onChange.onChange();
+                            //Log.e("animation", "animation onChange fired");
+                            onChange.onChange();
                             }
                         }
                     }

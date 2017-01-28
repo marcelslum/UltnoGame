@@ -4,7 +4,7 @@ package com.marcelslum.ultnogame;
  * Created by marcel on 26/01/2017.
  */
 
-public class TimeHandle {
+public class TimeHandler {
 
     static long timeOfLevelPlay = 0;
     static int secondsOfLevelPlay = 0;
@@ -58,9 +58,9 @@ public class TimeHandle {
                 displaySecondsString = String.valueOf(displaySeconds);
             }
 
-            MessageHandle.messageTime.setText(displayMinutesString+":"+displaySecondsString);
-            if (MessageHandle.messageTime.animTranslateX != 0){
-                MessageHandle.messageTime.clearAnimations();
+            MessagesHandler.messageTime.setText(displayMinutesString+":"+displaySecondsString);
+            if (MessagesHandler.messageTime.animTranslateX != 0){
+                MessagesHandler.messageTime.clearAnimations();
             }
         }
     }

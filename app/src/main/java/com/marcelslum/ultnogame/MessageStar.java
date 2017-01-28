@@ -94,8 +94,15 @@ public class MessageStar extends Entity {
             stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
         }
 
-        for (int i = 0; i < newStars; i++){
-            Utils.createAnimation3v(stars.get(totalStars - 1 - i), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, false).start();
+
+        if (newStars > 0) {
+            // adiciona animação na primeira estrela
+            Animation animStars = Utils.createAnimation3v(stars.get(totalStars - 1), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, false);
+            // adiciona animação às outras estrelas, por isso começa no i=1
+            for (int i = 1; i < newStars; i++) {
+                animStars.addAttachedEntities(stars.get(totalStars - 1 - i));
+            }
+            animStars.start();
         }
 
         final MessageStar ms = this;

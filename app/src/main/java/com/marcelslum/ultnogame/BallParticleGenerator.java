@@ -38,7 +38,7 @@ public class BallParticleGenerator extends Entity {
             float velocity_variation_y = Utils.getRandonFloat(-0.08f, 0.08f);
             float alpha_decay = Utils.getRandonFloat(0.01f, 0.05f);
             float size = Utils.getRandonFloat(radius/2f, radius*3f);
-            int textureMap = Game.TEXTURE_MAP_NUMBERS_EXPLODE_BALL;
+            int textureMap = Texture.TEXTURE_MAP_NUMBERS_EXPLODE_BALL;
             
             float px = Utils.getRandonFloat(x - radius, x + radius);
             float py = Utils.getRandonFloat(y - radius, y + radius);

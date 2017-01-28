@@ -541,6 +541,17 @@ public class Entity{
 
     }
 
+    public void unblockAndDisplay(){
+        unblock();
+        display();
+    }
+
+    public void blockAndClearDisplay(){
+        block();
+        clearDisplay();
+    }
+
+
     public void unblock(){
         this.isBlocked = false;
     }

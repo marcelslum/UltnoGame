@@ -43,7 +43,7 @@ public class LevelDataLoader {
         LevelsGroupData.levelsGroupData.add(l);
 
         levelsQuantity = 2;
-        l = new LevelsGroupData("Cores", nl, nl+levelsQuantity-1, 10, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData("Cores", nl, nl+levelsQuantity-1, 5, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
         // ---------- LEVEL8
         nl += 1;
         l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 7);
@@ -53,7 +53,7 @@ public class LevelDataLoader {
         LevelsGroupData.levelsGroupData.add(l);
 
         levelsQuantity = 3;
-        l = new LevelsGroupData("Explosão", nl, nl+levelsQuantity-1, 15, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData("Explosão", nl, nl+levelsQuantity-1, 5, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
         // ---------- LEVEL10
         nl += 1;
         l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 9);

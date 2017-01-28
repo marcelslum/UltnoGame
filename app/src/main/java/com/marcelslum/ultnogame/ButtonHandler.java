@@ -4,7 +4,7 @@ package com.marcelslum.ultnogame;
  * Created by marcel on 26/01/2017.
  */
 
-public class ButtonHandle {
+public class ButtonHandler {
 
     static Button buttonReturn;
     static Button buttonReturnObjectivesPause;

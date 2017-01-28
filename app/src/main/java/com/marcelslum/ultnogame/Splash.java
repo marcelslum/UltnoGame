@@ -79,11 +79,11 @@ public class Splash {
 
     private static void setGameEntities() {
         Game.tittle = tittle;
-        MessageHandle.messageSplash1 = message1;
+        MessagesHandler.messageSplash1 = message1;
         if (message2 != null) {
-            MessageHandle.messageSplash2 = message2;
+            MessagesHandler.messageSplash2 = message2;
         } else {
-            MessageHandle.messageSplash2 = null;
+            MessagesHandler.messageSplash2 = null;
         }
     }
 
@@ -224,9 +224,9 @@ public class Splash {
                             LevelDataLoader.initLevelsData();
                             MenuHandle.initMenus();
                             Game.initTittle();
-                            MessageHandle.initMessages();
+                            MessagesHandler.initMessages();
                             Game.initEdges();
-                            ButtonHandle.initButtons();
+                            ButtonHandler.initButtons();
 
                             //Game.changeDifficulty(SaveGame.saveGame.currentDifficulty);
                             Game.setGameState(Game.GAME_STATE_MENU);    
