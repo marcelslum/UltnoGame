@@ -322,7 +322,6 @@ public class MenuHandler {
                 innerMenu.block();
                 Game.blockAndWaitTouchRelease();
                 Game.clearAllMenuEntities();
-
                 if (!SaveGame.saveGame.tutorialsViwed[0]){
                     Tutorial.currentTutorial = 0;
                     Game.setGameState(Game.GAME_STATE_TUTORIAL);
@@ -462,9 +461,4 @@ public class MenuHandler {
             }
         });
     }
-
-
-
-
-
 }

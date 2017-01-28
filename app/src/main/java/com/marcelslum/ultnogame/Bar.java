@@ -229,7 +229,10 @@ public class Bar extends Rectangle{
         //Log.e(TAG, "moveLeft");
         if (!accelStarted || (accelStarted && (accelFinalVelocityX > 0f))) {
             //Log.e(TAG, "initAcceleration");
-            accelerateFrom(PhysicalObject.ACCEL_TYPE_EXPONENTIAL, 2000, -initialDVX, 0f, -initialDVX * 2f, 0f);
+            if  (dvx > -initialDVX * 2f){
+                accelerateFrom(PhysicalObject.ACCEL_TYPE_EXPONENTIAL, 2000, -initialDVX, 0f, -initialDVX * 2f, 0f);
+            }
+
         }
         verifyAcceleration();
         //Log.e(TAG, "dvx "+dvx);
@@ -245,10 +248,12 @@ public class Bar extends Rectangle{
         }
         //Log.e(TAG, "moveRight");
         if (!accelStarted || (accelStarted && (accelFinalVelocityX < 0f))) {
-            //Log.e(TAG, "initAcceleration");
-            accelerateFrom(PhysicalObject.ACCEL_TYPE_EXPONENTIAL, 2000, initialDVX, 0f, initialDVX * 2f, 0f);
+           if  (dvx < initialDVX * 2f){
+                accelerateFrom(PhysicalObject.ACCEL_TYPE_EXPONENTIAL, 2000, initialDVX, 0f, initialDVX * 2f, 0f);
+           }
         }
         verifyAcceleration();
+
         //Log.e(TAG, "dvx "+dvx);
         vx = dvx * timePercentage;
         translate(vx, 0f);
@@ -261,6 +266,9 @@ public class Bar extends Rectangle{
             accelPercentage = 0f;
             shineDecreaseAfterAccelerate.values.get(0)[1] = shine.numberForAnimation;
             shineDecreaseAfterAccelerate.start();
+        }
+        if (accelFinish){
+            accelFinish = false;
         }
         vx = 0f;
         verifyWind();

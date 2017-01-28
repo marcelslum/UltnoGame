@@ -30,6 +30,7 @@ public class PhysicalObject extends Entity implements Weight{
     public float accelPercentage;
     public int accelDuration;
     public long accelInitialTime;
+    public boolean accelFinish;
 
     public static final int ACCEL_TYPE_LINEAR = 0;
     public static final int ACCEL_TYPE_EXPONENTIAL = 1;
