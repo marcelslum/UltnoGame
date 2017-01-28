@@ -4,7 +4,7 @@ package com.marcelslum.ultnogame;
  * Created by marcel on 26/01/2017.
  */
 
-public class ScoreHandle {
+public class ScoreHandler {
     public static final int POINTS_DECAY = 1;
     static final long TIME_FOR_POINTS_DECAY = 2000;
     public static long maxScoreTotal;
@@ -39,5 +39,18 @@ public class ScoreHandle {
                 scorePanel.setValue(value, false, 0, false);
             }
         }
+    }
+
+    public static void createScorePanel() {
+        ScoreHandler.scorePanel = new ScorePanel("scorePanel",
+                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.07f);
+    }
+
+    public static float getScorePanelX() {
+        return ScoreHandler.scorePanel.x + (ScoreHandler.scorePanel.getWidth()*0.014f);
+    }
+
+    public static float getScorePanelWidth() {
+        return ScoreHandler.scorePanel.getWidth() - (ScoreHandler.scorePanel.getWidth()*0.035f);
     }
 }

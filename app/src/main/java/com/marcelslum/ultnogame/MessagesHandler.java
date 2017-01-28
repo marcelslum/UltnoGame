@@ -74,7 +74,7 @@ public class MessagesHandler {
 
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 Game.resolutionX*0.05f, Game.resolutionY*0.84f, Game.resolutionY*0.036f,
-                Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandle.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
+                Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
                 Game.resolutionX*0.9f, Game.resolutionY*0.15f, Game.resolutionY*0.05f,
@@ -142,4 +142,9 @@ public class MessagesHandler {
         }
     }
 
+    public static void createMessageTime() {
+        MessagesHandler.messageTime = new Text("messageTime",
+                Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.85f, Game.resolutionY*0.055f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
+        MessagesHandler.messageTime.alpha = 0.7f;
+    }
 }

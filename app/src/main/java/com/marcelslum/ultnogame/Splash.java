@@ -222,7 +222,7 @@ public class Splash {
                             Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
                             loadingSaveGame = false;
                             LevelDataLoader.initLevelsData();
-                            MenuHandle.initMenus();
+                            MenuHandler.initMenus();
                             Game.initTittle();
                             MessagesHandler.initMessages();
                             Game.initEdges();

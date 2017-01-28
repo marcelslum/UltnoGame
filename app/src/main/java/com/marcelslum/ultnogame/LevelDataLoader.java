@@ -41,10 +41,14 @@ public class LevelDataLoader {
         nl += 1;
         l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 6);
         LevelsGroupData.levelsGroupData.add(l);
+        // ---------- LEVEL8
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 6);
+        LevelsGroupData.levelsGroupData.add(l);
 
         levelsQuantity = 2;
         l = new LevelsGroupData("Cores", nl, nl+levelsQuantity-1, 5, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
-        // ---------- LEVEL8
+        // ---------- LEVEL9+++++++++++
         nl += 1;
         l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 7);
         // ---------- LEVEL9

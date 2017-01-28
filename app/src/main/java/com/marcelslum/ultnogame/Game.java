@@ -330,8 +330,8 @@ public class Game {
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             ButtonHandler.buttonReturnObjectivesPause.unblockAndDisplay();
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
-            MenuHandle.updateGroupMenu();
-            MenuHandle.groupMenu.appear();
+            MenuHandler.updateGroupMenu();
+            MenuHandler.groupMenu.appear();
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuSelecaoMundo));
             ButtonHandler.buttonReturn.unblockAndDisplay();
@@ -342,12 +342,12 @@ public class Game {
         } else if (state == GAME_STATE_MENU_TUTORIAL){
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuTutorial));
-            MenuHandle.updateTutorialMenu();
-            MenuHandle.tutorialMenu.appear();
+            MenuHandler.updateTutorialMenu();
+            MenuHandler.tutorialMenu.appear();
             ButtonHandler.buttonReturn.unblockAndDisplay();
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
-            MenuHandle.updateLevelMenu();
-            MenuHandle.levelMenu.appear();
+            MenuHandler.updateLevelMenu();
+            MenuHandler.levelMenu.appear();
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuSelecaoLevel));
             ButtonHandler.buttonReturn.unblockAndDisplay();
@@ -365,10 +365,10 @@ public class Game {
             Splash.display();
         } else if (state == GAME_STATE_OPCOES){
             tittle.display();
-            MenuHandle.menuOptions.appearAndUnblock(50);
+            MenuHandler.menuOptions.appearAndUnblock(50);
         } else if (state == GAME_STATE_OPCOES_GAME){
-            MenuHandle.menuInGame.blockAndClearDisplay();
-            MenuHandle.menuInGameOptions.appearAndUnblock(100);
+            MenuHandler.menuInGame.blockAndClearDisplay();
+            MenuHandler.menuInGameOptions.appearAndUnblock(100);
             MessagesHandler.messageInGame.y = gameAreaResolutionY*0.25f;
             MessagesHandler.messageInGame.display();
         } else if (state == GAME_STATE_MENU){
@@ -382,10 +382,10 @@ public class Game {
             initTittle();
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
-            MenuHandle.menuOptions.block();
-            MenuHandle.menuInGame.block();
-            MenuHandle.groupMenu.block();
-            MenuHandle.levelMenu.block();
+            MenuHandler.menuOptions.block();
+            MenuHandler.menuInGame.block();
+            MenuHandler.groupMenu.block();
+            MenuHandler.levelMenu.block();
 
             stopAndReleaseMusic();
             eraseAllGameEntities();
@@ -394,13 +394,13 @@ public class Game {
             if (MessagesHandler.messageSplash2 != null) {
                 MessagesHandler.messageSplash2.clearDisplay();
             }
-            MenuHandle.menuMain.unblockAndDisplay();
+            MenuHandler.menuMain.unblockAndDisplay();
             tittle.display();
             MessagesHandler.messageMaxScoreTotal.display();
             MessagesHandler.bottomTextBox.display();
             MessagesHandler.setBottomMessage("", 0);
             MessagesHandler.messageMaxScoreTotal.setText(
-                    getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandle.getMaxScoreTotal()));
+                    getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
 
             ConnectionHandler.verify();
 
@@ -518,16 +518,16 @@ public class Game {
 
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
-            MenuHandle.menuGameOver.appearAndUnblock(1000);
+            MenuHandler.menuGameOver.appearAndUnblock(1000);
             MessagesHandler.messageGameOver.display();
 
-            if (ScoreHandle.scorePanel.value > 0) {
-                ScoreHandle.scorePanel.showMessage("-50%", 1000);
-                int points = ScoreHandle.scorePanel.value / 2;
-                ScoreHandle.scorePanel.setValue(points, true, 1000, true);
+            if (ScoreHandler.scorePanel.value > 0) {
+                ScoreHandler.scorePanel.showMessage("-50%", 1000);
+                int points = ScoreHandler.scorePanel.value / 2;
+                ScoreHandler.scorePanel.setValue(points, true, 1000, true);
                 if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1] < points) {
                     SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1] = points;
-                    ScoreHandle.setMaxScoreTotal();
+                    ScoreHandler.setMaxScoreTotal();
                     SaveGame.save();
                     GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), points);
                 }
@@ -545,7 +545,7 @@ public class Game {
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 stopAllGameEntities();
                 reduceAllGameEntitiesAlpha(300);
-                MenuHandle.menuInGame.getMenuOptionByName("Continuar").textObject.setText(getContext().getResources().getString(R.string.continuarJogar));
+                MenuHandler.menuInGame.getMenuOptionByName("Continuar").textObject.setText(getContext().getResources().getString(R.string.continuarJogar));
 
                 ArrayList<float[]> valuesAnimPause = new ArrayList<>();
                 valuesAnimPause.add(new float[]{0f, 1f});
@@ -575,7 +575,7 @@ public class Game {
 
             }
                 MessagesHandler.messageInGame.display();
-                MenuHandle.menuInGame.appearAndUnblock(300);
+                MenuHandler.menuInGame.appearAndUnblock(300);
 
         } else if (state == GAME_STATE_VITORIA){
 
@@ -643,7 +643,7 @@ public class Game {
             StarsHandler.newStars = Level.levelGoalsObject.getStarsAchieved();
 
             // calcula a pontuação final, de acordo com a quantidade de bolas azuis e estrelas
-            int pointsTotal = ScoreHandle.scorePanel.value;
+            int pointsTotal = ScoreHandler.scorePanel.value;
             for (int i = 0; i < ballGoalsPanel.blueBalls; i++) {
                 pointsTotal *= 1.5;
             }
@@ -653,7 +653,7 @@ public class Game {
             final long previousPoints = SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1];
             if (previousPoints < pointsTotal) {
                 SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] = pointsTotal;
-                ScoreHandle.setMaxScoreTotal();
+                ScoreHandler.setMaxScoreTotal();
             }
             if (StarsHandler.previousStars < StarsHandler.newStars) {
                 SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1] = StarsHandler.newStars;
@@ -669,9 +669,9 @@ public class Game {
                 @Override
                 public void run() {
                     if (ballGoalsPanel.blueBalls > 0){
-                        int points = (int)((float) ScoreHandle.scorePanel.value * 1.5f);
-                        ScoreHandle.scorePanel.setValue(points, true, 1000, true);
-                        ScoreHandle.scorePanel.showMessage("+ 50%", 800);
+                        int points = (int)((float) ScoreHandler.scorePanel.value * 1.5f);
+                        ScoreHandler.scorePanel.setValue(points, true, 1000, true);
+                        ScoreHandler.scorePanel.showMessage("+ 50%", 800);
                         ballGoalsPanel.explodeBlueBall();
                     } else if (!levelGoalsPanel.isVisible){
                         Utils.createSimpleAnimation(ballGoalsPanel, "translateX", "translateX", 2000, 0f, gameAreaResolutionX*2f).start();
@@ -682,13 +682,13 @@ public class Game {
 
 
                         if (StarsHandler.newStars > 0) {
-                            int points = (int) ((float) ScoreHandle.scorePanel.value * (1f + (0.1f * (float) StarsHandler.newStars)));
-                            ScoreHandle.scorePanel.setValue(points, true, 1000, true);
-                            if (StarsHandler.newStars == 1) ScoreHandle.scorePanel.showMessage("+ 10%", 2000);
-                            if (StarsHandler.newStars == 2) ScoreHandle.scorePanel.showMessage("+ 20%", 2000);
-                            if (StarsHandler.newStars == 3) ScoreHandle.scorePanel.showMessage("+ 30%", 2000);
-                            if (StarsHandler.newStars == 4) ScoreHandle.scorePanel.showMessage("+ 40%", 2000);
-                            if (StarsHandler.newStars == 5) ScoreHandle.scorePanel.showMessage("+ 50%", 2000);
+                            int points = (int) ((float) ScoreHandler.scorePanel.value * (1f + (0.1f * (float) StarsHandler.newStars)));
+                            ScoreHandler.scorePanel.setValue(points, true, 1000, true);
+                            if (StarsHandler.newStars == 1) ScoreHandler.scorePanel.showMessage("+ 10%", 2000);
+                            if (StarsHandler.newStars == 2) ScoreHandler.scorePanel.showMessage("+ 20%", 2000);
+                            if (StarsHandler.newStars == 3) ScoreHandler.scorePanel.showMessage("+ 30%", 2000);
+                            if (StarsHandler.newStars == 4) ScoreHandler.scorePanel.showMessage("+ 40%", 2000);
+                            if (StarsHandler.newStars == 5) ScoreHandler.scorePanel.showMessage("+ 50%", 2000);
                         }
                     } else{
                         ButtonHandler.buttonContinue.display();
@@ -715,14 +715,14 @@ public class Game {
             Utils.createSimpleAnimation(ballGoalsPanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY*0.1f).start();
             Utils.createSimpleAnimation(ballGoalsPanel, "scaleX", "scaleX", 2000, 1f, 1.8f).start();
             Utils.createSimpleAnimation(ballGoalsPanel, "scaleY", "scaleY", 2000, 1f, 1.8f).start();
-            Utils.createSimpleAnimation(ScoreHandle.scorePanel, "scaleX", "scaleX", 2000, 1f, 1.5f).start();
-            Utils.createSimpleAnimation(ScoreHandle.scorePanel, "scaleY", "scaleY", 2000, 1f, 1.5f).start();
-            Utils.createSimpleAnimation(ScoreHandle.scorePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY * 0.05f, new Animation.AnimationListener() {
+            Utils.createSimpleAnimation(ScoreHandler.scorePanel, "scaleX", "scaleX", 2000, 1f, 1.5f).start();
+            Utils.createSimpleAnimation(ScoreHandler.scorePanel, "scaleY", "scaleY", 2000, 1f, 1.5f).start();
+            Utils.createSimpleAnimation(ScoreHandler.scorePanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY * 0.05f, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
                 float iY = - Game.gameAreaResolutionY * 0.05f;
-                Utils.createAnimation4v(ScoreHandle.scorePanel, "animScoreTX", "translateX", 30000, 0f, 0f, 0.3f, -10f, 0.7f, 20f, 1f, 0f, true, true).start();
-                Utils.createAnimation4v(ScoreHandle.scorePanel, "animScoreTY", "translateY", 12000, 0f,iY, 0.2f,iY + 5f, 0.7f,iY -20f, 1f,iY, true, true).start();
+                Utils.createAnimation4v(ScoreHandler.scorePanel, "animScoreTX", "translateX", 30000, 0f, 0f, 0.3f, -10f, 0.7f, 20f, 1f, 0f, true, true).start();
+                Utils.createAnimation4v(ScoreHandler.scorePanel, "animScoreTY", "translateY", 12000, 0f,iY, 0.2f,iY + 5f, 0.7f,iY -20f, 1f,iY, true, true).start();
                 }
                 }
             ).start();
@@ -740,12 +740,12 @@ public class Game {
                 }
             });
 
-            ScoreHandle.scorePanel.reduceAlpha(500, 0f, new Animation.AnimationListener() {
+            ScoreHandler.scorePanel.reduceAlpha(500, 0f, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
-                    ScoreHandle.scorePanel.clearDisplay();
-                    ScoreHandle.scorePanel.alpha = 1f;
-                    ScoreHandle.scorePanel.clearAnimations();
+                    ScoreHandler.scorePanel.clearDisplay();
+                    ScoreHandler.scorePanel.alpha = 1f;
+                    ScoreHandler.scorePanel.clearAnimations();
                 }
             });
             
@@ -890,8 +890,8 @@ public class Game {
             if (previousState == GAME_STATE_MENU_TUTORIAL) {
                 Log.e(TAG, "limpando menu tutorial");
                 MessagesHandler.messageMenu.clearDisplay();
-                MenuHandle.tutorialMenu.clearDisplay();
-                MenuHandle.tutorialMenu.block();
+                MenuHandler.tutorialMenu.clearDisplay();
+                MenuHandler.tutorialMenu.block();
             }
             if (!sameState) {
                 activateFrame(500);
@@ -1003,7 +1003,7 @@ public class Game {
     public static void eraseAllHudEntities() {
         ballGoalsPanel = null;
         ballDataPanel = null;
-        ScoreHandle.scorePanel = null;
+        ScoreHandler.scorePanel = null;
         ButtonHandler.button1Left = null;
         ButtonHandler.button1Right = null;
         ButtonHandler.button2Left = null;
@@ -1018,7 +1018,7 @@ public class Game {
         list.add(ButtonHandler.button1Right);
         list.add(ButtonHandler.button2Left);
         list.add(ButtonHandler.button2Right);
-        list.add(ScoreHandle.scorePanel);
+        list.add(ScoreHandler.scorePanel);
         list.add(ballDataPanel);
         list.add(ballGoalsPanel);
         list.add(MessagesHandler.messageTime);
@@ -1245,7 +1245,7 @@ public class Game {
         if (gameState == GAME_STATE_JOGAR) {
             background.move(1);
             verifyDead();
-            ScoreHandle.verifyScoreDecay();
+            ScoreHandler.verifyScoreDecay();
             verifyTargetsAppend();
         } else if(gameState == GAME_STATE_VITORIA){
             background.move(3);
@@ -1351,17 +1351,17 @@ public class Game {
             specialBalls.get(i).checkTransformations(true);
         }
 
-        if (MenuHandle.menuMain != null) MenuHandle.menuMain.checkTransformations(true);
-        if (MenuHandle.menuInGame != null) MenuHandle.menuInGame.checkTransformations(true);
-        if (MenuHandle.menuGameOver != null) MenuHandle.menuGameOver.checkTransformations(true);
+        if (MenuHandler.menuMain != null) MenuHandler.menuMain.checkTransformations(true);
+        if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.checkTransformations(true);
+        if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.checkTransformations(true);
         if (SelectorHandle.selectorLevel != null) SelectorHandle.selectorLevel.checkTransformations(true);
 
-        if (MenuHandle.menuOptions != null) MenuHandle.menuOptions.checkTransformations(true);
-        if (MenuHandle.groupMenu != null) MenuHandle.groupMenu.checkTransformations(true);
-        if (MenuHandle.levelMenu != null) MenuHandle.levelMenu.checkTransformations(true);
-        if (MenuHandle.tutorialMenu != null) MenuHandle.tutorialMenu.checkTransformations(true);
+        if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.checkTransformations(true);
+        if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.checkTransformations(true);
+        if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.checkTransformations(true);
+        if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.checkTransformations(true);
         if (levelGoalsPanel != null) levelGoalsPanel.checkTransformations(true);
-        if (MenuHandle.menuInGameOptions != null) MenuHandle.menuInGameOptions.checkTransformations(true);
+        if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.checkTransformations(true);
         if (SelectorHandle.selectorDificulty != null) SelectorHandle.selectorDificulty.checkTransformations(true);
         if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.checkTransformations(true);
         if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.checkTransformations(true);
@@ -1396,7 +1396,7 @@ public class Game {
 
         if (frame != null)frame.checkTransformations(true);
 
-        if (ScoreHandle.scorePanel != null) ScoreHandle.scorePanel.checkTransformations(true);
+        if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.checkTransformations(true);
         if (ballDataPanel != null) ballDataPanel.checkTransformations(true);
         if (ballGoalsPanel != null) ballGoalsPanel.checkTransformations(true);
 
@@ -1452,17 +1452,17 @@ public class Game {
             wind.prepareRender(matrixView, matrixProjection);
         }
 
-        if (MenuHandle.menuMain != null) MenuHandle.menuMain.prepareRender(matrixView, matrixProjection);
-        if (MenuHandle.menuInGame != null) MenuHandle.menuInGame.prepareRender(matrixView, matrixProjection);
-        if (MenuHandle.menuGameOver != null) MenuHandle.menuGameOver.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuMain != null) MenuHandler.menuMain.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.prepareRender(matrixView, matrixProjection);
         if (SelectorHandle.selectorLevel != null) SelectorHandle.selectorLevel.prepareRender(matrixView, matrixProjection);
 
-        if (MenuHandle.menuOptions != null) MenuHandle.menuOptions.prepareRender(matrixView, matrixProjection);
-        if (MenuHandle.groupMenu != null) MenuHandle.groupMenu.prepareRender(matrixView, matrixProjection);
-        if (MenuHandle.levelMenu != null) MenuHandle.levelMenu.prepareRender(matrixView, matrixProjection);
-        if (MenuHandle.tutorialMenu != null) MenuHandle.tutorialMenu.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.prepareRender(matrixView, matrixProjection);
         if (levelGoalsPanel != null) levelGoalsPanel.prepareRender(matrixView, matrixProjection);
-        if (MenuHandle.menuInGameOptions != null) MenuHandle.menuInGameOptions.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.prepareRender(matrixView, matrixProjection);
         if (SelectorHandle.selectorDificulty != null) SelectorHandle.selectorDificulty.prepareRender(matrixView, matrixProjection);
         if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.prepareRender(matrixView, matrixProjection);
         if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.prepareRender(matrixView, matrixProjection);
@@ -1497,7 +1497,7 @@ public class Game {
         if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
 
         if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
-        if (ScoreHandle.scorePanel != null) ScoreHandle.scorePanel.prepareRender(matrixView, matrixProjection);
+        if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.prepareRender(matrixView, matrixProjection);
         if (ballGoalsPanel != null) ballGoalsPanel.prepareRender(matrixView, matrixProjection);
 
         if (ButtonHandler.button1Left != null) ButtonHandler.button1Left.prepareRender(matrixView, matrixProjection);
@@ -1533,20 +1533,20 @@ public class Game {
                 interactionListeners.get(i).verify();
             }
         }
-        if (MenuHandle.menuMain != null) MenuHandle.menuMain.verifyListener();
-        if (MenuHandle.menuInGame != null) MenuHandle.menuInGame.verifyListener();
-        if (MenuHandle.menuGameOver != null) MenuHandle.menuGameOver.verifyListener();
+        if (MenuHandler.menuMain != null) MenuHandler.menuMain.verifyListener();
+        if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.verifyListener();
+        if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.verifyListener();
         if (SelectorHandle.selectorLevel != null) SelectorHandle.selectorLevel.verifyListener();
-        if (MenuHandle.menuOptions != null) MenuHandle.menuOptions.verifyListener();
-        if (MenuHandle.groupMenu != null) MenuHandle.groupMenu.verifyListener();
-        if (MenuHandle.levelMenu != null) MenuHandle.levelMenu.verifyListener();
-        if (MenuHandle.tutorialMenu != null) MenuHandle.tutorialMenu.verifyListener();
+        if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.verifyListener();
+        if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.verifyListener();
+        if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.verifyListener();
+        if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.verifyListener();
         // levelGoalsPanel não precisa de listener???
         if (ButtonHandler.buttonReturn != null) ButtonHandler.buttonReturn.verifyListener();
         if (ButtonHandler.buttonReturnObjectivesPause != null)
             ButtonHandler.buttonReturnObjectivesPause.verifyListener();
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.verifyListener();
-        if (MenuHandle.menuInGameOptions != null) MenuHandle.menuInGameOptions.verifyListener();
+        if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
         if (SelectorHandle.selectorDificulty != null) SelectorHandle.selectorDificulty.verifyListener();
         if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.verifyListener();
         if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.verifyListener();
@@ -1567,25 +1567,25 @@ public class Game {
 
     public static ArrayList<Entity> collectAllMenuEntities(){
         ArrayList<Entity> list = new ArrayList<>();
-        list.add(MenuHandle.menuMain);
-        list.add(MenuHandle.menuOptions);
-        list.add(MenuHandle.groupMenu);
-        list.add(MenuHandle.levelMenu);
-        list.add(MenuHandle.tutorialMenu);
+        list.add(MenuHandler.menuMain);
+        list.add(MenuHandler.menuOptions);
+        list.add(MenuHandler.groupMenu);
+        list.add(MenuHandler.levelMenu);
+        list.add(MenuHandler.tutorialMenu);
         list.add(levelGoalsPanel);
         list.add(Tutorial.tutorialImage);// TODO ????
         list.add(Tutorial.tutorialTextBox);// TODO ????
         list.add(ButtonHandler.buttonReturn);
         list.add(ButtonHandler.buttonReturnObjectivesPause);
         list.add(ButtonHandler.buttonContinue);
-        list.add(MenuHandle.menuInGameOptions);
+        list.add(MenuHandler.menuInGameOptions);
         list.add(SelectorHandle.selectorLevel);
         list.add(SelectorHandle.selectorDificulty);
         list.add(SelectorHandle.selectorMusic);
         list.add(SelectorHandle.selectorSound);
         list.add(SelectorHandle.selectorLevel);
-        list.add(MenuHandle.menuInGame);
-        list.add(MenuHandle.menuGameOver);
+        list.add(MenuHandler.menuInGame);
+        list.add(MenuHandler.menuGameOver);
         list.add(tittle);
         list.add(MessagesHandler.messageGameOver);
         list.add(MessagesHandler.messagePreparation);

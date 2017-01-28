@@ -155,7 +155,7 @@ public class Target extends Rectangle {
 
         Sound.play(Sound.soundDestroyTarget, 1, 1, 0);
 
-        ScoreHandle.scorePanel.setValue(ScoreHandle.scorePanel.value + points,  true, 500, false);
+        ScoreHandler.scorePanel.setValue(ScoreHandler.scorePanel.value + points,  true, 500, false);
 
         this.currentState -= 1;
 

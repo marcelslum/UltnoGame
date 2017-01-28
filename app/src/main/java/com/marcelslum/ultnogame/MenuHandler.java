@@ -9,7 +9,7 @@ import static com.marcelslum.ultnogame.Game.font;
  * Created by marcel on 26/01/2017.
  */
 
-public class MenuHandle {
+public class MenuHandler {
 
     static Menu menuMain;
     static Menu menuOptions;
@@ -20,7 +20,7 @@ public class MenuHandle {
     public static MenuIcon levelMenu;
     public static MenuIcon tutorialMenu;
 
-    public static String TAG = "MenuHandle";
+    public static String TAG = "MenuHandler";
 
     public static void updateGroupMenu(){
 
