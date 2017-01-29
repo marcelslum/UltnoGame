@@ -13,9 +13,9 @@ public class LevelGoalsLoader {
 
         int ln = 1;  // ---------- LEVEL 1
         if (levelNumber == ln) {
-            lg.add(new LevelGoal(3, LevelGoal.JUST_FINISH, 0));
-            lg.add(new LevelGoal(1, LevelGoal.ACCELERATE_N_TIMES, 3));
-            lg.add(new LevelGoal(1, LevelGoal.DECELERATE_N_TIMES, 3));
+            lg.add(new LevelGoal(5, LevelGoal.JUST_FINISH, 0));
+            //lg.add(new LevelGoal(1, LevelGoal.ACCELERATE_N_TIMES, 3));
+            //lg.add(new LevelGoal(1, LevelGoal.DECELERATE_N_TIMES, 3));
         }
 
         ln += 1; // ---------- LEVEL 2

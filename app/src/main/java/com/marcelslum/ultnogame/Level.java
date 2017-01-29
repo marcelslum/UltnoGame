@@ -124,6 +124,8 @@ public class Level {
         Game.quad = new Quadtree(new RectangleM(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY),5,5);
 
         MessagesHandler.createMessageTime();
+        MessagesHandler.createMessageCurrentLevel(SaveGame.saveGame.currentLevelNumber);
+
         ScoreHandler.createScorePanel();
 
         Game.ballDataPanel = new BallDataPanel("ballDataPanel",

@@ -80,13 +80,23 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
 
         // TODO retirar ao final
 
+        /*
+
         SaveGame.saveGame.starsLevels[0] = 5;
         SaveGame.saveGame.starsLevels[1] = 5;
         SaveGame.saveGame.starsLevels[2] = 5;
         SaveGame.saveGame.starsLevels[3] = 5;
         SaveGame.saveGame.starsLevels[4] = 5;
         SaveGame.saveGame.starsLevels[5] = 5;
-        /*
+
+        */
+
+        SaveGame.saveGame.starsLevels[0] = 0;
+        SaveGame.saveGame.starsLevels[1] = 0;
+        SaveGame.saveGame.starsLevels[2] = 0;
+        SaveGame.saveGame.starsLevels[3] = 0;
+        SaveGame.saveGame.starsLevels[4] = 0;
+        SaveGame.saveGame.starsLevels[5] = 0;
         SaveGame.saveGame.starsLevels[6] = 0;
         SaveGame.saveGame.starsLevels[7] = 0;
         SaveGame.saveGame.starsLevels[8] = 0;
@@ -102,18 +112,25 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
         SaveGame.saveGame.starsLevels[18] = 0;
         SaveGame.saveGame.starsLevels[19] = 0;
         SaveGame.saveGame.starsLevels[20] = 0;
-        */
+        SaveGame.saveGame.starsLevels[21] = 0;
+        SaveGame.saveGame.starsLevels[22] = 0;
+        SaveGame.saveGame.starsLevels[23] = 0;
+        SaveGame.saveGame.starsLevels[24] = 0;
+        SaveGame.saveGame.starsLevels[25] = 0;
+        SaveGame.saveGame.starsLevels[26] = 0;
+        SaveGame.saveGame.starsLevels[27] = 0;
+        SaveGame.saveGame.starsLevels[28] = 0;
+        SaveGame.saveGame.starsLevels[29] = 0;
+        SaveGame.saveGame.starsLevels[30] = 0;
+
 
         SaveGame.saveGame.tutorialsViwed[0] = true;
         SaveGame.saveGame.tutorialsViwed[1] = true;
 
         SaveGame.save();
 
-
-
-
-
     }
+
     protected void onProgressUpdate(){
         //Codigo
     }

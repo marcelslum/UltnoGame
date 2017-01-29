@@ -373,8 +373,8 @@ public class Entity{
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {
-        //if (name == "messageTime") {
-        //Log.e("entity", "translateX " + animTranslateX);
+        //if (name == "messageStars" && MessagesHandler.messageStars != null) {
+        //Log.e("entity", "messageStars "+ MessagesHandler.messageStars.isVisible);
         //}
         //Log.e("entity", "rendering wind");}
 
@@ -593,4 +593,14 @@ public class Entity{
         return listener;
     }
 
+    public void reduceAlphaAndClearDisplay(int duration) {
+        reduceAlpha(duration, 0f, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd() {
+                clearDisplay();
+                clearAnimations();
+                alpha = 1f;
+            }
+        });
+    }
 }

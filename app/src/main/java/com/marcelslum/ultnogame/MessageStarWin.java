@@ -19,4 +19,11 @@ public class MessageStarWin extends MessageStar {
             addChild(star);
         }
     }
+
+    public void setY(float v) {
+        y = v;
+        for (int i = 0; i < 5; i++){
+            stars.get(i).y = v;
+        }
+    }
 }

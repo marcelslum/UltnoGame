@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class MessagesHandler {
     public static Text messageInGame;
     static Text messageMenu;
+    static Text messageSubMenu;
     static Text messageGameOver;
     static Text messagePreparation;
     static Text messageMaxScoreTotal;
@@ -18,6 +19,7 @@ public class MessagesHandler {
     static Text messageSplash1;
     static Text messageSplash2;
     static Text messageTime;
+    static Text messageCurrentLevel;
     static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
     static MessageStar messageStars;
@@ -27,9 +29,9 @@ public class MessagesHandler {
     public static void initMessages(){
 
         float messageStarsSize = Game.gameAreaResolutionY*0.05f;
-        messageStars = new MessageStar("messageStar", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
+        messageStars = new MessageStar("messageStars", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
 
-        messageStarsWin = new MessageStarWin("messageStar", messageStarsSize, Game.resolutionX * 0.5f, Game.gameAreaResolutionY*0.62f);
+        messageStarsWin = new MessageStarWin("messageStarsWin", messageStarsSize, Game.resolutionX * 0.5f, Game.gameAreaResolutionY*0.62f);
 
         messageGameOver = new Text("messageGameOver",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.2f, Game.gameAreaResolutionY*0.17f,
@@ -37,6 +39,9 @@ public class MessagesHandler {
 
         messageMenu = new Text("messageMenu",
                 Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.145f, Game.gameAreaResolutionY*0.08f, ".", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f));
+
+        messageSubMenu = new Text("messageSubMenu",
+                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.25f, Game.gameAreaResolutionY*0.05f, ".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f));
         
         messageGroupsUnblocked = new Text("messageGroupsUnblocked",
                 Game.gameAreaResolutionX*0.5f, Game.resolutionY*0.6f, Game.gameAreaResolutionY*0.08f,
@@ -77,10 +82,10 @@ public class MessagesHandler {
                 Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
-                Game.resolutionX*0.9f, Game.resolutionY*0.15f, Game.resolutionY*0.05f,
+                Game.resolutionX*0.9f, Game.resolutionY*0.25f, Game.resolutionY*0.05f,
                 Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(0f, 0f, 0f, 0.5f));
 
-        starForMessage = new Image("frame", Game.resolutionX*0.85f, Game.resolutionY*0.15f, Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURE_BUTTONS_BALLS_STARS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
+        starForMessage = new Image("frame", Game.resolutionX*0.85f, Game.resolutionY*0.25f, Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURE_BUTTONS_BALLS_STARS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
 
         bottomTextBox = new TextBoxBuilder("bottomTextBox")
                 .position(Game.resolutionX*0.05f, Game.resolutionY*0.9f)
@@ -146,5 +151,11 @@ public class MessagesHandler {
         MessagesHandler.messageTime = new Text("messageTime",
                 Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.85f, Game.resolutionY*0.055f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
         MessagesHandler.messageTime.alpha = 0.7f;
+    }
+
+    public static void createMessageCurrentLevel(int currentLevel) {
+        MessagesHandler.messageCurrentLevel = new Text("messageCurrentLevel",
+                Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.925f, Game.resolutionY*0.055f,Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + String.valueOf(currentLevel), Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
+        MessagesHandler.messageCurrentLevel.alpha = 0.7f;
     }
 }

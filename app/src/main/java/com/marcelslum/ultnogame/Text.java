@@ -22,7 +22,6 @@ public class Text extends Entity{
     private int indexColors;
     public float[] charData;
     public int align;
-    //public float[] colorData2;
     
     public Text(String name, float x, float y, float size, String text, Font font, Color color, int align) {
         super(name, x, y);

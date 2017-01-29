@@ -322,14 +322,27 @@ public class Game {
             levelGoalsPanel.appearGray();
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
+            MessagesHandler.messageSubMenu.display();
+            MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + SaveGame.saveGame.currentLevelNumber);
+
             ButtonHandler.buttonContinue.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
         } else if (state == GAME_STATE_OBJETIVO_PAUSE){
             levelGoalsPanel.appearGrayAndShine();
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
+            MessagesHandler.messageSubMenu.display();
+            MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + SaveGame.saveGame.currentLevelNumber);
             ButtonHandler.buttonReturnObjectivesPause.unblockAndDisplay();
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
+
+            stopAndReleaseMusic();
+            eraseAllGameEntities();
+            eraseAllHudEntities();
+
+            mainActivity.showAdView();
+            Game.bordaB.y = Game.resolutionY;
+
             MenuHandler.updateGroupMenu();
             MenuHandler.groupMenu.appear();
             MessagesHandler.messageMenu.display();
@@ -350,6 +363,8 @@ public class Game {
             MenuHandler.levelMenu.appear();
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuSelecaoLevel));
+            MessagesHandler.messageSubMenu.display();
+            MessagesHandler.messageSubMenu.setText(currentLevelsGroupDataSelected.name);
             ButtonHandler.buttonReturn.unblockAndDisplay();
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
@@ -596,6 +611,8 @@ public class Game {
             });
             anim.start();
 
+            MessagesHandler.messageCurrentLevel.reduceAlphaAndClearDisplay(500);
+
             // TODO o que fazer com a animação quando for pausado
             stopAndReleaseMusic();
             Sound.play(Sound.soundWin, 1, 1, 0);
@@ -709,7 +726,7 @@ public class Game {
                 @Override
                 public void onAnimationEnd() {Sound.play(Sound.soundTextBoxAppear, 1, 1, 0);}
             });
-            MessagesHandler.messageInGame.setText(getContext().getResources().getString(R.string.nivelConcluido1)+ " " + getContext().getResources().getString(R.string.nivelConcluido2));
+            MessagesHandler.messageInGame.setText(getContext().getResources().getString(R.string.nivelConcluido1)+ " " +String.valueOf(SaveGame.saveGame.currentLevelNumber)+ " " + getContext().getResources().getString(R.string.nivelConcluido2));
             MessagesHandler.messageInGame.display();
 
             Utils.createSimpleAnimation(ballGoalsPanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY*0.1f).start();
@@ -728,36 +745,16 @@ public class Game {
             ).start();
         } else if (state == GAME_STATE_VITORIA_COMPLEMENTACAO) {
 
+            clearAllGameEntities();
+
             ButtonHandler.buttonContinue.clearDisplay();
             ButtonHandler.buttonContinue.block();
 
-            ballGoalsPanel.reduceAlpha(500, 0f, new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    ballGoalsPanel.clearDisplay();
-                    ballGoalsPanel.alpha = 1f;
+            ballGoalsPanel.reduceAlphaAndClearDisplay(500);
+            ScoreHandler.scorePanel.reduceAlphaAndClearDisplay(500);
+            ScoreHandler.scorePanel.reduceAlphaAndClearDisplay(500);
 
-                }
-            });
-
-            ScoreHandler.scorePanel.reduceAlpha(500, 0f, new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    ScoreHandler.scorePanel.clearDisplay();
-                    ScoreHandler.scorePanel.alpha = 1f;
-                    ScoreHandler.scorePanel.clearAnimations();
-                }
-            });
-            
-            
-            MessagesHandler.messageTime.reduceAlpha(500, 0f, new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    MessagesHandler.messageTime.clearDisplay();
-                    MessagesHandler.messageTime.alpha = 1f;
-                    MessagesHandler.messageTime.clearAnimations();
-                }
-            });
+            MessagesHandler.messageTime.reduceAlphaAndClearDisplay(500);
             
             if (ButtonHandler.button1Left != null) ButtonHandler.button1Left.clearDisplay();
             if (ButtonHandler.button2Left != null) ButtonHandler.button2Left.clearDisplay();
@@ -817,6 +814,14 @@ public class Game {
                 }
             }
 
+            if (groupsUnblocked.size() > 0) {
+                currentLevelIcon.y = Game.resolutionY * 0.2f;
+                MessagesHandler.messageStarsWin.setY(Game.gameAreaResolutionY*0.62f);
+            } else {
+                currentLevelIcon.y = Game.resolutionY * 0.3f;
+                MessagesHandler.messageStarsWin.setY(Game.gameAreaResolutionY*0.76f);
+
+            }
             currentLevelIcon.display();
 
             MessagesHandler.messageStarsWin.show(StarsHandler.newStars, StarsHandler.newStars - StarsHandler.previousStars, true);
@@ -825,10 +830,10 @@ public class Game {
             MessagesHandler.messageConqueredStarsTotal.alpha = 0f;
             MessagesHandler.starForMessage.increaseAlpha(500, 1f);
             MessagesHandler.messageConqueredStarsTotal.increaseAlpha(500, 1f);
+            MessagesHandler.messageConqueredStarsTotal.y = resolutionY * 0.2f;
+            MessagesHandler.starForMessage.y = resolutionY * 0.2f;
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
-
-
 
             ArrayList<float[]> valuesAnim = new ArrayList<>();
             valuesAnim.add(new float[]{0f,0f});
@@ -890,6 +895,7 @@ public class Game {
             if (previousState == GAME_STATE_MENU_TUTORIAL) {
                 Log.e(TAG, "limpando menu tutorial");
                 MessagesHandler.messageMenu.clearDisplay();
+                MessagesHandler.messageSubMenu.clearDisplay();
                 MenuHandler.tutorialMenu.clearDisplay();
                 MenuHandler.tutorialMenu.block();
             }
@@ -1010,6 +1016,7 @@ public class Game {
         ButtonHandler.button2Right = null;
         background = null;
         MessagesHandler.messageTime = null;
+        MessagesHandler.messageCurrentLevel = null;
     }
 
     public static ArrayList<Entity> collectAllHudEntities(){
@@ -1022,6 +1029,7 @@ public class Game {
         list.add(ballDataPanel);
         list.add(ballGoalsPanel);
         list.add(MessagesHandler.messageTime);
+        list.add(MessagesHandler.messageCurrentLevel);
         return list;
     }
 
@@ -1388,6 +1396,8 @@ public class Game {
         MessagesHandler.starForMessage.checkTransformations(true);
         MessagesHandler.bottomTextBox.checkTransformations(true);
         MessagesHandler.messageGroupsUnblocked.checkTransformations(true);
+        if (MessagesHandler.messageStarsWin != null)MessagesHandler.messageStarsWin.checkTransformations(true);
+        if (MessagesHandler.messageStars != null)MessagesHandler.messageStars.checkTransformations(true);
 
         if (bordaE != null)bordaE.checkTransformations(true);
         if (bordaD != null)bordaD.checkTransformations(true);
@@ -1415,6 +1425,8 @@ public class Game {
         if (background != null) {
             background.prepareRender(matrixView, matrixProjection);
         }
+
+        if (MessagesHandler.messageCurrentLevel != null) MessagesHandler.messageCurrentLevel.prepareRender(matrixView, matrixProjection);
 
         if (imageTutorialDown != null) imageTutorialDown.prepareRender(matrixView, matrixProjection);
 
@@ -1483,6 +1495,7 @@ public class Game {
         MessagesHandler.messagePreparation.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageInGame.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageMenu.prepareRender(matrixView, matrixProjection);
+        MessagesHandler.messageSubMenu.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
         MessagesHandler.starForMessage.prepareRender(matrixView, matrixProjection);
@@ -1591,6 +1604,7 @@ public class Game {
         list.add(MessagesHandler.messagePreparation);
         list.add(MessagesHandler.messageInGame);
         list.add(MessagesHandler.messageMenu);
+        list.add(MessagesHandler.messageSubMenu);
         list.add(MessagesHandler.messageGroupsUnblocked);
         list.add(MessagesHandler.messageMaxScoreTotal);
         list.add(MessagesHandler.messageConqueredStarsTotal);

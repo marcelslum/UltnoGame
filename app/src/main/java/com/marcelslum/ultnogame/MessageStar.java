@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class MessageStar extends Entity {
@@ -28,6 +30,7 @@ public class MessageStar extends Entity {
         isShowing = false;
         newShowing = false;
     }
+
 
     public void showAndGoAllGray(int totalStars){
         clearAnimations();
@@ -71,6 +74,10 @@ public class MessageStar extends Entity {
 
 
     public void show(int totalStars, int newStars, boolean stay){
+
+
+        Log.e(TAG, "show Message Stars");
+
         if (!isShowing){
             isShowing = true;
             Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
@@ -81,13 +88,15 @@ public class MessageStar extends Entity {
             return;
         }
 
+        Log.e(TAG, "showing");
+
         display();
 
         clearAnimations();
 
         for (int i = 0; i < 5; i++){
             stars.get(i).clearAnimations();
-            stars.get(i).translateX = Game.resolutionX;
+            stars.get(i).animTranslateX = Game.resolutionX;
         }
 
         for (int i = 0; i < totalStars; i++){
@@ -97,7 +106,7 @@ public class MessageStar extends Entity {
 
         if (newStars > 0) {
             // adiciona animação na primeira estrela
-            Animation animStars = Utils.createAnimation3v(stars.get(totalStars - 1), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, false);
+            Animation animStars = Utils.createAnimation3v(stars.get(totalStars - 1 - 0), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, false);
             // adiciona animação às outras estrelas, por isso começa no i=1
             for (int i = 1; i < newStars; i++) {
                 animStars.addAttachedEntities(stars.get(totalStars - 1 - i));
@@ -153,12 +162,7 @@ public class MessageStar extends Entity {
                     Game.resolutionX * 0.5f, 0.2f + (3 * 0.01f), 0f,  0.8f + (3 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
             Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
                     Game.resolutionX * 0.5f, 0.2f + (4 * 0.01f), 0f,  0.8f + (4 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
-
-
         }
-
-
-
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {

@@ -160,7 +160,7 @@ public class MainActivity extends FragmentActivity implements
 
 		    @Override
 		    public void onAdClosed() {
-                Game.setGameState(Game.GAME_STATE_MENU);
+                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                 interstitial.loadAd(adRequest);
 		    }
 
@@ -267,7 +267,7 @@ public class MainActivity extends FragmentActivity implements
                 Log.e("MainActivity", "Interstitial ad is not loaded yet");
                 if (Game.gameState != Game.GAME_STATE_INTRO){
                     Log.e("findStateMenu", "4");
-                    Game.setGameState(Game.GAME_STATE_MENU);
+                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                 }
             }
             }
