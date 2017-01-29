@@ -295,12 +295,12 @@ public class Game {
         gameState = state;
         Game.blockAndWaitTouchRelease();
         clearAllMenuEntities();
-        if (MessagesHandler.messageStars != null) {
-            MessagesHandler.messageStars.clearDisplay();
+        if (MessageStar.messageStars != null) {
+            MessageStar.messageStars.clearDisplay();
         }
 
-        if (MessagesHandler.messageStarsWin != null) {
-            MessagesHandler.messageStarsWin.clearDisplay();
+        if (MessageStarWin.messageStarsWin != null) {
+            MessageStarWin.messageStarsWin.clearDisplay();
         }
         
         if (currentLevelIcon != null)currentLevelIcon.clearDisplay();
@@ -496,7 +496,7 @@ public class Game {
             }
 
 
-            MessagesHandler.messageStars.reset();
+            MessageStar.messageStars.reset();
 
             for (int i = 0; i < bars.size(); i++) {
                 if (bars.get(i).scaleVariationData != null){
@@ -529,7 +529,7 @@ public class Game {
                 }
             }
 
-            MessagesHandler.messageStars.showAndGoAllGray(totalStars);
+            MessageStar.messageStars.showAndGoAllGray(totalStars);
 
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
@@ -816,15 +816,15 @@ public class Game {
 
             if (groupsUnblocked.size() > 0) {
                 currentLevelIcon.y = Game.resolutionY * 0.2f;
-                MessagesHandler.messageStarsWin.setY(Game.gameAreaResolutionY*0.62f);
+                MessageStarWin.messageStarsWin.setY(Game.gameAreaResolutionY*0.62f);
             } else {
                 currentLevelIcon.y = Game.resolutionY * 0.3f;
-                MessagesHandler.messageStarsWin.setY(Game.gameAreaResolutionY*0.76f);
+                MessageStarWin.messageStarsWin.setY(Game.gameAreaResolutionY*0.76f);
 
             }
             currentLevelIcon.display();
 
-            MessagesHandler.messageStarsWin.show(StarsHandler.newStars, StarsHandler.newStars - StarsHandler.previousStars, true);
+            MessageStarWin.messageStarsWin.show(StarsHandler.newStars, StarsHandler.newStars - StarsHandler.previousStars, true);
 
             MessagesHandler.starForMessage.alpha = 0f;
             MessagesHandler.messageConqueredStarsTotal.alpha = 0f;
@@ -1015,8 +1015,8 @@ public class Game {
         ButtonHandler.button2Left = null;
         ButtonHandler.button2Right = null;
         background = null;
-        MessagesHandler.messageTime = null;
-        MessagesHandler.messageCurrentLevel = null;
+        MessagesHandler.messageTime.clearDisplay();
+        MessagesHandler.messageCurrentLevel.clearDisplay();
     }
 
     public static ArrayList<Entity> collectAllHudEntities(){
@@ -1396,8 +1396,8 @@ public class Game {
         MessagesHandler.starForMessage.checkTransformations(true);
         MessagesHandler.bottomTextBox.checkTransformations(true);
         MessagesHandler.messageGroupsUnblocked.checkTransformations(true);
-        if (MessagesHandler.messageStarsWin != null)MessagesHandler.messageStarsWin.checkTransformations(true);
-        if (MessagesHandler.messageStars != null)MessagesHandler.messageStars.checkTransformations(true);
+        if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.checkTransformations(true);
+        if (MessageStar.messageStars != null) MessageStar.messageStars.checkTransformations(true);
 
         if (bordaE != null)bordaE.checkTransformations(true);
         if (bordaD != null)bordaD.checkTransformations(true);
@@ -1500,8 +1500,8 @@ public class Game {
         MessagesHandler.messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
         MessagesHandler.starForMessage.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageGroupsUnblocked.prepareRender(matrixView, matrixProjection);
-        if (MessagesHandler.messageStars != null) MessagesHandler.messageStars.prepareRender(matrixView, matrixProjection);
-        if (MessagesHandler.messageStarsWin != null) MessagesHandler.messageStarsWin.prepareRender(matrixView, matrixProjection);
+        if (MessageStar.messageStars != null) MessageStar.messageStars.prepareRender(matrixView, matrixProjection);
+        if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.prepareRender(matrixView, matrixProjection);
 
         if (MessagesHandler.messageTime != null) MessagesHandler.messageTime.prepareRender(matrixView, matrixProjection);
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);

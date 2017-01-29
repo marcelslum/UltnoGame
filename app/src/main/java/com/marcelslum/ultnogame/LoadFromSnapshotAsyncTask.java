@@ -91,13 +91,13 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
 
         */
 
-        SaveGame.saveGame.starsLevels[0] = 0;
-        SaveGame.saveGame.starsLevels[1] = 0;
-        SaveGame.saveGame.starsLevels[2] = 0;
-        SaveGame.saveGame.starsLevels[3] = 0;
-        SaveGame.saveGame.starsLevels[4] = 0;
-        SaveGame.saveGame.starsLevels[5] = 0;
-        SaveGame.saveGame.starsLevels[6] = 0;
+        SaveGame.saveGame.starsLevels[0] = 5;
+        SaveGame.saveGame.starsLevels[1] = 5;
+        SaveGame.saveGame.starsLevels[2] = 5;
+        SaveGame.saveGame.starsLevels[3] = 5;
+        SaveGame.saveGame.starsLevels[4] = 5;
+        SaveGame.saveGame.starsLevels[5] = 5;
+        SaveGame.saveGame.starsLevels[6] = 5;
         SaveGame.saveGame.starsLevels[7] = 0;
         SaveGame.saveGame.starsLevels[8] = 0;
         SaveGame.saveGame.starsLevels[9] = 0;

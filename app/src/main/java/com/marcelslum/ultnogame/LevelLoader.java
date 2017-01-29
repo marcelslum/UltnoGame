@@ -7,81 +7,80 @@ import java.util.ArrayList;
  */
 public class LevelLoader {
 
-    static final int[] ballsQuantity = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-    static final int[] minBallsAlive = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-    static final float[][] ballsRadius = {{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.013f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsX = {{0.1f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.1f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsY = {{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.6f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.45f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsVX = {{0.0025f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0026f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0027f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0028f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0028f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.003f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0032f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0032f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0032f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0032f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsVY = {{0.00441176470588235f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00458823529411765f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00476470588235294f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00494117647058824f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00494117647058824f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00529411764705882f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00564705882352941f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00564705882352941f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00564705882352941f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00564705882352941f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final int[][] ballsTextureMap = {{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
-    static final boolean[][] ballsInvencible = {{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false}};
-    static final float[][] ballsAngleToRotate = {{2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.1f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.1f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsMaxAngle = {{52f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsMinAngle = {{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsVelocityVariation = {{0.06f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0625f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.065f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0675f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsMaxVel = {{1.35f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.36f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] ballsMinVel = {{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final boolean[][] ballsFree = {{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false}};
-    static final int[] barsQuantity = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-    static final float[][] barsWidth = {{0.22f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.22f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.18f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.18f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.17f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.17f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] barsHeight = {{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] barsX = {{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] barsY = {{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] barsVX = {{0.003875f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.003952f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.003996f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004144f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004144f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00444f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004736f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004736f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004736f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004736f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
-    static final float[][] barsVY = {{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final int[] ballsQuantity = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,1,1,1};
+    static final int[] minBallsAlive = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+    static final float[][] ballsRadius = {{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.013f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0.012f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0.012f,0.012f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.012f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsX = {{0.1f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.1f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.35f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.1f,0.9f,0f,0f,0f,0f,0f,0f,0f,0f},{0.1f,0.1375f,0.8615f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsY = {{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.6f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.45f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.7f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.55f,0.55f,0f,0f,0f,0f,0f,0f,0f,0f},{0.58f,0.4198529412f,0.4198529412f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsVX = {{0.0025f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0026f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0027f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0028f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0028f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.003f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0032f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0032f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0032f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0032f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0.0034f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0.0034f,0.0034f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0034f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsVY = {{0.00441176470588235f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00458823529411765f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00476470588235294f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00494117647058824f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00494117647058824f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00529411764705882f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00564705882352941f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00564705882352941f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00564705882352941f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00564705882352941f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0.006f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0.006f,0.006f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.006f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final int[][] ballsTextureMap = {{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,26,0,0,0,0,0,0,0,0},{26,26,26,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{26,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
+    static final boolean[][] ballsInvencible = {{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,true,false,false,false,false,false,false,false,false},{false,true,true,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false}};
+    static final float[][] ballsAngleToRotate = {{2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.1f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.1f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,2.4f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,2.4f,2.4f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{2.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsMaxAngle = {{52f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{52.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{53.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,54f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,54f,54f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{54f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsMinAngle = {{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,37f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,37f,37f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsVelocityVariation = {{0.06f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0625f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.065f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0675f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0.07f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0.07f,0.07f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.07f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsMaxVel = {{1.35f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.36f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.37f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.38f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.5f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,1.55f,1.55f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] ballsMinVel = {{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0.75f,0.75f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final boolean[][] ballsFree = {{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,true,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{true,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false},{false,false,false,false,false,false,false,false,false,false}};
+    static final int[] barsQuantity = {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+    static final float[][] barsWidth = {{0.22f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.22f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.18f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.18f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.17f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.17f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] barsHeight = {{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] barsX = {{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] barsY = {{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.024f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] barsVX = {{0.003875f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.003952f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.003996f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004144f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004144f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.00444f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004736f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004736f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004736f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004736f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0.004998f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
+    static final float[][] barsVY = {{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f,0f,0f,0f}};
 
 
-    static final float[] targetWidth = {0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f};
-    static final float[] targetHeight = {0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f};
-    static final float[] targetDistance = {0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f};
-    static final float[] targetPadd = {0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f};
-
+    static final float[] targetWidth = {0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f,0.0895f};
+    static final float[] targetHeight = {0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f,0.04f};
+    static final float[] targetDistance = {0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f,0.001f};
+    static final float[] targetPadd = {0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f,0.00225f};
 
 
     public static void loadLevel(int levelNumber) {
 
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
         levelBuilder
-        .setBallsQuantity(ballsQuantity[levelNumber-1])
-        .setMinBallsAlive(minBallsAlive[levelNumber-1])
-        .setBallsRadius(ballsRadius[levelNumber-1])
-        .setBallsX(ballsX[levelNumber-1])
-        .setBallsY(ballsY[levelNumber-1])
-        .setBallsVX(ballsVX[levelNumber-1])
-        .setBallsVY(ballsVY[levelNumber-1])
-        .setBallsTextureMap(ballsTextureMap[levelNumber-1])
-        .setBallsInvencible(ballsInvencible[levelNumber-1])
-        .setBallsAngleToRotate(ballsAngleToRotate[levelNumber-1])
-        .setBallsMaxAngle(ballsMaxAngle[levelNumber-1])
-        .setBallsMinAngle(ballsMinAngle[levelNumber-1])
-        .setBallsVelocityMax(ballsMaxVel[levelNumber-1])
-        .setBallsVelocityMin(ballsMinVel[levelNumber-1])
-        .setBallsVelocityVariation(ballsVelocityVariation[levelNumber-1])
-        .setBallsFree(ballsFree[levelNumber-1])
-        .setBarsQuantity(barsQuantity[levelNumber-1])
-        .setBarsWidth(barsWidth[levelNumber-1])
-        .setBarsHeight(barsHeight[levelNumber-1])
-        .setBarsX(barsX[levelNumber-1])
-        .setBarsY(barsY[levelNumber-1])
-        .setBarsVX(barsVX[levelNumber-1])
-        .setBarsVY(barsVY[levelNumber-1])
-        .setTargetWidth(targetWidth[levelNumber-1])
-        .setTargetHeight(targetHeight[levelNumber-1])
-        .setTargetDistance(targetDistance[levelNumber-1])
-        .setTargetPadd(targetPadd[levelNumber-1])
-        .setBarsScaleVariationOff()
-        .setObstaclesScaleVariationOff()
-        .setObstaclesPositionVariationOff()
-        .setWindType(Level.WIND_TYPE_NO)
-        .setSpecialBallPercentage0_1(0f)
-        .setObstaclesQuantity(0)
-        .setWindowsQuantity(0)
-        .setTutorialAttached(Tutorial.TUTORIAL_INICIO)
-        .setBallsTargetsAppend(new ArrayList<int[]>())
-        .setTargetsStates(new int[]{0, 1, 2, 3});
+            .setBallsQuantity(ballsQuantity[levelNumber-1])
+            .setMinBallsAlive(minBallsAlive[levelNumber-1])
+            .setBallsRadius(ballsRadius[levelNumber-1])
+            .setBallsX(ballsX[levelNumber-1])
+            .setBallsY(ballsY[levelNumber-1])
+            .setBallsVX(ballsVX[levelNumber-1])
+            .setBallsVY(ballsVY[levelNumber-1])
+            .setBallsTextureMap(ballsTextureMap[levelNumber-1])
+            .setBallsInvencible(ballsInvencible[levelNumber-1])
+            .setBallsAngleToRotate(ballsAngleToRotate[levelNumber-1])
+            .setBallsMaxAngle(ballsMaxAngle[levelNumber-1])
+            .setBallsMinAngle(ballsMinAngle[levelNumber-1])
+            .setBallsVelocityMax(ballsMaxVel[levelNumber-1])
+            .setBallsVelocityMin(ballsMinVel[levelNumber-1])
+            .setBallsVelocityVariation(ballsVelocityVariation[levelNumber-1])
+            .setBallsFree(ballsFree[levelNumber-1])
+            .setBarsQuantity(barsQuantity[levelNumber-1])
+            .setBarsWidth(barsWidth[levelNumber-1])
+            .setBarsHeight(barsHeight[levelNumber-1])
+            .setBarsX(barsX[levelNumber-1])
+            .setBarsY(barsY[levelNumber-1])
+            .setBarsVX(barsVX[levelNumber-1])
+            .setBarsVY(barsVY[levelNumber-1])
+            .setTargetWidth(targetWidth[levelNumber-1])
+            .setTargetHeight(targetHeight[levelNumber-1])
+            .setTargetDistance(targetDistance[levelNumber-1])
+            .setTargetPadd(targetPadd[levelNumber-1])
+            .setBarsScaleVariationOff()
+            .setObstaclesScaleVariationOff()
+            .setObstaclesPositionVariationOff()
+            .setWindType(Level.WIND_TYPE_NO)
+            .setSpecialBallPercentage0_1(0f)
+            .setObstaclesQuantity(0)
+            .setWindowsQuantity(0)
+            .setTutorialAttached(Tutorial.TUTORIAL_INICIO)
+            .setBallsTargetsAppend(new ArrayList<int[]>())
+            .setTargetsStates(new int[]{0, 1, 2, 3});
 
-
+        // INÍCIO
         // ---------- LEVEL1
         int l = 1;
         if (levelNumber == l) {
@@ -147,6 +146,7 @@ public class LevelLoader {
         }
 
 
+        // OBSTÁCULOS
         // ---------- LEVEL5
         l += 1;
         if (levelNumber >= l) {
@@ -234,7 +234,7 @@ public class LevelLoader {
                     .setObstaclesHeight(0.2f, 0.2f, 0.2f);
         }
 
-
+        // CORES
         // ---------- LEVEL9
         l += 1;
         if (levelNumber >= l) {
@@ -312,7 +312,7 @@ public class LevelLoader {
                     .setObstaclesHeight(0.08f, 0.08f, 0.08f, 0.08f, 0.08f);
         }
 
-
+        // EXPLOSÃO
         // ---------- LEVEL 13
         l += 1;
         if (levelNumber >= l) {
@@ -396,6 +396,7 @@ public class LevelLoader {
         }
 
 
+        // ELÁSTICO
         // ---------- LEVEL 17
         l += 1;
         if (levelNumber == l) {
@@ -563,7 +564,8 @@ public class LevelLoader {
                     );
         }
 
-        // ---------- LEVEL 21++++++++++
+        // ELÁSTICO
+        // ---------- LEVEL 21
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -615,7 +617,7 @@ public class LevelLoader {
         }
 
 
-        // ---------- LEVEL 19
+        // ---------- LEVEL 22
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -667,7 +669,7 @@ public class LevelLoader {
         }
 
 
-        // ---------- LEVEL 20
+        // ---------- LEVEL 23
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -712,8 +714,8 @@ public class LevelLoader {
                     );
         }
 
-
-        // ---------- LEVEL 21
+        // VENTO
+        // ---------- LEVEL 24
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -738,7 +740,7 @@ public class LevelLoader {
         }
 
 
-        // ---------- LEVEL22
+        // ---------- LEVEL25
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -759,7 +761,8 @@ public class LevelLoader {
                     .setWindType(Level.WIND_TYPE_LEFT);
         }
 
-        // ---------- LEVEL23
+        // FANTASMA
+        // ---------- LEVEL26
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -775,7 +778,7 @@ public class LevelLoader {
                     );
         }
 
-        // ---------- LEVEL24
+        // ---------- LEVEL27
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -799,7 +802,7 @@ public class LevelLoader {
         }
         
 
-        // ---------- LEVEL25
+        // ---------- LEVEL28
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -827,24 +830,11 @@ public class LevelLoader {
         }
         
 
-        // ---------- LEVEL26
+        // INVENCIBILIDADE
+        // ---------- LEVEL29
         l += 1;
         if (levelNumber >= l) {
             levelBuilder
-                    .setBallsQuantity(2)
-                    .setBallsRadius(1f, 1f)
-                    .setBallsInvencible(false, true)
-                    .setBallsX(0.1f, 0.9f)
-                    .setBallsY(0.55f, 0.55f)
-                    .setBallsVX(1.214f)
-                    .setBallsVY(1.214f)
-                    .setBallsAngleToRotate(1.1f)
-                    .setBallsMaxAngle(1.1f)
-                    .setBallsMinAngle(1.055f)
-                    .setBallsVelocityVariation(0.1f)
-                    .setBallsVelocityMax(1f)
-                    .setBallsVelocityMin(1f)
-                    .setBarsWidth(0.909f)
                     .setTargetsMap(
                             new int[][]{
                                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -861,94 +851,37 @@ public class LevelLoader {
                             }
                     );
         }
-        // ---------- LEVEL27
-        l += 1;
-        if (levelNumber == l) {
-            ArrayList<int[]> targetsAppend = new ArrayList<>();
-            targetsAppend.add(new int[]{});
-            targetsAppend.add(new int[]{55, 63, 64, 70, 71, 78});
-            targetsAppend.add(new int[]{61, 68, 69, 75, 76, 84});
-
-            levelBuilder
-                    .setBallsQuantity(3)
-                    .setBallsRadius(1f, 1f, 1f)
-                    .setBallsInvencible(false, true, true)
-                    .setBallsFree(true, false, false)
-                    .setBallsX(0.1f, 0.1375f, 0.8615f)
-                    .setBallsY(0.58f, 0.4198529412f, 0.4198529412f)
-                    .setBallsTargetsAppend(targetsAppend)
-                    .setTargetsMap(
-                            new int[][]{
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                                    {1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
-                                    {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-                                    {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-
-                            }
-                    );
-        }
-
-
-        // ---------- LEVEL28
-        l += 1;
-        if (levelNumber == l) {
-            ArrayList<int[]> targetsAppend = new ArrayList<>();
-            targetsAppend.add(new int[]{});
-            targetsAppend.add(new int[]{55, 63, 64, 70, 71, 78});
-            targetsAppend.add(new int[]{61, 68, 69, 75, 76, 84});
-
-            levelBuilder
-                    .setBallsQuantity(3)
-                    .setBallsRadius(1f, 1f, 1f)
-                    .setBallsInvencible(false, true, true)
-                    .setBallsFree(true, false, false)
-                    .setBallsX(0.1f, 0.1375f, 0.8615f)
-                    .setBallsY(0.58f, 0.4198529412f, 0.4198529412f)
-                    .setBallsTargetsAppend(targetsAppend)
-                    .setBallsVX(1.214f)
-                    .setBallsVY(1.214f)
-                    .setBallsAngleToRotate(1.1f)
-                    .setBallsMaxAngle(1.1f)
-                    .setBallsMinAngle(1.055f)
-                    .setBallsVelocityVariation(0.1f)
-                    .setBallsVelocityMax(1f)
-                    .setBallsVelocityMin(1f)
-                    .setBarsWidth(0.909f)
-                    .setTargetsMap(
-                            new int[][]{
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                                    {1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
-                                    {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-                                    {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                            }
-                    );
-        }
-
-        // ---------- LEVEL29
-
         // ---------- LEVEL30
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{55, 63, 64, 70, 71, 78});
+            targetsAppend.add(new int[]{61, 68, 69, 75, 76, 84});
+
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                                    {1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1},
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
+                                    {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+                                    {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+
+                            }
+                    );
+        }
 
         // ---------- LEVEL31
 

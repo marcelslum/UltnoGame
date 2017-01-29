@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.app.Notification;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -22,16 +24,12 @@ public class MessagesHandler {
     static Text messageCurrentLevel;
     static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
-    static MessageStar messageStars;
-    static MessageStarWin messageStarsWin;
 
 
     public static void initMessages(){
 
-        float messageStarsSize = Game.gameAreaResolutionY*0.05f;
-        messageStars = new MessageStar("messageStars", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
-
-        messageStarsWin = new MessageStarWin("messageStarsWin", messageStarsSize, Game.resolutionX * 0.5f, Game.gameAreaResolutionY*0.62f);
+        MessageStar.initMessageStars();
+        MessageStarWin.initMessageStarsWin();
 
         messageGameOver = new Text("messageGameOver",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.2f, Game.gameAreaResolutionY*0.17f,
@@ -75,8 +73,6 @@ public class MessagesHandler {
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.25f, Game.gameAreaResolutionY*0.14f,
                 Game.getContext().getResources().getString(R.string.pause), Game.font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
-        //messageCurrentLevel = new Text("messageCurrentLevel", resolutionX*0.05f, resolutionY*0.72f, resolutionY*0.036f, getContext().getResources().getString(messageCurrentLevel) +"\u0020\u0020"+ Integer.toString(SaveGame.saveGame.currentLevelNumber) + " - " + getContext().getResources().getString(R.string.messageMaxScoreLevel) +"\u0020\u0020"+ SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1], font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_LEFT);
-
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 Game.resolutionX*0.05f, Game.resolutionY*0.84f, Game.resolutionY*0.036f,
                 Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
@@ -97,6 +93,17 @@ public class MessagesHandler {
                 .isHaveArrowContinue(false)
                 .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
                 .build();
+
+
+        MessagesHandler.messageTime = new Text("messageTime",
+                Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.825f, Game.resolutionY*0.055f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
+        MessagesHandler.messageTime.alpha = 0.7f;
+
+        MessagesHandler.messageCurrentLevel = new Text("messageCurrentLevel",
+                Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.9f, Game.resolutionY*0.055f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
+        MessagesHandler.messageCurrentLevel.alpha = 0.7f;
+
+
     }
 
     public static void setBottomMessage(String text, int duration){
@@ -145,17 +152,5 @@ public class MessagesHandler {
                 }
             }).start();
         }
-    }
-
-    public static void createMessageTime() {
-        MessagesHandler.messageTime = new Text("messageTime",
-                Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.85f, Game.resolutionY*0.055f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
-        MessagesHandler.messageTime.alpha = 0.7f;
-    }
-
-    public static void createMessageCurrentLevel(int currentLevel) {
-        MessagesHandler.messageCurrentLevel = new Text("messageCurrentLevel",
-                Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.925f, Game.resolutionY*0.055f,Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + String.valueOf(currentLevel), Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
-        MessagesHandler.messageCurrentLevel.alpha = 0.7f;
     }
 }

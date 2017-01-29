@@ -5,6 +5,10 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class MessageStar extends Entity {
+
+    static MessageStar messageStars;
+
+
     ArrayList<Image> stars;
     float size;
     boolean isShowing;
@@ -128,13 +132,13 @@ public class MessageStar extends Entity {
             isShowing = false;
 
             Utils.createAnimation4v(stars.get(1), "translateX1", "translateX", 2000, 0f,
-                    Game.resolutionX, 0.2f + (1 * 0.01f), 0f,  0.8f + (1 * 0.01f),0f,  1f, 0, false, true).start();
+                    Game.resolutionX, 0.2f + (1 * 0.02f), 0f,  0.8f + (1 * 0.01f),0f,  1f, 0, false, true).start();
             Utils.createAnimation4v(stars.get(2), "translateX2", "translateX", 2000, 0f,
-                    Game.resolutionX, 0.2f + (2 * 0.01f), 0f,  0.8f + (2 * 0.01f),0f,  1f, 0, false, true).start();
+                    Game.resolutionX, 0.2f + (2 * 0.03f), 0f,  0.8f + (2 * 0.01f),0f,  1f, 0, false, true).start();
             Utils.createAnimation4v(stars.get(3), "translateX3", "translateX", 2000, 0f,
-                    Game.resolutionX, 0.2f + (3 * 0.01f), 0f,  0.8f + (3 * 0.01f),0f,  1f, 0, false, true).start();
+                    Game.resolutionX, 0.2f + (3 * 0.04f), 0f,  0.8f + (3 * 0.01f),0f,  1f, 0, false, true).start();
             Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
-                    Game.resolutionX, 0.2f + (4 * 0.01f), 0f,  0.8f + (4 * 0.01f),0f,  1f, 0, false, true).start();
+                    Game.resolutionX, 0.2f + (4 * 0.05f), 0f,  0.8f + (4 * 0.01f),0f,  1f, 0, false, true).start();
 
 
         } else {
@@ -155,13 +159,13 @@ public class MessageStar extends Entity {
             anim.start();
 
             Utils.createAnimation4v(stars.get(1), "translateX1", "translateX", 2000, 0f,
-                    Game.resolutionX * 0.5f, 0.2f + (1 * 0.01f), 0f,  0.8f + (1 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+                    Game.resolutionX * 0.5f, 0.2f + (1 * 0.02f), 0f,  0.8f + (1 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
             Utils.createAnimation4v(stars.get(2), "translateX2", "translateX", 2000, 0f,
-                    Game.resolutionX * 0.5f, 0.2f + (2 * 0.01f), 0f,  0.8f + (2 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+                    Game.resolutionX * 0.5f, 0.2f + (2 * 0.02f), 0f,  0.8f + (2 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
             Utils.createAnimation4v(stars.get(3), "translateX3", "translateX", 2000, 0f,
-                    Game.resolutionX * 0.5f, 0.2f + (3 * 0.01f), 0f,  0.8f + (3 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+                    Game.resolutionX * 0.5f, 0.2f + (3 * 0.02f), 0f,  0.8f + (3 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
             Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
-                    Game.resolutionX * 0.5f, 0.2f + (4 * 0.01f), 0f,  0.8f + (4 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+                    Game.resolutionX * 0.5f, 0.2f + (4 * 0.02f), 0f,  0.8f + (4 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
         }
     }
 
@@ -175,5 +179,10 @@ public class MessageStar extends Entity {
         for (int i = 0; i < 5; i++){
             stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
         }
+    }
+
+    public static void initMessageStars() {
+        float messageStarsSize = Game.gameAreaResolutionY*0.05f;
+        MessageStar.messageStars = new MessageStar("messageStars", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
     }
 }

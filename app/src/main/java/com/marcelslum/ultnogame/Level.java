@@ -123,8 +123,8 @@ public class Level {
         Game.eraseAllGameEntities();
         Game.quad = new Quadtree(new RectangleM(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY),5,5);
 
-        MessagesHandler.createMessageTime();
-        MessagesHandler.createMessageCurrentLevel(SaveGame.saveGame.currentLevelNumber);
+        MessagesHandler.messageTime.setText("00:00");
+        MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));
 
         ScoreHandler.createScorePanel();
 

@@ -168,7 +168,7 @@ public class LevelGoal{
             }
         }
 
-        MessagesHandler.messageStars.show(totalStars, numberOfStars, false);
+        MessageStar.messageStars.show(totalStars, numberOfStars, false);
     }
 
 }

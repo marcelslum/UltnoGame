@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class MessageStarWin extends MessageStar {
 
+    static MessageStarWin messageStarsWin;
+
     public MessageStarWin(String name, float size, float x, float y) {
         super(name, size, x, y);
 
@@ -25,5 +27,10 @@ public class MessageStarWin extends MessageStar {
         for (int i = 0; i < 5; i++){
             stars.get(i).y = v;
         }
+    }
+
+    public static void initMessageStarsWin() {
+        float messageStarsSize = Game.gameAreaResolutionY*0.05f;
+        MessageStarWin.messageStarsWin = new MessageStarWin("messageStarsWin", messageStarsSize, Game.resolutionX * 0.5f, Game.gameAreaResolutionY*0.62f);
     }
 }
