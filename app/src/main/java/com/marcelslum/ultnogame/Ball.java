@@ -188,11 +188,7 @@ public class Ball extends Circle{
         super.prepareRender(matrixView, matrixProjection);
     }
     
-    public static function rotateX(float vx, float vy,  theta) {
-        return [v[0] * Math.cos(theta) - v[1] * Math.sin(theta), v[0] * Math.sin(theta) + v[1] * Math.cos(theta)];
-    }
-    
-    
+
 
     public void onCollision(){
 
@@ -261,7 +257,7 @@ public class Ball extends Circle{
 
                     Ball otherBall = (Ball) collisionsData.get(i).object;
 
-                    double theta = -Math.atan2(other.positionY - this.positionY, other.positionX - this.positionX);
+                    double theta = -Math.atan2(otherBall.positionY - this.positionY, otherBall.positionX - this.positionX);
                     
                     
                     double v1x = Utils.getXRotatedFromRad(dvx, dvy, theta);
@@ -276,10 +272,10 @@ public class Ball extends Circle{
                     double f2x = v2x * (otherBall.mass - mass)/(mass + otherBall.mass) + v1x * 2 * mass/(mass + otherBall.mass);
                     double f2y = v2y;
                     
-                    dvx = Utils.getXRotatedFromRad(f1x, f1y, -theta);
-                    dvy = Utils.getYRotatedFromRad(f1x, f1y, -theta);
-                    otherBall.dvx = Utils.getXRotatedFromRad(f2x, f2y, -theta);
-                    otherBall.dvy = Utils.getYRotatedFromRad(f2x, f2y, -theta);
+                    dvx = (float)Utils.getXRotatedFromRad(f1x, f1y, -theta);
+                    dvy = (float)Utils.getYRotatedFromRad(f1x, f1y, -theta);
+                    otherBall.dvx = (float)Utils.getXRotatedFromRad(f2x, f2y, -theta);
+                    otherBall.dvy = (float)Utils.getYRotatedFromRad(f2x, f2y, -theta);
                      
                     /*
                     
@@ -782,8 +778,8 @@ public class Ball extends Circle{
 
             Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
 
-            dvx = (float)Utils.getXRotated(dvx, dvy, angleToRotate);
-            dvy = (float) Utils.getYRotated(dvx, dvy, angleToRotate);
+            dvx = (float)Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
+            dvy = (float)Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
             Log.e("ball", "v depois da rotacao " + dvx + " " + dvy);
             Log.e("ball", "angulo depois"+Math.toDegrees(Math.atan2(dvy, dvx)));
             Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
