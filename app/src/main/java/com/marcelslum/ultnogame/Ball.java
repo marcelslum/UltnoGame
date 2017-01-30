@@ -187,6 +187,12 @@ public class Ball extends Circle{
         }
         super.prepareRender(matrixView, matrixProjection);
     }
+    
+    public static function rotateX(float vx, float vy,  theta) {
+        return [v[0] * Math.cos(theta) - v[1] * Math.sin(theta), v[0] * Math.sin(theta) + v[1] * Math.cos(theta)];
+    }
+    
+    
 
     public void onCollision(){
 
@@ -255,6 +261,28 @@ public class Ball extends Circle{
 
                     Ball otherBall = (Ball) collisionsData.get(i).object;
 
+                    double theta = -Math.atan2(other.positionY - this.positionY, other.positionX - this.positionX);
+                    
+                    
+                    double v1x = getXRotatedFromRad(dvx, dvy, theta);
+                    double v1y = getYRotatedFromRad(dvx, dvy, theta);
+                    double v2x = getXRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
+                    double v2y = getYRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
+                    
+  
+                    double f1x = v1x * (mass - otherBall.mass)/(mass + otherBall.mass) + v2x * 2 * otherBall.mass/(mass + otherBall.mass);
+                    double f1y = v1y;
+                    
+                    double f2x = v2x * (otherBall.mass - mass)/(mass + otherBall.mass) + v1x * 2 * mass/(mass + otherBall.mass);
+                    double f2y = v2y;
+                    
+                    dvx = getXRotatedFromRad(f1x, f1y, -theta);
+                    dvy = getYRotatedFromRad(f1x, f1y, -theta);
+                    otherBall.dvx = getXRotatedFromRad(f2x, f2y, -theta);
+                    otherBall.dvy = getYRotatedFromRad(f2x, f2y, -theta);
+                     
+                    /*
+                    
                     // calcula o angulo em que as bolas estão colidindo
                     double collisionAngle = Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX);
                     Log.e("ball", "collisionAngle " + Math.toDegrees(collisionAngle));
@@ -316,6 +344,9 @@ public class Ball extends Circle{
 
                     //dvy = (float)(Math.sin(direction1) * v1);
                     //dvx = (float)(Math.cos(direction1) * v1);
+                    
+                    
+                    */
 
                     checkDesireVelocity();
 
