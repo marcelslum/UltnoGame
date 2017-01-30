@@ -31,12 +31,20 @@ public abstract class Utils {
         return Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
     }
     
-    public static double getXRotated(double x, double y, double angle){
-        return (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
+    public static double getXRotatedFromDegrees(double x, double y, double angle){
+        return x * Math.cos(Math.toRadians(angle)) - y * Math.sin(Math.toRadians(angle));
     }
 
-    public static double getYRotated(double x, double y, double angle){
+    public static double getYRotatedFromDegrees(double x, double y, double angle){
         return x * Math.sin(Math.toRadians(angle)) + y * Math.cos(Math.toRadians(angle));
+    }
+    
+    public static double getXRotatedFromRad(double x, double y, double angle){
+        return x * Math.cos(angle) - y * Math.sin(angle);
+    }
+
+    public static double getYRotatedFromRad(double x, double y, double angle){
+        return x * Math.sin(angle) + y * Math.cos(angle);
     }
    
     public static boolean isPointInsideBounds(float testX, float testY, float x, float y, float width, float height){
