@@ -264,10 +264,10 @@ public class Ball extends Circle{
                     double theta = -Math.atan2(other.positionY - this.positionY, other.positionX - this.positionX);
                     
                     
-                    double v1x = getXRotatedFromRad(dvx, dvy, theta);
-                    double v1y = getYRotatedFromRad(dvx, dvy, theta);
-                    double v2x = getXRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
-                    double v2y = getYRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
+                    double v1x = Utils.getXRotatedFromRad(dvx, dvy, theta);
+                    double v1y = Utils.getYRotatedFromRad(dvx, dvy, theta);
+                    double v2x = Utils.getXRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
+                    double v2y = Utils.getYRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
                     
   
                     double f1x = v1x * (mass - otherBall.mass)/(mass + otherBall.mass) + v2x * 2 * otherBall.mass/(mass + otherBall.mass);
@@ -276,10 +276,10 @@ public class Ball extends Circle{
                     double f2x = v2x * (otherBall.mass - mass)/(mass + otherBall.mass) + v1x * 2 * mass/(mass + otherBall.mass);
                     double f2y = v2y;
                     
-                    dvx = getXRotatedFromRad(f1x, f1y, -theta);
-                    dvy = getYRotatedFromRad(f1x, f1y, -theta);
-                    otherBall.dvx = getXRotatedFromRad(f2x, f2y, -theta);
-                    otherBall.dvy = getYRotatedFromRad(f2x, f2y, -theta);
+                    dvx = Utils.getXRotatedFromRad(f1x, f1y, -theta);
+                    dvy = Utils.getYRotatedFromRad(f1x, f1y, -theta);
+                    otherBall.dvx = Utils.getXRotatedFromRad(f2x, f2y, -theta);
+                    otherBall.dvy = Utils.getYRotatedFromRad(f2x, f2y, -theta);
                      
                     /*
                     
