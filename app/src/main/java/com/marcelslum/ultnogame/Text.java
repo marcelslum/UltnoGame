@@ -136,9 +136,9 @@ public class Text extends Entity{
             float[] colors;
 
             float destLeft   = cursor + (charData[4]*proportion);
-            float destTop    = 0 + (charData[5]*proportion) - (size*0.1f);
+            float destTop    = 0 + (charData[5]*proportion); ///// - (size*0.1f);
             float destRight  = destLeft + (charData[2]*proportion);
-            float destBottom = destTop + (charData[3]*proportion)- (size*0.1f);
+            float destBottom = destTop + (charData[3]*proportion);/////////- (size*0.1f);
 
             vec[0] = cursor;
             vec[1] = destBottom;
