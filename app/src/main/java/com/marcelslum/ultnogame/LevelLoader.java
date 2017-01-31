@@ -952,7 +952,7 @@ public class LevelLoader {
         }
         
         
-        // ---------- LEVEL32
+        // ---------- LEVEL33
         l += 1;
         if (levelNumber == l) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
@@ -994,10 +994,35 @@ public class LevelLoader {
                     );
         }
         
-
-        // ---------- LEVEL33
-
         // ---------- LEVEL34
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{28, 29, 30, 31, 32, 33, 34, 35, 36, 39, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51});
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                            }
+                    )
+                    .setWindType(Level.WIND_TYPE_LEFT);
+        }
+
 
         // ---------- LEVEL35
 
