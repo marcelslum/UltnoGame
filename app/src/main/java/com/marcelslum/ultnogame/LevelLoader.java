@@ -890,7 +890,6 @@ public class LevelLoader {
                                     {0, 0, 0, 0, 5, 5, 5, 0, 0, 0, 0},
 
                             })
-                    .setTargetsStates(new int[]{0, 1, 2, 3})
                     .setObstaclesQuantity(2)
                     .setObstaclesX(0.125f, 0.7916666667f)
                     .setObstaclesY(0.5676470588f, 0.5676470588f)
@@ -949,10 +948,11 @@ public class LevelLoader {
 
                             }
                     );
+     
         }
         
         
-                // ---------- LEVEL32
+        // ---------- LEVEL32
         l += 1;
         if (levelNumber == l) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
@@ -976,10 +976,24 @@ public class LevelLoader {
                                     {0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3},
                                     {0, 0, 0, 0, 0, 0, 1, 1, 3, 3, 3},
                             }
+                    )
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.275f)
+                    .setObstaclesY(0.3705882353f)
+                    .setObstaclesWidth(0.0916666667f)
+                    .setObstaclesHeight(0.0705882353f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0015f),
                     );
         }
         
-
 
         // ---------- LEVEL33
 
