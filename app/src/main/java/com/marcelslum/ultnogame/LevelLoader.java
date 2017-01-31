@@ -342,7 +342,7 @@ public class LevelLoader {
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                     {3, 2, 1, 1, 0, 0, 0, 1, 1, 2, 3},
-                                    {2, 2, 0, 1, 4, 0, 4, 1, 0, 2, 2},
+16                                    {2, 2, 0, 1, 4, 0, 4, 1, 0, 2, 2},
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                     {1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1}
@@ -851,7 +851,75 @@ public class LevelLoader {
                             }
                     );
         }
+        
+        
         // ---------- LEVEL30
+        l += 1;
+        if (levelNumber >= l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+                                    {4, 1, 1, 1, 1, 4, 1, 1, 1, 1, 4},
+                                    {3, 2, 3, 2, 3, 1, 3, 2, 3, 2, 3},
+                            }
+                    );
+        }
+        
+        
+        // ---------- LEVEL31
+        l += 1;
+        if (levelNumber >= l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1},
+                                    {1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0},
+                                    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+                                    {1, 1, 0, 1, 0, 4, 0, 1, 0, 1, 1},
+                                    {0, 3, 1, 0, 1, 0, 1, 0, 1, 3, 0},
+                                    {0, 0, 1, 1, 0, 4, 0, 1, 1, 0, 0},
+                                    {1, 0, 0, 2, 1, 0, 1, 2, 0, 0, 1},
+                                    {1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1},
+                                    {0, 1, 1, 0, 0, 4, 0, 0, 1, 1, 0},
+                                    {0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1},
+                                    {0, 0, 0, 1, 5, 0, 5, 1, 0, 0, 0},
+                                    {0, 0, 0, 0, 5, 5, 5, 0, 0, 0, 0},
+
+                            })
+                    .setTargetsStates(new int[]{0, 1, 2, 3})
+                    .setObstaclesQuantity(2)
+                    .setObstaclesX(0.125f, 0.7916666667f)
+                    .setObstaclesY(0.5676470588f, 0.5676470588f)
+                    .setObstaclesWidth(0.0833f, 0.0833f)
+                    .setObstaclesHeight(0.1764705882f, 0.1764705882f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0015f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0015f)
+                    );
+        }
+        
+        
+        
+        // PRISÃO
+        // ---------- LEVEL32
         l += 1;
         if (levelNumber == l) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
@@ -870,7 +938,7 @@ public class LevelLoader {
                                     {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
                                     {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
                                     {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1},
-                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},//53
                                     {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
                                     {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
                                     {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
@@ -882,10 +950,36 @@ public class LevelLoader {
                             }
                     );
         }
+        
+        
+                // ---------- LEVEL32
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{0, 1, 3, 4, 5});
+            targetsAppend.add(new int[]{7, 8, 10, 11, 15, 16});
 
-        // ---------- LEVEL31
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {2, 2, 2, 3, 3, 3, 0, 0, 0, 0, 0},
+                                    {0, 0, 1, 0, 0, 4, 0, 0, 0, 0, 0},
+                                    {1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3},
+                                    {0, 0, 0, 0, 0, 4, 0, 0, 1, 1, 1},
+                                    {0, 0, 0, 1, 1, 1, 1, 1, 3, 3, 3},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3},
+                                    {0, 0, 0, 0, 0, 0, 1, 1, 3, 3, 3},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3},
+                                    {0, 0, 0, 0, 0, 0, 1, 1, 3, 3, 3},
+                            }
+                    );
+        }
+        
 
-        // ---------- LEVEL32
 
         // ---------- LEVEL33
 
