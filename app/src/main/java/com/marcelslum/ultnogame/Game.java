@@ -141,7 +141,7 @@ public class Game {
     static final int VIBRATE_HARD = 2;
     
     
-    public static vibrate(int intensity){
+    public static void vibrate(int intensity){
         if (intensity == VIBRATE_SMALL){
             long[] pattern = {0,50,50,50,50,50,50,50,50,50,50};
         } else if (intensity == VIBRATE_MEDIUM){
