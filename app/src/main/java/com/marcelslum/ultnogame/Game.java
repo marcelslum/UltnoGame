@@ -7,12 +7,16 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import android.os.Vibrator;
 
 // TODO verificar os listeners ativos
 // TODO colocar timeout em todos os awaits...
 // TODO colocar uma barra ao final do data panel
 
 public class Game {
+    
+    
+    static final Vibrator vibrator;
 
     static final String TAG = "Game";
 
