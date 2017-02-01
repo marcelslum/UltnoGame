@@ -697,12 +697,16 @@ public class Ball extends Circle{
         }
 
         // AJUSTA O ALVO ATINGIDO
+        
+        boolean targetHitted = false;
 
         for (int i = 0; i < collisionsData.size(); i++) {
             if (collisionsData.get(i).object.name == "target" && !collisionsData.get(i).isRepeated){
                 Game.ballCollidedFx = 40;
                 Target target = (Target)collisionsData.get(i).object;
                 target.onBallCollision();
+                
+                targetHitted = true;
 
                 Game.resetTimeForPointsDecay();
                 if (target.special == 1 && !listenForExplosion){
@@ -710,6 +714,11 @@ public class Ball extends Circle{
                 }
             }
         }
+        
+        if (targetHitted){
+            Game.vibrate(Game.VIBRATE_MEDIUM);
+        }
+        
 
         // TOCA O SOM ADEQUADO
 
@@ -730,6 +739,10 @@ public class Ball extends Circle{
 
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
             Sound.play(Sound.soundBallHit, volumeE, volumeD, 0);
+            
+            Game.vibrate(Game.VIBRATE_SMALL);
+            
+            
         }
     }
 
@@ -830,6 +843,10 @@ public class Ball extends Circle{
     }
     
     public void explode(){
+        
+        
+        Game.vibrate(Game.VIBRATE_HARD);
+        
         clearAnimations();
         ParticleGenerator pg = new ParticleGenerator("explode", x + accumulatedTranslateX, y + accumulatedTranslateY,
                 Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1, Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2, Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3);
