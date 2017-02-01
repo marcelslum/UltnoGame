@@ -103,8 +103,21 @@ public class Target extends Rectangle {
 
     public void verifySpecialBall(){
         if (Level.levelObject.specialBallPercentage > 0f){
-            if (Utils.getRandonFloat(0.0f, 1.0f) < Level.levelObject.specialBallPercentage){
+            
+            float percentage = Level.levelObject.specialBallPercentage;
+            int difference = TimeHandler.secondsOfLevelPlay - SpecialBall.timeOfLastSpecialBall;
+            
+            if (difference > 7 && difference < 10){
+                percentage *= 1.2;
+            } else if (difference >= 12){
+                percentage *= 1.5;
+            }
+            
+            if (Utils.getRandonFloat(0.0f, 1.0f) < percentage){
                 if (Game.specialBalls.size()<2) {
+                    
+                    SpecialBall.timeOfLastSpecialBall = TimeHandler.secondsOfLevelPlay;
+                    
                     SpecialBall sb = new SpecialBall("specialBall", positionX + (width/2f), positionY + (height/2f), (height/2f));
                     sb.dvy = Math.abs(Game.bars.get(0).dvx *0.4f);
                     Game.specialBalls.add(sb);
