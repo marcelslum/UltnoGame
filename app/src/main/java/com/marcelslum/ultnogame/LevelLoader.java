@@ -1237,12 +1237,12 @@ public class LevelLoader {
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
                                     .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00015f)
+                                    .setWidthVelocity(0.00025f)
                                     .setMinWidth_BI(0.05f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true)
                     )
-                    .setSpecialBallPercentage0_1(0.5f);
+                    .setSpecialBallPercentage0_1(0.4f);
 
         }
 

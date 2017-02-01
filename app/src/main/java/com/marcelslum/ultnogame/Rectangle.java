@@ -215,7 +215,7 @@ public class Rectangle extends PhysicalObject {
                         if (accumulatedScaleX + scaleX < ((width*s.minWidth_BI)/width)){
                             scaleX += s.widthVelocity*2;
 
-                            if (s.alwaysDecrease) {
+                            if (!s.alwaysDecrease) {
                                 s.increaseWidth = true;
                             }
                         }
