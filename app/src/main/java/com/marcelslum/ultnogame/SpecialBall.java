@@ -7,6 +7,8 @@ public class SpecialBall extends Circle{
     int textureMap;
     int textureSituation;
     boolean isDead = false;
+    static int timeOfLastSpecialBall;
+    
 
     public SpecialBall(String name, float x, float y, float radius) {
         super(name, x, y, radius, 0);
