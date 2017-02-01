@@ -10,6 +10,7 @@ public class ScaleVariationData{
     public float maxHeight_BI;
     public float widthVelocity;
     public float heightVelocity;
+    public boolean alwaysDecrease;
 
     public ScaleVariationData(ScaleVariationDataBuilder builder) {
         this.isActive = builder.isActive;

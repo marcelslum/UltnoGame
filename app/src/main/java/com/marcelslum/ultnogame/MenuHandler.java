@@ -58,7 +58,7 @@ public class MenuHandler {
                     }
                 }, false);
 
-                groupMenu.addText(1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+                groupMenu.addText(1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f));
 
 
                 int totalPoints = 0;
@@ -136,7 +136,7 @@ public class MenuHandler {
                 }
             }, false);
 
-            levelMenu.addText(1, ld.name, ld.name,Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+            levelMenu.addText(1, ld.name, ld.name,Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f));
             levelMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
 
             levelMenu.addText(2, ld.name+"2",  (int)SaveGame.saveGame.pointsLevels[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),

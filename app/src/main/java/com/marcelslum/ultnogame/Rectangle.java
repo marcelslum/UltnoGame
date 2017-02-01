@@ -204,7 +204,7 @@ public class Rectangle extends PhysicalObject {
 
                     //Log.e("rectangle", "scaleX befor "+scaleX);
                     //Log.e("rectangle", "s.increaseWidth "+s.increaseWidth);
-                    if (s.increaseWidth){
+                    if (s.increaseWidth && !s.alwaysDecrease){
                         scaleX += s.widthVelocity;
                         if (accumulatedScaleX + scaleX > ((width*s.maxWidth_BI)/width)){
                             scaleX -= s.widthVelocity*2;
@@ -214,7 +214,10 @@ public class Rectangle extends PhysicalObject {
                         scaleX -= s.widthVelocity;
                         if (accumulatedScaleX + scaleX < ((width*s.minWidth_BI)/width)){
                             scaleX += s.widthVelocity*2;
-                            s.increaseWidth = true;
+
+                            if (s.alwaysDecrease) {
+                                s.increaseWidth = true;
+                            }
                         }
                     }
                     //Log.e("rectangle", "scaleX after "+scaleX);

@@ -126,6 +126,9 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
 
         SaveGame.saveGame.tutorialsViwed[0] = true;
         SaveGame.saveGame.tutorialsViwed[1] = true;
+        SaveGame.saveGame.tutorialsViwed[2] = true;
+        SaveGame.saveGame.tutorialsViwed[3] = true;
+        SaveGame.saveGame.tutorialsViwed[4] = true;
 
         SaveGame.save();
 

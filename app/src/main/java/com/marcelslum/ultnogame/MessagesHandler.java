@@ -96,11 +96,11 @@ public class MessagesHandler {
 
 
         MessagesHandler.messageTime = new Text("messageTime",
-                Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.825f, Game.resolutionY*0.055f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
+                Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.81f, Game.resolutionY*0.051f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
         MessagesHandler.messageTime.alpha = 0.7f;
 
         MessagesHandler.messageCurrentLevel = new Text("messageCurrentLevel",
-                Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.9f, Game.resolutionY*0.055f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
+                Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.885f, Game.resolutionY*0.051f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
         MessagesHandler.messageCurrentLevel.alpha = 0.7f;
 
 

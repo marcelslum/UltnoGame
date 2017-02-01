@@ -10,9 +10,15 @@ public class ScaleVariationDataBuilder {
     public float maxHeight_BI = 2f;
     public float widthVelocity = 0f;
     public float heightVelocity = 0f;
+    public boolean alwaysDecrease = false;
 
     public ScaleVariationDataBuilder(){
 
+    }
+
+    public ScaleVariationDataBuilder setAlwaysDecrease(boolean v) {
+        alwaysDecrease = v;
+        return this;
     }
 
     public ScaleVariationDataBuilder setIsActive(boolean isActive) {

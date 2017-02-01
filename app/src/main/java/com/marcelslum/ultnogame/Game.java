@@ -420,6 +420,12 @@ public class Game {
             ConnectionHandler.verify();
 
         } else if (state == GAME_STATE_PREPARAR){
+
+
+            MessagesHandler.messageTime.display();
+            MessagesHandler.messageCurrentLevel.display();
+
+
             Level.levelGoalsObject.clearAchievements();
 
             ButtonHandler.buttonContinue.blockAndClearDisplay();
