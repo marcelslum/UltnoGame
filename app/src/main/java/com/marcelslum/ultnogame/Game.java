@@ -134,6 +134,29 @@ public class Game {
     public static String currentPlayerId;
 
     private Game() {}
+    
+    
+    static final int VIBRATE_SMALL = 0;
+    static final int VIBRATE_MEDIUM = 1;
+    static final int VIBRATE_HARD = 2;
+    
+    
+    public static vibrate(int intensity){
+        if (intensity == VIBRATE_SMALL){
+            long[] pattern = {0,50,50,50,50,50,50,50,50,50,50};
+        } else if (intensity == VIBRATE_MEDIUM){
+            long[] pattern = {0,75,25,75,25,75,25,75,25,75,25};
+        } else if (intensity == VIBRATE_HARD){
+            long[] pattern = {0,95,5,95,5,95,5,95,5,95,5};
+        } else {
+            long[] pattern = {0};
+        }
+        
+        if (vibrator.hasVibrator()){
+            vibrator.vibrate(pattern, -1);
+        }
+    }
+    
 
     public static void init(){
         Log.e("game", "init()");
