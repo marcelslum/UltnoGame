@@ -28,6 +28,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import android.os.Vibrator;
 
 public class MainActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener{
@@ -55,8 +56,10 @@ public class MainActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-
+	    
         Log.e(TAG, "maxMemory "+maxMemory);
+	    
+	Game.vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
 
         mResolvingError = savedInstanceState != null
                 && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
