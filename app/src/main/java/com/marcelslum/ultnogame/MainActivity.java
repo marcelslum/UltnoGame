@@ -59,7 +59,7 @@ public class MainActivity extends FragmentActivity implements
 	    
         Log.e(TAG, "maxMemory "+maxMemory);
 	    
-	Game.vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+	    Game.vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         mResolvingError = savedInstanceState != null
                 && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);

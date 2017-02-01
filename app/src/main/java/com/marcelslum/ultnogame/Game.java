@@ -16,7 +16,7 @@ import android.os.Vibrator;
 public class Game {
     
     
-    static final Vibrator vibrator;
+    static Vibrator vibrator;
 
     static final String TAG = "Game";
 
@@ -142,14 +142,16 @@ public class Game {
     
     
     public static void vibrate(int intensity){
+
+        long[] pattern;
         if (intensity == VIBRATE_SMALL){
-            long[] pattern = {0,50,50,50,50,50,50,50,50,50,50};
+            pattern = new long[]{0,50,20,50};
         } else if (intensity == VIBRATE_MEDIUM){
-            long[] pattern = {0,75,25,75,25,75,25,75,25,75,25};
+            pattern = new long[]{0,75,20,75};
         } else if (intensity == VIBRATE_HARD){
-            long[] pattern = {0,95,5,95,5,95,5,95,5,95,5};
+            pattern = new long[]{0,95,5,95,5,95,5,95,5,95,5};
         } else {
-            long[] pattern = {0};
+            pattern = new long[]{0};
         }
         
         if (vibrator.hasVibrator()){
