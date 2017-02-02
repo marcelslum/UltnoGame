@@ -52,6 +52,7 @@ public class Game {
     public static Background background;
     static Wind wind;
     static ArrayList<SpecialBall> specialBalls;
+    static ArrayList<Images> ballCollisionStars;
 
     static BallDataPanel ballDataPanel;
     static BallGoalsPanel ballGoalsPanel;
@@ -204,6 +205,7 @@ public class Game {
 
     public static void initData(){
         targets = new ArrayList<>();
+        ballCollisionStars = new ArrayList<>();
         balls = new ArrayList<>();
         obstacles = new ArrayList<>();
         windows = new ArrayList<>();
@@ -1038,6 +1040,8 @@ public class Game {
         windows.clear();
         specialBalls.clear();
         obstacles.clear();
+        ballCollisionStars.clear();
+        
         wind = null;
     }
 
@@ -1076,6 +1080,7 @@ public class Game {
         list.addAll(obstacles);
         list.addAll(windows);
         list.addAll(specialBalls);
+        list.addAll(ballCollisionStars);
         if (wind != null) {
             list.add(wind);
         }
@@ -1356,6 +1361,13 @@ public class Game {
         if (Level.levelObject.minBallsAlive > ballsNotInvencibleAlive){
             setGameState(GAME_STATE_DERROTA);
         }
+        
+        for (int i = 0; i < ballCollisionStars.size(); i++){
+            if (!ballCollisionStars.get(i).isVisible){
+                ballCollisionStars.delete(i);
+                break;
+            }
+        }
     }
 
     static void checkTransformations(){
@@ -1379,7 +1391,11 @@ public class Game {
         for (int i = 0; i < obstacles.size(); i++){
             obstacles.get(i).checkTransformations(true);
         }
-
+        
+        for (int i = 0; i < ballCollisionStars.size(); i++){
+                ballCollisionStars.get(i).checkTransformations(true);
+        }
+        
         for (int i = 0; i < targets.size(); i++){
             if (targets.get(i).showPointsState == Entity.SHOW_POINTS_ON){
                 targets.get(i).checkTransformations(true);
@@ -1486,6 +1502,10 @@ public class Game {
                 targets.get(i).renderPoints(matrixView, matrixProjection);
             }
         }
+        
+        for (int i = 0; i < ballCollisionStars.size(); i++){
+                ballCollisionStars.get(i).prepareRender(matrixView, matrixProjection);
+        }
 
         for (int i = 0; i < windows.size(); i++){
             windows.get(i).prepareRender(matrixView, matrixProjection);
@@ -1494,6 +1514,8 @@ public class Game {
         for (int i = 0; i < specialBalls.size(); i++){
             specialBalls.get(i).prepareRender(matrixView, matrixProjection);
         }
+        
+
 
         if (wind != null) {
             wind.prepareRender(matrixView, matrixProjection);
