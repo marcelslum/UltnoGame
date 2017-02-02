@@ -152,8 +152,8 @@ public class PhysicalObject extends Entity implements Weight{
         accelFinalVelocityY = y;
         accelStarted = true;
         accelDuration = duration;
-        accelInitialVelocityX = this.dvx;
-        accelInitialVelocityY = this.dvy;
+        accelInitialVelocityX = dvx;
+        accelInitialVelocityY = dvy;
         accelInitialTime = Utils.getTime();
     }
 

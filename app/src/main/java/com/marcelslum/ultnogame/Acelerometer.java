@@ -55,8 +55,8 @@ public class Acelerometer {
             long time = Utils.getTime();
             if (moveStatus == MOVE_NO) {
                 if (media2 - media1 > 1.5f) {
-                    //Log.e(TAG, " esquerda ");
-                    //Log.e(TAG, "media1: "+ media1 + "     media2: "+ media2 + "  difference: "+ (media2 - media1));
+                    Log.e(TAG, " acelerometer detectando movimento para a esquerda ");
+                    Log.e(TAG, "media1: "+ media1 + "     media2: "+ media2 + "  difference: "+ (media2 - media1));
                     moveStatus = MOVE_LEFT;
                     rotateBars(5f);
 
@@ -68,9 +68,9 @@ public class Acelerometer {
                         }
                     }
                     lastTime = time;
-                } else if (media1 - media2 > 1.5f) {
-                    //Log.e(TAG, " direita ");
-                    //Log.e(TAG, "media1: "+ media1 + "     media2: "+ media2 + "  difference: "+ (media2 - media1));
+                } else if (media2 - media1 < -1.5f) {
+                    Log.e(TAG, " acelerometer detectando movimento para a direita ");
+                    Log.e(TAG, "media1: "+ media1 + "     media2: "+ media2 + "  difference: "+ (media2 - media1));
                     moveStatus = MOVE_RIGHT;
                     rotateBars(-5f);
 
