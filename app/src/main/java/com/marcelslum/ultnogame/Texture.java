@@ -55,6 +55,7 @@ public class Texture {
     final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5 = 25;
     final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6 = 26;
     final static int TEXTURE_MAP_NUMBERS_EXPLODE_BALL = 27;
+    final static int TEXTURE_MAP_NUMBERS_COLLIDE_BALL = 27;
 
 
     public static int MAX_TEXTURES = 8;
@@ -83,7 +84,7 @@ public class Texture {
         Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_BALLS_STARS, "drawable/buttons_balls_stars"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION, "drawable/numbers_explosion"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION, "drawable/numbers_explosion_star"));
         Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/special_ball"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1c"));
         Texture.textures.add(new Texture(Texture.TEXTURE_LEVEL_ICONS, "drawable/level_icons"));
