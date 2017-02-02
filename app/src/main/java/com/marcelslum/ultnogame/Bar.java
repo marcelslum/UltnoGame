@@ -189,7 +189,7 @@ public class Bar extends Rectangle{
             shine.positionX = positionX;
             shine.positionY = positionY;
         }
-}
+    }
 
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection) {

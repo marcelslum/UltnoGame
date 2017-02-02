@@ -2,10 +2,15 @@ package com.marcelslum.ultnogame;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,8 +36,12 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import android.os.Vibrator;
 
 public class MainActivity extends FragmentActivity implements
-        GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener{
+        GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener,
+        SensorEventListener{
 
+
+    public static SensorManager mSensorManager;
+    public static Sensor mAccelerometer;
 
     private GLSurfaceView glSurfaceView;
     private InterstitialAd interstitial;
@@ -54,6 +63,9 @@ public class MainActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         Log.e("mainActivity", "create");
         super.onCreate(savedInstanceState);
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 	    
@@ -234,6 +246,9 @@ public class MainActivity extends FragmentActivity implements
         if (mAdView != null) {
             mAdView.pause();
         }
+
+        mSensorManager.unregisterListener(this);
+
         Sound.pauseAll();
 	    AsyncTasks.cancelAll();
         super.onPause();
@@ -284,6 +299,9 @@ public class MainActivity extends FragmentActivity implements
         isPaused = false;
         setFullScreen();
         glSurfaceView.onResume();
+
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+
         if (mAdView != null) {
             mAdView.resume();
         }
@@ -370,6 +388,16 @@ public class MainActivity extends FragmentActivity implements
     /* Called from ErrorDialogFragment when the dialog is dismissed. */
     public void onDialogDismissed() {
         mResolvingError = false;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Acelerometer.updateValue(event.values[1]);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     /* A fragment to display an error dialog */

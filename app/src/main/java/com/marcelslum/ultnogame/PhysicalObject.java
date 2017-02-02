@@ -145,16 +145,16 @@ public class PhysicalObject extends Entity implements Weight{
     public void accelerate(int duration, float x, float y){
         accelType = ACCEL_TYPE_LINEAR;
         if (this.accelStarted == false){
-            this.accelInitialVelocityX = this.accelFinalVelocityX;
-            this.accelInitialVelocityY = this.accelFinalVelocityY;
+            accelInitialVelocityX = accelFinalVelocityX;
+            accelInitialVelocityY = accelFinalVelocityY;
         }
-        this.accelFinalVelocityX = x;
-        this.accelFinalVelocityY = y;
-        this.accelStarted = true;
-        this.accelDuration = duration;
-        this.accelInitialVelocityX = this.dvx;
-        this.accelInitialVelocityY = this.dvy;
-        this.accelInitialTime = Utils.getTime();
+        accelFinalVelocityX = x;
+        accelFinalVelocityY = y;
+        accelStarted = true;
+        accelDuration = duration;
+        accelInitialVelocityX = this.dvx;
+        accelInitialVelocityY = this.dvy;
+        accelInitialTime = Utils.getTime();
     }
 
     public void accelerateFrom(int type, int duration, float initialVX, float initialVY, float finalVX, float finalVY){

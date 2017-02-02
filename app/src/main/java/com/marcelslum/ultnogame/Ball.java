@@ -49,6 +49,8 @@ public class Ball extends Circle{
     public float lastResponseBallY = 0f;
     public float impulsion = 0f;
 
+    public long lastBarCollisionTime = 0;
+
     ArrayList<Ball> ballsCollidedProcessed;
     
     double mass = 0f;
@@ -485,6 +487,9 @@ public class Ball extends Circle{
         }
 
         if(this.collisionBar){
+
+
+
             Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
             barCollided.shineAfterBallCollision.values.get(0)[1] = barCollided.shine.numberForAnimation2;
             barCollided.shineAfterBallCollision.start();
@@ -509,45 +514,77 @@ public class Ball extends Circle{
                 }
             }
 
-            float angleToRotate = 0;
+            float mAngleToRotate = 0;
             boolean velocityAdd = true;
             //Log.e("ball", "velocity add "+lastObjects.get(this.collisionBarNumber).vx);
+
+
+           lastBarCollisionTime = Utils.getTime();
+
             //console.log("this.velocityVariation", this.velocityVariation);
+
+            float angleToAdd = 0;
+            if (Acelerometer.moveStatus == Acelerometer.MOVE_LEFT || Acelerometer.moveStatus == Acelerometer.MOVE_RIGHT){
+                if (dvx >= 0f) {
+                    if (Acelerometer.moveStatus == Acelerometer.MOVE_LEFT) {
+                        angleToAdd = angleToRotate;
+                    } else if (Acelerometer.moveStatus == Acelerometer.MOVE_RIGHT) {
+                        angleToAdd = -angleToRotate;
+                    }
+                } else if (dvx <= 0f) {
+                    if (Acelerometer.moveStatus == Acelerometer.MOVE_LEFT) {
+                        angleToAdd = angleToRotate;
+                    } else if (Acelerometer.moveStatus == Acelerometer.MOVE_RIGHT) {
+                        angleToAdd = -angleToRotate;
+                    }
+                }
+                lastBarCollisionTime -= 600;
+            }
+
+
 
             if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).object.vx < 0){
                 velocityAdd = false;
-                angleToRotate = this.angleToRotate;
+                mAngleToRotate = angleToRotate + angleToAdd;
                 Level.levelObject.levelGoalsObject.increaseAngle();
             } else if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).object.vx > 0){
                 velocityAdd = true;
-                angleToRotate = -this.angleToRotate;
+                mAngleToRotate = - (angleToRotate) + angleToAdd;
                 Level.levelObject.levelGoalsObject.decreaseAngle();
             } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).object.vx > 0){
                 velocityAdd = false;
-                angleToRotate = -this.angleToRotate;
+                mAngleToRotate = -(angleToRotate) + angleToAdd;
                 Level.levelObject.levelGoalsObject.increaseAngle();
             } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).object.vx < 0){
                 velocityAdd = true;
-                angleToRotate = this.angleToRotate;
+                mAngleToRotate = (angleToRotate) + angleToAdd;
                 Level.levelObject.levelGoalsObject.decreaseAngle();
+            } else if (collisionsData.get(this.collisionBarNumber).object.vx == 0){
+                mAngleToRotate = angleToAdd;
             }
 
-            float percentageOfBarAccelerationApplied = 0.75f + (barCollided.accelPercentage*0.5f);
 
-            if (percentageOfBarAccelerationApplied >= 1.2){
-                Level.levelObject.levelGoalsObject.ballReachedWithMaximunBarSpped();
+            float percentageOfBarAccelerationApplied = 0.75f;
+            if (collisionsData.get(this.collisionBarNumber).object.vx == 0) {
+
+                percentageOfBarAccelerationApplied = 0.75f + (barCollided.accelPercentage * 0.5f);
+
+                if (percentageOfBarAccelerationApplied >= 1.2) {
+                    Level.levelObject.levelGoalsObject.ballReachedWithMaximunBarSpped();
+                }
+
+                mAngleToRotate = (mAngleToRotate * 0.5f) + (mAngleToRotate * 0.5f * collisionsData.get(this.collisionBarNumber).object.accelPercentage);
+            } else {
+                mAngleToRotate *= 0.75f;
             }
-
-            angleToRotate *= percentageOfBarAccelerationApplied;
             
-            Log.e(TAG, "aplicando rotação -  angulo original "+angleToRotate);
-            
-            angleToRotate = (angleToRotate * 0.5f) + (angleToRotate * 0.5f * collisionsData.get(this.collisionBarNumber).object.accelPercentage);
+            Log.e(TAG, "aplicando rotação -  angulo original "+mAngleToRotate);
             Log.e(TAG, "porcentagem da aceleração "+collisionsData.get(this.collisionBarNumber).object.accelPercentage);
-            Log.e(TAG, "angulo final "+angleToRotate);
-
+            Log.e(TAG, "angulo final "+mAngleToRotate);
             Log.e("ball", "velocity add "+velocityAdd);
-            Log.e("ball", "angleToRotate "+angleToRotate);
+            Log.e("ball", "angleToRotate "+mAngleToRotate);
+            Log.e("ball", "angleToADDDDDD "+angleToAdd);
+
             
             vx = dvx;
             vy = dvy;
@@ -565,7 +602,7 @@ public class Ball extends Circle{
             float final_vx  = vx;
             float final_vy  = vy;
 
-            if (angleToRotate == 0) {
+            if (mAngleToRotate == 0) {
                 float finalLen = Utils.getVectorMagnitude(final_vx, final_vy);
                 float velocityPercentage = (finalLen - minLen)/(maxLen - minLen);
                 float finalAngle = (float)Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx)));
@@ -576,9 +613,13 @@ public class Ball extends Circle{
 
                 float velocityScalePorcentage = ((maxLen - minLen) * velocityVariation)/(maxLen - minLen);
                 Log.e("ball", "velocityScalePorcentage antes "+velocityScalePorcentage);
-                velocityScalePorcentage *= 1 + (percentageOfBarAccelerationApplied * 0.5f);
-                Log.e("ball", "percentageOfBarAccelerationApplied "+percentageOfBarAccelerationApplied);
-                Log.e("ball", "velocityScalePorcentage depois "+velocityScalePorcentage);
+                if (collisionsData.get(this.collisionBarNumber).object.vx == 0) {
+                    velocityScalePorcentage *= 1 + (percentageOfBarAccelerationApplied * 0.5f);
+                    Log.e("ball", "percentageOfBarAccelerationApplied " + percentageOfBarAccelerationApplied);
+                    Log.e("ball", "velocityScalePorcentage depois " + velocityScalePorcentage);
+                } else {
+
+                }
 
                 if (velocityAdd == true){
                     scalePorcentage += velocityScalePorcentage;
@@ -631,49 +672,58 @@ public class Ball extends Circle{
                     }
                 }
 
-                Vector possibleVelocityRotate = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
 
-                float testAngle = (float)Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotate.y), Math.abs(possibleVelocityRotate.x)));
+                if (mAngleToRotate > 0){
+
+                }
+
+                float anguloFinalParaRotacao = angleToAdd + mAngleToRotate;
+
+                float possibleVelocityRotateX = (float) Utils.getXRotatedFromDegrees(vx, vy, anguloFinalParaRotacao);
+                float possibleVelocityRotateY = (float) Utils.getYRotatedFromDegrees(vx, vy, anguloFinalParaRotacao);
+
+
+                float testAngle = (float)Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotateY), Math.abs(possibleVelocityRotateX)));
                 Log.e("ball", "possible angle "+testAngle);
 
                 float finalAngle;
 
                 if (testAngle < maxAngle && testAngle > minAngle){
                     Log.e("ball", "rotacionando ");
-                    final_vx =  possibleVelocityRotate.x;
-                    final_vy =  possibleVelocityRotate.y;
+                    final_vx =  possibleVelocityRotateX;
+                    final_vy =  possibleVelocityRotateY;
                     finalAngle = testAngle;
                 } else {
                     if (testAngle > maxAngle){
                         Level.levelObject.levelGoalsObject.reachMaximunAngle();
                         finalAngle = maxAngle;
                         Log.e("ball", "testAngle > maxAngle");
-                        if (angleToRotate < 0f){
+                        if (anguloFinalParaRotacao < 0f){
                             Log.e("ball", "angleToRotate < 0f");
-                            angleToRotate += testAngle - maxAngle;
+                            anguloFinalParaRotacao += testAngle - maxAngle;
                         } else {
                             Log.e("ball", "angleToRotate > 0f");
-                            angleToRotate -= testAngle - maxAngle;
+                            anguloFinalParaRotacao -= testAngle - maxAngle;
                         }
                     } else if (testAngle < minAngle){
                         Level.levelObject.levelGoalsObject.reachMinimunAngle();
 
                         finalAngle = minAngle;
                         Log.e("ball", "testAngle < minAngle");
-                        if (angleToRotate > 0f){
+                        if (anguloFinalParaRotacao > 0f){
                             Log.e("ball", "angleToRotate > 0f");
-                            angleToRotate -= minAngle - testAngle;
+                            anguloFinalParaRotacao -= minAngle - testAngle;
                         } else {
                             Log.e("ball", "angleToRotate < 0f");
-                            angleToRotate += minAngle - testAngle;
+                            anguloFinalParaRotacao += minAngle - testAngle;
                         }
                     } else {
                         finalAngle = testAngle;
                     }
 
-                    Log.e("ball", "angleToRotate "+angleToRotate);
+                    Log.e("ball", "angleToRotate "+anguloFinalParaRotacao);
 
-                    Vector velocityAdjust = new Vector(vx, vy).rotate(angleToRotate *((float)Math.PI/180f));
+                    Vector velocityAdjust = new Vector(vx, vy).rotate(anguloFinalParaRotacao *((float)Math.PI/180f));
 
                     final_vx =  velocityAdjust.x;
                     final_vy =  velocityAdjust.y;
@@ -693,7 +743,12 @@ public class Ball extends Circle{
                 float anglePercentage = (finalAngle - minAngle)/(maxAngle - minAngle);
                 Game.ballDataPanel.setData(velocityPercentage, anglePercentage, true);
             }
-            this.accelerate(150, final_vx, final_vy);
+
+
+            accelerate(150, final_vx, final_vy);
+
+
+
         }
 
         // AJUSTA O ALVO ATINGIDO
@@ -1004,5 +1059,51 @@ public class Ball extends Circle{
         this.isSolid = false;
         this.isCollidable = false;
         this.isMovable = false;
+    }
+
+    public void barMove(int v) {
+
+        double angle = Math.toDegrees(Math.atan2(dvy, dvx));
+        Log.e("ball", "BAR MOVE ANTES" + angle);
+
+        if (accelStarted == true){
+
+            Log.e(TAG, "------------- ALTERANDO ACELERAÇÃO");
+
+            accelFinalVelocityX = (float) Utils.getXRotatedFromDegrees(accelFinalVelocityX, accelFinalVelocityY, angleToRotate);
+            accelFinalVelocityY = (float) Utils.getYRotatedFromDegrees(accelFinalVelocityX, accelFinalVelocityY, angleToRotate);
+        } else {
+
+
+            if (dvx >= 0f) {
+
+                Log.e(TAG, "------------- VELOCIDADE MAIOR OU ZERO");
+
+                if (v == Acelerometer.MOVE_LEFT) {
+                    Log.e(TAG, "------------- ROTATE LEFT");
+                    dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
+                    dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
+                } else if (v == Acelerometer.MOVE_RIGHT) {
+                    Log.e(TAG, "------------- ROTATE RIGHTS");
+                    dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, -angleToRotate);
+                    dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, -angleToRotate);
+                }
+            } else if (dvx <= 0f) {
+                if (v == Acelerometer.MOVE_LEFT) {
+                    Log.e(TAG, "------------- ROTATE LEFT");
+                    dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
+                    dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
+                } else if (v == Acelerometer.MOVE_RIGHT) {
+                    Log.e(TAG, "------------- ROTATE RIGHT");
+                    dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, -angleToRotate);
+                    dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, -angleToRotate);
+                }
+            }
+
+            angle = Math.toDegrees(Math.atan2(dvy, dvx));
+            Log.e("ball", "BAR MOVE DEPOIS" + angle);
+        }
+
+
     }
 }

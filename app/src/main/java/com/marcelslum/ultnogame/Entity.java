@@ -148,6 +148,8 @@ public class Entity{
             }
         }
         switch (parameter) {
+            case "rotate":
+                animRotateAngle = value;
             case "translateX":
                 animTranslateX = value;
                 break;
@@ -341,11 +343,11 @@ public class Entity{
             Matrix.translateM(matrixModel, 0, positionX + animTranslateX,
                     positionY + animTranslateY, 0);
         }
-        if (accumulatedRotate != 0) {
+        if (accumulatedRotate != 0 || animRotateAngle != 0) {
             float width = getWidth();
             float height = getHeight();
             Matrix.translateM(matrixModel, 0, width/2f, height/2f, 0);
-            Matrix.setRotateM(mRotationMatrix, 0, accumulatedRotate, 0f, 0f, 1f);
+            Matrix.setRotateM(mRotationMatrix, 0, accumulatedRotate + animRotateAngle, 0f, 0f, 1f);
             matrixTemp = matrixModel.clone();
             Matrix.multiplyMM(matrixModel, 0, matrixTemp, 0, mRotationMatrix, 0);
             Matrix.translateM(matrixModel, 0, -width/2f, -height/2f, 0);
