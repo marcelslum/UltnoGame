@@ -252,13 +252,43 @@ public class Ball extends Circle{
                 }
 
                 if (!collidedProcessed) {
+                    
+                    
+                  
+                    
+                    
+                    
+                    
+                    
 
                     Level.levelObject.levelGoalsObject.hitAnotherBall();
 
                     collisionOtherBall = true;
 
                     Ball otherBall = (Ball) collisionsData.get(i).object;
-
+                    
+                    
+                    float starX = 0f;
+                    if (positionX > otherBall.positionX){
+                        starX = positionX + ((positionX - otherBall.positionX)/2f);
+                    } else {
+                        starX = otherBall.positionX + ((otherBall.positionX - positionX)/2f);
+                    }
+                    
+                    float starY = 0f;
+                    if (positionY > otherBall.positionY){
+                        starY = positionY + ((positionY - otherBall.positionY)/2f);
+                    } else {
+                        starY = otherBall.positionY + ((otherBall.positionY - positionY)/2f);
+                    }
+                    
+                    Image star = new Image("ballCollisionStar", starX - radius, starY - radius, radius*2f, radius*2f, Texture.TEXTURE_NUMBERS_EXPLOSION,
+                        (896f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (640f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
+                    star.alpha = 0.7f;
+                    star.display();
+                    star.reduceAlphaAndClearDisplay(500);
+                    Game.ballCollisionStars.add(star);
+                    
                     double theta = -Math.atan2(otherBall.positionY - this.positionY, otherBall.positionX - this.positionX);
                     
                     
