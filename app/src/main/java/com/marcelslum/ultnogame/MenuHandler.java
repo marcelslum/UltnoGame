@@ -177,6 +177,10 @@ public class MenuHandler {
 
             tutorialMenu.addText(1, "instruções", Game.getContext().getResources().getString(R.string.tutorial1Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+            
+            if (!SaveGame.saveGame.tutorialViwed[Tutorial.TUTORIAL_INSTRUCOES_INICIAIS]){
+                    groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+            }
 
             tutorialMenu.addOption(1, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
                 @Override
@@ -188,7 +192,15 @@ public class MenuHandler {
 
             tutorialMenu.addText(1, "jogar", Game.getContext().getResources().getString(R.string.tutorial2Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+            
+            if (!SaveGame.saveGame.tutorialViwed[Tutorial.TUTORIAL_INICIO]){
+                    groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+            }
+            
         }
+        
+               
+        
 
 
         if (StarsHandler.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(1).starsToUnlock){
@@ -199,10 +211,13 @@ public class MenuHandler {
                     Game.setGameState(Game.GAME_STATE_TUTORIAL);
                 }
             }, false);
-
+            
             tutorialMenu.addText(1, "obstaculo", Game.getContext().getResources().getString(R.string.tutorial3Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
-
+            
+            if (!SaveGame.saveGame.tutorialViwed[Tutorial.TUTORIAL_OBSTACULO]){
+                    groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+            }
         }
 
         if (StarsHandler.conqueredStarsTotal >= LevelsGroupData.levelsGroupData.get(2).starsToUnlock){
@@ -216,6 +231,10 @@ public class MenuHandler {
 
             tutorialMenu.addText(1, "cores", Game.getContext().getResources().getString(R.string.tutorial4Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+            
+            if (!SaveGame.saveGame.tutorialViwed[Tutorial.TUTORIAL_CORES]){
+                    groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+            }
 
         }
 
@@ -230,6 +249,10 @@ public class MenuHandler {
 
             tutorialMenu.addText(1, "explosao", Game.getContext().getResources().getString(R.string.tutorial5Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+            
+            if (!SaveGame.saveGame.tutorialViwed[Tutorial.TUTORIAL_EXPLOSAO]){
+                    groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+            }
 
         }
     }
