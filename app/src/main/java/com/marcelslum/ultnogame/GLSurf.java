@@ -81,6 +81,9 @@ public class GLSurf extends GLSurfaceView {
 
                     pointerIndex = event.findPointerIndex(Game.touchEvents.get(i).id);
 
+
+
+
                     float x = event.getX(pointerIndex) - screenOffSetX;
                     float y = event.getY(pointerIndex) - screenOffSetY;
 

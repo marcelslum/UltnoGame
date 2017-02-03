@@ -1134,15 +1134,19 @@ public class Game {
         // atualiza posição da bola
         if (gameState == GAME_STATE_JOGAR) {
              for (int i = 0; i < balls.size(); i++) {
-                Ball ball = balls.get(i);
-                ball.verifyAcceleration();
-                ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
-                ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
 
-                ball.translate(ball.vx, ball.vy);
+                 if (balls.get(i).isAlive) {
 
-                ball.verifyWind();
-                 //Log.e("game", "ballv "+ ball.vx+" "+ball.vy);
+                     Ball ball = balls.get(i);
+                     ball.verifyAcceleration();
+                     ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
+                     ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+
+                     ball.translate(ball.vx, ball.vy);
+
+                     ball.verifyWind();
+                     //Log.e("game", "ballv "+ ball.vx+" "+ball.vy);
+                 }
             }
 
             for (int i = 0; i < specialBalls.size(); i++) {
@@ -1216,8 +1220,10 @@ public class Game {
 
             // insere as entidades no quadtree
             for (int i = 0; i < balls.size(); i++) {
-                quad.insert(balls.get(i));
-                balls.get(i).clearCollisionData();
+                if (balls.get(i).isAlive) {
+                    quad.insert(balls.get(i));
+                    balls.get(i).clearCollisionData();
+                }
             }
 
             for (int i = 0; i < bars.size(); i++) {
@@ -1282,12 +1288,19 @@ public class Game {
         // se a bola colidiu, faz o necessário
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
-                if (balls.get(i).isCollided) {
-                    balls.get(i).onCollision();
+                if (balls.get(i).isAlive) {
+                    if (balls.get(i).isCollided) {
+                        balls.get(i).onCollision();
+                    }
+
+                    double angle = Math.toDegrees(Math.atan2(balls.get(i).dvy, balls.get(i).dvx));
+                    if (balls.get(i).isAlive) {
+                        Log.e("ball", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + angle);
+                        Log.e("ball", "                                   " + balls.get(i).positionX + " - " + balls.get(i).positionY);
+                        Log.e("ball", "                                   " + balls.get(i).dvx + " - " + balls.get(i).dvy);
+                    }
                 }
 
-                double angle = Math.toDegrees(Math.atan2(balls.get(i).dvy, balls.get(i).dvx));
-                Log.e("ball", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + angle);
             }
         }
 

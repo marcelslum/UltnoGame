@@ -203,7 +203,7 @@ public class Ball extends Circle{
 
         checkCollisionsDataObjectRepetition();
 
-        Log.e("ball", "iniciando checagem de colisão---------------------------------");
+        Log.e("ball", "iniciando checagem de colisão---------------------------------"+ positionX + " " + positionY);
 
         boolean collidedProcessed = false;
 
@@ -425,6 +425,7 @@ public class Ball extends Circle{
         
         if (lastResponseBallX != 0f && lastResponseBallY != 0f && !collidedProcessed){
             if (collisionBar){
+                Log.e("ball", "colisão com barra, zera response Y");
                 lastResponseBallX = 0f;
             } else {
                 if (collisionsData.size() == 1 && !collisionOtherBall){
@@ -660,12 +661,21 @@ public class Ball extends Circle{
                 float anglePercentage = (finalAngle - minAngle)/(maxAngle - minAngle);
                 Game.ballDataPanel.setData(velocityPercentage, anglePercentage, false);
                 Level.levelObject.levelGoalsObject.notifyNotSpeedChange();
+
+                dvx = final_vx;
+                dvy = final_vy;
+
+                Log.e(TAG, "mAngleToRotate após ajuste pela velocidade da barra "+ mAngleToRotate);
+
+
+                Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
+
             } else {
 
-                // VELOCIDADE
+                // VELOCIDADELog.e("ball", "barra em movimento, alterando a velocidade ");
 
                 if (collisionsData.get(this.collisionBarNumber).object.vx != 0) {
-                    Log.e("ball", "barra em movimento, alterando a velocidade ");
+                    
                     float velocityScalePorcentage = ((maxLen - minLen) * velocityVariation)/(maxLen - minLen);
                     Log.e("ball", "velocityScalePorcentage antes "+velocityScalePorcentage);
 
@@ -687,8 +697,11 @@ public class Ball extends Circle{
 
                     if (possibleVelocityLen > minLen && possibleVelocityLen < maxLen){
                         Log.e("ball", "ajustando velocidade maior ou menor");
-                        vx = vx * scalePorcentage;
-                        vy = vy * scalePorcentage;
+                        final_vx = final_vx * scalePorcentage;
+                        final_vy = final_vy * scalePorcentage;
+
+
+                        Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
 
                         // achievemntAcelerador
                         if (velocityAdd) {
@@ -701,35 +714,37 @@ public class Ball extends Circle{
                         if (possibleVelocityLen < minLen){
                             Level.levelObject.levelGoalsObject.decelerateMinimun();
                             Log.e("ball", "velocidade menor que o mínimo");
-                            vx = vx * scalePorcentage;
-                            vy = vy * scalePorcentage;
-                            float lenAfter = Utils.getVectorMagnitude(vx, vy);
+                            final_vx = final_vx * scalePorcentage;
+                            final_vy = final_vy * scalePorcentage;
+                            float lenAfter = Utils.getVectorMagnitude(final_vx, final_vy);
                             Log.e("ball", "Len se aplicado: "+lenAfter+ " minLen: "+minLen);
                             float scaleToMin = minLen/lenAfter;
                             Log.e("ball", "scaleToMin: "+scaleToMin);
-                            vx = vx * scaleToMin;
-                            vy = vy * scaleToMin;
-                            Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(vx, vy));
+                            final_vx = final_vx * scaleToMin;
+                            final_vy = final_vy * scaleToMin;
+                            Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(final_vx, final_vy));
                         } else if (possibleVelocityLen > maxLen){
                             Level.levelObject.levelGoalsObject.accelerateMaximun();
                             Log.e("ball", "velocidade maior que o máximo");
-                            vx = vx * scalePorcentage;
-                            vy = vy * scalePorcentage;
-                            float lenAfter = Utils.getVectorMagnitude(vx, vy);
+                            final_vx = final_vx * scalePorcentage;
+                            final_vy = final_vy * scalePorcentage;
+                            float lenAfter = Utils.getVectorMagnitude(final_vx, final_vy);
                             Log.e("ball", "Len se aplicado: "+lenAfter+ " maxLen: "+maxLen);
                             float scaleToMax = maxLen/lenAfter;
                             Log.e("ball", "scaleToMax: "+scaleToMax);
-                            vx = vx * scaleToMax;
-                            vy = vy * scaleToMax;
-                            Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(vx, vy));
+                            final_vx = final_vx * scaleToMax;
+                            final_vy = final_vy * scaleToMax;
+                            Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(vx, final_vy));
                         }
+
+                        Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
                     }
                 }
 
                 // ROTAÇÃO
 
-                float possibleVelocityRotateX = (float) Utils.getXRotatedFromDegrees(vx, vy, mAngleToRotate);
-                float possibleVelocityRotateY = (float) Utils.getYRotatedFromDegrees(vx, vy, mAngleToRotate);
+                float possibleVelocityRotateX = (float) Utils.getXRotatedFromDegrees(final_vx, final_vy, mAngleToRotate);
+                float possibleVelocityRotateY = (float) Utils.getYRotatedFromDegrees(final_vx, final_vy, mAngleToRotate);
 
                 float testAngle = (float)Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotateY), Math.abs(possibleVelocityRotateX)));
                 Log.e("ball", "possible angle "+testAngle);
@@ -741,6 +756,8 @@ public class Ball extends Circle{
                     final_vx =  possibleVelocityRotateX;
                     final_vy =  possibleVelocityRotateY;
                     finalAngle = testAngle;
+                    Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
+
                 } else {
                     if (testAngle > maxAngle){
                         Level.levelObject.levelGoalsObject.reachMaximunAngle();
@@ -771,8 +788,12 @@ public class Ball extends Circle{
 
                     Log.e("ball", "angleFinalToRotate "+mAngleToRotate);
 
+                    Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
+
                     final_vx = (float) Utils.getXRotatedFromDegrees(vx, vy, mAngleToRotate);
-                    final_vy = (float) Utils.getXRotatedFromDegrees(vx, vy, mAngleToRotate);
+                    final_vy = (float) Utils.getYRotatedFromDegrees(vx, vy, mAngleToRotate);
+
+                    Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
                 }
 
                 // angleToRotate positivo = sentido horário
@@ -789,8 +810,10 @@ public class Ball extends Circle{
                 float anglePercentage = (finalAngle - minAngle)/(maxAngle - minAngle);
                 Game.ballDataPanel.setData(velocityPercentage, anglePercentage, true);
 
-                accelerate(150, final_vx, final_vy);
+
             }
+
+            accelerate(150, final_vx, final_vy);
         }
 
         // AJUSTA O ALVO ATINGIDO
