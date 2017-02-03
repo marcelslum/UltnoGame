@@ -72,6 +72,7 @@ public class Selector extends Entity{
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){
+                    Game.vibrate(Game.VIBRATE_SMALL);
                     innerSelector.levelUp();
                 }
             }
@@ -87,6 +88,7 @@ public class Selector extends Entity{
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){
+                    Game.vibrate(Game.VIBRATE_SMALL);
                     innerSelector.levelDown();
                 }
             }
@@ -112,6 +114,7 @@ public class Selector extends Entity{
             @Override
             public void onPress() {
                 if (!innerSelector.isBlocked){
+                    Game.vibrate(Game.VIBRATE_SMALL);
                     innerSelector.backToMenu();
                     if (onConclude != null){
                         onConclude.onConclude();

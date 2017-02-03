@@ -281,12 +281,28 @@ public class Ball extends Circle{
                     } else {
                         starY = otherBall.positionY + ((otherBall.positionY - positionY)/2f);
                     }
-                    
-                    Image star = new Image("ballCollisionStar", starX - radius, starY - radius, radius*2f, radius*2f, Texture.TEXTURE_NUMBERS_EXPLOSION,
+
+                    Log.e(TAG, "incluindo estrela na posicao "+starX+" "+starY );
+
+
+                    final Image star = new Image("ballCollisionStar", starX - radius*8f, starY - radius*8f, radius*16f, radius*16f, Texture.TEXTURE_NUMBERS_EXPLOSION,
                         (896f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (640f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
-                    star.alpha = 0.7f;
                     star.display();
-                    star.reduceAlphaAndClearDisplay(500);
+                    Animation anim = Utils.createAnimation3v(star, "star", "alpha", 800, 0f, 0f, 0.1f, 1f, 1f, 0f, false, true);
+
+                    Utils.createAnimation3v(star, "scaleX", "scaleX", 800, 0f, 0.5f, 0.1f, 1f, 1f, 0.5f, false, true).start();
+                    Utils.createAnimation3v(star, "scaleY", "scaleY", 800, 0f, 0.5f, 0.1f, 1f, 1f, 0.5f, false, true).start();
+                    Utils.createAnimation3v(star, "translateX", "translateX", 800, 0f, radius*4f, 0.1f, 0f, 1f, radius*4f, false, true).start();
+                    Utils.createAnimation3v(star, "translateY", "translateY", 800, 0f, radius*4f, 0.1f, 0f, 1f, radius*4f, false, true).start();
+
+                    anim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            star.clearDisplay();
+                        }
+                    });
+                    anim.start();
+
                     Game.ballCollisionStars.add(star);
                     
                     double theta = -Math.atan2(otherBall.positionY - this.positionY, otherBall.positionX - this.positionX);
@@ -795,11 +811,7 @@ public class Ball extends Circle{
                 }
             }
         }
-        
-        if (targetHitted){
-            Game.vibrate(Game.VIBRATE_MEDIUM);
-        }
-        
+
 
         // TOCA O SOM ADEQUADO
 
@@ -820,8 +832,19 @@ public class Ball extends Circle{
 
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
             Sound.play(Sound.soundBallHit, volumeE, volumeD, 0);
+
+            if (targetHitted){
+                Game.vibrate(Game.VIBRATE_TARGET);
+            }
+
+            if (collisionBar){
+                Game.vibrate(Game.VIBRATE_BAR);
+            } else {
+                Game.vibrate(Game.VIBRATE_SMALL);
+            }
+
             
-            Game.vibrate(Game.VIBRATE_SMALL);
+
 
         }
     }
@@ -1100,6 +1123,17 @@ public class Ball extends Circle{
                 Log.e(TAG, "------------- ROTATE RIGHTS");
                 accelFinalVelocityX = (float) Utils.getXRotatedFromDegrees(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate);
                 accelFinalVelocityY = (float) Utils.getYRotatedFromDegrees(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate);
+            }
+        } else {
+            Log.e(TAG, "------------- ALTERANDO ROTAÇÃO");
+            if (v == Acelerometer.MOVE_LEFT) {
+                Log.e(TAG, "------------- ROTATE LEFT");
+                dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
+                dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
+            } else if (v == Acelerometer.MOVE_RIGHT) {
+                Log.e(TAG, "------------- ROTATE RIGHTS");
+                dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, -angleToRotate);
+                dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, -angleToRotate);
             }
         }
     }

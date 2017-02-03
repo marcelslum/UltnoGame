@@ -52,7 +52,7 @@ public class Game {
     public static Background background;
     static Wind wind;
     static ArrayList<SpecialBall> specialBalls;
-    static ArrayList<Images> ballCollisionStars;
+    static ArrayList<Image> ballCollisionStars;
 
     static BallDataPanel ballDataPanel;
     static BallGoalsPanel ballGoalsPanel;
@@ -138,7 +138,8 @@ public class Game {
     
     
     static final int VIBRATE_SMALL = 0;
-    static final int VIBRATE_MEDIUM = 1;
+    static final int VIBRATE_BAR = 4;
+    static final int VIBRATE_TARGET = 1;
     static final int VIBRATE_HARD = 2;
     
     
@@ -146,11 +147,13 @@ public class Game {
 
         long[] pattern;
         if (intensity == VIBRATE_SMALL){
-            pattern = new long[]{0,50,20,50};
-        } else if (intensity == VIBRATE_MEDIUM){
-            pattern = new long[]{0,75,20,75};
+            pattern = new long[]{0,20};
+        } else if (intensity == VIBRATE_TARGET){
+            pattern = new long[]{0,25,10,18, 15, 10};
         } else if (intensity == VIBRATE_HARD){
-            pattern = new long[]{0,95,5,95,5,95,5,95,5,95,5};
+            pattern = new long[]{0,70,10,50, 10, 30, 10, 15, 10, 5};
+        } else if (intensity == VIBRATE_BAR){
+            pattern = new long[]{0,35,7,15, 17, 9};
         } else {
             pattern = new long[]{0};
         }
@@ -1282,6 +1285,9 @@ public class Game {
                 if (balls.get(i).isCollided) {
                     balls.get(i).onCollision();
                 }
+
+                double angle = Math.toDegrees(Math.atan2(balls.get(i).dvy, balls.get(i).dvx));
+                Log.e("ball", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + angle);
             }
         }
 
@@ -1364,7 +1370,8 @@ public class Game {
         
         for (int i = 0; i < ballCollisionStars.size(); i++){
             if (!ballCollisionStars.get(i).isVisible){
-                ballCollisionStars.delete(i);
+                //Log.e(TAG, "removing starball "+i);
+                ballCollisionStars.remove(i);
                 break;
             }
         }
@@ -1504,6 +1511,7 @@ public class Game {
         }
         
         for (int i = 0; i < ballCollisionStars.size(); i++){
+                //Log.e(TAG, "rendering ball collision star "+i);
                 ballCollisionStars.get(i).prepareRender(matrixView, matrixProjection);
         }
 
@@ -1512,6 +1520,8 @@ public class Game {
         }
 
         for (int i = 0; i < specialBalls.size(); i++){
+
+
             specialBalls.get(i).prepareRender(matrixView, matrixProjection);
         }
         

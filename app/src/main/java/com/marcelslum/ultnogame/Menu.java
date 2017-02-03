@@ -131,6 +131,8 @@ class Menu extends Entity{
                         public void onPress() {
                             //Log.e("Menu", "interaction menu");
                             if (!innerMenu.isBlocked){
+
+                                Game.vibrate(Game.VIBRATE_SMALL);
                                 Game.blockAndWaitTouchRelease();
                                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
 

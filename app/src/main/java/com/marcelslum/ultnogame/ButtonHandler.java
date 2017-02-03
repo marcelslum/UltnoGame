@@ -23,6 +23,8 @@ public class ButtonHandler {
         buttonReturn.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
+
+                Game.vibrate(Game.VIBRATE_SMALL);
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
@@ -46,6 +48,8 @@ public class ButtonHandler {
         buttonReturnObjectivesPause.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
+
+                Game.vibrate(Game.VIBRATE_SMALL);
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
@@ -60,6 +64,8 @@ public class ButtonHandler {
         buttonContinue.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
+
+                Game.vibrate(Game.VIBRATE_SMALL);
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_VITORIA){
                     Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
