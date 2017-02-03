@@ -304,6 +304,9 @@ public class MenuIcon extends Entity{
                     float translateSize = size * 0.09f;
                     Utils.createAnimation3v(innerButton, "x", "translateX", 400, 0f, 0f, 0.07f, translateSize, 1f, 0f, false, true).start();
                     Utils.createAnimation3v(innerButton, "y", "translateY", 400, 0f, 0f, 0.07f, translateSize, 1f, 0f, false, true).start();
+                    
+                    Game.vibrate(Game.VIBRATE_SMALL);
+                    
                 }
             }
         });
