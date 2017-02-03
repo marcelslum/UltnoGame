@@ -932,13 +932,12 @@ public class Game {
             animMessageConqueredStarsTotal.start();
 
         } else if (state == GAME_STATE_TUTORIAL) {
-            if (previousState == GAME_STATE_MENU_TUTORIAL) {
-                Log.e(TAG, "limpando menu tutorial");
-                MessagesHandler.messageMenu.clearDisplay();
-                MessagesHandler.messageSubMenu.clearDisplay();
-                MenuHandler.tutorialMenu.clearDisplay();
-                MenuHandler.tutorialMenu.block();
-            }
+            
+            MessagesHandler.messageMenu.clearDisplay();
+            MessagesHandler.messageSubMenu.clearDisplay();
+            MenuHandler.tutorialMenu.clearDisplay();
+            MenuHandler.tutorialMenu.block();
+            
             if (!sameState) {
                 activateFrame(500);
             }
@@ -946,11 +945,9 @@ public class Game {
             mainActivity.hideAdView();
 
             Tutorial.loadTutorial();
-            if (previousState == GAME_STATE_MENU_TUTORIAL) {
-                Tutorial.currentTutorialObject.showFirst(true);
-            } else {
-                Tutorial.currentTutorialObject.showFirst(false);
-            }
+            
+            Tutorial.currentTutorialObject.showFirst();
+            
         }
     }
 
