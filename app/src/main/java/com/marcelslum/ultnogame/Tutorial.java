@@ -16,7 +16,6 @@ public class Tutorial {
 
     public ArrayList<Frame> frames;
     int currentFrame;
-    boolean showingFromMenu;
 
     static final int TUTORIAL_INSTRUCOES_INICIAIS = 0;
     static final int TUTORIAL_INICIO = 1;
@@ -41,8 +40,7 @@ public class Tutorial {
         frames.clear();
     }
 
-    public void showFirst(boolean fromMenu){
-        showingFromMenu = fromMenu;
+    public void showFirst(){
         currentFrame = 0;
         show(true);
     }
@@ -57,16 +55,8 @@ public class Tutorial {
         if (currentFrame >= 0) {
             show(false);
         } else {
-            if (showingFromMenu){
-                Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
-            } else {
-                if (currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS){
-                    Game.setGameState(Game.GAME_STATE_MENU);
-                } else {
-                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-                }
+            Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
 
-            }
         }
     }
 
@@ -120,18 +110,9 @@ public class Tutorial {
             ButtonHandler.buttonReturn.block();
             tutorialImage.clearDisplay();
             tutorialTextBox.clearDisplay();
-
-            if (showingFromMenu){
-                SaveGame.saveGame.tutorialsViwed[currentTutorial] = true;
-                Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
-            } else {
-                SaveGame.saveGame.tutorialsViwed[currentTutorial] = true;
-                if (currentTutorial == TUTORIAL_INSTRUCOES_INICIAIS) {
-                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-                } else {
-                    Game.setGameState(Game.GAME_STATE_PREPARAR);
-                }
-            }
+            
+            SaveGame.saveGame.tutorialsViwed[currentTutorial] = true;
+            Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
         }
     }
 
@@ -161,8 +142,6 @@ public class Tutorial {
     public static void loadTutorial(){
         
         
-        
-
         float textBoxY = Game.resolutionX * 0.48f;
         float textBoxSize = Game.resolutionX * 0.03f;
 
