@@ -8,11 +8,11 @@ import java.util.ArrayList;
  */
 public class Tutorial {
 
-
     static int currentTutorial;
     static Tutorial currentTutorialObject;
     static Image tutorialImage;
     static TextBox tutorialTextBox;
+    static int numberOfTutorials = 20;
 
     public ArrayList<Frame> frames;
     int currentFrame;
@@ -22,6 +22,48 @@ public class Tutorial {
     static final int TUTORIAL_OBSTACULO = 2;
     static final int TUTORIAL_CORES = 3;
     static final int TUTORIAL_EXPLOSAO = 4;
+
+
+    public static boolean isTutorialUnblocked(int tutorialNumber){
+        int starsToUnlock = 0;
+        if (tutorialNumber == TUTORIAL_INSTRUCOES_INICIAIS){
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_INICIO){
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_OBSTACULO){
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(1).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_CORES){
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(2).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_EXPLOSAO){
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+        }
+
+        if (StarsHandler.conqueredStarsTotal >= starsToUnlock) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean hasUnvisitedTutorial(){
+
+        int test = TUTORIAL_INSTRUCOES_INICIAIS;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+
+        test = TUTORIAL_INICIO;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+
+        test = TUTORIAL_OBSTACULO;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+
+        test = TUTORIAL_CORES;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+
+        test = TUTORIAL_EXPLOSAO;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+
+        return false;
+
+    }
 
 
     public Tutorial(){

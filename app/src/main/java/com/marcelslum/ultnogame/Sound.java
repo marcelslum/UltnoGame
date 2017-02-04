@@ -69,7 +69,11 @@ public abstract class Sound {
     }
 
     public static int play(int id, float left, float right, int loop){
-        return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
+        if (SaveGame.saveGame.sound) {
+            return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
+        } else {
+            return -1;
+        }
     }
 
     public static void pauseAll(){

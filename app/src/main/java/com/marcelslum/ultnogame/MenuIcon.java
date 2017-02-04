@@ -207,9 +207,30 @@ public class MenuIcon extends Entity{
         float centerPosition = positionX + (size/2);
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
-        Text t = new Text(name, centerPosition, y + size - paddFromBottom - textSize, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+        final Text t = new Text(name, centerPosition, y + size - paddFromBottom - textSize, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
         innerTexts.add(t);
-        Utils.createAnimation3v(t, "alphaOscilation", "alpha", 3000, 0f, 1f, 0.7f, 0.5f, 1f, 1f, true, true).start();
+        Utils.createAnimation3v(t, "alphaOscilation", "alpha", 3000, 0f, 1f, 0.7f, 0.7f, 1f, 1f, true, true).start();
+
+        ArrayList<float[]> valuesAnim = new ArrayList<>();
+        valuesAnim.add(new float[]{0f,1f});
+        valuesAnim.add(new float[]{0.4f,2f});
+        valuesAnim.add(new float[]{0.6f,3f});
+        Animation animOption = new Animation(t, "numberForAnimation", "numberForAnimation", 2000, valuesAnim, true, false);
+        animOption.setOnChangeNotFluid(new Animation.OnChange() {
+            @Override
+            public void onChange() {
+                if (t.numberForAnimation == 1f){
+                    t.setColor(new Color(0.9f, 0.9f, 0f, 1f));
+                } else if (t.numberForAnimation == 2f) {
+                    t.setColor(new Color(1f, 0f, 0f, 1f));
+                } else if (t.numberForAnimation == 3f) {
+                    t.setColor(new Color(0f, 0f, 1f, 1f));
+                }
+            }
+        });
+        animOption.start();
+
+
         addChild(t);
     }
 

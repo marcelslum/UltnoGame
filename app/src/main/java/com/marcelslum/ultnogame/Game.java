@@ -26,8 +26,6 @@ public class Game {
 
     static int basePoints = 10;
 
-    static int numberOfTutorials = 20;
-
     static final int BALL_WEIGHT = 1;
     static final int BORDA_WEIGHT = 10;
     static final int OBSTACLES_WEIGHT = 7;
@@ -44,7 +42,6 @@ public class Game {
     static ArrayList<Obstacle> obstacles;
     static ArrayList<WindowGame> windows;
     static ArrayList<Menu> menus;
-    static ArrayList<Selector> selectors;
     static ArrayList<InteractionListener> interactionListeners;
     static ArrayList<TextBox> textBoxes;
     static Messages messages;
@@ -145,20 +142,23 @@ public class Game {
     
     public static void vibrate(int intensity){
 
-        long[] pattern;
-        if (intensity == VIBRATE_SMALL){
-            pattern = new long[]{0,20};
-        } else if (intensity == VIBRATE_TARGET){
-            pattern = new long[]{0,25,10,18, 15, 10};
-        } else if (intensity == VIBRATE_HARD){
-            pattern = new long[]{0,70,10,50, 10, 30, 10, 15, 10, 5};
-        } else if (intensity == VIBRATE_BAR){
-            pattern = new long[]{0,35,7,15, 17, 9};
-        } else {
-            pattern = new long[]{0};
+        if (!SaveGame.saveGame.vibration){
+            return;
         }
-        
+
         if (vibrator.hasVibrator()){
+            long[] pattern;
+            if (intensity == VIBRATE_SMALL){
+                pattern = new long[]{0,20};
+            } else if (intensity == VIBRATE_TARGET){
+                pattern = new long[]{0,25,10,18, 15, 10};
+            } else if (intensity == VIBRATE_HARD){
+                pattern = new long[]{0,70,10,50, 10, 30, 10, 15, 10, 5};
+            } else if (intensity == VIBRATE_BAR){
+                pattern = new long[]{0,23,7,15, 17, 9};
+            } else {
+                pattern = new long[]{0};
+            }
             vibrator.vibrate(pattern, -1);
         }
     }
@@ -218,7 +218,6 @@ public class Game {
         interactionListeners = new ArrayList<>();
         bars = new ArrayList<>();
         menus = new ArrayList<>();
-        selectors = new ArrayList<>();
         textBoxes = new ArrayList<>();
         messages = new Messages();
         lines = new ArrayList<> ();
@@ -374,6 +373,11 @@ public class Game {
             eraseAllGameEntities();
             eraseAllHudEntities();
 
+
+            if (Tutorial.hasUnvisitedTutorial()){
+                MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
+            }
+
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
 
@@ -395,6 +399,11 @@ public class Game {
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
             MenuHandler.updateLevelMenu();
             MenuHandler.levelMenu.appear();
+
+            if (Tutorial.hasUnvisitedTutorial()){
+                MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
+            }
+
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuSelecaoLevel));
             MessagesHandler.messageSubMenu.display();
@@ -1292,9 +1301,10 @@ public class Game {
 
                     double angle = Math.toDegrees(Math.atan2(balls.get(i).dvy, balls.get(i).dvx));
                     if (balls.get(i).isAlive) {
-                        Log.e("ball", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + angle);
-                        Log.e("ball", "                                   " + balls.get(i).positionX + " - " + balls.get(i).positionY);
-                        Log.e("ball", "                                   " + balls.get(i).dvx + " - " + balls.get(i).dvy);
+                        Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + angle);
+                        Log.e(TAG, "                        textureMap " + balls.get(i).textureMap);
+                        Log.e(TAG, "                        pos        " + balls.get(i).positionX + " - " + balls.get(i).positionY);
+                        Log.e(TAG, "                        dv         " + balls.get(i).dvx + " - " + balls.get(i).dvy);
                     }
                 }
 
@@ -1430,7 +1440,7 @@ public class Game {
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.checkTransformations(true);
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.checkTransformations(true);
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.checkTransformations(true);
-        if (SelectorHandle.selectorLevel != null) SelectorHandle.selectorLevel.checkTransformations(true);
+        if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.checkTransformations(true);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.checkTransformations(true);
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.checkTransformations(true);
@@ -1438,9 +1448,9 @@ public class Game {
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.checkTransformations(true);
         if (levelGoalsPanel != null) levelGoalsPanel.checkTransformations(true);
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.checkTransformations(true);
-        if (SelectorHandle.selectorDificulty != null) SelectorHandle.selectorDificulty.checkTransformations(true);
         if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.checkTransformations(true);
         if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.checkTransformations(true);
+        if (SelectorHandle.selectorVibration != null) SelectorHandle.selectorVibration.checkTransformations(true);
 
         if (tittle != null) tittle.checkTransformations(true);
 
@@ -1544,7 +1554,7 @@ public class Game {
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.prepareRender(matrixView, matrixProjection);
-        if (SelectorHandle.selectorLevel != null) SelectorHandle.selectorLevel.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.prepareRender(matrixView, matrixProjection);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.prepareRender(matrixView, matrixProjection);
@@ -1552,7 +1562,7 @@ public class Game {
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.prepareRender(matrixView, matrixProjection);
         if (levelGoalsPanel != null) levelGoalsPanel.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.prepareRender(matrixView, matrixProjection);
-        if (SelectorHandle.selectorDificulty != null) SelectorHandle.selectorDificulty.prepareRender(matrixView, matrixProjection);
+        if (SelectorHandle.selectorVibration != null) SelectorHandle.selectorVibration.prepareRender(matrixView, matrixProjection);
         if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.prepareRender(matrixView, matrixProjection);
         if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.prepareRender(matrixView, matrixProjection);
         if (tittle != null) {tittle.prepareRender(matrixView, matrixProjection);}
@@ -1626,8 +1636,9 @@ public class Game {
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.verifyListener();
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.verifyListener();
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.verifyListener();
-        if (SelectorHandle.selectorLevel != null) SelectorHandle.selectorLevel.verifyListener();
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.verifyListener();
+        if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.verifyListener();
+
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.verifyListener();
         if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.verifyListener();
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.verifyListener();
@@ -1637,7 +1648,7 @@ public class Game {
             ButtonHandler.buttonReturnObjectivesPause.verifyListener();
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.verifyListener();
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
-        if (SelectorHandle.selectorDificulty != null) SelectorHandle.selectorDificulty.verifyListener();
+        if (SelectorHandle.selectorVibration != null) SelectorHandle.selectorVibration.verifyListener();
         if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.verifyListener();
         if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.verifyListener();
 
@@ -1659,6 +1670,7 @@ public class Game {
         ArrayList<Entity> list = new ArrayList<>();
         list.add(MenuHandler.menuMain);
         list.add(MenuHandler.menuOptions);
+        list.add(MenuHandler.menuTutorialUnvisited);
         list.add(MenuHandler.groupMenu);
         list.add(MenuHandler.levelMenu);
         list.add(MenuHandler.tutorialMenu);
@@ -1669,11 +1681,9 @@ public class Game {
         list.add(ButtonHandler.buttonReturnObjectivesPause);
         list.add(ButtonHandler.buttonContinue);
         list.add(MenuHandler.menuInGameOptions);
-        list.add(SelectorHandle.selectorLevel);
-        list.add(SelectorHandle.selectorDificulty);
+        list.add(SelectorHandle.selectorVibration);
         list.add(SelectorHandle.selectorMusic);
         list.add(SelectorHandle.selectorSound);
-        list.add(SelectorHandle.selectorLevel);
         list.add(MenuHandler.menuInGame);
         list.add(MenuHandler.menuGameOver);
         list.add(tittle);

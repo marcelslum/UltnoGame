@@ -67,8 +67,8 @@ public class GLSurf extends GLSurfaceView {
             case MotionEvent.ACTION_POINTER_DOWN:
                 pointerIndex = event.getActionIndex();
                 pointerId = event.getPointerId(pointerIndex);
-                //Log.e(TAG, "pointer index "+pointerIndex + "; pointerId "+pointerId);
-                //Log.e("GLSurf", "ACTION_DOWN "+ pointerId);
+                Log.e(TAG, "pointer index "+pointerIndex + "; pointerId "+pointerId);
+                Log.e("GLSurf", "ACTION_DOWN "+ pointerId);
 
                 Game.touchEvents.add(new TouchEvent(pointerId, event.getX(pointerIndex)-screenOffSetX,event.getY(pointerIndex)-screenOffSetY));
                 break;
@@ -77,23 +77,21 @@ public class GLSurf extends GLSurfaceView {
 
                 for (int i = 0; i < Game.touchEvents.size();i++) {
 
+                    if (Game.touchEvents.get(i).type != TouchEvent.TOUCH_TYPE_UP) {
 
+                        pointerIndex = event.findPointerIndex(Game.touchEvents.get(i).id);
 
-                    pointerIndex = event.findPointerIndex(Game.touchEvents.get(i).id);
+                        float x = event.getX(pointerIndex) - screenOffSetX;
+                        float y = event.getY(pointerIndex) - screenOffSetY;
 
+                        Log.e(TAG, "Verificando o touch de "+"pointer index "+pointerIndex + "; pointerId "+Game.touchEvents.get(i).id);
 
-
-
-                    float x = event.getX(pointerIndex) - screenOffSetX;
-                    float y = event.getY(pointerIndex) - screenOffSetY;
-
-                    //Log.e(TAG, "Verificando o touch de "+"pointer index "+pointerIndex + "; pointerId "+Game.touchEvents.get(i).id);
-
-                    if (Game.touchEvents.get(i).x != x || Game.touchEvents.get(i).y != y){
-                        Game.touchEvents.get(i).move(event.getX(i)-screenOffSetX, event.getY(i)-screenOffSetY);
-                        //Log.e(TAG, "identificado movimento");
-                    } else {
-                        //Log.e(TAG, "não identificado movimento");
+                        if (Game.touchEvents.get(i).x != x || Game.touchEvents.get(i).y != y) {
+                            Game.touchEvents.get(i).move(event.getX(pointerIndex) - screenOffSetX, event.getY(pointerIndex) - screenOffSetY);
+                            Log.e(TAG, "identificado movimento");
+                        } else {
+                            Log.e(TAG, "não identificado movimento");
+                        }
                     }
                 }
                 break;
@@ -101,8 +99,9 @@ public class GLSurf extends GLSurfaceView {
             case MotionEvent.ACTION_POINTER_UP:
                 pointerIndex = event.getActionIndex();
                 pointerId = event.getPointerId(pointerIndex);
-                //Log.e(TAG, "pointer index "+pointerIndex + "; pointerId "+pointerId);
-                //Log.e("GLSurf", "action pointer up"+ pointerId);
+
+                Log.e(TAG, "pointer index "+pointerIndex + "; pointerId "+pointerId);
+                Log.e("GLSurf", "action pointer up"+ pointerId);
 
                 for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
                     if (Game.touchEvents.get(i2).id == event.getPointerId(pointerIndex)) {
@@ -115,8 +114,9 @@ public class GLSurf extends GLSurfaceView {
 
                 pointerIndex = event.getActionIndex();
                 pointerId = event.getPointerId(pointerIndex);
-                //Log.e(TAG, "pointer index "+pointerIndex + "; pointerId "+pointerId);
-                //Log.e("GLSurf", "action up"+ pointerId);
+
+                Log.e(TAG, "pointer index "+pointerIndex + "; pointerId "+pointerId);
+                Log.e("GLSurf", "action up"+ pointerId);
 
                 for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
                     if (Game.touchEvents.get(i2).id == event.getPointerId(pointerIndex)) {
@@ -129,8 +129,10 @@ public class GLSurf extends GLSurfaceView {
             case MotionEvent.ACTION_CANCEL:
                 pointerIndex = event.getActionIndex();
                 pointerId = event.getPointerId(pointerIndex);
-                //Log.e(TAG, "pointer index "+pointerIndex + "; pointerId "+pointerId);
-                //Log.e("GLSurf", "ACTION_CANCEL "+ event.getPointerId(pointerIndex));
+
+                Log.e(TAG, "pointer index "+pointerIndex + "; pointerId "+pointerId);
+                Log.e("GLSurf", "ACTION_CANCEL "+ event.getPointerId(pointerIndex));
+
                 Game.touchEvents.clear();
                 break;
             }

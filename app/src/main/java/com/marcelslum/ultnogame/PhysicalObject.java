@@ -77,9 +77,9 @@ public class PhysicalObject extends Entity implements Weight{
 
     public void respondToCollision(float responseX, float responseY){
         //Log.e("physical", "respond to collision " +responseX);
-        this.accumulatedTranslateX += responseX;
-        this.accumulatedTranslateY += responseY;
-        this.checkTransformations(false);
+        accumulatedTranslateX += responseX;
+        accumulatedTranslateY += responseY;
+        checkTransformations(false);
     }
 
 

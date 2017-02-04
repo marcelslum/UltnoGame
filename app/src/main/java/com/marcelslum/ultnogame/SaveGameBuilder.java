@@ -15,9 +15,11 @@ public class SaveGameBuilder {
     public int[] starsLevels;
     public boolean music;
     public boolean sound;
+    public boolean vibration;
     public long date;
     public boolean newGroupsSeen;
     public int lastStars;
+
 
 
     public SaveGameBuilder(){
@@ -82,7 +84,14 @@ public class SaveGameBuilder {
         return this;
     }
 
+    public SaveGameBuilder setVibration(boolean v) {
+        vibration = v;
+        return this;
+    }
+
     public SaveGame build() {
         return new SaveGame(this);
     }
+
+
 }

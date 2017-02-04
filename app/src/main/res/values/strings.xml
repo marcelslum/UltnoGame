@@ -199,5 +199,7 @@
     <string name="tutorial5Tittle">Explosão</string>
     <string name="pontos">pontos</string>
     <string name="messageGroupsUnblocked">Grupos desbloqueados</string>
+    <string name="vibracao">Vibração</string>
+    <string name="menuTutoriais">Existem tutoriais não vistos (clique aqui).</string>
 
 </resources>

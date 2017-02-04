@@ -31,7 +31,7 @@ public class Ball extends Circle{
     public float rotationAngle = 0;
     boolean isInvencible = false;
 
-    private int textureMap = COLOR_BALL_BLACK;
+    public int textureMap = COLOR_BALL_BLACK;
     
     public ArrayList<Float> historicPositionX;
     public ArrayList<Float> historicPositionY;
@@ -252,20 +252,41 @@ public class Ball extends Circle{
                 }
 
                 if (!collidedProcessed) {
-                    
-                    
-                  
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
+
+
+
 
                     Level.levelObject.levelGoalsObject.hitAnotherBall();
 
                     collisionOtherBall = true;
 
                     Ball otherBall = (Ball) collisionsData.get(i).object;
+
+
+                    Log.e(TAG, "DADOS INICIAIS");
+
+
+                    Log.e(TAG, "------------------BOLA1");
+                    Log.e(TAG, "                  textureMap "+textureMap);
+                    Log.e(TAG, "                  positionX "+ (positionX));
+                    Log.e(TAG, "                  positionY "+ (positionY));
+                    Log.e(TAG, "                  dvx "+ (dvx));
+                    Log.e(TAG, "                  dvy "+ (dvy));
+                    Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(dvy, dvx)));
+
+
+                    Log.e(TAG, "------------------BOLA2");
+                    Log.e(TAG, "                  textureMap "+otherBall.textureMap);
+                    Log.e(TAG, "                  positionX "+ (otherBall.positionX));
+                    Log.e(TAG, "                  positionY "+ (otherBall.positionY));
+                    Log.e(TAG, "                  dvx "+ (otherBall.dvx));
+                    Log.e(TAG, "                  dvy "+ (otherBall.dvy));
+                    Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
                     
                     
                     float starX = 0f;
@@ -409,6 +430,24 @@ public class Ball extends Circle{
                     Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
 
                     otherBall.ballsCollidedProcessed.add(this);
+
+
+
+                    Log.e(TAG, "DADOS FINAIS");
+
+                    Log.e(TAG, "------------------BOLA1");
+                    Log.e(TAG, "                  textureMap "+textureMap);
+                    Log.e(TAG, "                  dvx "+ (dvx));
+                    Log.e(TAG, "                  dvy "+ (dvy));
+                    Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(dvy, dvx)));
+
+
+                    Log.e(TAG, "------------------BOLA2");
+                    Log.e(TAG, "                  textureMap "+otherBall.textureMap);
+                    Log.e(TAG, "                  dvx "+ (otherBall.dvx));
+                    Log.e(TAG, "                  dvy "+ (otherBall.dvy));
+                    Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
+
                 }
             }
         }

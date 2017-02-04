@@ -1,6 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -27,6 +26,7 @@ public class SaveGame {
     public boolean[] tutorialsViwed;
     public boolean music;
     public boolean sound;
+    public boolean vibration;
     public long date;
     public int lastStars;
     public boolean newGroupsSeen;
@@ -43,6 +43,7 @@ public class SaveGame {
         music = builder.music;
         sound = builder.sound;
         date = builder.date;
+        vibration = builder.vibration;
         lastStars = builder.lastStars;
         newGroupsSeen = builder.newGroupsSeen;
     }
@@ -122,7 +123,8 @@ public class SaveGame {
             Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
             long[] _pointsLevels = new long[Level.maxNumberOfLevels];
             int[] _starsLevels = new int[Level.maxNumberOfLevels];
-            boolean[] _tutorialsViwed = new boolean[Game.numberOfTutorials];
+            boolean[] _tutorialsViwed = new boolean[Tutorial.numberOfTutorials];
+
 
             saveGame = new SaveGameBuilder()
                     .setMaxNumberOfLevels(Level.maxNumberOfLevels)
@@ -134,6 +136,7 @@ public class SaveGame {
                     .setLastStars(0)
                     .setMusic(true)
                     .setSound(true)
+                    .setVibration(true)
                     .setDate()
                     .build();
         }
@@ -148,6 +151,7 @@ public class SaveGame {
         boolean[] ftutorialsViwed;
         boolean fmusic;
         boolean fsound;
+        boolean fvibration;
         long fdate;
         boolean fnewGroupsSeen;
         int flastStars;
@@ -162,6 +166,7 @@ public class SaveGame {
 
         fmusic = sgLocal.music;
         fsound = sgLocal.sound;
+        fvibration = sgLocal.vibration;
         fdate = getHigher(sg1.date, sgLocal.date);
 
         return new SaveGameBuilder()
@@ -172,6 +177,7 @@ public class SaveGame {
                 .setStarsLevels(fstarsLevels)
                 .setMusic(fmusic)
                 .setSound(fsound)
+                .setVibration(fvibration)
                 .setDate(fdate)
                 .setLastStars(flastStars)
                 .setNewGroupsSeen(fnewGroupsSeen)
@@ -317,7 +323,7 @@ public class SaveGame {
 
             saveGameBuilder.setStarsLevels(starsLevels);
 
-            boolean[] tutorialsViwed = new boolean[Game.numberOfTutorials];
+            boolean[] tutorialsViwed = new boolean[Tutorial.numberOfTutorials];
             for (int i = 0; i < tutorialsViwed.length; i++) {
                 tutorialsViwed[i] = false;
             }
@@ -338,6 +344,13 @@ public class SaveGame {
 
             saveGameBuilder.setMusic(obj.getBoolean("music"));
             saveGameBuilder.setSound(obj.getBoolean("sound"));
+
+            try {
+                saveGameBuilder.setVibration(obj.getBoolean("vibration"));
+            } catch(JSONException e) {
+                saveGameBuilder.setVibration(true);
+            }
+
 
             saveGameBuilder.setDate(obj.getLong("date"));
 
@@ -374,6 +387,7 @@ public class SaveGame {
             obj.put("newGroupsSeen", saveGame.newGroupsSeen);
             obj.put("music", saveGame.music);
             obj.put("sound", saveGame.sound);
+            obj.put("vibration", saveGame.vibration);
             obj.put("date", saveGame.date);
             return obj.toString();
         } catch (JSONException ex) {
