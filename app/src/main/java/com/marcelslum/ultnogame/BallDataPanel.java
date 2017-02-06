@@ -17,6 +17,8 @@ public class BallDataPanel extends Entity{
 
 
     Rectangle backAngleRectangle;
+
+    Ball ballAnimating;
     
     private static final Color COLOR_BAR_GREEN_DARK = new Color (0.2f, 0.5f, 0.49f, 1f);
     private static final Color COLOR_BAR_GREEN_LIGHT = new Color (0.65f, 0.83f, 0.82f, 1f);
@@ -28,6 +30,9 @@ public class BallDataPanel extends Entity{
     float velocityPercent = 0f;
     float anglePercent = 0f;
     public static final String TAG = "BallDataPanel";
+
+    float previousVelocityPercent = -1f;
+    float previousAnglePercent = -1f;
 
     float width;
     float height;
@@ -103,8 +108,10 @@ public class BallDataPanel extends Entity{
 
     public void setData(float velocityPercentage, float anglePercentage, boolean animationOn) {
 
-        float previousVelocityPercent = velocityPercent;
-        float previousAnglePercent = anglePercent;
+        if (previousVelocityPercent == -1f) {
+            previousVelocityPercent = velocityPercent;
+            previousAnglePercent = anglePercent;
+        }
 
         //Log.e(TAG, "previousVelocityPercent "+previousVelocityPercent);
         //Log.e(TAG, "previousAnglePercent "+previousAnglePercent);

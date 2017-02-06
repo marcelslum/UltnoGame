@@ -1260,11 +1260,11 @@ public class Game {
                     if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode
                             && balls.get(i).y < gameAreaResolutionY * 0.8f) {
 
-                        balls.get(i).radius *= 5;
+                        balls.get(i).radius *= 4;
                         ArrayList<PhysicalObject> ball = new ArrayList<>();
                         ball.add(balls.get(i));
                         boolean collision = Collision.checkCollision(ball, quad, 0, false, false);
-                        balls.get(i).radius /= 5;
+                        balls.get(i).radius /= 4;
                         if (!collision){
                             balls.get(i).explode();
                         }

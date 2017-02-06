@@ -32,6 +32,7 @@ public class MenuHandler {
         groupMenu.texts2.clear();
         groupMenu.innerTexts.clear();
         groupMenu.graph.clear();
+        groupMenu.innerTexts.clear();
 
         StarsHandler.updateConqueredStars();
 
@@ -114,6 +115,7 @@ public class MenuHandler {
         levelMenu.texts.clear();
         levelMenu.texts2.clear();
         levelMenu.graph.clear();
+        levelMenu.innerTexts.clear();
 
 
         if (Game.currentLevelsGroupDataSelected == null){
@@ -168,6 +170,7 @@ public class MenuHandler {
         tutorialMenu.texts.clear();
         tutorialMenu.texts2.clear();
         tutorialMenu.graph.clear();
+        tutorialMenu.innerTexts.clear();
 
 
         float innerTextSize = Game.resolutionY * 0.08f;
@@ -277,7 +280,7 @@ public class MenuHandler {
         //menuObjectives.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.iniciar_jogo), new MenuOption.OnChoice() {@Override public void onChoice() {}});
 
         // -------------------------------------------MENU OPTIONS
-        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.53f, fontSize, font);
+        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.56f, fontSize, font);
 
         // SELETOR MUSICA
         SelectorHandle.selectorMusic = new Selector("Game.selectorMusic", 0f,0f, fontSize, "",
@@ -370,7 +373,7 @@ public class MenuHandler {
 
 
         // -------------------------------------------MENU TUTORIAL
-        menuTutorialUnvisited = new Menu("menuTutorialUnvisited", Game.gameAreaResolutionX/2, Game.resolutionY*0.9f, fontSize*0.65f, font);
+        menuTutorialUnvisited = new Menu("menuTutorialUnvisited", Game.gameAreaResolutionX/2, Game.resolutionY*0.9f, fontSize*0.6f, font);
 
         // adiciona a opção de visualizar tutoriais
         menuTutorialUnvisited.addMenuOption("verTutoriais", Game.getContext().getResources().getString(R.string.menuTutoriais), new MenuOption.OnChoice() {

@@ -73,12 +73,7 @@ public class ButtonHandler {
                     Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
                     LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                    if (!SaveGame.saveGame.tutorialsViwed[Level.levelObject.tutorialAttached]){
-                        Tutorial.currentTutorial = Level.levelObject.tutorialAttached;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    } else {
                         Game.setGameState(Game.GAME_STATE_PREPARAR);
-                    }
                 } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){
                         Tutorial.currentTutorialObject.next();
                 }

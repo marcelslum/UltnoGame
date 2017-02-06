@@ -253,14 +253,6 @@ public class Ball extends Circle{
 
                 if (!collidedProcessed) {
 
-
-
-
-
-
-
-
-
                     Level.levelObject.levelGoalsObject.hitAnotherBall();
 
                     collisionOtherBall = true;
@@ -448,6 +440,42 @@ public class Ball extends Circle{
                     Log.e(TAG, "                  dvy "+ (otherBall.dvy));
                     Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
 
+
+
+
+                    float projectedDistanceBetweenBall = Vector.distanceBetweenTwoPoints(positionX + dvx, positionY + dvy, otherBall.positionX + dvx, otherBall.positionY + dvy);
+                    float radiusOfTwoBalls = radius + otherBall.radius;
+
+                    Log.e(TAG, ">>>               projectedDistanceBetweenBall "+projectedDistanceBetweenBall);
+                    Log.e(TAG, ">>>               radiusOfTwoBalls "+radiusOfTwoBalls);
+
+                    if (projectedDistanceBetweenBall <= radiusOfTwoBalls) {
+                        Log.e(TAG, ">>>           bolas irão colidir no proximo frame ");
+
+                            if (dvx > 0 & otherBall.dvx < 0) {
+                                if (positionX < otherBall.positionX) {
+                                    Log.e(TAG, ">>>positionX < otherBall.positionX");
+                                    dvx *= -1;
+                                } else {
+                                    Log.e(TAG, ">>>>positionX > otherBall.positionX");
+                                    otherBall.dvx *= -1;
+                                }
+                            } else if (dvy > 0 & otherBall.dvy < 0) {
+                                if (positionY < otherBall.positionY) {
+                                    Log.e(TAG, ">>>positionY < otherBall.positionY");
+                                    dvy *= -1;
+                                } else {
+                                    Log.e(TAG, ">>>>positionY > otherBall.positionY");
+                                    otherBall.dvy *= -1;
+                                }
+                            }
+
+                        projectedDistanceBetweenBall = Vector.distanceBetweenTwoPoints(positionX + dvx, positionY + dvy, otherBall.positionX + dvx, otherBall.positionY + dvy);
+
+                        Log.e(TAG, ">>>               NOVA projectedDistanceBetweenBall "+projectedDistanceBetweenBall);
+                        Log.e(TAG, ">>>               radiusOfTwoBalls "+radiusOfTwoBalls);
+                    }
+
                 }
             }
         }
@@ -573,6 +601,9 @@ public class Ball extends Circle{
         }
 
         if(this.collisionBar){
+
+            Game.ballDataPanel.previousVelocityPercent = getVelocityPercentage();
+            Game.ballDataPanel.previousAnglePercent = getAnglePercentage();
 
             Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
             barCollided.shineAfterBallCollision.values.get(0)[1] = barCollided.shine.numberForAnimation2;
@@ -800,7 +831,6 @@ public class Ball extends Circle{
                 } else {
                     if (testAngle > maxAngle){
                         Level.levelObject.levelGoalsObject.reachMaximunAngle();
-                        finalAngle = maxAngle;
                         Log.e("ball", "testAngle > maxAngle");
                         if (mAngleToRotate < 0f){
                             Log.e("ball", "angleToRotate < 0f");
@@ -811,8 +841,6 @@ public class Ball extends Circle{
                         }
                     } else if (testAngle < minAngle){
                         Level.levelObject.levelGoalsObject.reachMinimunAngle();
-
-                        finalAngle = minAngle;
                         Log.e("ball", "testAngle < minAngle");
                         if (mAngleToRotate > 0f){
                             Log.e("ball", "angleToRotate > 0f");
@@ -821,8 +849,6 @@ public class Ball extends Circle{
                             Log.e("ball", "angleToRotate < 0f");
                             mAngleToRotate += minAngle - testAngle;
                         }
-                    } else {
-                        finalAngle = testAngle;
                     }
 
                     Log.e("ball", "angleFinalToRotate "+mAngleToRotate);
@@ -835,21 +861,8 @@ public class Ball extends Circle{
                     Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
                 }
 
-                // angleToRotate positivo = sentido horário
-
-                Log.e("ball", " min   Angle "+ minAngle);
-                Log.e("ball", " max   Angle "+ maxAngle);
-                float finalLen = Utils.getVectorMagnitude(final_vx, final_vy);
-                                                    
-                Log.e("ball", "finalLen "+finalLen);
-
-                // TODO considerar dado anterior da bola
-                
-                float velocityPercentage = (finalLen - minLen)/(maxLen - minLen);
-                float anglePercentage = (finalAngle - minAngle)/(maxAngle - minAngle);
-                Game.ballDataPanel.setData(velocityPercentage, anglePercentage, true);
-
-
+                Game.ballDataPanel.setData(getVelocityPercentage(), getAnglePercentage(), true);
+                Game.ballDataPanel.ballAnimating = this;
             }
 
             accelerate(150, final_vx, final_vy);
@@ -910,6 +923,24 @@ public class Ball extends Circle{
 
         }
     }
+
+    private float getVelocityPercentage() {
+        // TODO otimizar salvado estas variaveis???
+        float initialLen = Utils.getVectorMagnitude(initialDVX, initialDVY);
+        float maxLen = initialLen * velocityMax_BI;
+        float minLen = initialLen * velocityMin_BI;
+        float len = Utils.getVectorMagnitude(dvx, dvy);
+        return (len - minLen)/(maxLen - minLen);
+    }
+
+    private float getAnglePercentage() {
+        // TODO otimizar salvado estas variaveis???
+        float finalAngle = (float)Math.toDegrees(Math.atan2(Math.abs(dvy), Math.abs(dvx)));
+        return (finalAngle - minAngle)/(maxAngle - minAngle);
+    }
+
+
+
 
     public void checkDesireVelocity(){
         // quadrantes invertidos no eixo y
