@@ -54,7 +54,7 @@ public class Ball extends Circle{
     public float lastResponseBallY = 0f;
     public float impulsion = 0f;
 
-    public long lastBarCollisionTime = 0;
+    public long lastBarCollisionTime = 0l;
 
     ArrayList<Ball> ballsCollidedProcessed;
     
@@ -607,6 +607,9 @@ public class Ball extends Circle{
 
         if(this.collisionBar){
 
+            lastBarCollisionTime = System.currentTimeMillis();
+            Log.e(TAG, " setting lastBarCollisionTime "+lastBarCollisionTime);
+
             if (ballBehaviourData == null){
                 ballBehaviourData = new BallBehaviourData(this);
             } else {
@@ -647,7 +650,7 @@ public class Ball extends Circle{
             boolean velocityAdd = true;
             //Log.e("ball", "velocity add "+lastObjects.get(this.collisionBarNumber).vx);
 
-           lastBarCollisionTime = Utils.getTime();
+
 
             //console.log("this.velocityVariation", this.velocityVariation);
 
@@ -682,9 +685,10 @@ public class Ball extends Circle{
                 //    Log.e(TAG, "move right 3");
                 //    angleToAdd = -angleToRotate;
                 //}
+                lastBarCollisionTime -= 600;
             }
 
-            lastBarCollisionTime -= 600;
+
 
             Log.e(TAG, "angleToAdd "+ angleToAdd);
 
@@ -730,14 +734,16 @@ public class Ball extends Circle{
             vx = dvx;
             vy = dvy;
 
-            float initialLen = Utils.getVectorMagnitude(initialDVX, initialDVY);
-            Log.e("ball", "initialLen "+initialLen);
+            float lenOfInitialVelocity = Utils.getVectorMagnitude(initialDVX, initialDVY);
+            Log.e("ball", "initialLen "+lenOfInitialVelocity);
 
-            float maxLen = initialLen * velocityMax_BI;
+            float maxLen = lenOfInitialVelocity * velocityMax_BI;
             Log.e("ball", "maxLen "+maxLen);
 
-            float minLen = initialLen * velocityMin_BI;
+            float minLen = lenOfInitialVelocity * velocityMin_BI;
             Log.e("ball", "minLen "+minLen);
+
+            float initialLen = Utils.getVectorMagnitude(dvx, dvy);
 
             ballBehaviourData.setInitialLen(initialLen);
             ballBehaviourData.setMaxLen(maxLen);
@@ -823,11 +829,7 @@ public class Ball extends Circle{
                         Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
                     }
 
-
                 }
-
-
-
 
                 // ROTAÇÃO
                 rotateTestingAngle(final_vx, final_vy, mAngleToRotate);
@@ -1220,16 +1222,30 @@ public class Ball extends Circle{
         double angle = Math.toDegrees(Math.atan2(dvy, dvx));
         Log.e("ball", "BAR MOVE DEPOIS" + angle);
 
-
-
         if (accelStarted == true){
+
             Log.e(TAG, "------------- ALTERANDO ACELERAÇÃO");
             if (v == Acelerometer.MOVE_LEFT) {
                 Log.e(TAG, "------------- ROTATE LEFT");
                 rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, angleToRotate);
+
+                if (accelFinalVelocityX > 0) {
+                    ballBehaviourData.setAngleDecreaseWithBarInclination();
+                } else {
+                    ballBehaviourData.setAngleIncreaseWithBarInclination();
+                }
+
+
             } else if (v == Acelerometer.MOVE_RIGHT) {
                 Log.e(TAG, "------------- ROTATE RIGHT");
                 rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate);
+
+                if (accelFinalVelocityX > 0) {
+                    ballBehaviourData.setAngleIncreaseWithBarInclination();
+                } else {
+                    ballBehaviourData.setAngleDecreaseWithBarInclination();
+                }
+
             }
 
             accelFinalVelocityX = final_vx;
@@ -1240,9 +1256,23 @@ public class Ball extends Circle{
             if (v == Acelerometer.MOVE_LEFT) {
                 Log.e(TAG, "------------- ROTATE LEFT");
                 rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, angleToRotate);
+
+                if (accelFinalVelocityX > 0) {
+                    ballBehaviourData.setAngleDecreaseWithBarInclination();
+                } else {
+                    ballBehaviourData.setAngleIncreaseWithBarInclination();
+                }
+
             } else if (v == Acelerometer.MOVE_RIGHT) {
                 Log.e(TAG, "------------- ROTATE RIGHT");
                 rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate);
+
+                if (accelFinalVelocityX > 0) {
+                    ballBehaviourData.setAngleIncreaseWithBarInclination();
+                } else {
+                    ballBehaviourData.setAngleDecreaseWithBarInclination();
+                }
+
             }
 
             dvx = final_vx;

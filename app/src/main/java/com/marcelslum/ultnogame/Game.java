@@ -16,7 +16,7 @@ import android.os.Vibrator;
 public class Game {
 
 
-    public static final long TIME_OF_BALL_LISTENER = 200;
+    public static final long TIME_OF_BALL_LISTENER = 250;
     static Vibrator vibrator;
 
     static final String TAG = "Game";

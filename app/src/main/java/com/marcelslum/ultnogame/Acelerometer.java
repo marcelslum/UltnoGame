@@ -48,10 +48,10 @@ public class Acelerometer {
 
 
             if (lastTime == 0) {
-                lastTime = Utils.getTime();
+                lastTime = System.currentTimeMillis();
             }
 
-            long time = Utils.getTime();
+            long time = System.currentTimeMillis();
             if (moveStatus == MOVE_NO) {
                 if (media2 - media1 > 1.5f) {
                     Log.e(TAG, " acelerometer detectando movimento para a esquerda ");
@@ -61,7 +61,14 @@ public class Acelerometer {
 
                     if (Game.balls != null) {
                         for (int i = 0; i < Game.balls.size(); i++){
+
+
+                            Log.e(TAG, " time "+ time);
+                            Log.e(TAG, " lastBarCollisionTime "+Game.balls.get(i).lastBarCollisionTime);
+                            Log.e(TAG, " diferença de tempo "+(time - Game.balls.get(i).lastBarCollisionTime));
+
                             if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER){
+                                Log.e(TAG, " notifyBarMovementAfterCollision(MOVE_LEFT)");
                                 Game.balls.get(i).notifyBarMovementAfterCollision(MOVE_LEFT);
                             }
                         }
@@ -75,8 +82,12 @@ public class Acelerometer {
 
                     if (Game.balls != null) {
                         for (int i = 0; i < Game.balls.size(); i++){
+                            Log.e(TAG, " time "+ time);
+                            Log.e(TAG, " lastBarCollisionTime "+Game.balls.get(i).lastBarCollisionTime);
+                            Log.e(TAG, " diferença de tempo "+(time - Game.balls.get(i).lastBarCollisionTime));
                             if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER){
                                 Game.balls.get(i).notifyBarMovementAfterCollision(MOVE_RIGHT);
+                                Log.e(TAG, " notifyBarMovementAfterCollision(MOVE_RIGHT)");
                             }
                         }
                     }

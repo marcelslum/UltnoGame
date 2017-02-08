@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 /**
  * Created by marcel on 14/10/2016.
  */
@@ -113,11 +115,11 @@ public class BallDataPanel extends Entity{
             previousAnglePercent = anglePercent;
         }
 
-        //Log.e(TAG, "previousVelocityPercent "+previousVelocityPercent);
-        //Log.e(TAG, "previousAnglePercent "+previousAnglePercent);
+        Log.e(TAG, "previousVelocityPercent "+previousVelocityPercent);
+        Log.e(TAG, "previousAnglePercent "+previousAnglePercent);
 
-        //Log.e(TAG, "velocityPercentage "+velocityPercentage);
-        //Log.e(TAG, "anglePercentage "+anglePercentage);
+        Log.e(TAG, "velocityPercentage "+velocityPercentage);
+        Log.e(TAG, "anglePercentage "+anglePercentage);
 
         if (velocityPercentage < 0.005f){
             velocityPercentage = 0.005f;
@@ -134,9 +136,11 @@ public class BallDataPanel extends Entity{
         if (animationOn) {
             if (velocityPercent > previousVelocityPercent) {
                 velocityNewRectangle.animScaleX = velocityPercent;
+                velocityRectangle.animScaleX = previousVelocityPercent;
                 Utils.createSimpleAnimation(velocityRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
             } else {
                 velocityRectangle.animScaleX = velocityPercent;
+                velocityNewRectangle.animScaleX = previousVelocityPercent;
                 Utils.createSimpleAnimation(velocityNewRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
             }
         } else {
@@ -147,9 +151,11 @@ public class BallDataPanel extends Entity{
         if (animationOn) {
             if (anglePercent > previousAnglePercent) {
                 angleNewRectangle.animScaleX = anglePercent;
+                angleRectangle.animScaleX = previousAnglePercent;
                 Utils.createSimpleAnimation(angleRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
             } else {
                 angleRectangle.animScaleX = anglePercent;
+                angleNewRectangle.animScaleX = previousAnglePercent;
                 Utils.createSimpleAnimation(angleNewRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
             }
         } else {

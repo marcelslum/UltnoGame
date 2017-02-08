@@ -12,17 +12,17 @@ public class BallBehaviourData {
 
     long timeOfCollision;
     Ball ball;
-    boolean active;
-    boolean angleDecreasedWithBarMovement;
-    boolean angleIncreasedWithBarMovement ;
-    boolean angleDecreasedWithBarInclination;
-    boolean angleIncreasedWithBarInclination;
-    boolean velocityIncreased;
-    boolean velocityDecreased;
-    boolean minVelocityReached;
-    boolean maxVelocityReached;
-    boolean minAngleReached;
-    boolean maxAngleReached;
+    boolean active = false;
+    boolean angleDecreasedWithBarMovement = false;
+    boolean angleIncreasedWithBarMovement = false;
+    boolean angleDecreasedWithBarInclination = false;
+    boolean angleIncreasedWithBarInclination = false;
+    boolean velocityIncreased = false;
+    boolean velocityDecreased = false;
+    boolean minVelocityReached = false;
+    boolean maxVelocityReached = false;
+    boolean minAngleReached = false;
+    boolean maxAngleReached = false;
     float initialLen;
     float minLen;
     float maxLen;
@@ -35,6 +35,7 @@ public class BallBehaviourData {
 
     public BallBehaviourData(Ball b) {
         ball = b;
+        clear();
     }
 
     public void setAngleDecreaseWithBarMovement() {
@@ -91,6 +92,65 @@ public class BallBehaviourData {
         } else if (velocityDecreased) {
             MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_pisando_no_freio, 1);
         }
+
+
+
+
+
+        if (velocityIncreased){
+            Level.levelObject.levelGoalsObject.accelerate();
+        } else if (velocityDecreased){
+            Level.levelObject.levelGoalsObject.decelerate();
+        }
+
+        if (minVelocityReached){
+            Level.levelObject.levelGoalsObject.notifyMinVelocityReached();
+        } else if (maxVelocityReached){
+            Level.levelObject.levelGoalsObject.notifyMaxVelocityReached();
+        }
+
+        if (minAngleReached){
+            Level.levelObject.levelGoalsObject.notifyMinAngleReached();
+        } else if (maxAngleReached){
+            Level.levelObject.levelGoalsObject.notifyMaxAngleReached();
+        }
+
+        if (angleDecreasedWithBarInclination && !angleIncreasedWithBarMovement && !angleDecreasedWithBarMovement){
+            Level.levelObject.levelGoalsObject.notifyAngleDecreasedOnlyWithBarInclination();
+        } else if (angleIncreasedWithBarInclination && !angleIncreasedWithBarMovement && !angleDecreasedWithBarMovement){
+            Level.levelObject.levelGoalsObject.notifyAngleIncreasedOnlyWithBarInclination();
+        } else if (!angleIncreasedWithBarInclination && !angleDecreasedWithBarInclination && angleDecreasedWithBarMovement){
+            Level.levelObject.levelGoalsObject.notifyAngleDecreasedOnlyWithBarMovement();
+        } else if (!angleDecreasedWithBarInclination && !angleIncreasedWithBarInclination && angleIncreasedWithBarMovement){
+            Level.levelObject.levelGoalsObject.notifyAngleIncreasedOnlyWithBarMovement();
+        } else if(angleIncreasedWithBarInclination && angleIncreasedWithBarMovement){
+            Level.levelObject.levelGoalsObject.notifyAngleIncreasedWithBarMovementAndInclination();
+        } else if (angleDecreasedWithBarInclination && angleDecreasedWithBarMovement){
+            Level.levelObject.levelGoalsObject.notifyAngleDecreasedWithBarMovementAndInclination();
+        }
+
+        if (velocityIncreased && angleIncreasedWithBarInclination){
+            Level.levelObject.levelGoalsObject.accelerateWithBarIncreasingAngle();
+
+            if (finalAngle > initialAngle){
+                Level.levelObject.levelGoalsObject.increaseAngle();
+            } else if (finalAngle > initialAngle){
+                Level.levelObject.levelGoalsObject.decreaseAngle();
+            }
+
+
+        } else if (velocityDecreased && angleDecreasedWithBarInclination){
+            Level.levelObject.levelGoalsObject.decelerateWithBarDecreasingAngle();
+
+            if (finalAngle > initialAngle){
+                Level.levelObject.levelGoalsObject.increaseAngle();
+            } else if (finalAngle > initialAngle){
+                Level.levelObject.levelGoalsObject.decreaseAngle();
+            }
+
+        }
+
+
 
         active = false;
     }

@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -35,12 +37,17 @@ public class LevelGoals {
     int timesOfBallReachedWithMaximunBarSpped = 0;
 
     public int firstTimeLivingBalls = 0;
+    
+    public final static String TAG = "LevelGoals";
 
     public LevelGoals() {
         levelGoals = new ArrayList<>();
     }
 
     public void ballReachedWithMaximunBarSpped(){
+        
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"ballReachedWithMaximunBarSpped");
+        
         timesOfBallReachedWithMaximunBarSpped += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -80,6 +87,9 @@ public class LevelGoals {
     }
 
     public void hitObstacle(){
+
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"hitObstacle");
+        
         timesOfObstacleHit += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -95,6 +105,7 @@ public class LevelGoals {
     }
 
     public void hitAnotherBall(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"hitAnotherBall");
         timesOfCollisionBetweenBalls += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -110,6 +121,7 @@ public class LevelGoals {
     }
 
     public void setFinish(int seconds){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"setFinish");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.JUST_FINISH && !lg.achieved){
@@ -126,7 +138,10 @@ public class LevelGoals {
         }
     }
 
-    public void reachMaximunAngle(){
+    public void notifyMaxAngleReached(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxAngleReached");
+        timesOfDecelerationWithoutReachingMaxAngle = 0;
+
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.REACH_MAXIMUN_ANGLE && !lg.achieved){
@@ -136,7 +151,10 @@ public class LevelGoals {
         }
     }
 
-    public void reachMinimunAngle(){
+    public void notifyMinAngleReached(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMinAngleReached");
+        timesOfAccelerationWithoutReachingMinAngle = 0;
+
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.REACH_MINIMUN_ANGLE && !lg.achieved){
@@ -147,6 +165,7 @@ public class LevelGoals {
     }
 
     public void increaseAngle(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"increaseAngle");
         timesWhereAngleIncreased += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -162,6 +181,7 @@ public class LevelGoals {
     }
 
     public void decreaseAngle(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"decreaseAngle");
         timesWhereAngleDecreased += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -176,7 +196,8 @@ public class LevelGoals {
         }
     }
 
-    public void increaseAngleOnlyWithBarMovement(){
+    public void notifyAngleIncreasedOnlyWithBarMovement(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleIncreasedOnlyWithBarMovement");
         increaseAngle();
         timesWhereAngleIncreasedOnlyWithBarMovement += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -192,7 +213,8 @@ public class LevelGoals {
         }
     }
 
-    public void decreaseAngleOnlyWithBarMovement(){
+    public void notifyAngleDecreasedOnlyWithBarMovement(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleDecreasedOnlyWithBarMovement");
         decreaseAngle();
         timesWhereAngleDecreasedOnlyWithBarMovement += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -208,7 +230,8 @@ public class LevelGoals {
         }
     }
 
-    public void increaseAngleOnlyWithBaInclination(){
+    public void notifyAngleIncreasedOnlyWithBarInclination(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleIncreasedOnlyWithBarInclination");
         increaseAngle();
         timesWhereAngleIncreasedOnlyWithBarInclination += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -224,7 +247,8 @@ public class LevelGoals {
         }
     }
 
-    public void decreaseAngleOnlyWithBarInclination(){
+    public void notifyAngleDecreasedOnlyWithBarInclination(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleDecreasedOnlyWithBarInclination");
         decreaseAngle();
         timesWhereAngleDecreasedOnlyWithBarInclination += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -240,7 +264,8 @@ public class LevelGoals {
         }
     }
 
-    public void increaseAngleWithBarMovementAndInclination(){
+    public void notifyAngleIncreasedWithBarMovementAndInclination(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleIncreasedWithBarMovementAndInclination");
         increaseAngle();
         timesWhereAngleIncreasedWithBarMovementAndInclination += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -256,7 +281,8 @@ public class LevelGoals {
         }
     }
 
-    public void decreaseAngleWithBarMovementAndInclination(){
+    public void notifyAngleDecreasedWithBarMovementAndInclination(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleDecreasedWithBarMovementAndInclination");
         increaseAngle();
         timesWhereAngleDecreasedWithBarMovementAndInclination += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -274,7 +300,7 @@ public class LevelGoals {
 
 
     public void accelerateWithBarIncreasingAngle(){
-        increaseAngle();
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerateWithBarIncreasingAngle");
         timesOfAccelerationWithBarIncreasingAngle += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -290,7 +316,7 @@ public class LevelGoals {
     }
 
     public void decelerateWithBarDecreasingAngle(){
-        increaseAngle();
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerateWithBarDecreasingAngle");
         timesOfDecelerationWithBarDecreasingAngle += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -306,7 +332,7 @@ public class LevelGoals {
     }
 
     public void decelerateWithoutReachMaxAngle(){
-        increaseAngle();
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerateWithoutReachMaxAngle");
         timesOfDecelerationWithoutReachingMaxAngle += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -322,7 +348,7 @@ public class LevelGoals {
     }
 
     public void accelerateWithoutReachMinAngle(){
-        increaseAngle();
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerateWithoutReachMinAngle");
         timesOfAccelerationWithoutReachingMinAngle += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -337,7 +363,8 @@ public class LevelGoals {
         }
     }
 
-    public void accelerateMaximun(){
+    public void notifyMaxVelocityReached(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxVelocityReached");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.ACCELERATE_MAXIMUN && !lg.achieved){
@@ -347,7 +374,8 @@ public class LevelGoals {
         }
     }
 
-    public void decelerateMinimun(){
+    public void notifyMinVelocityReached(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMinVelocityReached");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.DECELERATE_MINIMUN && !lg.achieved){
@@ -358,10 +386,12 @@ public class LevelGoals {
     }
 
     public void notifyNotSpeedChange(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyNotSpeedChange");
         timesOfChangeBallSpeedInARow = 0;
     }
 
-    public void acelerate(){
+    public void accelerate(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerate");
         timesOfAccelerate += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -375,9 +405,11 @@ public class LevelGoals {
             }
         }
         speedChange();
+        accelerateWithoutReachMinAngle();
     }
 
     public void decelerate(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerate");
         timesOfDecelerate += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -391,9 +423,11 @@ public class LevelGoals {
             }
         }
         speedChange();
+        decelerateWithoutReachMaxAngle();
     }
 
     public void speedChange(){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"speedChange");
         timesOfChangeBallSpeedInARow += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
