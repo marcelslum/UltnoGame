@@ -1,6 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.hardware.SensorManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class Acelerometer {
                     if (Game.balls != null) {
                         for (int i = 0; i < Game.balls.size(); i++){
                             if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER){
-                                Game.balls.get(i).barMove(MOVE_LEFT);
+                                Game.balls.get(i).notifyBarMovementAfterCollision(MOVE_LEFT);
                             }
                         }
                     }
@@ -77,7 +76,7 @@ public class Acelerometer {
                     if (Game.balls != null) {
                         for (int i = 0; i < Game.balls.size(); i++){
                             if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER){
-                                Game.balls.get(i).barMove(MOVE_RIGHT);
+                                Game.balls.get(i).notifyBarMovementAfterCollision(MOVE_RIGHT);
                             }
                         }
                     }

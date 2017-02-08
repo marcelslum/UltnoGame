@@ -45,7 +45,7 @@ public class Game {
     static ArrayList<Menu> menus;
     static ArrayList<InteractionListener> interactionListeners;
     static ArrayList<TextBox> textBoxes;
-    static ArrayList<BallBehaviourData> ballBehaviourData;
+    static ArrayList<BallBehaviourData> ballBehaviourDatas;
     static Messages messages;
     static ArrayList<Line> lines;
     public static Background background;
@@ -221,7 +221,7 @@ public class Game {
         bars = new ArrayList<>();
         menus = new ArrayList<>();
         textBoxes = new ArrayList<>();
-        ballBehaviourData = new ArrayList<>();
+        ballBehaviourDatas = new ArrayList<>();
         messages = new Messages();
         lines = new ArrayList<> ();
         groupsUnblocked = new ArrayList<>();
@@ -1304,10 +1304,10 @@ public class Game {
 
                     double angle = Math.toDegrees(Math.atan2(balls.get(i).dvy, balls.get(i).dvx));
                     if (balls.get(i).isAlive) {
-                        Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + angle);
-                        Log.e(TAG, "                        textureMap " + balls.get(i).textureMap);
-                        Log.e(TAG, "                        pos        " + balls.get(i).positionX + " - " + balls.get(i).positionY);
-                        Log.e(TAG, "                        dv         " + balls.get(i).dvx + " - " + balls.get(i).dvy);
+                        //Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + angle);
+                        //Log.e(TAG, "                        textureMap " + balls.get(i).textureMap);
+                        //Log.e(TAG, "                        pos        " + balls.get(i).positionX + " - " + balls.get(i).positionY);
+                        //Log.e(TAG, "                        dv         " + balls.get(i).dvx + " - " + balls.get(i).dvy);
                     }
                 }
 
@@ -1334,31 +1334,13 @@ public class Game {
     }
 
     static void verifyBallBehaviourData(){
-        for (int i = 0; i < ballBehaviourData.size(); i ++){
-            if (Utils.getTime() - ballBehaviourData.get(i).timeOfCollision > TIME_OF_BALL_LISTENER * 1.2f){
-                ballBehaviourData.remove(i);
+        for (int i = 0; i < balls.size(); i ++){
+            if (balls.get(i).ballBehaviourData != null && balls.get(i).ballBehaviourData.active &&
+                    (Utils.getTime() - balls.get(i).ballBehaviourData.timeOfCollision > TIME_OF_BALL_LISTENER * 1.2f))
+                    balls.get(i).ballBehaviourData.processData();
             }
-        }
-    }
 
-    static void createBehaviourData(Ball b){
-        for (int i = 0; i < ballBehaviourData.size(); i++){
-            if (ballBehaviourData.get(i).ball == b){
-                return;
-            }
-        }
-        ballBehaviourData.add(new BallBehaviourData(b));
     }
-
-    static BallBehaviourData getBehaviourData(Ball b){
-        for (int i = 0; i < ballBehaviourData.size(); i++){
-            if (ballBehaviourData.get(i).ball == b){
-                return ballBehaviourData.get(i);
-            }
-        }
-        return null;
-    }
-
 
     static void verifyTargetsAppend(){
         for (int b = 0; b < balls.size(); b++){
