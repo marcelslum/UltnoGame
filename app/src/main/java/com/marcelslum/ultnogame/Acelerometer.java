@@ -62,7 +62,7 @@ public class Acelerometer {
 
                     if (Game.balls != null) {
                         for (int i = 0; i < Game.balls.size(); i++){
-                            if (time - Game.balls.get(i).lastBarCollisionTime < 200){
+                            if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER){
                                 Game.balls.get(i).barMove(MOVE_LEFT);
                             }
                         }
@@ -76,7 +76,7 @@ public class Acelerometer {
 
                     if (Game.balls != null) {
                         for (int i = 0; i < Game.balls.size(); i++){
-                            if (time - Game.balls.get(i).lastBarCollisionTime < 200){
+                            if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER){
                                 Game.balls.get(i).barMove(MOVE_RIGHT);
                             }
                         }

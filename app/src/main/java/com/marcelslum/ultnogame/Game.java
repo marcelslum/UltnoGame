@@ -14,8 +14,9 @@ import android.os.Vibrator;
 // TODO colocar uma barra ao final do data panel
 
 public class Game {
-    
-    
+
+
+    public static final long TIME_OF_BALL_LISTENER = 200;
     static Vibrator vibrator;
 
     static final String TAG = "Game";
@@ -44,6 +45,7 @@ public class Game {
     static ArrayList<Menu> menus;
     static ArrayList<InteractionListener> interactionListeners;
     static ArrayList<TextBox> textBoxes;
+    static ArrayList<BallBehaviourData> ballBehaviourData;
     static Messages messages;
     static ArrayList<Line> lines;
     public static Background background;
@@ -219,6 +221,7 @@ public class Game {
         bars = new ArrayList<>();
         menus = new ArrayList<>();
         textBoxes = new ArrayList<>();
+        ballBehaviourData = new ArrayList<>();
         messages = new Messages();
         lines = new ArrayList<> ();
         groupsUnblocked = new ArrayList<>();
@@ -1326,8 +1329,36 @@ public class Game {
         }
         if (gameState == GAME_STATE_JOGAR) {
             verifyWin();
+            verifyBallBehaviourData();
         }
     }
+
+    static void verifyBallBehaviourData(){
+        for (int i = 0; i < ballBehaviourData.size(); i ++){
+            if (Utils.getTime() - ballBehaviourData.get(i).timeOfCollision > TIME_OF_BALL_LISTENER * 1.2f){
+                ballBehaviourData.remove(i);
+            }
+        }
+    }
+
+    static void createBehaviourData(Ball b){
+        for (int i = 0; i < ballBehaviourData.size(); i++){
+            if (ballBehaviourData.get(i).ball == b){
+                return;
+            }
+        }
+        ballBehaviourData.add(new BallBehaviourData(b));
+    }
+
+    static BallBehaviourData getBehaviourData(Ball b){
+        for (int i = 0; i < ballBehaviourData.size(); i++){
+            if (ballBehaviourData.get(i).ball == b){
+                return ballBehaviourData.get(i);
+            }
+        }
+        return null;
+    }
+
 
     static void verifyTargetsAppend(){
         for (int b = 0; b < balls.size(); b++){

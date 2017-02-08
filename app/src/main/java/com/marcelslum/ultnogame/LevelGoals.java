@@ -9,8 +9,24 @@ import java.util.ArrayList;
 public class LevelGoals {
 
     public ArrayList<LevelGoal> levelGoals;
-    int timesOfAngleDecrease = 0;
-    int timesOfAngleIncrease = 0;
+    int timesWhereAngleDecreased = 0;
+    int timesWhereAngleIncreased = 0;
+
+    int timesWhereAngleDecreasedOnlyWithBarMovement = 0;
+    int timesWhereAngleIncreasedOnlyWithBarMovement = 0;
+
+    int timesWhereAngleDecreasedOnlyWithBarInclination = 0;
+    int timesWhereAngleIncreasedOnlyWithBarInclination = 0;
+
+    int timesWhereAngleIncreasedWithBarMovementAndInclination = 0;
+    int timesWhereAngleDecreasedWithBarMovementAndInclination = 0;
+
+    int timesOfAccelerationWithBarIncreasingAngle = 0;
+    int timesOfDecelerationWithBarDecreasingAngle = 0;
+
+    int timesOfAccelerationWithoutReachingMinAngle = 0;
+    int timesOfDecelerationWithoutReachingMaxAngle = 0;
+
     int timesOfAccelerate = 0;
     int timesOfDecelerate = 0;
     int timesOfChangeBallSpeedInARow = 0;
@@ -131,30 +147,191 @@ public class LevelGoals {
     }
 
     public void increaseAngle(){
-        timesOfAngleIncrease += 1;
+        timesWhereAngleIncreased += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.INCREASE_ANGLE_N_TIMES && !lg.achieved){
-                if (timesOfAngleIncrease == lg.value) {
+                if (timesWhereAngleIncreased == lg.value) {
                     lg.setAchieved();
                     Game.messages.showMessage(lg.messageText + " " + lg.value);
-                } else if (timesOfAngleIncrease < lg.value){
-                    Game.messages.showMessage(lg.messageText + " " + timesOfAngleIncrease+" / "+lg.value);
+                } else if (timesWhereAngleIncreased < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesWhereAngleIncreased +" / "+lg.value);
                 }
             }
         }
     }
 
     public void decreaseAngle(){
-        timesOfAngleDecrease += 1;
+        timesWhereAngleDecreased += 1;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.DECREASE_ANGLE_N_TIMES && !lg.achieved){
-                if (timesOfAngleDecrease == lg.value) {
+                if (timesWhereAngleDecreased == lg.value) {
                     lg.setAchieved();
                     Game.messages.showMessage(lg.messageText + " " + lg.value);
-                } else if (timesOfAngleDecrease < lg.value && !lg.achieved){
-                    Game.messages.showMessage(lg.messageText + " " + timesOfAngleDecrease+" / "+lg.value);
+                } else if (timesWhereAngleDecreased < lg.value && !lg.achieved){
+                    Game.messages.showMessage(lg.messageText + " " + timesWhereAngleDecreased +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void increaseAngleOnlyWithBarMovement(){
+        increaseAngle();
+        timesWhereAngleIncreasedOnlyWithBarMovement += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES && !lg.achieved){
+                if (timesWhereAngleIncreasedOnlyWithBarMovement == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesWhereAngleIncreasedOnlyWithBarMovement < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesWhereAngleIncreasedOnlyWithBarMovement +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void decreaseAngleOnlyWithBarMovement(){
+        decreaseAngle();
+        timesWhereAngleDecreasedOnlyWithBarMovement += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.DECREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES && !lg.achieved){
+                if (timesWhereAngleDecreasedOnlyWithBarMovement == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesWhereAngleDecreasedOnlyWithBarMovement < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesWhereAngleDecreasedOnlyWithBarMovement +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void increaseAngleOnlyWithBaInclination(){
+        increaseAngle();
+        timesWhereAngleIncreasedOnlyWithBarInclination += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES && !lg.achieved){
+                if (timesWhereAngleIncreasedOnlyWithBarInclination == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesWhereAngleIncreasedOnlyWithBarInclination < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesWhereAngleIncreasedOnlyWithBarInclination +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void decreaseAngleOnlyWithBarInclination(){
+        decreaseAngle();
+        timesWhereAngleDecreasedOnlyWithBarInclination += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.DECREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES && !lg.achieved){
+                if (timesWhereAngleDecreasedOnlyWithBarInclination == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesWhereAngleDecreasedOnlyWithBarInclination < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesWhereAngleDecreasedOnlyWithBarInclination +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void increaseAngleWithBarMovementAndInclination(){
+        increaseAngle();
+        timesWhereAngleIncreasedWithBarMovementAndInclination += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.INCREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES && !lg.achieved){
+                if (timesWhereAngleIncreasedWithBarMovementAndInclination == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesWhereAngleIncreasedWithBarMovementAndInclination < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesWhereAngleIncreasedWithBarMovementAndInclination +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void decreaseAngleWithBarMovementAndInclination(){
+        increaseAngle();
+        timesWhereAngleDecreasedWithBarMovementAndInclination += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.DECREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES && !lg.achieved){
+                if (timesWhereAngleDecreasedWithBarMovementAndInclination == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesWhereAngleDecreasedWithBarMovementAndInclination < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesWhereAngleDecreasedWithBarMovementAndInclination +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+
+    public void accelerateWithBarIncreasingAngle(){
+        increaseAngle();
+        timesOfAccelerationWithBarIncreasingAngle += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.ACCELERATE_WITH_BAR_INCREASING_ANGLE_N_TIMES && !lg.achieved){
+                if (timesOfAccelerationWithBarIncreasingAngle == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesOfAccelerationWithBarIncreasingAngle < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesOfAccelerationWithBarIncreasingAngle +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void decelerateWithBarDecreasingAngle(){
+        increaseAngle();
+        timesOfDecelerationWithBarDecreasingAngle += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.DECELERATE_WITH_BAR_DECREASING_ANGLE_N_TIMES && !lg.achieved){
+                if (timesOfDecelerationWithBarDecreasingAngle == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesOfDecelerationWithBarDecreasingAngle < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesOfDecelerationWithBarDecreasingAngle +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void decelerateWithoutReachMaxAngle(){
+        increaseAngle();
+        timesOfDecelerationWithoutReachingMaxAngle += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE && !lg.achieved){
+                if (timesOfDecelerationWithoutReachingMaxAngle == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesOfDecelerationWithoutReachingMaxAngle < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesOfDecelerationWithoutReachingMaxAngle +" / "+lg.value);
+                }
+            }
+        }
+    }
+
+    public void accelerateWithoutReachMinAngle(){
+        increaseAngle();
+        timesOfAccelerationWithoutReachingMinAngle += 1;
+        for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE && !lg.achieved){
+                if (timesOfAccelerationWithoutReachingMinAngle == lg.value) {
+                    lg.setAchieved();
+                    Game.messages.showMessage(lg.messageText + " " + lg.value);
+                } else if (timesOfAccelerationWithoutReachingMinAngle < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesOfAccelerationWithoutReachingMinAngle +" / "+lg.value);
                 }
             }
         }
@@ -251,14 +428,30 @@ public class LevelGoals {
     public void clearAchievements() {
         for (int i = 0; i < levelGoals.size(); i++){
             levelGoals.get(i).achieved = false;
-            timesOfAngleDecrease = 0;
-            timesOfAngleIncrease = 0;
+            timesWhereAngleDecreased = 0;
+            timesWhereAngleIncreased = 0;
             timesOfAccelerate = 0;
             timesOfDecelerate = 0;
             timesOfChangeBallSpeedInARow = 0;
             timesOfObstacleHit = 0;
             timesOfCollisionBetweenBalls = 0;
             timesOfBallReachedWithMaximunBarSpped = 0;
+
+            timesWhereAngleDecreasedOnlyWithBarMovement = 0;
+            timesWhereAngleIncreasedOnlyWithBarMovement = 0;
+
+            timesWhereAngleDecreasedOnlyWithBarInclination = 0;
+            timesWhereAngleIncreasedOnlyWithBarInclination = 0;
+
+            timesWhereAngleIncreasedWithBarMovementAndInclination = 0;
+            timesWhereAngleDecreasedWithBarMovementAndInclination = 0;
+
+            timesOfAccelerationWithBarIncreasingAngle = 0;
+            timesOfDecelerationWithBarDecreasingAngle = 0;
+
+            timesOfAccelerationWithoutReachingMinAngle = 0;
+            timesOfDecelerationWithoutReachingMaxAngle = 0;
+
         }
     }
 }

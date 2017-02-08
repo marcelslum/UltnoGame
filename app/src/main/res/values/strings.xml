@@ -201,5 +201,41 @@
     <string name="messageGroupsUnblocked">Grupos desbloqueados</string>
     <string name="vibracao">Vibração</string>
     <string name="menuTutoriais">Existem tutoriais não vistos (clique aqui).</string>
+    <string name="levelGoal21a">Reduza o ângulo da bola somente utilizando o movimento da barra por</string>
+    <string name="levelGoal21b">vezes</string>
+    <string name="levelGoal21m">Ângulo reduzido com movimento da barra:</string>
+    <string name="levelGoal22a">Aumente o ângulo da bola somente utilizando o movimento da barra por</string>
+    <string name="levelGoal22b">vezes</string>
+    <string name="levelGoal22m">Ângulo aumentado com movimento da barra:</string>
+    <string name="levelGoal23a">Diminua o ângulo da bola somente utilizando a inclinação da barra por</string>
+    <string name="levelGoal23b">vezes</string>
+    <string name="levelGoal23m">Ângulo reduzido com inclinação da barra:</string>
+    <string name="levelGoal24a">Aumente o ângulo da bola somente utilizando a inclinação da barra por</string>
+    <string name="levelGoal24b">vezes</string>
+    <string name="levelGoal24m">Ângulo aumentado com inclinação da barra:</string>
+    <string name="levelGoal25a">Diminua o ângulo da bola utilizando o movimento e a inclinação da barra por </string>
+    <string name="levelGoal25b">vezes</string>
+    <string name="levelGoal25m">Ângulo reduzido com inclinação e movimento da barra:</string>
+    <string name="levelGoal26a">Aumente o ângulo da bola utilizando o movimento e a inclinação da barra por </string>
+    <string name="levelGoal26b">vezes</string>
+    <string name="levelGoal26m">Ângulo aumentado com inclinação e movimento da barra:</string>
+    <string name="levelGoal27a">Acelere a bola aumentando o seu ângulo com a inclinação da barra por </string>
+    <string name="levelGoal27b">vezes</string>
+    <string name="levelGoal27m">Bola acelerada com angulo aumentado pela inclinação:</string>
+    <string name="levelGoal28a">Desacelere a bola diminuindo o seu ângulo com a inclinação da barra por </string>
+    <string name="levelGoal28b">vezes</string>
+    <string name="levelGoal28m">Bola desacelerada com ângulo diminuido pela inclinação:</string>
+    <string name="levelGoal29a">Acelere a bola por  </string>
+    <string name="levelGoal29b">vezes sem atingir o ângulo mínimo</string>
+    <string name="levelGoal29m">Bola acelerada sem atingir ângulo mínimo:</string>
+    <string name="levelGoal30a">Desacelere a bola por  </string>
+    <string name="levelGoal30b">vezes sem atingir o ângulo máximo</string>
+    <string name="levelGoal30m">Bola desacelerada sem atingir ângulo máximo:</string>
+
+
+
+
+
+
 
 </resources>

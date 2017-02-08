@@ -34,6 +34,20 @@ public class LevelGoal{
     public static final int ACCELERATE_N_TIMES_IN_A_ROW = 19;
     public static final int DECELERATE_N_TIMES_IN_A_ROW = 20;
 
+    public static final int DECREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES = 21;
+    public static final int INCREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES = 22;
+
+    public static final int DECREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES = 23;
+    public static final int INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES = 24;
+
+    public static final int DECREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES = 25;
+    public static final int INCREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES = 26;
+
+    public static final int ACCELERATE_WITH_BAR_INCREASING_ANGLE_N_TIMES = 27;
+    public static final int DECELERATE_WITH_BAR_DECREASING_ANGLE_N_TIMES = 28;
+
+    public static final int ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE = 29;
+    public static final int DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE = 30;
 
 
     public void setText() {
@@ -91,9 +105,40 @@ public class LevelGoal{
         } else if (type == DECELERATE_N_TIMES_IN_A_ROW) {
             text = Game.getContext().getResources().getString(R.string.levelGoal20a) + " " + String.valueOf(value) + " " +
                     Game.getContext().getResources().getString(R.string.levelGoal20b);
+        } else if (type == DECREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal21a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal21b);
+        } else if (type == INCREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal22a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal22b);
+        } else if (type == DECREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal23a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal23b);
+        } else if (type == INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal24a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal24b);
+        } else if (type == DECREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal25a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal25b);
+        } else if (type == INCREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal26a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal26b);
+        } else if (type == ACCELERATE_WITH_BAR_INCREASING_ANGLE_N_TIMES) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal27a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal27b);
+        } else if (type == DECELERATE_WITH_BAR_DECREASING_ANGLE_N_TIMES) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal28a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal28b);
+        } else if (type == ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal29a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal29b);
+        } else if (type == DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal30a) + " " + String.valueOf(value) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal30b);
         } else {
             text = "sem texto definido";
         }
+
     }
 
     public void setMessageText(){
@@ -131,9 +176,27 @@ public class LevelGoal{
             messageText = Game.getContext().getResources().getString(R.string.levelGoal3m);
         } else if (type == DECELERATE_N_TIMES_IN_A_ROW){
             messageText = Game.getContext().getResources().getString(R.string.levelGoal5m);
-
+        } else if (type == DECREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal21m);
+        } else if (type == INCREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal22m);
+        } else if (type == DECREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal23m);
+        } else if (type == INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal24m);
+        } else if (type == DECREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal25m);
+        } else if (type == INCREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal26m);
+        } else if (type == ACCELERATE_WITH_BAR_INCREASING_ANGLE_N_TIMES) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal27m);
+        } else if (type == DECELERATE_WITH_BAR_DECREASING_ANGLE_N_TIMES) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal28m);
+        } else if (type == ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal29m);
+        } else if (type == DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal30m);
         }
-
     }
 
     public LevelGoal(int numberOfStars, int type, int value) {
