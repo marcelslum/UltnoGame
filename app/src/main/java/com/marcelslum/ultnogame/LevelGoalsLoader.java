@@ -28,8 +28,10 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL 3
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
-            lg.add(new LevelGoal(2, LevelGoal.DECELERATE_N_TIMES, 6));
-            lg.add(new LevelGoal(2, LevelGoal.DECELERATE_MINIMUN, 0));
+            lg.add(new LevelGoal(1, LevelGoal.DECREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES, 5));
+            lg.add(new LevelGoal(1, LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES, 5));
+            lg.add(new LevelGoal(1, LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES, 5));
+            lg.add(new LevelGoal(1, LevelGoal.DECREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES, 5));
         }
 
         ln += 1; // ---------- LEVEL 4
