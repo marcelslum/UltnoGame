@@ -37,6 +37,8 @@ public class LevelGoals {
     int timesOfBallReachedWithMaximunBarSpped = 0;
 
     public int firstTimeLivingBalls = 0;
+    public boolean timeLivingBallsMessage1 = false;
+    public boolean timeLivingBallsMessage2 = false;
     
     public final static String TAG = "LevelGoals";
 
@@ -70,16 +72,31 @@ public class LevelGoals {
 
                 if (number >= lg.value){
                     if (firstTimeLivingBalls == 0){
+                        Game.messages.showMessage(lg.messageText + " " + lg.value + Game.getContext().getResources().getString(R.string.levelGoal12m2));
                         firstTimeLivingBalls = time;
+                        timeLivingBallsMessage1 = false;
+                        timeLivingBallsMessage2 = false;
                     } else {
                         if (time - firstTimeLivingBalls >= lg.value2){
                             lg.setAchieved();
                             Game.messages.showMessage(lg.messageText + " " + lg.value);
+                        } else if (time - firstTimeLivingBalls >= Math.floor(lg.value2/2)){
+                            if (timeLivingBallsMessage1) {
+                                Game.messages.showMessage(lg.messageText + " " + lg.value + " - " + String.valueOf(lg.value2 - Math.floor(lg.value2 / 2)) +
+                                        Game.getContext().getResources().getString(R.string.levelGoal12m3));
+                            }
+                        } else if (time - firstTimeLivingBalls >= Math.floor(lg.value2/4)){
+                            if (timeLivingBallsMessage1) {
+                                Game.messages.showMessage(lg.messageText + " " + lg.value + " - " + String.valueOf(lg.value2 - Math.floor(lg.value2 / 4)) +
+                                        Game.getContext().getResources().getString(R.string.levelGoal12m3));
+                            }
                         }
                     }
                 } else {
                     if (firstTimeLivingBalls > 0){
                         firstTimeLivingBalls = 0;
+                        timeLivingBallsMessage1 = false;
+                        timeLivingBallsMessage2 = false;
                     }
                 }
             }
@@ -147,6 +164,9 @@ public class LevelGoals {
             if (lg.type == LevelGoal.REACH_MAXIMUN_ANGLE && !lg.achieved){
                 lg.setAchieved();
                 Game.messages.showMessage(lg.messageText);
+            } else
+            if (lg.type == LevelGoal.DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE && !lg.achieved){
+                Game.messages.showMessage(lg.messageText + " " + timesOfDecelerationWithoutReachingMaxAngle +" / "+lg.value);
             }
         }
     }
@@ -160,6 +180,9 @@ public class LevelGoals {
             if (lg.type == LevelGoal.REACH_MINIMUN_ANGLE && !lg.achieved){
                 lg.setAchieved();
                 Game.messages.showMessage(lg.messageText);
+            } else
+            if (lg.type == LevelGoal.ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE && !lg.achieved){
+                Game.messages.showMessage(lg.messageText + " " + timesOfAccelerationWithoutReachingMinAngle +" / "+lg.value);
             }
         }
     }
@@ -405,7 +428,6 @@ public class LevelGoals {
             }
         }
         speedChange();
-        accelerateWithoutReachMinAngle();
     }
 
     public void decelerate(){
@@ -423,7 +445,6 @@ public class LevelGoals {
             }
         }
         speedChange();
-        decelerateWithoutReachMaxAngle();
     }
 
     public void speedChange(){

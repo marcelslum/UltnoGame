@@ -12,6 +12,7 @@ public class LevelGoal{
     boolean achieved;
     String text;
     String messageText;
+    String messageTextDown;
 
     public static final int JUST_FINISH = 0;
     public static final int FINISH_IN_N_SECONDS = 1;
@@ -54,8 +55,13 @@ public class LevelGoal{
         if (type == JUST_FINISH) {
             text = Game.getContext().getResources().getString(R.string.levelGoal0);
         } else if (type == FINISH_IN_N_SECONDS) {
-            text = Game.getContext().getResources().getString(R.string.levelGoal1a) + " " + String.valueOf(value) + " " +
-                    Game.getContext().getResources().getString(R.string.levelGoal1b);
+
+            int minutes = (int) Math.floor(value / 60);
+            int seconds = value -(minutes * 60);
+
+            text = Game.getContext().getResources().getString(R.string.levelGoal1a) + " " + String.valueOf(minutes) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal1b) + String.valueOf(seconds) + " " +
+                    Game.getContext().getResources().getString(R.string.levelGoal1c);
         } else if (type == ACCELERATE_MAXIMUN) {
             text = Game.getContext().getResources().getString(R.string.levelGoal2);
         } else if (type == ACCELERATE_N_TIMES) {
@@ -142,6 +148,9 @@ public class LevelGoal{
     }
 
     public void setMessageText(){
+
+        messageTextDown = ".";
+
         if (type == ACCELERATE_MAXIMUN){
             messageText = Game.getContext().getResources().getString(R.string.levelGoal2m);
         } else if (type == DECELERATE_MINIMUN){
@@ -194,10 +203,14 @@ public class LevelGoal{
             messageText = Game.getContext().getResources().getString(R.string.levelGoal28m);
         } else if (type == ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE) {
             messageText = Game.getContext().getResources().getString(R.string.levelGoal29m);
+
         } else if (type == DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE) {
             messageText = Game.getContext().getResources().getString(R.string.levelGoal30m);
         }
     }
+
+
+
 
     public LevelGoal(int numberOfStars, int type, int value) {
         this.numberOfStars = numberOfStars;
@@ -207,6 +220,7 @@ public class LevelGoal{
         this.achieved = false;
         setText();
         setMessageText();
+
     }
 
     public LevelGoal(int numberOfStars, int type, int value, int value2) {

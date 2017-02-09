@@ -20,7 +20,7 @@
     <string name="proximaInstrucao">Próxima instrução</string>
     <string name="Jogar">Play</string>
 
-    <string name="t1t1">Bem vindo ao Ultno! Clique na flecha à direita para continuar este tutorial.</string>
+    <string name="t1t1">Bem vindo ao Ultno! Clique na flecha à direita para continuar a ver o tutorial.</string>
     <string name="t1t2">Este jogo é dividido em níveis, que são organizados em grupos de níveis.</string>
     <string name="t1t3">Acima estão os três primeiros grupos de níveis.</string>
     <string name="t1t4">Cada grupo necessita de um determinado número de estrelas para estar disponível.</string>
@@ -42,30 +42,46 @@
     
     
     
-    <string name="t2t1">Antes de jogar, vamos aprender os comandos e instruções básicas do jogo.</string>
+    <string name="t2t1">Vamos dar uma olhada nos comandos e instruções básicas do jogo.</string>
     <string name="t2t2">Mova a barra para a esquerda e para a direita apertando um dos botões localizados nas extremidades inferiores da tela.</string>
     <string name="t2t3">Não deixe a bola cair.</string>
     <string name="t2t4">Atinja os alvos com a bola para eliminá-los. Cada alvo valerá 10 pontos.</string>
     <string name="t2t5">Elimine todos os alvos para completar o nível, mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
-    <string name="t2t6">Através do controle da barra, é possível alterar a direção e a velocidade da bola.</string>
-    <string name="t2t7">Ao atingir a bola com a barra se movimentando na direção contrária, a velocidade da bola aumentará</string>
-    <string name="t2t8">Já o ângulo da bola em relação à barra será reduzido.</string>
-    <string name="t2t9">O que ocorre com a velocidade e o ângulo da bola pode ser acompanhado por este painel </string>
-    <string name="t2t10">A barra verde representa a velocidade da bola, que, nesse caso, esta aumentando.</string>
-    <string name="t2t11">A barra azul, por sua vez, representa o ângulo, que, nesse caso, está diminuindo.</string>
-    <string name="t2t12">A velocidade e o ângulo possuem valores máximos e mínimos.</string>
-    <string name="t2t13">Vejamos agora o que ocorre na situação contrária.</string>
-    <string name="t2t14">Desta vez, a bola e a barra estão se movimentando na mesma direção.</string>
-    <string name="t2t15">Isso faz com que a velocidade da bola diminua.</string>
-    <string name="t2t16">E o ângulo em relação à barra aumente.</string>
-    <string name="t2t17">Use o que aprendeu para controlar a bola e acertar os alvos mais rapidamente.</string>
-    <string name="t2t18">Vamos jogar?</string>
+
+    <string name="t3t1">Através do controle do movimento da barra, é possível alterar a direção e a velocidade da bola.</string>
+    <string name="t3t2">Ao atingir a bola com a barra se movimentando na direção contrária, a velocidade da bola aumentará</string>
+    <string name="t3t3">Já o ângulo da bola em relação à barra será reduzido.</string>
+    <string name="t3t4">O que ocorre com a velocidade e o ângulo da bola pode ser acompanhado por este painel </string>
+    <string name="t3t5">A barra verde representa a velocidade da bola, que, nesse caso, esta aumentando.</string>
+    <string name="t3t6">A barra azul, por sua vez, representa o ângulo, que, nesse caso, está diminuindo.</string>
+    <string name="t3t7">A velocidade e o ângulo possuem valores máximos e mínimos.</string>
+    <string name="t3t8">Vejamos agora o que ocorre na situação contrária.</string>
+    <string name="t3t9">Desta vez, a bola e a barra estão se movimentando na mesma direção.</string>
+    <string name="t3t10">Isso faz com que a velocidade da bola diminua.</string>
+    <string name="t3t11">E o ângulo em relação à barra aumente.</string>
+    <string name="t3t12">Observe também que o movimento da barra não é linear, pois ela acelera quando se movimenta por mais tempo.</string>
+    <string name="t3t13">A velocidade da barra no momento do contato influencia no efeito provocado na bola.</string>
+    <string name="t3t14">Quanto maior a velocidade da barra, maior o efeito no ângulo e na velocidade da bola.</string>
+    <string name="t3t15">Use esses funcionalidades para controlar a bola e eliminar os alvos mais rapidamente.</string>
+
+    <string name="t4t1">Outra forma de controlar o âgulo da bola é através da inclinação da barra.</string>
+    <string name="t4t2">Mova seu dispositivo rapidademente para a esquerda ou para a direita para a barra se inclinar</string>
+    <string name="t4t3">O movimento deve ser feito como você fosse dar um tranco.</string>
+    <string name="t4t4">Se o tranco for dado para a esquerda, a barra se inclinará para a direita.</string>
+    <string name="t4t5">Se o tranco for dado para a direita, a inclinação será para a esquerda.</string>
+    <string name="t4t6">Executar esse movimento ao atingir a bola com a barra fará com que o ângulo da bola se altere.</string>
+    <string name="t4t7">Se a inclinação ocorrer na mesma direção do movimento da bola, o ângulo diminuirá.</string>
+    <string name="t4t8">Se a inclinação ocorrer na direção contrária ao movimento da bola, o ângulo aumentará.</string>
+    <string name="t4t9">É possível combinar a inclinação com o movimento da barra.</string>
+    <string name="t4t10">Por exemplo, na situação acima, o ângulo da bola está diminuindo em razão de a barra estar se movimentando na direção contrária.</string>
+    <string name="t4t11">Mas o ângulo também sofre influência da inclinação da barra, o que faz que com ele seja ainda mais diminuido.</string>
+
     
-    <string name="t3t1">A partir de agora, os níveis poderão ter obstáculos indestrutíveis.</string>
+    <string name="t3333t1">A partir de agora, os níveis poderão ter obstáculos indestrutíveis.</string>
     
-    <string name="t4t1">Nos próximos níveis, haverá alvos de cores diferentes.</string>
-    <string name="t4t2">Os alvos verdes, quanto atingidos, serão transformados em alvos azuis.</string>
-    <string name="t4t3">Já os alvos azuis passarão pela cor preta antes de poderem ser destruídos.</string>
+    <string name="t444t1">Nos próximos níveis, haverá alvos de cores diferentes.</string>
+    <string name="t444t2">Os alvos verdes, quanto atingidos, serão transformados em alvos azuis.</string>
+    <string name="t4444t3">Já os alvos azuis passarão pela cor preta antes de poderem ser destruídos.</string>
     
     <string name="t5t1">Agora a coisa vai ficar um pouco mais complexa.</string>
     <string name="t5t2">Haverá, nos próximos níveis, alvos de cor vermelha.</string>
@@ -139,7 +155,8 @@
     <string name="estrelas">estrelas</string>
     <string name="levelGoal0">Finalize o nível</string>
     <string name="levelGoal1a">Termine o nível em menos de</string>
-    <string name="levelGoal1b">segundos</string>
+    <string name="levelGoal1b">minuto(s)</string>
+    <string name="levelGoal1c">e segundo(s)</string>
     <string name="levelGoal2">Faça a bola atingir o máximo de sua velocidade</string>
     <string name="levelGoal4">Faça a bola atingir o mínimo de sua velocidade</string>
     <string name="levelGoal3a">Acelere a bola utilizando o movimento da barra por</string>
@@ -201,22 +218,22 @@
     <string name="messageGroupsUnblocked">Grupos desbloqueados</string>
     <string name="vibracao">Vibração</string>
     <string name="menuTutoriais">Existem tutoriais não vistos (clique aqui).</string>
-    <string name="levelGoal21a">Reduza o ângulo da bola somente utilizando o movimento da barra por</string>
+    <string name="levelGoal21a">Reduza o ângulo da bola utilizando somente o movimento da barra por</string>
     <string name="levelGoal21b">vezes</string>
     <string name="levelGoal21m">Ângulo reduzido com movimento da barra:</string>
-    <string name="levelGoal22a">Aumente o ângulo da bola somente utilizando o movimento da barra por</string>
+    <string name="levelGoal22a">Aumente o ângulo da bola utilizando somente o movimento da barra por</string>
     <string name="levelGoal22b">vezes</string>
     <string name="levelGoal22m">Ângulo aumentado com movimento da barra:</string>
-    <string name="levelGoal23a">Diminua o ângulo da bola somente utilizando a inclinação da barra por</string>
+    <string name="levelGoal23a">Diminua o ângulo da bola utilizando somente a inclinação da barra por</string>
     <string name="levelGoal23b">vezes</string>
     <string name="levelGoal23m">Ângulo reduzido com inclinação da barra:</string>
-    <string name="levelGoal24a">Aumente o ângulo da bola somente utilizando a inclinação da barra por</string>
+    <string name="levelGoal24a">Aumente o ângulo da bola utilizando somente a inclinação da barra por</string>
     <string name="levelGoal24b">vezes</string>
     <string name="levelGoal24m">Ângulo aumentado com inclinação da barra:</string>
-    <string name="levelGoal25a">Diminua o ângulo da bola utilizando o movimento e a inclinação da barra por </string>
+    <string name="levelGoal25a">Diminua o ângulo da bola utilizando, ao mesmo tempo, o movimento e a inclinação da barra por </string>
     <string name="levelGoal25b">vezes</string>
     <string name="levelGoal25m">Ângulo reduzido com inclinação e movimento da barra:</string>
-    <string name="levelGoal26a">Aumente o ângulo da bola utilizando o movimento e a inclinação da barra por </string>
+    <string name="levelGoal26a">Aumente o ângulo da bola utilizando, ao mesmo tempo, o movimento e a inclinação da barra por </string>
     <string name="levelGoal26b">vezes</string>
     <string name="levelGoal26m">Ângulo aumentado com inclinação e movimento da barra:</string>
     <string name="levelGoal27a">Acelere a bola aumentando o seu ângulo com a inclinação da barra por </string>
@@ -231,11 +248,8 @@
     <string name="levelGoal30a">Desacelere a bola por  </string>
     <string name="levelGoal30b">vezes sem atingir o ângulo máximo</string>
     <string name="levelGoal30m">Bola desacelerada sem atingir ângulo máximo:</string>
-
-
-
-
-
+    <string name="levelGoal12m2">- iniciando contagem</string>
+    <string name="levelGoal12m3"> segundos faltantes</string>
 
 
 </resources>

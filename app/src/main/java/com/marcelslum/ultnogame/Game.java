@@ -349,7 +349,7 @@ public class Game {
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
-            levelGoalsPanel = new LevelGoalsPanel("levelGoalsPanel", resolutionX * 0.24f, resolutionY * 0.2f, resolutionX * 0.025f, resolutionX * 0.79f);
+            levelGoalsPanel = new LevelGoalsPanel("levelGoalsPanel", resolutionX * 0.2f, resolutionY * 0.2f, resolutionX * 0.025f, resolutionX * 0.79f);
 
             for (int i = 0; i < Level.levelGoalsObject.levelGoals.size(); i++){
                 LevelGoal lg = Level.levelGoalsObject.levelGoals.get(i);
