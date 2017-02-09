@@ -38,9 +38,6 @@
     <string name="t1t16">É possível jogar novamente um nível já finalizado para tentar melhorar a quantidade de estrelas e pontos adquiridos.</string>
     <string name="t1t17">A cada nova tentativa, você começará o nível sem nenhuma estrela, ou seja, sem nenhum objetivo completo.</string>
     <string name="t1t18">Mas não se preocupe, você não perderá as estrelas já contabilizadas em tentativas anteriores.</string>
-    <string name="t1t19">Vamos começar?</string>
-    
-    
     
     <string name="t2t1">Vamos dar uma olhada nos comandos e instruções básicas do jogo.</string>
     <string name="t2t2">Mova a barra para a esquerda e para a direita apertando um dos botões localizados nas extremidades inferiores da tela.</string>
