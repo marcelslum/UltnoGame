@@ -25,6 +25,7 @@ public class Texture {
     public final static int TEXTURE_LEVEL_ICONS = 8;
     public final static int TEXTURE_TUTORIALS1 = 9;
     public final static int TEXTURE_TUTORIALS2 = 10;
+    public final static int TEXTURE_TUTORIALS3 = 13;
     public final static int TEXTURE_TUTORIAL_ICONS = 11;
     public final static int TEXTURE_GROUP_ICONS = 12;
 
@@ -92,6 +93,7 @@ public class Texture {
         Texture.textures.add(new Texture(Texture.TEXTURE_GROUP_ICONS, "drawable/group_icons"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS1, "drawable/tutorials1"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS2, "drawable/tutorials2"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS3, "drawable/tutorials3"));
     }
 
     Texture(int id, String resourceIdentifier){
