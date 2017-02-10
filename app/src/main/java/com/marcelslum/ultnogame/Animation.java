@@ -19,7 +19,7 @@ public class Animation{
     private long startTime;
     private int positionNotFluid;
     boolean started;
-    private float elapsedTime;
+    public float elapsedTime;
     private float percentage;
     private float initialValue;
     private float initialTime;

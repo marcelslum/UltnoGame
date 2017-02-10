@@ -23,7 +23,6 @@ public class Messages extends Entity {
             }
         }
 
-
         Log.e("messages", "numberOfActiveTexts "+numberOfActiveTexts);
 
         final Text textObject;
@@ -34,7 +33,7 @@ public class Messages extends Entity {
             childs.set(childToReplace, textObject);
         } else {
             textObject = new Text("text", x, y + (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
-                    Game.gameAreaResolutionY * 0.05f, messageText, Game.font, new Color (0.3f, 0.3f, 0.3f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.3f, 0.3f, 0.3f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.add(textObject);
         }
 
@@ -69,7 +68,4 @@ public class Messages extends Entity {
             }
         }
     }
-
-
-
 }

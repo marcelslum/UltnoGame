@@ -47,7 +47,7 @@ public class LevelGoalsLoader {
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(1, LevelGoal.ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE, 10));
-            lg.add(new LevelGoal(1, LevelGoal.DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE, 10));
+            lg.add(new LevelGoal(1, LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS, 1, 30));
             lg.add(new LevelGoal(1, LevelGoal.HIT_OBSTACLE_N_TIMES, 5));
             lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 200));
         }

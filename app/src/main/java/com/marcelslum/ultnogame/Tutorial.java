@@ -256,8 +256,6 @@ public class Tutorial {
             currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t1t18),
                     textBoxY, textBoxSize);
 
-            currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t1t19),
-                    textBoxY, textBoxSize);
 
         } else if (currentTutorial == Tutorial.TUTORIAL_INICIO) {
 
@@ -288,6 +286,7 @@ public class Tutorial {
             currentTutorialObject.addFrame(i3, Game.getContext().getResources().getString(R.string.t2t3), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t4), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t5), textBoxY, textBoxSize);
+            /*
             currentTutorialObject.addFrame(i4, Game.getContext().getResources().getString(R.string.t2t6), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i4, Game.getContext().getResources().getString(R.string.t2t7), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i4, Game.getContext().getResources().getString(R.string.t2t8), textBoxY, textBoxSize);
@@ -301,6 +300,7 @@ public class Tutorial {
             currentTutorialObject.addFrame(i5, Game.getContext().getResources().getString(R.string.t2t16), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, Game.getContext().getResources().getString(R.string.t2t17), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i5, Game.getContext().getResources().getString(R.string.t2t18), textBoxY, textBoxSize);
+            */
 
         } else if (currentTutorial == Tutorial.TUTORIAL_OBSTACULO) {
 

@@ -221,6 +221,8 @@ public class Entity{
         }
     }
 
+
+
     void reduceAlpha(int duration, float finalValue){
         Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue).start();
     }

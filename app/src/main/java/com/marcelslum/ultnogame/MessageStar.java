@@ -15,6 +15,8 @@ public class MessageStar extends Entity {
     boolean newShowing;
     int nextTotalStars;
     int nextNewStars;
+    Animation activeAnimation;
+    int currentNewStars;
 
 
     public MessageStar(String name, float size, float x, float y) {
@@ -79,18 +81,59 @@ public class MessageStar extends Entity {
 
     public void show(int totalStars, int newStars, boolean stay){
 
-
         Log.e(TAG, "show Message Stars");
 
         if (!isShowing){
             isShowing = true;
             Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
         } else {
-            newShowing = true;
-            nextTotalStars = totalStars;
-            nextNewStars = newStars;
+            if (activeAnimation.elapsedTime < 2000){
+
+                for (int i = 0; i < totalStars; i++){
+                    stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+                }
+
+                for (int i = 0; i < 5; i++){
+                    stars.get(i).animations.clear();
+                }
+
+                if ((newStars + currentNewStars) > 0) {
+                    // adiciona animação na primeira estrela
+                    Animation animStars = Utils.createAnimation3v(stars.get(totalStars - 1 - 0), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, false);
+                    // adiciona animação às outras estrelas, por isso começa no i=1
+                    for (int i = 1; i < newStars; i++) {
+                        animStars.addAttachedEntities(stars.get(totalStars - 1 - i));
+                    }
+                    animStars.start();
+                }
+
+                Animation anim = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000,
+                        0f, stars.get(0).animTranslateX, 0.2f, 0f, 0.8f, 0f, 1f, Game.resolutionX, false, true);
+                anim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        currentNewStars = 0;
+                        clearDisplay();
+
+                    }
+                });
+                anim.start();
+
+                Utils.createAnimation4v(stars.get(1), "translateX1", "translateX", 2000, 0f,
+                        stars.get(0).animTranslateX, 0.2f + (1 * 0.02f), 0f,  0.8f + (1 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+                Utils.createAnimation4v(stars.get(2), "translateX2", "translateX", 2000, 0f,
+                        stars.get(0).animTranslateX, 0.2f + (2 * 0.02f), 0f,  0.8f + (2 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+                Utils.createAnimation4v(stars.get(3), "translateX3", "translateX", 2000, 0f,
+                        stars.get(0).animTranslateX, 0.2f + (3 * 0.02f), 0f,  0.8f + (3 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+                Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
+                        stars.get(0).animTranslateX, 0.2f + (4 * 0.02f), 0f,  0.8f + (4 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
+            }
+
+
             return;
         }
+
+        currentNewStars = newStars;
 
         Log.e(TAG, "showing");
 
@@ -126,8 +169,8 @@ public class MessageStar extends Entity {
 
             Sound.play(Sound.soundTextBoxAppear, 0.5f, 0.5f, 0);
 
-
-            Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX, 0.2f, 0f, 0.8f, 0f, 0f, 0f, false, true).start();
+            activeAnimation = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX, 0.2f, 0f, 0.8f, 0f, 0f, 0f, false, true);
+            activeAnimation.start();
 
             isShowing = false;
 
@@ -139,21 +182,16 @@ public class MessageStar extends Entity {
                     Game.resolutionX, 0.2f + (3 * 0.04f), 0f,  0.8f + (3 * 0.01f),0f,  1f, 0, false, true).start();
             Utils.createAnimation4v(stars.get(4), "translateX4", "translateX", 2000, 0f,
                     Game.resolutionX, 0.2f + (4 * 0.05f), 0f,  0.8f + (4 * 0.01f),0f,  1f, 0, false, true).start();
-
-
         } else {
 
             Animation anim = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX * 0.5f, 0.2f, 0f, 0.8f, 0f, 1f, Game.resolutionX, false, true);
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
-                    if (ms.newShowing) {
-                        ms.newShowing = false;
-                        ms.show(innerNextTotalStars, innerNextNewStars, false);
-                    } else {
                         ms.isShowing = false;
+                        currentNewStars = 0;
                         clearDisplay();
-                    }
+
                 }
             });
             anim.start();
