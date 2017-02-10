@@ -30,7 +30,11 @@ public class Tutorial {
         int starsToUnlock = 0;
         if (tutorialNumber == TUTORIAL_INSTRUCOES_INICIAIS){
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
-        } else if (tutorialNumber == TUTORIAL_INICIO){
+        } else if (tutorialNumber == TUTORIAL_INICIO && isTutorialUnblocked(TUTORIAL_INSTRUCOES_INICIAIS)){
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && isTutorialUnblocked(TUTORIAL_INICIO)){
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_INCLINAÇÃO_BARRA && isTutorialUnblocked(TUTORIAL_MOVIMENTO_BARRA)){
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
         } else if (tutorialNumber == TUTORIAL_OBSTACULO){
             starsToUnlock = LevelsGroupData.levelsGroupData.get(1).starsToUnlock;
