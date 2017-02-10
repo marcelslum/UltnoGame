@@ -74,28 +74,28 @@
     <string name="t4t11">Mas o ângulo também sofre influência da inclinação da barra, o que faz que com ele seja ainda mais diminuido.</string>
 
     
-    <string name="t3333t1">A partir de agora, os níveis poderão ter obstáculos indestrutíveis.</string>
+    <string name="t5t1">A partir de agora, os níveis poderão ter obstáculos indestrutíveis.</string>
     
-    <string name="t444t1">Nos próximos níveis, haverá alvos de cores diferentes.</string>
-    <string name="t444t2">Os alvos verdes, quanto atingidos, serão transformados em alvos azuis.</string>
-    <string name="t4444t3">Já os alvos azuis passarão pela cor preta antes de poderem ser destruídos.</string>
+    <string name="t6t1">Nos próximos níveis, haverá alvos de cores diferentes.</string>
+    <string name="t6t2">Os alvos verdes, quanto atingidos, serão transformados em alvos azuis.</string>
+    <string name="t6t3">Já os alvos azuis passarão pela cor preta antes de poderem ser destruídos.</string>
     
-    <string name="t5t1">Agora a coisa vai ficar um pouco mais complexa.</string>
-    <string name="t5t2">Haverá, nos próximos níveis, alvos de cor vermelha.</string>
-    <string name="t5t3">A bola que atinjir este alvo explodirá, dando origem a quatro novas bolas.</string>
-    <string name="t5t4">Mas atenção, você não precisa manter as quatro bolas vivas.</string>
-    <string name="t5t5">Nos próximos níveis, ao menos uma bola deve ser mantida viva.</string>
-    <string name="t5t6">A quantidade de bolas a serem salvas e a quantidade de bolas que podem ser perdidas é representada no painel.</string>
-    <string name="t5t7">Em preto, aparece a quantidade de bolas que devem permanecer vivas.</string>
-    <string name="t5t8">Em azul, a quantidade de bolas que podem ser perdidas.</string>
-    <string name="t5t9">Não se preocupe com as cores das bolas, tanto faz a cor da bola que permanecerá viva.</string>
-    <string name="t5t10">Além da vantagem óbvia de poder atingir mais alvos ao mesmo tempo, a manutenção de bolas trás outros benefícios.</string>
-    <string name="t5t11">Para cada bola extra viva, a pontuação ao atingir um alvo é dobrada.</string>
-    <string name="t5t12">Além disso, ao completar o nível, bolas extras vivas darão ainda mais pontos extras.</string>
-    <string name="t5t13">Portanto, procure manter as bolas extras o máximo de tempo possível.</string>
+    <string name="t7t1">Agora a coisa vai ficar um pouco mais complexa.</string>
+    <string name="t7t2">Haverá, nos próximos níveis, alvos de cor vermelha.</string>
+    <string name="t7t3">A bola que atinjir este alvo explodirá, dando origem a quatro novas bolas.</string>
+    <string name="t7t4">Mas atenção, você não precisa manter as quatro bolas vivas.</string>
+    <string name="t7t5">Nos próximos níveis, ao menos uma bola deve ser mantida viva.</string>
+    <string name="t7t6">A quantidade de bolas a serem salvas e a quantidade de bolas que podem ser perdidas é representada no painel.</string>
+    <string name="t7t7">Em preto, aparece a quantidade de bolas que devem permanecer vivas.</string>
+    <string name="t7t8">Em azul, a quantidade de bolas que podem ser perdidas.</string>
+    <string name="t7t9">Não se preocupe com as cores das bolas, tanto faz a cor da bola que permanecerá viva.</string>
+    <string name="t7t10">Além da vantagem óbvia de poder atingir mais alvos ao mesmo tempo, a manutenção de bolas trás outros benefícios.</string>
+    <string name="t7t11">Para cada bola extra viva, a pontuação ao atingir um alvo é dobrada.</string>
+    <string name="t7t12">Além disso, ao completar o nível, bolas extras vivas darão ainda mais pontos extras.</string>
+    <string name="t7t13">Portanto, procure manter as bolas extras o máximo de tempo possível.</string>
 
-    <string name="t6t1">A partir de agora, a posição dos obstáculos pode mudar. Fique atento. </string>
-    <string name="t7t1">Nos próximos níveis, o tamanho dos obstáculos também pode variar. </string>
+    <string name="t8t1">A partir de agora, a posição dos obstáculos pode mudar. Fique atento. </string>
+    <string name="t8t1">Nos próximos níveis, o tamanho dos obstáculos também pode variar. </string>
 
     <string name="t8t1">Veja se consegue lidar com o vento, que influenciará na velocidade da bola e da barra. </string>
 
