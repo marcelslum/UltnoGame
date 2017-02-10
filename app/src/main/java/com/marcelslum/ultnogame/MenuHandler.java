@@ -175,7 +175,7 @@ public class MenuHandler {
 
         float innerTextSize = Game.resolutionY * 0.08f;
 
-
+        /////////TUTORIAL_INSTRUCOES_INICIAIS
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INSTRUCOES_INICIAIS)){
             tutorialMenu.addOption(0, Texture.TEXTURE_TUTORIAL_ICONS, 1, new Animation.AnimationListener() {
                 @Override
@@ -191,7 +191,10 @@ public class MenuHandler {
             if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_INSTRUCOES_INICIAIS]){
                 tutorialMenu.addInnerText("instruçõesinner", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
             }
+        }
 
+        /////////TUTORIAL_INICIO
+        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INICIO)) {
             tutorialMenu.addOption(1, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
@@ -202,15 +205,52 @@ public class MenuHandler {
 
             tutorialMenu.addText(1, "jogar", Game.getContext().getResources().getString(R.string.tutorial2Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
-            
-            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_INICIO]){
+
+            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_INICIO]) {
                 tutorialMenu.addInnerText("jogarinner", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
             }
-            
         }
 
+
+        /////////TUTORIAL_MOVIMENTO_BARRA
+        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_MOVIMENTO_BARRA)) {
+            tutorialMenu.addOption(2, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    Tutorial.currentTutorial = Tutorial.TUTORIAL_MOVIMENTO_BARRA;
+                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
+                }
+            }, false);
+
+            tutorialMenu.addText(1, "movimentoBarra", Game.getContext().getResources().getString(R.string.tutorial3Tittle),
+                    Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+
+            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_MOVIMENTO_BARRA]) {
+                tutorialMenu.addInnerText("movimentoBarraInner", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+            }
+        }
+
+        /////////TUTORIAL_INCLINAÇÃO_BARRA
+        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INCLINACAO_BARRA)) {
+            tutorialMenu.addOption(3, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    Tutorial.currentTutorial = Tutorial.TUTORIAL_INCLINACAO_BARRA;
+                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
+                }
+            }, false);
+
+            tutorialMenu.addText(1, "inclinacaoBarra", Game.getContext().getResources().getString(R.string.tutorial4Tittle),
+                    Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+
+            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_INCLINACAO_BARRA]) {
+                tutorialMenu.addInnerText("inclinacaoBarraInner", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+            }
+        }
+
+        /////////TUTORIAL_OBSTACULO
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_OBSTACULO)){
-            tutorialMenu.addOption(2, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
+            tutorialMenu.addOption(4, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_OBSTACULO;
@@ -218,7 +258,7 @@ public class MenuHandler {
                 }
             }, false);
             
-            tutorialMenu.addText(1, "obstaculo", Game.getContext().getResources().getString(R.string.tutorial3Tittle),
+            tutorialMenu.addText(1, "obstaculo", Game.getContext().getResources().getString(R.string.tutorial5Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
             
             if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_OBSTACULO]){
@@ -226,8 +266,9 @@ public class MenuHandler {
             }
         }
 
+        /////////TUTORIAL_CORES
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_CORES)){
-            tutorialMenu.addOption(3, Texture.TEXTURE_TUTORIAL_ICONS, 4, new Animation.AnimationListener() {
+            tutorialMenu.addOption(5, Texture.TEXTURE_TUTORIAL_ICONS, 4, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_CORES;
@@ -235,7 +276,7 @@ public class MenuHandler {
                 }
             }, false);
 
-            tutorialMenu.addText(1, "cores", Game.getContext().getResources().getString(R.string.tutorial4Tittle),
+            tutorialMenu.addText(1, "cores", Game.getContext().getResources().getString(R.string.tutorial6Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
             
             if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_CORES]){
@@ -244,8 +285,9 @@ public class MenuHandler {
 
         }
 
+        /////////TUTORIAL_EXPLOSAO
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_EXPLOSAO)){
-            tutorialMenu.addOption(4, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+            tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_EXPLOSAO;
@@ -253,7 +295,7 @@ public class MenuHandler {
                 }
             }, false);
 
-            tutorialMenu.addText(1, "explosao", Game.getContext().getResources().getString(R.string.tutorial5Tittle),
+            tutorialMenu.addText(1, "explosao", Game.getContext().getResources().getString(R.string.tutorial7Tittle),
                     Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
             
             if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_EXPLOSAO]){
