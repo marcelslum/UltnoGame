@@ -107,7 +107,7 @@ public class Obstacle extends Rectangle{
             accumulatedTranslateX += responseX;
             accumulatedTranslateY += responseY;
         }
-        this.checkTransformations(false);
-    }
 
+        checkTransformations(false);
+    }
 }

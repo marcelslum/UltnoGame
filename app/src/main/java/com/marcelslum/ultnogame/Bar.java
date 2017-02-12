@@ -216,7 +216,9 @@ public class Bar extends Rectangle{
     }
 
     public void specialBarScale() {
-        scale(0.1f, 0.0f);
+
+
+        scale(0.1f * (1 / accumulatedScaleX), 0.0f);
         startTimeSpecialBallAnim = Utils.getTime();
         specialBallAnimActive = true;
     }

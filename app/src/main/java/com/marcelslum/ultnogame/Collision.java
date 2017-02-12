@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public abstract class Collision {
@@ -103,10 +105,11 @@ public abstract class Collision {
                         int quantityPassagens;
 
                         // defina quantas passagens serão realidades, com base na maior velocidade
-                        quantityPassagens = Math.round(velocities[maxIndex]/2) ;
+                        quantityPassagens = Math.round(velocities[maxIndex]/5) ;
                         if (quantityPassagens == 0){
                             quantityPassagens = 1;
                         }
+
 
                         //Log.e("Game", " a.previousPositionX "+a.previousPositionX);
                         //Log.e("Game", " a.previousPositionY "+a.previousPositionY);
@@ -119,7 +122,7 @@ public abstract class Collision {
                         float bPreviousY = b.previousPositionY;
 
                         //if (b.name == "obstacle"){
-                        //    Log.e("game", " x"+ this.polygon2.pos.x);
+                        //    Log.e("Collisions", " quantityPassagens "+quantityPassagens);
                         //}
 
                         //Log.e("Game", " a.previousPositionX 2"+aPreviousX);
@@ -207,7 +210,7 @@ public abstract class Collision {
 
                             // se houver registro de colisão, mas se a resposta foi zerada, retorna para uma próxima verificação
                             if (collided) {
-                                if (response.overlapV.x != 0 &&  response.overlapV.y != 0){
+                                if (!(response.overlapV.x == 0 &&  response.overlapV.y == 0)){
                                     break;
                                 }
                             }
@@ -304,18 +307,21 @@ public abstract class Collision {
         }
         */
 
+        //Log.e("Collision", a.name + " contra " + b.name);
+
         a.accumulatedTranslateX += ax - a.positionX;
         a.accumulatedTranslateY += ay - a.positionY;
         b.accumulatedTranslateX += bx - b.positionX;
         b.accumulatedTranslateY += by - b.positionY;
 
         if (a.getWeight() > b.getWeight()) {// Move the other object out of us
-            //Log.e("Collision", a.name + " mais pesado que " + b.name + " rX "+responseX + " rY " + responseY);
+            //Log.e("Collision", a.name + " A mais pesado que " + b.name + " rX "+responseX + " rY " + responseY);
 
             float tResponseX = 0f;
             float tResponseY = 0f;
             for (int i = 0; i < b.collisionsData.size(); i++){
                 if (b.collisionsData.get(i).object != a) {
+
                     if (b.collisionsData.get(i).object.getWeight() > a.getWeight()) {
                         //Log.e("Collision", "objeto mais pesado "+b.collisionsData.get(i).object.name +" oferece força de x " + b.collisionsData.get(i).normalX + " y " + b.collisionsData.get(i).normalY);
                         if ((b.collisionsData.get(i).responseX < 0 && responseX > 0)||
@@ -344,7 +350,7 @@ public abstract class Collision {
             for (int i = 0; i < a.collisionsData.size(); i++){
                 if (a.collisionsData.get(i).object != b) {
                     if (a.collisionsData.get(i).object.getWeight() > b.getWeight()) {
-                        //Log.e("Collision", "objeto mais pesado "+a.collisionsData.get(i).object.name +" oferece força de x " + a.collisionsData.get(i).normalX + " y " + a.collisionsData.get(i).normalY);
+                        //Log.e("Collision", "B objeto mais pesado "+a.collisionsData.get(i).object.name +" oferece força de x " + a.collisionsData.get(i).normalX + " y " + a.collisionsData.get(i).normalY);
                         if ((a.collisionsData.get(i).responseX < 0 && responseX > 0)||
                                 (a.collisionsData.get(i).responseX > 0 && responseX < 0)){
                             tResponseX = responseX;
@@ -363,6 +369,7 @@ public abstract class Collision {
             }
             a.respondToCollision(responseX, responseY);
         } else if (a.getWeight() == b.getWeight()){        // Move equally out of each other
+            //Log.e("Collision", a.name + " mesmo peso que " + b.name);
             float aResponseX = responseX/2f;
             float aResponseY = responseY/2f;
             float bResponseX = -responseX/2f;

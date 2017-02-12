@@ -29,9 +29,9 @@ public class Game {
 
     static final int BALL_WEIGHT = 1;
     static final int BORDA_WEIGHT = 10;
-    static final int OBSTACLES_WEIGHT = 7;
+    static final int OBSTACLES_WEIGHT = 9;
     static final int TARGET_WEIGHT = 10;
-    static final int BAR_WEIGHT = 8;
+    static final int BAR_WEIGHT = 5;
 
     static LevelGoalsPanel levelGoalsPanel;
 
@@ -1260,6 +1260,7 @@ public class Game {
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
+                    Log.e(TAG, "verificando explosão da bola "+i);
                     if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode
                             && balls.get(i).y < gameAreaResolutionY * 0.8f) {
 
@@ -1283,6 +1284,7 @@ public class Game {
             for (int i = 0; i < 2; i++) {
                 Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true);
                 Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true);
+                Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true);
                 Collision.checkCollision(obstacles, quad, Game.BORDA_WEIGHT, true, true);
                 Collision.checkCollision(obstacles, quad, Game.BAR_WEIGHT, true, true);
                 Collision.checkCollision(obstacles, quad, Game.OBSTACLES_WEIGHT, true, true);

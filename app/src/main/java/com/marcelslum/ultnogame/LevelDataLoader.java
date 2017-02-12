@@ -188,6 +188,22 @@ public class LevelDataLoader {
         l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
         LevelsGroupData.levelsGroupData.add(l);
 
+        levelsQuantity = 4;
+        l = new LevelsGroupData("Muro", nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        // ---------- LEVEL43
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
+        // ---------- LEVEL44
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        // ---------- LEVEL45
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        // ---------- LEVEL46
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        LevelsGroupData.levelsGroupData.add(l);
+
 
 
     }

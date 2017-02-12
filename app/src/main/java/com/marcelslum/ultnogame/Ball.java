@@ -1040,9 +1040,11 @@ public class Ball extends Circle{
     }
 
     private void waitForExplosion() {
+        listenForExplosion = true;
+
         alarmId = Sound.play(Sound.soundAlarm, 1, 1, 100);
         initialTimeWaitingExplosion = Utils.getTime();
-        listenForExplosion = true;
+
         setTextureMapAndUvData(COLOR_BALL_RED);
         
         ArrayList<float[]> valuesAlphaRedBall = new ArrayList<>();
@@ -1050,11 +1052,14 @@ public class Ball extends Circle{
         valuesAlphaRedBall.add(new float[]{0.5f,0.5f});
         valuesAlphaRedBall.add(new float[]{1f,1f});
 
-        Animation anim = new Animation(this, "alphaExplode", "alpha", 3000, valuesAlphaRedBall, true, true);
+        Animation anim = new Animation(this, "alphaExplode", "alpha", 1000, valuesAlphaRedBall, true, true);
         anim.start();
     }
     
     public void explode(){
+
+
+        Log.e(TAG, "explode");
 
         Game.vibrate(Game.VIBRATE_HARD);
         
