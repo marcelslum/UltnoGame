@@ -1177,7 +1177,6 @@ public class LevelLoader {
                                     {1, 0, 3, 0, 1, 0, 1, 0, 3, 0, 1},
                                     {3, 0, 1, 0, 1, 0, 1, 0, 1, 0, 3}
                             })
-                    .setTargetsStates(new int[]{0, 1, 2, 3})
                     .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
@@ -1556,6 +1555,60 @@ public class LevelLoader {
         }
 
         // ---------- LEVEL47
+        
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{33, 41, 42, 47, 48, 53, 54, 59, 60, 68});
+            targetsAppend.add(new int[]{37, 43, 44, 49, 50, 55, 56, 61, 62, 72});
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+                                    {1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1},
+                                    {1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1},
+                                    {1, 0, 2, 0, 5, 0, 3, 0, 5, 0, 3},
+                                    {2, 0, 2, 0, 5, 0, 3, 0, 5, 0, 1},
+                                    {1, 0, 2, 0, 5, 0, 3, 0, 5, 0, 3},
+                                    {2, 0, 2, 0, 5, 0, 3, 0, 5, 0, 1},
+                                    {1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1},
+                                    {1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1},
+                                    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.45f)
+                    .setObstaclesY(0.5768088235f)
+                    .setObstaclesWidth(0.1f)
+                    .setObstaclesHeight(1-0.577f)
+                    .setBarsScaleVariation(
+                                new ScaleVariationDataBuilder()
+                                        .setIsActive(true)
+                                        .setIncreaseWidth(true)
+                                        .setIncreaseHeight(false)
+                                        .setWidthVelocity(0.006f)
+                                        .setHeightVelocity(0f)
+                                        .setMinWidth_BI(0.5f)
+                                        .setMaxWidth_BI(1.5f)
+                                        .setMinHeight_BI(1f)
+                                        .setMaxHeight_BI(1f),
+                                new ScaleVariationDataBuilder()
+                                        .setIsActive(true)
+                                        .setIncreaseWidth(true)
+                                        .setIncreaseHeight(false)
+                                        .setWidthVelocity(0.006f)
+                                        .setHeightVelocity(0f)
+                                        .setMinWidth_BI(0.5f)
+                                        .setMaxWidth_BI(1.5f)
+                                        .setMinHeight_BI(1f)
+                                        .setMaxHeight_BI(1f)
+                        );
+        }
+        
+        
 
         // ---------- LEVEL48
 
