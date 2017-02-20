@@ -1517,14 +1517,43 @@ public class LevelLoader {
                                     .setMaxWidth_BI(100000f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f)
-                    )
-                    .setWindType(Level.WIND_TYPE_RIGHT);
+                    );
 
         }
 
-
-
         // ---------- LEVEL46
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{14, 22, 23, 29, 30, 38});
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1},
+                                    {1, 1, 1, 1, 4, 1, 1, 0, 1, 1, 1},
+                                    {1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1},
+                                    {1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1},
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {4, 1, 1, 1, 1, 1, 0, 0, 4, 1, 1},
+                                    {0, 0, 2, 2, 2, 2, 3, 1, 1, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 3, 1, 1, 0, 0},
+                                    {1, 1, 3, 0, 0, 0, 3, 0, 1, 2, 2},
+                                    {1, 1, 3, 0, 0, 0, 3, 0, 1, 2, 2},
+                                    {1, 0, 3, 0, 0, 0, 3, 1, 1, 0, 0},
+                                    {1, 0, 3, 0, 0, 0, 3, 1, 1, 0, 0},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0},
+   
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.45f)
+                    .setObstaclesY(0.5768088235f)
+                    .setObstaclesWidth(0.1f)
+                    .setObstaclesHeight(1-0.577f)
+                    .setWindType(Level.WIND_TYPE_LEFT);
+        }
 
         // ---------- LEVEL47
 
