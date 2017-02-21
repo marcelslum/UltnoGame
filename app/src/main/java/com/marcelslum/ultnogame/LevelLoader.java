@@ -1555,7 +1555,6 @@ public class LevelLoader {
         }
 
         // ---------- LEVEL47
-        
         l += 1;
         if (levelNumber == l) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
@@ -1607,15 +1606,144 @@ public class LevelLoader {
                                         .setMaxHeight_BI(1f)
                         );
         }
-        
-        
 
         // ---------- LEVEL48
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0},
+                                    {0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0},
+                                    {0, 0, 1, 2, 2, 0, 2, 2, 1, 0, 0},
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.45f)
+                    .setObstaclesY(0.01f)
+                    .setObstaclesWidth(0.1f)
+                    .setObstaclesHeight(1-0.02f);
+        }
 
         // ---------- LEVEL49
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0},
+                                    {0, 1, 1, 2, 1, 0, 1, 2, 1, 1, 0},
+                                    {0, 0, 1, 2, 2, 0, 2, 2, 1, 0, 0},
+                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0},
+                                    {0, 0, 0, 2, 1, 0, 1, 2, 0, 0, 0},
+                                    {0, 0, 0, 1, 2, 0, 2, 1, 0, 0, 0},
+                                    {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.45f)
+                    .setObstaclesY(0.01f)
+                    .setObstaclesWidth(0.1f)
+                    .setObstaclesHeight(1-0.02f);
+        }
 
         // ---------- LEVEL50
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
+                                    {0, 3, 1, 2, 0, 0, 0, 2, 1, 1, 0},
+                                    {0, 0, 1, 2, 1, 0, 2, 2, 1, 0, 0},
+                                    {0, 0, 2, 1, 1, 0, 2, 1, 1, 0, 0},
+                                    {0, 0, 0, 2, 1, 0, 1, 2, 0, 0, 0},
+                                    {0, 0, 0, 3, 2, 0, 2, 1, 0, 0, 0},
+                                    {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1}
+                            })
+                    .setObstaclesQuantity(3)
+                    .setObstaclesX(0.45f, 0.17f, 0.69f)
+                    .setObstaclesY(0.01f, 0.69f, 0.69f)
+                    .setObstaclesWidth(0.1f,0.31f, 0.31f)
+                    .setObstaclesHeight(1-0.02f, 0.058f, 0.058f)
+                    .setObstaclesPositionVariation(
+                            null,
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f));
+        }
 
+        // ---------- LEVEL51
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 1, 2, 0, 0, 0, 2, 1, 4, 0},
+                                    {0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
+                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0},
+                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0},
+                                    {0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0},
+                                    {0, 0, 0, 1, 1, 0, 1, 4, 0, 1, 0},
+                                    {0, 0, 0, 0, 2, 0, 2, 0, 0, 1, 0},
+                                    {0, 2, 0, 0, 1, 0, 1, 0, 0, 2, 0},
+                                    {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                                    {1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1},
+                                    {1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                    {2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.45f)
+                    .setObstaclesY(0.01f)
+                    .setObstaclesWidth(0.1f)
+                    .setObstaclesHeight(1-0.02f);
+        }
+
+        // ---------- LEVEL52
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 3, 0, 0, 0, 2, 1, 4, 0},
+                                    {1, 1, 1, 3, 0, 0, 0, 1, 1, 1, 0},
+                                    {1, 1, 1, 3, 1, 0, 1, 1, 1, 1, 0},
+                                    {2, 2, 1, 3, 1, 0, 1, 1, 1, 1, 0},
+                                    {2, 2, 0, 1, 1, 0, 1, 1, 0, 1, 0},
+                                    {1, 3, 0, 1, 1, 0, 1, 4, 0, 1, 0},
+                                    {0, 3, 0, 0, 1, 0, 2, 0, 0, 1, 0},
+                                    {0, 3, 0, 0, 1, 0, 1, 0, 0, 2, 0},
+                                    {0, 3, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                                    {1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1},
+                                    {1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.45f)
+                    .setObstaclesY(0.01f)
+                    .setObstaclesWidth(0.1f)
+                    .setObstaclesHeight(1-0.02f);
+        }
 
         Level.levelObject = levelBuilder.build();
     }
