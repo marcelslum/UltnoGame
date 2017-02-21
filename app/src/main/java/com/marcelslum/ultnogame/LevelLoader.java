@@ -1797,11 +1797,29 @@ public class LevelLoader {
                                     {0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0},
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f)
-                    .setObstaclesY(0.01f)
-                    .setObstaclesWidth(0.1f)
-                    .setObstaclesHeight(1-0.02f)
-                    .setWindType(Level.WIND_TYPE_RIGHT);
+                    .setObstaclesX(0.45f, 0.1123333333f, 0.7483333333f)
+                    .setObstaclesY(0.01f, 0.2137205882f, 0.2137205882f)
+                    .setObstaclesWidth(0.1f, 0.0472416667f, 0.0472416667f)
+                    .setObstaclesHeight(1-0.02f, 0.0895735294f, 0.0895735294f)
+                    .setObstaclesPositionVariation(
+                            null,
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f),
+                             new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0015f));
+                       
         }
 
         Level.levelObject = levelBuilder.build();
