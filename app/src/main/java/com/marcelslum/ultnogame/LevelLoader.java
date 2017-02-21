@@ -1822,7 +1822,7 @@ public class LevelLoader {
                        
         }
         
-         // ---------- LEVEL55
+        // ---------- LEVEL55
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1842,25 +1842,102 @@ public class LevelLoader {
                                     {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0}
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f, 0.8383333333f
-                    .setObstaclesY(0.01f, 0.2989705882f
-                    .setObstaclesWidth(0.1f, 0.0471666667f
-                    .setObstaclesHeight(1-0.02f, 0.1666176471f
-                    .setBarsScaleVariation(
+                    .setObstaclesX(0.45f, 0.8383333333f)
+                    .setObstaclesY(0.01f, 0.2989705882f)
+                    .setObstaclesWidth(0.1f, 0.0471666667f)
+                    .setObstaclesHeight(1-0.02f, 0.1666176471f)
+                    .setObstaclesScaleVariation(
                                 null, 
                                 new ScaleVariationDataBuilder()
-                                        .setIsActive(true)
-                                        .setIncreaseWidth(true)
-                                        .setIncreaseHeight(false)
-                                        .setWidthVelocity(0.006f)
-                                        .setHeightVelocity(0f)
-                                        .setMinWidth_BI(0.5f)
-                                        .setMaxWidth_BI(1.5f)
-                                        .setMinHeight_BI(1f)
-                                        .setMaxHeight_BI(1f))
-                    .setWindType(Level.WIND_TYPE_LEFT);
-                                 
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.01f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(1f)
+                                    .setMaxWidth_BI(100000f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f))
+                    .setWindType(Level.WIND_TYPE_LEFT);        
         }
+                                        
+        // ---------- LEVEL56
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 4, 1, 2, 0, 1, 1, 4, 1, 2},
+                                    {1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2},
+                                    {1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
+                                    {0, 0, 2, 4, 3, 0, 3, 4, 0, 0, 2},
+                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.45f)
+                    .setObstaclesY(0.01f)
+                    .setObstaclesWidth(0.1f)
+                    .setObstaclesHeight(1-0.02f)
+                   .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.006f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.5f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.006f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.5f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f)
+                    );     
+        }
+        
+        
+        // ---------- LEVEL57
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1},
+                            });
+        }
+        
+        // ---------- LEVEL58
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1},
+                            });
+        }
+        
+        
 
         Level.levelObject = levelBuilder.build();
     }
