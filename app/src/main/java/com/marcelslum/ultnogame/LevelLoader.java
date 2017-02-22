@@ -1605,10 +1605,10 @@ public class LevelLoader {
                                     {0, 0, 1, 2, 2, 0, 2, 2, 1, 0, 0},
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f)
-                    .setObstaclesY(0.01f)
-                    .setObstaclesWidth(0.1f)
-                    .setObstaclesHeight(1-0.02f);
+                    .setObstaclesX(0.47f)
+                    .setObstaclesY(0.001f)
+                    .setObstaclesWidth(0.06f)
+                    .setObstaclesHeight(1-0.002f);
         }
 
         // ---------- LEVEL49
@@ -1627,10 +1627,10 @@ public class LevelLoader {
                                     {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0}
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f)
-                    .setObstaclesY(0.01f)
-                    .setObstaclesWidth(0.1f)
-                    .setObstaclesHeight(1-0.02f);
+                    .setObstaclesX(0.47f)
+                    .setObstaclesY(0.001f)
+                    .setObstaclesWidth(0.06f)
+                    .setObstaclesHeight(1-0.002f);
         }
 
         // ---------- LEVEL50
@@ -1654,10 +1654,11 @@ public class LevelLoader {
                                     {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1}
                             })
                     .setObstaclesQuantity(3)
-                    .setObstaclesX(0.45f, 0.17f, 0.69f)
-                    .setObstaclesY(0.01f, 0.69f, 0.69f)
-                    .setObstaclesWidth(0.1f,0.31f, 0.31f)
-                    .setObstaclesHeight(1-0.02f, 0.058f, 0.058f)
+                    .setObstaclesX(0.47f, 0.17f, 0.69f)
+                    .setObstaclesY(0.006f, 0.69f, 0.69f)
+                    .setObstaclesWidth(0.001f,0.31f, 0.31f)
+                    .setObstaclesHeight(1-0.002f, 0.058f, 0.058f)
+               
                     .setObstaclesPositionVariation(
                             null,
                             new PositionVariationDataBuilder()
@@ -1699,10 +1700,10 @@ public class LevelLoader {
                                     {2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2}
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f)
-                    .setObstaclesY(0.01f)
-                    .setObstaclesWidth(0.1f)
-                    .setObstaclesHeight(1-0.02f);
+                    .setObstaclesX(0.47f)
+                    .setObstaclesY(0.001f)
+                    .setObstaclesWidth(0.06f)
+                    .setObstaclesHeight(1-0.002f);
         }
 
         // ---------- LEVEL52
@@ -1726,10 +1727,10 @@ public class LevelLoader {
                                     {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1}
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f)
-                    .setObstaclesY(0.01f)
-                    .setObstaclesWidth(0.1f)
-                    .setObstaclesHeight(1-0.02f);
+                    .setObstaclesX(0.47f)
+                    .setObstaclesY(0.001f)
+                    .setObstaclesWidth(0.06f)
+                    .setObstaclesHeight(1-0.002f);
         }
         
         // ---------- LEVEL53
@@ -1753,10 +1754,10 @@ public class LevelLoader {
                                     {1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0}
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f)
-                    .setObstaclesY(0.01f)
-                    .setObstaclesWidth(0.1f)
-                    .setObstaclesHeight(1-0.02f)
+                    .setObstaclesX(0.47f)
+                    .setObstaclesY(0.001f)
+                    .setObstaclesWidth(0.06f)
+                    .setObstaclesHeight(1-0.002f);
                     .setWindType(Level.WIND_TYPE_RIGHT);
         }
         
@@ -1784,10 +1785,10 @@ public class LevelLoader {
                                     {0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0},
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f, 0.1123333333f, 0.7483333333f)
-                    .setObstaclesY(0.01f, 0.2137205882f, 0.2137205882f)
-                    .setObstaclesWidth(0.1f, 0.0472416667f, 0.0472416667f)
-                    .setObstaclesHeight(1-0.02f, 0.0895735294f, 0.0895735294f)
+                    .setObstaclesX(0.47f, 0.1123333333f, 0.7483333333f)
+                    .setObstaclesY(0.001f, 0.2137205882f, 0.2137205882f)
+                    .setObstaclesWidth(0.06f, 0.0472416667f, 0.0472416667f)
+                    .setObstaclesHeight(1-0.002f, 0.0895735294f, 0.0895735294f)
                     .setObstaclesPositionVariation(
                             null,
                             new PositionVariationDataBuilder()
@@ -1829,10 +1830,10 @@ public class LevelLoader {
                                     {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0}
                             })
                     .setObstaclesQuantity(2)
-                    .setObstaclesX(0.45f, 0.8383333333f)
-                    .setObstaclesY(0.01f, 0.2989705882f)
-                    .setObstaclesWidth(0.1f, 0.0471666667f)
-                    .setObstaclesHeight(1-0.02f, 0.1666176471f)
+                    .setObstaclesX(0.47f, 0.8383333333f)
+                    .setObstaclesY(0.001f, 0.2989705882f)
+                    .setObstaclesWidth(0.06f, 0.0471666667f)
+                    .setObstaclesHeight(1-0.002f, 0.1666176471f)
                     .setObstaclesScaleVariation(
                                 null, 
                                 new ScaleVariationDataBuilder()
@@ -1871,10 +1872,10 @@ public class LevelLoader {
                                     {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1}
                             })
                     .setObstaclesQuantity(1)
-                    .setObstaclesX(0.45f)
-                    .setObstaclesY(0.01f)
-                    .setObstaclesWidth(0.1f)
-                    .setObstaclesHeight(1-0.02f)
+                    .setObstaclesX(0.47f)
+                    .setObstaclesY(0.001f)
+                    .setObstaclesWidth(0.06f)
+                    .setObstaclesHeight(1-0.002f);
                    .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
