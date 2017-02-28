@@ -22,7 +22,7 @@ public class LevelLoader {
     static final float[][] ballsMaxVel = {{1.35f,0f,0f,0f,0f,0f,0f},{1.36f,0f,0f,0f,0f,0f,0f},{1.37f,0f,0f,0f,0f,0f,0f},{1.38f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f},{1.4f,0f,0f,0f,0f,0f,0f},{1.5f,0f,0f,0f,0f,0f,0f},{1.5f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,1.55f,0f,0f,0f,0f},{1.55f,1.55f,1.55f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,0f,0f,0f,0f,0f,0f},{1.55f,1.55f,1.55f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,1.55f,1.55f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{1.55f,1.55f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f}};
     static final float[][] ballsMinVel = {{0.8f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f},{0.8f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0.75f,0f,0f,0f,0f},{0.75f,0.75f,0.75f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0f,0f,0f,0f,0f,0f},{0.75f,0.75f,0.75f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0.75f,0.75f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0.75f,0.75f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f}};
     static final boolean[][] ballsFree = {{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,true,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,true,false,false,false,false,false},{true,false,false,false,false,false,false},{true,false,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,true,true,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{true,true,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false},{false,false,false,false,false,false,false}};
-    static final int[] barsQuantity = {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
+    static final int[] barsQuantity = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
     static final float[][] barsWidth = {{0.22f,0f,0f,0f,0f,0f,0f},{0.22f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f},{0.2f,0f,0f,0f,0f,0f,0f},{0.18f,0f,0f,0f,0f,0f,0f},{0.18f,0f,0f,0f,0f,0f,0f},{0.175f,0f,0f,0f,0f,0f,0f},{0.175f,0f,0f,0f,0f,0f,0f},{0.17f,0f,0f,0f,0f,0f,0f},{0.17f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0.165f,0.165f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f}};
     static final float[][] barsHeight = {{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0.0175f,0.0175f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f}};
     static final float[][] barsX = {{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.3f,0f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0.2f,0.7f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f},{0f,0f,0f,0f,0f,0f,0f}};
@@ -85,7 +85,6 @@ public class LevelLoader {
         if (levelNumber == l) {
             levelBuilder.setTargetsMap(
                     new int[][]{
-                        //{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                         {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}
                     });
         }
@@ -1655,7 +1654,7 @@ public class LevelLoader {
                             })
                     .setObstaclesQuantity(3)
                     .setObstaclesX(0.47f, 0.17f, 0.69f)
-                    .setObstaclesY(0.006f, 0.3740852941f, 0.0.3740852941f)
+                    .setObstaclesY(0.006f, 0.3740852941f, 0.3740852941f)
                     .setObstaclesWidth(0.001f,1433333333f, 0.1433333333f)
                     .setObstaclesHeight(1-0.002f, 0.058f, 0.058f)
                 
@@ -1757,153 +1756,12 @@ public class LevelLoader {
                     .setObstaclesX(0.47f)
                     .setObstaclesY(0.001f)
                     .setObstaclesWidth(0.06f)
-                    .setObstaclesHeight(1-0.002f);
+                    .setObstaclesHeight(1-0.002f)
                     .setWindType(Level.WIND_TYPE_RIGHT);
         }
         
+
         // ---------- LEVEL54
-        l += 1;
-        if (levelNumber == l) {
-            levelBuilder
-                    .setTargetsMap(
-                            new int[][]{
-                                    {1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
-                                    {1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0},
-                                    {1, 1, 1, 2, 1, 0, 1, 1, 1, 2, 1},
-                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
-                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
-                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
-                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
-                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
-                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
-                                    {1, 1, 1, 2, 1, 0, 1, 1, 1, 2, 1},
-                                    {1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0},
-                                    {1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
-                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                    {0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0},
-                            })
-                    .setObstaclesQuantity(3)
-                    .setObstaclesX(0.47f, 0.1123333333f, 0.7483333333f)
-                    .setObstaclesY(0.001f, 0.2137205882f, 0.2137205882f)
-                    .setObstaclesWidth(0.06f, 0.0472416667f, 0.0472416667f)
-                    .setObstaclesHeight(1-0.002f, 0.0895735294f, 0.0895735294f)
-                
-               
-                    .setObstaclesPositionVariation(
-                            null,
-                            new PositionVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setMaxX(0.99f)
-                                    .setMinX(0.01f)
-                                    .setMaxY(0.9f)
-                                    .setMinY(0.01f)
-                                    .setxVelocity(0.0015f)
-                                    .setyVelocity(0f),
-                             new PositionVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setMaxX(0.99f)
-                                    .setMinX(0.01f)
-                                    .setMaxY(0.9f)
-                                    .setMinY(0.01f)
-                                    .setxVelocity(0f)
-                                    .setyVelocity(0.0015f));
-                       
-        }
-        
-        // ---------- LEVEL55
-        l += 1;
-        if (levelNumber == l) {
-            levelBuilder
-                    .setTargetsMap(
-                            new int[][]{
-                                    {1, 0, 3, 2, 0, 0, 0, 2, 3, 0, 1},
-                                    {1, 0, 3, 2, 0, 0, 0, 2, 3, 0, 1},
-                                    {1, 0, 3, 2, 0, 0, 0, 2, 3, 0, 1},
-                                    {1, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1},
-                                    {1, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1},
-                                    {1, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1},
-                                    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-                                    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-                                    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0},
-                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0},
-                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0}
-                            })
-                    .setObstaclesQuantity(2)
-                    .setObstaclesX(0.47f, 0.8383333333f)
-                    .setObstaclesY(0.001f, 0.2989705882f)
-                    .setObstaclesWidth(0.06f, 0.0471666667f)
-                    .setObstaclesHeight(1-0.002f, 0.1666176471f)
-                    .setObstaclesScaleVariation(
-                                null, 
-                                new ScaleVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setIncreaseWidth(true)
-                                    .setIncreaseHeight(false)
-                                    .setWidthVelocity(0.01f)
-                                    .setHeightVelocity(0f)
-                                    .setMinWidth_BI(1f)
-                                    .setMaxWidth_BI(100000f)
-                                    .setMinHeight_BI(1f)
-                                    .setMaxHeight_BI(1f))
-                    .setWindType(Level.WIND_TYPE_LEFT);        
-        }
-                                        
-        // ---------- LEVEL56
-        l += 1;
-        if (levelNumber == l) {
-            levelBuilder
-                    .setTargetsMap(
-                            new int[][]{
-                                    {1, 1, 4, 1, 2, 0, 1, 1, 4, 1, 2},
-                                    {1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2},
-                                    {1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2},
-                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
-                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
-                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
-                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
-                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
-                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
-                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
-                                    {0, 0, 2, 4, 3, 0, 3, 4, 0, 0, 2},
-                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
-                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
-                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
-                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1}
-                            })
-                    .setObstaclesQuantity(1)
-                    .setObstaclesX(0.47f)
-                    .setObstaclesY(0.001f)
-                    .setObstaclesWidth(0.06f)
-                    .setObstaclesHeight(1-0.002f);
-                   .setBarsScaleVariation(
-                            new ScaleVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setIncreaseWidth(true)
-                                    .setIncreaseHeight(false)
-                                    .setWidthVelocity(0.006f)
-                                    .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.5f)
-                                    .setMaxWidth_BI(1.5f)
-                                    .setMinHeight_BI(1f)
-                                    .setMaxHeight_BI(1f),
-                            new ScaleVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setIncreaseWidth(true)
-                                    .setIncreaseHeight(false)
-                                    .setWidthVelocity(0.006f)
-                                    .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.5f)
-                                    .setMaxWidth_BI(1.5f)
-                                    .setMinHeight_BI(1f)
-                                    .setMaxHeight_BI(1f)
-                    );     
-        }
-        
-        
-        // ---------- LEVEL57
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1915,7 +1773,7 @@ public class LevelLoader {
                             });
         }
         
-        // ---------- LEVEL58
+        // ---------- LEVEL55
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1936,7 +1794,7 @@ public class LevelLoader {
                             });
         }
 
-        // ---------- LEVEL59
+        // ---------- LEVEL56
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1961,7 +1819,7 @@ public class LevelLoader {
                             });
         }
 
-        // ---------- LEVEL60
+        // ---------- LEVEL57
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -2006,6 +1864,140 @@ public class LevelLoader {
                                     .setMinY(0.01f)
                                     .setxVelocity(0.0015f)
                                     .setyVelocity(0f));
+        }
+
+        // ---------- LEVEL58
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+                                    {1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0},
+                                    {1, 1, 1, 2, 1, 0, 1, 1, 1, 2, 1},
+                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
+                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
+                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
+                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
+                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
+                                    {1, 0, 1, 2, 1, 0, 1, 1, 0, 2, 1},
+                                    {1, 1, 1, 2, 1, 0, 1, 1, 1, 2, 1},
+                                    {1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0},
+                                    {1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0},
+                            })
+                    .setObstaclesQuantity(2)
+                    .setObstaclesX(0.1123333333f, 0.7483333333f)
+                    .setObstaclesY(0.2137205882f, 0.2137205882f)
+                    .setObstaclesWidth(0.0472416667f, 0.0472416667f)
+                    .setObstaclesHeight(0.0895735294f, 0.0895735294f)
+
+
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0015f));
+
+        }
+
+        // ---------- LEVEL59
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 0, 3, 2, 0, 0, 0, 2, 3, 0, 1},
+                                    {1, 0, 3, 2, 0, 0, 0, 2, 3, 0, 1},
+                                    {1, 0, 3, 2, 0, 0, 0, 2, 3, 0, 1},
+                                    {1, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1},
+                                    {1, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1},
+                                    {1, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1},
+                                    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+                                    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+                                    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0},
+                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0},
+                                    {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.8383333333f)
+                    .setObstaclesY(0.2989705882f)
+                    .setObstaclesWidth(0.0471666667f)
+                    .setObstaclesHeight(0.1666176471f)
+                    .setObstaclesScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.01f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(1f)
+                                    .setMaxWidth_BI(100000f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f));
+        }
+
+        // ---------- LEVEL60
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 4, 1, 2, 0, 1, 1, 4, 1, 2},
+                                    {1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2},
+                                    {1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
+                                    {0, 0, 2, 4, 3, 0, 3, 4, 0, 0, 2},
+                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1}
+                            })
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.006f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.5f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.006f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.5f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f)
+                    )
+                    .setWindType(Level.WIND_TYPE_LEFT);
         }
         
         

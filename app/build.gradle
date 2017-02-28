@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'ultno'
             keyPassword 'marcelslumultno'
-            storeFile file('C:/Users/marcel/Documents/Ultno/APK/android.jks')
+            storeFile file('D:/Ultno/APK/android.jks')
             storePassword 'marcelslum'
         }
     }
