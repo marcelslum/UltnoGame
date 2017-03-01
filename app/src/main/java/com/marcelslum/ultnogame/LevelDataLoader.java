@@ -30,7 +30,7 @@ public class LevelDataLoader {
         LevelsGroupData.levelsGroupData.add(l);
 
         levelsQuantity = 4;  // starst to unlock 7
-        l = new LevelsGroupData("Obstáculo", nl, nl+levelsQuantity-1, 5, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 2);
+        l = new LevelsGroupData("Obstáculo", nl, nl+levelsQuantity-1, 12, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 2);
                 // ---------- LEVEL5
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 4);
@@ -46,7 +46,7 @@ public class LevelDataLoader {
         LevelsGroupData.levelsGroupData.add(l);
 
         levelsQuantity = 4;
-        l = new LevelsGroupData("Cor", nl, nl+levelsQuantity-1, 5, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData("Cor", nl, nl+levelsQuantity-1, 26, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL9
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 7);
@@ -61,7 +61,6 @@ public class LevelDataLoader {
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 8);
         LevelsGroupData.levelsGroupData.add(l);
 
-        // EXPLOSÃO
         levelsQuantity = 4;
         l = new LevelsGroupData("Explosão", nl, nl+levelsQuantity-1, 5, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL13

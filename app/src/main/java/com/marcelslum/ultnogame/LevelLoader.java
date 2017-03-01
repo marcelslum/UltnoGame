@@ -55,7 +55,7 @@ public class LevelLoader {
         if (levelNumber == l) {
             levelBuilder.setTargetsMap(
                     new int[][]{
-                        {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}
+                        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                     });
         }
 
@@ -105,9 +105,6 @@ public class LevelLoader {
         // OBSTÁCULOS
         // ---------- LEVEL5
         l += 1;
-        if (levelNumber >= l) {
-            levelBuilder.setTutorialAttached(Tutorial.TUTORIAL_OBSTACULO);
-        }
         if (levelNumber == l) {
             levelBuilder.setTargetsMap(
                     new int[][]{

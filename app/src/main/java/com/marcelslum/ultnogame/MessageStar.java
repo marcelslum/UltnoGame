@@ -87,7 +87,7 @@ public class MessageStar extends Entity {
             isShowing = true;
             Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
         } else {
-            if (activeAnimation.elapsedTime < 2000){
+            if (activeAnimation != null && activeAnimation.elapsedTime < 2000){
 
                 for (int i = 0; i < totalStars; i++){
                     stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
