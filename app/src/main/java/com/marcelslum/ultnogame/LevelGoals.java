@@ -29,6 +29,9 @@ public class LevelGoals {
     int timesOfAccelerationWithoutReachingMinAngle = 0;
     int timesOfDecelerationWithoutReachingMaxAngle = 0;
 
+    int timesOfDecelerationInARow = 0;
+    int timesOfAccelerationInARow = 0;
+
     int timesOfAccelerate = 0;
     int timesOfDecelerate = 0;
     int timesOfChangeBallSpeedInARow = 0;
@@ -411,11 +414,15 @@ public class LevelGoals {
     public void notifyNotSpeedChange(){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyNotSpeedChange");
         timesOfChangeBallSpeedInARow = 0;
+        timesOfAccelerationInARow = 0;
+        timesOfDecelerationInARow = 0;
     }
 
     public void accelerate(){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerate");
         timesOfAccelerate += 1;
+        timesOfAccelerationInARow += 1;
+        timesOfDecelerationInARow = 0;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.ACCELERATE_N_TIMES && !lg.achieved){
@@ -425,6 +432,13 @@ public class LevelGoals {
                 } else if (timesOfAccelerate < lg.value){
                     Game.messages.showMessage(lg.messageText + " " + timesOfAccelerate+" / "+lg.value);
                 }
+            } else if (lg.type == LevelGoal.ACCELERATE_N_TIMES_IN_A_ROW && !lg.achieved){
+                if (timesOfAccelerationInARow == lg.value) {
+                    Game.messages.showMessage(lg.messageText + " " + timesOfAccelerationInARow+" / "+lg.value);
+                    lg.setAchieved();
+                } else if (timesOfAccelerationInARow < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesOfAccelerationInARow+" / "+lg.value);
+                }
             }
         }
         speedChange();
@@ -433,6 +447,8 @@ public class LevelGoals {
     public void decelerate(){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerate");
         timesOfDecelerate += 1;
+        timesOfDecelerationInARow += 1;
+        timesOfAccelerationInARow = 0;
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.DECELERATE_N_TIMES && !lg.achieved){
@@ -441,6 +457,13 @@ public class LevelGoals {
                     lg.setAchieved();
                 } else if (timesOfDecelerate < lg.value){
                     Game.messages.showMessage(lg.messageText + " " + timesOfDecelerate+" / "+lg.value);
+                }
+            } else if (lg.type == LevelGoal.DECELERATE_N_TIMES_IN_A_ROW && !lg.achieved){
+                if (timesOfDecelerationInARow == lg.value) {
+                    Game.messages.showMessage(lg.messageText + " " + timesOfDecelerationInARow+" / "+lg.value);
+                    lg.setAchieved();
+                } else if (timesOfDecelerationInARow < lg.value){
+                    Game.messages.showMessage(lg.messageText + " " + timesOfDecelerationInARow+" / "+lg.value);
                 }
             }
         }

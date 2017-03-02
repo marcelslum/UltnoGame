@@ -103,6 +103,10 @@ public class BallBehaviourData {
             }
         }
 
+        if (!velocityIncreased && !velocityDecreased){
+            Level.levelObject.levelGoalsObject.notifyNotSpeedChange();
+        }
+
         if (velocityIncreased){
             Level.levelObject.levelGoalsObject.accelerate();
         } else if (velocityDecreased){
@@ -113,32 +117,6 @@ public class BallBehaviourData {
             Level.levelObject.levelGoalsObject.accelerateWithoutReachMinAngle();
         } else if (velocityDecreased && !maxAngleReached){
             Level.levelObject.levelGoalsObject.decelerateWithoutReachMaxAngle();
-        }
-
-        if (minVelocityReached){
-            Level.levelObject.levelGoalsObject.notifyMinVelocityReached();
-            lastMinVelocityReached = true;
-            lastMaxVelocityReached = false;
-        } else if (maxVelocityReached){
-            Level.levelObject.levelGoalsObject.notifyMaxVelocityReached();
-            lastMinVelocityReached = false;
-            lastMaxVelocityReached = true;
-        } else {
-            lastMinVelocityReached = false;
-            lastMaxVelocityReached = false;
-        }
-
-        if (minAngleReached){
-            Level.levelObject.levelGoalsObject.notifyMinAngleReached();
-            lastMinAngleReached = true;
-            lastMaxAngleReached = false;
-        } else if (maxAngleReached){
-            Level.levelObject.levelGoalsObject.notifyMaxAngleReached();
-            lastMinAngleReached = false;
-            lastMaxAngleReached = true;
-        } else {
-            lastMinAngleReached = false;
-            lastMaxAngleReached = false;
         }
 
         if (angleDecreasedWithBarInclination && !angleIncreasedWithBarMovement && !angleDecreasedWithBarMovement){
@@ -198,6 +176,32 @@ public class BallBehaviourData {
                 }
             }
 
+        }
+
+        if (minAngleReached){
+            Level.levelObject.levelGoalsObject.notifyMinAngleReached();
+            lastMinAngleReached = true;
+            lastMaxAngleReached = false;
+        } else if (maxAngleReached){
+            Level.levelObject.levelGoalsObject.notifyMaxAngleReached();
+            lastMinAngleReached = false;
+            lastMaxAngleReached = true;
+        } else {
+            lastMinAngleReached = false;
+            lastMaxAngleReached = false;
+        }
+
+        if (minVelocityReached){
+            Level.levelObject.levelGoalsObject.notifyMinVelocityReached();
+            lastMinVelocityReached = true;
+            lastMaxVelocityReached = false;
+        } else if (maxVelocityReached){
+            Level.levelObject.levelGoalsObject.notifyMaxVelocityReached();
+            lastMinVelocityReached = false;
+            lastMaxVelocityReached = true;
+        } else {
+            lastMinVelocityReached = false;
+            lastMaxVelocityReached = false;
         }
 
 

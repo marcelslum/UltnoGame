@@ -13,8 +13,6 @@ public class MessageStar extends Entity {
     float size;
     boolean isShowing;
     boolean newShowing;
-    int nextTotalStars;
-    int nextNewStars;
     Animation activeAnimation;
     int currentNewStars;
 
@@ -82,11 +80,15 @@ public class MessageStar extends Entity {
     public void show(int totalStars, int newStars, boolean stay){
 
         Log.e(TAG, "show Message Stars");
+        Log.e(TAG, "totalStars "+totalStars);
 
         if (!isShowing){
             isShowing = true;
             Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
         } else {
+
+            Log.e(TAG, "showing");
+
             if (activeAnimation != null && activeAnimation.elapsedTime < 2000){
 
                 for (int i = 0; i < totalStars; i++){
@@ -97,11 +99,14 @@ public class MessageStar extends Entity {
                     stars.get(i).animations.clear();
                 }
 
+                Log.e(TAG, "newStars "+newStars);
+                Log.e(TAG, "currentNewStars "+currentNewStars);
+
                 if ((newStars + currentNewStars) > 0) {
                     // adiciona animação na primeira estrela
                     Animation animStars = Utils.createAnimation3v(stars.get(totalStars - 1 - 0), "alpha", "alpha", 500, 0f, 1f, 0.5f, 0.6f, 1f, 1f, true, false);
                     // adiciona animação às outras estrelas, por isso começa no i=1
-                    for (int i = 1; i < newStars; i++) {
+                    for (int i = 1; i < totalStars; i++) {
                         animStars.addAttachedEntities(stars.get(totalStars - 1 - i));
                     }
                     animStars.start();
@@ -113,6 +118,7 @@ public class MessageStar extends Entity {
                     @Override
                     public void onAnimationEnd() {
                         currentNewStars = 0;
+                        isShowing = false;
                         clearDisplay();
 
                     }
@@ -134,8 +140,6 @@ public class MessageStar extends Entity {
         }
 
         currentNewStars = newStars;
-
-        Log.e(TAG, "showing");
 
         display();
 
@@ -162,15 +166,12 @@ public class MessageStar extends Entity {
         }
 
         final MessageStar ms = this;
-        final int innerNextTotalStars = nextTotalStars;
-        final int innerNextNewStars = nextNewStars;
 
         if (stay){
 
             Sound.play(Sound.soundTextBoxAppear, 0.5f, 0.5f, 0);
 
-            activeAnimation = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX, 0.2f, 0f, 0.8f, 0f, 0f, 0f, false, true);
-            activeAnimation.start();
+            Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX, 0.2f, 0f, 0.8f, 0f, 0f, 0f, false, true).start();
 
             isShowing = false;
 
@@ -184,8 +185,8 @@ public class MessageStar extends Entity {
                     Game.resolutionX, 0.2f + (4 * 0.05f), 0f,  0.8f + (4 * 0.01f),0f,  1f, 0, false, true).start();
         } else {
 
-            Animation anim = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX * 0.5f, 0.2f, 0f, 0.8f, 0f, 1f, Game.resolutionX, false, true);
-            anim.setAnimationListener(new Animation.AnimationListener() {
+            activeAnimation = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX * 0.5f, 0.2f, 0f, 0.8f, 0f, 1f, Game.resolutionX, false, true);
+            activeAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                         ms.isShowing = false;
@@ -194,7 +195,7 @@ public class MessageStar extends Entity {
 
                 }
             });
-            anim.start();
+            activeAnimation.start();
 
             Utils.createAnimation4v(stars.get(1), "translateX1", "translateX", 2000, 0f,
                     Game.resolutionX * 0.5f, 0.2f + (1 * 0.02f), 0f,  0.8f + (1 * 0.01f),0f,  1f, Game.resolutionX, false, true).start();
