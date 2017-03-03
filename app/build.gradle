@@ -10,7 +10,7 @@ android {
         }
     }
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion '24.0.1'
     apply plugin: 'com.android.application'
     defaultConfig {
         applicationId 'com.marcelslum.ultno'
@@ -36,7 +36,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.google.android.gms:play-services:9.6.1'
+    compile 'com.google.android.gms:play-services:10.2.0'
     //compile 'com.google.android.gms:play-services-games:9.6.1'
     //compile 'com.google.android.gms:play-services-ads:9.6.1'
 }

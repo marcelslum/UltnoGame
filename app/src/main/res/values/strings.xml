@@ -176,10 +176,10 @@
     <string name="levelGoal12c">segundos</string>
     <string name="levelGoal13a">Fazer com que duas bolas colidam por</string>
     <string name="levelGoal13b">vezes</string>
-    <string name="levelGoal14">Atinjir a bola com a barra em sua velocidade máxima</string>
-    <string name="levelGoal15a">Atinjir um obstáculo com a bola por</string>
+    <string name="levelGoal14">Atinja a bola com a barra em sua velocidade máxima</string>
+    <string name="levelGoal15a">Atinja um obstáculo com a bola por</string>
     <string name="levelGoal15b">vezes</string>
-    <string name="levelGoal16a">Evitar que o vento carregue a barra por mais de</string>
+    <string name="levelGoal16a">Evite que o vento carregue a barra por mais de</string>
     <string name="levelGoal16b">segundo(s)</string>
 
     <string name="levelGoal19a">Acelere a bola utilizando o movimento da barra por</string>

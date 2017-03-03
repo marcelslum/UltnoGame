@@ -1,5 +1,6 @@
 package com.marcelslum.ultnogame;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Vibrator;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 // TODO verificar os listeners ativos
 // TODO colocar timeout em todos os awaits...
@@ -1132,11 +1135,34 @@ public class Game {
         }
     }
 
+    // Get a MemoryInfo object for the device's current memory status.
+    static private ActivityManager.MemoryInfo getAvailableMemory() {
+        ActivityManager activityManager = (ActivityManager) mainActivity.getSystemService(ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(memoryInfo);
+        return memoryInfo;
+    }
+
     static void simulate(long elapsed, float frameDuration){
 
         if (gameState != GAME_STATE_VITORIA) {
             TimeHandler.updateTimeOfLevelPlay(elapsed);
         }
+
+
+
+        // Before doing something that requires a lot of memory,
+        // check to see whether the device is in a low memory state.
+        ActivityManager.MemoryInfo memoryInfo = getAvailableMemory();
+
+        if (memoryInfo.lowMemory) {
+            Log.e(TAG, "lowMemory");
+        }
+
+
+
+
+
 
         ballCollidedFx -= 1;
 
