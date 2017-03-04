@@ -179,7 +179,7 @@
     <string name="levelGoal14">Atinja a bola com a barra em sua velocidade máxima</string>
     <string name="levelGoal15a">Atinja um obstáculo com a bola por</string>
     <string name="levelGoal15b">vezes</string>
-    <string name="levelGoal16a">Evite que o vento carregue a barra por mais de</string>
+    <string name="levelGoal16a">Evite que o vento mova sozinho a barra por mais de</string>
     <string name="levelGoal16b">segundo(s)</string>
 
     <string name="levelGoal19a">Acelere a bola utilizando o movimento da barra por</string>
@@ -249,6 +249,7 @@
     <string name="levelGoal30m">Bola desacelerada sem atingir ângulo máximo:</string>
     <string name="levelGoal12m2">- iniciando contagem</string>
     <string name="levelGoal12m3"> segundos faltantes</string>
+    <string name="levelGoal16m">Barra carregada pelo vento por tempo demais</string>
 
 
 </resources>

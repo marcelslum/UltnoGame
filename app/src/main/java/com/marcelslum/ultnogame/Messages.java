@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Messages extends Entity {
 
     public Messages() {
-        super("messages", Game.resolutionX * 0.97f, Game.gameAreaResolutionY * 0.6f);
+        super("messages", Game.resolutionX * 0.97f, Game.gameAreaResolutionY * 0.7f);
         isVisible = true;
     }
 
@@ -32,7 +32,7 @@ public class Messages extends Entity {
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.3f, 0.3f, 0.3f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.set(childToReplace, textObject);
         } else {
-            textObject = new Text("text", x, y + (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
+            textObject = new Text("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.3f, 0.3f, 0.3f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.add(textObject);
         }
@@ -53,7 +53,7 @@ public class Messages extends Entity {
         });
         anim1.start();
 
-        Utils.createSimpleAnimation(textObject, "alpha", "alpha", 2500, 1f, 0.5f, new Animation.AnimationListener() {
+        Utils.createSimpleAnimation(textObject, "alpha", "alpha", 2500, 1f, 0.8f, new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
                 textObject.isVisible = false;

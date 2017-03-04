@@ -8,6 +8,8 @@ import android.util.Log;
  */
 public class Bar extends Rectangle{
 
+    long timeOfWindMove = 0;
+
     public static final String TAG = "Bar";
 
     long startTimeSpecialBallAnim = 0;
@@ -241,7 +243,7 @@ public class Bar extends Rectangle{
         vx = dvx * timePercentage;
         translate(vx, 0f);
         verifyWind();
-
+        timeOfWindMove = 0;
     }
 
     public void moveRight(float timePercentage) {
@@ -259,6 +261,7 @@ public class Bar extends Rectangle{
         //Log.e(TAG, "dvx "+dvx);
         vx = dvx * timePercentage;
         translate(vx, 0f);
+        timeOfWindMove = 0;
         verifyWind();
     }
 
@@ -273,6 +276,14 @@ public class Bar extends Rectangle{
             accelFinish = false;
         }
         vx = 0f;
+
+        if (Game.wind != null){
+            if (timeOfWindMove == 0) {
+                timeOfWindMove = Utils.getTime();
+            }
+            Level.levelObject.levelGoalsObject.notifyBarMoveByWind(Utils.getTime() - timeOfWindMove);
+        }
+
         verifyWind();
     }
     

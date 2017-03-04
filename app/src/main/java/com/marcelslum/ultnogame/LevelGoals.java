@@ -11,6 +11,10 @@ import java.util.ArrayList;
 public class LevelGoals {
 
     public ArrayList<LevelGoal> levelGoals;
+
+    long barMoveByWind = 0;
+    boolean barMoveByWindLoose = false;
+
     int timesWhereAngleDecreased = 0;
     int timesWhereAngleIncreased = 0;
 
@@ -145,6 +149,10 @@ public class LevelGoals {
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.JUST_FINISH && !lg.achieved){
+                lg.setAchieved();
+            }
+
+            if (lg.type == LevelGoal.PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS && !barMoveByWindLoose){
                 lg.setAchieved();
             }
 
@@ -418,6 +426,30 @@ public class LevelGoals {
         timesOfDecelerationInARow = 0;
     }
 
+    public void notifyBarMoveByWind(long time){
+
+        if (barMoveByWindLoose){
+            return;
+        }
+
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"barMoveByWindo "+time);
+
+        barMoveByWind  = time;
+                for (int i = 0; i < levelGoals.size(); i++){
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS){
+                if (time > lg.value * 1000){
+                    // mensagem de que o objetivo foi perdido
+                    Log.e(TAG, "messageText "+lg.messageText);
+                    Game.messages.showMessage(lg.messageText);
+                    barMoveByWindLoose = true;
+                }
+            }
+        }
+
+
+    }
+
     public void accelerate(){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerate");
         timesOfAccelerate += 1;
@@ -506,6 +538,10 @@ public class LevelGoals {
     public void clearAchievements() {
         for (int i = 0; i < levelGoals.size(); i++){
             levelGoals.get(i).achieved = false;
+
+            barMoveByWind = 0;
+            barMoveByWindLoose = false;
+
             timesWhereAngleDecreased = 0;
             timesWhereAngleIncreased = 0;
             timesOfAccelerate = 0;
@@ -514,6 +550,8 @@ public class LevelGoals {
             timesOfObstacleHit = 0;
             timesOfCollisionBetweenBalls = 0;
             timesOfBallReachedWithMaximunBarSpped = 0;
+
+
 
             timesWhereAngleDecreasedOnlyWithBarMovement = 0;
             timesWhereAngleIncreasedOnlyWithBarMovement = 0;
