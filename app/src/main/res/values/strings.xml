@@ -152,8 +152,9 @@
     <string name="estrelas">estrelas</string>
     <string name="levelGoal0">Finalize o nível</string>
     <string name="levelGoal1a">Termine o nível em menos de</string>
-    <string name="levelGoal1b">minuto(s)</string>
-    <string name="levelGoal1c">e segundo(s)</string>
+    <string name="levelGoal1b">minuto(s) e</string>
+    <string name="levelGoal1b2">minuto(s)</string>
+    <string name="levelGoal1c">segundo(s)</string>
     <string name="levelGoal2">Faça a bola atingir o máximo de sua velocidade</string>
     <string name="levelGoal4">Faça a bola atingir o mínimo de sua velocidade</string>
     <string name="levelGoal3a">Acelere a bola utilizando o movimento da barra por</string>
@@ -169,12 +170,12 @@
     <string name="levelGoal8b">vezes</string>
     <string name="levelGoal9a">Aumente o ângulo da bola em relação à barra (eixo horizontal) </string>
     <string name="levelGoal9b">vezes</string>
-    <string name="levelGoal11a">Ter ao menos</string>
+    <string name="levelGoal11a">Tenha ao menos</string>
     <string name="levelGoal11b">bolas vivas em algum momento</string>
-    <string name="levelGoal12a">Manter ao menos</string>
+    <string name="levelGoal12a">Mantenha ao menos</string>
     <string name="levelGoal12b">bolas vivas por</string>
     <string name="levelGoal12c">segundos</string>
-    <string name="levelGoal13a">Fazer com que duas bolas colidam por</string>
+    <string name="levelGoal13a">Faça com que duas bolas colidam por</string>
     <string name="levelGoal13b">vezes</string>
     <string name="levelGoal14">Atinja a bola com a barra em sua velocidade máxima</string>
     <string name="levelGoal15a">Atinja um obstáculo com a bola por</string>
@@ -250,6 +251,15 @@
     <string name="levelGoal12m2">- iniciando contagem</string>
     <string name="levelGoal12m3"> segundos faltantes</string>
     <string name="levelGoal16m">Barra carregada pelo vento por tempo demais</string>
+    <string name="levelGoal31">Evite que a barra encoste na borda da esquerda</string>
+    <string name="levelGoal31m">Borda esquerda encostada :/</string>
+    <string name="levelGoal32">Evite que a barra encoste na borda da direita</string>
+    <string name="levelGoal32m">Borda direita encostada :/</string>
+    <string name="levelGoal33">Evite que a barra encoste em qualquer uma das bordas</string>
+    <string name="levelGoal33m">Borda encostada :/</string>
+    <string name="levelGoal1m">Level não concluído a tempo :/</string>
+    <string name="levelGoal1m2">segundos restantes</string>
+    <string name="levelGoal1m3">1 minuto restante</string>
 
 
 </resources>

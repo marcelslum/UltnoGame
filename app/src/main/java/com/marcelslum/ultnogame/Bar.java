@@ -320,4 +320,16 @@ public class Bar extends Rectangle{
         //Log.e(TAG, "shine alpha "+ shine.alpha);
 
     }
+
+    public void onCollision() {
+        for (int i = 0; i < collisionsData.size(); i++){
+            if (collisionsData.get(i).object.name.equals("bordaE")){
+                Level.levelObject.levelGoalsObject.notifyLeftBorderTouch();
+            }
+            if (collisionsData.get(i).object.name.equals("bordaD")){
+                Level.levelObject.levelGoalsObject.notifyRightBorderTouch();
+            }
+
+        }
+    }
 }

@@ -17,6 +17,8 @@ public abstract class Collision {
     private static SatCircle circle1;
     private static SatCircle circle2;
 
+    private static final String TAG = "Collision";
+
     public static boolean checkCollision(ArrayList<? extends PhysicalObject> aEntities, Quadtree quad, int bWeight, boolean respond, boolean updateData){
         if (polygon1 == null){
             initData();
@@ -93,6 +95,12 @@ public abstract class Collision {
                         velocities[2] = Math.abs(b.vx);
                         velocities[3] = Math.abs(b.vy);
 
+
+                        //if (a.name == "bar" && b.name == "bar"){
+                        //Log.e(TAG, " velocities "+velocities[0]+" - "+velocities[1]+" - "+velocities[2]+" - "+velocities[3]);
+                        //}
+
+
                         float max = -100000;
                         int maxIndex = -1;
                         for (int n = 0; n < 4; n++){
@@ -102,10 +110,18 @@ public abstract class Collision {
                             }
                         }
 
+                        //if (a.name == "bar" && b.name == "bar"){
+                            //Log.e(TAG, " maxIndex "+maxIndex);
+                            //Log.e(TAG, " max "+max);
+                            //Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
+                            //Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
+                        //}
+
                         int quantityPassagens;
 
-                        // defina quantas passagens serão realidades, com base na maior velocidade
-                        quantityPassagens = Math.round(velocities[maxIndex]/5) ;
+                        // definir quantas passagens serão realidades, com base na maior velocidade
+                        // quanto maior o número divisor, menor o número de passagens
+                        quantityPassagens = Math.round(velocities[maxIndex]/1.5f) ;
                         if (quantityPassagens == 0){
                             quantityPassagens = 1;
                         }
@@ -121,8 +137,8 @@ public abstract class Collision {
                         float bPreviousX = b.previousPositionX;
                         float bPreviousY = b.previousPositionY;
 
-                        //if (b.name == "obstacle"){
-                        //    Log.e("Collisions", " quantityPassagens "+quantityPassagens);
+                        //if (a.name == "bar" && b.name == "bar"){
+                        //    Log.e(TAG, " quantityPassagens "+quantityPassagens);
                         //}
 
                         //Log.e("Game", " a.previousPositionX 2"+aPreviousX);
@@ -141,6 +157,12 @@ public abstract class Collision {
 
                         // calcula a porcentagem de cada passada;
                         float porcentagem = (100f/quantityPassagens)/100f;
+
+                        //if (a.name == "bar" && b.name == "bar"){
+                        //    Log.e(TAG, " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
+                        //}
+
+
                         //Log.e("Game", " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
                         float porcentagemAplicadaNaPassagem;
                         float aPosAConsiderarX = -1000f;

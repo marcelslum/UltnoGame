@@ -15,6 +15,9 @@ public class LevelGoals {
     long barMoveByWind = 0;
     boolean barMoveByWindLoose = false;
 
+    boolean leftBorderTouch = false;
+    boolean rightBorderTouch = false;
+
     int timesWhereAngleDecreased = 0;
     int timesWhereAngleIncreased = 0;
 
@@ -48,6 +51,9 @@ public class LevelGoals {
     public boolean timeLivingBallsMessage2 = false;
     
     public final static String TAG = "LevelGoals";
+    private boolean warning60;
+    private boolean warning30;
+    private boolean warning10;
 
     public LevelGoals() {
         levelGoals = new ArrayList<>();
@@ -66,6 +72,34 @@ public class LevelGoals {
             }
         }
     }
+
+    public void notifyTime(int seconds) {
+        for (int i = 0; i < levelGoals.size(); i++) {
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.FINISH_IN_N_SECONDS) {
+                if (seconds > lg.value){
+                    Game.messages.showMessage(lg.messageText);
+                } else {
+                    if (lg.value - seconds < 60 && lg.value > 60 && !warning60){
+                        Game.messages.showMessage(Game.getContext().getResources().getString(R.string.levelGoal1m3));
+                        warning60 = true;
+                    }
+
+                    if (lg.value - seconds < 30 && !warning30){
+                        Game.messages.showMessage("30 "+Game.getContext().getResources().getString(R.string.levelGoal1m2));
+                        warning30 = true;
+                    }
+
+                    if (lg.value - seconds < 10 && !warning10){
+                        Game.messages.showMessage("10 "+Game.getContext().getResources().getString(R.string.levelGoal1m2));
+                        warning10 = true;
+                    }
+                }
+
+            }
+        }
+    }
+
 
     public void notifyBallsAlive(int number, int time){
         for (int i = 0; i < levelGoals.size(); i++){
@@ -153,6 +187,18 @@ public class LevelGoals {
             }
 
             if (lg.type == LevelGoal.PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS && !barMoveByWindLoose){
+                lg.setAchieved();
+            }
+
+            if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH && !leftBorderTouch && !rightBorderTouch){
+                lg.setAchieved();
+            }
+
+            if (lg.type == LevelGoal.PREVENT_RIGHT_BORDER_TOUCH && !rightBorderTouch){
+                lg.setAchieved();
+            }
+
+            if (lg.type == LevelGoal.PREVENT_LEFT_BORDER_TOUCH && !leftBorderTouch){
                 lg.setAchieved();
             }
 
@@ -435,7 +481,7 @@ public class LevelGoals {
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"barMoveByWindo "+time);
 
         barMoveByWind  = time;
-                for (int i = 0; i < levelGoals.size(); i++){
+        for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS){
                 if (time > lg.value * 1000){
@@ -518,6 +564,39 @@ public class LevelGoals {
         }
     }
 
+    public void notifyLeftBorderTouch() {
+        if (!rightBorderTouch) {
+            rightBorderTouch = true;
+            Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
+            for (int i = 0; i < levelGoals.size(); i++){
+                LevelGoal lg = levelGoals.get(i);
+                if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH){
+                        Game.messages.showMessage(lg.messageText);
+                }
+                if (lg.type == LevelGoal.PREVENT_LEFT_BORDER_TOUCH){
+                    Game.messages.showMessage(lg.messageText);
+                }
+            }
+        }
+    }
+
+
+    public void notifyRightBorderTouch() {
+        if (!leftBorderTouch) {
+            leftBorderTouch = true;
+            Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyRightBorderTouch ");
+            for (int i = 0; i < levelGoals.size(); i++){
+                LevelGoal lg = levelGoals.get(i);
+                if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH){
+                    Game.messages.showMessage(lg.messageText);
+                }
+                if (lg.type == LevelGoal.PREVENT_RIGHT_BORDER_TOUCH){
+                    Game.messages.showMessage(lg.messageText);
+                }
+            }
+        }
+    }
+
     public void addLevelGoal(int numberOfStars, int type, int value){
         this.levelGoals.add(new LevelGoal(numberOfStars, type, value));
     }
@@ -542,6 +621,13 @@ public class LevelGoals {
             barMoveByWind = 0;
             barMoveByWindLoose = false;
 
+            leftBorderTouch = false;
+            rightBorderTouch = false;
+
+            warning60 = false;
+            warning30 = false;
+            warning10 = false;
+
             timesWhereAngleDecreased = 0;
             timesWhereAngleIncreased = 0;
             timesOfAccelerate = 0;
@@ -550,6 +636,7 @@ public class LevelGoals {
             timesOfObstacleHit = 0;
             timesOfCollisionBetweenBalls = 0;
             timesOfBallReachedWithMaximunBarSpped = 0;
+
 
 
 
@@ -570,4 +657,6 @@ public class LevelGoals {
 
         }
     }
+
+
 }

@@ -32,6 +32,8 @@ public class TimeHandler {
         if (lastSeconds != secondsOfLevelPlay){
             lastSeconds = secondsOfLevelPlay;
 
+            Level.levelObject.levelGoalsObject.notifyTime(secondsOfLevelPlay);
+
             long displaySeconds;
             long displayMinutes = 0;
 

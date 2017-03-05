@@ -76,9 +76,17 @@ public class PhysicalObject extends Entity implements Weight{
     }
 
     public void respondToCollision(float responseX, float responseY){
-        //Log.e("physical", "respond to collision " +responseX);
+        if (name == "bar") Log.e(TAG, name + " respond to collision response " + responseX + ", " + responseY);
+
         accumulatedTranslateX += responseX;
         accumulatedTranslateY += responseY;
+
+        if (accelStarted && ((responseX < 0 && dvx > 0)||(responseX > 0 && dvx < 0))){
+            accelInitialTime = Utils.getTime();
+            Log.e(TAG, "zerando accelInitialTime por haver colisão contrária");
+        }
+
+
         checkTransformations(false);
     }
 
@@ -124,7 +132,7 @@ public class PhysicalObject extends Entity implements Weight{
     }
 
     public void verifyAcceleration(){
-        if (this.accelStarted){
+        if (accelStarted){
             long elapsedTime = Utils.getTime() - accelInitialTime;
             accelPercentage = (float)elapsedTime / (float)accelDuration;
 

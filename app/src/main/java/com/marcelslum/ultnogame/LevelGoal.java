@@ -50,6 +50,10 @@ public class LevelGoal{
     public static final int ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE = 29;
     public static final int DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE = 30;
 
+    public static final int PREVENT_LEFT_BORDER_TOUCH = 31;
+    public static final int PREVENT_RIGHT_BORDER_TOUCH = 32;
+    public static final int PREVENT_BORDER_TOUCH = 33;
+
 
     public void setText() {
         if (type == JUST_FINISH) {
@@ -59,9 +63,14 @@ public class LevelGoal{
             int minutes = (int) Math.floor(value / 60);
             int seconds = value -(minutes * 60);
 
-            text = Game.getContext().getResources().getString(R.string.levelGoal1a) + " " + String.valueOf(minutes) + " " +
-                    Game.getContext().getResources().getString(R.string.levelGoal1b) + String.valueOf(seconds) + " " +
-                    Game.getContext().getResources().getString(R.string.levelGoal1c);
+            if (seconds >0) {
+                text = Game.getContext().getResources().getString(R.string.levelGoal1a) + " " + String.valueOf(minutes) + " " +
+                        Game.getContext().getResources().getString(R.string.levelGoal1b) + " " + String.valueOf(seconds) + " " +
+                        Game.getContext().getResources().getString(R.string.levelGoal1c);
+            } else {
+                text = Game.getContext().getResources().getString(R.string.levelGoal1a) + " " + String.valueOf(minutes) + " " +
+                        Game.getContext().getResources().getString(R.string.levelGoal1b2);
+            }
         } else if (type == ACCELERATE_MAXIMUN) {
             text = Game.getContext().getResources().getString(R.string.levelGoal2);
         } else if (type == ACCELERATE_N_TIMES) {
@@ -141,6 +150,12 @@ public class LevelGoal{
         } else if (type == DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE) {
             text = Game.getContext().getResources().getString(R.string.levelGoal30a) + " " + String.valueOf(value) + " " +
                     Game.getContext().getResources().getString(R.string.levelGoal30b);
+        } else if (type == PREVENT_LEFT_BORDER_TOUCH) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal31);
+        } else if (type == PREVENT_RIGHT_BORDER_TOUCH) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal32);
+        } else if (type == PREVENT_BORDER_TOUCH) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal33);
         } else {
             text = "sem texto definido";
         }
@@ -205,6 +220,14 @@ public class LevelGoal{
             messageText = Game.getContext().getResources().getString(R.string.levelGoal30m);
         } else if (type == PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS) {
             messageText = Game.getContext().getResources().getString(R.string.levelGoal16m);
+        } else if (type == PREVENT_LEFT_BORDER_TOUCH) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal31m);
+        } else if (type == PREVENT_RIGHT_BORDER_TOUCH) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal32m);
+        } else if (type == PREVENT_BORDER_TOUCH) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal33m);
+        } else if (type == FINISH_IN_N_SECONDS) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal1m);
         }
     }
 

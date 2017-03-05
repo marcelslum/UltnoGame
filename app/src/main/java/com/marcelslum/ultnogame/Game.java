@@ -1340,6 +1340,13 @@ public class Game {
                 }
 
             }
+
+            for (int i = 0; i < bars.size(); i++) {
+                if (bars.get(i).isCollided) {
+                    bars.get(i).onCollision();
+                }
+            }
+
         }
 
         // toma as medidas finais
