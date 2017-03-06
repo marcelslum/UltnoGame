@@ -224,7 +224,7 @@ public class Ball extends Circle{
                 return;
 
             }
-            
+
             if (collisionsData.get(i).object.name.equals("bar") && !collisionsData.get(i).isRepeated){
                 collisionBar = true;
                 collisionBarNumber = i;
@@ -411,6 +411,7 @@ public class Ball extends Circle{
                     */
 
                     checkDataAfterAnotherBallCollision();
+                    checkDataAfterAnotherBallCollision();
 
                     Log.e("ball", "dv final " + dvx + " " + dvy);
                     Log.e("ball", "dv final len --------" + Utils.getVectorMagnitude(dvx, dvy));
@@ -421,6 +422,7 @@ public class Ball extends Circle{
                     Log.e("ball", "otherBall.dv initial" + otherBall.dvx + " " + otherBall.dvy);
                     Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
 
+                    otherBall.checkDataAfterAnotherBallCollision();
                     otherBall.checkDataAfterAnotherBallCollision();
 
                     Log.e("ball", "otherBall.dv final" + otherBall.dvx + " " + otherBall.dvy);
@@ -500,7 +502,16 @@ public class Ball extends Circle{
                 Log.e("ball", "colisão com barra, zera response Y");
                 lastResponseBallX = 0f;
             } else {
-                if (collisionsData.size() == 1 && !collisionOtherBall){
+
+                int numberOfCollisionsObjects = 0;
+                for (int i = 0; i < collisionsData.size(); i++){
+                    if (!collisionsData.get(i).isRepeated){
+                        numberOfCollisionsObjects += 1;
+                    }
+                }
+
+
+                if (numberOfCollisionsObjects == 1 && !collisionOtherBall){
                     if (Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)){
                         Log.e("ball", "zera response Y");
                         lastResponseBallY = 0f;
@@ -508,7 +519,7 @@ public class Ball extends Circle{
                         Log.e("ball", "zera response X");
                         lastResponseBallX = 0f;
                     }
-                } else if(collisionsData.size() > 1 && !collisionOtherBall){
+                } else if(numberOfCollisionsObjects > 1 && !collisionOtherBall){
                     Log.e("ball", "lidando com dois objetos colididos");
 
                     Log.e("ball", "antes da analise");
@@ -520,45 +531,60 @@ public class Ball extends Circle{
                     int signalX = 0;
                     int signalY = 0;
                     for (int i = 0; i < collisionsData.size(); i++){
-                        if (collisionsData.get(i).responseX > 0){
-                                Log.e("ball", "collisionsData.get(i).responseX > 0");
-                            if (signalX == 0){
-                                Log.e("ball", "signalX == 0");
-                                signalX = 1;
-                            } else if (signalX == -1 && !oppositeX){
-                                Log.e("ball", "signalX == -1 && !oppositeY");
-                                oppositeX = true;
+                        if (!collisionsData.get(i).isRepeated){
+                            if (collisionsData.get(i).responseX > 0){
+                                    Log.e("ball", "collisionsData.get(i).responseX > 0");
+                                if (signalX == 0){
+                                    Log.e("ball", "signalX == 0");
+                                    signalX = 1;
+                                } else if (signalX == -1 && !oppositeX){
+                                    Log.e("ball", "signalX == -1 && !oppositeY");
+                                    oppositeX = true;
+                                }
+                            } else if (collisionsData.get(i).responseX < 0){
+                                Log.e("ball", "ollisionsData.get(i).responseX < 0");
+                                if (signalX == 0){
+                                    Log.e("ball", "signalX == 0");
+                                    signalX = -1;
+                                } else if (signalX == 1 && !oppositeX){
+                                    Log.e("ball", "signalX == 1 && !opposite");
+                                    oppositeX = true;
+                                }
                             }
-                        } else if (collisionsData.get(i).responseX < 0){
-                            Log.e("ball", "ollisionsData.get(i).responseX < 0");
-                            if (signalX == 0){
-                                Log.e("ball", "signalX == 0");
-                                signalX = -1;
-                            } else if (signalX == 1 && !oppositeX){
-                                Log.e("ball", "signalX == 1 && !opposite");
-                                oppositeX = true;
-                            }
-                        }
-                        if (collisionsData.get(i).responseY < 0){
-                            if (signalY == 0){
-                                signalY= 1;
-                            } else if (signalY == -1 && !oppositeY){
-                                oppositeY = true;
-                            }
-                        } else if (collisionsData.get(i).responseY < 0){
-                            if (signalY == 0){
-                                signalY= -1;
-                            } else if (signalY == 1 && !oppositeY){
-                                oppositeY = true;
+                            if (collisionsData.get(i).responseY < 0){
+                                if (signalY == 0){
+                                    signalY= 1;
+                                } else if (signalY == -1 && !oppositeY){
+                                    oppositeY = true;
+                                }
+                            } else if (collisionsData.get(i).responseY < 0){
+                                if (signalY == 0){
+                                    signalY= -1;
+                                } else if (signalY == 1 && !oppositeY){
+                                    oppositeY = true;
+                                }
                             }
                         }
                     }
-                    
+
                     if (oppositeX){
                         lastResponseBallX = 0f;
                     }
                     if (oppositeY){
                         lastResponseBallY = 0f;
+                    }
+
+                    if (lastResponseBallX != 0 && lastResponseBallY != 0){
+                        if (lastResponseBallX > lastResponseBallY){
+                            Log.e(TAG, "zerando lastResponseBallY");
+                            lastResponseBallY = 0;
+                        } else if (lastResponseBallY > lastResponseBallX){
+                            lastResponseBallX = 0;
+                            Log.e(TAG, "zerando lastResponseBallY");
+                            lastResponseBallY = 0;
+                        }
+
+
                     }
 
                     Log.e("ball", "após analise");
@@ -930,7 +956,7 @@ public class Ball extends Circle{
                 }
             }
 
-            Log.e("ball", "angleFinalToRotate " + mAngleToRotate);
+            Log.e("ball", "angulo que a bola será rotacionada " + mAngleToRotate);
 
             final_vx = (float) Utils.getXRotatedFromDegrees(vx, vy, mAngleToRotate);
             final_vy = (float) Utils.getYRotatedFromDegrees(vx, vy, mAngleToRotate);

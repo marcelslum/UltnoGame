@@ -121,12 +121,12 @@ public class LevelGoals {
                         if (time - firstTimeLivingBalls >= lg.value2){
                             lg.setAchieved();
                             Game.messages.showMessage(lg.messageText + " " + lg.value);
-                        } else if (time - firstTimeLivingBalls >= Math.floor(lg.value2/2)){
+                        } else if (time - firstTimeLivingBalls >= Math.floor(lg.value2/2) && lg.value2 > 2){
                             if (timeLivingBallsMessage1) {
                                 Game.messages.showMessage(lg.messageText + " " + lg.value + " - " + String.valueOf(lg.value2 - Math.floor(lg.value2 / 2)) +
                                         Game.getContext().getResources().getString(R.string.levelGoal12m3));
                             }
-                        } else if (time - firstTimeLivingBalls >= Math.floor(lg.value2/4)){
+                        } else if (time - firstTimeLivingBalls >= Math.floor(lg.value2/4) && lg.value2 > 4){
                             if (timeLivingBallsMessage1) {
                                 Game.messages.showMessage(lg.messageText + " " + lg.value + " - " + String.valueOf(lg.value2 - Math.floor(lg.value2 / 4)) +
                                         Game.getContext().getResources().getString(R.string.levelGoal12m3));
