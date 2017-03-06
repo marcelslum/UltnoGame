@@ -388,7 +388,9 @@ public class Game {
             Game.bordaB.y = Game.resolutionY;
 
             MenuHandler.updateGroupMenu();
+            MenuHandler.groupMenu.setTranslateX(currentGroupMenuTranslateX);
             MenuHandler.groupMenu.appear();
+            MenuHandler.groupMenu.move(SaveGame.saveGame.currentGroupMenuTranslateX);
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuSelecaoMundo));
             ButtonHandler.buttonReturn.unblockAndDisplay();
@@ -401,10 +403,12 @@ public class Game {
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuTutorial));
             MenuHandler.updateTutorialMenu();
             MenuHandler.tutorialMenu.appear();
+            MenuHandler.tutorialMenu.move(SaveGame.saveGame.currentTutorialMenuTranslateX);
             ButtonHandler.buttonReturn.unblockAndDisplay();
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
             MenuHandler.updateLevelMenu();
             MenuHandler.levelMenu.appear();
+            MenuHandler.levelMenu.move(SaveGame.saveGame.currentLevelMenuTranslateX);
 
             if (Tutorial.hasUnvisitedTutorial()){
                 MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
