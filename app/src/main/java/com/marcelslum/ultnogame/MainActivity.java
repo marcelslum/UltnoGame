@@ -175,8 +175,8 @@ public class MainActivity extends FragmentActivity implements
 
 		    @Override
 		    public void onAdClosed() {
-                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-                interstitial.loadAd(adRequest);
+			Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+			interstitial.loadAd(adRequest);
 		    }
 
 		    @Override
