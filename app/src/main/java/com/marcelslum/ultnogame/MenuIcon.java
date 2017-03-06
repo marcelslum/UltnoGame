@@ -27,6 +27,7 @@ public class MenuIcon extends Entity{
     Rectangle beggining;
     Rectangle ending;
     public int iconNumberToShow = -1;
+    public currentTranslateX = 0;
 
     public MenuIcon(String name, float x, float y, float size) {
         super(name, x, y);
@@ -455,6 +456,8 @@ public class MenuIcon extends Entity{
             //Log.e(TAG, "ativando translate do graph " + i);
             graph.get(i).translate(iconTranslateX, 0f);
         }
+        
+        currentTranslateX += iconTranslateX;
     }
 
     @Override
