@@ -42,7 +42,6 @@ public class MenuHandler {
             }
         }
 
-
         for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++){
 
             final LevelsGroupData lgd = LevelsGroupData.levelsGroupData.get(i);
@@ -59,6 +58,7 @@ public class MenuHandler {
 
                         Game.currentLevelsGroupDataSelected = lgd;
                         Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                        SaveGame.saveGame.currentGroupMenuTranslateX = groupMenu.currentTranslateX;
                     }
                 }, false);
 
@@ -138,6 +138,7 @@ public class MenuHandler {
                     );
                     Game.currentLevelIcon.clearDisplay();
                     Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
+                    SaveGame.saveGame.currentLevelMenuTranslateX = levelMenu.currentTranslateX;
                 }
             }, false);
 
@@ -182,6 +183,7 @@ public class MenuHandler {
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_INSTRUCOES_INICIAIS;
                     Game.setGameState(Game.GAME_STATE_TUTORIAL);
+                    SaveGame.saveGame.currentTutorialMenuTranslateX = tutorialMenu.currentTranslateX;
                 }
             }, false);
 
