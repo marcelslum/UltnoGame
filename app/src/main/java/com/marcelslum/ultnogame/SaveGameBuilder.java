@@ -27,17 +27,17 @@ public class SaveGameBuilder {
     public SaveGameBuilder(){
     }
     
-    public setCurrentGroupMenuTranslateX(float v){
+    public SaveGameBuilder setCurrentGroupMenuTranslateX(float v){
         this.currentGroupMenuTranslateX = v;
         return this;
     }
     
-    public setCurrentLevelMenuTranslateX(float v){
+    public SaveGameBuilder setCurrentLevelMenuTranslateX(float v){
         this.currentLevelMenuTranslateX = v;
         return this;
     }
     
-    public setCurrentTutorialMenuTranslateX(float v){
+    public SaveGameBuilder setCurrentTutorialMenuTranslateX(float v){
         this.currentTutorialMenuTranslateX = v;
         return this;
     }
