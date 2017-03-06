@@ -27,6 +27,9 @@ public class SaveGame {
     public boolean music;
     public boolean sound;
     public boolean vibration;
+    public float currentGroupMenuTranslateX;
+    public float currentLevelMenuTranslateX;
+    public float currentTutorialMenuTranslateX;
     public long date;
     public int lastStars;
     public boolean newGroupsSeen;
@@ -40,6 +43,9 @@ public class SaveGame {
         pointsLevels = builder.pointsLevels;
         starsLevels = builder.starsLevels;
         tutorialsViwed = builder.tutorialsViwed;
+        currentGroupMenuTranslateX = builder.currentGroupMenuTranslateX;
+        currentLevelMenuTranslateX = builder.currentLevelMenuTranslateX;
+        currentTutorialMenuTranslateX = builder.currentTutorialMenuTranslateX;
         music = builder.music;
         sound = builder.sound;
         date = builder.date;
@@ -132,6 +138,9 @@ public class SaveGame {
                     .setPointsLevels(_pointsLevels)
                     .setStarsLevels(_starsLevels)
                     .setTutorialsViwed(_tutorialsViwed)
+                    .setCurrentGroupMenuTranslateX(0);
+                    .setCurrentLevelMenuTranslateX(0);
+                    .setCurrentTutorialMenuTranslateX(0);
                     .setNewGroupsSeen(true)
                     .setLastStars(0)
                     .setMusic(true)
@@ -175,6 +184,9 @@ public class SaveGame {
                 .setTutorialsViwed(ftutorialsViwed)
                 .setPointsLevels(fpointsLevels)
                 .setStarsLevels(fstarsLevels)
+                .setCurrentGroupMenuTranslateX(sgLocal.currentGroupMenuTranslateX);
+                .setCurrentLevelMenuTranslateX(sgLocal.currentLevelMenuTranslateX);
+                .setCurrentTutorialMenuTranslateX(sgLocal.currentTutorialMenuTranslateX);
                 .setMusic(fmusic)
                 .setSound(fsound)
                 .setVibration(fvibration)
@@ -313,6 +325,25 @@ public class SaveGame {
             } catch(JSONException e) {
                 saveGameBuilder.setLastStars(0);
             }
+            
+            
+            try {
+                saveGameBuilder.setCurrentGroupMenuTranslateX(obj.getFloat("currentGroupMenuTranslateX"));
+            } catch(JSONException e) {
+                saveGameBuilder.setCurrentGroupMenuTranslateX(0);
+            }
+            
+            try {
+                saveGameBuilder.setCurrentLevelMenuTranslateX(obj.getFloat("currentLevelMenuTranslateX"));
+            } catch(JSONException e) {
+                saveGameBuilder.setCurrentLevelMenuTranslateX(0);
+            }
+            
+            try {
+                saveGameBuilder.setCurrentTutorialMenuTranslateX(obj.getFloat("currentTutorialMenuTranslateX"));
+            } catch(JSONException e) {
+                saveGameBuilder.setCurrentTutorialMenuTranslateX(0);
+            }
 
             try {
                 saveGameBuilder.setNewGroupsSeen(obj.getBoolean("newGroupsSeen"));
@@ -383,6 +414,9 @@ public class SaveGame {
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
             obj.put("starsLevels", new JSONArray(saveGame.starsLevels));
             obj.put("tutorialsViwed", new JSONArray(saveGame.tutorialsViwed));
+            obj.put("currentLevelMenuTranslateX", saveGame.currentLevelMenuTranslateX);
+            obj.put("currentGroupMenuTranslateX", saveGame.currentGroupMenuTranslateX);
+            obj.put("currentTutorialMenuTranslateX", saveGame.currentTutorialMenuTranslateX);
             obj.put("lastStars", saveGame.lastStars);
             obj.put("newGroupsSeen", saveGame.newGroupsSeen);
             obj.put("music", saveGame.music);
