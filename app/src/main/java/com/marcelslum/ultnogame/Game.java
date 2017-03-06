@@ -470,8 +470,10 @@ public class Game {
 
         } else if (state == GAME_STATE_PREPARAR){
 
-
+            MessagesHandler.messageTime.clearAnimations();
+            MessagesHandler.messageTime.alpha = 0.7f;
             MessagesHandler.messageTime.display();
+                
             MessagesHandler.messageCurrentLevel.display();
 
 
