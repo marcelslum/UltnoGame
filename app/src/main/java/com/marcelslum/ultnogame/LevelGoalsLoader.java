@@ -360,16 +360,63 @@ public class LevelGoalsLoader {
            lg.add(new LevelGoal(1, LevelGoal.CAUSE_N_COLLISIONS_BETWEEN_BALLS, 5)); 
         }
         
-        ln += 1; // ---------- LEVEL 52
+        ln += 1; // ---------- LEVEL 53
         if (levelNumber == ln) {
            lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 200));
            lg.add(new LevelGoal(2, LevelGoal.PREVENT_RIGHT_BORDER_TOUCH, 0));
+        }
+        
+        ln += 1; // ---------- LEVEL 54
+        if (levelNumber == ln) {
+           lg.add(new LevelGoal(1, LevelGoal.DECELERATE_N_TIMES, 10))
+           lg.add(new LevelGoal(2, LevelGoal.DECELERATE_MINIMUN, 0));
+           lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_MAXIMUN, 0));
+        }
+        
+        ln += 1; // ---------- LEVEL 55
+        if (levelNumber == ln) {
+           lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 200));
+           lg.add(new LevelGoal(2 LevelGoal.ACELERATE_N_TIMES, 8))
+           lg.add(new LevelGoal(2 LevelGoal.HIT_OBSTACLE_N_TIMES, 30));
+        }
+        
+        ln += 1; // ---------- LEVEL 56
+        if (levelNumber == ln) {
+           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 200));
+           lg.add(new LevelGoal(3, LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS, 4, 6));
+        }
+        
+        ln += 1; // ---------- LEVEL 57
+        if (levelNumber == ln) {
+           lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 200));
+           lg.add(new LevelGoal(2 LevelGoal.DECELERATE_N_TIMES_WITHOUT_REACHING_MAX_ANGLE, 10))
+           lg.add(new LevelGoal(2 LevelGoal.HIT_OBSTACLE_N_TIMES, 30));
+        }
+        
+        ln += 1; // ---------- LEVEL 58
+        if (levelNumber == ln) {
+           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 200));
+           lg.add(new LevelGoal(3, LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS, 5, 7));
+        }
+        
+        
+        ln += 1; // ---------- LEVEL 59
+        if (levelNumber == ln) {
+           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 200));
+           lg.add(new LevelGoal(2, LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS, 5, 8));
+           lg.add(new LevelGoal(1 LevelGoal.ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE, 10))
+        }
+        
+        ln += 1; // ---------- LEVEL 60
+        if (levelNumber == ln) {
+           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 120));
+           lg.add(new LevelGoal(3, LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS, 6, 10));
         }
 
         
         ln += 1; // ---------- LEVEL ++++
         if (levelNumber >= ln) {
-            lg.add(new LevelGoal(3, LevelGoal.JUST_FINISH, 0));
+            lg.add(new LevelGoal(3, LevelGoal.DECELERATE_N_TIMES, 0));
             lg.add(new LevelGoal(2, LevelGoal.INCREASE_ANGLE_N_TIMES, 4));
         }
 
