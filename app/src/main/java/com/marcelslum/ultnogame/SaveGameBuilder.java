@@ -19,10 +19,27 @@ public class SaveGameBuilder {
     public long date;
     public boolean newGroupsSeen;
     public int lastStars;
-
+    public float currentGroupMenuTranslateX;
+    public float currentLevelMenuTranslateX;
+    public float currentTutorialMenuTranslateX;
 
 
     public SaveGameBuilder(){
+    }
+    
+    public setCurrentGroupMenuTranslateX(float v){
+        this.currentGroupMenuTranslateX = v;
+        return this;
+    }
+    
+    public setCurrentLevelMenuTranslateX(float v){
+        this.currentLevelMenuTranslateX = v;
+        return this;
+    }
+    
+    public setCurrentTutorialMenuTranslateX(float v){
+        this.currentTutorialMenuTranslateX = v;
+        return this;
     }
 
     public SaveGameBuilder setLastStars(int lastStars) {
