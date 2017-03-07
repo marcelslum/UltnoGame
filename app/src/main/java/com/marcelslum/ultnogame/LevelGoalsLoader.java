@@ -293,9 +293,9 @@ public class LevelGoalsLoader {
         
         ln += 1; // ---------- LEVEL 43
         if (levelNumber == ln) {
-           lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 200));
+           lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 330));
            lg.add(new LevelGoal(2, LevelGoal.KEEP_N_LIVING_BALLS, 5)); 
-           lg.add(new LevelGoal(2, LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES, 5)); 
+           lg.add(new LevelGoal(2, LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES, 10)); 
             
         }
         
