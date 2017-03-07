@@ -325,7 +325,6 @@ public class Ball extends Circle{
                     
                     double theta = -Math.atan2(otherBall.positionY - this.positionY, otherBall.positionX - this.positionX);
                     
-                    
                     double v1x = Utils.getXRotatedFromRad(dvx, dvy, theta);
                     double v1y = Utils.getYRotatedFromRad(dvx, dvy, theta);
                     double v2x = Utils.getXRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
@@ -433,8 +432,6 @@ public class Ball extends Circle{
                     Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
 
                     otherBall.ballsCollidedProcessed.add(this);
-
-
 
                     Log.e(TAG, "DADOS FINAIS");
 
