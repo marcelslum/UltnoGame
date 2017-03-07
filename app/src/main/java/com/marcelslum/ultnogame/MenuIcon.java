@@ -27,7 +27,7 @@ public class MenuIcon extends Entity{
     Rectangle beggining;
     Rectangle ending;
     public int iconNumberToShow = -1;
-    public currentTranslateX = 0;
+    public float currentTranslateX = 0;
 
     public MenuIcon(String name, float x, float y, float size) {
         super(name, x, y);
@@ -114,6 +114,8 @@ public class MenuIcon extends Entity{
     }
 
     public void appear(){
+
+        move(currentTranslateX, false);
         
         if (iconNumberToShow != -1){
             moveToIcon(iconNumberToShow);
@@ -273,7 +275,7 @@ public class MenuIcon extends Entity{
                 @Override
                 public void onMove(TouchEvent touch, long startTime) {
                     //Log.e(TAG, "onMove");
-                    innerMenuIcon.move(touch.x - touch.previousX);
+                    innerMenuIcon.move(touch.x - touch.previousX, true);
                     lastMovement = touch.x - touch.previousX;
                 }
 
@@ -370,14 +372,14 @@ public class MenuIcon extends Entity{
     private void desacelerate() {
         if (lastMovement < 0) {
             if (lastMovement + 0.8f < 0) {
-                move(lastMovement + 0.8f);
+                move(lastMovement + 0.8f, true);
                 lastMovement += 0.8f;
             } else {
                 desacelerationActivated = false;
             }
         } else if (lastMovement > 0) {
             if (lastMovement - 0.8f > 0) {
-                move(lastMovement - 0.8f);
+                move(lastMovement - 0.8f, true);
                 lastMovement -= 0.8f;
             } else {
                 desacelerationActivated = false;
@@ -408,11 +410,11 @@ public class MenuIcon extends Entity{
         }
         
          if (icons.size() > iconNumber){
-            move(getPositionXFromIconNumber(iconNumber));
+            move(getPositionXFromIconNumber(iconNumber), true);
         }
     }
 
-    private void move(float iconTranslateX) {
+    public void move(float iconTranslateX, boolean updateCurrentTranslateX) {
         //Log.e(TAG, "movendo "+ iconTranslateX);
         float padd = size * 0.1f;
 
@@ -456,8 +458,13 @@ public class MenuIcon extends Entity{
             //Log.e(TAG, "ativando translate do graph " + i);
             graph.get(i).translate(iconTranslateX, 0f);
         }
-        
-        currentTranslateX += iconTranslateX;
+
+        if (updateCurrentTranslateX) {
+            currentTranslateX += iconTranslateX;
+        }
+
+        Log.e(TAG, "currentTranslateX "+currentTranslateX);
+
     }
 
     @Override

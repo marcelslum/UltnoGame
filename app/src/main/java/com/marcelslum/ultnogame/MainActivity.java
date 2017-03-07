@@ -35,6 +35,8 @@ import com.google.android.gms.games.Games;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import android.os.Vibrator;
 
+import java.text.NumberFormat;
+
 public class MainActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener,
         SensorEventListener{
@@ -175,8 +177,19 @@ public class MainActivity extends FragmentActivity implements
 
 		    @Override
 		    public void onAdClosed() {
-			Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-			interstitial.loadAd(adRequest);
+
+                //ConnectionHandler.menuConnectionAttempts = 0;
+
+                Game.bordaB.y = Game.resolutionY;
+
+                Game.stopAndReleaseMusic();
+                Game.eraseAllGameEntities();
+                Game.eraseAllHudEntities();
+
+                //ConnectionHandler.verify();
+
+                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                interstitial.loadAd(adRequest);
 		    }
 
 		    @Override

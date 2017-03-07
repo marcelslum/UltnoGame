@@ -117,6 +117,15 @@ public class SaveGame {
             Log.e(TAG, "Criando saveGame com dados do snapshot, pois ele é igual aos dados locais");
             saveGame = getSaveGameFromJson(data);
         }
+
+        if (MenuHandler.groupMenu != null) {
+            MenuHandler.groupMenu.currentTranslateX = saveGame.currentGroupMenuTranslateX;
+        }
+
+        if (MenuHandler.tutorialMenu != null) {
+            MenuHandler.tutorialMenu.currentTranslateX = saveGame.currentTutorialMenuTranslateX;
+        }
+
         loaded = true;
     }
 
@@ -138,9 +147,9 @@ public class SaveGame {
                     .setPointsLevels(_pointsLevels)
                     .setStarsLevels(_starsLevels)
                     .setTutorialsViwed(_tutorialsViwed)
-                    .setCurrentGroupMenuTranslateX(0);
-                    .setCurrentLevelMenuTranslateX(0);
-                    .setCurrentTutorialMenuTranslateX(0);
+                    .setCurrentGroupMenuTranslateX(0)
+                    .setCurrentLevelMenuTranslateX(0)
+                    .setCurrentTutorialMenuTranslateX(0)
                     .setNewGroupsSeen(true)
                     .setLastStars(0)
                     .setMusic(true)
@@ -184,9 +193,9 @@ public class SaveGame {
                 .setTutorialsViwed(ftutorialsViwed)
                 .setPointsLevels(fpointsLevels)
                 .setStarsLevels(fstarsLevels)
-                .setCurrentGroupMenuTranslateX(sgLocal.currentGroupMenuTranslateX);
-                .setCurrentLevelMenuTranslateX(sgLocal.currentLevelMenuTranslateX);
-                .setCurrentTutorialMenuTranslateX(sgLocal.currentTutorialMenuTranslateX);
+                .setCurrentGroupMenuTranslateX(sgLocal.currentGroupMenuTranslateX)
+                .setCurrentLevelMenuTranslateX(sgLocal.currentLevelMenuTranslateX)
+                .setCurrentTutorialMenuTranslateX(sgLocal.currentTutorialMenuTranslateX)
                 .setMusic(fmusic)
                 .setSound(fsound)
                 .setVibration(fvibration)
@@ -328,19 +337,19 @@ public class SaveGame {
             
             
             try {
-                saveGameBuilder.setCurrentGroupMenuTranslateX(obj.getFloat("currentGroupMenuTranslateX"));
+                saveGameBuilder.setCurrentGroupMenuTranslateX((float)obj.getDouble("currentGroupMenuTranslateX"));
             } catch(JSONException e) {
                 saveGameBuilder.setCurrentGroupMenuTranslateX(0);
             }
             
             try {
-                saveGameBuilder.setCurrentLevelMenuTranslateX(obj.getFloat("currentLevelMenuTranslateX"));
+                saveGameBuilder.setCurrentLevelMenuTranslateX((float)obj.getDouble("currentLevelMenuTranslateX"));
             } catch(JSONException e) {
                 saveGameBuilder.setCurrentLevelMenuTranslateX(0);
             }
             
             try {
-                saveGameBuilder.setCurrentTutorialMenuTranslateX(obj.getFloat("currentTutorialMenuTranslateX"));
+                saveGameBuilder.setCurrentTutorialMenuTranslateX((float)obj.getDouble("currentTutorialMenuTranslateX"));
             } catch(JSONException e) {
                 saveGameBuilder.setCurrentTutorialMenuTranslateX(0);
             }
@@ -406,6 +415,15 @@ public class SaveGame {
     }
 
     public static String getStringFromSaveGame(SaveGame saveGame) {
+
+        if (MenuHandler.groupMenu != null) {
+            saveGame.currentGroupMenuTranslateX = MenuHandler.groupMenu.currentTranslateX;
+        }
+
+        if (MenuHandler.tutorialMenu != null) {
+            saveGame.currentTutorialMenuTranslateX = MenuHandler.tutorialMenu.currentTranslateX;
+        }
+
         try {
             JSONObject obj = new JSONObject();
             obj.put("version", SERIAL_VERSION);
@@ -414,9 +432,9 @@ public class SaveGame {
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
             obj.put("starsLevels", new JSONArray(saveGame.starsLevels));
             obj.put("tutorialsViwed", new JSONArray(saveGame.tutorialsViwed));
-            obj.put("currentLevelMenuTranslateX", saveGame.currentLevelMenuTranslateX);
-            obj.put("currentGroupMenuTranslateX", saveGame.currentGroupMenuTranslateX);
-            obj.put("currentTutorialMenuTranslateX", saveGame.currentTutorialMenuTranslateX);
+            obj.put("currentLevelMenuTranslateX", (double)saveGame.currentLevelMenuTranslateX);
+            obj.put("currentGroupMenuTranslateX", (double)saveGame.currentGroupMenuTranslateX);
+            obj.put("currentTutorialMenuTranslateX", (double)saveGame.currentTutorialMenuTranslateX);
             obj.put("lastStars", saveGame.lastStars);
             obj.put("newGroupsSeen", saveGame.newGroupsSeen);
             obj.put("music", saveGame.music);

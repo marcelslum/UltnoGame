@@ -1621,8 +1621,8 @@ public class LevelLoader {
                             })
                     .setObstaclesQuantity(3)
                     .setObstaclesX(0.47f, 0.17f, 0.69f)
-                    .setObstaclesY(0.006f, 0.3740852941f, 0.3740852941f)
-                    .setObstaclesWidth(0.001f,1433333333f, 0.1433333333f)
+                    .setObstaclesY(0.06f, 0.3740852941f, 0.3740852941f)
+                    .setObstaclesWidth(0.001f,0.1433333333f, 0.1433333333f)
                     .setObstaclesHeight(1-0.002f, 0.058f, 0.058f)
                 
                     .setObstaclesPositionVariation(

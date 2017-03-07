@@ -250,7 +250,7 @@ public class LevelGoal{
         this.numberOfStars = numberOfStars;
         this.type = type;
         this.value = value;
-        this.value = value2;
+        this.value2 = value2;
         this.achieved = false;
         setText();
         setMessageText();

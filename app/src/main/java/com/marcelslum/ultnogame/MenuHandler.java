@@ -58,7 +58,6 @@ public class MenuHandler {
 
                         Game.currentLevelsGroupDataSelected = lgd;
                         Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-                        SaveGame.saveGame.currentGroupMenuTranslateX = groupMenu.currentTranslateX;
                     }
                 }, false);
 
@@ -117,6 +116,8 @@ public class MenuHandler {
         levelMenu.graph.clear();
         levelMenu.innerTexts.clear();
 
+        levelMenu.currentTranslateX = 0;
+
 
         if (Game.currentLevelsGroupDataSelected == null){
             Game.currentLevelsGroupDataSelected = LevelsGroupData.levelsGroupData.get(0);
@@ -138,7 +139,6 @@ public class MenuHandler {
                     );
                     Game.currentLevelIcon.clearDisplay();
                     Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
-                    SaveGame.saveGame.currentLevelMenuTranslateX = levelMenu.currentTranslateX;
                 }
             }, false);
 
@@ -183,7 +183,6 @@ public class MenuHandler {
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_INSTRUCOES_INICIAIS;
                     Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    SaveGame.saveGame.currentTutorialMenuTranslateX = tutorialMenu.currentTranslateX;
                 }
             }, false);
 
@@ -318,6 +317,11 @@ public class MenuHandler {
         updateLevelMenu();
 
         tutorialMenu = new MenuIcon("tutorialMenu", 0f, Game.resolutionY * 0.3f, Game.resolutionY * 0.4f);
+
+        if (SaveGame.saveGame != null) {
+            groupMenu.currentTranslateX = SaveGame.saveGame.currentGroupMenuTranslateX;
+            tutorialMenu.currentTranslateX = SaveGame.saveGame.currentTutorialMenuTranslateX;
+        }
 
         // -------------------------------------------MENU OBJETIVOS
         //menuObjectives = new Menu("menuObjectives", Game.resolutionX*0.5f, Game.resolutionY*0.87f, fontSize, font);

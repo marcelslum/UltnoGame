@@ -342,9 +342,13 @@ public class Ball extends Circle{
                     dvy = (float)Utils.getYRotatedFromRad(f1x, f1y, -theta);
                     otherBall.dvx = (float)Utils.getXRotatedFromRad(f2x, f2y, -theta);
                     otherBall.dvy = (float)Utils.getYRotatedFromRad(f2x, f2y, -theta);
-                     
+
+
+                    Log.e("ball", "dvx após colisão elastica bola 1 " + dvx + " " + dvy);
+                    Log.e("ball", "dvy após colisão elastica bola 2 " + otherBall.dvx + " " + otherBall.dvy);
+
+
                     /*
-                    
                     // calcula o angulo em que as bolas estão colidindo
                     double collisionAngle = Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX);
                     Log.e("ball", "collisionAngle " + Math.toDegrees(collisionAngle));
