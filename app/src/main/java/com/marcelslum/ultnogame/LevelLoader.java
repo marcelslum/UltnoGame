@@ -1535,29 +1535,7 @@ public class LevelLoader {
                     .setObstaclesX(0.45f)
                     .setObstaclesY(0.5768088235f)
                     .setObstaclesWidth(0.1f)
-                    .setObstaclesHeight(1-0.577f)
-                    .setBarsScaleVariation(
-                                new ScaleVariationDataBuilder()
-                                        .setIsActive(true)
-                                        .setIncreaseWidth(true)
-                                        .setIncreaseHeight(false)
-                                        .setWidthVelocity(0.006f)
-                                        .setHeightVelocity(0f)
-                                        .setMinWidth_BI(0.5f)
-                                        .setMaxWidth_BI(1.5f)
-                                        .setMinHeight_BI(1f)
-                                        .setMaxHeight_BI(1f),
-                                new ScaleVariationDataBuilder()
-                                        .setIsActive(true)
-                                        .setIncreaseWidth(true)
-                                        .setIncreaseHeight(false)
-                                        .setWidthVelocity(0.006f)
-                                        .setHeightVelocity(0f)
-                                        .setMinWidth_BI(0.5f)
-                                        .setMaxWidth_BI(1.5f)
-                                        .setMinHeight_BI(1f)
-                                        .setMaxHeight_BI(1f)
-                        );
+                    .setObstaclesHeight(1-0.577f);
         }
 
         // ---------- LEVEL48

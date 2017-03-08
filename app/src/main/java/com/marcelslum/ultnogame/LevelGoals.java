@@ -77,7 +77,7 @@ public class LevelGoals {
         for (int i = 0; i < levelGoals.size(); i++) {
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.FINISH_IN_N_SECONDS) {
-                if (seconds = lg.value){
+                if (seconds == lg.value){//??
                     Game.messages.showMessage(lg.messageText);
                 } else {
                     if (lg.value - seconds < 60 && lg.value > 60 && !warning60){

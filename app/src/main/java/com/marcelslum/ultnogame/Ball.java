@@ -322,30 +322,65 @@ public class Ball extends Circle{
                     anim.start();
 
                     Game.ballCollisionStars.add(star);
-                    
-                    double theta = -Math.atan2(otherBall.positionY - this.positionY, otherBall.positionX - this.positionX);
-                    
-                    double v1x = Utils.getXRotatedFromRad(dvx, dvy, theta);
-                    double v1y = Utils.getYRotatedFromRad(dvx, dvy, theta);
-                    double v2x = Utils.getXRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
-                    double v2y = Utils.getYRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
-                    
-  
-                    double f1x = v1x * (mass - otherBall.mass)/(mass + otherBall.mass) + v2x * 2 * otherBall.mass/(mass + otherBall.mass);
-                    double f1y = v1y;
-                    
-                    double f2x = v2x * (otherBall.mass - mass)/(mass + otherBall.mass) + v1x * 2 * mass/(mass + otherBall.mass);
-                    double f2y = v2y;
-                    
-                    dvx = (float)Utils.getXRotatedFromRad(f1x, f1y, -theta);
-                    dvy = (float)Utils.getYRotatedFromRad(f1x, f1y, -theta);
-                    otherBall.dvx = (float)Utils.getXRotatedFromRad(f2x, f2y, -theta);
-                    otherBall.dvy = (float)Utils.getYRotatedFromRad(f2x, f2y, -theta);
 
+                    double collisionAngle = Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX);
+
+                    Log.e(TAG, "collisionAngle " + Math.toDegrees(collisionAngle));
+
+                    double magBall1 = Math.sqrt((dvx * dvx)+(dvy * dvy));
+                    double magBall2 = Math.sqrt((otherBall.dvx * otherBall.dvx)+(otherBall.dvy * otherBall.dvy));
+
+                    Log.e(TAG, "magBall1 " + magBall1);
+                    Log.e(TAG, "magBall2 " + magBall2);
+
+                    double angleBall1 = Math.atan2(dvy, dvx);
+                    double angleBall2 = Math.atan2(otherBall.dvy, otherBall.dvx);
+
+                    Log.e(TAG, "angleBall1 " + angleBall1);
+                    Log.e(TAG, "angleBall2 " + angleBall2);
+
+                    double xSpeedBall1 = magBall1 * Math.cos(angleBall1-collisionAngle);
+                    double ySpeedBall1 = magBall1 * Math.sin(angleBall1-collisionAngle);
+                    double xSpeedBall2 = magBall2 * Math.cos(angleBall2-collisionAngle);
+                    double ySpeedBall2 = magBall2 * Math.sin(angleBall2-collisionAngle);
+
+                    Log.e(TAG, "xSpeedBall1 " + xSpeedBall1);
+                    Log.e(TAG, "ySpeedBall1 " + ySpeedBall1);
+                    Log.e(TAG, "xSpeedBall2 " + xSpeedBall2);
+                    Log.e(TAG, "ySpeedBall2 " + ySpeedBall2);
+
+                    double finalxSpeedBall1 = ((mass-otherBall.mass)*xSpeedBall1+(otherBall.mass+otherBall.mass)*xSpeedBall2)/(mass+otherBall.mass);
+                    double finalxSpeedBall2 = ((mass+mass)*xSpeedBall1+(otherBall.mass-mass)*xSpeedBall2)/(mass+otherBall.mass);
+
+                    Log.e(TAG, "finalxSpeedBall1 " + finalxSpeedBall1);
+                    double finalySpeedBall1 = ySpeedBall1;
+
+                    Log.e(TAG, "finalxSpeedBall2 " + finalxSpeedBall2);
+                    double finalySpeedBall2 = ySpeedBall2;
+                    
+                    //double v1x = Utils.getXRotatedFromRad(dvx, dvy, theta);
+                    //double v1y = Utils.getYRotatedFromRad(dvx, dvy, theta);
+                    //double v2x = Utils.getXRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
+                    //double v2y = Utils.getYRotatedFromRad(otherBall.dvx, otherBall.dvy, theta);
+
+                    //Log.e(TAG, "v1x " + v1x);
+                    //Log.e(TAG, "v1y " + v1y);
+                    //Log.e(TAG, "v2x " + v2x);
+                    //Log.e(TAG, "v2y " + v2y);
+
+                    dvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall1+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall1);
+                    dvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall1+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall1);
+                    otherBall.dvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall2+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall2);
+                    otherBall.dvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall2+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall2);
+
+
+                    //dvx = (float)Utils.getXRotatedFromRad(f1x, f1y, -theta);
+                    //dvy = (float)Utils.getYRotatedFromRad(f1x, f1y, -theta);
+                    //otherBall.dvx = (float)Utils.getXRotatedFromRad(f2x, f2y, -theta);
+                    //otherBall.dvy = (float)Utils.getYRotatedFromRad(f2x, f2y, -theta);
 
                     Log.e("ball", "dvx após colisão elastica bola 1 " + dvx + " " + dvy);
                     Log.e("ball", "dvy após colisão elastica bola 2 " + otherBall.dvx + " " + otherBall.dvy);
-
 
                     /*
                     // calcula o angulo em que as bolas estão colidindo
@@ -576,13 +611,12 @@ public class Ball extends Circle{
                     }
 
                     if (lastResponseBallX != 0 && lastResponseBallY != 0){
-                        if (lastResponseBallX > lastResponseBallY){
+                        if (Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)){
                             Log.e(TAG, "zerando lastResponseBallY");
                             lastResponseBallY = 0;
-                        } else if (lastResponseBallY > lastResponseBallX){
+                        } else if (Math.abs(lastResponseBallY) > Math.abs(lastResponseBallX)){
                             lastResponseBallX = 0;
-                            Log.e(TAG, "zerando lastResponseBallY");
-                            lastResponseBallY = 0;
+                            Log.e(TAG, "zerando lastResponseBallX");
                         }
 
 
