@@ -2287,6 +2287,53 @@ public class LevelLoader {
         }
         
        // LEVEL 68 - BASEADO NO 60
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 4, 1, 2, 0, 1, 1, 4, 1, 2},
+                                    {1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2},
+                                    {1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
+                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
+                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1}
+                            })
+                    
+                    )
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true))
+                    .setSpecialBallPercentage0_1(0.4f)
+                    .setWindType(Level.WIND_TYPE_LEFT)
+                    .setWindowsQuantity(2)
+                    .setWindowsDistance(0.25f, 0.25f)
+                    .setWindowsY(0.25f, 0.25f)
+                    .setWindowsHeight(0.5f, 0.5f)
+                    .setWindowsQuantityOfLines(4, 4)
+                    .setWindowsVelocity(0.006f, 0.006f);
+        }
 
         Level.levelObject = levelBuilder.build();
     }
