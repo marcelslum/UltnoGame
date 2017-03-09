@@ -186,11 +186,14 @@ public class Ball extends Circle{
 
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection) {
-        if (ballParticleGenerator != null && ballParticleGenerator.isActive){
-            ballParticleGenerator.prepareRender(matrixView, matrixProjection);
-        }
-        if (particleGenerator != null && particleGenerator.isActive){
-            particleGenerator.prepareRender(matrixView, matrixProjection);
+
+        if (isAlive) {
+            if (ballParticleGenerator != null && ballParticleGenerator.isActive) {
+                ballParticleGenerator.prepareRender(matrixView, matrixProjection);
+            }
+            if (particleGenerator != null && particleGenerator.isActive) {
+                particleGenerator.prepareRender(matrixView, matrixProjection);
+            }
         }
         super.prepareRender(matrixView, matrixProjection);
     }
@@ -1292,6 +1295,8 @@ public class Ball extends Circle{
         if (listenForExplosion){
             Sound.soundPool.stop(alarmId);
         }
+
+        clearParticles();
 
         this.isSolid = false;
         this.isCollidable = false;
