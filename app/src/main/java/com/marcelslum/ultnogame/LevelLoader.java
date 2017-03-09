@@ -1999,7 +1999,7 @@ public class LevelLoader {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
             targetsAppend.add(new int[]{});
             targetsAppend.add(new int[]{});
-            targetsAppend.add(new int[]{9, 12, 13, 17, 18, 23});
+            targetsAppend.add(new int[]{8, 11, 12, 16, 17, 22});
 
             levelBuilder
                     .setBallsTargetsAppend(targetsAppend)
@@ -2030,16 +2030,154 @@ public class LevelLoader {
         }
         
         //LEVEL 63 - BASEADO NO 39
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 2, 1, 1, 1, 4, 1, 1, 1, 2, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 2, 2, 1, 1, 4, 1, 1, 1, 2, 2},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 1, 1, 1, 1, 3, 1, 1, 1, 1, 0},
+                                    {0, 1, 1, 1, 1, 3, 1, 1, 1, 1, 0}
+                            })
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true)
+                        )
+                    .setSpecialBallPercentage0_1(0.4f)
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.25f)
+                    .setWindowsY(0.25f)
+                    .setWindowsHeight(0.5f)
+                    .setWindowsQuantityOfLines(4)
+                    .setWindowsVelocity(0.006f);
+
+        }
         
         //LEVEL 64 - BASEADO NO 33
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{0, 1, 2, 3, 7, 8});
+            targetsAppend.add(new int[]{10, 11, 16, 17, 24, 25});
+
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 1},
+                                    {2, 2, 2, 3, 3, 3, 0, 0, 1, 2, 1},
+                                    {0, 0, 1, 0, 0, 4, 0, 0, 1, 2, 1},
+                                    {1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3},
+                                    {0, 0, 0, 0, 0, 4, 0, 0, 1, 2, 1},
+                                    {0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1},
+                                    {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
+                                    {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
+                            }
+                    )
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.275f)
+                    .setObstaclesY(0.3705882353f)
+                    .setObstaclesWidth(0.0916666667f)
+                    .setObstaclesHeight(0.0705882353f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0017f)
+                    )
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.25f)
+                    .setWindowsY(0.25f)
+                    .setWindowsHeight(0.5f)
+                    .setWindowsQuantityOfLines(4)
+                    .setWindowsVelocity(0.006f)
+                    .setWindType(Level.WIND_TYPE_RIGHT);
+        }
         
        // LEVEL 65 - BASEADO NO 53
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 5, 5, 5, 0, 0, 1, 5, 5, 5, 0},
+                                    {0, 5, 5, 5, 0, 0, 0, 5, 5, 5, 0},
+                                    {2, 0, 3, 1, 1, 0, 1, 0, 1, 1, 2},
+                                    {1, 1, 0, 2, 1, 0, 1, 2, 3, 1, 1},
+                                    {1, 1, 0, 2, 1, 0, 1, 2, 0, 1, 1},
+                                    {2, 1, 0, 1, 1, 0, 1, 1, 0, 1, 2},
+                                    {0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1},
+                                    {0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1},
+                                    {0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0},
+                                    {1, 2, 3, 1, 0, 0, 1, 1, 3, 2, 0},
+                                    {1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0},
+                                    {5, 5, 0, 0, 0, 0, 5, 5, 0, 0, 0},
+                                    {5, 5, 0, 0, 0, 0, 5, 5, 0, 0, 0}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.47f)
+                    .setObstaclesY(0.04f)
+                    .setObstaclesWidth(0.06f)
+                    .setObstaclesHeight(0.2f)
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true))
+                    .setSpecialBallPercentage0_1(0.4f)
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.25f)
+                    .setWindowsY(0.25f)
+                    .setWindowsHeight(0.5f)
+                    .setWindowsQuantityOfLines(4)
+                    .setWindowsVelocity(0.006f);
+        }
         
        // LEVEL 66 - BASEADO NO 46
         
-        // LEVEL 67 - BASEADO NO 57
+       // LEVEL 67 - BASEADO NO 57
         
-        // LEVEL 68 - BASEADO NO 60
+       // LEVEL 68 - BASEADO NO 60
 
         Level.levelObject = levelBuilder.build();
     }
