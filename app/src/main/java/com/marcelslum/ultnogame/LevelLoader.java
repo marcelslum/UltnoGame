@@ -2023,8 +2023,8 @@ public class LevelLoader {
                             })
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.25f)
-                    .setWindowsY(0.25f)
-                    .setWindowsHeight(0.5f)
+                    .setWindowsY(0.2f)
+                    .setWindowsHeight(0.4f)
                     .setWindowsQuantityOfLines(4)
                     .setWindowsVelocity(0.006f);
         }
@@ -2066,11 +2066,11 @@ public class LevelLoader {
                         )
                     .setSpecialBallPercentage0_1(0.4f)
                     .setWindowsQuantity(1)
-                    .setWindowsDistance(0.25f)
+                    .setWindowsDistance(0.3f)
                     .setWindowsY(0.25f)
-                    .setWindowsHeight(0.5f)
-                    .setWindowsQuantityOfLines(4)
-                    .setWindowsVelocity(0.006f);
+                    .setWindowsHeight(0.45f)
+                    .setWindowsQuantityOfLines(5)
+                    .setWindowsVelocity(-0.007f);
 
         }
         
@@ -2116,11 +2116,11 @@ public class LevelLoader {
                                     .setyVelocity(0.0017f)
                     )
                     .setWindowsQuantity(1)
-                    .setWindowsDistance(0.25f)
-                    .setWindowsY(0.25f)
+                    .setWindowsDistance(0.4f)
+                    .setWindowsY(0.3f)
                     .setWindowsHeight(0.5f)
-                    .setWindowsQuantityOfLines(4)
-                    .setWindowsVelocity(0.006f)
+                    .setWindowsQuantityOfLines(5)
+                    .setWindowsVelocity(0.0075f)
                     .setWindType(Level.WIND_TYPE_RIGHT);
         }
         
@@ -2166,11 +2166,11 @@ public class LevelLoader {
                                     .setAlwaysDecrease(true))
                     .setSpecialBallPercentage0_1(0.4f)
                     .setWindowsQuantity(1)
-                    .setWindowsDistance(0.25f)
+                    .setWindowsDistance(0.45f)
                     .setWindowsY(0.25f)
-                    .setWindowsHeight(0.5f)
-                    .setWindowsQuantityOfLines(4)
-                    .setWindowsVelocity(0.006f);
+                    .setWindowsHeight(0.55f)
+                    .setWindowsQuantityOfLines(6)
+                    .setWindowsVelocity(-0.008f);
         }
         
        // LEVEL 66 - BASEADO NO 46
@@ -2201,11 +2201,11 @@ public class LevelLoader {
    
                             })
                     .setWindowsQuantity(2)
-                    .setWindowsDistance(0.25f, 0.25f)
-                    .setWindowsY(0.25f, 0.25f)
-                    .setWindowsHeight(0.5f, 0.5f)
+                    .setWindowsDistance(0.45f, 0.45f)
+                    .setWindowsY(0.15f, 0.55f)
+                    .setWindowsHeight(0.25f, 0.25f)
                     .setWindowsQuantityOfLines(4, 4)
-                    .setWindowsVelocity(0.006f, 0.006f);
+                    .setWindowsVelocity(-0.007f, -0.007f);
         }
         
        // LEVEL 67 - BASEADO NO 57
@@ -2279,11 +2279,11 @@ public class LevelLoader {
                                     .setAlwaysDecrease(true))
                     .setSpecialBallPercentage0_1(0.4f)
                     .setWindowsQuantity(2)
-                    .setWindowsDistance(0.25f, 0.25f)
-                    .setWindowsY(0.25f, 0.25f)
-                    .setWindowsHeight(0.5f, 0.5f)
+                    .setWindowsDistance(0.45f, 0.45f)
+                    .setWindowsY(0.15f, 0.55f)
+                    .setWindowsHeight(0.25f, 0.25f)
                     .setWindowsQuantityOfLines(4, 4)
-                    .setWindowsVelocity(0.006f, 0.006f);
+                    .setWindowsVelocity(0.008f, -0.007f);
         }
         
        // LEVEL 68 - BASEADO NO 60
@@ -2328,11 +2328,11 @@ public class LevelLoader {
                     .setSpecialBallPercentage0_1(0.4f)
                     .setWindType(Level.WIND_TYPE_LEFT)
                     .setWindowsQuantity(2)
-                    .setWindowsDistance(0.25f, 0.25f)
-                    .setWindowsY(0.25f, 0.25f)
-                    .setWindowsHeight(0.5f, 0.5f)
-                    .setWindowsQuantityOfLines(4, 4)
-                    .setWindowsVelocity(0.006f, 0.006f);
+                    .setWindowsDistance(0.45f, 0.45f)
+                    .setWindowsY(0.1f, 0.5f)
+                    .setWindowsHeight(0.3f, 0.25f)
+                    .setWindowsQuantityOfLines(5, 6)
+                    .setWindowsVelocity(-0.008f, 0.009f);
         }
 
         Level.levelObject = levelBuilder.build();
