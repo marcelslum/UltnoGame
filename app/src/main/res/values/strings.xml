@@ -85,9 +85,9 @@
     <string name="t7t1">A partir de agora o jogo ficará mais complexo.</string>
     <string name="t7t2">Haverá, nos próximos níveis, alvos de cor vermelha.</string>
     <string name="t7t3">A bola que atinjir este alvo explodirá, dando origem a quatro novas bolas.</string>
-    <string name="t7t4">Mas atenção, você não precisa manter as quatro bolas vivas.</string>
-    <string name="t7t5">Nos próximos níveis, ao menos uma bola deve ser mantida viva.</string>
-    <string name="t7t6">A quantidade de bolas a serem salvas e a quantidade de bolas que podem ser perdidas é representada no painel.</string>
+    <string name="t7t4">NÃO é necessário manter todas as quatro bolas vivas.</string>
+    <string name="t7t5">Por enquanto, somente uma delas deve ser mantida viva.</string>
+    <string name="t7t6">A quantidade de bolas a serem salvas e que podem ser perdidas é representada no painel.</string>
     <string name="t7t7">Em preto, aparece a quantidade de bolas que devem permanecer vivas.</string>
     <string name="t7t8">Em azul, a quantidade de bolas que podem ser perdidas.</string>
     <string name="t7t9">As cores azul e preta são apenas ilustrativas, ou seja, tanto faz a cor da bola que permanecerá no jogo.</string>
@@ -97,11 +97,16 @@
     <string name="t7t13">Portanto, procure manter as bolas extras o máximo de tempo possível.</string>
 
     <string name="t8t1">A partir de agora, a posição dos obstáculos pode mudar. Fique atento. </string>
-    <string name="t8t2">Nos próximos níveis, o tamanho dos obstáculos também pode variar. </string>
-
-    <string name="t8t3">Veja se consegue lidar com o vento, que influenciará na velocidade da bola e da barra. </string>
-
-    <string name="t9t1">Níveis muitos fáceis? Fique atento para algumas coisas escondidas.</string>
+    
+    <string name="t9t1">Nos próximos níveis, o tamanho dos obstáculos também pode variar. </string>
+    
+    <string name="t10t1">Veja se consegue lidar com o vento, que influenciará na velocidade da bola e da barra. </string>
+    
+    <string name="t11t1">Níveis muitos fáceis? Fique atento para algumas coisas escondidas.</string>
+    
+    <string name="t12t1">Níveis muitos fáceis? Fique atento para algumas coisas escondidas.</string>
+    
+    
     
     
     <string name="l21t1">Apenas um alvo? Há algo de estranho nesse nível...</string>
