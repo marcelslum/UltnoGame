@@ -1366,8 +1366,7 @@ public class LevelLoader {
                     .setObstaclesX(0.42f)
                     .setObstaclesY(0.5268088235f)
                     .setObstaclesWidth(0.16f)
-                    .setObstaclesHeight(0.4705882353f)
-                    ;
+                    .setObstaclesHeight(0.4705882353f);
         }
 
         // ---------- LEVEL44
@@ -1938,7 +1937,7 @@ public class LevelLoader {
         }
 
 
-        // ---------- LEVEL61
+        // ---------- LEVEL61 (BASEADO NO 50)
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1946,17 +1945,21 @@ public class LevelLoader {
                             new int[][]{
                                     {0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
                                     {0, 3, 1, 2, 0, 0, 0, 2, 1, 1, 0},
-                                    {0, 0, 1, 2, 1, 0, 2, 2, 1, 0, 0},
+                                    {0, 0, 1, 2, 1, 0, 4, 2, 1, 0, 0},
                                     {0, 0, 2, 1, 1, 0, 2, 1, 1, 0, 0},
                                     {0, 0, 0, 2, 1, 0, 1, 2, 0, 0, 0},
-                                    {0, 0, 0, 3, 2, 0, 2, 1, 0, 0, 0},
-                                    {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
-                                    {0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0},
-                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 0, 3, 2, 0, 2, 1, 0, 0, 1},
+                                    {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                                     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                                     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                                     {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1}
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                             })
                     .setObstaclesQuantity(2)
                     .setObstaclesX(0.17f, 0.69f)
@@ -1988,6 +1991,55 @@ public class LevelLoader {
                     .setWindowsQuantityOfLines(3)
                     .setWindowsVelocity(0.005f);
         }
+        
+        // ---------- LEVEL62 (BASEADO NO 41)
+        l += 1;
+        if (levelNumber == l) {
+
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{9, 12, 13, 17, 18, 23});
+
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0},
+                                    {0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
+                                    {0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0},
+                                    {0, 0, 1, 0, 1, 3, 0, 1, 0, 0, 0},
+                                    {1, 0, 1, 0, 3, 0, 0, 1, 0, 0, 1},
+                                    {1, 0, 1, 2, 0, 0, 1, 1, 0, 0, 1},
+                                    {1, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1},
+                                    {1, 1, 0, 4, 0, 2, 0, 3, 0, 1, 1},
+                                    {0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 0},
+                                    {0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0},
+                                    {0, 0, 0, 0, 1, 3, 0, 0, 0, 1, 0},
+                                    {0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0},
+                                    {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0},
+                                    {0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0},
+                            })
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.25f)
+                    .setWindowsY(0.25f)
+                    .setWindowsHeight(0.5f)
+                    .setWindowsQuantityOfLines(4)
+                    .setWindowsVelocity(0.006f);
+        }
+        
+        //LEVEL 63 - BASEADO NO 39
+        
+        //LEVEL 64 - BASEADO NO 33
+        
+       // LEVEL 65 - BASEADO NO 53
+        
+       // LEVEL 66 - BASEADO NO 46
+        
+        // LEVEL 67 - BASEADO NO 57
+        
+        // LEVEL 68 - BASEADO NO 60
 
         Level.levelObject = levelBuilder.build();
     }
