@@ -156,11 +156,11 @@ public class Game {
             if (intensity == VIBRATE_SMALL){
                 pattern = new long[]{0,20};
             } else if (intensity == VIBRATE_TARGET){
-                pattern = new long[]{0,25,10,18, 15, 10};
+                pattern = new long[]{0,25,10,15, 10, 5};
             } else if (intensity == VIBRATE_HARD){
-                pattern = new long[]{0,70,10,50, 10, 30, 10, 15, 10, 5};
+                pattern = new long[]{0,70,10,50, 8, 25, 7, 15};
             } else if (intensity == VIBRATE_BAR){
-                pattern = new long[]{0,23,7,15, 17, 9};
+                pattern = new long[]{0,23,7,10, 5, 5};
             } else {
                 pattern = new long[]{0};
             }

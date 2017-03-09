@@ -49,6 +49,7 @@ public class LevelGoals {
     public int firstTimeLivingBalls = 0;
     public boolean timeLivingBallsMessage1 = false;
     public boolean timeLivingBallsMessage2 = false;
+    public boolean listeningLivingBalls = false;
     
     public final static String TAG = "LevelGoals";
     private boolean warning60;
@@ -100,7 +101,6 @@ public class LevelGoals {
         }
     }
 
-
     public void notifyBallsAlive(int number, int time){
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -110,11 +110,11 @@ public class LevelGoals {
             }
 
             if (lg.type == LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS && !lg.achieved){
-
                 if (number >= lg.value){
-                    if (firstTimeLivingBalls == 0){
+                    if (!listeningLivingBalls){
                         Game.messages.showMessage(lg.messageText + " " + lg.value + Game.getContext().getResources().getString(R.string.levelGoal12m2));
                         firstTimeLivingBalls = time;
+                        listeningLivingBalls = true;
                         timeLivingBallsMessage1 = false;
                         timeLivingBallsMessage2 = false;
                     } else {
@@ -134,10 +134,11 @@ public class LevelGoals {
                         }
                     }
                 } else {
-                    if (firstTimeLivingBalls > 0){
+                    if (listeningLivingBalls){
                         firstTimeLivingBalls = 0;
                         timeLivingBallsMessage1 = false;
                         timeLivingBallsMessage2 = false;
+                        listeningLivingBalls = false;
                     }
                 }
             }
@@ -620,6 +621,8 @@ public class LevelGoals {
 
             barMoveByWind = 0;
             barMoveByWindLoose = false;
+
+            listeningLivingBalls = false;
 
             leftBorderTouch = false;
             rightBorderTouch = false;

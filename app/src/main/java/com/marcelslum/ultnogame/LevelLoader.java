@@ -53,7 +53,8 @@ public class LevelLoader {
         // ---------- LEVEL1
         int l = 1;
         if (levelNumber == l) {
-            levelBuilder.setTargetsMap(
+            levelBuilder
+                    .setTargetsMap(
                     new int[][]{
                         {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                     });
@@ -1914,10 +1915,10 @@ public class LevelLoader {
                                     {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
                                     {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
                                     {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
-                                    {0, 0, 2, 4, 3, 0, 3, 4, 0, 0, 2},
+                                    {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
                                     {0, 0, 2, 0, 3, 0, 3, 0, 0, 0, 2},
                                     {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
-                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 4, 0, 0, 0, 4, 3, 1, 1},
                                     {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1}
                             })
                     .setBarsScaleVariation(
@@ -1925,27 +1926,68 @@ public class LevelLoader {
                                     .setIsActive(true)
                                     .setIncreaseWidth(true)
                                     .setIncreaseHeight(false)
-                                    .setWidthVelocity(0.006f)
+                                    .setWidthVelocity(0.0006f)
                                     .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.5f)
+                                    .setMinWidth_BI(0.75f)
                                     .setMaxWidth_BI(1.5f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f),
-                            new ScaleVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setIncreaseWidth(true)
-                                    .setIncreaseHeight(false)
-                                    .setWidthVelocity(0.006f)
-                                    .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.5f)
-                                    .setMaxWidth_BI(1.5f)
-                                    .setMinHeight_BI(1f)
-                                    .setMaxHeight_BI(1f)
+                            null
                     )
                     .setWindType(Level.WIND_TYPE_LEFT);
         }
-        
-        
+
+
+        // ---------- LEVEL61
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
+                                    {0, 3, 1, 2, 0, 0, 0, 2, 1, 1, 0},
+                                    {0, 0, 1, 2, 1, 0, 2, 2, 1, 0, 0},
+                                    {0, 0, 2, 1, 1, 0, 2, 1, 1, 0, 0},
+                                    {0, 0, 0, 2, 1, 0, 1, 2, 0, 0, 0},
+                                    {0, 0, 0, 3, 2, 0, 2, 1, 0, 0, 0},
+                                    {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1}
+                            })
+                    .setObstaclesQuantity(2)
+                    .setObstaclesX(0.17f, 0.69f)
+                    .setObstaclesY(0.3740852941f, 0.3740852941f)
+                    .setObstaclesWidth(0.1433333333f, 0.1433333333f)
+                    .setObstaclesHeight(0.058f, 0.058f)
+
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f))
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.15f)
+                    .setWindowsY(0.15f)
+                    .setWindowsHeight(0.3f)
+                    .setWindowsQuantityOfLines(3)
+                    .setWindowsVelocity(0.005f);
+        }
 
         Level.levelObject = levelBuilder.build();
     }

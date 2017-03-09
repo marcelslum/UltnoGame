@@ -542,16 +542,16 @@ public class Ball extends Circle{
                 lastResponseBallX = 0f;
                 
                 Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
-                
-                
+
+                Log.e(TAG, "ATENÇÃO ------------------------------------------------------");
                 Log.e(TAG, "colisão com a barra e com responseX e responseY diferentes de 0");
                 Log.e(TAG, "positionY + radius "+ (positionY + radius));
-                Log.e(TAG, "bar.positionY "+ bar.positionY);
+                Log.e(TAG, "bar.positionY "+ barCollided.positionY);
                                 
-                if (positionY + radius) > bar.positionY{
+                if (positionY + radius > barCollided.positionY){
                     Log.e(TAG, "ajustando positionY da bola");
                     Log.e(TAG, "positionY antes " + positionY);
-                    positionY -= (positionY + (radius*1.001)) - bar.positionY;
+                    positionY -= (positionY + (radius*1.001)) - barCollided.positionY;
                     Log.e(TAG, "positionY depois " + positionY);
                 }
                 

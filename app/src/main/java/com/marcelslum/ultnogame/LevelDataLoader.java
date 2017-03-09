@@ -258,6 +258,35 @@ public class LevelDataLoader {
         LevelsGroupData.levelsGroupData.add(l);
 
 
+        levelsQuantity = 8;
+        l = new LevelsGroupData("Obnubilado", nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        // ---------- LEVEL61
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
+        // ---------- LEVEL62
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        // ---------- LEVEL63
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        // ---------- LEVEL64
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        // ---------- LEVEL65
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        // ---------- LEVEL66
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        // ---------- LEVEL67
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        // ---------- LEVEL68
+        nl += 1;
+        l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 2);
+        LevelsGroupData.levelsGroupData.add(l);
+
+
 
     }
 
