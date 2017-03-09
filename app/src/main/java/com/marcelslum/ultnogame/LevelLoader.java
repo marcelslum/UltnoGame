@@ -2174,8 +2174,117 @@ public class LevelLoader {
         }
         
        // LEVEL 66 - BASEADO NO 46
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{14, 22, 23, 29, 30, 38});
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 5, 0, 0, 0, 5, 0, 0, 1, 5, 1},
+                                    {1, 5, 1, 1, 4, 5, 1, 0, 1, 5, 1},
+                                    {1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1},
+                                    {1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1},
+                                    {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {4, 1, 1, 1, 1, 1, 0, 0, 4, 1, 1},
+                                    {0, 0, 2, 2, 2, 2, 3, 5, 1, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 3, 5, 1, 0, 0},
+                                    {1, 5, 3, 1, 5, 3, 3, 0, 1, 2, 2},
+                                    {1, 5, 3, 1, 5, 3, 3, 0, 1, 2, 2},
+                                    {1, 0, 3, 1, 0, 3, 3, 1, 1, 0, 0},
+                                    {1, 0, 3, 1, 0, 3, 3, 1, 1, 0, 0},
+                                    {1, 1, 3, 1, 1, 3, 0, 0, 0, 0, 0},
+                                    {1, 1, 3, 1, 1, 3, 0, 0, 0, 0, 0},
+   
+                            })
+                    .setWindowsQuantity(2)
+                    .setWindowsDistance(0.25f, 0.25f)
+                    .setWindowsY(0.25f, 0.25f)
+                    .setWindowsHeight(0.5f, 0.5f)
+                    .setWindowsQuantityOfLines(4, 4)
+                    .setWindowsVelocity(0.006f, 0.006f);
+        }
         
        // LEVEL 67 - BASEADO NO 57
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 4, 1, 0, 0, 0, 0, 0, 3, 0},
+                                    {2, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1},
+                                    {3, 0, 1, 0, 2, 1, 0, 1, 2, 0, 1},
+                                    {3, 0, 1, 0, 0, 3, 3, 3, 0, 0, 1},
+                                    {2, 0, 1, 0, 0, 3, 3, 3, 0, 0, 4},
+                                    {1, 0, 1, 0, 2, 1, 0, 1, 2, 0, 1},
+                                    {1, 0, 0, 1, 1, 0, 0, 0, 1, 3, 1},
+                                    {2, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1},
+                                    {2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                            })
+                    .setObstaclesQuantity(3)
+                    .setObstaclesX(0.5506666667f, 0.275f, 0.6f)
+                    .setObstaclesY(0.0242647059f, 0.5045382353f, 0.65f)
+                    .setObstaclesWidth(0.1f, 0.1266666667f, 0.1266666667f)
+                    .setObstaclesHeight(1-0.0610294118f, 0.0610294118f, 0.0610294118f)
+                    .setObstaclesScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.01f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(1f)
+                                    .setMaxWidth_BI(100000f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f),
+                            null,
+                            null)
+                    .setObstaclesPositionVariation(
+                            null,
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f))
+                 .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true))
+                    .setSpecialBallPercentage0_1(0.4f)
+                    .setWindowsQuantity(2)
+                    .setWindowsDistance(0.25f, 0.25f)
+                    .setWindowsY(0.25f, 0.25f)
+                    .setWindowsHeight(0.5f, 0.5f)
+                    .setWindowsQuantityOfLines(4, 4)
+                    .setWindowsVelocity(0.006f, 0.006f);
+        }
         
        // LEVEL 68 - BASEADO NO 60
 
