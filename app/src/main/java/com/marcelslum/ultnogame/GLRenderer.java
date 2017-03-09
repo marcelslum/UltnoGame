@@ -177,9 +177,9 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             Game.verifyTouchBlock();
             Game.verifyListeners();
 
-            if (elapsed > (frameDuration*2)){
-                Log.e("GLRenderer", "frame muito longo, reduzindo de " + elapsed + " para " + (frameDuration*2));
-                elapsed = (long)frameDuration*2;
+            if (elapsed > (frameDuration*3)){
+                Log.e("GLRenderer", "frame muito longo, reduzindo de " + elapsed + " para " + (frameDuration*3));
+                elapsed = (long)frameDuration*3;
             }
 
             Game.simulate(elapsed, frameDuration);

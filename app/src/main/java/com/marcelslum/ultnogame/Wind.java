@@ -24,7 +24,7 @@ public class Wind extends Entity{
         isCollidable = false;
 
         // quanto menor, mais ondas
-        density = 80;
+        density = 140;
         frequenciaCentral = 3.0f;
 
         quantityOfWaves = (int)Math.floor(height/(float)density);
