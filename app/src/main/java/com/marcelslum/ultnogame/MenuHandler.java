@@ -107,6 +107,46 @@ public class MenuHandler {
                 groupMenu.addText(2, lgd.name+"2", Game.getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + Game.getContext().getResources().getString(R.string.estrelas), Game.resolutionY * 0.03f, Game.resolutionY * 0.07f, new Color(0.5f, 0.5f, 0.5f, 1f));
             }
         }
+        
+        for (int i = 0; i < numberOfSecretLevels; i++){
+               if (SaveGame.saveGame.secretLevelsUnlocked[i]){
+                   groupMenu.addOption(i, textureUnit, textureMap, new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        SaveGame.saveGame.currentLevelNumber = 1000 + i;
+                        float size = Game.resolutionX * 0.21f;
+                        Game.currentLevelIcon = new Image("Game.currentLevelIcon", (Game.resolutionX * 0.5f) - size * 0.5f,
+                                Game.resolutionY * 0.2f,
+                                size, size,
+                                ld.textureUnit,Utils.getUvData256(ld.textureMap)
+                        );
+                        Game.currentLevelIcon.clearDisplay();
+                        Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
+                        }
+                    }, false);
+                   
+                    levelMenu.addText(1, "Level secreto " + (i + 1), "Level secreto " + (i + 1), Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f));
+                    MenuGraph menuGraph = levelMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
+
+                    levelMenu.addText(2, "Level secreto " + (i + 1) + "2",  (int)SaveGame.saveGame.pointsSecretLevels[0]+" "+Game.getContext().getResources().getString(R.string.pontos),
+                            Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f));
+
+                    float percentage = 0f;
+                    float starsOfLevel = SaveGame.saveGame.starsSecretLevels[i];
+                    if (starsOfLevel == 1){
+                        percentage = 0.2f;
+                    } else if (starsOfLevel == 2){
+                        percentage = 0.4f;
+                    } else if (starsOfLevel == 3){
+                        percentage = 0.6f;
+                    } else if (starsOfLevel == 4){
+                        percentage = 0.8f;
+                    } else if (starsOfLevel == 5){
+                        percentage = 1f;
+                    }
+                    menuGraph.setPercentage(percentage); 
+               }
+        }
     }
 
     public static void updateLevelMenu(){
