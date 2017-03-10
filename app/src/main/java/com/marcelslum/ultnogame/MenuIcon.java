@@ -17,8 +17,14 @@ public class MenuIcon extends Entity{
     ArrayList<Text> texts;
     ArrayList<Text> texts2;
     ArrayList<Text> innerTexts;
-
     ArrayList<MenuIconGraph> graph;
+    
+    ArrayList<boolean> iconsDelayShow;
+    ArrayList<boolean> textsDelayShow;
+    ArrayList<boolean> texts2DelayShow;
+    ArrayList<boolean> innerTextsDelayShow;
+    ArrayList<boolean> graphDelayShow;
+    
     float size;
     private static final String TAG = "MenuIcon";
     boolean desacelerationActivated = false;
@@ -47,6 +53,21 @@ public class MenuIcon extends Entity{
         ending.alpha = 0f;
         addChild(ending);
 
+    }
+    
+    public void clear(){
+        icons.clear();
+        texts.clear();
+        texts2.clear();
+        innerTexts.clear();
+        graph.clear();
+        innerTexts.clear();   
+        iconsDelayShow.clear();
+        textsDelayShow.clear();
+        texts2DelayShow.clear();
+        innerTextsDelayShow.clear();
+        graphDelayShow.clear();
+        innerTextsDelayShow.clear();   
     }
 
     @Override
@@ -182,7 +203,7 @@ public class MenuIcon extends Entity{
         }
     }
 
-    public void addText(int number, String name, String text, float textSize, float paddFromBottom, Color color){
+    public void addText(int number, String name, String text, float textSize, float paddFromBottom, Color color, boolean delayShow){
         float padd = size * 0.1f;
 
         int numberOfIconsAdded = icons.size();
@@ -194,14 +215,16 @@ public class MenuIcon extends Entity{
         Text t = new Text(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
         if (number == 1){
             texts.add(t);
+            textsDelayShow.add(delayShow);
         } else {
             //Log.e(TAG, "adicionando texto 2 ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
             texts2.add(t);
+            texts2DelayShow.add(delayShow);
         }
         addChild(t);
     }
 
-    public void addInnerText(String name, String text, float textSize, float paddFromBottom, Color color){
+    public void addInnerText(String name, String text, float textSize, float paddFromBottom, Color color, boolean delayShow){
         float padd = size * 0.1f;
 
         int numberOfIconsAdded = icons.size();
@@ -212,6 +235,7 @@ public class MenuIcon extends Entity{
 
         final Text t = new Text(name, centerPosition, y + size - paddFromBottom - textSize, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
         innerTexts.add(t);
+        innerTextsDelayShow.add(delayShow);
         Utils.createAnimation3v(t, "alphaOscilation", "alpha", 3000, 0f, 1f, 0.7f, 0.7f, 1f, 1f, true, true).start();
 
         ArrayList<float[]> valuesAnim = new ArrayList<>();
@@ -239,19 +263,18 @@ public class MenuIcon extends Entity{
 
 
 
-    public void addGraph(String name, float paddFromBottom, float height, int type){
+    public MenuIconGraph addGraph(String name, float paddFromBottom, float height, int type, boolean delayShow){
         float padd = size * 0.1f;
         float positionX = x + padd + (graph.size() * size * 1.1f);
         positionX += size * 0.15f;
-
-
-
         MenuIconGraph g = new MenuIconGraph(name, positionX, y + size + paddFromBottom, size * 0.7f, height, type);
         graph.add(g);
+        graphDelayShow.add(delayShow);
         childs.add(g);
+        return g;
     }
 
-    public void addOption(int id, int textureUnit, int textureMap, Animation.AnimationListener onSelect, boolean optionBlocked){
+    public void addOption(int id, int textureUnit, int textureMap, Animation.AnimationListener onSelect, boolean optionBlocked, boolean delayShow){
         
         if (listener == null){
             final MenuIcon innerMenuIcon = this;
@@ -351,6 +374,7 @@ public class MenuIcon extends Entity{
             }
         });
         icons.add(button);
+        iconsDelayShow(delayShow);
         addChild(button);
 
     }
@@ -410,7 +434,7 @@ public class MenuIcon extends Entity{
         }
         
          if (icons.size() > iconNumber){
-            move(getPositionXFromIconNumber(iconNumber), true);
+            move(-getPositionXFromIconNumber(iconNumber), true);
         }
     }
 
