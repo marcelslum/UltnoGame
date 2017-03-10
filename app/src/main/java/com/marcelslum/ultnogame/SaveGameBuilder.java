@@ -22,9 +22,33 @@ public class SaveGameBuilder {
     public float currentGroupMenuTranslateX;
     public float currentLevelMenuTranslateX;
     public float currentTutorialMenuTranslateX;
+    public long[]pointsSecretLevels;
+    public int[]starsSecretLevels;
+    public boolean[] secretLevelsUnlocked;
+    public boolean[] secretLevelsSeen;
 
 
     public SaveGameBuilder(){
+    }
+    
+    public SaveGameBuilder setPointsSecretLevels(long [] v){
+        this.pointsSecretLevels = v;
+        return this;
+    }
+    
+    public SaveGameBuilder setStarsSecretLevels(int [] v){
+        this.starsSecretLevels = v;
+        return this;
+    }
+    
+    public SaveGameBuilder setSecretLevelsUnlocked(boolean [] v){
+        this.secretLevelsUnlocked = v;
+        return this;
+    }
+    
+    public SaveGameBuilder setSecretLevelsSeen(boolean [] v){
+        this.secretLevelsSeen = v;
+        return this;
     }
     
     public SaveGameBuilder setCurrentGroupMenuTranslateX(float v){
