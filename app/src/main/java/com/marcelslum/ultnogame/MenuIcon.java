@@ -61,13 +61,12 @@ public class MenuIcon extends Entity{
         texts2.clear();
         innerTexts.clear();
         graph.clear();
-        innerTexts.clear();   
+        
         iconsDelayShow.clear();
         textsDelayShow.clear();
         texts2DelayShow.clear();
         innerTextsDelayShow.clear();
         graphDelayShow.clear();
-        innerTextsDelayShow.clear();   
     }
 
     @Override
