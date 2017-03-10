@@ -150,6 +150,8 @@ public class Entity{
         switch (parameter) {
             case "rotate":
                 animRotateAngle = value;
+            case "rotateAngle":
+                animRotateAngle = value;
             case "translateX":
                 animTranslateX = value;
                 break;

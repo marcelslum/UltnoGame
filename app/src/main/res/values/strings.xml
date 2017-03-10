@@ -267,6 +267,7 @@
     <string name="levelGoal1m">Level não concluído a tempo :/</string>
     <string name="levelGoal1m2">segundos restantes</string>
     <string name="levelGoal1m3">1 minuto restante</string>
+    <string name="secretLevelUnblocked">Level secreto desbloqueado!!!</string>
 
 
 </resources>

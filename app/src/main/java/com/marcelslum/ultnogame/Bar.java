@@ -16,6 +16,9 @@ public class Bar extends Rectangle{
     long specialBallAnimDuration = 1000;
     boolean specialBallAnimActive = false;
     int textureMap = COLOR_BLACK;
+    boolean leftPress = false;
+
+    boolean rightPress = false;
 
     static final int [] UV_MAP = new int[]{0, 72, 144, 216, 288, 360, 432, 504, 576};
     static final int COLOR_RED = 1;
@@ -26,6 +29,8 @@ public class Bar extends Rectangle{
     static final int COLOR_PINK = 6;
     static final int COLOR_PURPLE = 7;
     static final int COLOR_BLACK = 8;
+
+    int secretLevel1Steps = 0;//L R R L R R L L
 
     Image shine;
     Animation shineDecreaseAfterAccelerate;
@@ -230,6 +235,22 @@ public class Bar extends Rectangle{
             return;
         }
 
+        rightPress = false;
+
+        if (!leftPress){
+            leftPress = true;
+            if (secretLevel1Steps == 0 || secretLevel1Steps == 3 || secretLevel1Steps == 6 || secretLevel1Steps == 7){
+                secretLevel1Steps += 1;
+                if (secretLevel1Steps == 8){
+                    Level.levelGoalsObject.notifySecretLevelUnblocked(1);
+                }
+                Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
+            } else {
+                secretLevel1Steps = 0;
+            }//0 L 1 R 2 R 3 L 4 R 5 R 6 L 7 L
+
+        }
+
         //Log.e(TAG, "moveLeft");
         if (!accelStarted || (accelStarted && (accelFinalVelocityX > 0f))) {
             //Log.e(TAG, "initAcceleration");
@@ -244,11 +265,26 @@ public class Bar extends Rectangle{
         translate(vx, 0f);
         verifyWind();
         timeOfWindMove = 0;
+
+
     }
 
     public void moveRight(float timePercentage) {
         if (!isMovable){
             return;
+        }
+
+        leftPress = false;
+
+        if (!rightPress){
+            rightPress = true;
+
+            if (secretLevel1Steps == 1 || secretLevel1Steps == 2 || secretLevel1Steps == 4 || secretLevel1Steps == 5){
+                secretLevel1Steps += 1;
+                Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
+            } else {
+                secretLevel1Steps = 0;
+            }
         }
         //Log.e(TAG, "moveRight");
         if (!accelStarted || (accelStarted && (accelFinalVelocityX < 0f))) {
@@ -263,9 +299,13 @@ public class Bar extends Rectangle{
         translate(vx, 0f);
         timeOfWindMove = 0;
         verifyWind();
+
     }
 
     public void stop(){
+        rightPress = false;
+        leftPress = false;
+
         if (accelStarted){
             accelStarted = false;
             accelPercentage = 0f;

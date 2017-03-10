@@ -18,6 +18,17 @@ public class LevelGoals {
     boolean leftBorderTouch = false;
     boolean rightBorderTouch = false;
 
+    int secretLevel1Step = 0;
+    int secretLevel2Step = 0;
+    int secretLevel3Step = 0;
+    int secretLevel4Step = 0;
+    int secretLevel5Step = 0;
+    int secretLevel6Step = 0;
+    int secretLevel7Step = 0;
+    int secretLevel8Step = 0;
+    int secretLevel9Step = 0;
+    int secretLevel10Step = 0;
+
     int timesWhereAngleDecreased = 0;
     int timesWhereAngleIncreased = 0;
 
@@ -58,6 +69,20 @@ public class LevelGoals {
 
     public LevelGoals() {
         levelGoals = new ArrayList<>();
+    }
+
+    public void notifySecretLevelUnblocked(int i){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"secretLevelUnblocked "+i);
+        if (i == 1){
+            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
+            Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
+            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
+            Game.messages.showMessage(Game.getContext().getResources().getString(R.string.secretLevelUnblocked));
+        }
+    }
+
+    public void notifyBarMoveLeft(){
+
     }
 
     public void ballReachedWithMaximunBarSpped(){
@@ -640,7 +665,16 @@ public class LevelGoals {
             timesOfCollisionBetweenBalls = 0;
             timesOfBallReachedWithMaximunBarSpped = 0;
 
-
+            secretLevel1Step = 0;
+            secretLevel2Step = 0;
+            secretLevel3Step = 0;
+            secretLevel4Step = 0;
+            secretLevel5Step = 0;
+            secretLevel6Step = 0;
+            secretLevel7Step = 0;
+            secretLevel8Step = 0;
+            secretLevel9Step = 0;
+            secretLevel10Step = 0;
 
 
             timesWhereAngleDecreasedOnlyWithBarMovement = 0;

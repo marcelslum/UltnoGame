@@ -128,6 +128,16 @@ public class Background extends Entity {
         this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
     }
 
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    @Override
+    public float getHeight() {
+        return height;
+    }
+
     public void setDrawInfo() {
         initializeData(12, 6, 8, 0);
 
