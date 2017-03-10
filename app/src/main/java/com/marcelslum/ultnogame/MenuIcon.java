@@ -146,37 +146,83 @@ public class MenuIcon extends Entity{
         blockAllIcons();
         display();
         final MenuIcon innerMenuIcon = this;
+        
+        final boolean hasDelayShow = false;
+        for (int i = 0; i < iconsDelayShow.size(); i++){
+            if (iconsDelayShow.get(i)){
+                hasDelayShow = true;
+                break;
+            }
+        }
+        
+        boolean delayShowUnblockMarked = false;
         for (int i = 0; i < icons.size(); i++){
             icons.get(i).animTranslateX = (Game.resolutionX * 0.5f) + (Game.resolutionX * i * 0.1f);
             icons.get(i).animTranslateY = (Game.resolutionX * 0.5f) + (Game.resolutionX * i * 0.1f);
-            if (i == 0) {
-                Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0f, new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        innerMenuIcon.unblock();
-                    }
-                }).start();
+            
+            if (!iconsDelayShow.get(i)){
+                if (i == 0) {
+                    Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            if (!hasDelayShow);
+                            innerMenuIcon.unblock();
+                        }
+                    }).start();
+                } else {
+                    Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
+                }
+                Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateY", 500, (-Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
             } else {
-                Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
-            }
-            Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateY", 500, (-Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
+                if (!delayShowUnblockMarked){
+                    Utils.createSimpleAnimation(icons.get(i), "a" + i, "alpha", 3000, 0f, 1f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            if (!hasDelayShow);
+                            innerMenuIcon.unblock();
+                        }
+                    }).start();
+                    delayShowUnblockMarked = true;
+                } else {
+                    Utils.createSimpleAnimation(icons.get(i), "a" + i, "alpha", 3000, 0f, 1f).start();
+                }
+            }  
         }
 
         for (int i = 0; i < texts.size(); i++) {
             texts.get(i).alpha = 0f;
-            texts.get(i).increaseAlpha(1200, 1f);
+            if (!textsDelayShow.get(i)){
+                texts.get(i).increaseAlpha(1200, 1f);
+            } else {
+                texts.get(i).increaseAlpha(3000, 1f);
+            }
         }
+        
         for (int i = 0; i < texts2.size(); i++) {
             texts2.get(i).alpha = 0f;
-            texts2.get(i).increaseAlpha(1200, 1f);
+            if (!texts2DelayShow.get(i)){
+                texts2.get(i).increaseAlpha(1200, 1f);
+            } else {
+                texts2.get(i).increaseAlpha(3000, 1f);
+            }
         }
+        
         for (int i = 0; i < graph.size(); i++) {
             graph.get(i).alpha = 0f;
-            graph.get(i).increaseAlpha(1200, 1f);
+            if (!graphDelayShow.get(i)){
+                graph.get(i).increaseAlpha(1200, 1f);
+            } else {
+                graph.get(i).increaseAlpha(3000, 1f);
+            }
         }
+        
         for (int i = 0; i < innerTexts.size(); i++) {
             innerTexts.get(i).alpha = 0f;
-            innerTexts.get(i).increaseAlpha(1200, 1f);
+            if (!innerTextsDelayShow.get(i)){
+                innerTexts.get(i).increaseAlpha(1200, 1f);
+            } else {
+                innerTexts.get(i).increaseAlpha(3000, 1f);
+            }
         }
 
     }
@@ -439,6 +485,12 @@ public class MenuIcon extends Entity{
     }
 
     public void move(float iconTranslateX, boolean updateCurrentTranslateX) {
+        
+        
+        if (isBlocked){
+            return;   
+        }
+        
         //Log.e(TAG, "movendo "+ iconTranslateX);
         float padd = size * 0.1f;
 
