@@ -31,7 +31,11 @@ public class ButtonHandler {
                 } else if (Game.gameState == Game.GAME_STATE_SELECAO_GRUPO){
                     Game.setGameState(Game.GAME_STATE_MENU);
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
-                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                    if (SaveGame.saveGame.currentLevelNumber < 1000){
+                        Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                    } else {
+                        Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                    }
                 } else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL){
                     Game.setGameState(Game.GAME_STATE_MENU);
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
