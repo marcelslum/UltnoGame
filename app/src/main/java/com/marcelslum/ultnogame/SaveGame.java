@@ -23,6 +23,12 @@ public class SaveGame {
     public int currentLevelNumber;
     public long[] pointsLevels;
     public int[] starsLevels;
+    
+    public long[]pointsSecretLevels;
+    public int[]starsSecretLevels;
+    public boolean[] secretLevelsUnlocked;
+    public boolean[] secretLevelsSeen;
+    
     public boolean[] tutorialsViwed;
     public boolean music;
     public boolean sound;
@@ -42,6 +48,10 @@ public class SaveGame {
         currentLevelNumber = builder.currentLevelNumber;
         pointsLevels = builder.pointsLevels;
         starsLevels = builder.starsLevels;
+        pointsSecretLevels = builder.pointsSecretLevels;
+        starsSecretLevels = builder.starsSecretLevels;
+        secretLevelsUnlocked = builder.secretLevelsUnlocked;
+        secretLevelsSeen = builder.secretLevelsSenn;
         tutorialsViwed = builder.tutorialsViwed;
         currentGroupMenuTranslateX = builder.currentGroupMenuTranslateX;
         currentLevelMenuTranslateX = builder.currentLevelMenuTranslateX;
@@ -139,7 +149,11 @@ public class SaveGame {
             long[] _pointsLevels = new long[Level.maxNumberOfLevels];
             int[] _starsLevels = new int[Level.maxNumberOfLevels];
             boolean[] _tutorialsViwed = new boolean[Tutorial.numberOfTutorials];
-
+            
+            long[] _pointsSecretLevels = new long[Level.numberOfSecretLevels];
+            int[] _starsSecretLevels = new int[Level.numberOfSecretLevels];
+            boolean[] _secretLevelsUnlocked = new boolean[Tutorial.numberOfSecretLevels];
+            boolean[] _secretLevelsSeen = new boolean[Tutorial.numberOfSecretLevels];
 
             saveGame = new SaveGameBuilder()
                     .setMaxNumberOfLevels(Level.maxNumberOfLevels)
@@ -147,6 +161,10 @@ public class SaveGame {
                     .setPointsLevels(_pointsLevels)
                     .setStarsLevels(_starsLevels)
                     .setTutorialsViwed(_tutorialsViwed)
+                    .setPointsSecretLevels(_pointsSecretLevels)
+                    .setStarsSecretLevels(_starsSecretLevels)
+                    .setSecretLevelsUnlocked(_secretLevelsUnlocked)
+                    .setSecretLevelsSenn(_secretLevelsSeen)
                     .setCurrentGroupMenuTranslateX(0)
                     .setCurrentLevelMenuTranslateX(0)
                     .setCurrentTutorialMenuTranslateX(0)
@@ -166,6 +184,10 @@ public class SaveGame {
         int fcurrentLevelNumber;
         long[] fpointsLevels;
         int[] fstarsLevels;
+        long[]fpointsSecretLevels;
+        int[]fstarsSecretLevels;
+        boolean[] fsecretLevelsUnlocked;
+        boolean[] fsecretLevelsSeen;
         boolean[] ftutorialsViwed;
         boolean fmusic;
         boolean fsound;
@@ -177,8 +199,16 @@ public class SaveGame {
         fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sgLocal.maxNumberOfLevels);
         fcurrentLevelNumber = sgLocal.currentLevelNumber;
         ftutorialsViwed = getHigher(sg1.tutorialsViwed, sgLocal.tutorialsViwed);
+        
         fpointsLevels = getHigher(sg1.pointsLevels, sgLocal.pointsLevels);
         fstarsLevels = getHigher(sg1.starsLevels, sgLocal.starsLevels);
+        
+        fpointsSecretLevels = getHigher(sg1.pointsSecretLevels, sgLocal.pointsSecretLevels);
+        fstarsSecretLevels = getHigher(sg1.starsSecretLevels, sgLocal.starsSecretLevels);
+        fsecretLevelsSeen = getHigher(sg1.secretLevelsSeen, sgLocal.secretLevelsSeen);
+        fsecretLevelsUnlocked = getHigher(sg1.fsecretLevelsUnlocked, sgLocal.fsecretLevelsUnlocked);
+        
+        
         flastStars = getHigher(sg1.lastStars, sgLocal.lastStars);
         fnewGroupsSeen = sg1.newGroupsSeen || sgLocal.newGroupsSeen;
 
@@ -193,6 +223,10 @@ public class SaveGame {
                 .setTutorialsViwed(ftutorialsViwed)
                 .setPointsLevels(fpointsLevels)
                 .setStarsLevels(fstarsLevels)
+                .setPointsSecretLevels(fpointsSecretLevels)
+                .setStarsSecretLevels(fstarsSecretLevels)
+                .setSecretLevelsUnlocked(fsecretLevelsUnlocked)
+                .setSecretLevelsSenn(fsecretLevelsSeen)
                 .setCurrentGroupMenuTranslateX(sgLocal.currentGroupMenuTranslateX)
                 .setCurrentLevelMenuTranslateX(sgLocal.currentLevelMenuTranslateX)
                 .setCurrentTutorialMenuTranslateX(sgLocal.currentTutorialMenuTranslateX)
@@ -305,6 +339,64 @@ public class SaveGame {
 
             saveGameBuilder.setMaxNumberOfLevels(obj.getInt("maxNumberOfLevels"));
             saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
+            
+            
+            // pontuação dos levels secretos
+            try {
+                long[] pointsSecretLevels = new long[saveGameBuilder.numberOfSecretLevels];
+                JSONArray array = obj.getJSONArray("pointsSecretLevels");
+                for (int i = 0; i < pointsSecretLevels.length; i++) {
+                    pointsSecretLevels[i] = array.getLong(i);
+                }
+                saveGameBuilder.setPointsSecretLevels(pointsSecretLevels);
+            } catch(JSONException e){
+                for (int i = 0; i < pointsSecretLevels.length; i++) {
+                    pointsSecretLevels[i] = 0;
+                }
+            }
+            
+            // estrelas dos levels secretos
+            try {
+                int[] starsSecretLevels = new long[saveGameBuilder.numberOfSecretLevels];
+                JSONArray array = obj.getJSONArray("starsSecretLevels");
+                for (int i = 0; i < starsSecretLevels.length; i++) {
+                    starsSecretLevels[i] = array.getInt(i);
+                }
+                saveGameBuilder.setStarsSecretLevels(starsSecretLevels);
+            } catch(JSONException e){
+                for (int i = 0; i < starsSecretLevels.length; i++) {
+                    starsSecretLevels[i] = 0;
+                }
+            }
+            
+            
+             // levels secretos desbloqueados
+            try {
+                boolean[] secretLevelsUnlocked = new long[saveGameBuilder.numberOfSecretLevels];
+                JSONArray array = obj.getJSONArray("secretLevelsUnlocked");
+                for (int i = 0; i < secretLevelsUnlocked.length; i++) {
+                    secretLevelsUnlocked[i] = array.getBoolean(i);
+                }
+                saveGameBuilder.setSecretLevelsUnlocked(secretLevelsUnlocked);
+            } catch(JSONException e){
+                for (int i = 0; i < secretLevelsUnlocked.length; i++) {
+                    secretLevelsUnlocked[i] = false;
+                }
+            }
+            
+            // levels secretos vistos
+            try {
+                boolean[] secretLevelsSeen = new long[saveGameBuilder.numberOfSecretLevels];
+                JSONArray array = obj.getJSONArray("secretLevelsSeen");
+                for (int i = 0; i < secretLevelsSeen.length; i++) {
+                    secretLevelsSeen[i] = array.getBoolean(i);
+                }
+                saveGameBuilder.setSecretLevelsSeen(secretLevelsSeen);
+            } catch(JSONException e){
+                for (int i = 0; i < secretLevelsSeen.length; i++) {
+                    secretLevelsSeen[i] = false;
+                }
+            }
 
             // pontuação dos levels
             long[] pointsLevels = new long[saveGameBuilder.maxNumberOfLevels];
@@ -431,7 +523,11 @@ public class SaveGame {
             obj.put("currentLevelNumber", saveGame.currentLevelNumber);
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
             obj.put("starsLevels", new JSONArray(saveGame.starsLevels));
+            obj.put("pointsSecretLevels", new JSONArray(saveGame.pointsSecretLevels));
+            obj.put("starsSecretLevels", new JSONArray(saveGame.starsSecretLevels));
             obj.put("tutorialsViwed", new JSONArray(saveGame.tutorialsViwed));
+            obj.put("secretLevelsUnlocked", new JSONArray(saveGame.secretLevelsUnlocked));
+            obj.put("secretLevelsSeen", new JSONArray(saveGame.secretLevelsSeen));
             obj.put("currentLevelMenuTranslateX", (double)saveGame.currentLevelMenuTranslateX);
             obj.put("currentGroupMenuTranslateX", (double)saveGame.currentGroupMenuTranslateX);
             obj.put("currentTutorialMenuTranslateX", (double)saveGame.currentTutorialMenuTranslateX);
