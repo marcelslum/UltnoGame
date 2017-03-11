@@ -566,12 +566,14 @@ public class MenuIcon extends Entity{
     @Override
     public void block() {
         super.block();
+        isBlocked = true;
         blockAllIcons();
     }
 
     @Override
     public void unblock() {
         super.unblock();
+        isBlocked = false;
         unblockAllIcons();
     }
 }
