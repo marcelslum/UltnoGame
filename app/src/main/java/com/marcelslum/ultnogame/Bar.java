@@ -240,6 +240,9 @@ public class Bar extends Rectangle{
         if (!leftPress){
             leftPress = true;
             if (secretLevel1Steps == 0 || secretLevel1Steps == 3 || secretLevel1Steps == 6 || secretLevel1Steps == 7){
+
+                Level.levelGoalsObject.notifySecretStepsToConquer(7 - secretLevel1Steps);
+
                 secretLevel1Steps += 1;
                 if (secretLevel1Steps == 8){
                     Level.levelGoalsObject.notifySecretLevelUnblocked(1);
@@ -280,6 +283,8 @@ public class Bar extends Rectangle{
             rightPress = true;
 
             if (secretLevel1Steps == 1 || secretLevel1Steps == 2 || secretLevel1Steps == 4 || secretLevel1Steps == 5){
+                Level.levelGoalsObject.notifySecretStepsToConquer(7 - secretLevel1Steps);
+
                 secretLevel1Steps += 1;
                 Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
             } else {

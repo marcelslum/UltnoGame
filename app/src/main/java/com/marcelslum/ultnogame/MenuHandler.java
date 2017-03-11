@@ -37,6 +37,7 @@ public class MenuHandler {
             }
         }
 
+        int lastId = 0;
         for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++){
 
             final LevelsGroupData lgd = LevelsGroupData.levelsGroupData.get(i);
@@ -100,14 +101,17 @@ public class MenuHandler {
                 groupMenu.addText(1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.7f, 0.7f, 0.7f, 1f), false);
                 groupMenu.addText(2, lgd.name+"2", Game.getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + Game.getContext().getResources().getString(R.string.estrelas), Game.resolutionY * 0.03f, Game.resolutionY * 0.07f, new Color(0.5f, 0.5f, 0.5f, 1f), false);
             }
+            lastId = i;
         }
+
+        lastId += 1;
         
         for (int i = 0; i < Level.numberOfSecretLevels; i++){
 
                 final int numberOfCurrentLevelNumber = 1000 + i;
 
                if (SaveGame.saveGame.secretLevelsUnlocked[i]){
-                   groupMenu.addOption(i, Texture.TEXTURE_LEVEL_ICONS, 2, new Animation.AnimationListener() {
+                   groupMenu.addOption(lastId, Texture.TEXTURE_LEVEL_ICONS, 2, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         SaveGame.saveGame.currentLevelNumber = numberOfCurrentLevelNumber;
@@ -152,11 +156,9 @@ public class MenuHandler {
         
         levelMenu.currentTranslateX = 0;
 
-
         if (Game.currentLevelsGroupDataSelected == null){
             Game.currentLevelsGroupDataSelected = LevelsGroupData.levelsGroupData.get(0);
         }
-
 
         for (int i = 0; i < Game.currentLevelsGroupDataSelected.levelsData.size(); i++){
             final LevelsGroupData.LevelData ld = Game.currentLevelsGroupDataSelected.levelsData.get(i);

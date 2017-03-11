@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -9,45 +11,92 @@ public class LevelLoader {
 
     public static void loadLevel(int levelNumber) {
 
+        Log.e("LevelLoader", "levelNumber "+levelNumber);
+
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
-        levelBuilder
-            .setBallsQuantity(LevelLoaderData.ballsQuantity[levelNumber-1])
-            .setMinBallsAlive(LevelLoaderData.minBallsAlive[levelNumber-1])
-            .setBallsRadius(LevelLoaderData.ballsRadius[levelNumber-1])
-            .setBallsX(LevelLoaderData.ballsX[levelNumber-1])
-            .setBallsY(LevelLoaderData.ballsY[levelNumber-1])
-            .setBallsVX(LevelLoaderData.ballsVX[levelNumber-1])
-            .setBallsVY(LevelLoaderData.ballsVY[levelNumber-1])
-            .setBallsTextureMap(LevelLoaderData.ballsTextureMap[levelNumber-1])
-            .setBallsInvencible(LevelLoaderData.ballsInvencible[levelNumber-1])
-            .setBallsAngleToRotate(LevelLoaderData.ballsAngleToRotate[levelNumber-1])
-            .setBallsMaxAngle(LevelLoaderData.ballsMaxAngle[levelNumber-1])
-            .setBallsMinAngle(LevelLoaderData.ballsMinAngle[levelNumber-1])
-            .setBallsVelocityMax(LevelLoaderData.ballsMaxVel[levelNumber-1])
-            .setBallsVelocityMin(LevelLoaderData.ballsMinVel[levelNumber-1])
-            .setBallsVelocityVariation(LevelLoaderData.ballsVelocityVariation[levelNumber-1])
-            .setBallsFree(LevelLoaderData.ballsFree[levelNumber-1])
-            .setBarsQuantity(LevelLoaderData.barsQuantity[levelNumber-1])
-            .setBarsWidth(LevelLoaderData.barsWidth[levelNumber-1])
-            .setBarsHeight(LevelLoaderData.barsHeight[levelNumber-1])
-            .setBarsX(LevelLoaderData.barsX[levelNumber-1])
-            .setBarsY(LevelLoaderData.barsY[levelNumber-1])
-            .setBarsVX(LevelLoaderData.barsVX[levelNumber-1])
-            .setBarsVY(LevelLoaderData.barsVY[levelNumber-1])
-            .setTargetWidth(LevelLoaderData.targetWidth[levelNumber-1])
-            .setTargetHeight(LevelLoaderData.targetHeight[levelNumber-1])
-            .setTargetDistance(LevelLoaderData.targetDistance[levelNumber-1])
-            .setTargetPadd(LevelLoaderData.targetPadd[levelNumber-1])
-            .setBarsScaleVariationOff()
-            .setObstaclesScaleVariationOff()
-            .setObstaclesPositionVariationOff()
-            .setWindType(Level.WIND_TYPE_NO)
-            .setSpecialBallPercentage0_1(0f)
-            .setObstaclesQuantity(0)
-            .setWindowsQuantity(0)
-            .setTutorialAttached(Tutorial.TUTORIAL_INICIO)
-            .setBallsTargetsAppend(new ArrayList<int[]>())
-            .setTargetsStates(new int[]{0, 1, 2, 3});
+        
+        if (levelNumber < 1000) {
+            levelBuilder
+                    .setBallsQuantity(LevelLoaderData.ballsQuantity[levelNumber - 1])
+                    .setMinBallsAlive(LevelLoaderData.minBallsAlive[levelNumber - 1])
+                    .setBallsRadius(LevelLoaderData.ballsRadius[levelNumber - 1])
+                    .setBallsX(LevelLoaderData.ballsX[levelNumber - 1])
+                    .setBallsY(LevelLoaderData.ballsY[levelNumber - 1])
+                    .setBallsVX(LevelLoaderData.ballsVX[levelNumber - 1])
+                    .setBallsVY(LevelLoaderData.ballsVY[levelNumber - 1])
+                    .setBallsTextureMap(LevelLoaderData.ballsTextureMap[levelNumber - 1])
+                    .setBallsInvencible(LevelLoaderData.ballsInvencible[levelNumber - 1])
+                    .setBallsAngleToRotate(LevelLoaderData.ballsAngleToRotate[levelNumber - 1])
+                    .setBallsMaxAngle(LevelLoaderData.ballsMaxAngle[levelNumber - 1])
+                    .setBallsMinAngle(LevelLoaderData.ballsMinAngle[levelNumber - 1])
+                    .setBallsVelocityMax(LevelLoaderData.ballsMaxVel[levelNumber - 1])
+                    .setBallsVelocityMin(LevelLoaderData.ballsMinVel[levelNumber - 1])
+                    .setBallsVelocityVariation(LevelLoaderData.ballsVelocityVariation[levelNumber - 1])
+                    .setBallsFree(LevelLoaderData.ballsFree[levelNumber - 1])
+                    .setBarsQuantity(LevelLoaderData.barsQuantity[levelNumber - 1])
+                    .setBarsWidth(LevelLoaderData.barsWidth[levelNumber - 1])
+                    .setBarsHeight(LevelLoaderData.barsHeight[levelNumber - 1])
+                    .setBarsX(LevelLoaderData.barsX[levelNumber - 1])
+                    .setBarsY(LevelLoaderData.barsY[levelNumber - 1])
+                    .setBarsVX(LevelLoaderData.barsVX[levelNumber - 1])
+                    .setBarsVY(LevelLoaderData.barsVY[levelNumber - 1])
+                    .setTargetWidth(LevelLoaderData.targetWidth[levelNumber - 1])
+                    .setTargetHeight(LevelLoaderData.targetHeight[levelNumber - 1])
+                    .setTargetDistance(LevelLoaderData.targetDistance[levelNumber - 1])
+                    .setTargetPadd(LevelLoaderData.targetPadd[levelNumber - 1])
+                    .setBarsScaleVariationOff()
+                    .setObstaclesScaleVariationOff()
+                    .setObstaclesPositionVariationOff()
+                    .setWindType(Level.WIND_TYPE_NO)
+                    .setSpecialBallPercentage0_1(0f)
+                    .setObstaclesQuantity(0)
+                    .setWindowsQuantity(0)
+                    .setTutorialAttached(Tutorial.TUTORIAL_INICIO)
+                    .setBallsTargetsAppend(new ArrayList<int[]>())
+                    .setTargetsStates(new int[]{0, 1, 2, 3});
+        } else {
+
+            levelBuilder
+                    .setBallsQuantity(LevelLoaderData.ballsQuantitySecret[levelNumber - 1000])
+                    .setMinBallsAlive(LevelLoaderData.minBallsAliveSecret[levelNumber - 1000])
+                    .setBallsRadius(LevelLoaderData.ballsRadiusSecret[levelNumber - 1000])
+                    .setBallsX(LevelLoaderData.ballsXSecret[levelNumber - 1000])
+                    .setBallsY(LevelLoaderData.ballsYSecret[levelNumber - 1000])
+                    .setBallsVX(LevelLoaderData.ballsVXSecret[levelNumber - 1000])
+                    .setBallsVY(LevelLoaderData.ballsVYSecret[levelNumber - 1000])
+                    .setBallsTextureMap(LevelLoaderData.ballsTextureMapSecret[levelNumber - 1000])
+                    .setBallsInvencible(LevelLoaderData.ballsInvencibleSecret[levelNumber - 1000])
+                    .setBallsAngleToRotate(LevelLoaderData.ballsAngleToRotateSecret[levelNumber - 1000])
+                    .setBallsMaxAngle(LevelLoaderData.ballsMaxAngleSecret[levelNumber - 1000])
+                    .setBallsMinAngle(LevelLoaderData.ballsMinAngleSecret[levelNumber - 1000])
+                    .setBallsVelocityMax(LevelLoaderData.ballsMaxVelSecret[levelNumber - 1000])
+                    .setBallsVelocityMin(LevelLoaderData.ballsMinVelSecret[levelNumber - 1000])
+                    .setBallsVelocityVariation(LevelLoaderData.ballsVelocityVariationSecret[levelNumber - 1000])
+                    .setBallsFree(LevelLoaderData.ballsFreeSecret[levelNumber - 1000])
+                    .setBarsQuantity(LevelLoaderData.barsQuantitySecret[levelNumber - 1000])
+                    .setBarsWidth(LevelLoaderData.barsWidthSecret[levelNumber - 1000])
+                    .setBarsHeight(LevelLoaderData.barsHeightSecret[levelNumber - 1000])
+                    .setBarsX(LevelLoaderData.barsXSecret[levelNumber - 1000])
+                    .setBarsY(LevelLoaderData.barsYSecret[levelNumber - 1000])
+                    .setBarsVX(LevelLoaderData.barsVXSecret[levelNumber - 1000])
+                    .setBarsVY(LevelLoaderData.barsVYSecret[levelNumber - 1000])
+                    .setTargetWidth(LevelLoaderData.targetWidthSecret[levelNumber - 1000])
+                    .setTargetHeight(LevelLoaderData.targetHeightSecret[levelNumber - 1000])
+                    .setTargetDistance(LevelLoaderData.targetDistanceSecret[levelNumber - 1000])
+                    .setTargetPadd(LevelLoaderData.targetPaddSecret[levelNumber - 1000])
+                    .setBarsScaleVariationOff()
+                    .setObstaclesScaleVariationOff()
+                    .setObstaclesPositionVariationOff()
+                    .setWindType(Level.WIND_TYPE_NO)
+                    .setSpecialBallPercentage0_1(0f)
+                    .setObstaclesQuantity(0)
+                    .setWindowsQuantity(0)
+                    .setTutorialAttached(Tutorial.TUTORIAL_INICIO)
+                    .setBallsTargetsAppend(new ArrayList<int[]>())
+                    .setTargetsStates(new int[]{0, 1, 2, 3});
+            
+            
+        }
 
         // INÍCIO
         // ---------- LEVEL1

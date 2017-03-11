@@ -140,17 +140,16 @@ public class MenuIcon extends Entity{
 
     public void appear(){
 
-
-
-        
         Sound.play(Sound.soundMenuIconDrop, 0.5f, 0.5f, 0);
         blockAllIcons();
         display();
         final MenuIcon innerMenuIcon = this;
         
         boolean hasDelayShowVerify = false;
+        int delayIcon = 0;
         for (int i = 0; i < iconsDelayShow.size(); i++){
             if (iconsDelayShow.get(i)){
+                delayIcon = i;
                 hasDelayShowVerify = true;
                 break;
 
@@ -160,7 +159,8 @@ public class MenuIcon extends Entity{
         final boolean hasDelayShow = hasDelayShowVerify;
 
         if (hasDelayShow) {
-            currentTranslateX = -1000000;
+            currentTranslateX = - getPositionXFromIconNumber(delayIcon - 1);
+        //    currentTranslateX = 0;
         }
 
         move(currentTranslateX, false);
@@ -172,7 +172,7 @@ public class MenuIcon extends Entity{
 
         boolean delayShowUnblockMarked = false;
 
-        Log.e(TAG, "appear hasDelayShow "+hasDelayShow);
+        //Log.e(TAG, "appear hasDelayShow "+hasDelayShow);
 
         for (int i = 0; i < icons.size(); i++){
 
@@ -181,9 +181,11 @@ public class MenuIcon extends Entity{
                 icons.get(i).animTranslateY = (Game.resolutionX * 0.5f) + (Game.resolutionX * i * 0.1f);
             }
 
-            Log.e(TAG, "appear iconsDelayShow"+i+" "+iconsDelayShow.get(i));
+            //Log.e(TAG, "appear iconsDelayShow"+i+" "+iconsDelayShow.get(i));
             if (!iconsDelayShow.get(i)){
+                //Log.e(TAG, "hasDelayShow " + hasDelayShow);
                 if (!hasDelayShow) {
+                    //Log.e(TAG, "i " + i);
                     if (i == 0) {
                         Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0f, new Animation.AnimationListener() {
                             @Override
@@ -202,6 +204,7 @@ public class MenuIcon extends Entity{
             } else {
                 Animation anim = Utils.createAnimation3v(icons.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true);
                 if (!delayShowUnblockMarked) {
+                    Sound.play(Sound.soundSecretMenuUnblocked, 0.5f, 0.5f, 0);
                     anim.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
@@ -366,7 +369,7 @@ public class MenuIcon extends Entity{
 
                 @Override
                 public void onMove(TouchEvent touch, long startTime) {
-                    //Log.e(TAG, "onMove");
+                    Log.e(TAG, "onMove isBlocked "+isBlocked);
                     if (!isBlocked){
                         innerMenuIcon.move(touch.x - touch.previousX, true);
                         lastMovement = touch.x - touch.previousX;
@@ -447,7 +450,6 @@ public class MenuIcon extends Entity{
         icons.add(button);
         iconsDelayShow.add(delayShow);
         addChild(button);
-
     }
     
     // primeiro icone é número 0
@@ -521,10 +523,15 @@ public class MenuIcon extends Entity{
             if (desacelerationActivated){
                 desacelerationActivated = false;
             }
-            Utils.createSimpleAnimation(ending, "alpha", "alpha", 1200, 1f, 0f).start();
+            //Utils.createSimpleAnimation(ending, "alpha", "alpha", 1200, 1f, 0f).start();
         }
 
         Button firstIcon = icons.get(0);
+
+        //Log.e(TAG, " firstIcon.positionX "+firstIcon.positionX);
+        //Log.e(TAG, " iconTranslateX "+iconTranslateX);
+        //Log.e(TAG, " padd "+padd);
+
         if (firstIcon.positionX + iconTranslateX > padd){
             iconTranslateX = padd - firstIcon.positionX;
             //Log.e(TAG, "primeiro icone na borda - iconTranslateX "+iconTranslateX);
@@ -534,7 +541,12 @@ public class MenuIcon extends Entity{
             Utils.createSimpleAnimation(beggining, "alpha", "alpha", 1200, 1f, 0f).start();
         }
 
+        //Log.e(TAG, "movendo "+ iconTranslateX);
+
         for (int i = 0; i < icons.size(); i++){
+            //Log.e(TAG, "translateIcon "+i);
+            //Log.e(TAG, "icons.get(i).positionX "+icons.get(i).positionX);
+
             icons.get(i).translate(iconTranslateX, 0f);
         }
 
@@ -559,21 +571,20 @@ public class MenuIcon extends Entity{
             currentTranslateX += iconTranslateX;
         }
 
-        Log.e(TAG, "currentTranslateX "+currentTranslateX);
-
+        //Log.e(TAG, "currentTranslateX "+currentTranslateX);
     }
 
     @Override
     public void block() {
         super.block();
-        isBlocked = true;
+
         blockAllIcons();
     }
 
     @Override
     public void unblock() {
         super.unblock();
-        isBlocked = false;
+
         unblockAllIcons();
     }
 }

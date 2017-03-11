@@ -188,7 +188,12 @@ public class MainActivity extends FragmentActivity implements
 
                 //ConnectionHandler.verify();
 
-                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                if (SaveGame.saveGame.currentLevelNumber < 1000){
+                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                } else {
+                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                }
+
                 interstitial.loadAd(adRequest);
 		    }
 
@@ -287,12 +292,13 @@ public class MainActivity extends FragmentActivity implements
         } else if (Game.gameState != Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
             Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
         } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
-		if (SaveGame.saveGame.currentLevelNumber < 1000){
-			Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-		} else {
-			Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-		}
-	}
+
+            if (SaveGame.saveGame.currentLevelNumber < 1000){
+                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+            } else {
+                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+            }
+	    }
     }
 
     public void showInterstitial() {
@@ -304,7 +310,12 @@ public class MainActivity extends FragmentActivity implements
                 Log.e("MainActivity", "Interstitial ad is not loaded yet");
                 if (Game.gameState != Game.GAME_STATE_INTRO){
                     Log.e("findStateMenu", "4");
-                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+
+                    if (SaveGame.saveGame.currentLevelNumber < 1000){
+                        Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                    } else {
+                        Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                    }
                 }
             }
             }

@@ -95,6 +95,7 @@ class Menu extends Entity{
                                                }
                                            });
         animationMenu.start();
+
         Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
     }
 

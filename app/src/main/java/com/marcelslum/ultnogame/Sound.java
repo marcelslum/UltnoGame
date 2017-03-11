@@ -35,6 +35,7 @@ public abstract class Sound {
     public static int soundStarsUp;
     public static int soundSecretUnblocked;
     public static int soundSecretMenuUnblocked;
+    public static int soundSecretPart;
     public static MediaPlayer music;
 
 
@@ -68,8 +69,9 @@ public abstract class Sound {
         soundSuccess2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success2, 1);
         soundMenuIconDrop = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuicondrop, 1);
         soundStarsUp = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.starsup, 1);
-        soundSecretUnblocked = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.secretunblocked, 1);
-        soundSecretMenuUnblocked = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.secretmenuunblocked, 1);
+        soundSecretUnblocked = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.secretunblocked5, 1);
+        soundSecretMenuUnblocked = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.secretmenuunblocked2, 1);
+        soundSecretPart = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.secretpart, 1);
     }
 
     public static int play(int id, float left, float right, int loop){

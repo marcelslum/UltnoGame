@@ -71,13 +71,28 @@ public class LevelGoals {
         levelGoals = new ArrayList<>();
     }
 
+    public void notifySecretStepsToConquer(int i){
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifySecretStepsToConquer "+i);
+        if (i == 1){
+            Sound.play(Sound.soundSecretPart, 1f, 1f, 0);
+        } else if (i == 2){
+            Sound.play(Sound.soundSecretPart, 0.8f, 0.8f, 0);
+        } else if (i == 3){
+            Sound.play(Sound.soundSecretPart, 0.6f, 0.6f, 0);
+        } else if (i == 4){
+            Sound.play(Sound.soundSecretPart, 0.4f, 0.4f, 0);
+        } else if (i == 5){
+            Sound.play(Sound.soundSecretPart, 0.2f, 0.2f, 0);
+        }
+    }
+
     public void notifySecretLevelUnblocked(int i){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"secretLevelUnblocked "+i);
         if (i == 1){
-            Sound.play(Sound.soundSecretMenuUnblocked, 1, 1, 0);
+            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
             Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
-            Game.messages.showMessage(Game.getContext().getResources().getString(R.string.secretLevelUnblocked));
+            Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         }
     }
