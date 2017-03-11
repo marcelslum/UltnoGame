@@ -74,10 +74,11 @@ public class LevelGoals {
     public void notifySecretLevelUnblocked(int i){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"secretLevelUnblocked "+i);
         if (i == 1){
-            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
+            Sound.play(Sound.soundSecretMenuUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
             Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
             Game.messages.showMessage(Game.getContext().getResources().getString(R.string.secretLevelUnblocked));
+            SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         }
     }
 

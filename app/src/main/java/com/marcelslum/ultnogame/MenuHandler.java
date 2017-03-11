@@ -102,27 +102,30 @@ public class MenuHandler {
             }
         }
         
-        for (int i = 0; i < numberOfSecretLevels; i++){
+        for (int i = 0; i < Level.numberOfSecretLevels; i++){
+
+                final int numberOfCurrentLevelNumber = 1000 + i;
+
                if (SaveGame.saveGame.secretLevelsUnlocked[i]){
-                   groupMenu.addOption(i, textureUnit, textureMap, new Animation.AnimationListener() {
+                   groupMenu.addOption(i, Texture.TEXTURE_LEVEL_ICONS, 2, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
-                        SaveGame.saveGame.currentLevelNumber = 1000 + i;
+                        SaveGame.saveGame.currentLevelNumber = numberOfCurrentLevelNumber;
                         float size = Game.resolutionX * 0.21f;
                         Game.currentLevelIcon = new Image("Game.currentLevelIcon", (Game.resolutionX * 0.5f) - size * 0.5f,
                                 Game.resolutionY * 0.2f,
                                 size, size,
-                                ld.textureUnit,Utils.getUvData256(ld.textureMap)
+                                Texture.TEXTURE_LEVEL_ICONS,Utils.getUvData256(2)
                         );
                         Game.currentLevelIcon.clearDisplay();
                         Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
                         }
                     }, false, true);
                    
-                    levelMenu.addText(1, "Level secreto " + (i + 1), "Level secreto " + (i + 1), Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), true);
-                    MenuGraph menuGraph = levelMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, true);
+                   groupMenu.addText(1, "Level secreto " + (i + 1), "Level secreto " + (i + 1), Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), true);
+                   MenuIconGraph menuGraph = groupMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, true);
 
-                    levelMenu.addText(2, "Level secreto " + (i + 1) + "2",  (int)SaveGame.saveGame.pointsSecretLevels[0]+" "+Game.getContext().getResources().getString(R.string.pontos),
+                   groupMenu.addText(2, "Level secreto " + (i + 1) + "2",  (int)SaveGame.saveGame.pointsSecretLevels[0]+" "+Game.getContext().getResources().getString(R.string.pontos),
                             Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f), true);
 
                     float percentage = 0f;

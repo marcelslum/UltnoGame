@@ -19,11 +19,11 @@ public class MenuIcon extends Entity{
     ArrayList<Text> innerTexts;
     ArrayList<MenuIconGraph> graph;
     
-    ArrayList<boolean> iconsDelayShow;
-    ArrayList<boolean> textsDelayShow;
-    ArrayList<boolean> texts2DelayShow;
-    ArrayList<boolean> innerTextsDelayShow;
-    ArrayList<boolean> graphDelayShow;
+    ArrayList<Boolean> iconsDelayShow;
+    ArrayList<Boolean> textsDelayShow;
+    ArrayList<Boolean> texts2DelayShow;
+    ArrayList<Boolean> innerTextsDelayShow;
+    ArrayList<Boolean> graphDelayShow;
     
     float size;
     private static final String TAG = "MenuIcon";
@@ -42,6 +42,11 @@ public class MenuIcon extends Entity{
         texts2 = new ArrayList<>();
         innerTexts = new ArrayList<>();
         graph = new ArrayList<>();
+        iconsDelayShow = new ArrayList<>();
+        textsDelayShow = new ArrayList<>();
+        texts2DelayShow = new ArrayList<>();
+        innerTextsDelayShow = new ArrayList<>();
+        graphDelayShow = new ArrayList<>();
         this.size = size;
 
         float padd = size * 0.1f;
@@ -135,57 +140,78 @@ public class MenuIcon extends Entity{
 
     public void appear(){
 
-        move(currentTranslateX, false);
-        
-        if (iconNumberToShow != -1){
-            moveToIcon(iconNumberToShow);
-        }
+
+
         
         Sound.play(Sound.soundMenuIconDrop, 0.5f, 0.5f, 0);
         blockAllIcons();
         display();
         final MenuIcon innerMenuIcon = this;
         
-        final boolean hasDelayShow = false;
+        boolean hasDelayShowVerify = false;
         for (int i = 0; i < iconsDelayShow.size(); i++){
             if (iconsDelayShow.get(i)){
-                hasDelayShow = true;
+                hasDelayShowVerify = true;
                 break;
+
             }
         }
-        
+
+        final boolean hasDelayShow = hasDelayShowVerify;
+
+        if (hasDelayShow) {
+            currentTranslateX = -1000000;
+        }
+
+        move(currentTranslateX, false);
+
+
+        if (iconNumberToShow != -1){
+            moveToIcon(iconNumberToShow);
+        }
+
         boolean delayShowUnblockMarked = false;
+
+        Log.e(TAG, "appear hasDelayShow "+hasDelayShow);
+
         for (int i = 0; i < icons.size(); i++){
-            icons.get(i).animTranslateX = (Game.resolutionX * 0.5f) + (Game.resolutionX * i * 0.1f);
-            icons.get(i).animTranslateY = (Game.resolutionX * 0.5f) + (Game.resolutionX * i * 0.1f);
-            
+
+            if (!iconsDelayShow.get(i)) {
+                icons.get(i).animTranslateX = (Game.resolutionX * 0.5f) + (Game.resolutionX * i * 0.1f);
+                icons.get(i).animTranslateY = (Game.resolutionX * 0.5f) + (Game.resolutionX * i * 0.1f);
+            }
+
+            Log.e(TAG, "appear iconsDelayShow"+i+" "+iconsDelayShow.get(i));
             if (!iconsDelayShow.get(i)){
-                if (i == 0) {
-                    Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0f, new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationEnd() {
-                            if (!hasDelayShow);
-                            innerMenuIcon.unblock();
-                        }
-                    }).start();
+                if (!hasDelayShow) {
+                    if (i == 0) {
+                        Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0f, new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                                innerMenuIcon.unblock();
+                            }
+                        }).start();
+                    } else {
+                        Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
+                    }
                 } else {
                     Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
                 }
                 Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateY", 500, (-Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
+                Utils.createSimpleAnimation(icons.get(i), "a" + i, "alpha", 3000, 0f, 1f).start();
             } else {
-                if (!delayShowUnblockMarked){
-                    Utils.createSimpleAnimation(icons.get(i), "a" + i, "alpha", 3000, 0f, 1f, new Animation.AnimationListener() {
+                Animation anim = Utils.createAnimation3v(icons.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true);
+                if (!delayShowUnblockMarked) {
+                    anim.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
-                            if (!hasDelayShow);
                             innerMenuIcon.unblock();
                         }
-                    }).start();
+                    });
                     delayShowUnblockMarked = true;
-                } else {
-                    Utils.createSimpleAnimation(icons.get(i), "a" + i, "alpha", 3000, 0f, 1f).start();
                 }
-            }  
+                anim.start();
+            }
         }
 
         for (int i = 0; i < texts.size(); i++) {
@@ -193,7 +219,7 @@ public class MenuIcon extends Entity{
             if (!textsDelayShow.get(i)){
                 texts.get(i).increaseAlpha(1200, 1f);
             } else {
-                texts.get(i).increaseAlpha(3000, 1f);
+                Utils.createAnimation3v(texts.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true).start();
             }
         }
         
@@ -202,7 +228,7 @@ public class MenuIcon extends Entity{
             if (!texts2DelayShow.get(i)){
                 texts2.get(i).increaseAlpha(1200, 1f);
             } else {
-                texts2.get(i).increaseAlpha(3000, 1f);
+                Utils.createAnimation3v(texts2.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true).start();
             }
         }
         
@@ -211,7 +237,7 @@ public class MenuIcon extends Entity{
             if (!graphDelayShow.get(i)){
                 graph.get(i).increaseAlpha(1200, 1f);
             } else {
-                graph.get(i).increaseAlpha(3000, 1f);
+                Utils.createAnimation3v(graph.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true).start();
             }
         }
         
@@ -220,12 +246,10 @@ public class MenuIcon extends Entity{
             if (!innerTextsDelayShow.get(i)){
                 innerTexts.get(i).increaseAlpha(1200, 1f);
             } else {
-                innerTexts.get(i).increaseAlpha(3000, 1f);
+                Utils.createAnimation3v(innerTexts.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true).start();
             }
         }
-
     }
-
 
     @Override
     public void clearDisplay() {
@@ -343,8 +367,10 @@ public class MenuIcon extends Entity{
                 @Override
                 public void onMove(TouchEvent touch, long startTime) {
                     //Log.e(TAG, "onMove");
-                    innerMenuIcon.move(touch.x - touch.previousX, true);
-                    lastMovement = touch.x - touch.previousX;
+                    if (!isBlocked){
+                        innerMenuIcon.move(touch.x - touch.previousX, true);
+                        lastMovement = touch.x - touch.previousX;
+                    }
                 }
 
                 @Override
@@ -419,7 +445,7 @@ public class MenuIcon extends Entity{
             }
         });
         icons.add(button);
-        iconsDelayShow(delayShow);
+        iconsDelayShow.add(delayShow);
         addChild(button);
 
     }
@@ -484,12 +510,7 @@ public class MenuIcon extends Entity{
     }
 
     public void move(float iconTranslateX, boolean updateCurrentTranslateX) {
-        
-        
-        if (isBlocked){
-            return;   
-        }
-        
+
         //Log.e(TAG, "movendo "+ iconTranslateX);
         float padd = size * 0.1f;
 

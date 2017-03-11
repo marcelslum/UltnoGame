@@ -68,6 +68,7 @@ public class Level {
     public static LevelGoals levelGoalsObject;
 
     public static final int maxNumberOfLevels = 100;
+    public static final int numberOfSecretLevels = 10;
 
     private Level(){
         ballsQuantity = LevelBuilder.ballsQuantity;

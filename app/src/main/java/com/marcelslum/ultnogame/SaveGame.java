@@ -51,7 +51,7 @@ public class SaveGame {
         pointsSecretLevels = builder.pointsSecretLevels;
         starsSecretLevels = builder.starsSecretLevels;
         secretLevelsUnlocked = builder.secretLevelsUnlocked;
-        secretLevelsSeen = builder.secretLevelsSenn;
+        secretLevelsSeen = builder.secretLevelsSeen;
         tutorialsViwed = builder.tutorialsViwed;
         currentGroupMenuTranslateX = builder.currentGroupMenuTranslateX;
         currentLevelMenuTranslateX = builder.currentLevelMenuTranslateX;
@@ -152,8 +152,8 @@ public class SaveGame {
             
             long[] _pointsSecretLevels = new long[Level.numberOfSecretLevels];
             int[] _starsSecretLevels = new int[Level.numberOfSecretLevels];
-            boolean[] _secretLevelsUnlocked = new boolean[Tutorial.numberOfSecretLevels];
-            boolean[] _secretLevelsSeen = new boolean[Tutorial.numberOfSecretLevels];
+            boolean[] _secretLevelsUnlocked = new boolean[Level.numberOfSecretLevels];
+            boolean[] _secretLevelsSeen = new boolean[Level.numberOfSecretLevels];
 
             saveGame = new SaveGameBuilder()
                     .setMaxNumberOfLevels(Level.maxNumberOfLevels)
@@ -164,7 +164,7 @@ public class SaveGame {
                     .setPointsSecretLevels(_pointsSecretLevels)
                     .setStarsSecretLevels(_starsSecretLevels)
                     .setSecretLevelsUnlocked(_secretLevelsUnlocked)
-                    .setSecretLevelsSenn(_secretLevelsSeen)
+                    .setSecretLevelsSeen(_secretLevelsSeen)
                     .setCurrentGroupMenuTranslateX(0)
                     .setCurrentLevelMenuTranslateX(0)
                     .setCurrentTutorialMenuTranslateX(0)
@@ -206,7 +206,7 @@ public class SaveGame {
         fpointsSecretLevels = getHigher(sg1.pointsSecretLevels, sgLocal.pointsSecretLevels);
         fstarsSecretLevels = getHigher(sg1.starsSecretLevels, sgLocal.starsSecretLevels);
         fsecretLevelsSeen = getHigher(sg1.secretLevelsSeen, sgLocal.secretLevelsSeen);
-        fsecretLevelsUnlocked = getHigher(sg1.fsecretLevelsUnlocked, sgLocal.fsecretLevelsUnlocked);
+        fsecretLevelsUnlocked = getHigher(sg1.secretLevelsUnlocked, sgLocal.secretLevelsUnlocked);
         
         
         flastStars = getHigher(sg1.lastStars, sgLocal.lastStars);
@@ -226,7 +226,7 @@ public class SaveGame {
                 .setPointsSecretLevels(fpointsSecretLevels)
                 .setStarsSecretLevels(fstarsSecretLevels)
                 .setSecretLevelsUnlocked(fsecretLevelsUnlocked)
-                .setSecretLevelsSenn(fsecretLevelsSeen)
+                .setSecretLevelsSeen(fsecretLevelsSeen)
                 .setCurrentGroupMenuTranslateX(sgLocal.currentGroupMenuTranslateX)
                 .setCurrentLevelMenuTranslateX(sgLocal.currentLevelMenuTranslateX)
                 .setCurrentTutorialMenuTranslateX(sgLocal.currentTutorialMenuTranslateX)
@@ -342,61 +342,60 @@ public class SaveGame {
             
             
             // pontuação dos levels secretos
+            long[] pointsSecretLevels = new long[Level.numberOfSecretLevels];
             try {
-                long[] pointsSecretLevels = new long[saveGameBuilder.numberOfSecretLevels];
                 JSONArray array = obj.getJSONArray("pointsSecretLevels");
                 for (int i = 0; i < pointsSecretLevels.length; i++) {
                     pointsSecretLevels[i] = array.getLong(i);
                 }
-                saveGameBuilder.setPointsSecretLevels(pointsSecretLevels);
             } catch(JSONException e){
                 for (int i = 0; i < pointsSecretLevels.length; i++) {
                     pointsSecretLevels[i] = 0;
                 }
             }
+            saveGameBuilder.setPointsSecretLevels(pointsSecretLevels);
             
             // estrelas dos levels secretos
+            int[] starsSecretLevels = new int[Level.numberOfSecretLevels];
             try {
-                int[] starsSecretLevels = new long[saveGameBuilder.numberOfSecretLevels];
                 JSONArray array = obj.getJSONArray("starsSecretLevels");
                 for (int i = 0; i < starsSecretLevels.length; i++) {
                     starsSecretLevels[i] = array.getInt(i);
                 }
-                saveGameBuilder.setStarsSecretLevels(starsSecretLevels);
             } catch(JSONException e){
                 for (int i = 0; i < starsSecretLevels.length; i++) {
                     starsSecretLevels[i] = 0;
                 }
             }
-            
+            saveGameBuilder.setStarsSecretLevels(starsSecretLevels);
             
              // levels secretos desbloqueados
+            boolean[] secretLevelsUnlocked = new boolean[Level.numberOfSecretLevels];
             try {
-                boolean[] secretLevelsUnlocked = new long[saveGameBuilder.numberOfSecretLevels];
                 JSONArray array = obj.getJSONArray("secretLevelsUnlocked");
                 for (int i = 0; i < secretLevelsUnlocked.length; i++) {
                     secretLevelsUnlocked[i] = array.getBoolean(i);
                 }
-                saveGameBuilder.setSecretLevelsUnlocked(secretLevelsUnlocked);
             } catch(JSONException e){
                 for (int i = 0; i < secretLevelsUnlocked.length; i++) {
                     secretLevelsUnlocked[i] = false;
                 }
             }
+            saveGameBuilder.setSecretLevelsUnlocked(secretLevelsUnlocked);
             
             // levels secretos vistos
+            boolean[] secretLevelsSeen = new boolean[Level.numberOfSecretLevels];
             try {
-                boolean[] secretLevelsSeen = new long[saveGameBuilder.numberOfSecretLevels];
                 JSONArray array = obj.getJSONArray("secretLevelsSeen");
                 for (int i = 0; i < secretLevelsSeen.length; i++) {
                     secretLevelsSeen[i] = array.getBoolean(i);
                 }
-                saveGameBuilder.setSecretLevelsSeen(secretLevelsSeen);
             } catch(JSONException e){
                 for (int i = 0; i < secretLevelsSeen.length; i++) {
                     secretLevelsSeen[i] = false;
                 }
             }
+            saveGameBuilder.setSecretLevelsSeen(secretLevelsSeen);
 
             // pontuação dos levels
             long[] pointsLevels = new long[saveGameBuilder.maxNumberOfLevels];
@@ -451,7 +450,6 @@ public class SaveGame {
             } catch(JSONException e) {
                 saveGameBuilder.setNewGroupsSeen(true);
             }
-
 
             saveGameBuilder.setStarsLevels(starsLevels);
 
