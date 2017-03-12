@@ -18,16 +18,8 @@ public class LevelGoals {
     boolean leftBorderTouch = false;
     boolean rightBorderTouch = false;
 
-    int secretLevel1Step = 0;
-    int secretLevel2Step = 0;
-    int secretLevel3Step = 0;
     int secretLevel4Step = 0;
     int secretLevel5Step = 0;
-    int secretLevel6Step = 0;
-    int secretLevel7Step = 0;
-    int secretLevel8Step = 0;
-    int secretLevel9Step = 0;
-    int secretLevel10Step = 0;
 
     int timesWhereAngleDecreased = 0;
     int timesWhereAngleIncreased = 0;
@@ -89,6 +81,24 @@ public class LevelGoals {
     public void notifySecretLevelUnblocked(int i){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"secretLevelUnblocked "+i);
         if (i == 1){
+            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
+            Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
+            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
+            Game.messages.showMessage("???");
+            SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
+        } else if (i == 2){
+            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
+            Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
+            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
+            Game.messages.showMessage("???");
+            SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
+        } else if (i == 3){
+            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
+            Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
+            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
+            Game.messages.showMessage("???");
+            SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
+        } else if (i == 4){ // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
             Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
@@ -509,6 +519,7 @@ public class LevelGoals {
 
     public void notifyNotSpeedChange(){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyNotSpeedChange");
+        secretLevel4Step = 0;
         timesOfChangeBallSpeedInARow = 0;
         timesOfAccelerationInARow = 0;
         timesOfDecelerationInARow = 0;
@@ -534,12 +545,22 @@ public class LevelGoals {
                 }
             }
         }
-
-
     }
 
     public void accelerate(){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerate");
+
+        // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
+        if(secretLevel4Step == 0 || secretLevel4Step == 1 || secretLevel4Step == 4 || secretLevel4Step == 6 || secretLevel4Step == 9){
+            secretLevel4Step += 1;
+            notifySecretStepsToConquer(10 - secretLevel4Step);
+            if (secretLevel4Step == 10){
+                notifySecretLevelUnblocked(4);
+            }
+        } else {
+            secretLevel4Step = 0;
+        }
+
         timesOfAccelerate += 1;
         timesOfAccelerationInARow += 1;
         timesOfDecelerationInARow = 0;
@@ -566,6 +587,15 @@ public class LevelGoals {
 
     public void decelerate(){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerate");
+
+        // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
+        if(secretLevel4Step == 2 || secretLevel4Step == 3 || secretLevel4Step == 5 || secretLevel4Step == 7 || secretLevel4Step == 8){
+            secretLevel4Step += 1;
+            notifySecretStepsToConquer(10 - secretLevel4Step);
+        } else {
+            secretLevel4Step = 0;
+        }
+
         timesOfDecelerate += 1;
         timesOfDecelerationInARow += 1;
         timesOfAccelerationInARow = 0;
@@ -607,8 +637,8 @@ public class LevelGoals {
     }
 
     public void notifyLeftBorderTouch() {
-        if (!rightBorderTouch) {
-            rightBorderTouch = true;
+        if (!leftBorderTouch) {
+            leftBorderTouch = true;
             Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
             for (int i = 0; i < levelGoals.size(); i++){
                 LevelGoal lg = levelGoals.get(i);
@@ -624,8 +654,8 @@ public class LevelGoals {
 
 
     public void notifyRightBorderTouch() {
-        if (!leftBorderTouch) {
-            leftBorderTouch = true;
+        if (!rightBorderTouch) {
+            rightBorderTouch = true;
             Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyRightBorderTouch ");
             for (int i = 0; i < levelGoals.size(); i++){
                 LevelGoal lg = levelGoals.get(i);
@@ -681,17 +711,8 @@ public class LevelGoals {
             timesOfCollisionBetweenBalls = 0;
             timesOfBallReachedWithMaximunBarSpped = 0;
 
-            secretLevel1Step = 0;
-            secretLevel2Step = 0;
-            secretLevel3Step = 0;
             secretLevel4Step = 0;
             secretLevel5Step = 0;
-            secretLevel6Step = 0;
-            secretLevel7Step = 0;
-            secretLevel8Step = 0;
-            secretLevel9Step = 0;
-            secretLevel10Step = 0;
-
 
             timesWhereAngleDecreasedOnlyWithBarMovement = 0;
             timesWhereAngleIncreasedOnlyWithBarMovement = 0;

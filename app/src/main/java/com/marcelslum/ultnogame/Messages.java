@@ -6,9 +6,13 @@ import java.util.ArrayList;
 
 public class Messages extends Entity {
 
+
+    ArrayList<Entity> childs2;
+
     public Messages() {
         super("messages", Game.resolutionX * 0.97f, Game.gameAreaResolutionY * 0.7f);
         isVisible = true;
+        childs2 = new ArrayList<>();
     }
 
     public void showMessage(String messageText){
@@ -26,18 +30,30 @@ public class Messages extends Entity {
         Log.e("messages", "numberOfActiveTexts "+numberOfActiveTexts);
 
         final Text textObject;
+        final Text textObject2;
         if (childToReplace != -1){
 
             textObject = new Text("text", x, childs.get(childToReplace).y,
-                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.3f, 0.3f, 0.3f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.set(childToReplace, textObject);
+
+            textObject2 = new Text("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), childs.get(childToReplace).y + (Game.gameAreaResolutionY * 0.045f * 0.07f),
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.2f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
+            childs2.set(childToReplace, textObject2);
+
         } else {
             textObject = new Text("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
-                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.3f, 0.3f, 0.3f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.add(textObject);
+
+            textObject2 = new Text("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f) + (Game.gameAreaResolutionY * 0.045f * 0.07f),
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.2f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
+            childs2.add(textObject2);
+
         }
 
         textObject.isVisible = true;
+        textObject2.isVisible = true;
 
         Sound.play(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
 
@@ -46,26 +62,62 @@ public class Messages extends Entity {
         anim1.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
-                Utils.createAnimation2v(textObject, "translateX", "translateX", 225,
+                Utils.createAnimation2v(textObject, "translateX2", "translateX", 225,
+                        0f, -Game.resolutionX * 0.05f, 1f,  Game.resolutionX, false, true).start();
+                Utils.createAnimation2v(textObject2, "translateX2", "translateX", 225,
                         0f, -Game.resolutionX * 0.05f, 1f,  Game.resolutionX, false, true).start();
                 Sound.play(Sound.soundTextBoxAppear, 0.1f, 0.1f, 0);
             }
         });
         anim1.start();
 
-        Utils.createSimpleAnimation(textObject, "alpha", "alpha", 2500, 1f, 0.8f, new Animation.AnimationListener() {
+        Utils.createAnimation3v(textObject2, "translateX", "translateX", 2225,
+                0f, Game.resolutionX, 0.1f, 0f, 0.9f, -Game.resolutionX * 0.05f, false, true).start();
+
+        textObject2.alpha = 1f;
+
+        Utils.createSimpleAnimation(textObject, "alpha", "alpha", 2500, 1f, 0.6f, new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
                 textObject.isVisible = false;
+                textObject2.isVisible = false;
             }
         }).start();
+    }
+
+    @Override
+    public void checkTransformations(boolean updatePrevious) {
+        if (childs2 != null) {
+            for (int i = 0; i < childs2.size(); i++) {
+                childs2.get(i).checkTransformations(updatePrevious);
+            }
+        }
+        super.checkTransformations(updatePrevious);
+    }
+
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection) {
+        if (childs2 != null) {
+            for (int i = 0; i < childs2.size(); i++) {
+                for (int a = 0; a < childs2.get(i).animations.size(); a++) {
+
+                    if (childs2.get(i).animations.get(a).started) {
+                        Log.e(TAG, childs2.get(i).animations.get(a).name);
+                        childs2.get(i).animations.get(a).doAnimation();
+                    }
+                }
+            }
+        }
+        super.prepareRender(matrixView, matrixProjection);
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {
         for (int i = 0; i < childs.size(); i++) {
             if (childs.get(i).isVisible) {
+                childs2.get(i).render(matrixView, matrixProjection);
                 childs.get(i).render(matrixView, matrixProjection);
             }
+
         }
     }
 }

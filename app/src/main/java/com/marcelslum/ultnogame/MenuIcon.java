@@ -200,7 +200,7 @@ public class MenuIcon extends Entity{
                     Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
                 }
                 Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateY", 500, (-Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
-                Utils.createSimpleAnimation(icons.get(i), "a" + i, "alpha", 3000, 0f, 1f).start();
+                Utils.createSimpleAnimation(icons.get(i), "a" + i, "alpha", 500, 0f, 1f).start();
             } else {
                 Animation anim = Utils.createAnimation3v(icons.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true);
                 if (!delayShowUnblockMarked) {
@@ -209,6 +209,7 @@ public class MenuIcon extends Entity{
                         @Override
                         public void onAnimationEnd() {
                             innerMenuIcon.unblock();
+                            SaveGame.setAllSecretSenn();
                         }
                     });
                     delayShowUnblockMarked = true;

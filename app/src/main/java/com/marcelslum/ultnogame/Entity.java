@@ -65,6 +65,7 @@ public class Entity{
     
     public Entity parent;
     public ArrayList<Entity> childs;
+
     public ArrayList<Animation> animations;
     public InteractionListener listener;
 

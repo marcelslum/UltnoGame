@@ -470,6 +470,8 @@ public class Game {
 
         } else if (state == GAME_STATE_PREPARAR){
 
+            Acelerometer.secretLevel3Steps = 0;
+
             MessagesHandler.messageTime.clearAnimations();
             MessagesHandler.messageTime.alpha = 0.7f;
             MessagesHandler.messageTime.display();
@@ -1324,6 +1326,12 @@ public class Game {
             quad.clear();
         }
 
+        for (int i = 0; i < bars.size(); i++){
+            if (bars.get(i).collisionsData.size() == 0){
+                bars.get(i).secretLevel2LockStep = false;
+            }
+        }
+
         // se a bola colidiu, faz o necessário
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
@@ -1622,11 +1630,11 @@ public class Game {
 
         if (currentLevelIcon != null) currentLevelIcon.prepareRender(matrixView, matrixProjection);
 
-        for (int i = 0; i < groupsUnblocked.size(); i++) {
-            groupsUnblocked.get(i).prepareRender(matrixView, matrixProjection);
+        if (groupsUnblocked != null) {
+            for (int i = 0; i < groupsUnblocked.size(); i++) {
+                groupsUnblocked.get(i).prepareRender(matrixView, matrixProjection);
+            }
         }
-
-
 
         MessagesHandler.messageGameOver.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messagePreparation.prepareRender(matrixView, matrixProjection);

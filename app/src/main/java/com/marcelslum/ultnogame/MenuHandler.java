@@ -124,13 +124,13 @@ public class MenuHandler {
                         Game.currentLevelIcon.clearDisplay();
                         Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
                         }
-                    }, false, true);
+                    }, false, !SaveGame.saveGame.secretLevelsSeen[i]);
                    
-                   groupMenu.addText(1, "Level secreto " + (i + 1), "Level secreto " + (i + 1), Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), true);
-                   MenuIconGraph menuGraph = groupMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, true);
+                   groupMenu.addText(1, "Level secreto " + (i + 1), "Level secreto " + (i + 1), Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), !SaveGame.saveGame.secretLevelsSeen[i]);
+                   MenuIconGraph menuGraph = groupMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, !SaveGame.saveGame.secretLevelsSeen[i]);
 
                    groupMenu.addText(2, "Level secreto " + (i + 1) + "2",  (int)SaveGame.saveGame.pointsSecretLevels[0]+" "+Game.getContext().getResources().getString(R.string.pontos),
-                            Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f), true);
+                            Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f), !SaveGame.saveGame.secretLevelsSeen[i]);
 
                     float percentage = 0f;
                     float starsOfLevel = SaveGame.saveGame.starsSecretLevels[i];

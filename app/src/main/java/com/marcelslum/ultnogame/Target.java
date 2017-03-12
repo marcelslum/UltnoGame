@@ -144,7 +144,9 @@ public class Target extends Rectangle {
             pointsX = x + (width/2f);
         }
 
-        pointsObject = new Point("points", pointsX,y + (height/2f) ,height * 1.5f);
+        //Log.e(TAG, "height of point "+height);
+
+        pointsObject = new Point("points", pointsX,y + (height/2f), Game.gameAreaResolutionY * 0.07f);
 
 
 

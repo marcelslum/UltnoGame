@@ -541,4 +541,13 @@ public class SaveGame {
             throw new RuntimeException("Error converting save data to JSON.", ex);
         }
     }
+
+    public static void setAllSecretSenn() {
+        for (int i = 0; i < saveGame.secretLevelsUnlocked.length; i++){
+            if (saveGame.secretLevelsUnlocked[i]){
+                saveGame.secretLevelsSeen[i] = true;
+            }
+
+        }
+    }
 }
