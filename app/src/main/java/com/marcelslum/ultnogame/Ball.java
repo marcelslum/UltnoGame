@@ -19,6 +19,10 @@ public class Ball extends Circle{
     public BallParticleGenerator ballParticleGenerator;
 
 
+    ArrayList<Ball> quarentineBalls;
+    ArrayList<Integer> quarentineBallsState;
+
+
     float final_vx =  0f;
     float final_vy =  0f;
     BallBehaviourData ballBehaviourData;
@@ -259,6 +263,7 @@ public class Ball extends Circle{
                     }
                 }
 
+
                 if (!collidedProcessed) {
 
                     Level.levelObject.levelGoalsObject.hitAnotherBall();
@@ -277,7 +282,7 @@ public class Ball extends Circle{
                     Log.e(TAG, "                  positionY "+ (positionY));
                     Log.e(TAG, "                  dvx "+ (dvx));
                     Log.e(TAG, "                  dvy "+ (dvy));
-                    Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(dvy, dvx)));
+                    Log.e(TAG, "                  moveAngle " + Math.toDegrees(Math.atan2(dvy, dvx)));
 
 
                     Log.e(TAG, "------------------BOLA2");
@@ -286,7 +291,7 @@ public class Ball extends Circle{
                     Log.e(TAG, "                  positionY "+ (otherBall.positionY));
                     Log.e(TAG, "                  dvx "+ (otherBall.dvx));
                     Log.e(TAG, "                  dvy "+ (otherBall.dvy));
-                    Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
+                    Log.e(TAG, "                  moveAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
                     
                     
                     float starX = 0f;
@@ -296,7 +301,7 @@ public class Ball extends Circle{
                         starX = otherBall.positionX + ((otherBall.positionX - positionX)/2f);
                     }
                     
-                    float starY = 0f;
+                    float starY;
                     if (positionY > otherBall.positionY){
                         starY = positionY + ((positionY - otherBall.positionY)/2f);
                     } else {
@@ -452,7 +457,6 @@ public class Ball extends Circle{
                     */
 
                     checkDataAfterAnotherBallCollision();
-                    checkDataAfterAnotherBallCollision();
 
                     Log.e("ball", "dv final " + dvx + " " + dvy);
                     Log.e("ball", "dv final len --------" + Utils.getVectorMagnitude(dvx, dvy));
@@ -464,12 +468,14 @@ public class Ball extends Circle{
                     Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
 
                     otherBall.checkDataAfterAnotherBallCollision();
-                    otherBall.checkDataAfterAnotherBallCollision();
 
                     Log.e("ball", "otherBall.dv final" + otherBall.dvx + " " + otherBall.dvy);
                     Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
 
                     otherBall.ballsCollidedProcessed.add(this);
+
+                    addQuarantineBall(otherBall);
+                    otherBall.addQuarantineBall(this);
 
                     Log.e(TAG, "DADOS FINAIS");
 
@@ -968,6 +974,33 @@ public class Ball extends Circle{
             } else {
                 Game.vibrate(Game.VIBRATE_SMALL);
             }
+        }
+    }
+
+    private void addQuarantineBall(Ball b) {
+        if (quarentineBalls == null){
+            quarentineBalls = new ArrayList<>();
+            quarentineBallsState = new ArrayList<>();
+        }
+        quarentineBalls.add(b);
+        quarentineBallsState.add(6);
+    }
+
+    public void checkQuarentineBall(){
+        if (quarentineBalls == null){
+            quarentineBalls = new ArrayList<>();
+            quarentineBallsState = new ArrayList<>();
+        }
+
+        for (int i = quarentineBalls.size() - 1; i >= 0; i--){
+            if (quarentineBallsState.get(i) > 0){
+                quarentineBallsState.set(i, quarentineBallsState.get(i) - 1);
+            } else {
+                quarentineBalls.remove(i);
+                quarentineBallsState.remove(i);
+            }
+
+
         }
     }
 

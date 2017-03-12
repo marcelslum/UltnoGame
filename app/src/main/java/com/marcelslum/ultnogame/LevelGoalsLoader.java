@@ -287,8 +287,8 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL 39
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
-            lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 200));
-            lg.add(new LevelGoal(3, LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS, 3, 6));
+            lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 125));
+            lg.add(new LevelGoal(3, LevelGoal.KEEP_N_LIVING_BALLS_FOR_N_SECONDS, 3, 8));
         }
         
         ln += 1; // ---------- LEVEL 40

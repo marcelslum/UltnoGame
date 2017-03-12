@@ -1173,8 +1173,14 @@ public class Game {
         // atualiza posição da bola
         if (gameState == GAME_STATE_JOGAR) {
              for (int i = 0; i < balls.size(); i++) {
-
                  if (balls.get(i).isAlive) {
+                     //Log.e(TAG, "                  textureMap "+ balls.get(i).textureMap);
+                     //Log.e(TAG, "                  positionX "+ (balls.get(i).positionX));
+                     //Log.e(TAG, "                  positionY "+ (balls.get(i).positionY));
+                     //Log.e(TAG, "                  dvx "+ (balls.get(i).dvx));
+                     //Log.e(TAG, "                  dvy "+ (balls.get(i).dvy));
+                     //Log.e(TAG, "                  moveAngle " + Math.toDegrees(Math.atan2(balls.get(i).dvy, balls.get(i).dvx)));
+
 
                      Ball ball = balls.get(i);
                      ball.verifyAcceleration();
@@ -1311,6 +1317,14 @@ public class Game {
 
         // verifica a colisão da barra
         if (gameState == GAME_STATE_JOGAR) {
+
+
+
+
+
+
+
+
             for (int i = 0; i < 2; i++) {
                 Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true);
                 Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true);
@@ -1336,6 +1350,9 @@ public class Game {
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).isAlive) {
+
+                    balls.get(i).checkQuarentineBall();
+
                     if (balls.get(i).isCollided) {
                         balls.get(i).onCollision();
                     }

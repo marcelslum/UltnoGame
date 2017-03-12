@@ -36,11 +36,27 @@ public abstract class Collision {
                 collided = false;
                 out = quad.retrieve(a);
 
+
+
                 // roda pelas entidades extraidas e verifica a colisão
                 for (int bCount = 0; bCount < out.size(); bCount++){
                     PhysicalObject b = (PhysicalObject)out.get(bCount);
 
+                    boolean onQuarentine = false;
+                    if (a.name == "ball" && b.name == "ball") {
 
+                        Ball ball1 = (Ball) a;
+                        Ball ball2 = (Ball) b;
+
+                        if (ball1.quarentineBalls != null) {
+                            for (int q = 0; q < ball1.quarentineBalls.size(); q++) {
+                                if (ball1.quarentineBalls.get(q) == ball2) {
+                                    Log.e(TAG, "dispensando bola por estar em quarentena " + ball1.quarentineBallsState.get(q));
+                                    onQuarentine = true;
+                                }
+                            }
+                        }
+                    }
                     // verifica o peso da entidade b
                     // se a variável bWeight for 0, pula essa verificação
                     boolean check = true;
@@ -51,7 +67,7 @@ public abstract class Collision {
                     }
 
                     // verifica se a entidade não é a mesma e se elas são colidíveis e se o peso é compatível
-                    if ((a.isSolid && b.isSolid) && (b != a) && check){
+                    if ((a.isSolid && b.isSolid) && (b != a) && check && !onQuarentine){
 
                         // seta os dados da entidade 'a' e da entidade 'b'
                         a.setSatData();

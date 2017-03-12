@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Messages extends Entity {
 
-
     ArrayList<Entity> childs2;
 
     public Messages() {
@@ -49,7 +48,6 @@ public class Messages extends Entity {
             textObject2 = new Text("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f) + (Game.gameAreaResolutionY * 0.045f * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.2f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs2.add(textObject2);
-
         }
 
         textObject.isVisible = true;
@@ -62,10 +60,12 @@ public class Messages extends Entity {
         anim1.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
-                Utils.createAnimation2v(textObject, "translateX2", "translateX", 225,
-                        0f, -Game.resolutionX * 0.05f, 1f,  Game.resolutionX, false, true).start();
-                Utils.createAnimation2v(textObject2, "translateX2", "translateX", 225,
-                        0f, -Game.resolutionX * 0.05f, 1f,  Game.resolutionX, false, true).start();
+
+                Animation a2 = Utils.createAnimation2v(textObject, "translateX2", "translateX", 225,
+                        0f, -Game.resolutionX * 0.05f, 1f,  Game.resolutionX, false, true);
+                a2.addAttachedEntities(textObject2);
+                a2.start();
+
                 Sound.play(Sound.soundTextBoxAppear, 0.1f, 0.1f, 0);
             }
         });
