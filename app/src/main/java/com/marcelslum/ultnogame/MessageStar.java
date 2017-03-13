@@ -18,7 +18,7 @@ public class MessageStar extends Entity {
 
 
     public MessageStar(String name, float size, float x, float y) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_PANEL);
         this.size = size;
         stars = new ArrayList<>();
 
