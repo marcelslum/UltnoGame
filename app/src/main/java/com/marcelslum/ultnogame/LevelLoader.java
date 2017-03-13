@@ -103,6 +103,7 @@ public class LevelLoader {
         int l = 1;
         if (levelNumber == l) {
             levelBuilder
+                    .setFakeBallPercentage(0.8f);
                     .setTargetsMap(
                     new int[][]{
                         {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
