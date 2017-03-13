@@ -12,14 +12,13 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Entity{
-    
-    
-    
+
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
     final public static int TYPE_BAR = 2;
     final public static int TYPE_TARGET = 3;
     final public static int TYPE_OBSTACLE = 4;
+    final public static int TYPE_BACKGROUND = 5;
     
 
     public final static String TAG = "Entity";
