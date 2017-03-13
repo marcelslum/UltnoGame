@@ -559,6 +559,7 @@ public class LevelGoals {
             }
         } else {
             secretLevel4Step = 0;
+
         }
 
         timesOfAccelerate += 1;
@@ -594,6 +595,7 @@ public class LevelGoals {
             notifySecretStepsToConquer(10 - secretLevel4Step);
         } else {
             secretLevel4Step = 0;
+
         }
 
         timesOfDecelerate += 1;

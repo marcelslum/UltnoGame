@@ -362,7 +362,12 @@ public class Game {
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             MessagesHandler.messageSubMenu.display();
-            MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + SaveGame.saveGame.currentLevelNumber);
+
+            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + SaveGame.saveGame.currentLevelNumber);
+            } else {
+                MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 999));
+            }
 
             ButtonHandler.buttonContinue.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
@@ -371,7 +376,11 @@ public class Game {
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             MessagesHandler.messageSubMenu.display();
-            MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + SaveGame.saveGame.currentLevelNumber);
+            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + SaveGame.saveGame.currentLevelNumber);
+            } else {
+                MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 999));
+            }
             ButtonHandler.buttonReturnObjectivesPause.unblockAndDisplay();
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
 
@@ -599,11 +608,20 @@ public class Game {
                 ScoreHandler.scorePanel.showMessage("-50%", 1000);
                 int points = ScoreHandler.scorePanel.value / 2;
                 ScoreHandler.scorePanel.setValue(points, true, 1000, true);
-                if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1] < points) {
-                    SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber-1] = points;
-                    ScoreHandler.setMaxScoreTotal();
-                    SaveGame.save();
-                    GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), points);
+                if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                    if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] < points) {
+                        SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] = points;
+                        ScoreHandler.setMaxScoreTotal();
+                        SaveGame.save();
+                        GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), points);
+                    }
+                } else {
+                    if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1000] < points) {
+                        SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1000] = points;
+                        ScoreHandler.setMaxScoreTotal();
+                        SaveGame.save();
+                        GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), points);
+                    }
                 }
             }
         } else if (state == GAME_STATE_PAUSE){
@@ -715,7 +733,12 @@ public class Game {
             });
             anim2.start();
 
-            StarsHandler.previousStars = SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1];
+            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                StarsHandler.previousStars = SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1];
+            } else {
+                StarsHandler.previousStars = SaveGame.saveGame.starsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000];
+            }
+
             StarsHandler.newStars = Level.levelGoalsObject.getStarsAchieved();
 
             // calcula a pontuação final, de acordo com a quantidade de bolas azuis e estrelas
@@ -726,13 +749,31 @@ public class Game {
             pointsTotal *= 1f + (0.1f * (float) StarsHandler.newStars);
 
             // salva os dados dos pontos e estrelas
-            final long previousPoints = SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1];
+
+            long previousPointsVerify;
+
+            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                previousPointsVerify = SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1];
+            } else {
+                previousPointsVerify = SaveGame.saveGame.pointsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000];
+            }
+
+            final long previousPoints = previousPointsVerify;
+
             if (previousPoints < pointsTotal) {
-                SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] = pointsTotal;
+                if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                    SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] = pointsTotal;
+                } else {
+                    SaveGame.saveGame.pointsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000] = pointsTotal;
+                }
                 ScoreHandler.setMaxScoreTotal();
             }
             if (StarsHandler.previousStars < StarsHandler.newStars) {
-                SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1] = StarsHandler.newStars;
+                if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                    SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1] = StarsHandler.newStars;
+                } else {
+                    SaveGame.saveGame.starsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000] = StarsHandler.newStars;
+                }
             }
 
             GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), pointsTotal);
@@ -785,7 +826,13 @@ public class Game {
                 @Override
                 public void onAnimationEnd() {Sound.play(Sound.soundTextBoxAppear, 1, 1, 0);}
             });
-            MessagesHandler.messageInGame.setText(getContext().getResources().getString(R.string.nivelConcluido1)+ " " +String.valueOf(SaveGame.saveGame.currentLevelNumber)+ " " + getContext().getResources().getString(R.string.nivelConcluido2));
+
+
+            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                MessagesHandler.messageInGame.setText(getContext().getResources().getString(R.string.nivelConcluido1) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber) + " " + getContext().getResources().getString(R.string.nivelConcluido2));
+            } else {
+                MessagesHandler.messageInGame.setText(getContext().getResources().getString(R.string.nivelConcluido1) + " " + getContext().getResources().getString(R.string.nivelConcluido2));
+            }
             MessagesHandler.messageInGame.display();
 
             Utils.createSimpleAnimation(ballGoalsPanel, "translateX", "translateY", 2000, 0f, -gameAreaResolutionY*0.1f).start();
@@ -1342,6 +1389,9 @@ public class Game {
 
         for (int i = 0; i < bars.size(); i++){
             if (bars.get(i).collisionsData.size() == 0){
+
+                //Log.e(TAG, "secret 1 step: "+bars.get(i).secretLevel1Steps);
+
                 bars.get(i).secretLevel2LockStep = false;
             }
         }
@@ -1382,6 +1432,10 @@ public class Game {
         // verifica se está vivo
         // verifica se o score deve ser reduzido
         if (gameState == GAME_STATE_JOGAR) {
+
+
+
+
             background.move(1);
             verifyDead();
             ScoreHandler.verifyScoreDecay();

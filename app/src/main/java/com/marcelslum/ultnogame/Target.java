@@ -92,11 +92,15 @@ public class Target extends Rectangle {
 
     public void onBallCollision(){
         int points = Game.basePoints;
+        if (SaveGame.saveGame.currentLevelNumber > 999){
+            points *= 2;
+        }
         if (Game.ballGoalsPanel.blueBalls > 0) {
             for (int i = 0; i < Game.ballGoalsPanel.blueBalls; i++) {
                 points *= 2;
             }
         }
+
         decayState(points);
         verifySpecialBall();
     }

@@ -110,6 +110,15 @@ public class BallDataPanel extends Entity{
 
     public void setData(float velocityPercentage, float anglePercentage, boolean animationOn) {
 
+        if (velocityPercentage < 0){
+            velocityPercentage = 0f;
+        }
+
+        if (anglePercentage < 0){
+            anglePercentage = 0f;
+        }
+
+
         if (previousVelocityPercent == -1f) {
             previousVelocityPercent = velocityPercent;
             previousAnglePercent = anglePercent;

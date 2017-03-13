@@ -31,7 +31,8 @@ public class Bar extends Rectangle{
     static final int COLOR_BLACK = 8;
 
     int secretLevel1Steps = 0;//0 L 1 R 2 R 3 L 4 R 5 R 6 L 7 L 8 R 9 R bar
-    int secretLevel2Steps = 0; //L R L L L R R L R L bar touch border
+    int secretLevel2Steps = 0; //0 L 1 R 2 L 3 L 4 L 5 R 6 R 7 L 8 R 9 L bar touch border
+    //0 R 1 R 2 R 3 L 4 L 5 L 6 R 7 R 8 R 9 L bar inclination
     boolean secretLevel2LockStep = false;
 
     Image shine;
@@ -246,10 +247,10 @@ public class Bar extends Rectangle{
                 Level.levelGoalsObject.notifySecretStepsToConquer(10 - secretLevel1Steps);
 
 
-                Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
+                //Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
             } else {
                 secretLevel1Steps = 0;
-            }//0 L 1 R 2 R 3 L 4 R 5 R 6 L 7 L 8 R 9 R
+            }//0 L 1 R 2 R 3 L 4 R 5 R 6 L 7 L 8 R 9 R bar
 
         }
 
@@ -291,10 +292,11 @@ public class Bar extends Rectangle{
                     secretLevel1Steps += 0;
                 }
 
-                Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
+
+               // Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
             } else {
                 secretLevel1Steps = 0;
-            }
+            }//0 L 1 R 2 R 3 L 4 R 5 R 6 L 7 L 8 R 9 R bar
         }
         //Log.e(TAG, "moveRight");
         if (!accelStarted || (accelStarted && (accelFinalVelocityX < 0f))) {
@@ -391,8 +393,8 @@ public class Bar extends Rectangle{
                     }
                 } else {
                     if (!secretLevel2LockStep) {
-                        secretLevel2Steps = 0;
                         Log.e(TAG, " - notify secretLevel2Steps = 0");
+                        secretLevel2Steps = 0;
                     }
 
                 }//0 L 1 R 2 L 3 L 4 L 5 R 6 R 7 L 8 R 9 L bar touch border

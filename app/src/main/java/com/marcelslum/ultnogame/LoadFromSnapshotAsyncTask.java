@@ -89,39 +89,19 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
         SaveGame.saveGame.starsLevels[4] = 5;
         SaveGame.saveGame.starsLevels[5] = 5;
 
-        */
+*/
 
-        SaveGame.saveGame.starsLevels[0] = 5;
-        SaveGame.saveGame.starsLevels[1] = 5;
-        SaveGame.saveGame.starsLevels[2] = 5;
-        SaveGame.saveGame.starsLevels[3] = 5;
-        SaveGame.saveGame.starsLevels[4] = 5;
-        SaveGame.saveGame.starsLevels[5] = 5;
-        SaveGame.saveGame.starsLevels[6] = 5;
-        SaveGame.saveGame.starsLevels[7] = 0;
-        SaveGame.saveGame.starsLevels[8] = 0;
-        SaveGame.saveGame.starsLevels[9] = 0;
-        SaveGame.saveGame.starsLevels[10] = 0;
-        SaveGame.saveGame.starsLevels[11] = 0;
-        SaveGame.saveGame.starsLevels[12] = 0;
-        SaveGame.saveGame.starsLevels[13] = 0;
-        SaveGame.saveGame.starsLevels[14] = 0;
-        SaveGame.saveGame.starsLevels[15] = 0;
-        SaveGame.saveGame.starsLevels[16] = 0;
-        SaveGame.saveGame.starsLevels[17] = 0;
-        SaveGame.saveGame.starsLevels[18] = 0;
-        SaveGame.saveGame.starsLevels[19] = 0;
-        SaveGame.saveGame.starsLevels[20] = 0;
-        SaveGame.saveGame.starsLevels[21] = 0;
-        SaveGame.saveGame.starsLevels[22] = 0;
-        SaveGame.saveGame.starsLevels[23] = 0;
-        SaveGame.saveGame.starsLevels[24] = 0;
-        SaveGame.saveGame.starsLevels[25] = 0;
-        SaveGame.saveGame.starsLevels[26] = 0;
-        SaveGame.saveGame.starsLevels[27] = 0;
-        SaveGame.saveGame.starsLevels[28] = 0;
-        SaveGame.saveGame.starsLevels[29] = 0;
-        SaveGame.saveGame.starsLevels[30] = 0;
+        SaveGame.saveGame.secretLevelsSeen[0] = false;
+        SaveGame.saveGame.secretLevelsSeen[1] = false;
+        SaveGame.saveGame.secretLevelsSeen[2] = false;
+        SaveGame.saveGame.secretLevelsSeen[3] = false;
+        SaveGame.saveGame.secretLevelsSeen[4] = false;
+
+        SaveGame.saveGame.secretLevelsUnlocked[0] = false;
+        SaveGame.saveGame.secretLevelsUnlocked[1] = false;
+        SaveGame.saveGame.secretLevelsUnlocked[2] = false;
+        SaveGame.saveGame.secretLevelsUnlocked[3] = false;
+        SaveGame.saveGame.secretLevelsUnlocked[4] = false;
 
 
         //SaveGame.saveGame.tutorialsViwed[0] = true;

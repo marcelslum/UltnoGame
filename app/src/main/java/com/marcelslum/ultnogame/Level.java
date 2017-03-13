@@ -125,7 +125,11 @@ public class Level {
         Game.quad = new Quadtree(new RectangleM(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY),5,5);
 
         MessagesHandler.messageTime.setText("00:00");
-        MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));
+        if (SaveGame.saveGame.currentLevelNumber < 1000) {
+            MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));
+        } else {
+            MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber - 999));
+        }
 
         ScoreHandler.createScorePanel();
 

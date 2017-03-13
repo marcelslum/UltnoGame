@@ -15,9 +15,14 @@ public class StarsHandler {
 
     public static int updateConqueredStars(){
         int numberOfStars = 0;
-        for (int i = 0; i < SaveGame.saveGame.maxNumberOfLevels; i++){
+        for (int i = 0; i < Level.maxNumberOfLevels; i++){
             numberOfStars += SaveGame.saveGame.starsLevels[i];
         }
+
+        for (int i = 0; i < Level.numberOfSecretLevels; i++){
+            numberOfStars += SaveGame.saveGame.starsSecretLevels[i];
+        }
+
         conqueredStarsTotal = numberOfStars;
         if (MessagesHandler.messageConqueredStarsTotal != null) {
             MessagesHandler.messageConqueredStarsTotal.setText(Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +

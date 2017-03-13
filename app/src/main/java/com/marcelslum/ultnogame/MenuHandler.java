@@ -111,7 +111,8 @@ public class MenuHandler {
                 final int numberOfCurrentLevelNumber = 1000 + i;
 
                if (SaveGame.saveGame.secretLevelsUnlocked[i]){
-                   groupMenu.addOption(lastId, Texture.TEXTURE_LEVEL_ICONS, 2, new Animation.AnimationListener() {
+
+                   groupMenu.addOption(lastId+i, Texture.TEXTURE_LEVEL_ICONS, 2, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         SaveGame.saveGame.currentLevelNumber = numberOfCurrentLevelNumber;

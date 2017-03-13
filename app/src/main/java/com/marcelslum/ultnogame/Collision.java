@@ -51,8 +51,9 @@ public abstract class Collision {
                         if (ball1.quarentineBalls != null) {
                             for (int q = 0; q < ball1.quarentineBalls.size(); q++) {
                                 if (ball1.quarentineBalls.get(q) == ball2) {
-                                    Log.e(TAG, "dispensando bola por estar em quarentena " + ball1.quarentineBallsState.get(q));
+                                    //Log.e(TAG, "dispensando bola por estar em quarentena " + ball1.quarentineBallsState.get(q));
                                     onQuarentine = true;
+                                    break;
                                 }
                             }
                         }

@@ -457,7 +457,7 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL ++++
         if (levelNumber >= ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
-            lg.add(new LevelGoal(2, LevelGoal.DECELERATE_N_TIMES, 0));
+            lg.add(new LevelGoal(2, LevelGoal.DECELERATE_N_TIMES, 6));
             lg.add(new LevelGoal(2, LevelGoal.INCREASE_ANGLE_N_TIMES, 4));
         }
 
