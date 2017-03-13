@@ -27,7 +27,7 @@ public class MenuIconGraph extends Entity{
     Rectangle backRectangle;
 
     MenuIconGraph(String name, float x, float y, float width, float height, int type) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_MENU);
         if (type == TYPE_BAR) {
             backRectangle = new Rectangle("back", x, y, width, height, -1, COLOR_BAR_LIGHT);
             frontRectangle = new Rectangle("front", x, y, width, height, -1, COLOR_BAR_DARK);
