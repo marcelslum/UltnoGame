@@ -43,7 +43,7 @@ public abstract class Collision {
                     PhysicalObject b = (PhysicalObject)out.get(bCount);
 
                     boolean onQuarentine = false;
-                    if (a.name == "ball" && b.name == "ball") {
+                    if (a.type == Entity.TYPE_BALL && b.type == Entity.TYPE_BALL) {
 
                         Ball ball1 = (Ball) a;
                         Ball ball2 = (Ball) b;
