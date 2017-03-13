@@ -61,6 +61,7 @@ public class Level {
     public float[] windowsVelocity;
     public boolean isHaveSpecialBall = true;
     public float specialBallPercentage = 0.0f;
+    public float fakeBallPercentage = 0.0f;
     public float windType;
 
 
