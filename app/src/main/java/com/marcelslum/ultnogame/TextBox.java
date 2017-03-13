@@ -31,7 +31,7 @@ public class TextBox extends Entity{
     private OnPress onPress;
 
     public TextBox(TextBoxBuilder builder) {
-        super(builder.name, builder.x, builder.y);
+        super(builder.name, builder.x, builder.y, Entity.TYPE_TEXT_BOX);
         width = builder.width;
         size = builder.size;
         isHaveArrow = builder.isHaveArrow;
