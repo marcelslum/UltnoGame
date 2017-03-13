@@ -11,7 +11,7 @@ public class Point extends Entity {
     //private final static float [] lines = new float [] {257f,514f,771f};
 
     Point(String name, float x, float y, float size) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_POINT);
         this.size = size;
         isSolid = false;
         isCollidable = false;
