@@ -9,7 +9,7 @@ public class Messages extends Entity {
     ArrayList<Entity> childs2;
 
     public Messages() {
-        super("messages", Game.resolutionX * 0.97f, Game.gameAreaResolutionY * 0.7f);
+        super("messages", Game.resolutionX * 0.97f, Game.gameAreaResolutionY * 0.7f, Entity.TYPE_PANEL);
         isVisible = true;
         childs2 = new ArrayList<>();
     }
