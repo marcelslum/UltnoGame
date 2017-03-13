@@ -95,8 +95,22 @@
     <string name="t7t11">Para cada bola extra viva, a pontuação ao atingir um alvo é dobrada.</string>
     <string name="t7t12">Além disso, ao completar o nível, bolas extras vivas darão ainda mais pontos extras.</string>
     <string name="t7t13">Portanto, procure manter as bolas extras o máximo de tempo possível.</string>
-
-    <string name="t8t1">A partir de agora, a posição dos obstáculos pode mudar. Fique atento. </string>
+    
+    
+    <string name="t8t1">Os níveis parecem muito fáceis?</string>
+    <string name="t8t2">Pode ser que as dificuldades estejam escondidas.</string>
+    
+    <string name="t9t1">A partir de agora, os obstáculos podem se mexer.</string>
+    <string name="t9t2">Ou alterar de tamanho.</string>
+    
+    <string name="t10t1">Nos próximos níveis, poderão existir bolas invencíveis.</string>
+    <string name="t10t2">As bolas invencíveis são coloridas.</string>
+    <string name="t10t3">Como o nome já revela, esse tipo de bola não pode morrer.</string>
+    <string name="t10t4">A quantidade de bolas invencíveis aparece também no painel.</string>
+    <string name="t10t5">As bolas invencíveis não concedem pontos extras durante ou no final do nível.</string>
+    
+    
+    <string name="t9t2">Ou alterar de tamanho.</string>
     
     <string name="t9t1">Nos próximos níveis, o tamanho dos obstáculos também pode variar. </string>
     
