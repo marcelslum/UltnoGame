@@ -50,8 +50,8 @@ public class PhysicalObject extends Entity implements Weight{
         }
     }
 
-    PhysicalObject(String name, float x, float y, int weight){
-        super(name, x, y);
+    PhysicalObject(String name, float x, float y, int type, int weight){
+        super(name, x, y, type);
         this.weight = weight;
 
         vx = 0.0f;
