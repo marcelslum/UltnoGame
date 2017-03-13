@@ -20,7 +20,7 @@ public class ScorePanel extends Entity {
     private Text messageText;
 
     ScorePanel(String name, float x, float y, float size) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_PANEL);
 
         this.x -= (size * 0.55294f) * 3.5f;
 
