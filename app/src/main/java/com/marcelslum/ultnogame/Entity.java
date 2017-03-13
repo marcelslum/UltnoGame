@@ -12,11 +12,22 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Entity{
+    
+    
+    
+    final public static int TYPE_OTHER = 0;
+    final public static int TYPE_BALL = 1;
+    final public static int TYPE_BAR = 2;
+    final public static int TYPE_TARGET = 3;
+    final public static int TYPE_OBSTACLE = 4;
+    
 
     public final static String TAG = "Entity";
     final public static int SHOW_POINTS_ON = 1;
     final public static int SHOW_POINTS_OFF = 0;
 
+    
+    public int type;
     public String name;
     public float x;
     public float y;
@@ -105,10 +116,11 @@ public class Entity{
         this.textureId = textureId;
     }
 
-    Entity(String name, float x, float y) {
+    Entity(String name, float x, float y, int type) {
         this.name = name;
         this.x = x;
         this.y = y;
+        this.type = type;
         previousPositionX = x;
         previousPositionY = y;
         animations = new ArrayList<>();
