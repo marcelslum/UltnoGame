@@ -1,6 +1,7 @@
 package com.marcelslum.ultnogame;
 public class Programs {
 
+    /*
     public static final String vs_Wind =
             "uniform mat4 um4_projection;" +
                     "uniform mat4 um4_view;" +
@@ -17,19 +18,19 @@ public class Programs {
 
     public static final String vs_SolidColor = Utils.readRawTextFile(Game.mainActivity.getApplicationContext(), R.raw.shader_frag_solidcolor);
 
-            /*
-                    "uniform mat4 um4_projection;" +
-                    "uniform mat4 um4_view;" +
-                    "uniform mat4 um4_model;" +
-                    "attribute vec4 av4_colors;" +
-                    "varying vec4 vv4_Colors;" +
-                    "attribute vec4 av4_vertices;" +
-                    "varying float vf_alpha;" +
-                    "   void main() {" +
-                    "       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
-                    "       vv4_Colors = av4_colors;" +
-                    "   }";
-             */
+            
+                    //"uniform mat4 um4_projection;" +
+                    //"uniform mat4 um4_view;" +
+                    //"uniform mat4 um4_model;" +
+                    //"attribute vec4 av4_colors;" +
+                    //"varying vec4 vv4_Colors;" +
+                    //"attribute vec4 av4_vertices;" +
+                    //"varying float vf_alpha;" +
+                    //"   void main() {" +
+                    //"       gl_Position = um4_projection * um4_view * um4_model * av4_vertices;" +
+                    //"       vv4_Colors = av4_colors;" +
+                    //"   }";
+            
     public static final String fs_SolidColor =
                     "precision mediump float;" +
                     "varying vec4 vv4_Colors;" +
@@ -185,7 +186,7 @@ public class Programs {
                     " if (gl_FragColor.a < 0.01) discard;"+
                     " gl_FragColor = vec4(vv4_Colors.r, vv4_Colors.g, vv4_Colors.b, vf_alpha*vv4_Colors.a);" +
                     "}";
-
+*/
     /*
      public static final String fs_Image_Alpha =
     
