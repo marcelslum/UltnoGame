@@ -19,6 +19,14 @@ public class Entity{
     final public static int TYPE_TARGET = 3;
     final public static int TYPE_OBSTACLE = 4;
     final public static int TYPE_BACKGROUND = 5;
+    final public static int TYPE_PANEL = 6;
+    final public static int TYPE_PARTICLE = 7;
+    final public static int TYPE_BUTTON = 8;
+    final public static int TYPE_LEFT_BORDER = 9;
+    final public static int TYPE_RIGHT_BORDER = 10;
+    final public static int TYPE_TOP_BORDER = 11;
+    final public static int TYPE_BOTTOM_BORDER = 12;
+    final public static int TYPE_IMAGE = 13;
     
 
     public final static String TAG = "Entity";
