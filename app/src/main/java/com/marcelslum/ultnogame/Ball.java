@@ -65,7 +65,7 @@ public class Ball extends Circle{
     double mass = 0f;
 
     Ball(String name, float x, float y, float radius, int textureMap){
-        super(name, x, y, radius, Game.BALL_WEIGHT);
+        super(name, x, y, Entity.TYPE_BALL, radius, Game.BALL_WEIGHT);
         textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
         program = Game.imageProgram;
         this.textureMap = textureMap;
