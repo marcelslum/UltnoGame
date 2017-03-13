@@ -123,7 +123,7 @@ public class Bar extends Rectangle{
 
 
     Bar(String name, float x, float y, float width, float height){
-        super(name, x, y, width, height, Game.BAR_WEIGHT, new Color(0.0f, 0.0f, 0.0f, 1.0f));
+        super(name, x, y, Entity.TYPE_BAR, width, height, Game.BAR_WEIGHT, new Color(0.0f, 0.0f, 0.0f, 1.0f));
         program = Game.imageColorizedProgram;
         textureId = Texture.TEXTURE_BARS;
         isCollidable = true;
