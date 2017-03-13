@@ -26,7 +26,7 @@ public class List extends Entity{
     ArrayList<Rectangle> rectangles;
 
     List(String name, float x, float y, float width, float height, int numberOfLines) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_LIST);
         this.width = width;
         this.height = height;
         this.numberOfLines = numberOfLines;
