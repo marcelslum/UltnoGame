@@ -27,7 +27,7 @@ public class Selector extends Entity{
 
 
     Selector(String name, float x, float y, float size, String text, String [] values, Font font){
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_SELECTOR);
         this.size = size;
         this.text = text;
         this.values = values;
