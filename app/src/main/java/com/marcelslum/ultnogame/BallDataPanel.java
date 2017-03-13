@@ -40,7 +40,7 @@ public class BallDataPanel extends Entity{
     float height;
 
     BallDataPanel(String name, float x, float y, float width, float height) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_PANEL);
         this.width = width;
         this.height = height;
         isCollidable = false;
