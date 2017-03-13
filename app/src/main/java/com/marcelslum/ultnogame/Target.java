@@ -107,7 +107,6 @@ public class Target extends Rectangle {
 
     public void verifySpecialBall(){
         if (Level.levelObject.specialBallPercentage > 0f){
-            
             float percentage = Level.levelObject.specialBallPercentage;
             int difference = TimeHandler.secondsOfLevelPlay - SpecialBall.timeOfLastSpecialBall;
             
