@@ -952,6 +952,8 @@ public class Ball extends Circle{
                     if (target.special == 1 && !listenForExplosion){
                         waitForExplosion();
                     }
+                    
+                    verifyFakeBall();
                 }
             }
         }
