@@ -31,7 +31,7 @@ public class Tutorial {
     static final int TUTORIAL_VENTO = 11;
     static final int TUTORIAL_BARRA_DINAMICA = 12;
     static final int TUTORIAL_COMIDA = 13;
-    static final int TUTORIAL_OBNUBILADO = 14;
+    static final int TUTORIAL_GRADE = 14;
     
 
 
