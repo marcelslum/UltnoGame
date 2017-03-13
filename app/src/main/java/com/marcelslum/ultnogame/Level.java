@@ -117,6 +117,7 @@ public class Level {
         windowsDistance = LevelBuilder.windowsDistance;
         windowsVelocity = LevelBuilder.windowsVelocity;
         specialBallPercentage = LevelBuilder.specialBallPercentage;
+        fakeBallPercentage = LevelBuilder.fakeBallPercentage;
         windType = LevelBuilder.windType;
         tutorialAttached = LevelBuilder.tutorialAttached;
     }
@@ -376,7 +377,8 @@ public class Level {
         private static int[] windowsQuantityOfLines;
         private static float[] windowsDistance;
         private static float[] windowsVelocity;
-        private static float specialBallPercentage;
+        private static float specialBallPercentage = 0f;
+        private static float fakeBallPercentage = 0f;
         private static int windType = Level.WIND_TYPE_NO;
         private static ArrayList<LevelGoal> levelGoals;
         public static int tutorialAttached;
@@ -686,6 +688,11 @@ public class Level {
 
         public LevelBuilder setSpecialBallPercentage0_1(float v){
             specialBallPercentage = v;
+            return this;
+        }
+        
+        public LevelBuilder setFakeBallPercentage0_1(float v){
+            fakeBallPercentage = v;
             return this;
         }
 
