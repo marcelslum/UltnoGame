@@ -7,7 +7,7 @@ public class Image extends Entity{
     float x1, x2, y1, y2;
 
     Image(String name, float x, float y, float width, float height, int textureUnit, float x1, float x2, float y1, float y2){
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_IMAGE);
         this.width = width;
         this.height = height;
         this.textureId = textureUnit;
@@ -20,7 +20,7 @@ public class Image extends Entity{
     }
     
         Image(String name, float x, float y, float width, float height, int textureUnit, float[] uvData){
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_IMAGE);
         this.width = width;
         this.height = height;
         this.textureId = textureUnit;
@@ -33,7 +33,7 @@ public class Image extends Entity{
     }
 
     Image(String name, float x, float y, float width, float height, int textureId, float x1, float x2, float y1, float y2, Color color){
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_IMAGE);
         this.width = width;
         this.height = height;
         this.textureId = textureId;
