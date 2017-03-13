@@ -14,7 +14,7 @@ class Menu extends Entity{
 
 
     public Menu(String name, float x, float y, float size, Font font){
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_MENU);
         this.font = font;
         this.size = size;
         isBlocked = true;
