@@ -226,19 +226,19 @@ public class Ball extends Circle{
 
             Log.e("ball", collisionsData.get(i).object.name +" rX "+ collisionsData.get(i).responseX +" rY "+ collisionsData.get(i).responseY +" nX "+ collisionsData.get(i).normalX +" nY "+ collisionsData.get(i).normalY+" isRepeated "+collisionsData.get(i).isRepeated);
 
-            if (collisionsData.get(i).object.name.equals("bordaB") && !collisionsData.get(i).isRepeated && !isInvencible){
+            if (collisionsData.get(i).object.type == Entity.TYPE_BOTTOM_BORDER && !collisionsData.get(i).isRepeated && !isInvencible){
                 setDead();
                 return;
 
             }
 
-            if (collisionsData.get(i).object.name.equals("bar") && !collisionsData.get(i).isRepeated){
+            if (collisionsData.get(i).object.type == Entity.TYPE_BAR && !collisionsData.get(i).isRepeated){
                 collisionBar = true;
                 collisionBarNumber = i;
             }
         
             // verifica se obstáculo esta crescendo e, se a velocidade for maior que a da bola, gera nela uma impulsão
-            if (collisionsData.get(i).object.name.equals("obstacle") && !collisionsData.get(i).isRepeated){
+            if (collisionsData.get(i).type == Entity.TYPE_OBSTACLE && !collisionsData.get(i).isRepeated){
                 Obstacle o = (Obstacle)collisionsData.get(i).object;
                 if (o.scaleVariationData != null){
                     if (o.scaleVariationData.isActive){
@@ -255,7 +255,7 @@ public class Ball extends Circle{
 
             }
 
-            if (collisionsData.get(i).object.name == "ball" && !collisionsData.get(i).isRepeated) {
+            if (collisionsData.get(i).object.type == Entity.TYPE_BALL  && !collisionsData.get(i).isRepeated) {
                 for (int i2 = 0; i2 < ballsCollidedProcessed.size(); i2++) {
                     if (ballsCollidedProcessed.get(i2) == collisionsData.get(i).object) {
                         Log.e("ball", "collided processed");
@@ -547,7 +547,7 @@ public class Ball extends Circle{
                 Log.e("ball", "colisão com barra, zera response X");
                 lastResponseBallX = 0f;
                 
-                Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
+                Bar barCollided = (Bar) collisionsData.get(collisionBarNumber).object;
 
                 Log.e(TAG, "ATENÇÃO ------------------------------------------------------");
                 Log.e(TAG, "colisão com a barra e com responseX e responseY diferentes de 0");
