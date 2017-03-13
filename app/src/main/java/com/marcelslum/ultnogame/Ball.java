@@ -930,7 +930,7 @@ public class Ball extends Circle{
         boolean targetHitted = false;
 
         for (int i = 0; i < collisionsData.size(); i++) {
-            if (collisionsData.get(i).object.name == "target" && !collisionsData.get(i).isRepeated){
+            if (collisionsData.get(i).object.type == Entity.TYPE_TARGET && !collisionsData.get(i).isRepeated){
                 Game.ballCollidedFx = 40;
                 Target target = (Target)collisionsData.get(i).object;
                 target.onBallCollision();
