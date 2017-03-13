@@ -4,8 +4,8 @@ public class Circle extends PhysicalObject {
     float radius;
     float[] verticesData;
 
-    Circle(String name, float x, float y, float radius, int weight){
-        super(name, x, y, weight);
+    Circle(String name, float x, float y, int type, float radius, int weight){
+        super(name, x, y, type, weight);
         this.radius = radius;
     }
 
