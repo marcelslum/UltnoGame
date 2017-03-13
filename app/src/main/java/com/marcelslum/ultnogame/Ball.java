@@ -1015,6 +1015,23 @@ public class Ball extends Circle{
 
         }
     }
+    
+    
+    public void verifyFakeBall(){
+        if (Level.levelObject.fakeBallPercentage > 0f){
+            float percentage = Level.levelObject.fakeBallPercentage;
+            
+            if (Utils.getRandonFloat(0.0f, 1.0f) < percentage){
+                
+                SpecialBall sb = new SpecialBall("specialBall", positionX + (width/2f), positionY + (height/2f), (height/2f));
+                sb.dvy = Math.abs(Game.bars.get(0).dvx *0.4f);
+                Game.specialBalls.add(sb);
+                
+            }
+        }
+    }
+    
+    
 
     public void rotateTestingAngle(float vx, float vy, float angleToRotateToTest) {
 
