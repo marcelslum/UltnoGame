@@ -10,7 +10,7 @@ public class BallParticleGenerator extends Entity {
     boolean isVisible = true;
     
     BallParticleGenerator(String name, float x, float y) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_PARTICLE);
         program = Game.imageColorizedProgram;
         textureId = Texture.TEXTURE_NUMBERS_EXPLOSION;
         particlesArray= new ArrayList<>();
