@@ -17,7 +17,7 @@ public class BallGoalsPanel extends Entity{
     public ArrayList<ParticleGenerator> particleGenerators;
 
     BallGoalsPanel(String name, Game game, float x, float y, float size) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_PANEL);
         initialX = x;
         initialY = y;
         this.size = size;
