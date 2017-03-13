@@ -1022,11 +1022,65 @@ public class Ball extends Circle{
             float percentage = Level.levelObject.fakeBallPercentage;
             
             if (Utils.getRandonFloat(0.0f, 1.0f) < percentage){
+    
+                double angle = Math.toDegrees(Math.atan2(dvy, dvx));
+                Log.e("ball", "angle " + angle);
+
+                float angleToRotate = 0;
+                if (angle > 0 && angle <= 45){
+                    angleToRotate 5f;
+                } else if (angle > 45 && angle <= 90){
+                    angleToRotate -5f;
+                } else if (angle > 90 && angle <= 135){
+                    angleToRotate 5f;
+                } else if (angle > 135 && angle <= 180){
+                    angleToRotate -5f;
+                } else if (angle < 0 && angle >= -45){
+                    angleToRotate -5f;
+                } else if (angle < -45 && angle >= -90){
+                    angleToRotate 5f;
+                } else if (angle < -90 && angle >= -135){
+                    angleToRotate -5f;
+                } else if (angle > -135 && angle <= -180){
+                    angleToRotate 5f;
+                }
                 
-                SpecialBall sb = new SpecialBall("specialBall", positionX + (width/2f), positionY + (height/2f), (height/2f));
-                sb.dvy = Math.abs(Game.bars.get(0).dvx *0.4f);
-                Game.specialBalls.add(sb);
                 
+                float newPositionX = positionX;
+                float newPositionY = positionY;
+                float newRadius = radius;
+                
+                Ball ball = new Ball("ball", newPositionX, newPositionY, newRadius, textureMap);
+                ball.setAsFakeBall();
+                ball.program = Game.imageProgram;
+                ball.textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
+                
+                ball.dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
+                ball.dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
+                
+                ball.angleToRotate = angleToRotate;
+                ball.velocityVariation = velocityVariation;
+
+                ball.velocityMax_BI = velocityMax_BI;
+                ball.velocityMin_BI = velocityMin_BI;
+                
+                float testAngleOriginal = (float) Math.toDegrees(Math.atan2(dvy, dvx))
+                float testAngleFake = (float) Math.toDegrees(Math.atan2(ball.dvy, ball.dvy))
+                
+                Log.e(TAG, "fake ball angle of original "+testAngleOriginal);
+                Log.e(TAG, "fake ball angle of fake "+testAngleFake);
+
+                ball.maxAngle = this.maxAngle;
+                ball.minAngle = this.minAngle;
+
+                Log.e("ball", "ball.maxAngle "+ball.maxAngle);
+                Log.e("ball", "ball.minAngle "+ball.minAngle);
+
+                ball.initialDVX = initialDVX;
+                ball.initialDVY = initialDVY;
+
+                Game.addFakeBall(ball);
+
             }
         }
     }
