@@ -1355,6 +1355,14 @@ public class Game {
                     balls.get(i).clearCollisionData();
                 }
             }
+            
+            // insere as entidades no quadtree
+            for (int i = 0; i < fakeBalls.size(); i++) {
+                if (fakeBalls.get(i).isAlive) {
+                    quad.insert(fakeBalls.get(i));
+                    fakeBalls.get(i).clearCollisionData();
+                }
+            }
 
             for (int i = 0; i < bars.size(); i++) {
                 quad.insert(bars.get(i));
@@ -1413,6 +1421,11 @@ public class Game {
                 Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true);
                 Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true);
                 Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true);
+                
+                Collision.checkCollision(fakeBalls, quad, Game.BORDA_WEIGHT, true, true);
+                Collision.checkCollision(fakeBalls, quad, Game.BAR_WEIGHT, true, true);
+                Collision.checkCollision(fakeBalls, quad, Game.OBSTACLES_WEIGHT, true, true);
+                
             }
             quad.clear();
         }
