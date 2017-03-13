@@ -17,7 +17,7 @@ public class LevelGoalsPanel extends Entity{
     boolean gray;
 
     LevelGoalsPanel(String name, float x, float y, float size, float maxTextWidth) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_PANEL);
         this.size = size;
         lines = new ArrayList<>();
         this.maxTextWidth = maxTextWidth;
