@@ -16,7 +16,7 @@ public class WindowGame extends PhysicalObject{
     boolean isActive;
     
     public WindowGame(String name, float y, int quantityOfLines, float height, float distance, float velocity) {
-        super(name, 0f, y, 0);
+        super(name, 0f, y, Entity.TYPE_WINDOW_GAME, 0);
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
         program = Game.imageProgram;
