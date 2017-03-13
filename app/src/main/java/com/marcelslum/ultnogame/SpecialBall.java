@@ -11,7 +11,7 @@ public class SpecialBall extends Circle{
     
 
     public SpecialBall(String name, float x, float y, float radius) {
-        super(name, x, y, radius, 0);
+        super(name, x, y, Entity.TYPE_SPECIAL_BALL, radius, 0);
         program = Game.specialBallProgram;
         isCollidable = false;
         isSolid = false;
