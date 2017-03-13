@@ -63,6 +63,8 @@ public class Ball extends Circle{
     ArrayList<Ball> ballsCollidedProcessed;
     
     double mass = 0f;
+    
+    public boolean isFake = false;
 
     Ball(String name, float x, float y, float radius, int textureMap){
         super(name, x, y, Entity.TYPE_BALL, radius, Game.BALL_WEIGHT);
@@ -82,9 +84,18 @@ public class Ball extends Circle{
         setDrawInfo();
         ballParticleGenerator = new BallParticleGenerator(name+"pg", 0f, 0f);
     }
+    
+    public void markAsFakeBall(){
+        this.isFake = true;
+    }
 
     public void setInvencible() {
-            isInvencible = true;
+        
+        if (isFake){
+            return;
+        }
+        
+          isInvencible = true;
           ArrayList<float[]> valuesInvencible = new ArrayList<>();
                 valuesInvencible.add(new float[]{0f,1f});
                 valuesInvencible.add(new float[]{0.2f,2f});
@@ -229,7 +240,6 @@ public class Ball extends Circle{
             if (collisionsData.get(i).object.type == Entity.TYPE_BOTTOM_BORDER && !collisionsData.get(i).isRepeated && !isInvencible){
                 setDead();
                 return;
-
             }
 
             if (collisionsData.get(i).object.type == Entity.TYPE_BAR && !collisionsData.get(i).isRepeated){
@@ -243,15 +253,16 @@ public class Ball extends Circle{
                 if (o.scaleVariationData != null){
                     if (o.scaleVariationData.isActive){
                         if (o.scaleVariationData.widthVelocity > 0 && (o.scaleVariationData.widthVelocity * o.getTransformedWidth())/2f > Math.abs(dvx) && collisionsData.get(i).responseX != 0f){
-                            impulsion += o.scaleVariationData.widthVelocity/Math.abs(dvx*0.9f);
+                            impulsion += o.scaleVariationData.widthVelocity/Math.abs(dvx*1f);
                         }
                         if (o.scaleVariationData.heightVelocity > 0 && (o.scaleVariationData.heightVelocity * o.getTransformedHeight())/2f > Math.abs(dvy) && collisionsData.get(i).responseY != 0f){
-                            impulsion += o.scaleVariationData.heightVelocity/Math.abs(dvy*0.9f);
+                            impulsion += o.scaleVariationData.heightVelocity/Math.abs(dvy*1f);
                         }
                     }
                 }
-
-                Level.levelObject.levelGoalsObject.hitObstacle();
+                if (!isFake){
+                    Level.levelObject.levelGoalsObject.hitObstacle();
+                }
 
             }
 
@@ -264,7 +275,7 @@ public class Ball extends Circle{
                 }
 
 
-                if (!collidedProcessed) {
+                if (!collidedProcessed && !isFake) {
 
                     Level.levelObject.levelGoalsObject.hitAnotherBall();
 
@@ -541,7 +552,6 @@ public class Ball extends Circle{
             accelerate(500, iDvx, iDvy);
         }
 
-        
         if (lastResponseBallX != 0f && lastResponseBallY != 0f && !collidedProcessed){
             if (collisionBar){
                 Log.e("ball", "colisão com barra, zera response X");
@@ -808,7 +818,7 @@ public class Ball extends Circle{
             if (collisionsData.get(this.collisionBarNumber).object.vx != 0) {
                 percentageOfBarAccelerationApplied = 0.75f + (barCollided.accelPercentage * 0.5f);
 
-                if (percentageOfBarAccelerationApplied >= 1.2) {
+                if (percentageOfBarAccelerationApplied >= 1.2 && !isFake) {
                     Level.levelObject.levelGoalsObject.ballReachedWithMaximunBarSpped();
                 }
                 mAngleToRotate = (mAngleToRotate) + (mAngleToRotate * 0.5f * collisionsData.get(this.collisionBarNumber).object.accelPercentage);
@@ -929,17 +939,19 @@ public class Ball extends Circle{
         
         boolean targetHitted = false;
 
-        for (int i = 0; i < collisionsData.size(); i++) {
-            if (collisionsData.get(i).object.type == Entity.TYPE_TARGET && !collisionsData.get(i).isRepeated){
-                Game.ballCollidedFx = 40;
-                Target target = (Target)collisionsData.get(i).object;
-                target.onBallCollision();
-                
-                targetHitted = true;
+        if (!isFake){
+            for (int i = 0; i < collisionsData.size(); i++) {
+                if (collisionsData.get(i).object.type == Entity.TYPE_TARGET && !collisionsData.get(i).isRepeated){
+                    Game.ballCollidedFx = 40;
+                    Target target = (Target)collisionsData.get(i).object;
+                    target.onBallCollision();
 
-                Game.resetTimeForPointsDecay();
-                if (target.special == 1 && !listenForExplosion){
-                    waitForExplosion();
+                    targetHitted = true;
+
+                    Game.resetTimeForPointsDecay();
+                    if (target.special == 1 && !listenForExplosion){
+                        waitForExplosion();
+                    }
                 }
             }
         }
@@ -949,17 +961,17 @@ public class Ball extends Circle{
 
         if (!collidedProcessed) {
             float soundX = positionX / Game.gameAreaResolutionX;
-            float volumeD = 0.5f;
-            float volumeE = 0.5f;
+            float volumeD = 0.7f;
+            float volumeE = 0.7f;
 
 
             if (soundX < 0.5f) {
-                volumeE = (0.5f + (0.5f - soundX));
-                volumeD = (0.5f - (0.5f - soundX));
+                volumeE = (0.7f + (0.3f - soundX));
+                volumeD = (0.7f - (0.3f - soundX));
             }
             if (soundX > 0.5f) {
-                volumeD = (0.5f + (soundX - 0.5f));
-                volumeE = (0.5f - (soundX - 0.5f));
+                volumeD = (0.7f + (soundX - 0.3f));
+                volumeE = (0.7f - (soundX - 0.3f));
             }
 
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
