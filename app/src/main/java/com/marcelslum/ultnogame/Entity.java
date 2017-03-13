@@ -27,6 +27,17 @@ public class Entity{
     final public static int TYPE_TOP_BORDER = 11;
     final public static int TYPE_BOTTOM_BORDER = 12;
     final public static int TYPE_IMAGE = 13;
+    final public static int TYPE_LINE = 14;
+    final public static int TYPE_LIST = 15;
+    final public static int TYPE_MENU = 16;
+    final public static int TYPE_POINT = 17;
+    final public static int TYPE_SELECTOR = 18;
+    final public static int TYPE_SPECIAL_BALL = 19;
+    final public static int TYPE_TEXT = 20;
+    final public static int TYPE_TEXT_BOX = 21;
+    final public static int TYPE_WIND = 22;
+    final public static int TYPE_WINDOW_GAME = 23;
+    
     
 
     public final static String TAG = "Entity";
