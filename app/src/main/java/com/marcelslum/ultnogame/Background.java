@@ -19,7 +19,7 @@ public class Background extends Entity {
     boolean uvYUp;
 
     Background(String name, float x, float y, float width, float height, int variationNumber) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_BACKGROUND);
         this.width = width;
         this.height = height;
         isSolid = false;
