@@ -16,7 +16,7 @@ public class Wind extends Entity{
 
 
     public Wind(String name, float x, float y, float height, boolean toRight) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_WIND);
         this.height = height;
         program = Game.windProgram;
         isActive = false;
