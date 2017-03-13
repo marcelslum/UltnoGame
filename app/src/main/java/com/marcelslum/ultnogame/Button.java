@@ -19,7 +19,7 @@ public class Button extends Entity{
     public static final int BUTTON_TYPE_256 = 2;
 
     Button(String name, float x, float y, float width, float height, int textureUnit, float listenerScale, int buttonType) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_BUTTON);
         this.height = height;
         this.width = width;
         isCollidable = false;
