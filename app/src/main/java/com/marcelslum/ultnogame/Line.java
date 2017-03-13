@@ -8,7 +8,7 @@ import android.util.Log;
 public class Line extends Entity{
     float x2, y2;
     Line(String name, float x1, float y1, float x2, float y2, Color color){
-        super(name, x1, y1);
+        super(name, x1, y1, Entity.TYPE_LINE);
         this.color = color;
         this.x2 = x2;
         this.y2 = y2;
