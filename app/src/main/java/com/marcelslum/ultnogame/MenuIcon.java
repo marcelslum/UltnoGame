@@ -36,7 +36,7 @@ public class MenuIcon extends Entity{
     public float currentTranslateX = 0;
 
     public MenuIcon(String name, float x, float y, float size) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_MENU);
         icons = new ArrayList<>();
         texts = new ArrayList<>();
         texts2 = new ArrayList<>();
