@@ -40,6 +40,7 @@ public class Game {
 
     static ArrayList<Target> targets;
     static ArrayList<Ball> balls;
+    static ArrayList<Ball> fakeBalls;
     static ArrayList<Text> texts;
     static ArrayList<TouchEvent> touchEvents;
     static ArrayList<Bar> bars;
@@ -215,6 +216,7 @@ public class Game {
         targets = new ArrayList<>();
         ballCollisionStars = new ArrayList<>();
         balls = new ArrayList<>();
+        fakeBalls = new ArrayList<>();
         obstacles = new ArrayList<>();
         windows = new ArrayList<>();
         specialBalls = new ArrayList<>();
@@ -231,10 +233,10 @@ public class Game {
     }
 
     public static void initEdges(){
-        Game.bordaE = new Edge("bordaE", -999, 0, 1000, Game.resolutionY*2);
-        Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0, 2000, Game.resolutionY*2);
-        Game.bordaC = new Edge("bordaC",  1, -1000, Game.resolutionX-4, 1001);
-        Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY, Game.resolutionX*3, 1000);
+        Game.bordaE = new Edge("bordaE", -999, 0, Entity.TYPE_LEFT_BORDER, 1000, Game.resolutionY*2);
+        Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0,  Entity.TYPE_RIGHT_BORDER, 2000, Game.resolutionY*2);
+        Game.bordaC = new Edge("bordaC",  1, -1000,  Entity.TYPE_TOP_BORDER, Game.resolutionX-4, 1001);
+        Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY,  Entity.TYPE_BOTTOM_BORDER, Game.resolutionX*3, 1000);
     }
 
     public static void initTittle(){
@@ -289,6 +291,12 @@ public class Game {
     static void addBall(Ball ball){
         balls.add(ball);
     }
+    
+    static void addFakeBall(Ball ball){
+        ball.markAsFake();
+        fakeBalls.add(ball);
+    }
+    
     static void addBar(Bar bar){
         bars.add(bar);
     }
@@ -1034,6 +1042,14 @@ public class Game {
                 b.ballParticleGenerator.isActive = true;
             }
         }
+        
+        for (Ball b : fakeBalls){
+            b.isMovable = true;
+            if (b.ballParticleGenerator != null) {
+                b.ballParticleGenerator.isActive = true;
+            }
+        }
+        
         for (Bar b : bars){
             b.isMovable = true;
         }
@@ -1062,6 +1078,12 @@ public class Game {
             b.isMovable = false;
             b.clearParticles();
         }
+        
+        for (Ball b : fakeBalls){
+            b.isMovable = false;
+            b.clearParticles();
+        }
+        
         for (Bar b : bars){
             b.isMovable = false;
             if (b.scaleVariationData != null){
@@ -1101,6 +1123,7 @@ public class Game {
 
     public static void eraseAllGameEntities() {
         balls.clear();
+        fakeBalls.clear();
         bars.clear();
         targets.clear();
         windows.clear();
@@ -1141,6 +1164,7 @@ public class Game {
     static ArrayList<Entity> collectAllGameEntities(){
         ArrayList<Entity> list = new ArrayList<>();
         list.addAll(balls);
+        list.addAll(fakeBalls);
         list.addAll(bars);
         list.addAll(targets);
         list.addAll(obstacles);
@@ -1238,6 +1262,20 @@ public class Game {
 
                      ball.verifyWind();
                      //Log.e("game", "ballv "+ ball.vx+" "+ball.vy);
+                 }
+            }
+            
+            for (int i = 0; i < fakeBalls.size(); i++) {
+                 if (fakeBalls.get(i).isAlive) {
+                     
+                     Ball ball = fakeBalls.get(i);
+                     ball.verifyAcceleration();
+                     ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
+                     ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+
+                     ball.translate(ball.vx, ball.vy);
+
+                     ball.verifyWind();
                  }
             }
 
@@ -1362,16 +1400,8 @@ public class Game {
 
         }
 
-        // verifica a colisão da barra
+        // verifica as demais colisões
         if (gameState == GAME_STATE_JOGAR) {
-
-
-
-
-
-
-
-
             for (int i = 0; i < 2; i++) {
                 Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true);
                 Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true);
@@ -1432,10 +1462,6 @@ public class Game {
         // verifica se está vivo
         // verifica se o score deve ser reduzido
         if (gameState == GAME_STATE_JOGAR) {
-
-
-
-
             background.move(1);
             verifyDead();
             ScoreHandler.verifyScoreDecay();
@@ -1455,7 +1481,6 @@ public class Game {
                     (Utils.getTime() - balls.get(i).ballBehaviourData.timeOfCollision > TIME_OF_BALL_LISTENER * 1.2f))
                     balls.get(i).ballBehaviourData.processData();
             }
-
     }
 
     static void verifyTargetsAppend(){
@@ -1534,6 +1559,10 @@ public class Game {
 
         for (int i = 0; i < balls.size(); i++){
             balls.get(i).checkTransformations(true);
+        }
+        
+        for (int i = 0; i < fakeBalls.size(); i++){
+            fakeBalls.get(i).checkTransformations(true);
         }
 
         for (int i = 0; i < targets.size(); i++){
@@ -1639,6 +1668,10 @@ public class Game {
 
         for (int i = 0; i < balls.size(); i++){
             balls.get(i).prepareRender(matrixView, matrixProjection);
+        }
+        
+        for (int i = 0; i < fakeBalls.size(); i++){
+            fakeBalls.get(i).prepareRender(matrixView, matrixProjection);
         }
 
         for (int i = 0; i < targets.size(); i++){
