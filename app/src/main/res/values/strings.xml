@@ -109,25 +109,26 @@
     <string name="t10t4">A quantidade de bolas invencíveis aparece também no painel.</string>
     <string name="t10t5">As bolas invencíveis não concedem pontos extras durante ou no final do nível.</string>
     
+    <string name="t11t1">As bolas invencíveis poderão começar o nível presas.</string>
+    <string name="t11t2">Enquanto estiverem presas, elas não se mexerão.</string>
+    <string name="t11t3">Para libertá-las, basta destruir um dos alvos que ficam ao seu redor.</string>
     
-    <string name="t9t2">Ou alterar de tamanho.</string>
+    <string name="t12t1">Em alguns níveis, haverá vento.</string>
+    <string name="t12t2">O vento influenciará na velocidade da bola e na barra.</string>
+    <string name="t12t3">A favor do vento a velocidade da bola e da barra será maior.</string>
+    <string name="t12t4">Contra o vento, a velocidade será menor.</string>
+    <string name="t12t5">Além disso, a barra poderá ser levada pelo vento se ficar parada.</string>
     
-    <string name="t9t1">Nos próximos níveis, o tamanho dos obstáculos também pode variar. </string>
+    <string name="t13t1">Nos próximos níveis, o tamanho da barra poderá variar.</string>
     
-    <string name="t10t1">Veja se consegue lidar com o vento, que influenciará na velocidade da bola e da barra. </string>
+    <string name="t14t1">Em alguns níveis, o tamanho da barra irá sempre diminuir.</string>
+    <string name="t14t2">Nesse caso, você deverá coletar bolas azuis brilhantes para que a barra não fique muito pequena.</string>
+    <string name="t14t3">As bolas azuis brilhantes cairão quando alguns alvos, escolhidos aleatoriamente, forem destruídos.</string>
     
-    <string name="t11t1">Níveis muitos fáceis? Fique atento para algumas coisas escondidas.</string>
+    <string name="t15t1">Em alguns níveis, haverá uma grade atrapalhando a visão.</string>
+    <string name="t15t2">Essa grade se mexerá a uma velocidade constante durante o nível.</string>
+    <string name="t15t3">A grade não influenciará o jogo, ou seja, não tera nenhum efeito na bola, na barra ou nos alvos.</string>
     
-    <string name="t12t1">Níveis muitos fáceis? Fique atento para algumas coisas escondidas.</string>
-    
-    
-    
-    
-    <string name="l21t1">Apenas um alvo? Há algo de estranho nesse nível...</string>
-    <string name="l24t1">Quantos alvos, não?</string>
-    <string name="l24t2">Para ajudar, haverá uma bola invencível neste nível.</string>
-    <string name="l24t3">A quantidade de bolas invencíveis é também mostrada no painel.</string>
-    <string name="l25t1">Neste nível, algumas bolas invencíveis estão presas. Liberte-as.</string>
     <string name="options">Opções</string>
     <string name="dificuldade">Dificuldade</string>
     <string name="musica">Música</string>
