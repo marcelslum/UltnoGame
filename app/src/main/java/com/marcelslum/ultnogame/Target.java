@@ -41,7 +41,7 @@ public class Target extends Rectangle {
     }
 
     Target(String name, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
-        super(name, x, y, width, height, Game.TARGET_WEIGHT, new Color(0,0,0,1));
+        super(name, x, y, Entity.TYPE_TARGET, width, height, Game.TARGET_WEIGHT, new Color(0,0,0,1));
         this.states = states;
         this.currentState = currentState;
         this.special = special;
