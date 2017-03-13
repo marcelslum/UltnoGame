@@ -17,8 +17,8 @@ public class Rectangle extends PhysicalObject {
     public float borderThicknes;
 
 
-    Rectangle(String name, float x, float y, float width, float height, int weight, Color color){
-        super(name, x, y, weight);
+    Rectangle(String name, float x, float y, int type, float width, float height, int weight, Color color){
+        super(name, x, y, type, weight);
         this.program = Game.solidProgram;
         this.color = color;
         this.width = width;
