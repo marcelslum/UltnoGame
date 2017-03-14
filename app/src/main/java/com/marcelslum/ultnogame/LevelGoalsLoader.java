@@ -480,6 +480,7 @@ public class LevelGoalsLoader {
            lg.add(new LevelGoal(2, LevelGoal.PREVENT_RIGHT_BORDER_TOUCH, 0));
         }
         
+        // DUAS BOLAS LIVRES
         ln += 1; // ---------- LEVEL 65
         if (levelNumber == ln) {
            lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
@@ -526,6 +527,8 @@ public class LevelGoalsLoader {
            lg.add(new LevelGoal(1, LevelGoal.ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE, 10));
         }
         
+        // WINDOW
+        //?????????????????
         ln += 1; // ---------- LEVEL ++++
         if (levelNumber >= ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
