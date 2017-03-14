@@ -85,6 +85,10 @@ public class BallBehaviourData {
     public void processData() {
 
         if (!active) return;
+        
+        if (ball.isFake){
+            Level.levelObject.levelGoalsObject.notifyFakeBallHitted();
+        }
 
         Game.ballDataPanel.previousAnglePercent = (initialAngle - minAngle) / (maxAngle - minAngle);
         Game.ballDataPanel.previousVelocityPercent = (initialLen - minLen) / (maxLen - minLen);
