@@ -125,9 +125,24 @@
     <string name="t14t2">Nesse caso, você deverá coletar bolas azuis brilhantes para que a barra não fique muito pequena.</string>
     <string name="t14t3">As bolas azuis brilhantes cairão quando alguns alvos, escolhidos aleatoriamente, forem destruídos.</string>
     
-    <string name="t15t1">Em alguns níveis, haverá uma grade atrapalhando a visão.</string>
-    <string name="t15t2">Essa grade se mexerá a uma velocidade constante durante o nível.</string>
-    <string name="t15t3">A grade não influenciará o jogo, ou seja, não tera nenhum efeito na bola, na barra ou nos alvos.</string>
+    <string name="t15t1">A bola, ao colidir com algum alvo, poderá se dividir em duas.</string>
+    <string name="t15t2">Uma das bolas é a verdadeira.</string>
+    <string name="t15t3">A outra será uma bola falsa. Cabe a você identificá-la.</string>
+    <string name="t15t4">A bola falsa não destrói alvos, não colide com outras bolas, nem gera novas bolas falsas.</string>
+    <string name="t15t5">A bola falsa também não poderá ser utilizada para cumprir objetivos.</string>
+    <string name="t15t6">A bola falsa não é contabilizada no painel.</string>
+    <string name="t15t7">Assim que identificada, é recomendável que você deixe a bola falsa morrer, para não mais atrapalhá-lo.</string>
+    
+    <string name="t16t1">Observe a direção das flechas dos botões.</string>
+    <string name="t16t2">Em alguns casos, os botões poderão estar invertidos.</string>
+    
+    <string name="t17t1">Divida seu cérebro no meio e tente controlar duas barras ao mesmo tempo.</string>
+    
+    <string name="t18t1">Observe o painel. Nesse caso, duas bolas deverão ser mantidas vivas.</string>
+        
+    <string name="t19t1">Em alguns níveis, haverá uma grade atrapalhando a visão.</string>
+    <string name="t19t2">Essa grade se mexerá a uma velocidade constante durante o nível.</string>
+    <string name="t19t3">A grade não influenciará o jogo, ou seja, não tera nenhum efeito na bola, na barra ou nos alvos.</string>
     
     <string name="options">Opções</string>
     <string name="dificuldade">Dificuldade</string>
