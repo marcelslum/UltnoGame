@@ -17,21 +17,25 @@ public class Tutorial {
     public ArrayList<Frame> frames;
     int currentFrame;
 
-    static final int TUTORIAL_INSTRUCOES_INICIAIS = 0;
-    static final int TUTORIAL_INICIO = 1;
-    static final int TUTORIAL_MOVIMENTO_BARRA = 2;
-    static final int TUTORIAL_INCLINACAO_BARRA = 3;
-    static final int TUTORIAL_OBSTACULO = 4;
-    static final int TUTORIAL_CORES = 5;
-    static final int TUTORIAL_EXPLOSAO = 6;
-    static final int TUTORIAL_ALVO_FANTASMA = 7;
-    static final int TUTORIAL_OBSTACULOS_DINAMICOS = 8;
-    static final int TUTORIAL_BOLAS_INVENCIVEIS = 9;
-    static final int TUTORIAL_BOLAS_PRESAS = 10;
-    static final int TUTORIAL_VENTO = 11;
-    static final int TUTORIAL_BARRA_DINAMICA = 12;
-    static final int TUTORIAL_COMIDA = 13;
-    static final int TUTORIAL_GRADE = 14;
+    static final int TUTORIAL_INSTRUCOES_INICIAIS = 1;
+    static final int TUTORIAL_INICIO = 2;
+    static final int TUTORIAL_MOVIMENTO_BARRA = 3;
+    static final int TUTORIAL_INCLINACAO_BARRA = 4;
+    static final int TUTORIAL_OBSTACULO = 5;
+    static final int TUTORIAL_CORES = 6;
+    static final int TUTORIAL_EXPLOSAO = 7;
+    static final int TUTORIAL_ALVO_FANTASMA = 8;
+    static final int TUTORIAL_OBSTACULOS_DINAMICOS = 9;
+    static final int TUTORIAL_BOLAS_INVENCIVEIS = 10;
+    static final int TUTORIAL_BOLAS_PRESAS = 11;
+    static final int TUTORIAL_VENTO = 12;
+    static final int TUTORIAL_BARRA_DINAMICA = 13;
+    static final int TUTORIAL_COMIDA = 14;
+    static final int TUTORIAL_BOLA_FALSA = 15;
+    static final int TUTORIAL_BOTÃO_INVERTIDO = 16;
+    static final int TUTORIAL_DUAS_BARRAS = 17;
+    static final int TUTORIAL_DUAS_BOLAS = 18;
+    static final int TUTORIAL_GRADE = 19;
     
 
 
