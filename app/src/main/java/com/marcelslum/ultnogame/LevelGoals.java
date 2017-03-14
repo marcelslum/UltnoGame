@@ -48,6 +48,8 @@ public class LevelGoals {
     int timesOfObstacleHit = 0;
     int timesOfCollisionBetweenBalls = 0;
     int timesOfBallReachedWithMaximunBarSpped = 0;
+    
+    int timesOfFakeBallsHitted = 0;
 
     public int firstTimeLivingBalls = 0;
     public boolean timeLivingBallsMessage1 = false;
@@ -62,6 +64,25 @@ public class LevelGoals {
     public LevelGoals() {
         levelGoals = new ArrayList<>();
     }
+    
+    public void notifyFakeBallHited(){
+        timesOfFakeBallsHited += 1;
+        
+        for (int i = 0; i < levelGoals.size(); i++) {
+            LevelGoal lg = levelGoals.get(i);
+            if (lg.type == LevelGoal.HIT_FAKE_BALL_WITH_BAR_UNTIL) {
+                if (timesOfFakeBallsHited == lg.value){//??
+                    Game.messages.showMessage(lg.messageText);
+                } else {
+                    if (lg.value - timesOfFakeBallsHitted == 5){
+                        Game.messages.showMessage(Game.getContext().getResources().getString(R.string.levelGoal34m2) +
+                                                 " 5 " + Game.getContext().getResources().getString(R.string.levelGoal34m3));
+                    }
+                }
+            }
+        }
+    }
+    
 
     public void notifySecretStepsToConquer(int i){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifySecretStepsToConquer "+i);
@@ -260,6 +281,12 @@ public class LevelGoals {
 
             if (lg.type == LevelGoal.FINISH_LEVEL_WITHOUT_CHANGE_SPEED && timesOfAccelerate == 0 && timesOfDecelerate == 0 && !lg.achieved){
                 lg.setAchieved();
+            }
+            
+            if (lg.type == LevelGoal.HIT_FAKE_BALL_WITH_BAR_UNTIL) {
+                if (timesOfFakeBallsHited < lg.value){
+                    lg.setAchieved();
+                }
             }
         }
     }
@@ -712,6 +739,7 @@ public class LevelGoals {
             timesOfObstacleHit = 0;
             timesOfCollisionBetweenBalls = 0;
             timesOfBallReachedWithMaximunBarSpped = 0;
+            timesOfFakeBallsHitted = 0;
 
             secretLevel4Step = 0;
             secretLevel5Step = 0;
