@@ -38,7 +38,7 @@ public class Text extends Entity{
     }
 
     public Text(String name, float x, float y, float size, String text, Font font, Color color) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_TEXT);
         this.text = text;
         this.size = size;
         this.color = color;
@@ -52,7 +52,7 @@ public class Text extends Entity{
     }
 
     public Text(String name, float x, float y, float size, String text, Font font) {
-        super(name, x, y);
+        super(name, x, y, Entity.TYPE_TEXT);
         this.text = text;
         this.size = size;
 

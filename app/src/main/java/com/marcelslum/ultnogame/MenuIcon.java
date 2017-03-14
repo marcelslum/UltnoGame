@@ -51,10 +51,10 @@ public class MenuIcon extends Entity{
 
         float padd = size * 0.1f;
 
-        beggining = new Rectangle("beginning", 0, y, padd * 0.5f, size, 0, new Color(0.4f, 0.4f, 0.4f, 1f));
+        beggining = new Rectangle("beginning", 0, y, Entity.TYPE_OTHER, padd * 0.5f, size, 0, new Color(0.4f, 0.4f, 0.4f, 1f));
         beggining.alpha = 0f;
         addChild(beggining);
-        ending = new Rectangle("ending", Game.resolutionX - (padd * 0.5f), y, padd * 0.5f, size, 0, new Color(0.4f, 0.4f, 0.4f, 1f));
+        ending = new Rectangle("ending", Game.resolutionX - (padd * 0.5f), y, Entity.TYPE_OTHER, padd * 0.5f, size, 0, new Color(0.4f, 0.4f, 0.4f, 1f));
         ending.alpha = 0f;
         addChild(ending);
 

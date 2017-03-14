@@ -153,7 +153,7 @@ public class WindowGame extends PhysicalObject{
         WindowGame wg;
 
         public SubWindowGameM(WindowGame wg, float x, float y) {
-            super(wg.name+"m", x, y, 0);
+            super(wg.name+"m", x, y, Entity.TYPE_WINDOW_GAME, 0);
             program = wg.program;
             textureId = wg.textureId;
             this.wg = wg;
@@ -210,7 +210,7 @@ public class WindowGame extends PhysicalObject{
         WindowGame wg;
 
         public SubWindowGameF(WindowGame wg, float x, float y) {
-            super(wg.name+"f", x, y, 0);
+            super(wg.name+"f", x, y, Entity.TYPE_WINDOW_GAME, 0);
             program = wg.program;
             textureId = wg.textureId;
             this.wg = wg;

@@ -82,7 +82,7 @@ public class TextBox extends Entity{
             if (frameType == TextBoxBuilder.FRAME_TYPE_IMAGE) {
                 frame = new Image("frame", x, y, frameWidth, height, Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f / 1024f);
             } else if (frameType == TextBoxBuilder.FRAME_TYPE_SOLID) {
-                frame = new Rectangle("frame", x, y, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
+                frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
             }
             addChild(frame);
         }

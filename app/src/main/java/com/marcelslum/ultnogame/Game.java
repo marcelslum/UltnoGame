@@ -30,7 +30,9 @@ public class Game {
 
     static int basePoints = 10;
 
-    static final int BALL_WEIGHT = 1;
+
+    static final int FAKE_BALL_WEIGHT = 1;
+    static final int BALL_WEIGHT = 2;
     static final int BORDA_WEIGHT = 10;
     static final int OBSTACLES_WEIGHT = 9;
     static final int TARGET_WEIGHT = 10;
@@ -191,7 +193,7 @@ public class Game {
 
         Texture.init();
 
-        Game.frame = new Rectangle("frame", 0f, 0f, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
+        Game.frame = new Rectangle("frame", 0f, 0f, Entity.TYPE_OTHER, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
         Game.frame.clearDisplay();
         Game.frame.alpha = 0f;
 
@@ -293,7 +295,7 @@ public class Game {
     }
     
     static void addFakeBall(Ball ball){
-        ball.markAsFake();
+        ball.markAsFakeBall();
         fakeBalls.add(ball);
     }
     
@@ -1441,32 +1443,32 @@ public class Game {
 
         // se a bola colidiu, faz o necessário
         if (gameState == GAME_STATE_JOGAR) {
+
+            // tomas as medidas no caso de colisão das bolas falsas
+            for (int i = 0; i < fakeBalls.size(); i++) {
+                if (fakeBalls.get(i).isAlive) {
+                    if (fakeBalls.get(i).isCollided) {
+                        fakeBalls.get(i).onCollision();
+                    }
+                }
+            }
+
+            // tomas as medidas no caso de colisão das bolas
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).isAlive) {
-
                     balls.get(i).checkQuarentineBall();
-
                     if (balls.get(i).isCollided) {
                         balls.get(i).onCollision();
                     }
-
-                    double angle = Math.toDegrees(Math.atan2(balls.get(i).dvy, balls.get(i).dvx));
-                    if (balls.get(i).isAlive) {
-                        //Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + angle);
-                        //Log.e(TAG, "                        textureMap " + balls.get(i).textureMap);
-                        //Log.e(TAG, "                        pos        " + balls.get(i).positionX + " - " + balls.get(i).positionY);
-                        //Log.e(TAG, "                        dv         " + balls.get(i).dvx + " - " + balls.get(i).dvy);
-                    }
                 }
-
             }
 
+            // tomas as medidas no caso de colisão das barras
             for (int i = 0; i < bars.size(); i++) {
                 if (bars.get(i).isCollided) {
                     bars.get(i).onCollision();
                 }
             }
-
         }
 
         // toma as medidas finais
@@ -1679,12 +1681,20 @@ public class Game {
 
         if (imageTutorialDown != null) imageTutorialDown.prepareRender(matrixView, matrixProjection);
 
+        for (int i = 0; i < fakeBalls.size(); i++){
+            if (!fakeBalls.get(i).fakeOnTop) {
+                fakeBalls.get(i).prepareRender(matrixView, matrixProjection);
+            }
+        }
+
         for (int i = 0; i < balls.size(); i++){
             balls.get(i).prepareRender(matrixView, matrixProjection);
         }
         
         for (int i = 0; i < fakeBalls.size(); i++){
-            fakeBalls.get(i).prepareRender(matrixView, matrixProjection);
+            if (fakeBalls.get(i).fakeOnTop) {
+                fakeBalls.get(i).prepareRender(matrixView, matrixProjection);
+            }
         }
 
         for (int i = 0; i < targets.size(); i++){

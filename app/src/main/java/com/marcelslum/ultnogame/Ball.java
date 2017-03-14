@@ -18,6 +18,10 @@ public class Ball extends Circle{
     public ParticleGenerator particleGenerator;
     public BallParticleGenerator ballParticleGenerator;
 
+    long startTimeFakeBallAnim = 0;
+    long fakeBallAnimDuration = 3000;
+    boolean fakeBallAnimActive = false;
+
 
     ArrayList<Ball> quarentineBalls;
     ArrayList<Integer> quarentineBallsState;
@@ -65,13 +69,15 @@ public class Ball extends Circle{
     double mass = 0f;
     
     public boolean isFake = false;
+    public boolean fakeOnTop = false;
 
     Ball(String name, float x, float y, float radius, int textureMap){
         super(name, x, y, Entity.TYPE_BALL, radius, Game.BALL_WEIGHT);
         textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
-        program = Game.imageProgram;
+        program = Game.imageColorizedProgram;
         this.textureMap = textureMap;
         ballsCollidedProcessed = new ArrayList<>();
+        color = new Color(0f, 0f, 0f, 1f);
         
         // volume of sphere = (4/3) * PI * r^3
         // mass = density * volume
@@ -84,9 +90,21 @@ public class Ball extends Circle{
         setDrawInfo();
         ballParticleGenerator = new BallParticleGenerator(name+"pg", 0f, 0f);
     }
+
+
+
+
     
     public void markAsFakeBall(){
-        this.isFake = true;
+        isFake = true;
+
+        if (Utils.getRandonFloat(0f, 1f) < 0.5f){
+            fakeOnTop = true;
+        } else {
+            fakeOnTop = false;
+        }
+
+        weight = Game.FAKE_BALL_WEIGHT;
     }
 
     public void setInvencible() {
@@ -139,6 +157,13 @@ public class Ball extends Circle{
 
         Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
+
+
+        colorsData = new float[16];
+        Utils.insertRectangleColorsData(colorsData, 0, color);
+        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+
+
     }
     
     public void setTextureMapAndUvData(int textureMap){
@@ -199,6 +224,12 @@ public class Ball extends Circle{
         super.checkTransformations(updatePrevious);
     }
 
+
+    public void initFakeAnimation() {
+        startTimeFakeBallAnim = Utils.getTime();
+        fakeBallAnimActive = true;
+    }
+
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection) {
 
@@ -210,6 +241,25 @@ public class Ball extends Circle{
                 particleGenerator.prepareRender(matrixView, matrixProjection);
             }
         }
+
+        if (fakeBallAnimActive){
+            long elapsedTime = Utils.getTime() - startTimeFakeBallAnim;
+            if (elapsedTime < fakeBallAnimDuration){
+                color.r = Utils.getRandonFloat(0f, 0.3f) * (1.0f - ((float)elapsedTime/(float)fakeBallAnimDuration));
+                color.g = Utils.getRandonFloat(0f, 0.4f) * (1.0f - ((float)elapsedTime/(float)fakeBallAnimDuration));
+                color.b = Utils.getRandonFloat(0f, 0.5f) * (1.0f - ((float)elapsedTime/(float)fakeBallAnimDuration));
+            } else {
+                fakeBallAnimActive = false;
+                color.r = 0f;
+                color.g = 0f;
+                color.b = 0f;
+            }
+
+            Utils.insertRectangleColorsData(colorsData, 0, color);
+            colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        }
+
+
         super.prepareRender(matrixView, matrixProjection);
     }
     
@@ -248,7 +298,7 @@ public class Ball extends Circle{
             }
         
             // verifica se obstáculo esta crescendo e, se a velocidade for maior que a da bola, gera nela uma impulsão
-            if (collisionsData.get(i).type == Entity.TYPE_OBSTACLE && !collisionsData.get(i).isRepeated){
+            if (collisionsData.get(i).object.type == Entity.TYPE_OBSTACLE && !collisionsData.get(i).isRepeated){
                 Obstacle o = (Obstacle)collisionsData.get(i).object;
                 if (o.scaleVariationData != null){
                     if (o.scaleVariationData.isActive){
@@ -668,34 +718,34 @@ public class Ball extends Circle{
 
         if (!collisionOtherBall && !collidedProcessed){
             if (lastResponseBallX < 0 && this.dvx > 0) {
-                this.dvx *= -1;
-                if (this.accelStarted) {
-                    this.accelFinalVelocityX *= -1;
-                    this.accelInitialVelocityX *= -1;
+                dvx *= -1;
+                if (accelStarted) {
+                    accelFinalVelocityX *= -1;
+                    accelInitialVelocityX *= -1;
                 }
             }
 
             if (lastResponseBallX > 0 && this.dvx < 0) {
-                this.dvx *= -1;
-                if (this.accelStarted) {
-                    this.accelFinalVelocityX *= -1;
-                    this.accelInitialVelocityX *= -1;
+                dvx *= -1;
+                if (accelStarted) {
+                    accelFinalVelocityX *= -1;
+                    accelInitialVelocityX *= -1;
                 }
             }
 
             if (lastResponseBallY < 0 && this.dvy > 0) {
-                this.dvy *= -1;
-                if (this.accelStarted) {
-                    this.accelFinalVelocityY *= -1;
-                    this.accelInitialVelocityY *= -1;
+                dvy *= -1;
+                if (accelStarted) {
+                    accelFinalVelocityY *= -1;
+                    accelInitialVelocityY *= -1;
                 }
             }
 
             if (lastResponseBallY > 0 && this.dvy < 0) {
-                this.dvy *= -1;
-                if (this.accelStarted) {
-                    this.accelFinalVelocityY *= -1;
-                    this.accelInitialVelocityY *= -1;
+                dvy *= -1;
+                if (accelStarted) {
+                    accelFinalVelocityY *= -1;
+                    accelInitialVelocityY *= -1;
                 }
             }
         }
@@ -787,26 +837,23 @@ public class Ball extends Circle{
 
             Log.e(TAG, "angleToAdd "+ angleToAdd);
 
-            if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).object.vx < 0){
+            if (dvx < 0 && collisionsData.get(collisionBarNumber).object.vx < 0){
                 velocityAdd = false;
                 mAngleToRotate = angleToRotate + angleToAdd;
                 ballBehaviourData.setAngleIncreaseWithBarMovement();
-            } else if (this.dvx < 0 && collisionsData.get(this.collisionBarNumber).object.vx > 0){
+            } else if (dvx < 0 && collisionsData.get(collisionBarNumber).object.vx > 0){
                 velocityAdd = true;
                 mAngleToRotate = - (angleToRotate + angleToAdd);
                 ballBehaviourData.setAngleDecreaseWithBarMovement();
-
-            } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).object.vx > 0){
+            } else if (dvx > 0 && collisionsData.get(collisionBarNumber).object.vx > 0){
                 velocityAdd = false;
                 mAngleToRotate = -(angleToRotate + angleToAdd);
                 ballBehaviourData.setAngleIncreaseWithBarMovement();
-
-            } else if (this.dvx > 0 && collisionsData.get(this.collisionBarNumber).object.vx < 0){
+            } else if (dvx > 0 && collisionsData.get(this.collisionBarNumber).object.vx < 0){
                 velocityAdd = true;
                 mAngleToRotate = angleToRotate + angleToAdd;
                 ballBehaviourData.setAngleDecreaseWithBarMovement();
-
-            } else if (collisionsData.get(this.collisionBarNumber).object.vx == 0){
+            } else if (collisionsData.get(collisionBarNumber).object.vx == 0){
                 Log.e(TAG, "barra sem velocidade, adicionando apenas o angleToAdd");
                 mAngleToRotate = angleToAdd;
             }
@@ -928,10 +975,8 @@ public class Ball extends Circle{
 
                 // ROTAÇÃO
                 rotateTestingAngle(final_vx, final_vy, mAngleToRotate);
-
                 ballBehaviourData.setFinalLen(Utils.getVectorMagnitude(final_vx, final_vy));
             }
-
             accelerate(150, final_vx, final_vy);
         }
 
@@ -963,17 +1008,17 @@ public class Ball extends Circle{
 
         if (!collidedProcessed) {
             float soundX = positionX / Game.gameAreaResolutionX;
-            float volumeD = 0.7f;
-            float volumeE = 0.7f;
+            float volumeD = 0.5f;
+            float volumeE = 0.5f;
 
 
             if (soundX < 0.5f) {
-                volumeE = (0.7f + (0.3f - soundX));
-                volumeD = (0.7f - (0.3f - soundX));
+                volumeE = (0.5f + (0.5f - soundX));
+                volumeD = (0.5f - (0.5f - soundX));
             }
             if (soundX > 0.5f) {
-                volumeD = (0.7f + (soundX - 0.3f));
-                volumeE = (0.7f - (soundX - 0.3f));
+                volumeD = (0.5f + (soundX - 0.5f));
+                volumeE = (0.5f - (soundX - 0.5f));
             }
 
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
@@ -1030,21 +1075,21 @@ public class Ball extends Circle{
 
                 float angleToRotate = 0;
                 if (angle > 0 && angle <= 45){
-                    angleToRotate 5f;
+                    angleToRotate = 4f;
                 } else if (angle > 45 && angle <= 90){
-                    angleToRotate -5f;
+                    angleToRotate =  -4f;
                 } else if (angle > 90 && angle <= 135){
-                    angleToRotate 5f;
+                    angleToRotate = 4f;
                 } else if (angle > 135 && angle <= 180){
-                    angleToRotate -5f;
+                    angleToRotate = -4f;
                 } else if (angle < 0 && angle >= -45){
-                    angleToRotate -5f;
+                    angleToRotate = -4f;
                 } else if (angle < -45 && angle >= -90){
-                    angleToRotate 5f;
+                    angleToRotate = 4f;
                 } else if (angle < -90 && angle >= -135){
-                    angleToRotate -5f;
+                    angleToRotate = -4f;
                 } else if (angle > -135 && angle <= -180){
-                    angleToRotate 5f;
+                    angleToRotate = 4f;
                 }
                 
                 
@@ -1053,12 +1098,29 @@ public class Ball extends Circle{
                 float newRadius = radius;
                 
                 Ball ball = new Ball("ball", newPositionX, newPositionY, newRadius, textureMap);
-                ball.setAsFakeBall();
+                ball.markAsFakeBall();
                 ball.program = Game.imageProgram;
                 ball.textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
-                
-                ball.dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
-                ball.dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
+
+
+                Log.e(TAG, "fake ball dvx dvy antes "+dvx + " " + dvy);
+
+
+                if (Utils.getRandonFloat(0.0f, 1.0f) > 0.5f) {
+
+                    ball.dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
+                    ball.dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
+
+                } else {
+
+                    ball.dvx = dvx;
+                    ball.dvy = dvy;
+
+                    dvx = (float) Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
+                    dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
+                }
+
+                Log.e(TAG, "fake ball dvx dvy antes "+ball.dvx + " " + ball.dvy);
                 
                 ball.angleToRotate = angleToRotate;
                 ball.velocityVariation = velocityVariation;
@@ -1066,8 +1128,8 @@ public class Ball extends Circle{
                 ball.velocityMax_BI = velocityMax_BI;
                 ball.velocityMin_BI = velocityMin_BI;
                 
-                float testAngleOriginal = (float) Math.toDegrees(Math.atan2(dvy, dvx))
-                float testAngleFake = (float) Math.toDegrees(Math.atan2(ball.dvy, ball.dvy))
+                float testAngleOriginal = (float) Math.toDegrees(Math.atan2(dvy, dvx));
+                float testAngleFake = (float) Math.toDegrees(Math.atan2(ball.dvy, ball.dvx));
                 
                 Log.e(TAG, "fake ball angle of original "+testAngleOriginal);
                 Log.e(TAG, "fake ball angle of fake "+testAngleFake);
@@ -1082,6 +1144,10 @@ public class Ball extends Circle{
                 ball.initialDVY = initialDVY;
 
                 Game.addFakeBall(ball);
+
+                Sound.play(Sound.soundDuplicateBall, 0.7f, 0.7f, 0);
+                initFakeAnimation();
+                ball.initFakeAnimation();
 
             }
         }
@@ -1478,7 +1544,6 @@ public class Ball extends Circle{
                 }
 
             }
-
             dvx = final_vx;
             dvy = final_vy;
 

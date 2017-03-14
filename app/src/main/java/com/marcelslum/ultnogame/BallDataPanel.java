@@ -47,27 +47,27 @@ public class BallDataPanel extends Entity{
         isMovable = false;
         isSolid = false;
         float  baseHeight = height/5f;
-        velocityRectangle = new Rectangle("velocityRectangle", x, y, width, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
-        velocityNewRectangle = new Rectangle("velocityNewRectangle", x, y, width, baseHeight *2f, -1, COLOR_BAR_GREEN_LIGHT);
+        velocityRectangle = new Rectangle("velocityRectangle", x, y, Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
+        velocityNewRectangle = new Rectangle("velocityNewRectangle", x, y, Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BAR_GREEN_LIGHT);
 
 
 
         velocityRectangle.animScaleX = 0.008f;
         velocityNewRectangle.animScaleX = 0.008f;
 
-        angleRectangle = new Rectangle("angleRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
-        angleNewRectangle = new Rectangle("angleNewRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BAR_BLUE_LIGHT);
+        angleRectangle = new Rectangle("angleRectangle", x, y + (baseHeight * 3f), Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
+        angleNewRectangle = new Rectangle("angleNewRectangle", x, y + (baseHeight * 3f), Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BAR_BLUE_LIGHT);
 
-        backVelocityRectangle = new Rectangle("backVelocityRectangle", x, y, width, baseHeight *2f, -1, COLOR_BACK);
-        backAngleRectangle = new Rectangle("backAngleRectangle", x, y + (baseHeight * 3f), width, baseHeight *2f, -1, COLOR_BACK);
+        backVelocityRectangle = new Rectangle("backVelocityRectangle", x, y, Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BACK);
+        backAngleRectangle = new Rectangle("backAngleRectangle", x, y + (baseHeight * 3f), Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BACK);
 
 
         angleRectangle.animScaleX = 0.008f;
         angleNewRectangle.animScaleX = 0.008f;
 
         float markSize =  width*0.008f;
-        endVelocity = new Rectangle("velocityRectangle", x + width - markSize, y, markSize, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
-        endAngle = new Rectangle("velocityRectangle", x + width - markSize, y + (baseHeight * 3f), markSize, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
+        endVelocity = new Rectangle("velocityRectangle", x + width - markSize, y, Entity.TYPE_OTHER, markSize, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
+        endAngle = new Rectangle("velocityRectangle", x + width - markSize, y + (baseHeight * 3f), Entity.TYPE_OTHER, markSize, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
 
     }
 

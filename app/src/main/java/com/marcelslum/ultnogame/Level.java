@@ -686,12 +686,12 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setSpecialBallPercentage0_1(float v){
+        public LevelBuilder setSpecialBallPercentage(float v){
             specialBallPercentage = v;
             return this;
         }
         
-        public LevelBuilder setFakeBallPercentage0_1(float v){
+        public LevelBuilder setFakeBallPercentage(float v){
             fakeBallPercentage = v;
             return this;
         }
