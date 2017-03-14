@@ -89,6 +89,8 @@ public class LevelLoader {
                     .setObstaclesPositionVariationOff()
                     .setWindType(Level.WIND_TYPE_NO)
                     .setSpecialBallPercentage(0f)
+                    .setFakeBallPercentage(0f)
+                    .setInvertedButtons(false)
                     .setObstaclesQuantity(0)
                     .setWindowsQuantity(0)
                     .setTutorialAttached(Tutorial.TUTORIAL_INICIO)
@@ -241,10 +243,6 @@ public class LevelLoader {
         // CORES
         // ---------- LEVEL9
         l += 1;
-        if (levelNumber >= l) {
-            levelBuilder
-                    .setTutorialAttached(Tutorial.TUTORIAL_CORES);
-        }
         if (levelNumber == l) {
             levelBuilder
                     .setTargetsMap(
@@ -319,10 +317,6 @@ public class LevelLoader {
         // EXPLOSÃO
         // ---------- LEVEL 13
         l += 1;
-        if (levelNumber >= l) {
-            levelBuilder
-                    .setTutorialAttached(Tutorial.TUTORIAL_EXPLOSAO);
-        }
         if (levelNumber == l) {
             levelBuilder
                     .setTargetsMap(
@@ -358,7 +352,7 @@ public class LevelLoader {
                     .setObstaclesWidth(0.15f ,      0.15f);
         }
 
-        // ---------- LEVEL 15
+        // ---------- LEVEL15
         l += 1;
         if (levelNumber == l) {
                 levelBuilder = new Level.LevelBuilder()
@@ -402,7 +396,37 @@ public class LevelLoader {
 
         // ELÁSTICO
         // ---------- LEVEL 17
-
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
+                                    {4, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 2, 1, 0, 0, 0, 1, 2, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+                                    {1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
+                                    {3, 0, 0, 3, 0, 0, 0, 3, 0, 0, 3}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.333f)
+                    .setObstaclesY(0.43529f)
+                    .setObstaclesHeight(0.0735294118f)
+                    .setObstaclesWidth(0.333f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.8f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.001f)
+                                    .setyVelocity(0)
+                    );
+        }
 
 
         // ---------- LEVEL 18
@@ -689,7 +713,6 @@ public class LevelLoader {
         }
 
         // VENTO
-
         // ---------- LEVEL24
         l += 1;
         if (levelNumber == l) {
@@ -760,6 +783,8 @@ public class LevelLoader {
                     .setWindType(Level.WIND_TYPE_LEFT);
         }
 
+
+        // LEVEL 27
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -793,9 +818,6 @@ public class LevelLoader {
                     .setWindType(Level.WIND_TYPE_RIGHT);
         }
 
-
-
-
         // FANTASMA
         // ---------- LEVEL28
         l += 1;
@@ -812,7 +834,29 @@ public class LevelLoader {
                             }
                     );
         }
-        
+
+        // ---------- LEVEL29
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2},
+                                    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 5, 0, 0, 0, 7, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {0, 1, 0, 0, 0, 7, 0, 0, 0, 1, 0},
+                            }
+                    );
+        }
 
         // ---------- LEVEL30
         l += 1;
@@ -1426,7 +1470,7 @@ public class LevelLoader {
                             {1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0},
                             {1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0},
                     })
-            .setFakeBallPercentage(0.75f);
+            .setFakeBallPercentage(0.55f);
         }
 
         // ---------- LEVEL 47
@@ -1445,7 +1489,7 @@ public class LevelLoader {
                                     {2, 0, 1, 0, 0, 0, 0, 0, 1, 0, 2},
                                     {0, 2, 1, 0, 0, 0, 0, 0, 1, 2, 0},
                             })
-                    .setFakeBallPercentage(0.8f)
+                    .setFakeBallPercentage(0.6f)
                     .setObstaclesQuantity(2)
                     .setObstaclesX(0.31f, 0.64f)
                     .setObstaclesY(0.2f, 0.2f)
@@ -1470,7 +1514,7 @@ public class LevelLoader {
                                     {0, 2, 0, 0, 1, 0, 1, 0, 0, 2, 0},
                                     {0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
                             })
-                    .setFakeBallPercentage(0.8f)
+                    .setFakeBallPercentage(0.6f)
                     .setObstaclesQuantity(2)
                     .setObstaclesX(0.1176466667f, 0.8428633333f)
                     .setObstaclesY(0.4158558824f, 0.4158558824f)
@@ -1504,7 +1548,7 @@ public class LevelLoader {
         l += 1;
         if (levelNumber == l) {
             levelBuilder
-                    .setFakeBallPercentage(0.8f)
+                    .setFakeBallPercentage(0.6f)
                     .setTargetsMap(
                             new int[][]{
                                     {0, 1, 0, 3, 0, 1, 0, 3, 0, 1, 0},
@@ -1524,9 +1568,149 @@ public class LevelLoader {
                     );
         }
 
+        // ESPELHO
+        // ---------- LEVEL50
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder = new Level.LevelBuilder()
+                    .setInvertedButtons(true)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 3, 0, 1, 0, 0, 0, 1, 0, 3, 0},
+                                    {1, 4, 0, 1, 0, 0, 0, 1, 0, 1, 1},
+                                    {1, 3, 0, 1, 0, 0, 0, 1, 0, 3, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                    {1, 3, 2, 1, 0, 0, 0, 1, 2, 3, 1},
+                                    {3, 2, 2, 1, 0, 0, 0, 1, 2, 2, 3},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0}
+                            }
+                    );
+        }
+
+        // ---------- LEVEL51
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder.setTargetsMap(
+                    new int[][]{
+                            {1, 0, 1, 1, 1, 3, 1, 1, 1, 0, 1},
+                            {0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0},
+                            {0, 0, 1, 0, 0, 3, 0, 0, 1, 0, 0},
+                            {0, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0},
+                            {0, 0, 0, 1, 1, 3, 1, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 1, 1, 3, 1, 0, 0, 0, 0},
+                            {0, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0},
+                            {0, 0, 1, 0, 0, 3, 0, 0, 1, 0, 0},
+                            {0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0},
+                            {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+                    })
+                    .setSpecialBallPercentage(0.42f)
+                    .setInvertedButtons(true)
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.000255f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true));
+
+        }
+
+        // ---------- LEVEL52
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+                                    {3, 2, 3, 2, 3, 1, 3, 2, 3, 2, 3},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {4, 1, 1, 1, 1, 4, 1, 1, 1, 1, 4},
+                                    {3, 2, 3, 2, 3, 1, 3, 2, 3, 2, 3}
+                            }
+                    )
+                    .setInvertedButtons(true)
+                    .setObstaclesQuantity(2)
+                    .setObstaclesX(0.125f, 0.7916666667f)
+                    .setObstaclesY(0.5676470588f, 0.5676470588f)
+                    .setObstaclesWidth(0.0833f, 0.0833f)
+                    .setObstaclesHeight(0.1764705882f, 0.1764705882f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0015f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0015f)
+                    );
+        }
+
+        //LEVEL 53
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+                                    {1, 4, 3, 3, 3, 3, 3, 3, 3, 4, 1},
+                                    {1, 0, 2, 0, 0, 0, 0, 0, 2, 0, 1},
+                                    {0, 1, 2, 0, 0, 0, 0, 0, 2, 1, 1},
+                                    {1, 1, 2, 1, 0, 0, 0, 1, 1, 1, 1},
+                                    {3, 3, 3, 3, 1, 0, 1, 3, 3, 3, 3},
+                            })
+                    .setInvertedButtons(true)
+                    .setObstaclesQuantity(3)
+                    .setObstaclesX(0.45f, 0.2f, 0.7f)
+                    .setObstaclesY(0.175f, 0.65f, 0.65f)
+                    .setObstaclesWidth(0.1f, 0.1f, 0.1f)
+                    .setObstaclesHeight(0.18f, 0.18f, 0.18f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0015f)
+                                    .setyVelocity(0f)
+                    );
+        }
+
 
         // MURO E DUAS BARRAS
-        // ---------- LEVEL50
+        // ---------- LEVEL54
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1552,7 +1736,7 @@ public class LevelLoader {
                     .setObstaclesHeight(0.4705882353f);
         }
 
-        // ---------- LEVEL51
+        // ---------- LEVEL55
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1598,7 +1782,7 @@ public class LevelLoader {
 
         }
 
-        // ---------- LEVEL52
+        // ---------- LEVEL56
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1656,7 +1840,7 @@ public class LevelLoader {
 
         }
 
-        // ---------- LEVEL53
+        // ---------- LEVEL57
         l += 1;
         if (levelNumber == l) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
@@ -1690,7 +1874,7 @@ public class LevelLoader {
                     .setWindType(Level.WIND_TYPE_LEFT);
         }
 
-        // ---------- LEVEL54
+        // ---------- LEVEL58
         l += 1;
         if (levelNumber == l) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
@@ -1722,7 +1906,7 @@ public class LevelLoader {
         }
 
         // muro e duas bolas
-        // ---------- LEVEL55
+        // ---------- LEVEL59
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1739,7 +1923,7 @@ public class LevelLoader {
                     .setObstaclesHeight(1-0.002f);
         }
 
-        // ---------- LEVEL56
+        // ---------- LEVEL60
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1761,7 +1945,7 @@ public class LevelLoader {
                     .setObstaclesHeight(1-0.002f);
         }
 
-        // ---------- LEVEL57
+        // ---------- LEVEL61
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1807,7 +1991,7 @@ public class LevelLoader {
                                     .setyVelocity(0f));
         }
 
-        // ---------- LEVEL58
+        // ---------- LEVEL62
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1834,7 +2018,7 @@ public class LevelLoader {
                     .setObstaclesHeight(1-0.002f);
         }
 
-        // ---------- LEVEL59
+        // ---------- LEVEL63
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1861,7 +2045,7 @@ public class LevelLoader {
                     .setObstaclesHeight(1-0.002f);
         }
         
-        // ---------- LEVEL60
+        // ---------- LEVEL64
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1890,8 +2074,8 @@ public class LevelLoader {
         }
         
 
-        // duas bolas livres
-        // ---------- LEVEL61
+        // DUAS BOLAS LIVRES
+        // ---------- LEVEL65
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1903,7 +2087,7 @@ public class LevelLoader {
                             });
         }
         
-        // ---------- LEVEL62
+        // ---------- LEVEL66
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1924,7 +2108,7 @@ public class LevelLoader {
                             });
         }
 
-        // ---------- LEVEL63
+        // ---------- LEVEL67
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1949,7 +2133,7 @@ public class LevelLoader {
                             });
         }
 
-        // ---------- LEVEL64
+        // ---------- LEVEL68
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1996,7 +2180,7 @@ public class LevelLoader {
                                     .setyVelocity(0f));
         }
 
-        // ---------- LEVEL65
+        // ---------- LEVEL69
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -2043,10 +2227,9 @@ public class LevelLoader {
                                     .setMinY(0.01f)
                                     .setxVelocity(0f)
                                     .setyVelocity(0.0015f));
-
         }
 
-        // ---------- LEVEL66
+        // ---------- LEVEL70
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -2083,8 +2266,8 @@ public class LevelLoader {
                                     .setMaxHeight_BI(1f));
         }
 
-        // grade
-        // ---------- LEVEL67 (BASEADO NO 50)
+        // GRADE
+        // ---------- LEVEL71 (BASEADO NO 50)
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -2139,7 +2322,7 @@ public class LevelLoader {
                     .setWindowsVelocity(0.002f);
         }
         
-        // ---------- LEVEL68 (BASEADO NO 41)
+        // ---------- LEVEL72 (BASEADO NO 41)
         l += 1;
         if (levelNumber == l) {
 
@@ -2176,7 +2359,7 @@ public class LevelLoader {
                     .setWindowsVelocity(0.0023f);
         }
         
-        //LEVEL 69 - BASEADO NO 39
+        //LEVEL 73 - BASEADO NO 39
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -2221,7 +2404,7 @@ public class LevelLoader {
 
         }
         
-        //LEVEL 70 - BASEADO NO 33
+        //LEVEL 74 - BASEADO NO 33
         l += 1;
         if (levelNumber == l) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
@@ -2271,7 +2454,7 @@ public class LevelLoader {
                     .setWindType(Level.WIND_TYPE_RIGHT);
         }
         
-       // LEVEL 71 - BASEADO NO 53
+       // LEVEL 75 - BASEADO NO 53
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -2320,7 +2503,7 @@ public class LevelLoader {
                     .setWindowsVelocity(-0.003f);
         }
         
-       // LEVEL 72 - BASEADO NO 46
+       // LEVEL 76 - BASEADO NO 46
         l += 1;
         if (levelNumber == l) {
             ArrayList<int[]> targetsAppend = new ArrayList<>();
@@ -2355,7 +2538,7 @@ public class LevelLoader {
                     .setWindowsVelocity(-0.003f, -0.0029f);
         }
         
-       // LEVEL 73 - BASEADO NO 57
+       // LEVEL 77 - BASEADO NO 57
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -2433,7 +2616,7 @@ public class LevelLoader {
                     .setWindowsVelocity(0.0029f, -0.003f);
         }
         
-       // LEVEL 74 - BASEADO NO 60
+       // LEVEL 78 - BASEADO NO 60
         l += 1;
         if (levelNumber == l) {
             levelBuilder

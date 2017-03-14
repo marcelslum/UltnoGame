@@ -59,9 +59,9 @@ public class Level {
     public int[] windowsQuantityOfLines;
     public float[] windowsDistance;
     public float[] windowsVelocity;
-    public boolean isHaveSpecialBall = true;
-    public float specialBallPercentage = 0.0f;
-    public float fakeBallPercentage = 0.0f;
+    public float specialBallPercentage = 0f;
+    public float fakeBallPercentage = 0f;
+    public boolean invertedButtons = false;
     public float windType;
 
 
@@ -120,6 +120,7 @@ public class Level {
         fakeBallPercentage = LevelBuilder.fakeBallPercentage;
         windType = LevelBuilder.windType;
         tutorialAttached = LevelBuilder.tutorialAttached;
+        invertedButtons = LevelBuilder.invertedButtons;
     }
 
     public void loadEntities() {
@@ -168,7 +169,7 @@ public class Level {
 
         //Log.e("Level loadEnt", "1");
 
-        ButtonHandler.createGameButtons(barsQuantity);
+        ButtonHandler.createGameButtons(barsQuantity, invertedButtons);
 
         InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea111", 0f, 0f,
                 Game.gameAreaResolutionX, Game.gameAreaResolutionY * 0.8f, 0, Game.background);
@@ -382,6 +383,14 @@ public class Level {
         private static int windType = Level.WIND_TYPE_NO;
         private static ArrayList<LevelGoal> levelGoals;
         public static int tutorialAttached;
+        public static boolean invertedButtons = false;
+
+
+        public LevelBuilder setInvertedButtons(boolean v) {
+            invertedButtons = v;
+            return this;
+        }
+
 
         public LevelBuilder setTutorialAttached(int v) {
             tutorialAttached = v;

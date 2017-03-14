@@ -1065,13 +1065,13 @@ public class Ball extends Circle{
     
     
     public void verifyFakeBall(){
-        if (Level.levelObject.fakeBallPercentage > 0f){
+        if (Level.levelObject.fakeBallPercentage > 0f && !fakeBallAnimActive && !isInvencible){
             float percentage = Level.levelObject.fakeBallPercentage;
             
             if (Utils.getRandonFloat(0.0f, 1.0f) < percentage){
     
                 double angle = Math.toDegrees(Math.atan2(dvy, dvx));
-                Log.e("ball", "angle " + angle);
+                //Log.e("ball", "angle " + angle);
 
                 float angleToRotate = 0;
                 if (angle > 0 && angle <= 45){
@@ -1103,7 +1103,7 @@ public class Ball extends Circle{
                 ball.textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
 
 
-                Log.e(TAG, "fake ball dvx dvy antes "+dvx + " " + dvy);
+                //Log.e(TAG, "fake ball dvx dvy antes "+dvx + " " + dvy);
 
 
                 if (Utils.getRandonFloat(0.0f, 1.0f) > 0.5f) {
@@ -1120,7 +1120,7 @@ public class Ball extends Circle{
                     dvy = (float) Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
                 }
 
-                Log.e(TAG, "fake ball dvx dvy antes "+ball.dvx + " " + ball.dvy);
+                //Log.e(TAG, "fake ball dvx dvy antes "+ball.dvx + " " + ball.dvy);
                 
                 ball.angleToRotate = angleToRotate;
                 ball.velocityVariation = velocityVariation;
@@ -1136,9 +1136,6 @@ public class Ball extends Circle{
 
                 ball.maxAngle = this.maxAngle;
                 ball.minAngle = this.minAngle;
-
-                Log.e("ball", "ball.maxAngle "+ball.maxAngle);
-                Log.e("ball", "ball.minAngle "+ball.minAngle);
 
                 ball.initialDVX = initialDVX;
                 ball.initialDVY = initialDVY;
