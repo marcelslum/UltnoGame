@@ -138,7 +138,8 @@
     
     <string name="t17t1">Divida seu cérebro no meio e tente controlar duas barras ao mesmo tempo.</string>
     
-    <string name="t18t1">Observe o painel. Nesse caso, duas bolas deverão ser mantidas vivas.</string>
+    <string name="t18t1">Observe o painel.</string>
+    <string name="t18t1">Nesse caso, pelos menos duas bolas deverão ser mantidas vivas.</string>
         
     <string name="t19t1">Em alguns níveis, haverá uma grade atrapalhando a visão.</string>
     <string name="t19t2">Essa grade se mexerá a uma velocidade constante durante o nível.</string>
