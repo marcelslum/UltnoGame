@@ -53,6 +53,8 @@ public class LevelGoal{
     public static final int PREVENT_LEFT_BORDER_TOUCH = 31;
     public static final int PREVENT_RIGHT_BORDER_TOUCH = 32;
     public static final int PREVENT_BORDER_TOUCH = 33;
+    
+    public static final int HIT_FAKE_BALL_WITH_BAR_UNTIL = 34;
 
 
     public void setText() {
@@ -156,6 +158,10 @@ public class LevelGoal{
             text = Game.getContext().getResources().getString(R.string.levelGoal32);
         } else if (type == PREVENT_BORDER_TOUCH) {
             text = Game.getContext().getResources().getString(R.string.levelGoal33);
+        else if (type == HIT_FAKE_BALL_WITH_BAR_UNTIL) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal34);
+        }
+            
         } else {
             text = "sem texto definido";
         }
@@ -226,13 +232,12 @@ public class LevelGoal{
             messageText = Game.getContext().getResources().getString(R.string.levelGoal32m);
         } else if (type == PREVENT_BORDER_TOUCH) {
             messageText = Game.getContext().getResources().getString(R.string.levelGoal33m);
+        else if (type == HIT_FAKE_BALL_WITH_BAR_UNTIL) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal34m);
         } else if (type == FINISH_IN_N_SECONDS) {
             messageText = Game.getContext().getResources().getString(R.string.levelGoal1m);
         }
     }
-
-
-
 
     public LevelGoal(int numberOfStars, int type, int value) {
         this.numberOfStars = numberOfStars;
