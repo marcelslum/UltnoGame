@@ -17,47 +17,109 @@ public class Tutorial {
     public ArrayList<Frame> frames;
     int currentFrame;
 
-    static final int TUTORIAL_INSTRUCOES_INICIAIS = 1;
-    static final int TUTORIAL_INICIO = 2;
-    static final int TUTORIAL_MOVIMENTO_BARRA = 3;
-    static final int TUTORIAL_INCLINACAO_BARRA = 4;
-    static final int TUTORIAL_OBSTACULO = 5;
-    static final int TUTORIAL_CORES = 6;
-    static final int TUTORIAL_EXPLOSAO = 7;
-    static final int TUTORIAL_ALVO_FANTASMA = 8;
-    static final int TUTORIAL_OBSTACULOS_DINAMICOS = 9;
-    static final int TUTORIAL_BOLAS_INVENCIVEIS = 10;
-    static final int TUTORIAL_BOLAS_PRESAS = 11;
-    static final int TUTORIAL_VENTO = 12;
-    static final int TUTORIAL_BARRA_DINAMICA = 13;
-    static final int TUTORIAL_COMIDA = 14;
-    static final int TUTORIAL_BOLA_FALSA = 15;
-    static final int TUTORIAL_BOTAO_INVERTIDO = 16;
-    static final int TUTORIAL_DUAS_BARRAS = 17;
-    static final int TUTORIAL_DUAS_BOLAS = 18;
-    static final int TUTORIAL_GRADE = 19;
+    static final int TUTORIAL_INSTRUCOES_INICIAIS = 0;
+    static final int TUTORIAL_INICIO = 1;
+    static final int TUTORIAL_MOVIMENTO_BARRA = 2;
+    static final int TUTORIAL_INCLINACAO_BARRA = 3;
+    static final int TUTORIAL_OBSTACULO = 4;
+    static final int TUTORIAL_CORES = 5;
+    static final int TUTORIAL_EXPLOSAO = 6;
+    static final int TUTORIAL_ALVO_FANTASMA = 7;
+    static final int TUTORIAL_OBSTACULOS_DINAMICOS = 8;
+    static final int TUTORIAL_BOLAS_INVENCIVEIS = 9;
+    static final int TUTORIAL_BOLAS_PRESAS = 10;
+    static final int TUTORIAL_VENTO = 11;
+    static final int TUTORIAL_BARRA_DINAMICA = 12;
+    static final int TUTORIAL_COMIDA = 13;
+    static final int TUTORIAL_BOLA_FALSA = 14;
+    static final int TUTORIAL_BOTAO_INVERTIDO = 15;
+    static final int TUTORIAL_DUAS_BARRAS = 16;
+    static final int TUTORIAL_DUAS_BOLAS = 17;
+    static final int TUTORIAL_GRADE = 18;
     
 
 
     public static boolean isTutorialUnblocked(int tutorialNumber){
         int starsToUnlock = 9999;
         if (tutorialNumber == TUTORIAL_INSTRUCOES_INICIAIS){
+            
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+            
         } else if ((tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.tutorialsViwed[TUTORIAL_INSTRUCOES_INICIAIS])||
                 (tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.pointsLevels[0] > 0)){
+            
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+            
         } else if (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && SaveGame.saveGame.tutorialsViwed[TUTORIAL_INICIO] ||
-                (tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.pointsLevels[0] > 0)){
+                (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && SaveGame.saveGame.pointsLevels[0] > 0)){
+            
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+            
         } else if (tutorialNumber == TUTORIAL_INCLINACAO_BARRA && SaveGame.saveGame.tutorialsViwed[TUTORIAL_MOVIMENTO_BARRA]||
-                (tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.pointsLevels[0] > 0)){
+                (tutorialNumber == TUTORIAL_INCLINACAO_BARRA && SaveGame.saveGame.pointsLevels[0] > 0)){
+            
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+            
         } else if (tutorialNumber == TUTORIAL_OBSTACULO){
+            
             starsToUnlock = LevelsGroupData.levelsGroupData.get(1).starsToUnlock;
+            
         } else if (tutorialNumber == TUTORIAL_CORES){
+            
             starsToUnlock = LevelsGroupData.levelsGroupData.get(2).starsToUnlock;
+            
         } else if (tutorialNumber == TUTORIAL_EXPLOSAO){
+            
             starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_OBSTACULOS_DINAMICOS){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_VENTO){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_ALVO_FANTASMA){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_BOLAS_INVENCIVEIS){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_BOLAS_PRESAS){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_BARRA_DINAMICA){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_COMIDA){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_BOLA_FALSA){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_BOTAO_INVERTIDO){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_DUAS_BARRAS){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_DUAS_BOLAS){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
+        } else if (tutorialNumber == TUTORIAL_GRADE){
+            
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            
         }
 
         if (StarsHandler.conqueredStarsTotal >= starsToUnlock) {
