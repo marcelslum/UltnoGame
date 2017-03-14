@@ -274,13 +274,27 @@
     <string name="novo">Novo</string>
     <string name="objetivos">Objetivos</string>
     <string name="tutoriais">Tutoriais</string>
+    
     <string name="tutorial1Tittle">Instruções gerais</string>
-    <string name="tutorial2Tittle">Jogar</string>
+    <string name="tutorial2Tittle">Instruções iniciais</string>
     <string name="tutorial3Tittle">Movimento da barra</string>
     <string name="tutorial4Tittle">Inclinação da barra</string>
-    <string name="tutorial5Tittle">Obstáculo</string>
-    <string name="tutorial6Tittle">Cores</string>
+    <string name="tutorial5Tittle">Obstáculos</string>
+    <string name="tutorial6Tittle">Alvos coloridos</string>
     <string name="tutorial7Tittle">Explosão</string>
+    <string name="tutorial8Tittle">Alvos fantasmas</string>
+    <string name="tutorial9Tittle">Obstáculos dinâmicos</string>
+    <string name="tutorial10Tittle">Bolas invencíveis</string>
+    <string name="tutorial11Tittle">Bolas presas</string>
+    <string name="tutorial12Tittle">Vento</string>
+    <string name="tutorial13Tittle">Tamanho da barra</string>
+    <string name="tutorial14Tittle">Aumento da barra</string>
+    <string name="tutorial15Tittle">Bolas falsas</string>
+    <string name="tutorial16Tittle">Botões invertidos</string>
+    <string name="tutorial17Tittle">Duas barras</string>
+    <string name="tutorial18Tittle">Duas bolas</string>
+    <string name="tutorial19Tittle">Grade</string>
+    
     <string name="pontos">pontos</string>
     <string name="messageGroupsUnblocked">Grupos desbloqueados</string>
     <string name="vibracao">Vibração</string>
