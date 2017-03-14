@@ -19,6 +19,29 @@
     <string name="jogarONivel">Jogar o nível </string>
     <string name="proximaInstrucao">Próxima instrução</string>
     <string name="Jogar">Play</string>
+    
+    
+    
+    <string name="group1name">Início</string>
+    <string name="group2name">Obstáculo</string>
+    <string name="group3name">Cor</string>
+    <string name="group4name">Explosão</string>
+    <string name="group5name">Deslizamento</string>
+    <string name="group6name">Elástico</string>
+    <string name="group7name">Vento</string>
+    <string name="group8name">Fantasma</string>
+    <string name="group9name">Invencibilidade</string>
+    <string name="group10name">Prisão</string>
+    <string name="group11name">Encolhimento</string>
+    <string name="group12name">Comida</string>
+    <string name="group13name">Falsidade</string>
+    <string name="group14name">Espelho</string>
+    <string name="group15name">Muro</string>
+    <string name="group16name">Divisão</string>
+    <string name="group17name">Liberdade</string>
+    <string name="group18name">Grade</string>
+    <string name="group19name">Rapidez</string>
+    <string name="group20name">Loucura</string>
 
     <string name="t1t1">Bem vindo ao Ultno! Clique na flecha à direita para continuar a ver o tutorial.</string>
     <string name="t1t2">Este jogo é dividido em níveis, que são organizados em grupos.</string>
