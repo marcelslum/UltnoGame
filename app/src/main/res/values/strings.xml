@@ -213,6 +213,9 @@
     
     <string name="levelGoal34a">Não atinja bolas falsas com a barra por mais de</string>
     <string name="levelGoal34b">vezes</string>
+    <string name="levelGoal34m">Bolas falsas atinjidas vezes demais :/</string>
+    <string name="levelGoal34m2">Faltam</string>
+    <string name="levelGoal34m3">bolas falsas para perder objetivo</string>
 
     <string name="levelGoal3m">Bola acelerada:</string>
     <string name="levelGoal5m">Bola desacelerada:</string>
