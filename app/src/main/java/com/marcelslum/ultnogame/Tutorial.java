@@ -456,6 +456,32 @@ public class Tutorial {
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t12t3), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t12t4), textBoxY, textBoxSize);  
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t12t5), textBoxY, textBoxSize);  
+        } else if (currentTutorial == Tutorial.TUTORIAL_BARRA_DINAMICA){
+            Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
+                    Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS3,
+                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (768f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f);
+            currentTutorialObject = new Tutorial();
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t13t1), textBoxY, textBoxSize);
+        } else if (currentTutorial == Tutorial.TUTORIAL_COMIDA){
+            Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
+                    Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS3,
+                      (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (768f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f);
+            currentTutorialObject = new Tutorial();
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t1), textBoxY, textBoxSize, Game.resolutionX * 0.2f, Game.resolutionY * 0.9f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t2), textBoxY, textBoxSize, Game.resolutionX * 0.22f, Game.resolutionY * 0.85f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t3), textBoxY, textBoxSize, Game.resolutionX * 0.55f, Game.resolutionY * 0.9f);
+        } else if (currentTutorial == Tutorial.TUTORIAL_COMIDA){
+            Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
+                    Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS3,
+                      (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (768f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f);
+            currentTutorialObject = new Tutorial();
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t1), textBoxY, textBoxSize, Game.resolutionX * 0.2f, Game.resolutionY * 0.9f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t2), textBoxY, textBoxSize, Game.resolutionX * 0.22f, Game.resolutionY * 0.85f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t3), textBoxY, textBoxSize, Game.resolutionX * 0.55f, Game.resolutionY * 0.9f);
         }
+        
+        
+        
+        
     }
 }
