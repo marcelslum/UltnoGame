@@ -74,51 +74,51 @@ public class Tutorial {
             
         } else if (tutorialNumber == TUTORIAL_OBSTACULOS_DINAMICOS){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(4).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_VENTO){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(6).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_ALVO_FANTASMA){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(7).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_BOLAS_INVENCIVEIS){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(8).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_BOLAS_PRESAS){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(9).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_BARRA_DINAMICA){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(10).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_COMIDA){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(11).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_BOLA_FALSA){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(12).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_BOTAO_INVERTIDO){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(13).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_DUAS_BARRAS){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(14).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_DUAS_BOLAS){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(15).starsToUnlock;
             
         } else if (tutorialNumber == TUTORIAL_GRADE){
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(3).starsToUnlock;
+            starsToUnlock = LevelsGroupData.levelsGroupData.get(17).starsToUnlock;
             
         }
 
