@@ -210,6 +210,9 @@
 
     <string name="levelGoal20a">Acelere a bola utilizando o movimento da barra por</string>
     <string name="levelGoal20b">vezes seguidas</string>
+    
+    <string name="levelGoal34a">Não atinja bolas falsas com a barra por mais de</string>
+    <string name="levelGoal34b">vezes</string>
 
     <string name="levelGoal3m">Bola acelerada:</string>
     <string name="levelGoal5m">Bola desacelerada:</string>
