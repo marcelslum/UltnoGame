@@ -2745,6 +2745,53 @@ public class LevelLoader {
   
         }
         
+        // LEVEL 81
+        l += 1;
+        if (levelNumber == l) {
+            
+           ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{8, 9, 11, 12, 16, 17});
+            targetsAppend.add(new int[]{19, 20, 27, 28, 35, 36});
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                {3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 4},
+                                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                                {2, 3, 2, 3, 2, 3, 0, 0, 0, 0, 4},
+                                {0, 0, 1, 0, 0, 4, 0, 0, 0, 0, 0},
+                                {1, 1, 1, 2, 3, 2, 3, 2, 3, 2, 3},
+                                {1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1},
+                                {1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+                                {2, 3, 2, 0, 0, 0, 0, 0, 1, 1, 1},
+                                {1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+                                {3, 2, 3, 1, 0, 0, 0, 0, 1, 0, 1},
+                                {0, 0, 0, 2, 3, 2, 1, 1, 1, 0, 1},
+                                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                                {0, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.6816666667f)
+                    .setObstaclesY(0.0841088235f)
+                    .setObstaclesWidth(0.0895f)
+                    .setObstaclesHeight(0.0695029412f)
+                    .setObstaclesScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.011f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(1f)
+                                    .setMaxWidth_BI(100000f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f))
+                .setWindType(Level.WIND_TYPE_RIGHT)
+                   
+  
+        }
+        
         if (levelNumber == 1000) {
             levelBuilder
                     .setTargetsMap(
