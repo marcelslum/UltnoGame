@@ -414,7 +414,7 @@ public class Game {
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
             MessagesHandler.messageConqueredStarsTotal.setY(resolutionY * 0.15f);
-            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y - (MessagesHandler.starForMessage.height * 0.001f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.3f);
         } else if (state == GAME_STATE_MENU_TUTORIAL){
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuTutorial));
@@ -438,7 +438,7 @@ public class Game {
             MessagesHandler.messageConqueredStarsTotal.display();
 
             MessagesHandler.messageConqueredStarsTotal.setY(resolutionY*0.15f);
-            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y - (MessagesHandler.starForMessage.height * 0.001f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.3f);
 
         } else if (state == GAME_STATE_INTRO) {
             mainActivity.hideAdView();
@@ -947,7 +947,7 @@ public class Game {
             MessagesHandler.starForMessage.increaseAlpha(500, 1f);
             MessagesHandler.messageConqueredStarsTotal.increaseAlpha(500, 1f);
             MessagesHandler.messageConqueredStarsTotal.setY(resolutionY * 0.2f);
-            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y - (MessagesHandler.starForMessage.height * 0.001f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.3f);
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
 

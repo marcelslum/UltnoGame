@@ -109,6 +109,7 @@ public class LevelGoals {
         if (i == 1){
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
+            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, Game.background.height * 0.0001f).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 2){

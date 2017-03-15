@@ -91,17 +91,17 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
 
 */
 
-        SaveGame.saveGame.secretLevelsSeen[0] = false;
-        SaveGame.saveGame.secretLevelsSeen[1] = false;
-        SaveGame.saveGame.secretLevelsSeen[2] = false;
-        SaveGame.saveGame.secretLevelsSeen[3] = false;
-        SaveGame.saveGame.secretLevelsSeen[4] = false;
+        //SaveGame.saveGame.secretLevelsSeen[0] = false;
+        //SaveGame.saveGame.secretLevelsSeen[1] = false;
+        //SaveGame.saveGame.secretLevelsSeen[2] = false;
+        //SaveGame.saveGame.secretLevelsSeen[3] = false;
+        //SaveGame.saveGame.secretLevelsSeen[4] = false;
 
-        SaveGame.saveGame.secretLevelsUnlocked[0] = false;
-        SaveGame.saveGame.secretLevelsUnlocked[1] = false;
-        SaveGame.saveGame.secretLevelsUnlocked[2] = false;
-        SaveGame.saveGame.secretLevelsUnlocked[3] = false;
-        SaveGame.saveGame.secretLevelsUnlocked[4] = false;
+        //SaveGame.saveGame.secretLevelsUnlocked[0] = false;
+        //SaveGame.saveGame.secretLevelsUnlocked[1] = false;
+        //SaveGame.saveGame.secretLevelsUnlocked[2] = false;
+        //SaveGame.saveGame.secretLevelsUnlocked[3] = false;
+        //SaveGame.saveGame.secretLevelsUnlocked[4] = false;
 
 
         //SaveGame.saveGame.tutorialsViwed[0] = true;

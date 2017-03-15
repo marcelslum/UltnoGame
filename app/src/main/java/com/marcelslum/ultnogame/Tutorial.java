@@ -462,13 +462,13 @@ public class Tutorial {
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t1), textBoxY, textBoxSize);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t2), textBoxY, textBoxSize, Game.resolutionX * 0.15f, Game.resolutionY * 0.15f);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t3), textBoxY, textBoxSize, Game.resolutionX * 0.78f, Game.resolutionY * 0.35f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t2), textBoxY, textBoxSize, Game.resolutionX * 0.15f, Game.resolutionY * 0.16f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t3), textBoxY, textBoxSize, Game.resolutionX * 0.78f, Game.resolutionY * 0.38f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t4), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t5), textBoxY, textBoxSize);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t6), textBoxY, textBoxSize, Game.resolutionX * 0.17f, Game.resolutionY * 0.6f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t6), textBoxY, textBoxSize, Game.resolutionX * 0.17f, Game.resolutionY * 0.58f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t7), textBoxY, textBoxSize, Game.resolutionX * 0.8f, Game.resolutionY * 0.6f);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t8), textBoxY, textBoxSize, Game.resolutionX * 0.85f, Game.resolutionY * 0.6f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t8), textBoxY, textBoxSize, Game.resolutionX * 0.86f, Game.resolutionY * 0.6f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t9), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t10), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t11), textBoxY, textBoxSize);
@@ -491,7 +491,7 @@ public class Tutorial {
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t9t1), textBoxY, textBoxSize, Game.resolutionX * 0.17f, Game.resolutionY * 0.4f);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t9t2), textBoxY, textBoxSize, Game.resolutionX * 0.5f, Game.resolutionY * 0.8f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t9t2), textBoxY, textBoxSize, Game.resolutionX * 0.55f, Game.resolutionY * 0.6f);
             
         } else if (currentTutorial == Tutorial.TUTORIAL_BOLAS_INVENCIVEIS){
             
@@ -500,9 +500,9 @@ public class Tutorial {
                     (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t1), textBoxY, textBoxSize);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t2), textBoxY, textBoxSize, Game.resolutionX * 0.05f, Game.resolutionY * 0.8f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t2), textBoxY, textBoxSize, Game.resolutionX * 0.1f, Game.resolutionY * 0.52f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t3), textBoxY, textBoxSize);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t4), textBoxY, textBoxSize, Game.resolutionX * 0.45f, Game.resolutionY * 0.9f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t4), textBoxY, textBoxSize, Game.resolutionX * 0.44f, Game.resolutionY * 0.61f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t5), textBoxY, textBoxSize); 
             
         } else if (currentTutorial == Tutorial.TUTORIAL_BOLAS_PRESAS){
@@ -511,9 +511,9 @@ public class Tutorial {
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS3,
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (512f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t11t1), textBoxY, textBoxSize, Game.resolutionX * 0.05f, Game.resolutionY * 0.15f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t11t1), textBoxY, textBoxSize, Game.resolutionX * 0.12f, Game.resolutionY * 0.15f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t11t2), textBoxY, textBoxSize);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t11t3), textBoxY, textBoxSize, Game.resolutionX * 0.52f, Game.resolutionY * 0.15f);  
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t11t3), textBoxY, textBoxSize, Game.resolutionX * 0.59f, Game.resolutionY * 0.19f);
             
         } else if (currentTutorial == Tutorial.TUTORIAL_VENTO){
             
@@ -541,9 +541,9 @@ public class Tutorial {
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS3,
                       (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (768f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t1), textBoxY, textBoxSize, Game.resolutionX * 0.2f, Game.resolutionY * 0.9f);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t2), textBoxY, textBoxSize, Game.resolutionX * 0.22f, Game.resolutionY * 0.85f);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t3), textBoxY, textBoxSize, Game.resolutionX * 0.55f, Game.resolutionY * 0.9f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t1), textBoxY, textBoxSize, Game.resolutionX * 0.18f, Game.resolutionY * 0.69f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t2), textBoxY, textBoxSize, Game.resolutionX * 0.6f, Game.resolutionY * 0.69f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t3), textBoxY, textBoxSize);
             
         } else if (currentTutorial == Tutorial.TUTORIAL_BOLA_FALSA){
             
@@ -551,12 +551,12 @@ public class Tutorial {
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS4,
                      (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t1), textBoxY, textBoxSize, Game.resolutionX * 0.5f, Game.resolutionY * 0.4f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t1), textBoxY, textBoxSize, Game.resolutionX * 0.5f, Game.resolutionY * 0.31f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t2), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t3), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t4), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t5), textBoxY, textBoxSize);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t6), textBoxY, textBoxSize, Game.resolutionX * 0.4f, Game.resolutionY * 0.85f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t6), textBoxY, textBoxSize, Game.resolutionX * 0.46f, Game.resolutionY * 0.57f);
             
         } else if (currentTutorial == Tutorial.TUTORIAL_BOTAO_INVERTIDO){
             
@@ -564,7 +564,7 @@ public class Tutorial {
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS4,
                      (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t16t1), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t16t1), textBoxY, textBoxSize, Game.resolutionX * 0.06f, Game.resolutionY * 0.5f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t16t2), textBoxY, textBoxSize);
             
         } else if (currentTutorial == Tutorial.TUTORIAL_DUAS_BARRAS){
@@ -574,6 +574,8 @@ public class Tutorial {
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t17t1), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t17t2), textBoxY, textBoxSize, Game.resolutionX * 0.76f, Game.resolutionY * 0.64f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t17t3), textBoxY, textBoxSize, Game.resolutionX * 0.07f, Game.resolutionY * 0.64f);
             
         } else if (currentTutorial == Tutorial.TUTORIAL_DUAS_BOLAS){
             
@@ -581,7 +583,7 @@ public class Tutorial {
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS4,
                     (512f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (256f + 1.5f) / 1024f, (512f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t18t1), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t18t1), textBoxY, textBoxSize, Game.resolutionX * 0.45f, Game.resolutionY * 0.62f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t18t2), textBoxY, textBoxSize);
             
         } else if (currentTutorial == Tutorial.TUTORIAL_GRADE){
@@ -590,7 +592,7 @@ public class Tutorial {
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS4,
                     (0f + 1.5f) / 1024f, (512f - 1.5f) / 1024f, (512f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
             currentTutorialObject = new Tutorial();
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t19t1), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t19t1), textBoxY, textBoxSize, Game.resolutionX * 0.2f, Game.resolutionY * 0.41f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t19t2), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t19t3), textBoxY, textBoxSize);
             
