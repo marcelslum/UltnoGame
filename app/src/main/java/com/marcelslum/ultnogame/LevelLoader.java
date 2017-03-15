@@ -2688,10 +2688,11 @@ public class LevelLoader {
                                     {1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0}
                             })
                     .setObstaclesQuantity(2)
-                    .setObstaclesX(0.5506666667f, 0.275f, 0.6f)
-                    .setObstaclesY(0.0242647059f, 0.5045382353f, 0.65f)
-                    .setObstaclesWidth(0.1f, 0.1266666667f, 0.1266666667f)
-                    .setObstaclesHeight(0.04f, 0.0610294118f, 0.0610294118f);
+                    .setObstaclesX(0.2765066667f, 0.7275566667f)
+                    .setObstaclesY(0.0832029412f, 0.3970882353f)
+                    .setObstaclesWidth(0.08705f, 0.08705f)
+                    .setObstaclesHeight(0.0605f, 0.0605f);
+  
         }
         
         if (levelNumber == 1000) {
