@@ -2695,6 +2695,56 @@ public class LevelLoader {
   
         }
         
+        // LEVEL 80
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 4},
+                                    {1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1},
+                                    {1, 1, 1, 0, 3, 4, 3, 0, 1, 1, 1},
+                                    {2, 2, 2, 3, 0, 3, 0, 3, 2, 2, 2},
+                                    {2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2},
+                                    {1, 1, 1, 5, 5, 3, 5, 5, 1, 1, 1},
+                                    {0, 1, 1, 5, 5, 7, 5, 5, 0, 1, 1},
+                                    {1, 0, 1, 5, 6, 6, 6, 5, 1, 0, 1},
+                                    {0, 0, 0, 5, 1, 5, 1, 5, 0, 0, 1},
+                                    {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1}
+                            })
+                    .setObstaclesQuantity(3)
+                    .setObstaclesX(0.15f, 0.45f, 0.75f)
+                    .setObstaclesY(0.5470588235f, 0.5470588235f, 0.5470588235f)
+                    .setObstaclesWidth(0.1f, 0.1f, 0.1f)
+                    .setObstaclesHeight(0.83f, 0.83f, 0.83f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0018f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(-0.0018f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0017f));
+  
+        }
+        
         if (levelNumber == 1000) {
             levelBuilder
                     .setTargetsMap(
