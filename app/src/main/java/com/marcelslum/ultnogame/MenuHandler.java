@@ -211,7 +211,7 @@ public class MenuHandler {
 
         //TUTORIAL1
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INSTRUCOES_INICIAIS)){
-            tutorialMenu.addOption(0, Texture.TEXTURE_TUTORIAL_ICONS, 1, new Animation.AnimationListener() {
+            tutorialMenu.addOption(1, Texture.TEXTURE_TUTORIAL_ICONS, 1, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_INSTRUCOES_INICIAIS;
@@ -229,7 +229,7 @@ public class MenuHandler {
 
         //TUTORIAL2
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INICIO)) {
-            tutorialMenu.addOption(1, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
+            tutorialMenu.addOption(2, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_INICIO;
@@ -248,7 +248,7 @@ public class MenuHandler {
 
         //TUTORIAL3
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_MOVIMENTO_BARRA)) {
-            tutorialMenu.addOption(2, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
+            tutorialMenu.addOption(3, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_MOVIMENTO_BARRA;
@@ -266,7 +266,7 @@ public class MenuHandler {
 
         //TUTORIAL4
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INCLINACAO_BARRA)) {
-            tutorialMenu.addOption(3, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
+            tutorialMenu.addOption(4, Texture.TEXTURE_TUTORIAL_ICONS, 2, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_INCLINACAO_BARRA;
@@ -284,7 +284,7 @@ public class MenuHandler {
 
         //TUTORIAL5
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_OBSTACULO)){
-            tutorialMenu.addOption(4, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
+            tutorialMenu.addOption(5, Texture.TEXTURE_TUTORIAL_ICONS, 3, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_OBSTACULO;
@@ -302,7 +302,7 @@ public class MenuHandler {
 
         //TUTORIAL6
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_CORES)){
-            tutorialMenu.addOption(5, Texture.TEXTURE_TUTORIAL_ICONS, 4, new Animation.AnimationListener() {
+            tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 4, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_CORES;
@@ -321,7 +321,7 @@ public class MenuHandler {
 
         //TUTORIAL7
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_EXPLOSAO)){
-            tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+            tutorialMenu.addOption(7, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_EXPLOSAO;
@@ -339,7 +339,7 @@ public class MenuHandler {
 
         //TUTORIAL8
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_ALVO_FANTASMA)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(8, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_ALVO_FANTASMA;
@@ -353,12 +353,12 @@ public class MenuHandler {
                 if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_ALVO_FANTASMA]){
                     tutorialMenu.addInnerText("t8i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
-            }
         }
+
 
         //TUTORIAL9
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(9, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS;
@@ -372,12 +372,12 @@ public class MenuHandler {
                 if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS]){
                     tutorialMenu.addInnerText("t9i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
-            }
         }
+
 
         //TUTORIAL10
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLAS_INVENCIVEIS)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(10, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLAS_INVENCIVEIS;
@@ -392,11 +392,11 @@ public class MenuHandler {
                     tutorialMenu.addInnerText("t10i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
-        }
+
 
         //TUTORIAL11
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLAS_PRESAS)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(11, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLAS_PRESAS;
@@ -411,14 +411,14 @@ public class MenuHandler {
                     tutorialMenu.addInnerText("t11i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
-        }
+
 
         //TUTORIAL12
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_VENTO)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(12, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_TUTORIAL_VENTOEXPLOSAO;
+                        Tutorial.currentTutorial = Tutorial.TUTORIAL_VENTO;
                         Game.setGameState(Game.GAME_STATE_TUTORIAL);
                     }
                 }, false, false);
@@ -430,11 +430,11 @@ public class MenuHandler {
                     tutorialMenu.addInnerText("t12i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
-        }
+
 
         //TUTORIAL13
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BARRA_DINAMICA)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(13, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BARRA_DINAMICA;
@@ -449,11 +449,11 @@ public class MenuHandler {
                     tutorialMenu.addInnerText("t13i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
-        }
+
 
         //TUTORIAL14
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_COMIDA)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(14, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_COMIDA;
@@ -468,11 +468,11 @@ public class MenuHandler {
                     tutorialMenu.addInnerText("t14i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
-        }
+
 
         //TUTORIAL15
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLA_FALSA)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(15, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLA_FALSA;
@@ -486,11 +486,11 @@ public class MenuHandler {
                 if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_BOLA_FALSA]){
                     tutorialMenu.addInnerText("t15i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
-            }
         }
+
         //TUTORIAL16
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOTAO_INVERTIDO)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(16, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BOTAO_INVERTIDO;
@@ -504,11 +504,11 @@ public class MenuHandler {
                 if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_BOTAO_INVERTIDO]){
                     tutorialMenu.addInnerText("t16i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
-            }
         }
+
         //TUTORIAL17
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_DUAS_BARRAS)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(17, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_DUAS_BARRAS;
@@ -522,11 +522,11 @@ public class MenuHandler {
                 if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_DUAS_BARRAS]){
                     tutorialMenu.addInnerText("t17i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
-            }
         }
+
         //TUTORIAL18
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_DUAS_BOLAS)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(18, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_DUAS_BOLAS;
@@ -540,12 +540,11 @@ public class MenuHandler {
                 if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_DUAS_BOLAS]){
                     tutorialMenu.addInnerText("t18i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
-            }
         }
+
         //TUTORIAL19
-        
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_GRADE)){
-                tutorialMenu.addOption(6, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(19, Texture.TEXTURE_TUTORIAL_ICONS, 5, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_GRADE;
@@ -560,8 +559,8 @@ public class MenuHandler {
                     tutorialMenu.addInnerText("t19i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
-        }
-}
+    }
+
 
     public static void initMenus(){
 
@@ -588,49 +587,49 @@ public class MenuHandler {
         menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.56f, fontSize, font);
 
         // SELETOR MUSICA
-        SelectorHandle.selectorMusic = new Selector("Game.selectorMusic", 0f,0f, fontSize, "",
+        SelectorHandler.selectorMusic = new Selector("Game.selectorMusic", 0f,0f, fontSize, "",
                 new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, font);
 
         menuOptions.addMenuOption("music", Game.getContext().getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandle.selectorMusic.fromMenu(menuOptions);
+                SelectorHandler.selectorMusic.fromMenu(menuOptions);
             }
         });
 
         if (SaveGame.saveGame.music) {
-            SelectorHandle.selectorMusic.setSelectedValue(1);
+            SelectorHandler.selectorMusic.setSelectedValue(1);
         } else {
-            SelectorHandle.selectorMusic.setSelectedValue(0);
+            SelectorHandler.selectorMusic.setSelectedValue(0);
         }
 
-        SelectorHandle.selectorMusic.setOnChange(new Selector.OnChange() {
+        SelectorHandler.selectorMusic.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
-                if (SelectorHandle.selectorMusic.selectedValue == 1){SaveGame.saveGame.music = true;} else {SaveGame.saveGame.music = false;}
+                if (SelectorHandler.selectorMusic.selectedValue == 1){SaveGame.saveGame.music = true;} else {SaveGame.saveGame.music = false;}
             }
         });
 
         // SELETOR SOM
-        SelectorHandle.selectorSound = new Selector("Game.selectorSound", 0f,0f, fontSize, "",
+        SelectorHandler.selectorSound = new Selector("Game.selectorSound", 0f,0f, fontSize, "",
                 new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, font);
 
         menuOptions.addMenuOption("sound", Game.getContext().getResources().getString(R.string.sons), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandle.selectorSound.fromMenu(menuOptions);
+                SelectorHandler.selectorSound.fromMenu(menuOptions);
             }
         });
 
         if (SaveGame.saveGame.sound) {
-            SelectorHandle.selectorSound.setSelectedValue(1);
+            SelectorHandler.selectorSound.setSelectedValue(1);
         } else {
-            SelectorHandle.selectorSound.setSelectedValue(0);
+            SelectorHandler.selectorSound.setSelectedValue(0);
         }
-        SelectorHandle.selectorSound.setOnChange(new Selector.OnChange() {
+        SelectorHandler.selectorSound.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
-                if (SelectorHandle.selectorSound.selectedValue == 1){
+                if (SelectorHandler.selectorSound.selectedValue == 1){
                     SaveGame.saveGame.sound = true;
                 } else {
                     SaveGame.saveGame.sound = false;
@@ -639,7 +638,7 @@ public class MenuHandler {
         });
 
         // SELETOR VIBRAÇÃO
-        SelectorHandle.selectorVibration = new Selector("Game.selectorVibration", 0f,0f, fontSize, "",
+        SelectorHandler.selectorVibration = new Selector("Game.selectorVibration", 0f,0f, fontSize, "",
                 new String[]{Game.getContext().getResources().getString(R.string.desligado),
                         Game.getContext().getResources().getString(R.string.ligado)},
                 font);
@@ -647,20 +646,20 @@ public class MenuHandler {
         menuOptions.addMenuOption("vibration", Game.getContext().getResources().getString(R.string.vibracao), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandle.selectorVibration.fromMenu(menuOptions);
+                SelectorHandler.selectorVibration.fromMenu(menuOptions);
             }
         });
 
         if (SaveGame.saveGame.vibration) {
-            SelectorHandle.selectorVibration.setSelectedValue(1);
+            SelectorHandler.selectorVibration.setSelectedValue(1);
         } else {
-            SelectorHandle.selectorVibration.setSelectedValue(0);
+            SelectorHandler.selectorVibration.setSelectedValue(0);
         }
 
-        SelectorHandle.selectorVibration.setOnChange(new Selector.OnChange() {
+        SelectorHandler.selectorVibration.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
-                if (SelectorHandle.selectorVibration.selectedValue == 1){
+                if (SelectorHandler.selectorVibration.selectedValue == 1){
                     SaveGame.saveGame.vibration = true;
                 } else {
                     SaveGame.saveGame.vibration = false;
@@ -833,14 +832,21 @@ public class MenuHandler {
         menuInGameOptions.addMenuOption("music", Game.getContext().getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandle.selectorMusic.fromMenu(menuInGameOptions);
+                SelectorHandler.selectorMusic.fromMenu(menuInGameOptions);
             }
         });
 
         menuInGameOptions.addMenuOption("sound", Game.getContext().getResources().getString(R.string.sons), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandle.selectorSound.fromMenu(menuInGameOptions);
+                SelectorHandler.selectorSound.fromMenu(menuInGameOptions);
+            }
+        });
+
+        menuInGameOptions.addMenuOption("vibration", Game.getContext().getResources().getString(R.string.vibracao), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                SelectorHandler.selectorVibration.fromMenu(menuInGameOptions);
             }
         });
 

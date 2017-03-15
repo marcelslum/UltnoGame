@@ -22,7 +22,9 @@ public class Text extends Entity{
     private int indexColors;
     public float[] charData;
     public int align;
-    
+    public Text shadowText;
+    private Color shadowColor;
+
     public Text(String name, float x, float y, float size, String text, Font font, Color color, int align) {
         super(name, x, y, Entity.TYPE_TEXT);
         this.text = text;
@@ -68,7 +70,29 @@ public class Text extends Entity{
 
     public void setText(String text){
         this.text = text;
+        if (shadowText != null) {
+            addShadow(shadowColor);
+        }
         this.setDrawInfo();
+    }
+
+    public void translate(float translateX, float translateY) {
+        this.translateX = translateX;
+        this.translateY = translateY;
+    }
+
+    public void addShadow(Color shadowColor){
+        this.shadowColor = shadowColor;
+        shadowText = new Text(name+"shadow", x + (size*0.09f), y + (size*0.09f), size, text, font, shadowColor, align);
+        addChild(shadowText);
+    }
+
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection) {
+        if (shadowText != null){
+            shadowText.prepareRender(matrixView, matrixProjection);
+        }
+        super.prepareRender(matrixView, matrixProjection);
     }
 
     public void setDrawInfo(){
@@ -196,6 +220,8 @@ public class Text extends Entity{
         }
     }
 
+
+
     public float calculateWidth(){
         float cursor = 0;
 
@@ -261,6 +287,11 @@ public class Text extends Entity{
     public void setX(float x) {
         this.x = x;
         setDrawInfo();
+
+        if (shadowText != null){
+            shadowText.setX(x + (size*0.05f));
+        }
+
     }
 
     public void setColor(Color color) {
@@ -370,5 +401,35 @@ public class Text extends Entity{
         }
 
         return returnText;
+    }
+
+    @Override
+    public void display(){
+        isVisible = true;
+        if (shadowText != null) {
+            shadowText.display();
+        }
+    }
+
+    @Override
+    public void clearDisplay(){
+        isVisible = false;
+        if (shadowText != null) {
+            shadowText.clearDisplay();
+        }
+    }
+
+    public void setAlpha(float v) {
+        alpha = v;
+        if (shadowText != null){
+            shadowText.alpha = v;
+        }
+    }
+
+    public void setY(float v) {
+        y = v;
+        if (shadowText != null){
+            shadowText.y = v + (size*0.05f);
+        }
     }
 }

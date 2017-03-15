@@ -340,7 +340,7 @@ public class Game {
             sameState = true;
         }
 
-        SelectorHandle.repositionSelectors(state);
+        SelectorHandler.repositionSelectors(state);
         gameState = state;
         Game.blockAndWaitTouchRelease();
         clearAllMenuEntities();
@@ -413,8 +413,8 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
-            MessagesHandler.messageConqueredStarsTotal.y = resolutionY * 0.15f;
-            MessagesHandler.starForMessage.y = resolutionY * 0.15f;
+            MessagesHandler.messageConqueredStarsTotal.setY(resolutionY * 0.15f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y - (MessagesHandler.starForMessage.height * 0.001f);
         } else if (state == GAME_STATE_MENU_TUTORIAL){
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuTutorial));
@@ -437,8 +437,8 @@ public class Game {
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
 
-            MessagesHandler.messageConqueredStarsTotal.y =  resolutionY*0.15f;
-            MessagesHandler.starForMessage.y = resolutionY*0.15f;
+            MessagesHandler.messageConqueredStarsTotal.setY(resolutionY*0.15f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y - (MessagesHandler.starForMessage.height * 0.001f);
 
         } else if (state == GAME_STATE_INTRO) {
             mainActivity.hideAdView();
@@ -461,7 +461,7 @@ public class Game {
                     activateFrame(500);
                 }
             }
-            SelectorHandle.repositionSelectors(state);
+            SelectorHandler.repositionSelectors(state);
             initTittle();
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
@@ -492,11 +492,11 @@ public class Game {
             Acelerometer.secretLevel3Steps = 0;
 
             MessagesHandler.messageTime.clearAnimations();
-            MessagesHandler.messageTime.alpha = 0.7f;
             MessagesHandler.messageTime.display();
                 
             MessagesHandler.messageCurrentLevel.display();
 
+            MessagesHandler.setMessageTime();
 
             Level.levelGoalsObject.clearAchievements();
 
@@ -692,7 +692,7 @@ public class Game {
                 public void onAnimationEnd() {
                     String previousText = MessagesHandler.messageTime.text;
                     MessagesHandler.messageTime = new Text("messageTime",
-                            Game.resolutionX*0.01f, Game.resolutionY*0.95f, Game.resolutionY*0.04f,getContext().getResources().getString(R.string.tempo_gasto) + " " + previousText, Game.font, new Color(0.1f, 0.1f, 0.1f, 1f));
+                            Game.resolutionX*0.01f, Game.resolutionY*0.93f, Game.resolutionY*0.04f,getContext().getResources().getString(R.string.tempo_gasto) + " " + previousText, Game.font, new Color(0.1f, 0.1f, 0.1f, 1f));
                     Utils.createSimpleAnimation(MessagesHandler.messageTime, "translateX", "translateX", 800, -resolutionX, 0f).start();
                 }
             });
@@ -946,8 +946,8 @@ public class Game {
             MessagesHandler.messageConqueredStarsTotal.alpha = 0f;
             MessagesHandler.starForMessage.increaseAlpha(500, 1f);
             MessagesHandler.messageConqueredStarsTotal.increaseAlpha(500, 1f);
-            MessagesHandler.messageConqueredStarsTotal.y = resolutionY * 0.2f;
-            MessagesHandler.starForMessage.y = resolutionY * 0.2f;
+            MessagesHandler.messageConqueredStarsTotal.setY(resolutionY * 0.2f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y - (MessagesHandler.starForMessage.height * 0.001f);
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
 
@@ -1621,9 +1621,9 @@ public class Game {
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.checkTransformations(true);
         if (levelGoalsPanel != null) levelGoalsPanel.checkTransformations(true);
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.checkTransformations(true);
-        if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.checkTransformations(true);
-        if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.checkTransformations(true);
-        if (SelectorHandle.selectorVibration != null) SelectorHandle.selectorVibration.checkTransformations(true);
+        if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.checkTransformations(true);
+        if (SelectorHandler.selectorSound != null) SelectorHandler.selectorSound.checkTransformations(true);
+        if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.checkTransformations(true);
 
         if (tittle != null) tittle.checkTransformations(true);
 
@@ -1747,9 +1747,9 @@ public class Game {
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.prepareRender(matrixView, matrixProjection);
         if (levelGoalsPanel != null) levelGoalsPanel.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.prepareRender(matrixView, matrixProjection);
-        if (SelectorHandle.selectorVibration != null) SelectorHandle.selectorVibration.prepareRender(matrixView, matrixProjection);
-        if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.prepareRender(matrixView, matrixProjection);
-        if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.prepareRender(matrixView, matrixProjection);
+        if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.prepareRender(matrixView, matrixProjection);
+        if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.prepareRender(matrixView, matrixProjection);
+        if (SelectorHandler.selectorSound != null) SelectorHandler.selectorSound.prepareRender(matrixView, matrixProjection);
         if (tittle != null) {tittle.prepareRender(matrixView, matrixProjection);}
 
         if (Tutorial.tutorialImage != null) Tutorial.tutorialImage.prepareRender(matrixView, matrixProjection);
@@ -1833,9 +1833,9 @@ public class Game {
             ButtonHandler.buttonReturnObjectivesPause.verifyListener();
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.verifyListener();
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
-        if (SelectorHandle.selectorVibration != null) SelectorHandle.selectorVibration.verifyListener();
-        if (SelectorHandle.selectorMusic != null) SelectorHandle.selectorMusic.verifyListener();
-        if (SelectorHandle.selectorSound != null) SelectorHandle.selectorSound.verifyListener();
+        if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.verifyListener();
+        if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.verifyListener();
+        if (SelectorHandler.selectorSound != null) SelectorHandler.selectorSound.verifyListener();
 
         if (ButtonHandler.button1Left != null) ButtonHandler.button1Left.verifyListener();
         if (ButtonHandler.button1Right != null) ButtonHandler.button1Right.verifyListener();
@@ -1866,9 +1866,9 @@ public class Game {
         list.add(ButtonHandler.buttonReturnObjectivesPause);
         list.add(ButtonHandler.buttonContinue);
         list.add(MenuHandler.menuInGameOptions);
-        list.add(SelectorHandle.selectorVibration);
-        list.add(SelectorHandle.selectorMusic);
-        list.add(SelectorHandle.selectorSound);
+        list.add(SelectorHandler.selectorVibration);
+        list.add(SelectorHandler.selectorMusic);
+        list.add(SelectorHandler.selectorSound);
         list.add(MenuHandler.menuInGame);
         list.add(MenuHandler.menuGameOver);
         list.add(tittle);

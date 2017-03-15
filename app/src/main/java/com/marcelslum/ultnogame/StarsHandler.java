@@ -27,6 +27,10 @@ public class StarsHandler {
         if (MessagesHandler.messageConqueredStarsTotal != null) {
             MessagesHandler.messageConqueredStarsTotal.setText(Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                     "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal));
+
+
+
+
         }
         return numberOfStars;
     }

@@ -66,17 +66,22 @@ public class LevelGoals {
     }
     
     public void notifyFakeBallHited(){
-        timesOfFakeBallsHited += 1;
+        timesOfFakeBallsHitted += 1;
+
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyFakeBallHited vezes "+timesOfFakeBallsHitted);
         
         for (int i = 0; i < levelGoals.size(); i++) {
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.HIT_FAKE_BALL_WITH_BAR_UNTIL) {
-                if (timesOfFakeBallsHited == lg.value){//??
+                if (timesOfFakeBallsHitted == lg.value){
                     Game.messages.showMessage(lg.messageText);
                 } else {
                     if (lg.value - timesOfFakeBallsHitted == 5){
                         Game.messages.showMessage(Game.getContext().getResources().getString(R.string.levelGoal34m2) +
                                                  " 5 " + Game.getContext().getResources().getString(R.string.levelGoal34m3));
+                    } else if (lg.value - timesOfFakeBallsHitted == 10){
+                        Game.messages.showMessage(Game.getContext().getResources().getString(R.string.levelGoal34m2) +
+                                " 10 " + Game.getContext().getResources().getString(R.string.levelGoal34m3));
                     }
                 }
             }
@@ -104,25 +109,21 @@ public class LevelGoals {
         if (i == 1){
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 2){
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 3){
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 4){ // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, -0).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         }
@@ -284,7 +285,7 @@ public class LevelGoals {
             }
             
             if (lg.type == LevelGoal.HIT_FAKE_BALL_WITH_BAR_UNTIL) {
-                if (timesOfFakeBallsHited < lg.value){
+                if (timesOfFakeBallsHitted < lg.value){
                     lg.setAchieved();
                 }
             }

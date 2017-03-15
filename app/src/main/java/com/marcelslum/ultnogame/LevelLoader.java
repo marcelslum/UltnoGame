@@ -49,6 +49,7 @@ public class LevelLoader {
                     .setObstaclesPositionVariationOff()
                     .setWindType(Level.WIND_TYPE_NO)
                     .setSpecialBallPercentage(0f)
+                    .setFakeBallPercentage(0f)
                     .setObstaclesQuantity(0)
                     .setWindowsQuantity(0)
                     .setTutorialAttached(Tutorial.TUTORIAL_INICIO)
@@ -105,7 +106,6 @@ public class LevelLoader {
         int l = 1;
         if (levelNumber == l) {
             levelBuilder
-                    .setFakeBallPercentage(0.8f)
                     .setTargetsMap(
                     new int[][]{
                         {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}

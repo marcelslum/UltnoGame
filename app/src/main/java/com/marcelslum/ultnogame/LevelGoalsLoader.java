@@ -353,7 +353,7 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL 48
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
-            lg.add(new LevelGoal(2, LevelGoal.HIT_FAKE_BALL_WITH_BAR_UNTIL, 20));
+            lg.add(new LevelGoal(2, LevelGoal.HIT_FAKE_BALL_WITH_BAR_UNTIL, 18));
             lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 200));
         }
 

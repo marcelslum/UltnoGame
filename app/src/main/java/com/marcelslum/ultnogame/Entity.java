@@ -169,13 +169,11 @@ public class Entity{
             }
         }
     }    
-    
-    
-    
-    public void applyAnimation(String parameter, float value) {
-        if (this.childs != null) {
-            for (int i = 0; i < this.childs.size(); i++) {
-                this.childs.get(i).applyAnimation(parameter, value);
+
+    public void applyAnimation(String parameter, float value, boolean applyOnChilds) {
+        if (childs != null) {
+            for (int i = 0; i < childs.size(); i++) {
+                childs.get(i).applyAnimation(parameter, value, applyOnChilds);
             }
         }
         switch (parameter) {
@@ -265,7 +263,6 @@ public class Entity{
     }
 
     void increaseAlpha(int duration, float finalValue){
-
         Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue).start();
     }
 
@@ -381,6 +378,8 @@ public class Entity{
         if (accumulatedRotate != 0 || animRotateAngle != 0) {
             float width = getWidth();
             float height = getHeight();
+
+
             Matrix.translateM(matrixModel, 0, width/2f, height/2f, 0);
             Matrix.setRotateM(mRotationMatrix, 0, accumulatedRotate + animRotateAngle, 0f, 0f, 1f);
             matrixTemp = matrixModel.clone();
@@ -540,7 +539,10 @@ public class Entity{
     }
 
     public void display(){
-        this.isVisible = true;
+        isVisible = true;
+        //for (int i = 0; i < childs.size(); i++){
+        //    childs.get(i).display();
+        //}
     }
 
     public void verifyListener(){
@@ -595,6 +597,9 @@ public class Entity{
 
     public void clearDisplay(){
         isVisible = false;
+        //for (int i = 0; i < this.childs.size(); i++){
+        //    this.childs.get(i).clearDisplay();
+        //}
     }
 
     public void addAnimation(Animation animation){

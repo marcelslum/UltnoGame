@@ -167,7 +167,6 @@ public class Selector extends Entity{
     public void levelUp(){
         if (this.selectedValue < (this.values.length-1)){
             Sound.play(Sound.soundMenuSelectSmall, 1, 1, 0);
-            //this.audioSmall.play();
             this.selectedValue +=1;
             this.verifyOnChangeComplete();
         }
@@ -218,8 +217,8 @@ public class Selector extends Entity{
 
         menuRelated = menu;
         menu.isBlocked = true;
-        this.alpha = 0f;
-        this.isVisible = true;
+        alpha = 0f;
+        isVisible = true;
 
         ArrayList<float[]> valuesAnimation = new ArrayList<>();
         valuesAnimation.add(new float[]{0f,1f});

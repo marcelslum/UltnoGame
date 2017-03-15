@@ -30,22 +30,28 @@ public class Animation{
     private OnChange onChange;
     private boolean[] isFluidChanged;
     private ArrayList<Entity> attachedEntities;
+    boolean applyOnChild = true;
 
     public Animation(Entity target, String name, String parameter, int duration, ArrayList<float[]> values, boolean isInfinite, boolean isFluid){
         this.name = name;
-        this.targetObject = target;
-        this.parameterToAnimate = parameter;
+        targetObject = target;
+        parameterToAnimate = parameter;
         this.duration = duration;
         this.values = values;
         this.isInfinite = isInfinite;
         this.isFluid = isFluid;
-        this.startTime = 0;
-        this.positionNotFluid = -1;
-        this.started = false;
-        this.elapsedTime = 0;
-        this.percentage = 0;
-        this.offSet = 0;
-        this.targetObject.addAnimation(this);
+        startTime = 0;
+        positionNotFluid = -1;
+        started = false;
+        elapsedTime = 0;
+        percentage = 0;
+        offSet = 0;
+        applyOnChild = true;
+        targetObject.addAnimation(this);
+    }
+
+    public void excludeChild(){
+        applyOnChild = false;
     }
 
     public void start(){
@@ -80,11 +86,11 @@ public class Animation{
 
     void stopAndConclude(){
         stop();
-        targetObject.applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1]);
+        targetObject.applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1], applyOnChild);
 
         if (attachedEntities != null){
             for (int i = 0; i < attachedEntities.size(); i++){
-                attachedEntities.get(i).applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1]);
+                attachedEntities.get(i).applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1], applyOnChild);
             }
         }
         fireAnimationEnd();
@@ -135,11 +141,11 @@ public class Animation{
                     }
 
                     //Log.e("Animation", "aplicando animação na entidade "+this.targetObject.name+ " para o valor "+ (value + addValue));
-                    this.targetObject.applyAnimation(parameterToAnimate, value + addValue);
+                    this.targetObject.applyAnimation(parameterToAnimate, value + addValue, applyOnChild);
 
                     if (attachedEntities != null){
                         for (int i = 0; i < attachedEntities.size(); i++){
-                            attachedEntities.get(i).applyAnimation(parameterToAnimate, value + addValue);
+                            attachedEntities.get(i).applyAnimation(parameterToAnimate, value + addValue, applyOnChild);
                         }
                     }
                 }
@@ -155,11 +161,11 @@ public class Animation{
                             if (v > this.positionNotFluid) {
                                 this.positionNotFluid = v;
                             }
-                            this.targetObject.applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet);
+                            this.targetObject.applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet, applyOnChild);
 
                             if (attachedEntities != null) {
                                 for (int i = 0; i < attachedEntities.size(); i++) {
-                                    attachedEntities.get(i).applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet);
+                                    attachedEntities.get(i).applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet, applyOnChild);
                                 }
                             }
                             if (this.onChange != null) {
@@ -172,7 +178,7 @@ public class Animation{
             }
         } else {
             if (!this.isInfinite){
-                this.targetObject.applyAnimation(parameterToAnimate, this.values.get(this.values.size()-1)[1] + this.offSet);
+                this.targetObject.applyAnimation(parameterToAnimate, this.values.get(this.values.size()-1)[1] + this.offSet, applyOnChild);
                 this.started = false;
                 this.fireAnimationEnd();
             } else {

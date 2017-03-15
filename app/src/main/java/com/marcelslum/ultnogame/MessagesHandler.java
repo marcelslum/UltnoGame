@@ -79,9 +79,19 @@ public class MessagesHandler {
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
                 Game.resolutionX*0.9f, Game.resolutionY*0.25f, Game.resolutionY*0.05f,
-                Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(0f, 0f, 0f, 0.5f));
+                Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(1f, 1f, 0f, 1f));
 
-        starForMessage = new Image("frame", Game.resolutionX*0.85f, Game.resolutionY*0.25f, Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURE_BUTTONS_BALLS_STARS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
+        messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));
+
+        Animation animMessageConqueredStarsTotal = Utils.createAnimation3v(messageConqueredStarsTotal, "alpha", "alpha", 6500, 0f, 1f, 0.85f, 0.4f, 1f, 1f, true, true);
+        animMessageConqueredStarsTotal.excludeChild();
+        animMessageConqueredStarsTotal.start();
+
+        starForMessage = new Image("frame", Game.resolutionX*0.85f, MessagesHandler.messageConqueredStarsTotal.y - (Game.resolutionY*0.05f*0.02f),
+                Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURE_BUTTONS_BALLS_STARS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
+
+        Utils.createAnimation2v(starForMessage, "rotate", "rotate", 10000, 0f, 0f, 1f, 360f, true, true).start();
+        Utils.createAnimation2v(starForMessage, "translateX", "translateX", 10000, 0f, 0f, 1f, -Game.resolutionX*0.001f, true, true).start();
 
         bottomTextBox = new TextBoxBuilder("bottomTextBox")
                 .position(Game.resolutionX*0.05f, Game.resolutionY*0.9f)
@@ -94,16 +104,17 @@ public class MessagesHandler {
                 .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
                 .build();
 
-
-        MessagesHandler.messageTime = new Text("messageTime",
-                Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.81f, Game.resolutionY*0.051f,"00:00", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
-        MessagesHandler.messageTime.alpha = 0.7f;
+        setMessageTime();
 
         MessagesHandler.messageCurrentLevel = new Text("messageCurrentLevel",
                 Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.885f, Game.resolutionY*0.051f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
-        MessagesHandler.messageCurrentLevel.alpha = 0.7f;
+        MessagesHandler.messageCurrentLevel.setAlpha(0.7f);
+    }
 
-
+    public static void setMessageTime(){
+        MessagesHandler.messageTime = new Text("messageTime",
+                Game.resolutionX*0.99f, Game.gameAreaResolutionY*0.81f, Game.resolutionY*0.051f,"00:00", Game.font, new Color(0.7f, 0.7f, 0.7f, 1f), Text.TEXT_ALIGN_RIGHT);
+        MessagesHandler.messageTime.addShadow(new Color(0.4f, 0.4f, 0.4f, 1f));
     }
 
     public static void setBottomMessage(String text, int duration){

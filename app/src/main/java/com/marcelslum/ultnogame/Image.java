@@ -19,7 +19,7 @@ public class Image extends Entity{
         setDrawInfo();
     }
     
-        Image(String name, float x, float y, float width, float height, int textureUnit, float[] uvData){
+    Image(String name, float x, float y, float width, float height, int textureUnit, float[] uvData){
         super(name, x, y, Entity.TYPE_IMAGE);
         this.width = width;
         this.height = height;
@@ -30,6 +30,16 @@ public class Image extends Entity{
         this.y2 = uvData[3];
         this.program = Game.imageProgram;
         setDrawInfo();
+    }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    @Override
+    public float getHeight() {
+        return height;
     }
 
     Image(String name, float x, float y, float width, float height, int textureId, float x1, float x2, float y1, float y2, Color color){

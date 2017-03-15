@@ -4,7 +4,7 @@ package com.marcelslum.ultnogame;
  * Created by marcel on 26/01/2017.
  */
 
-public class SelectorHandle {
+public class SelectorHandler {
 
     static Selector selectorMusic;
     static Selector selectorSound;

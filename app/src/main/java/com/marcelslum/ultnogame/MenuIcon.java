@@ -88,6 +88,9 @@ public class MenuIcon extends Entity{
         }
         for (int i = 0; i < texts.size();i++){
             //Log.e("menu", "render text");
+            if (texts.get(i).shadowText != null){
+                texts.get(i).shadowText.render(matrixView, matrixProjection);
+            }
             texts.get(i).render(matrixView, matrixProjection);
         }
         for (int i = 0; i < texts2.size();i++){
@@ -219,7 +222,7 @@ public class MenuIcon extends Entity{
         }
 
         for (int i = 0; i < texts.size(); i++) {
-            texts.get(i).alpha = 0f;
+            texts.get(i).setAlpha(0f);
             if (!textsDelayShow.get(i)){
                 texts.get(i).increaseAlpha(1200, 1f);
             } else {
@@ -286,7 +289,9 @@ public class MenuIcon extends Entity{
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
         Text t = new Text(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+
         if (number == 1){
+            t.addShadow(new Color(0.7f, 0.7f, 0.7f, 0.9f));
             texts.add(t);
             textsDelayShow.add(delayShow);
         } else {
@@ -492,6 +497,9 @@ public class MenuIcon extends Entity{
         
         for (int i = 0; i < texts.size(); i++){
             texts.get(i).accumulatedTranslateX = 0f;
+            if (texts.get(i).shadowText != null){
+                texts.get(i).shadowText.accumulatedTranslateX = 0f;
+            }
         }
 
         for (int i = 0; i < texts2.size(); i++){
@@ -547,12 +555,15 @@ public class MenuIcon extends Entity{
         for (int i = 0; i < icons.size(); i++){
             //Log.e(TAG, "translateIcon "+i);
             //Log.e(TAG, "icons.get(i).positionX "+icons.get(i).positionX);
-
             icons.get(i).translate(iconTranslateX, 0f);
+
         }
 
         for (int i = 0; i < texts.size(); i++){
             texts.get(i).translate(iconTranslateX, 0f);
+            if (texts.get(i).shadowText != null){
+                texts.get(i).shadowText.translate(iconTranslateX, 0f);
+            }
         }
 
         for (int i = 0; i < texts2.size(); i++){

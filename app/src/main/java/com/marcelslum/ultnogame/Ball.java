@@ -752,6 +752,10 @@ public class Ball extends Circle{
 
         if(this.collisionBar){
 
+            if (isFake){
+                Level.levelObject.levelGoalsObject.notifyFakeBallHited();
+            }
+
             lastBarCollisionTime = System.currentTimeMillis();
             Log.e(TAG, " setting lastBarCollisionTime "+lastBarCollisionTime);
 
@@ -863,6 +867,7 @@ public class Ball extends Circle{
 
             float percentageOfBarAccelerationApplied = 0.75f;
             if (collisionsData.get(this.collisionBarNumber).object.vx != 0) {
+
                 percentageOfBarAccelerationApplied = 0.75f + (barCollided.accelPercentage * 0.5f);
 
                 if (percentageOfBarAccelerationApplied >= 1.2 && !isFake) {
@@ -1065,7 +1070,10 @@ public class Ball extends Circle{
     
     
     public void verifyFakeBall(){
-        if (Level.levelObject.fakeBallPercentage > 0f && !fakeBallAnimActive && !isInvencible){
+
+        Log.e(TAG, "Level.levelObject.fakeBallPercentage "+Level.levelObject.fakeBallPercentage);
+
+        if (Level.levelObject.fakeBallPercentage > 0.01f && !fakeBallAnimActive && !isInvencible){
             float percentage = Level.levelObject.fakeBallPercentage;
             
             if (Utils.getRandonFloat(0.0f, 1.0f) < percentage){
