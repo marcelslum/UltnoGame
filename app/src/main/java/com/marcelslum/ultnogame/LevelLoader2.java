@@ -1227,7 +1227,7 @@ public class LevelLoader2 {
                 .setWindType(Level.WIND_TYPE_RIGHT);
         }
 
-        // LEVEL 82
+        // LEVEL82
         l += 1;
         if (levelNumber == l) {
             levelBuilder
@@ -1246,7 +1246,7 @@ public class LevelLoader2 {
                                     {5, 1, 0, 1, 0, 0, 0, 1, 0, 1, 5},
                                     {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1}
                             })
-                    .setSpecialBallPercentage(0.8f)
+                    .setSpecialBallPercentage(0.63f)
                     .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
