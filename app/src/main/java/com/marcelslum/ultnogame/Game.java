@@ -1697,9 +1697,35 @@ public class Game {
             }
         }
 
+        /*
+        
         for (int i = 0; i < targets.size(); i++){
             targets.get(i).prepareRender(matrixView, matrixProjection);
         }
+        
+        
+        */
+        
+        if (targetGroup == null){
+            targetGroup = new TargetGroup();   
+            targetGroup.targets = new ArrayList<>();
+        } else {
+            targetGroup.targets.clear();
+        }
+        
+        
+        for (int i = 0; i < targets.size(); i++){
+            targets.get(i).checkAnimations();
+            if (isVisible){
+                targetGroup.targets.add(new TargetGroupData(i, targets.get(i).positionX, targets.get(i).positionY, 
+                       targets.get(i).width, targets.get(i).height, 
+                       targets.get(i).alpha, targets.get(i).type));
+            }
+        }
+        
+        targetGroup.setDrawInfo();
+        
+        targetGroup.render(matrixView, matrixProjection);
 
         for (int i = 0; i < bars.size(); i++){
             bars.get(i).prepareRender(matrixView, matrixProjection);
