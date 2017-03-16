@@ -291,7 +291,7 @@ public class MenuIcon extends Entity{
         Text t = new Text(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
 
         if (number == 1){
-            t.addShadow(new Color(0.7f, 0.7f, 0.7f, 0.9f));
+            //t.addShadow(new Color(0.7f, 0.7f, 0.7f, 0.9f));
             texts.add(t);
             textsDelayShow.add(delayShow);
         } else {
