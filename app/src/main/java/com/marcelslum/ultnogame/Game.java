@@ -126,6 +126,7 @@ public class Game {
     
     // programs
     static Program imageProgram;
+    static Program targetProgram;
     static Program imageColorizedProgram;
     static Program lineProgram;
     static Program textProgram;
@@ -270,6 +271,8 @@ public class Game {
 
     public static void initPrograms(){
         imageProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_text),
+                Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
+        targetProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_target),
                 Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
         textProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_imagecolorized),
                 Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_imagecolorized));
