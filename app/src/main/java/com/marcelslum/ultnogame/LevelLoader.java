@@ -2748,7 +2748,6 @@ public class LevelLoader {
         // LEVEL 81
         l += 1;
         if (levelNumber == l) {
-            
            ArrayList<int[]> targetsAppend = new ArrayList<>();
             targetsAppend.add(new int[]{});
             targetsAppend.add(new int[]{8, 9, 11, 12, 16, 17});
@@ -2787,11 +2786,190 @@ public class LevelLoader {
                                     .setMaxWidth_BI(100000f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f))
-                .setWindType(Level.WIND_TYPE_RIGHT)
-                   
-  
+                .setWindType(Level.WIND_TYPE_RIGHT);
         }
-        
+
+        // LEVEL 82
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 0, 0, 0, 5, 5, 5, 0, 0, 0, 0},
+                                    {0, 0, 0, 2, 1, 0, 1, 3, 0, 0, 0},
+                                    {0, 0, 2, 2, 0, 0, 0, 3, 4, 0, 0},
+                                    {0, 2, 2, 0, 0, 4, 0, 0, 3, 3, 0},
+                                    {1, 0, 0, 0, 1, 1, 1, 0, 0, 3, 3},
+                                    {1, 0, 0, 2, 1, 3, 1, 3, 0, 0, 1},
+                                    {5, 0, 2, 1, 0, 4, 0, 1, 3, 0, 5},
+                                    {5, 2, 1, 0, 1, 3, 1, 0, 1, 3, 5},
+                                    {1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1},
+                                    {5, 0, 1, 0, 1, 3, 1, 0, 1, 0, 5},
+                                    {5, 1, 0, 1, 0, 0, 0, 1, 0, 1, 5},
+                                    {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1}
+                            })
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true));
+        }
+
+        // LEVEL 83
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 1, 3, 0, 1, 0, 3, 1, 1, 1},
+                                    {1, 1, 1, 3, 0, 1, 0, 3, 1, 4, 1},
+                                    {1, 4, 1, 3, 1, 1, 1, 3, 1, 1, 1},
+                                    {2, 2, 1, 3, 1, 1, 1, 3, 1, 2, 2},
+                                    {2, 2, 0, 1, 1, 1, 1, 1, 0, 2, 2},
+                                    {1, 3, 0, 1, 1, 1, 1, 1, 0, 3, 1},
+                                    {0, 3, 0, 0, 1, 0, 1, 0, 0, 3, 1},
+                                    {0, 3, 0, 0, 1, 0, 1, 0, 0, 3, 1},
+                                    {0, 3, 0, 0, 1, 0, 0, 0, 0, 3, 1},
+                                    {1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1},
+                                    {1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1},
+                                    {1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1},
+                                    {1, 1, 0, 3, 1, 0, 0, 0, 0, 1, 1},
+                                    {0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0},
+                                    {0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0}
+                            })
+                    .setBarsScaleVariation(
+                        new ScaleVariationDataBuilder()
+                                .setIsActive(true)
+                                .setIncreaseWidth(true)
+                                .setIncreaseHeight(false)
+                                .setWidthVelocity(0.0055f)
+                                .setHeightVelocity(0f)
+                                .setMinWidth_BI(0.625f)
+                                .setMaxWidth_BI(1.5f)
+                                .setMinHeight_BI(1f)
+                                .setMaxHeight_BI(1f),
+                        new ScaleVariationDataBuilder()
+                                .setIsActive(true)
+                                .setIncreaseWidth(true)
+                                .setIncreaseHeight(false)
+                                .setWidthVelocity(0.0055f)
+                                .setHeightVelocity(0f)
+                                .setMinWidth_BI(0.625f)
+                                .setMaxWidth_BI(1.5f)
+                                .setMinHeight_BI(1f)
+                                .setMaxHeight_BI(1f));
+        }
+
+        // LEVEL 84
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{27, 35, 36, 44});
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0, 1, 1, 1, 2, 0, 2, 1, 1, 1, 0},
+                                    {0, 3, 1, 2, 0, 2, 0, 3, 1, 1, 0},
+                                    {0, 1, 1, 2, 1, 0, 4, 3, 1, 1, 0},
+                                    {0, 1, 3, 1, 1, 2, 3, 1, 1, 1, 0},
+                                    {1, 1, 0, 2, 1, 0, 1, 3, 0, 1, 1},
+                                    {1, 1, 0, 3, 2, 2, 3, 1, 0, 1, 1},
+                                    {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 3, 2, 1, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+                            })
+                    .setObstaclesQuantity(1)
+                    .setObstaclesX(0.1705833333f)
+                    .setObstaclesY(0.3567647059f)
+                    .setObstaclesWidth(0.1433333333f)
+                    .setObstaclesHeight(0.0588235294f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.002f))
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.15f)
+                    .setWindowsY(0.15f)
+                    .setWindowsHeight(0.3f)
+                    .setWindowsQuantityOfLines(3)
+                    .setWindowsVelocity(0.002f);
+        }
+
+        // LEVEL 85
+        l += 1;
+        if (levelNumber == l) {
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{});
+            targetsAppend.add(new int[]{14, 22, 23, 29, 30, 38});
+            levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 0, 0, 0, 1, 0, 0, 3, 1, 1},
+                                    {1, 1, 2, 1, 4, 1, 1, 0, 3, 1, 1},
+                                    {1, 0, 2, 1, 1, 0, 1, 1, 3, 0, 1},
+                                    {1, 0, 2, 0, 1, 0, 1, 1, 3, 0, 1},
+                                    {1, 1, 2, 0, 1, 1, 1, 0, 1, 1, 1},
+                                    {4, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1},
+                                    {0, 0, 2, 2, 2, 2, 3, 1, 1, 0, 0},
+                                    {0, 0, 0, 0, 1, 0, 3, 1, 1, 0, 0},
+                                    {1, 1, 3, 0, 1, 0, 3, 0, 1, 2, 2},
+                                    {1, 1, 3, 1, 1, 0, 3, 0, 1, 2, 2},
+                                    {1, 0, 3, 1, 1, 0, 3, 1, 1, 1, 1},
+                                    {1, 0, 3, 0, 0, 0, 3, 1, 1, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 1}
+
+                            });
+        }
+
+        // LEVEL 86
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1, 1, 2, 1, 4, 2, 1, 1, 2, 1, 1},
+                                    {1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1},
+                                    {1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1},
+                                    {1, 1, 3, 1, 1, 3, 1, 4, 3, 1, 1},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                    {1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
+                                    {1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1},
+                                    {1, 1, 2, 0, 0, 0, 0, 0, 2, 1, 1}
+                            })
+                    .setFakeBallPercentage(0.6f)
+                    .setWindType(Level.WIND_TYPE_LEFT);
+        }
+
         if (levelNumber == 1000) {
             levelBuilder
                     .setTargetsMap(
