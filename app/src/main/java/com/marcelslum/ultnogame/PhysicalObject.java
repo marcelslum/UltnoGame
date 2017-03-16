@@ -86,7 +86,6 @@ public class PhysicalObject extends Entity implements Weight{
             Log.e(TAG, "zerando accelInitialTime por haver colisão contrária");
         }
 
-
         checkTransformations(false);
     }
 

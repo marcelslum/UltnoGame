@@ -185,19 +185,20 @@ public class Bar extends Rectangle{
         array[5 + (startIndex)] = (short)(3 + (startValue));
     }
     
-    public void checkTransformations(boolean updatePrevious){
-
+    public void checkTransformations(boolean updatePrevious) {
         super.checkTransformations(updatePrevious);
-
         if (shine != null) {
             shine.accumulatedTranslateX = accumulatedTranslateX;
             shine.accumulatedTranslateY = accumulatedTranslateY;
             shine.accumulatedRotate = accumulatedRotate;
             shine.accumulatedScaleX = accumulatedScaleX;
             shine.accumulatedScaleY = accumulatedScaleY;
-
-            shine.positionX = positionX;
-            shine.positionY = positionY;
+            shine.checkTransformations(updatePrevious);
+            //Log.e(TAG, "positionY bar x shine " + accumulatedTranslateX + " - " + shine.accumulatedTranslateX);
+            //Log.e(TAG, "positionY bar x shine " + accumulatedTranslateY + " - " + shine.accumulatedTranslateY);
+            //Log.e(TAG, "positionY bar x shine " + accumulatedRotate + " - " + shine.accumulatedRotate);
+            //Log.e(TAG, "positionY bar x shine " + accumulatedScaleX + " - " + shine.accumulatedScaleX);
+            //Log.e(TAG, "positionY bar x shine " + accumulatedScaleY + " - " + shine.accumulatedScaleY);
         }
     }
 

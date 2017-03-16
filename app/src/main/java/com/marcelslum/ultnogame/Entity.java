@@ -368,6 +368,36 @@ public class Entity{
 
     public void setMatrixModel(){
         Matrix.setIdentityM(matrixModel, 0);
+
+        /*
+        if (name == "bar"){
+            Log.e(TAG, "BAR-----------------------");
+            Log.e(TAG, "accumulatedScaleX " + accumulatedScaleX);
+            Log.e(TAG, "accumulatedScaleY " + accumulatedScaleY);
+            Log.e(TAG, "positionX " + positionX);
+            Log.e(TAG, "animTranslateX " + animTranslateX);
+            Log.e(TAG, "getTransformedWidth() " + getTransformedWidth());
+            Log.e(TAG, "getWidth() " + getWidth());
+            Log.e(TAG, "positionY " + positionY);
+            Log.e(TAG, "animTranslateY " + animTranslateY);
+            Log.e(TAG, "getTransformedHeight() " + getTransformedHeight());
+            Log.e(TAG, "getHeight() " + getHeight());
+        }
+        if (name == "shine"){
+            Log.e(TAG, "SHINE-----------------------");
+            Log.e(TAG, "accumulatedScaleX " + accumulatedScaleX);
+            Log.e(TAG, "accumulatedScaleY " + accumulatedScaleY);
+            Log.e(TAG, "positionX " + positionX);
+            Log.e(TAG, "animTranslateX " + animTranslateX);
+            Log.e(TAG, "getTransformedWidth() " + getTransformedWidth());
+            Log.e(TAG, "getWidth() " + getWidth());
+            Log.e(TAG, "positionY " + positionY);
+            Log.e(TAG, "animTranslateY " + animTranslateY);
+            Log.e(TAG, "getTransformedHeight() " + getTransformedHeight());
+            Log.e(TAG, "getHeight() " + getHeight());
+        }
+        */
+
         if (accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
             Matrix.translateM(matrixModel, 0, positionX + animTranslateX + (getTransformedWidth() - getWidth()) / 2f,
                     positionY + animTranslateY  + (getTransformedHeight() - getHeight()) / 2f, 0);
@@ -378,7 +408,6 @@ public class Entity{
         if (accumulatedRotate != 0 || animRotateAngle != 0) {
             float width = getWidth();
             float height = getHeight();
-
 
             Matrix.translateM(matrixModel, 0, width/2f, height/2f, 0);
             Matrix.setRotateM(mRotationMatrix, 0, accumulatedRotate + animRotateAngle, 0f, 0f, 1f);

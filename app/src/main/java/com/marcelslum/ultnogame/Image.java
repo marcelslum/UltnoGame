@@ -62,6 +62,16 @@ public class Image extends Entity{
         colorsBuffer = Utils.generateFloatBuffer(colorsData);
     }
 
+    @Override
+    public float getTransformedWidth() {
+        return width * accumulatedScaleX;
+    }
+
+    @Override
+    public float getTransformedHeight() {
+        return height * accumulatedScaleY;
+    }
+
     public void setUvData(float x1, float x2, float y1, float y2){
         this.x1 = x1;
         this.x2 = x2;

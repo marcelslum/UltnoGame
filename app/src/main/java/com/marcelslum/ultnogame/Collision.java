@@ -127,18 +127,18 @@ public abstract class Collision {
                             }
                         }
 
-                        //if (a.name == "bar" && b.name == "bar"){
-                            //Log.e(TAG, " maxIndex "+maxIndex);
-                            //Log.e(TAG, " max "+max);
-                            //Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
-                            //Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
-                        //}
+                        if (a.name == "bar" && b.name == "bar"){
+                            Log.e(TAG, " maxIndex "+maxIndex);
+                            Log.e(TAG, " max "+max);
+                            Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
+                            Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
+                        }
 
                         int quantityPassagens;
 
                         // definir quantas passagens serão realidades, com base na maior velocidade
                         // quanto maior o número divisor, menor o número de passagens
-                        quantityPassagens = Math.round(velocities[maxIndex]/1.5f) ;
+                        quantityPassagens = Math.round(velocities[maxIndex]/1.2f) ;
                         if (quantityPassagens == 0){
                             quantityPassagens = 1;
                         }
