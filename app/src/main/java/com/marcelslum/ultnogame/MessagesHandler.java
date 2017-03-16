@@ -83,7 +83,7 @@ public class MessagesHandler {
 
         messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));
 
-        Animation animMessageConqueredStarsTotal = Utils.createAnimation3v(messageConqueredStarsTotal, "alpha", "alpha", 6500, 0f, 1f, 0.85f, 0.4f, 1f, 1f, true, true);
+        Animation animMessageConqueredStarsTotal = Utils.createAnimation3v(messageConqueredStarsTotal, "alpha", "alpha", 6500, 0f, 1f, 0.92f, 0.4f, 1f, 1f, true, true);
         animMessageConqueredStarsTotal.excludeChild();
         animMessageConqueredStarsTotal.start();
 
