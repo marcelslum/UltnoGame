@@ -94,13 +94,9 @@ public class BallBehaviourData {
         logData();
 
         if (velocityIncreased) {
-            if (!lastMaxVelocityReached) {
                 MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_acelerando, 1);
-            }
         } else if (velocityDecreased) {
-            if (!lastMinVelocityReached) {
                 MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_pisando_no_freio, 1);
-            }
         }
 
         if (!velocityIncreased && !velocityDecreased){
@@ -120,60 +116,34 @@ public class BallBehaviourData {
         }
 
         if (angleDecreasedWithBarInclination && !angleIncreasedWithBarMovement && !angleDecreasedWithBarMovement){
-            if (!lastMinAngleReached) {
-                Level.levelObject.levelGoalsObject.notifyAngleDecreasedOnlyWithBarInclination();
-            }
+            Level.levelObject.levelGoalsObject.notifyAngleDecreasedOnlyWithBarInclination();
         } else if (angleIncreasedWithBarInclination && !angleIncreasedWithBarMovement && !angleDecreasedWithBarMovement){
-            if (!lastMaxAngleReached) {
-                Level.levelObject.levelGoalsObject.notifyAngleIncreasedOnlyWithBarInclination();
-            }
+            Level.levelObject.levelGoalsObject.notifyAngleIncreasedOnlyWithBarInclination();
         } else if (!angleIncreasedWithBarInclination && !angleDecreasedWithBarInclination && angleDecreasedWithBarMovement){
-            if (!lastMinAngleReached) {
-                Level.levelObject.levelGoalsObject.notifyAngleDecreasedOnlyWithBarMovement();
-            }
+            Level.levelObject.levelGoalsObject.notifyAngleDecreasedOnlyWithBarMovement();
         } else if (!angleDecreasedWithBarInclination && !angleIncreasedWithBarInclination && angleIncreasedWithBarMovement){
-            if (!lastMaxAngleReached) {
-                Level.levelObject.levelGoalsObject.notifyAngleIncreasedOnlyWithBarMovement();
-            }
+            Level.levelObject.levelGoalsObject.notifyAngleIncreasedOnlyWithBarMovement();
         } else if(angleIncreasedWithBarInclination && angleIncreasedWithBarMovement){
-            if (!lastMaxAngleReached) {
-                Level.levelObject.levelGoalsObject.notifyAngleIncreasedWithBarMovementAndInclination();
-            }
+            Level.levelObject.levelGoalsObject.notifyAngleIncreasedWithBarMovementAndInclination();
         } else if (angleDecreasedWithBarInclination && angleDecreasedWithBarMovement){
-            if (!lastMinAngleReached) {
-                Level.levelObject.levelGoalsObject.notifyAngleDecreasedWithBarMovementAndInclination();
-            }
+            Level.levelObject.levelGoalsObject.notifyAngleDecreasedWithBarMovementAndInclination();
         }
 
         if (velocityIncreased && angleIncreasedWithBarInclination){
-            if (!lastMaxVelocityReached) {
-                Level.levelObject.levelGoalsObject.accelerateWithBarIncreasingAngle();
-            }
-
+            Level.levelObject.levelGoalsObject.accelerateWithBarIncreasingAngle();
             if (finalAngle > initialAngle){
-                if (!lastMaxAngleReached) {
                     Level.levelObject.levelGoalsObject.increaseAngle();
-                }
             } else if (finalAngle > initialAngle){
-                if (!lastMinAngleReached) {
                     Level.levelObject.levelGoalsObject.decreaseAngle();
-                }
             }
 
 
         } else if (velocityDecreased && angleDecreasedWithBarInclination){
-            if (!lastMinVelocityReached) {
-                Level.levelObject.levelGoalsObject.decelerateWithBarDecreasingAngle();
-            }
-
+            Level.levelObject.levelGoalsObject.decelerateWithBarDecreasingAngle();
             if (finalAngle > initialAngle){
-                if (!lastMaxAngleReached) {
                     Level.levelObject.levelGoalsObject.increaseAngle();
-                }
             } else if (finalAngle > initialAngle){
-                if (!lastMinAngleReached) {
                     Level.levelObject.levelGoalsObject.decreaseAngle();
-                }
             }
 
         }
