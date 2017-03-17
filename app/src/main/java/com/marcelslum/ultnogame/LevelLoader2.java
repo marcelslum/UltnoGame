@@ -1988,7 +1988,7 @@ public class LevelLoader2 {
         //LEVEL98
         l += 1;
         if (levelNumber == l) {
-             ArrayList<int[]> targetsAppend = new ArrayList<>();
+            ArrayList<int[]> targetsAppend = new ArrayList<>();
             targetsAppend.add(new int[]{});
             targetsAppend.add(new int[]{});
             targetsAppend.add(new int[]{46, 54, 55, 62, 63, 71, 72, 80, 81, 88});
@@ -2092,8 +2092,12 @@ public class LevelLoader2 {
          //LEVEL100
         l += 1;
         if (levelNumber == l) {
-            levelBuilder
-                    .setTargetsMap(
+                ArrayList<int[]> targetsAppend = new ArrayList<>();
+                targetsAppend.add(new int[]{});
+                targetsAppend.add(new int[]{});
+                targetsAppend.add(new int[]{7, 14, 22, 30, 38});
+                levelBuilder
+                    .setBallsTargetsAppend(targetsAppend)
                             new int[][]{
                                 {5,1,5,1,0,1,1,1,0,0,0},
                                 {5,1,5,1,0,1,1,1,0,0,0},
