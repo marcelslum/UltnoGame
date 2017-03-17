@@ -2171,7 +2171,13 @@ public class LevelLoader2 {
                                     .setMaxWidth_BI(100000f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f)
-                    );
+                    )
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.20f)
+                    .setWindowsY(0.33f)
+                    .setWindowsHeight(0.4f)
+                    .setWindowsQuantityOfLines(7)
+                    .setWindowsVelocity(-0.003f);
         }
 
         if (levelNumber == 1000) {
