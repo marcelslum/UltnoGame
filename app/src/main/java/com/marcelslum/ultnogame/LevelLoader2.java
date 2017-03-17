@@ -1974,6 +1974,62 @@ public class LevelLoader2 {
                     .setWindowsQuantityOfLines(5)
                     .setWindowsVelocity(0.003f);
         }
+        
+        //LEVEL98
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                
+                                {1,1,1,1,1,1,1,1,3,1,1}
+                                {1,3,1,1,4,1,1,3,1,1,0}
+                                {0,1,3,1,1,1,3,1,1,0,0}
+                                {0,1,1,3,1,3,1,1,0,0,1}
+                                {1,0,1,1,3,1,1,0,0,1,1}
+                                {1,0,1,1,1,1,0,0,1,1,1}
+                                {1,1,0,1,1,0,0,1,1,1,1}
+                                {1,1,0,1,1,0,4,1,2,1,1}
+                                {1,1,0,1,1,0,1,1,2,1,1}
+                                {1,1,0,1,1,0,0,1,1,1,1}
+                                {1,0,1,1,1,1,0,0,1,1,1}
+                                {1,0,1,1,2,1,1,0,0,1,1}
+                                {0,1,1,2,1,2,1,1,0,0,1}
+                                {0,1,2,1,1,1,2,1,1,0,0}
+                                {1,2,1,0,0,0,1,2,1,1,0}
+                                {1,1,1,0,0,0,1,1,2,1,1}
+                            })
+                     .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.0055f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.625f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f),
+                            null)
+                    .setFakeBallPercentage(0.6f)
+                    .setObstaclesQuantity(2)
+                    .setObstaclesX(0.46793f, 0.476205f)
+                    .setObstaclesY(0.2871058824f, 0.7357411765f)
+                    .setObstaclesWidth(0.0500933333f, 0.0368833333f)
+                    .setObstaclesHeight(0.1012323529f, 0.0552588235f)
+                    .setObstaclesScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setIncreaseHeight(true)
+                                    .setWidthVelocity(0f)
+                                    .setHeightVelocity(0.012f)
+                                    .setMinWidth_BI(1f)
+                                    .setMaxWidth_BI(100000f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f),
+                            null);
+        }
 
         if (levelNumber == 1000) {
             levelBuilder
