@@ -37,6 +37,7 @@ public class Entity{
     final public static int TYPE_TEXT_BOX = 21;
     final public static int TYPE_WIND = 22;
     final public static int TYPE_WINDOW_GAME = 23;
+    final public static int TYPE_TARGET_GROUP = 23;
     
     
 
@@ -453,7 +454,7 @@ public class Entity{
 
         // get handle to vertex shader's vPosition member and add vertices
         int av4_verticesHandle = GLES20.glGetAttribLocation(program.get(), "av4_vertices");
-        GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, this.verticesBuffer);
+        GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, verticesBuffer);
         GLES20.glEnableVertexAttribArray(av4_verticesHandle);
         //Log.e("render", " ");
 
@@ -475,6 +476,7 @@ public class Entity{
 
         int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
         GLES20.glUniform1f(uf_alphaHandle, alpha);
+
         
         // Get handle to shape's transformation matrix and add our matrix
         int um4_projectionHandle = GLES20.glGetUniformLocation(program.get(), "um4_projection");

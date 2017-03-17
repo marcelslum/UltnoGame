@@ -1,13 +1,11 @@
 package com.marcelslum.ultnogame;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
  * Created by marcel on 07/12/2016.
  */
-
 
 // por enquanto, só serve para deslocamento horizontal e cuja largura seja igual ao tamanho da tela
 

@@ -26,7 +26,7 @@ public class Messages extends Entity {
             }
         }
 
-        Log.e("messages", "numberOfActiveTexts "+numberOfActiveTexts);
+        //Log.e("messages", "numberOfActiveTexts "+numberOfActiveTexts);
 
         final Text textObject;
         final Text textObject2;

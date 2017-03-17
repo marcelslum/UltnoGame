@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
@@ -80,7 +82,14 @@ public class BallParticleGenerator extends Entity {
             p.vy += p.velocity_variation_y;
             p.alpha -= p.alpha_decay;
             if(p.alpha < 0f) p.alpha = 0f;
-            
+
+            //Log.e(TAG, " inserindo particle "+
+            //        (p.x - p.size/2f) + " " +
+            //        (p.x + p.size/2f) + " " +
+            //        (p.y- p.size/2f) + " " +
+            //        (p.y + p.size/2f));
+
+
             Utils.insertRectangleVerticesData(verticesData, i * 12, p.x - p.size/2f, p.x + p.size/2f, p.y- p.size/2f, p.y + p.size/2f, 0f);
             //Log.e("ballParticleGenerator", " "+p.x+" "+p.y+" "+p.size);
 

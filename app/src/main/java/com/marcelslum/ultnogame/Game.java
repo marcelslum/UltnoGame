@@ -139,6 +139,7 @@ public class Game {
     static long initialTimePointsDecay;
 
     public static String currentPlayerId;
+    private static TargetGroup targetGroup;
 
     private Game() {}
     
@@ -265,7 +266,6 @@ public class Game {
             }
         });
         animTittle.start();
-
     }
 
 
@@ -273,7 +273,7 @@ public class Game {
         imageProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_text),
                 Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
         targetProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_target),
-                Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
+                Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_target));
         textProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_imagecolorized),
                 Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_imagecolorized));
         imageColorizedProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_imagecolorized),
@@ -1240,10 +1240,6 @@ public class Game {
         }
 
 
-
-
-
-
         ballCollidedFx -= 1;
 
         // atualiza posição da bola
@@ -1700,35 +1696,54 @@ public class Game {
             }
         }
 
-        /*
-        
-        for (int i = 0; i < targets.size(); i++){
-            targets.get(i).prepareRender(matrixView, matrixProjection);
-        }
-        
-        
-        */
-        
-        if (targetGroup == null){
-            targetGroup = new TargetGroup();   
-            targetGroup.targets = new ArrayList<>();
-        } else {
-            targetGroup.targets.clear();
-        }
-        
-        
-        for (int i = 0; i < targets.size(); i++){
-            targets.get(i).checkAnimations();
-            if (isVisible){
-                targetGroup.targets.add(new TargetGroupData(i, targets.get(i).positionX, targets.get(i).positionY, 
-                       targets.get(i).width, targets.get(i).height, 
-                       targets.get(i).alpha, targets.get(i).type));
+
+
+        boolean targetRenderIndividual = false;
+
+        if (targetRenderIndividual) {
+
+            for (int i = 0; i < targets.size(); i++) {
+                targets.get(i).prepareRender(matrixView, matrixProjection);
             }
+        } else {
+
+
+            if (targetGroup == null) {
+                targetGroup = new TargetGroup();
+                targetGroup.targets = new ArrayList<>();
+            } else {
+                targetGroup.targets.clear();
+            }
+
+            for (int i = 0; i < targets.size(); i++) {
+                targets.get(i).checkAnimations();
+                if (targets.get(i).isVisible) {
+
+                    float percentage;
+                    if (Utils.getTime() - targets.get(i).timeOfLastDecay < 1000){
+                        percentage = (float)(Utils.getTime() - targets.get(i).timeOfLastDecay)/1000f;
+
+                        Log.e(TAG, "percentage "+ percentage);
+                    } else {
+                        percentage = 0;
+                    }
+
+
+
+                    targetGroup.targets.add(new TargetGroupData(i, targets.get(i).positionX, targets.get(i).positionY,
+                            targets.get(i).width, targets.get(i).height,
+                            targets.get(i).alpha, targets.get(i).type, percentage));
+                }
+            }
+
+            if (targets.size() > 0) {
+                targetGroup.setDrawInfo();
+                targetGroup.render(matrixView, matrixProjection);
+            }
+
         }
-        
-        targetGroup.setDrawInfo();
-        
-        targetGroup.render(matrixView, matrixProjection);
+
+
 
         for (int i = 0; i < bars.size(); i++){
             bars.get(i).prepareRender(matrixView, matrixProjection);

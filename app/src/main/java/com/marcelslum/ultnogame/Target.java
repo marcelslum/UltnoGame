@@ -16,13 +16,10 @@ public class Target extends Rectangle {
     int pointsToShow;
     float posYVariation;
     public int type;
-    static final int TARGET_BLACK = 0;
-    static final int TARGET_GREEN = 1;
-
-
-
-    static final int TARGET_BLUE = 2;
-    private static final int TARGET_RED = 3;
+    public static final int TARGET_BLACK = 0;
+    public static final int TARGET_GREEN = 1;
+    public static final int TARGET_BLUE = 2;
+    public static final int TARGET_RED = 3;
     private Animation showPointsStateAnim;
     private Animation showPointsAlphaAnim;
     private Animation ghostAlphaAnim;
@@ -31,6 +28,9 @@ public class Target extends Rectangle {
     private Point pointsObject;
     private final static int POINTS_DURATION = 1000;
     boolean alive = true;
+    public long timeOfLastDecay = 0;
+    public float percentageOfDecay = 0f;
+
 
     @Override
     public void render(float[] matrixView, float[] matrixProjection) {
@@ -170,6 +170,8 @@ public class Target extends Rectangle {
     }
 
     public void decayState(int points){
+
+        timeOfLastDecay = Utils.getTime();
 
         Sound.play(Sound.soundDestroyTarget, 1, 1, 0);
 

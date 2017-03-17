@@ -8,6 +8,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+
+import java.util.ArrayList;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -24,6 +27,9 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     float	effectiveScreenWidth;
     float	effectiveScreenHeight;
+
+    ArrayList<Long> frameDurations;
+    long longestFrame;
 
     float testeValue = 10f;
 
@@ -176,6 +182,28 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         } else {
             Game.verifyTouchBlock();
             Game.verifyListeners();
+
+
+            if (frameDurations == null){
+                frameDurations = new ArrayList<>();
+            }
+
+            frameDurations.add(elapsed);
+
+            if (elapsed > longestFrame){
+                longestFrame = elapsed;
+            }
+
+            if (frameDurations.size() == 60){
+                float soma = 0;
+                for (int i = 0; i < frameDurations.size(); i++){
+                    soma += frameDurations.get(i);
+                }
+                Log.e("GLRenderer"," frame duration: "+(soma / frameDurations.size()));
+                Log.e("GLRenderer"," longestFrame: "+longestFrame);
+                frameDurations.clear();
+                longestFrame = 0;
+            }
 
             if (elapsed > (frameDuration*3)){
                 Log.e("GLRenderer", "frame muito longo, reduzindo de " + elapsed + " para " + (frameDuration*3));

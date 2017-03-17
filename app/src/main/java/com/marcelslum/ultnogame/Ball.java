@@ -444,11 +444,11 @@ public class Ball extends Circle{
                     
                     double magBall1After = Math.sqrt((dvx * dvx)+(dvy * dvy));
                                         
-                    verifyMagnitudeVariation(magBall1, magBall1After, velocityVariation * 2);
+                    verifyMagnitudeVariation((float)magBall1, (float)magBall1After, velocityVariation * 2);
                     
                     
                     double magBall2After = Math.sqrt((otherBall.dvx * otherBall.dvx)+(otherBall.dvy * otherBall.dvy));
-                    otherBall.verifyMagnitudeVariation(magBall2, magBall2After, otherBall.velocityVariation * 2);
+                    otherBall.verifyMagnitudeVariation((float)magBall2, (float)magBall2After, otherBall.velocityVariation * 2);
 
                     //dvx = (float)Utils.getXRotatedFromRad(f1x, f1y, -theta);
                     //dvy = (float)Utils.getYRotatedFromRad(f1x, f1y, -theta);
@@ -1049,7 +1049,7 @@ public class Ball extends Circle{
     private void verifyMagnitudeVariation(float magBefore, float magAfter, float maxVelocityVariation){
             if (magAfter > magBefore){
                 float magPercentage = magAfter / magBefore;
-                float maxMagPercentage = (1 + (maxVelocityVariation);
+                float maxMagPercentage = 1 + maxVelocityVariation;
                 if (magPercentage > maxMagPercentage){    
                     
                     Log.e(TAG,"verifyMagnitudeVariation - ajustando velocidade da bola - DIMINUINDO");
@@ -1058,8 +1058,8 @@ public class Ball extends Circle{
                     dvy *= (maxMagPercentage / magPercentage);
                 }
             } else if (magBefore < magAfter){
-                float magPercentage = magAfter / magBefore;0,75
-                float minMagPercentage = (1 - (maxVelocityVariation);0,86
+                float magPercentage = magAfter / magBefore;
+                float minMagPercentage = 1 - maxVelocityVariation;
                 if (magPercentage < minMagPercentage){    
                     
                     Log.e(TAG,"verifyMagnitudeVariation - ajustando velocidade da bola - AUMENTANDO");
@@ -1100,7 +1100,7 @@ public class Ball extends Circle{
     
     public void verifyFakeBall(){
 
-        Log.e(TAG, "Level.levelObject.fakeBallPercentage "+Level.levelObject.fakeBallPercentage);
+        //Log.e(TAG, "Level.levelObject.fakeBallPercentage "+Level.levelObject.fakeBallPercentage);
 
         if (Level.levelObject.fakeBallPercentage > 0.01f && !fakeBallAnimActive && !isInvencible){
             float percentage = Level.levelObject.fakeBallPercentage;
