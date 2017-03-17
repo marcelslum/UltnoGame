@@ -19,6 +19,7 @@ public class BallBehaviourData {
     boolean angleIncreasedWithBarInclination = false;
     boolean velocityIncreased = false;
     boolean velocityDecreased = false;
+    boolean velocityChanged = false;
     boolean minVelocityReached = false;
     boolean maxVelocityReached = false;
     boolean minAngleReached = false;
@@ -63,6 +64,10 @@ public class BallBehaviourData {
     public void setInitialLen(float v) {
         initialLen = v;
     }
+    
+    public void setFinalLen(float v) {
+        finalLen = v;
+    }
 
     public void setMaxLen(float v) {
         maxLen = v;
@@ -73,14 +78,8 @@ public class BallBehaviourData {
     }
 
     public void notifyNotSpeedChange() {
-        velocityIncreased = false;
-        velocityDecreased = false;
+        velocityChanged = true;
     }
-
-    public void setFinalLen(float v) {
-        finalLen = v;
-    }
-
 
     public void processData() {
 
@@ -91,27 +90,32 @@ public class BallBehaviourData {
         Game.ballDataPanel.setData((finalLen - minLen) / (maxLen - minLen), (finalAngle - minAngle) / (maxAngle - minAngle), true);
         Game.ballDataPanel.ballAnimating = ball;
 
-        logData();
+        //logData();
+        
+        if (finalLen != initialLen){
+            velocityChanged = true;   
+        }
+            
 
-        if (velocityIncreased) {
+        if (finalLen > initialLen) {
                 MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_acelerando, 1);
-        } else if (velocityDecreased) {
+        } else if (initialLen > finalLen) {
                 MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_pisando_no_freio, 1);
         }
 
-        if (!velocityIncreased && !velocityDecreased){
+        if (!velocityChanged){
             Level.levelObject.levelGoalsObject.notifyNotSpeedChange();
         }
 
-        if (velocityIncreased){
+        if (finalLen > initialLen){
             Level.levelObject.levelGoalsObject.accelerate();
-        } else if (velocityDecreased){
+        } else if (initialLen > finalLen){
             Level.levelObject.levelGoalsObject.decelerate();
         }
 
-        if (velocityIncreased && !minAngleReached){
+        if ((finalLen > initialLen) && !minAngleReached){
             Level.levelObject.levelGoalsObject.accelerateWithoutReachMinAngle();
-        } else if (velocityDecreased && !maxAngleReached){
+        } else if ((initialLen > finalLen) && !maxAngleReached){
             Level.levelObject.levelGoalsObject.decelerateWithoutReachMaxAngle();
         }
 
@@ -129,16 +133,14 @@ public class BallBehaviourData {
             Level.levelObject.levelGoalsObject.notifyAngleDecreasedWithBarMovementAndInclination();
         }
 
-        if (velocityIncreased && angleIncreasedWithBarInclination){
+        if ((finalLen > initialLen) && angleIncreasedWithBarInclination){
             Level.levelObject.levelGoalsObject.accelerateWithBarIncreasingAngle();
             if (finalAngle > initialAngle){
                     Level.levelObject.levelGoalsObject.increaseAngle();
             } else if (finalAngle > initialAngle){
                     Level.levelObject.levelGoalsObject.decreaseAngle();
             }
-
-
-        } else if (velocityDecreased && angleDecreasedWithBarInclination){
+        } else if ((initialLen > finalLen) && angleDecreasedWithBarInclination){
             Level.levelObject.levelGoalsObject.decelerateWithBarDecreasingAngle();
             if (finalAngle > initialAngle){
                     Level.levelObject.levelGoalsObject.increaseAngle();
@@ -150,31 +152,15 @@ public class BallBehaviourData {
 
         if (minAngleReached){
             Level.levelObject.levelGoalsObject.notifyMinAngleReached();
-            lastMinAngleReached = true;
-            lastMaxAngleReached = false;
         } else if (maxAngleReached){
             Level.levelObject.levelGoalsObject.notifyMaxAngleReached();
-            lastMinAngleReached = false;
-            lastMaxAngleReached = true;
-        } else {
-            lastMinAngleReached = false;
-            lastMaxAngleReached = false;
         }
 
         if (minVelocityReached){
             Level.levelObject.levelGoalsObject.notifyMinVelocityReached();
-            lastMinVelocityReached = true;
-            lastMaxVelocityReached = false;
         } else if (maxVelocityReached){
             Level.levelObject.levelGoalsObject.notifyMaxVelocityReached();
-            lastMinVelocityReached = false;
-            lastMaxVelocityReached = true;
-        } else {
-            lastMinVelocityReached = false;
-            lastMaxVelocityReached = false;
         }
-
-
 
         active = false;
     }
@@ -235,15 +221,6 @@ public class BallBehaviourData {
         minAngleReached = true;
     }
 
-    public void notifyVelocityIncreased() {
-        velocityIncreased = true;
-    }
-
-    public void notifyVelocityDecreased() {
-        velocityDecreased = true;
-    }
-
-
     public void notifyNotMinOrMaxAngleReached() {
         maxAngleReached = false;
         minAngleReached = false;
@@ -262,5 +239,6 @@ public class BallBehaviourData {
         maxVelocityReached = false;
         minAngleReached = false;
         maxAngleReached = false;
+        velocityChanged = false;
     }
 }
