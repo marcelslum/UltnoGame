@@ -2045,6 +2045,48 @@ public class LevelLoader2 {
                                     .setMaxHeight_BI(1f),
                             null);
         }
+        
+        //LEVEL99
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                {0,1,1,0,1,1,1,0,1,1,0},
+                                {0,1,1,0,1,0,1,0,1,1,0},
+                                {0,0,1,0,1,0,1,0,0,1,0},
+                                {0,1,0,0,1,4,1,0,1,0,0},
+                                {0,1,1,0,1,1,1,0,1,1,0},
+                                {4,1,1,1,1,1,1,1,1,1,4},
+                                {1,1,1,1,1,1,1,1,1,1,1},
+                                {0,1,1,0,3,1,2,0,1,1,0},
+                                {0,1,0,0,3,1,2,0,1,0,0},
+                                {0,0,1,0,3,1,2,0,0,1,0},
+                                {0,1,1,0,3,1,2,0,1,1,0},
+                                {1,1,1,1,3,1,2,1,1,1,1},
+                                {5,5,5,5,7,5,2,5,5,5,5},
+                                {0,0,0,0,3,0,0,2,0,0,0},
+                                {0,0,0,0,3,0,0,2,0,0,0}
+                            })
+                
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true))
+                    .setSpecialBallPercentage(0.63f)
+                    .setWindType(Level.WIND_TYPE_RIGHT);
+        }
 
         if (levelNumber == 1000) {
             levelBuilder
