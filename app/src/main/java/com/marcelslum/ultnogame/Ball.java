@@ -450,7 +450,6 @@ public class Ball extends Circle{
                                         
                     verifyMagnitudeVariation((float)magBall1, (float)magBall1After, velocityVariation * 2);
                     
-                    
                     double magBall2After = Math.sqrt((otherBall.dvx * otherBall.dvx)+(otherBall.dvy * otherBall.dvy));
                     otherBall.verifyMagnitudeVariation((float)magBall2, (float)magBall2After, otherBall.velocityVariation * 2);
 
@@ -911,8 +910,8 @@ public class Ball extends Circle{
             if (collisionsData.get(collisionBarNumber).object.vx == 0 && mAngleToRotate == 0) {
 
                 ballBehaviourData.notifyNotSpeedChange();
-                ballBehaviourData.setFinalLen(Utils.getVectorMagnitude(final_vx, final_vy));
-
+                
+                ballBehaviourData.setFinalLen(initialLen);
                 ballBehaviourData.setFinalAngle(initialAngle);
 
                 dvx = final_vx;
@@ -936,11 +935,9 @@ public class Ball extends Circle{
 
 
                     if (velocityAdd == true){
-                        ballBehaviourData.notifyVelocityIncreased();
                         scalePorcentage += velocityScalePorcentage;
                     } else  {
                         scalePorcentage -= velocityScalePorcentage;
-                        ballBehaviourData.notifyVelocityDecreased();
                     }
 
                     float possibleVelocityLen = Utils.getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
@@ -952,12 +949,12 @@ public class Ball extends Circle{
                         final_vy = final_vy * scalePorcentage;
                         //Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
                         
-                        onMinVelocity = false;
-                        onMaxVelocity = false;
+                        markNotMinOrMaxVelocity();
 
                     } else {
                         //Log.e("ball", "velocidade maior que o máximo ou menor que o mínimo");
                         if (possibleVelocityLen <= minLen){
+                            
                             markMinVelocity();
                             //Log.e("ball", "velocidade menor que o mínimo");
                             final_vx = final_vx * scalePorcentage;
@@ -970,12 +967,8 @@ public class Ball extends Circle{
                             final_vy = final_vy * scaleToMin;
                             //Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(final_vx, final_vy));
                         } else if (possibleVelocityLen >= maxLen){
+                            
                             markMaxVelocity();
-                            if (!onMaxVelocity){
-                                ballBehaviourData.notifyMaxVelocityReached();
-                                onMaxVelocity = true;
-                            }
-                            onMinVelocity = false;
                             
                             //Log.e("ball", "velocidade maior que o máximo");
                             final_vx = final_vx * scalePorcentage;
@@ -1240,11 +1233,14 @@ public class Ball extends Circle{
 
             final_vx = (float) Utils.getXRotatedFromDegrees(vx, vy, mAngleToRotate);
             final_vy = (float) Utils.getYRotatedFromDegrees(vx, vy, mAngleToRotate);
+            
+            ballBehaviourData.setFinalAngle((float) Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx))));
+            
         } 
         
 
 
-        ballBehaviourData.setFinalAngle((float) Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx))));
+        
     }
 
 
@@ -1338,15 +1334,11 @@ public class Ball extends Circle{
 
         double angleToRotate = 0d;
         if (angle <= thisMinAngle) {
-            markMinAngle();
             angleToRotate = thisMinAngle - angle;
             Log.e("ball", "angulo menor que o esperado, rotacao de " + angleToRotate);
         } else if (angle >= thisMaxAngle) {
-            markMaxAngle();
             angleToRotate = thisMaxAngle - angle;
             Log.e("ball", "angulo maior que o esperado, rotacao de " + angleToRotate);
-        } else {
-            markNotMinOrMaxAngle();
         }
             
 
@@ -1371,26 +1363,18 @@ public class Ball extends Circle{
         float actualLen = Utils.getVectorMagnitude(dvx, dvy);
 
         if (actualLen >= maxLen){
-            
-            markMaxVelocity();
-            
             Log.e("ball", "ajustando velocidade - diminuindo");
-
             dvx *= (maxLen/actualLen);
             dvy *= (maxLen/actualLen);
 
             Log.e("ball", "v " + dvx + " " + dvy);
             Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
             Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
-
         } else if (actualLen <= minLen){
-            markMinVelocity();
             Log.e("ball", "ajustando velocidade - aumentando");
             dvx *= (minLen/actualLen);
             dvy *= (minLen/actualLen);
             Log.e("ball", "v " + dvx + " " + dvy);
-        } else {
-            markNotMinOrMaxVelocity();   
         }
 
         Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
