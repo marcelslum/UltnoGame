@@ -1720,15 +1720,13 @@ public class Game {
                 if (targets.get(i).isVisible) {
 
                     float percentage;
-                    if (Utils.getTime() - targets.get(i).timeOfLastDecay < 1000){
-                        percentage = (float)(Utils.getTime() - targets.get(i).timeOfLastDecay)/1000f;
+                    if (Utils.getTime() - targets.get(i).timeOfLastDecay < 300){
+                        percentage = (float)(Utils.getTime() - targets.get(i).timeOfLastDecay)/300f;
 
                         Log.e(TAG, "percentage "+ percentage);
                     } else {
                         percentage = 0;
                     }
-
-
 
                     targetGroup.targets.add(new TargetGroupData(i, targets.get(i).positionX, targets.get(i).positionY,
                             targets.get(i).width, targets.get(i).height,

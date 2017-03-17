@@ -44,7 +44,20 @@ public ArrayList<TargetGroupData> targets;
                   Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
             }
 
-            Utils.insertRectangleColorsData(colorsData, i * 16, targets.get(i).lastDecayPercentage*0.1f, targets.get(i).lastDecayPercentage*0.1f, targets.get(i).lastDecayPercentage*0.1f, targets.get(i).alpha);
+
+            float finalPorcentage = ((float)Math.pow(((targets.get(i).lastDecayPercentage)-0.5f),2)*-1) + 0.25f;
+
+            if (finalPorcentage != 0f) {
+                Log.e(TAG, "finalPorcentage " + finalPorcentage);
+            }
+
+            if (targets.get(i).type == Target.TARGET_BLUE) {
+                Utils.insertRectangleColorsData(colorsData, i * 16, 0, finalPorcentage/2f, 0, targets.get(i).alpha);
+            } else if (targets.get(i).type == Target.TARGET_BLACK){
+                Utils.insertRectangleColorsData(colorsData, i * 16, 0, 0, finalPorcentage/2f, targets.get(i).alpha);
+            } else {
+                Utils.insertRectangleColorsData(colorsData, i * 16, 0, 0, 0, targets.get(i).alpha);
+            }
 
         }
 

@@ -151,8 +151,6 @@ public class Target extends Rectangle {
 
         pointsObject = new Point("points", pointsX,y + (height/2f), Game.gameAreaResolutionY * 0.07f);
 
-
-
         addChild(pointsObject);
         pointsObject.setValue(points);
 

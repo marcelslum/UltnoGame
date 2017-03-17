@@ -1545,6 +1545,382 @@ public class LevelLoader2 {
                                     {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1}});
         }
 
+        // MISTURA
+
+        //LEVEL91
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1,0,1,0,1,0,1,0,1,0,4},
+                                    {0,3,1,5,1,3,1,5,1,3,0},
+                                    {0,3,1,5,1,3,1,5,1,3,0},
+                                    {1,0,1,1,1,0,1,1,1,0,1},
+                                    {0,2,1,1,1,4,1,1,1,2,0},
+                                    {0,2,1,1,1,4,1,1,1,2,0},
+                                    {1,2,1,0,1,0,1,0,1,2,3},
+                                    {1,0,1,1,1,0,1,1,1,0,3},
+                                    {0,1,1,1,1,2,1,1,1,1,0},
+                                    {0,1,1,1,1,2,1,1,1,1,0},
+                                    {0,1,1,1,1,2,1,1,1,1,0},
+                                    {0,1,1,0,1,0,1,0,1,1,0},
+                                    {2,0,1,3,1,0,1,3,1,0,2},
+                                    {2,3,1,3,1,3,1,3,1,3,2},
+                                    {2,3,1,0,1,3,1,0,1,3,2}
+                                    })
+                    .setSpecialBallPercentage(0.63f)
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true))
+                    .setWindType(Level.WIND_TYPE_RIGHT)
+                    .setFakeBallPercentage(0.6f);
+        }
+
+        //LEVEL92
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1,0,0,0,0,0,0,0,0,0,4},
+                                    {0,3,0,0,1,3,1,7,7,3,0},
+                                    {0,3,0,0,1,3,1,7,7,3,0},
+                                    {1,0,0,0,5,0,5,7,7,0,1},
+                                    {0,2,0,0,5,4,5,0,0,2,0},
+                                    {0,2,0,0,5,5,5,0,0,2,0},
+                                    {1,2,0,0,0,0,0,0,0,2,3},
+                                    {1,0,0,0,1,0,1,0,0,0,3},
+                                    {0,1,7,7,1,2,1,0,0,1,0},
+                                    {0,1,7,7,1,2,1,0,0,1,0},
+                                    {0,1,7,7,1,2,1,0,0,1,0},
+                                    {0,1,0,0,0,0,0,0,0,0,2},
+                                    {2,0,0,0,3,0,3,0,0,0,2},
+                                    {2,3,0,0,3,3,3,0,0,3,2},
+                                    {2,3,0,0,0,3,0,0,0,3,2}
+
+                            })
+
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.0055f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.625f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f))
+                    .setWindType(Level.WIND_TYPE_LEFT)
+                    .setObstaclesQuantity(2)
+                    .setObstaclesX(0.1980166667f, 0.6550883333f)
+                    .setObstaclesY(0.1708205882f, 0.3708205882f)
+                    .setObstaclesWidth(0.151815f, 0.151815f)
+                    .setObstaclesHeight(0.0924088235f, 0.0924088235f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0018f)
+                                    .setyVelocity(0f),
+                            null
+                            )
+                    .setObstaclesScaleVariation(
+                            null,
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setIncreaseHeight(true)
+                                    .setWidthVelocity(0f)
+                                    .setHeightVelocity(0.012f)
+                                    .setMinWidth_BI(1f)
+                                    .setMaxWidth_BI(100000f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f)
+                            )
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.15f)
+                    .setWindowsY(0.3f)
+                    .setWindowsHeight(0.3f)
+                    .setWindowsQuantityOfLines(1)
+                    .setWindowsVelocity(-0.002f)
+                    .setInvertedButtons(true);
+        }
+
+        //LEVEL93
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0,1,1,0,0,3,0,0,1,1,0},
+                                    {2,0,1,0,1,4,2,0,1,0,2},
+                                    {2,3,1,0,0,1,0,0,1,3,2},
+                                    {2,3,1,1,1,0,1,1,1,3,2},
+                                    {0,0,2,0,1,0,1,0,2,0,0},
+                                    {0,0,2,3,1,0,1,3,2,0,0},
+                                    {0,0,2,3,1,0,1,3,2,0,0},
+                                    {0,0,2,3,1,0,1,3,2,0,0},
+                                    {0,0,2,3,1,0,1,3,2,0,0},
+                                    {0,0,2,3,1,0,1,3,2,0,0},
+                                    {0,0,2,0,1,0,1,0,2,0,0},
+                                    {2,3,1,1,1,0,1,1,1,3,2},
+                                    {2,3,1,0,0,3,0,0,1,3,2},
+                                    {2,0,1,0,1,4,2,0,1,0,2},
+                                    {0,1,1,0,0,1,0,0,1,1,0}
+                            })
+
+                    .setObstaclesQuantity(3)
+                    .setObstaclesX(0.0005366667f, 0.0698133333f, 0.4791083333f, 0.892615f, 0.9639133333f)
+                    .setObstaclesY(0.5624235294f, 0.1993205882f, 0.1993205882f, 0.1993205882f, 0.5624235294f)
+                    .setObstaclesWidth(0.0355566667f, 0.0355566667f, 0.0355566667f, 0.0355566667f, 0.0355566667f)
+                    .setObstaclesHeight(0.1996f, 0.1996f, 0.1996f, 0.1996f, 0.1996f)
+                    .setWindowsQuantity(2)
+                    .setWindowsDistance(0.15f, 0.15f)
+                    .setWindowsY(0.3f, 0.5f)
+                    .setWindowsHeight(0.15f, 0.15f)
+                    .setWindowsQuantityOfLines(1)
+                    .setWindowsVelocity(0.002f, 0.003f)
+                    .setFakeBallPercentage(0.6f);
+
+
+        }
+
+        //LEVEL94
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {1,1,1,3,2,3,2,3,1,1,1},
+                                    {1,0,1,1,1,3,1,1,1,0,1},
+                                    {1,0,0,1,1,1,1,1,0,0,1},
+                                    {1,0,0,0,1,1,1,0,0,0,1},
+                                    {1,0,0,0,1,1,1,0,0,0,1},
+                                    {1,4,0,0,1,1,1,0,0,4,1},
+                                    {1,1,1,0,1,0,1,0,1,1,1},
+                                    {1,1,1,1,1,0,1,1,1,1,1},
+                                    {1,1,1,1,1,0,1,1,1,1,1},
+                                    {1,1,3,1,1,1,1,1,3,1,1},
+                                    {1,3,0,3,1,1,1,3,0,3,1},
+                                    {1,0,0,1,1,2,1,1,0,0,3},
+                                    {3,0,3,1,1,2,1,1,3,0,1},
+                                    {1,3,1,1,1,2,1,1,1,3,1},
+                                    {1,1,1,0,1,2,1,0,1,1,1},
+                                    {1,1,0,0,1,1,1,0,0,1,1}
+                            })
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.0055f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.625f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.0055f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.625f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f))
+                    .setObstaclesQuantity(4)
+                    .setObstaclesX(0.1011766667f, 0.2636766667f, 0.477565f, 0.8091283333f)
+                    .setObstaclesY(0.1023264706f, 0.1454617647f, 0.1454617647f, 0.1023264706f)
+                    .setObstaclesWidth(0.089315f, 0.089315f, 0.089315f, 0.089315f)
+                    .setObstaclesHeight(0.0924088235f, 0.0924088235f, 0.0924088235f, 0.0924088235f)
+                    .setObstaclesPositionVariation(
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0018f)
+                                    .setyVelocity(0f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0018f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0018f)
+                                    .setyVelocity(0f),
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0f)
+                                    .setyVelocity(0.0018f)
+                    );
+        }
+
+        //LEVEL95
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0,0,2,0,0,0,0,0,0,3,0},
+                                    {0,2,5,2,2,0,0,0,3,5,3},
+                                    {0,5,5,2,5,2,1,0,5,5,0},
+                                    {2,5,2,5,5,1,0,4,5,3,0},
+                                    {0,2,2,5,2,0,0,0,3,0,0},
+                                    {0,5,0,2,1,0,1,3,0,0,0},
+                                    {0,5,1,0,0,1,3,0,3,0,0},
+                                    {0,1,5,1,0,0,0,2,0,0,0},
+                                    {0,5,5,0,0,3,2,3,2,1,0},
+                                    {1,5,1,1,0,0,3,0,1,5,1},
+                                    {0,1,1,5,1,2,0,2,5,5,0},
+                                    {0,0,5,5,0,1,2,1,5,1,0},
+                                    {0,1,5,1,1,5,1,0,1,0,0},
+                                    {0,0,1,0,5,5,0,0,0,0,0},
+                                    {0,0,0,1,5,1,0,0,0,0,0},
+                                    {0,0,0,0,1,0,0,0,0,0,0}
+                            })
+                    .setWindType(Level.WIND_TYPE_RIGHT)
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.00025f)
+                                    .setMinWidth_BI(0.05f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setAlwaysDecrease(true))
+                    .setSpecialBallPercentage(0.63f)
+                    .setWindowsQuantity(1)
+                    .setWindowsDistance(0.15f)
+                    .setWindowsY(0.3f)
+                    .setWindowsHeight(0.3f)
+                    .setWindowsQuantityOfLines(3)
+                    .setWindowsVelocity(-0.003f);
+        }
+
+        //LEVEL96
+        l += 1;
+        if (levelNumber == l) {
+            levelBuilder
+                    .setTargetsMap(
+                            new int[][]{
+                                    {0,0,0,0,0,1,0,0,0,0,0},
+                                    {0,0,0,0,0,2,0,0,0,0,0},
+                                    {0,3,0,0,0,2,0,0,0,3,0},
+                                    {3,3,3,0,1,2,1,0,3,3,0},
+                                    {0,3,3,0,1,2,1,0,3,3,3},
+                                    {0,3,3,3,1,1,1,3,3,3,0},
+                                    {0,1,3,1,1,1,1,1,3,1,0},
+                                    {0,1,1,1,1,0,1,1,1,1,0},
+                                    {0,1,1,1,1,0,1,1,1,1,0},
+                                    {0,1,1,2,1,0,1,2,1,1,0},
+                                    {0,1,2,2,0,0,0,2,2,1,0},
+                                    {0,2,2,2,1,1,1,2,2,2,0},
+                                    {0,2,2,2,1,1,1,2,2,2,0},
+                                    {0,2,2,1,1,1,1,1,2,2,0},
+                                    {0,2,1,1,1,3,1,1,1,2,0},
+                                    {0,1,1,3,2,3,2,3,1,1,0}
+                            })
+                    .setBarsScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.0055f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.625f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f),
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(true)
+                                    .setIncreaseHeight(false)
+                                    .setWidthVelocity(0.0055f)
+                                    .setHeightVelocity(0f)
+                                    .setMinWidth_BI(0.625f)
+                                    .setMaxWidth_BI(1.5f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f))
+                    .setFakeBallPercentage(0.6f)
+                    .setObstaclesQuantity(3)
+                    .setObstaclesX(0.01481f, 0.6418083333f, 0.9226166667f)
+                    .setObstaclesY(0.2617941176f, 0.0169117647f, 0.0169117647f)
+                    .setObstaclesWidth(0.0582483333f, 0.089315f, 0.089315f)
+                    .setObstaclesHeight(0.2294647059f, 0.0924088235f, 0.0924088235f)
+                    .setObstaclesPositionVariation(
+                            null,
+                            new PositionVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setMaxX(0.99f)
+                                    .setMinX(0.01f)
+                                    .setMaxY(0.9f)
+                                    .setMinY(0.01f)
+                                    .setxVelocity(0.0018f)
+                                    .setyVelocity(0f),
+                            null
+                    )
+                    .setObstaclesScaleVariation(
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setIncreaseHeight(true)
+                                    .setWidthVelocity(0f)
+                                    .setHeightVelocity(0.012f)
+                                    .setMinWidth_BI(1f)
+                                    .setMaxWidth_BI(100000f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f),
+                            null,
+                            new ScaleVariationDataBuilder()
+                                    .setIsActive(true)
+                                    .setIncreaseWidth(false)
+                                    .setIncreaseHeight(true)
+                                    .setWidthVelocity(0f)
+                                    .setHeightVelocity(0.012f)
+                                    .setMinWidth_BI(1f)
+                                    .setMaxWidth_BI(100000f)
+                                    .setMinHeight_BI(1f)
+                                    .setMaxHeight_BI(1f)
+                    );
+        }
 
         if (levelNumber == 1000) {
             levelBuilder
