@@ -37,7 +37,7 @@ public class Entity{
     final public static int TYPE_TEXT_BOX = 21;
     final public static int TYPE_WIND = 22;
     final public static int TYPE_WINDOW_GAME = 23;
-    final public static int TYPE_TARGET_GROUP = 23;
+    final public static int TYPE_TARGET_GROUP = 24;
     
     
 

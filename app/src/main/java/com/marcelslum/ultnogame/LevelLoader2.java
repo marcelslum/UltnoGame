@@ -1559,34 +1559,31 @@ public class LevelLoader2 {
                                     {1,0,1,1,1,0,1,1,1,0,1},
                                     {0,2,1,1,1,4,1,1,1,2,0},
                                     {0,2,1,1,1,4,1,1,1,2,0},
-                                    {1,2,1,0,1,0,1,0,1,2,3},
+                                    {1,2,1,0,1,1,1,0,1,2,3},
                                     {1,0,1,1,1,0,1,1,1,0,3},
-                                    {0,1,1,1,1,2,1,1,1,1,0},
-                                    {0,1,1,1,1,2,1,1,1,1,0},
-                                    {0,1,1,1,1,2,1,1,1,1,0},
                                     {0,1,1,0,1,0,1,0,1,1,0},
-                                    {2,0,1,3,1,0,1,3,1,0,2},
+                                    {2,0,1,3,1,1,1,3,1,0,2},
                                     {2,3,1,3,1,3,1,3,1,3,2},
                                     {2,3,1,0,1,3,1,0,1,3,2}
                                     })
-                    .setSpecialBallPercentage(0.63f)
+                    .setSpecialBallPercentage(0.68f)
                     .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
                                     .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00025f)
+                                    .setWidthVelocity(0.00018f)
                                     .setMinWidth_BI(0.05f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true),
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
                                     .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00025f)
+                                    .setWidthVelocity(0.00018f)
                                     .setMinWidth_BI(0.05f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true))
                     .setWindType(Level.WIND_TYPE_RIGHT)
-                    .setFakeBallPercentage(0.6f);
+                    .setFakeBallPercentage(0.1f);
         }
 
         //LEVEL92
@@ -1659,11 +1656,12 @@ public class LevelLoader2 {
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f)
                             )
+
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.15f)
                     .setWindowsY(0.3f)
                     .setWindowsHeight(0.3f)
-                    .setWindowsQuantityOfLines(1)
+                    .setWindowsQuantityOfLines(2)
                     .setWindowsVelocity(-0.002f)
                     .setInvertedButtons(true);
         }
@@ -1691,18 +1689,18 @@ public class LevelLoader2 {
                                     {0,1,1,0,0,1,0,0,1,1,0}
                             })
 
-                    .setObstaclesQuantity(3)
+                    .setObstaclesQuantity(5)
                     .setObstaclesX(0.0005366667f, 0.0698133333f, 0.4791083333f, 0.892615f, 0.9639133333f)
-                    .setObstaclesY(0.5624235294f, 0.1993205882f, 0.1993205882f, 0.1993205882f, 0.5624235294f)
+                    .setObstaclesY(0.6f, 0.1993205882f, 0.1993205882f, 0.1993205882f, 0.6f)
                     .setObstaclesWidth(0.0355566667f, 0.0355566667f, 0.0355566667f, 0.0355566667f, 0.0355566667f)
-                    .setObstaclesHeight(0.1996f, 0.1996f, 0.1996f, 0.1996f, 0.1996f)
+                    .setObstaclesHeight(0.18f, 0.1996f, 0.1996f, 0.1996f, 0.18f)
                     .setWindowsQuantity(2)
                     .setWindowsDistance(0.15f, 0.15f)
-                    .setWindowsY(0.3f, 0.5f)
+                    .setWindowsY(0.15f, 0.4f)
                     .setWindowsHeight(0.15f, 0.15f)
-                    .setWindowsQuantityOfLines(1)
+                    .setWindowsQuantityOfLines(2, 2)
                     .setWindowsVelocity(0.002f, 0.003f)
-                    .setFakeBallPercentage(0.6f);
+                    .setFakeBallPercentage(0.08f);
 
 
         }
@@ -1713,8 +1711,7 @@ public class LevelLoader2 {
             levelBuilder
                     .setTargetsMap(
                             new int[][]{
-                                    {1,1,1,3,2,3,2,3,1,1,1},
-                                    {1,0,1,1,1,3,1,1,1,0,1},
+                                    {1,0,1,3,2,3,2,3,1,0,1},
                                     {1,0,0,1,1,1,1,1,0,0,1},
                                     {1,0,0,0,1,1,1,0,0,0,1},
                                     {1,0,0,0,1,1,1,0,0,0,1},
@@ -1728,7 +1725,6 @@ public class LevelLoader2 {
                                     {3,0,3,1,1,2,1,1,3,0,1},
                                     {1,3,1,1,1,2,1,1,1,3,1},
                                     {1,1,1,0,1,2,1,0,1,1,1},
-                                    {1,1,0,0,1,1,1,0,0,1,1}
                             })
                     .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
@@ -1737,7 +1733,7 @@ public class LevelLoader2 {
                                     .setIncreaseHeight(false)
                                     .setWidthVelocity(0.0055f)
                                     .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.625f)
+                                    .setMinWidth_BI(0.75f)
                                     .setMaxWidth_BI(1.5f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f),
@@ -1747,13 +1743,15 @@ public class LevelLoader2 {
                                     .setIncreaseHeight(false)
                                     .setWidthVelocity(0.0055f)
                                     .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.625f)
+                                    .setMinWidth_BI(0.75f)
                                     .setMaxWidth_BI(1.5f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f))
                     .setObstaclesQuantity(4)
-                    .setObstaclesX(0.1011766667f, 0.2636766667f, 0.477565f, 0.8091283333f)
-                    .setObstaclesY(0.1023264706f, 0.1454617647f, 0.1454617647f, 0.1023264706f)
+
+
+                    .setObstaclesX(0.1011766667f, 0.2636766667f, 0.6442316667f, 0.8091283333f)
+                    .setObstaclesY(0.0523264706f, 0.0954617647f, 0.0954617647f, 0.0523264706f)
                     .setObstaclesWidth(0.089315f, 0.089315f, 0.089315f, 0.089315f)
                     .setObstaclesHeight(0.0924088235f, 0.0924088235f, 0.0924088235f, 0.0924088235f)
                     .setObstaclesPositionVariation(
@@ -1820,21 +1818,21 @@ public class LevelLoader2 {
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
                                     .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00025f)
-                                    .setMinWidth_BI(0.05f)
+                                    .setWidthVelocity(0.0002f)
+                                    .setMinWidth_BI(0.75f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true),
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
                                     .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00025f)
-                                    .setMinWidth_BI(0.05f)
+                                    .setWidthVelocity(0.0002f)
+                                    .setMinWidth_BI(0.75f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true))
                     .setSpecialBallPercentage(0.63f)
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.15f)
-                    .setWindowsY(0.3f)
+                    .setWindowsY(0.25f)
                     .setWindowsHeight(0.3f)
                     .setWindowsQuantityOfLines(3)
                     .setWindowsVelocity(-0.003f);
@@ -1865,36 +1863,30 @@ public class LevelLoader2 {
                                     {0,2,2,2,1,1,1,2,2,2,0},
                                     {0,2,2,2,1,1,1,2,2,2,0},
                                     {0,2,2,1,1,1,1,1,2,2,0},
-                                    {0,2,1,1,1,3,1,1,1,2,0},
-                                    {0,1,1,3,2,3,2,3,1,1,0}
+                                    {0,2,1,3,2,3,2,3,1,2,0},
                             })
                     .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
-                                    .setIncreaseWidth(true)
-                                    .setIncreaseHeight(false)
-                                    .setWidthVelocity(0.0055f)
-                                    .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.625f)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.0002f)
+                                    .setMinWidth_BI(0.75f)
                                     .setMaxWidth_BI(1.5f)
-                                    .setMinHeight_BI(1f)
-                                    .setMaxHeight_BI(1f),
+                                    .setAlwaysDecrease(true),
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
-                                    .setIncreaseWidth(true)
-                                    .setIncreaseHeight(false)
-                                    .setWidthVelocity(0.0055f)
-                                    .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.625f)
+                                    .setIncreaseWidth(false)
+                                    .setWidthVelocity(0.0002f)
+                                    .setMinWidth_BI(0.75f)
                                     .setMaxWidth_BI(1.5f)
-                                    .setMinHeight_BI(1f)
-                                    .setMaxHeight_BI(1f))
-                    .setFakeBallPercentage(0.6f)
+                                    .setAlwaysDecrease(true))
+                    .setFakeBallPercentage(0.15f)
                     .setObstaclesQuantity(3)
+
                     .setObstaclesX(0.01481f, 0.6418083333f, 0.9226166667f)
-                    .setObstaclesY(0.2617941176f, 0.0169117647f, 0.0169117647f)
-                    .setObstaclesWidth(0.0582483333f, 0.089315f, 0.089315f)
-                    .setObstaclesHeight(0.2294647059f, 0.0924088235f, 0.0924088235f)
+                    .setObstaclesY(0.2617941176f, 0.0169117647f, 0.2533147059f)
+                    .setObstaclesWidth(0.0582483333f, 0.089315f, 0.0582483333f)
+                    .setObstaclesHeight(0.2294647059f, 0.0924088235f, 0.2294647059f)
                     .setObstaclesPositionVariation(
                             null,
                             new PositionVariationDataBuilder()
@@ -1953,8 +1945,8 @@ public class LevelLoader2 {
                                 {0,1,1,0,1,1,1,1,7,1,1},
                                 {0,1,1,0,1,1,1,1,1,1,1},
                                 {5,5,5,5,1,1,1,1,1,1,1},
-                                {5,5,5,5,1,1,1,1,1,1,1},
-                                {1,1,1,1,1,1,1,0,0,0,1}
+                                {5,5,5,5,1,1,1,0,0,0,1},
+
                             })
                     .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
@@ -1974,13 +1966,13 @@ public class LevelLoader2 {
                     .setSpecialBallPercentage(0.63f)
                     .setObstaclesQuantity(3)
                     .setObstaclesX(0.0194166667f, 0.2012816667f, 0.2012816667f)
-                    .setObstaclesY(0.4820941176f, 0.0161058824f, 0.0.3107764706f)
+                    .setObstaclesY(0.4820941176f, 0.0161058824f, 0.3107764706f)
                     .setObstaclesWidth(0.0530716667f, 0.0530716667f, 0.0530716667f)
                     .setObstaclesHeight(0.0581470588f, 0.0581470588f, 0.0581470588f)
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.20f)
-                    .setWindowsY(0.25f)
-                    .setWindowsHeight(0.5f)
+                    .setWindowsY(0.18f)
+                    .setWindowsHeight(0.4f)
                     .setWindowsQuantityOfLines(5)
                     .setWindowsVelocity(0.003f);
         }
@@ -1996,23 +1988,20 @@ public class LevelLoader2 {
                     .setBallsTargetsAppend(targetsAppend)
                     .setTargetsMap(
                             new int[][]{
-                                
-                                {1,1,1,1,1,1,1,1,3,1,1}
-                                {1,3,1,1,4,1,1,3,1,1,0}
-                                {0,1,3,1,1,1,3,1,1,0,0}
-                                {0,1,1,3,1,3,1,1,0,0,1}
-                                {1,0,1,1,3,1,1,0,0,1,1}
-                                {1,0,1,1,1,1,0,0,1,1,1}
-                                {1,1,0,1,1,0,0,1,1,1,1}
-                                {1,1,0,1,1,0,4,1,2,1,1}
-                                {1,1,0,1,1,0,1,1,2,1,1}
-                                {1,1,0,1,1,0,0,1,1,1,1}
-                                {1,0,1,1,1,1,0,0,1,1,1}
-                                {1,0,1,1,2,1,1,0,0,1,1}
-                                {0,1,1,2,1,2,1,1,0,0,1}
-                                {0,1,2,1,1,1,2,1,1,0,0}
-                                {1,2,1,0,0,0,1,2,1,1,0}
-                                {1,1,1,0,0,0,1,1,2,1,1}
+                                {1,3,1,1,4,1,1,3,1,1,0},
+                                {0,1,3,1,1,1,3,1,1,0,0},
+                                {0,1,1,3,1,3,1,1,0,0,1},
+                                {1,0,1,1,3,1,1,0,0,1,1},
+                                {1,0,1,1,1,1,0,0,1,1,1},
+                                {1,1,0,1,1,0,0,1,1,1,1},
+                                {1,1,0,1,1,0,4,1,2,1,1},
+                                {1,1,0,1,1,0,1,1,2,1,1},
+                                {1,1,0,1,1,0,0,1,1,1,1},
+                                {1,0,1,1,1,1,0,0,1,1,1},
+                                {1,0,1,1,2,1,1,0,0,1,1},
+                                {0,1,1,2,1,2,1,1,0,0,1},
+                                {0,1,2,1,1,1,2,1,1,0,0},
+                                {1,2,1,0,0,0,1,2,1,1,0},
                             })
                      .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
@@ -2025,13 +2014,22 @@ public class LevelLoader2 {
                                     .setMaxWidth_BI(1.5f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f),
-                            null)
-                    .setFakeBallPercentage(0.6f)
+                             new ScaleVariationDataBuilder()
+                                     .setIsActive(true)
+                                     .setIncreaseWidth(true)
+                                     .setIncreaseHeight(false)
+                                     .setWidthVelocity(0f)
+                                     .setHeightVelocity(0f)
+                                     .setMinWidth_BI(0.625f)
+                                     .setMaxWidth_BI(1.5f)
+                                     .setMinHeight_BI(1f)
+                                     .setMaxHeight_BI(1f))
+                    .setFakeBallPercentage(0.12f)
                     .setObstaclesQuantity(2)
                     .setObstaclesX(0.46793f, 0.476205f)
-                    .setObstaclesY(0.2871058824f, 0.7357411765f)
-                    .setObstaclesWidth(0.0500933333f, 0.0368833333f)
-                    .setObstaclesHeight(0.1012323529f, 0.0552588235f)
+                    .setObstaclesY(0.2959294118f, 0.7357411765f)
+                    .setObstaclesWidth(0.063426f, 0.0368833333f)
+                    .setObstaclesHeight(0.0924088235f, 0.0552588235f)
                     .setObstaclesScaleVariation(
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
@@ -2097,7 +2095,8 @@ public class LevelLoader2 {
                 targetsAppend.add(new int[]{});
                 targetsAppend.add(new int[]{7, 14, 22, 30, 38});
                 levelBuilder
-                    .setBallsTargetsAppend(targetsAppend)
+                        .setBallsTargetsAppend(targetsAppend)
+                        .setTargetsMap(
                             new int[][]{
                                 {5,1,5,1,0,1,1,1,0,0,0},
                                 {5,1,5,1,0,1,1,1,0,0,0},
@@ -2135,7 +2134,7 @@ public class LevelLoader2 {
                                     .setAlwaysDecrease(true))
                     .setSpecialBallPercentage(0.63f)
                     .setWindType(Level.WIND_TYPE_LEFT)
-                    .setFakeBallPercentage(0.6f)
+                    .setFakeBallPercentage(0.08f)
                 
  
                     .setObstaclesQuantity(3)
@@ -2178,9 +2177,9 @@ public class LevelLoader2 {
                     )
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.20f)
-                    .setWindowsY(0.33f)
-                    .setWindowsHeight(0.4f)
-                    .setWindowsQuantityOfLines(7)
+                    .setWindowsY(0.15f)
+                    .setWindowsHeight(0.28f)
+                    .setWindowsQuantityOfLines(4)
                     .setWindowsVelocity(-0.003f);
         }
 

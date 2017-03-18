@@ -182,13 +182,13 @@ public class WindowGame extends PhysicalObject{
             }
 
             for (int i = 0; i < quantityOfSquares; i++) {
-                Utils.insertRectangleIndicesData(this.indicesData, i * 6, i * 4);
-                Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
+                Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+                Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, 29);
             }
 
-            this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
-            this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
-            this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+            verticesBuffer = Utils.generateFloatBuffer(verticesData);
+            indicesBuffer = Utils.generateShortBuffer(indicesData);
+            uvsBuffer = Utils.generateFloatBuffer(uvsData);
         }
 
         public void move(float vx, float maxDistance) {

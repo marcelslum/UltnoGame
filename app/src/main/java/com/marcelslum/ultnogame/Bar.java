@@ -137,7 +137,6 @@ public class Bar extends Rectangle{
 
     }
 
-
     public void setDrawInfo(){
         verticesData = new float[12];
         insertVerticesData(this.verticesData,0);
@@ -375,7 +374,8 @@ public class Bar extends Rectangle{
     public void onCollision() {
 
         for (int i = 0; i < collisionsData.size(); i++){
-            if (collisionsData.get(i).object.name.equals("bordaE")) {
+
+            if (collisionsData.get(i).object.type == Entity.TYPE_LEFT_BORDER) {
                 Level.levelObject.levelGoalsObject.notifyLeftBorderTouch();
 
                 Log.e(TAG, " - notify secretLevel2Steps on left "+secretLevel2Steps);
@@ -401,7 +401,7 @@ public class Bar extends Rectangle{
 
             }
 
-            if (collisionsData.get(i).object.name.equals("bordaD")){
+            if (collisionsData.get(i).object.type == Entity.TYPE_RIGHT_BORDER){
                 Level.levelObject.levelGoalsObject.notifyRightBorderTouch();
 
                 Log.e(TAG, " - notify secretLevel2Steps on right"+secretLevel2Steps);

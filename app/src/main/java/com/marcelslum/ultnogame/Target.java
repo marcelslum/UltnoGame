@@ -36,7 +36,7 @@ public class Target extends Rectangle {
     public void render(float[] matrixView, float[] matrixProjection) {
         float normalAlpha = alpha;
         alpha = normalAlpha * ghostAlpha;
-        super.render(matrixView, matrixProjection);
+        render(matrixView, matrixProjection);
         alpha = normalAlpha;
     }
 

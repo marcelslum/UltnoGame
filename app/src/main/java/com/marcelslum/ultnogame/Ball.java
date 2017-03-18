@@ -782,7 +782,7 @@ public class Ball extends Circle{
             float initialAngle = (float)Math.toDegrees(Math.atan2(Math.abs(dvy), Math.abs(dvx)));
             ballBehaviourData.setInitialAngle(initialAngle);
 
-            Bar barCollided = (Bar) collisionsData.get(this.collisionBarNumber).object;
+            Bar barCollided = (Bar) collisionsData.get(collisionBarNumber).object;
             barCollided.shineAfterBallCollision.values.get(0)[1] = barCollided.shine.numberForAnimation2;
             barCollided.shineAfterBallCollision.start();
 
@@ -850,23 +850,53 @@ public class Ball extends Circle{
             
             //Log.e(TAG, "angleToAdd "+ angleToAdd);
 
-            if (dvx < 0 && collisionsData.get(collisionBarNumber).object.vx < 0){
+            float totalResponseX = 0;
+            boolean collidedWithLeftBorder = false;
+            boolean collidedWithRightBorder = false;
+            for (int i = 0; i < collisionsData.get(collisionBarNumber).object.collisionsData.size(); i++) {
+                Log.e(TAG, i+" name  " + collisionsData.get(collisionBarNumber).object.collisionsData.get(i));
+                totalResponseX += collisionsData.get(collisionBarNumber).object.collisionsData.get(i).responseX;
+                if (collisionsData.get(collisionBarNumber).object.collisionsData.get(i).object.type == Entity.TYPE_LEFT_BORDER){
+                    collidedWithLeftBorder = true;
+                } else if (collisionsData.get(collisionBarNumber).object.collisionsData.get(i).object.type == Entity.TYPE_RIGHT_BORDER){
+                    collidedWithRightBorder = true;
+                }
+            }
+
+            Log.e(TAG, "collidedWithLeftBorder " + collidedWithLeftBorder);
+            Log.e(TAG, "collidedWithRightBorder " + collidedWithRightBorder);
+
+            Log.e(TAG, "collisionsData.get(collisionBarNumber).object.vx " + collisionsData.get(collisionBarNumber).object.vx);
+            Log.e(TAG, "totalResponseX " + totalResponseX);
+
+            float speedToConsider = collisionsData.get(collisionBarNumber).object.vx + totalResponseX;
+
+            if (speedToConsider < 0 && collidedWithLeftBorder){
+                speedToConsider = 0;
+            } else if (speedToConsider > 0 && collidedWithRightBorder){
+                speedToConsider = 0;
+            }
+
+
+            Log.e(TAG, "speedToConsider " + speedToConsider);
+
+            if (dvx < 0 && speedToConsider < 0){
                 velocityAdd = false;
                 mAngleToRotate = angleToRotate + angleToAdd;
                 ballBehaviourData.setAngleIncreaseWithBarMovement();
-            } else if (dvx < 0 && collisionsData.get(collisionBarNumber).object.vx > 0){
+            } else if (dvx < 0 && speedToConsider > 0){
                 velocityAdd = true;
                 mAngleToRotate = - (angleToRotate + angleToAdd);
                 ballBehaviourData.setAngleDecreaseWithBarMovement();
-            } else if (dvx > 0 && collisionsData.get(collisionBarNumber).object.vx > 0){
+            } else if (dvx > 0 && speedToConsider > 0){
                 velocityAdd = false;
                 mAngleToRotate = -(angleToRotate + angleToAdd);
                 ballBehaviourData.setAngleIncreaseWithBarMovement();
-            } else if (dvx > 0 && collisionsData.get(this.collisionBarNumber).object.vx < 0){
+            } else if (dvx > 0 && speedToConsider < 0){
                 velocityAdd = true;
                 mAngleToRotate = angleToRotate + angleToAdd;
                 ballBehaviourData.setAngleDecreaseWithBarMovement();
-            } else if (collisionsData.get(collisionBarNumber).object.vx == 0){
+            } else if (speedToConsider == 0){
                 //Log.e(TAG, "barra sem velocidade, adicionando apenas o angleToAdd");
                 mAngleToRotate = angleToAdd;
             }
@@ -874,7 +904,7 @@ public class Ball extends Circle{
             //Log.e(TAG, "mAngleToRotate após add "+ mAngleToRotate);
 
             float percentageOfBarAccelerationApplied = 0.75f;
-            if (collisionsData.get(this.collisionBarNumber).object.vx != 0) {
+            if (speedToConsider != 0) {
                 percentageOfBarAccelerationApplied = 0.75f + (barCollided.accelPercentage * 0.5f);
                 if (percentageOfBarAccelerationApplied >= 1.2 && !isFake) {
                     Level.levelObject.levelGoalsObject.ballReachedWithMaximunBarSpped();
@@ -907,7 +937,7 @@ public class Ball extends Circle{
             final_vx  = vx;
             final_vy  = vy;
 
-            if (collisionsData.get(collisionBarNumber).object.vx == 0 && mAngleToRotate == 0) {
+            if (speedToConsider == 0 && mAngleToRotate == 0) {
 
                 ballBehaviourData.notifyNotSpeedChange();
                 
@@ -924,7 +954,7 @@ public class Ball extends Circle{
 
                 // VELOCIDADELog.e("ball", "barra em movimento, alterando a velocidade ");
                 
-                if (collisionsData.get(this.collisionBarNumber).object.vx != 0) {
+                if (speedToConsider != 0) {
                     
                     float velocityScalePorcentage = ((maxLen - minLen) * velocityVariation)/(maxLen - minLen);
                     //Log.e("ball", "velocityScalePorcentage antes "+velocityScalePorcentage);
@@ -948,14 +978,9 @@ public class Ball extends Circle{
                         final_vx = final_vx * scalePorcentage;
                         final_vy = final_vy * scalePorcentage;
                         //Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
-                        
-                        markNotMinOrMaxVelocity();
-
                     } else {
                         //Log.e("ball", "velocidade maior que o máximo ou menor que o mínimo");
                         if (possibleVelocityLen <= minLen){
-                            
-                            markMinVelocity();
                             //Log.e("ball", "velocidade menor que o mínimo");
                             final_vx = final_vx * scalePorcentage;
                             final_vy = final_vy * scalePorcentage;
@@ -967,9 +992,6 @@ public class Ball extends Circle{
                             final_vy = final_vy * scaleToMin;
                             //Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(final_vx, final_vy));
                         } else if (possibleVelocityLen >= maxLen){
-                            
-                            markMaxVelocity();
-                            
                             //Log.e("ball", "velocidade maior que o máximo");
                             final_vx = final_vx * scalePorcentage;
                             final_vy = final_vy * scalePorcentage;
@@ -1094,8 +1116,6 @@ public class Ball extends Circle{
                 quarentineBalls.remove(i);
                 quarentineBallsState.remove(i);
             }
-
-
         }
     }
     
@@ -1205,10 +1225,8 @@ public class Ball extends Circle{
             final_vy = possibleVelocityRotateY;
             ballBehaviourData.notifyNotMinOrMaxAngleReached();
             ballBehaviourData.setFinalAngle(testAngle);
-            markNotMinOrMaxAngle();
         } else {
             if (testAngle >= maxAngle) {
-                markMaxAngle();
                 Log.e("ball", "testAngle > maxAngle");
                 if (mAngleToRotate < 0f) {
                     Log.e("ball", "angleToRotate < 0f");
@@ -1218,7 +1236,6 @@ public class Ball extends Circle{
                     mAngleToRotate -= testAngle - maxAngle;
                 }
             } else if (testAngle <= minAngle) {
-                markMinAngle();
                 Log.e("ball", "testAngle < minAngle");
                 if (mAngleToRotate > 0f) {
                     Log.e("ball", "angleToRotate > 0f");
@@ -1235,12 +1252,7 @@ public class Ball extends Circle{
             final_vy = (float) Utils.getYRotatedFromDegrees(vx, vy, mAngleToRotate);
             
             ballBehaviourData.setFinalAngle((float) Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx))));
-            
-        } 
-        
-
-
-        
+        }
     }
 
 
@@ -1260,19 +1272,13 @@ public class Ball extends Circle{
     }
     
     public void markMinAngle(){
-            if (!onMinAngle){
-                ballBehaviourData.notifyMinAngleReached();
-                onMinAngle = true;
-            }
+            onMinAngle = true;
             onMaxAngle = false;  
     }
     
     public void markMaxAngle(){
-            if (!onMaxAngle){
-                ballBehaviourData.notifyMaxAngleReached();
-                onMaxAngle = true;
-            }
-            onMinAngle = false;  
+            onMaxAngle = true;
+            onMinAngle = false;
     }
     
     public void markNotMinOrMaxAngle(){
@@ -1281,19 +1287,13 @@ public class Ball extends Circle{
     }
     
     public void markMinVelocity(){
-            if (!onMinVelocity){
-                ballBehaviourData.notifyMinVelocityReached();
-                onMinVelocity = true;
-            }
-            onMaxVelocity = false;  
+            onMinVelocity = true;
+            onMaxVelocity = false;
     }
     
     public void markMaxVelocity(){
-            if (!onMaxVelocity){
-                ballBehaviourData.notifyMaxVelocityReached();
-                onMaxVelocity = true;
-            }
-            onMinVelocity = false;  
+            onMaxVelocity = true;
+            onMinVelocity = false;
     }
     
     public void markNotMinOrMaxVelocity(){

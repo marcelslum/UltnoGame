@@ -63,7 +63,7 @@ public class Background extends Entity {
         Texture.getTextureById(textureId).changeBitmap(bitmap);
 
         program = Game.imageColorizedFxProgram;
-        this.alpha = 0.8f;
+        alpha = 0.8f;
 
         uvXUp = true;
         uvYUp = true;
@@ -124,8 +124,8 @@ public class Background extends Entity {
             }
         }
 
-        Utils.insertRectangleUvData(this.uvsData, 0, uvx1, uvx2, uvy1, uvy2);
-        this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        Utils.insertRectangleUvData(uvsData, 0, uvx1, uvx2, uvy1, uvy2);
+        uvsBuffer = Utils.generateFloatBuffer(uvsData);
     }
 
     @Override
@@ -141,14 +141,18 @@ public class Background extends Entity {
     public void setDrawInfo() {
         initializeData(12, 6, 8, 0);
 
-        Utils.insertRectangleVerticesData(this.verticesData, 0, -10f, width+20, -10f, height+20, 0f);
-        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
+        Utils.insertRectangleVerticesData(verticesData, 0, -10f, width+20, -10f, height+20, 0f);
+        verticesBuffer = Utils.generateFloatBuffer(verticesData);
 
-        Utils.insertRectangleIndicesData(this.indicesData, 0, 0);
-        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
+        Utils.insertRectangleIndicesData(indicesData, 0, 0);
+        indicesBuffer = Utils.generateShortBuffer(indicesData);
 
-        Utils.insertRectangleUvData(this.uvsData, 0, uvx1, uvx2, uvy1, uvy2);
-        this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        Utils.insertRectangleUvData(uvsData, 0, uvx1, uvx2, uvy1, uvy2);
+        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+
+        //Utils.insertRectangleColorsData(colorsData, 0, Utils.getRandonFloat(-0.1f, 0.1f),
+        //        0f, Utils.getRandonFloat(-0.1f, 0.1f), 1f);
+        //colorsBuffer = Utils.generateFloatBuffer(colorsData);
     }
 
     @Override

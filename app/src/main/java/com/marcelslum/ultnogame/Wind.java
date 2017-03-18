@@ -88,9 +88,9 @@ public class Wind extends Entity{
             Utils.insertRectangleColorsData(colorsData, i * 16, waves[i].initX, waves[i].finalX, waves[i].frequency, waves[i].y);
         }
 
-        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
-        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
-        this.colorsBuffer = Utils.generateFloatBuffer(this.colorsData);
+        verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
+        indicesBuffer = Utils.generateShortBuffer(this.indicesData);
+        colorsBuffer = Utils.generateFloatBuffer(this.colorsData);
     }
 
     public void stop(){

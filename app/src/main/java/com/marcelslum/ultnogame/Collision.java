@@ -127,12 +127,12 @@ public abstract class Collision {
                             }
                         }
 
-                        if (a.name == "bar" && b.name == "bar"){
-                            Log.e(TAG, " maxIndex "+maxIndex);
-                            Log.e(TAG, " max "+max);
-                            Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
-                            Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
-                        }
+                        //if (a.name == "bar" && b.name == "bar"){
+                        //    Log.e(TAG, " maxIndex "+maxIndex);
+                        //    Log.e(TAG, " max "+max);
+                        //    Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
+                        //    Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
+                        //}
 
                         int quantityPassagens;
 
