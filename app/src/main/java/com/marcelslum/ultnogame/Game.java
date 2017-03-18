@@ -363,6 +363,9 @@ public class Game {
         if (state == GAME_STATE_INTERSTITIAL){
             mainActivity.showInterstitial();
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
+
+            mainActivity.showAdView();
+
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
             levelGoalsPanel = new LevelGoalsPanel("levelGoalsPanel", resolutionX * 0.2f, resolutionY * 0.2f, resolutionX * 0.025f, resolutionX * 0.79f);
@@ -384,7 +387,11 @@ public class Game {
 
             ButtonHandler.buttonContinue.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
+
         } else if (state == GAME_STATE_OBJETIVO_PAUSE){
+
+            mainActivity.showAdView();
+
             levelGoalsPanel.appearGrayAndShine();
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
@@ -395,12 +402,12 @@ public class Game {
                 MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 999));
             }
             ButtonHandler.buttonReturnObjectivesPause.unblockAndDisplay();
+
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
 
             stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();
-
 
             if (Tutorial.hasUnvisitedTutorial()){
                 MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
@@ -417,14 +424,21 @@ public class Game {
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
             MessagesHandler.messageConqueredStarsTotal.setY(resolutionY * 0.15f);
-            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.3f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.25f);
         } else if (state == GAME_STATE_MENU_TUTORIAL){
+
+            mainActivity.showAdView();
+
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuTutorial));
             MenuHandler.updateTutorialMenu();
             MenuHandler.tutorialMenu.appear();
             ButtonHandler.buttonReturn.unblockAndDisplay();
+
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
+
+            mainActivity.showAdView();
+
             MenuHandler.updateLevelMenu();
             MenuHandler.levelMenu.appear();
 
@@ -441,7 +455,7 @@ public class Game {
             MessagesHandler.messageConqueredStarsTotal.display();
 
             MessagesHandler.messageConqueredStarsTotal.setY(resolutionY*0.15f);
-            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.3f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.25f);
 
         } else if (state == GAME_STATE_INTRO) {
             mainActivity.hideAdView();
@@ -450,14 +464,22 @@ public class Game {
             Splash.init();
             Splash.display();
         } else if (state == GAME_STATE_OPCOES){
+
+            mainActivity.showAdView();
+
             tittle.display();
             MenuHandler.menuOptions.appearAndUnblock(50);
+
         } else if (state == GAME_STATE_OPCOES_GAME){
+
+            mainActivity.showAdView();
+
             MenuHandler.menuInGame.blockAndClearDisplay();
             MenuHandler.menuInGameOptions.appearAndUnblock(100);
             MessagesHandler.messageInGame.y = gameAreaResolutionY*0.25f;
             MessagesHandler.messageInGame.display();
         } else if (state == GAME_STATE_MENU){
+
             ConnectionHandler.menuConnectionAttempts = 0;
             if (!sameState) {
                 if (previousState != GAME_STATE_OPCOES) {
@@ -491,7 +513,7 @@ public class Game {
             ConnectionHandler.verify();
 
         } else if (state == GAME_STATE_PREPARAR){
-
+            mainActivity.hideAdView();
             Acelerometer.secretLevel3Steps = 0;
 
             MessagesHandler.messageTime.clearAnimations();
@@ -571,6 +593,7 @@ public class Game {
             verifyDead();
 
         } else if (state == GAME_STATE_JOGAR){
+            mainActivity.hideAdView();
             TimeHandler.resumeTimeOfLevelPlay();
             if (SaveGame.saveGame.music) {
                 Sound.music.start();
@@ -598,6 +621,8 @@ public class Game {
 
             freeAllGameEntities();
         } else if (state == GAME_STATE_DERROTA){
+
+            mainActivity.showAdView();
 
             stopAndReleaseMusic();
             Sound.play(Sound.soundGameOver, 1, 1, 0);
@@ -638,6 +663,9 @@ public class Game {
                 }
             }
         } else if (state == GAME_STATE_PAUSE){
+
+            mainActivity.showAdView();
+
             ButtonHandler.buttonReturnObjectivesPause.block();
             ButtonHandler.buttonReturnObjectivesPause.clearDisplay();
 
@@ -950,7 +978,7 @@ public class Game {
             MessagesHandler.starForMessage.increaseAlpha(500, 1f);
             MessagesHandler.messageConqueredStarsTotal.increaseAlpha(500, 1f);
             MessagesHandler.messageConqueredStarsTotal.setY(resolutionY * 0.2f);
-            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.3f);
+            MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.25f);
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
 
@@ -1011,7 +1039,6 @@ public class Game {
             animMessageConqueredStarsTotal.start();
 
         } else if (state == GAME_STATE_TUTORIAL) {
-            
             MessagesHandler.messageMenu.clearDisplay();
             MessagesHandler.messageSubMenu.clearDisplay();
             MenuHandler.tutorialMenu.clearDisplay();

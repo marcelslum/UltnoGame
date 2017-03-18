@@ -33,8 +33,8 @@ public class Button extends Entity{
 
         float lw = width * listenerScale;
         float lh = height * listenerScale;
-        float lx = this.x - (lw - width);
-        float ly = this.y - (lh - height);
+        float lx = x - ((lw - width)/2f);
+        float ly = y - ((lh - height)/2f);
 
         final Button finalButton =  this;
         setListener(new InteractionListener("listenerButton"+this.name, lx, ly, lw, lh, 5000, this,

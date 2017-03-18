@@ -20,9 +20,11 @@ public class LevelsGroupData {
     int finalLevel;
     boolean isLocked;
     ArrayList<LevelData> levelsData;
+    int number;
 
-    public LevelsGroupData(String name, int firstLevel, int finalLevel, int starsToUnlock, int conqueredStars, int textureUnit, int textureMap) {
+    public LevelsGroupData(String name, int number, int firstLevel, int finalLevel, int starsToUnlock, int conqueredStars, int textureUnit, int textureMap) {
         this.starsToUnlock = starsToUnlock;
+        this.number = number;
         this.conqueredStars = conqueredStars;
         this.name = name;
         this.firstLevel = firstLevel;

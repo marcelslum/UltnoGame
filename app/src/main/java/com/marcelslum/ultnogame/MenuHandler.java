@@ -51,8 +51,8 @@ public class MenuHandler {
                             SaveGame.saveGame.newGroupsSeen = true;
                             SaveGame.saveGame.lastStars = StarsHandler.conqueredStarsTotal;
                         }
-
                         Game.currentLevelsGroupDataSelected = lgd;
+                        SaveGame.saveGame.currentGroupNumber = lgd.number;
                         Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
                     }
                 }, false, false);
@@ -152,13 +152,19 @@ public class MenuHandler {
     }
 
     public static void updateLevelMenu(){
+
+
         
         levelMenu.clear();
-        
-        levelMenu.currentTranslateX = 0;
 
         if (Game.currentLevelsGroupDataSelected == null){
             Game.currentLevelsGroupDataSelected = LevelsGroupData.levelsGroupData.get(0);
+        } else {
+            if (Game.currentLevelsGroupDataSelected.number != SaveGame.saveGame.currentGroupNumber){
+                SaveGame.saveGame.currentGroupNumber = Game.currentLevelsGroupDataSelected.number;
+                levelMenu.currentTranslateX = 0;
+            }
+
         }
 
         for (int i = 0; i < Game.currentLevelsGroupDataSelected.levelsData.size(); i++){
@@ -575,6 +581,7 @@ public class MenuHandler {
         tutorialMenu = new MenuIcon("tutorialMenu", 0f, Game.resolutionY * 0.3f, Game.resolutionY * 0.4f);
 
         if (SaveGame.saveGame != null) {
+            levelMenu.currentTranslateX = 0;
             groupMenu.currentTranslateX = SaveGame.saveGame.currentGroupMenuTranslateX;
             tutorialMenu.currentTranslateX = SaveGame.saveGame.currentTutorialMenuTranslateX;
         }

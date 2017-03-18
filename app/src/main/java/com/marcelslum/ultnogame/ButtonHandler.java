@@ -94,13 +94,13 @@ public class ButtonHandler {
         if (invertedButtons){
             x = Game.resolutionX * 0.87f;
             if (barsQuantity > 1) {
-                x = Game.resolutionX * 0.72f;
+                x = Game.resolutionX * 0.68f;
             }
         } else {
             x = Game.resolutionX * 0.03f;
         }
 
-        ButtonHandler.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        ButtonHandler.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         ButtonHandler.button1Left.setTextureMap(19);
         ButtonHandler.button1Left.textureMapUnpressed = 19;
         ButtonHandler.button1Left.textureMapPressed = 18;
@@ -110,13 +110,13 @@ public class ButtonHandler {
         if (invertedButtons){
             x = Game.resolutionX * 0.03f;
             if (barsQuantity > 1) {
-                x = Game.resolutionX * 0.18f;
+                x = Game.resolutionX * 0.22f;
             }
         } else {
             x = Game.resolutionX * 0.87f;
         }
 
-        ButtonHandler.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+        ButtonHandler.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
         ButtonHandler.button2Right.setTextureMap(20);
         ButtonHandler.button2Right.textureMapUnpressed = 20;
         ButtonHandler.button2Right.textureMapPressed = 17;
@@ -126,9 +126,9 @@ public class ButtonHandler {
             if (invertedButtons) {
                 x = Game.resolutionX * 0.87f;
             } else {
-                x = Game.resolutionX * 0.18f;
+                x = Game.resolutionX * 0.22f;
             }
-            ButtonHandler.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+            ButtonHandler.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
             ButtonHandler.button1Right.setTextureMap(20);
             ButtonHandler.button1Right.textureMapUnpressed = 20;
             ButtonHandler.button1Right.textureMapPressed = 17;
@@ -138,9 +138,9 @@ public class ButtonHandler {
             if (invertedButtons) {
                 x = Game.resolutionX * 0.03f;
             } else {
-                x = Game.resolutionX * 0.72f;
+                x = Game.resolutionX * 0.68f;
             }
-            ButtonHandler.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+            ButtonHandler.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
             ButtonHandler.button2Left.setTextureMap(19);
             ButtonHandler.button2Left.textureMapUnpressed = 19;
             ButtonHandler.button2Left.textureMapPressed = 18;

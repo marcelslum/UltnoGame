@@ -83,10 +83,6 @@ public class MessagesHandler {
 
         messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));
 
-        Animation animMessageConqueredStarsTotal = Utils.createAnimation3v(messageConqueredStarsTotal, "alpha", "alpha", 6500, 0f, 1f, 0.92f, 0.4f, 1f, 1f, true, true);
-        animMessageConqueredStarsTotal.excludeChild();
-        animMessageConqueredStarsTotal.start();
-
         starForMessage = new Image("frame", Game.resolutionX*0.85f, MessagesHandler.messageConqueredStarsTotal.y - (Game.resolutionY*0.05f*0.02f),
                 Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURE_BUTTONS_BALLS_STARS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
 

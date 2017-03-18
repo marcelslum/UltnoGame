@@ -20,7 +20,7 @@ public class LevelDataLoader {
         
         //GRUPO 1
         int levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group1name), nl, nl+levelsQuantity-1, 0, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 1);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group1name), 1,  nl, nl+levelsQuantity-1, 0, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 1);
                 // ---------- LEVEL1
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
                 // ---------- LEVEL2
@@ -36,7 +36,7 @@ public class LevelDataLoader {
 
         //GRUPO 2
         levelsQuantity = 4;  // starst to unlock 7
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group2name), nl, nl+levelsQuantity-1, 12, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 2);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group2name), 2, nl, nl+levelsQuantity-1, 12, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 2);
                 // ---------- LEVEL5
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 4);
@@ -53,7 +53,7 @@ public class LevelDataLoader {
 
         //GRUPO 3
         levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group3name), nl, nl+levelsQuantity-1, 26, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group3name), 3, nl, nl+levelsQuantity-1, 26, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL9
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 7);
@@ -70,7 +70,7 @@ public class LevelDataLoader {
 
         //GRUPO 4
         levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group4name), nl, nl+levelsQuantity-1, 5, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group4name), 4, nl, nl+levelsQuantity-1, 5, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL13
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 9);
@@ -87,7 +87,7 @@ public class LevelDataLoader {
 
         //GRUPO 5
         levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group5name), nl, nl+levelsQuantity-1, 20, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group5name), 5, nl, nl+levelsQuantity-1, 20, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL17
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 12);
@@ -104,7 +104,7 @@ public class LevelDataLoader {
 
         //GRUPO 6
         levelsQuantity = 3;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group6name), nl, nl+levelsQuantity-1, 20, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group6name), 6, nl, nl+levelsQuantity-1, 20, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL21
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -118,7 +118,7 @@ public class LevelDataLoader {
 
         //GRUPO 7
         levelsQuantity = 2;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group7name), nl, nl+levelsQuantity-1, 25, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group7name), 7, nl, nl+levelsQuantity-1, 25, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL24
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -135,7 +135,7 @@ public class LevelDataLoader {
         
         //GRUPO 8
         levelsQuantity = 3;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group8name), nl, nl+levelsQuantity-1, 30, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group8name), 8, nl, nl+levelsQuantity-1, 30, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL28
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -149,7 +149,7 @@ public class LevelDataLoader {
 
         //GRUPO 9
         levelsQuantity = 3;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group9name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group9name), 9, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL31
                 nl += 1;
                 l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -163,7 +163,7 @@ public class LevelDataLoader {
 
         //GRUPO 10
         levelsQuantity = 3;
-            l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group10name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group10name), 10, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL34
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -177,7 +177,7 @@ public class LevelDataLoader {
 
         //GRUPO 11
         levelsQuantity = 4;
-            l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group11name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+            l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group11name), 11, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL37
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -194,7 +194,7 @@ public class LevelDataLoader {
 
         //GRUPO 12
         levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group12name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group12name), 12, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL41
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -211,7 +211,7 @@ public class LevelDataLoader {
 
         //GRUPO 13
         levelsQuantity = 5;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group13name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group13name), 13, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL45
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -231,7 +231,7 @@ public class LevelDataLoader {
 
         //GRUPO 14
         levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group14name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group14name), 14, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL50
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -248,7 +248,7 @@ public class LevelDataLoader {
 
         //GRUPO 15
         levelsQuantity = 5;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group15name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group15name), 15, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL54
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -268,7 +268,7 @@ public class LevelDataLoader {
         
         //GRUPO 16
         levelsQuantity = 6;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group16name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group16name), 16, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL59
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -291,7 +291,7 @@ public class LevelDataLoader {
 
         //GRUPO 17
         levelsQuantity = 6;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group17name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group17name), 17, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL65
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -314,7 +314,7 @@ public class LevelDataLoader {
 
         //GRUPO 18
         levelsQuantity = 8;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group18name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group18name), 18, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL71
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -344,7 +344,7 @@ public class LevelDataLoader {
         
         //GRUPO 19
         levelsQuantity = 12;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group19name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group19name), 19, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL79
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);
@@ -385,7 +385,7 @@ public class LevelDataLoader {
         
          //GRUPO 20
         levelsQuantity = 12;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group20name), nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
+        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group20name), 20, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL91
             nl += 1;
             l.addLevel("Nível "+String.valueOf(nl), nl, Texture.TEXTURE_LEVEL_ICONS, 1);

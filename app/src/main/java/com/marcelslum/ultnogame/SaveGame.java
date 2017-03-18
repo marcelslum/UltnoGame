@@ -21,6 +21,7 @@ public class SaveGame {
 
     public int maxNumberOfLevels;
     public int currentLevelNumber;
+    public int currentGroupNumber = 0;
     public long[] pointsLevels;
     public int[] starsLevels;
     
@@ -513,6 +514,11 @@ public class SaveGame {
         if (MenuHandler.tutorialMenu != null) {
             saveGame.currentTutorialMenuTranslateX = MenuHandler.tutorialMenu.currentTranslateX;
         }
+
+        if (MenuHandler.levelMenu != null) {
+            saveGame.currentLevelMenuTranslateX = MenuHandler.levelMenu.currentTranslateX;
+        }
+
 
         try {
             JSONObject obj = new JSONObject();
