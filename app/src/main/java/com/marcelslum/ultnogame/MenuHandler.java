@@ -764,7 +764,7 @@ public class MenuHandler {
         menuGameOver = new Menu("menuGameOver",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, font);
 
         // adiciona a opção continuar
-        menuGameOver.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
+        menuGameOver.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.tentarNovamente), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
 

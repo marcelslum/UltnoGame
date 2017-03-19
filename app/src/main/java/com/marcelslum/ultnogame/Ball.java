@@ -516,20 +516,66 @@ public class Ball extends Circle{
                     //Log.e(TAG, "v2x " + v2x);
                     //Log.e(TAG, "v2y " + v2y);
 
-                    float initialLen = Utils.getVectorMagnitude(dvx, dvy);
-                    Log.e(TAG, "initialLen " + initialLen);
-                    float otherBallInitialLen = Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy);
-                    Log.e(TAG, "otherBallInitialLen " + otherBallInitialLen);
+
+
+
+
+
 
                     float finalDvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall1+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall1);
                     Log.e(TAG, "finalDvx " + finalDvx);
                     float finalDvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall1+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall1);
                     Log.e(TAG, "finalDvy " + finalDvy);
 
+                    if (finalDvx < 0){
+                        if (dvx > 0){
+                            dvx *= -1;
+                        }
+                    } else if (finalDvx > 0){
+                        if (dvx < 0){
+                            dvx *= -1;
+                        }
+                    }
+
+                    if (finalDvy < 0){
+                        if (dvy > 0){
+                            dvy *= -1;
+                        }
+                    } else if (finalDvy > 0){
+                        if (dvy < 0){
+                            dvy *= -1;
+                        }
+                    }
+
                     float otherBallFinalDvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall2+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall2);
                     Log.e(TAG, "otherBallFinalDvx " + otherBallFinalDvx);
                     float otherBallFinalDvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall2+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall2);
                     Log.e(TAG, "otherBallFinalDvy " + otherBallFinalDvy);
+
+                    if (otherBallFinalDvx < 0){
+                        if (otherBall.dvx > 0){
+                            otherBall.dvx *= -1;
+                        }
+                    } else if (otherBallFinalDvx > 0){
+                        if (otherBall.dvx < 0){
+                            otherBall.dvx *= -1;
+                        }
+                    }
+
+                    if (otherBallFinalDvy < 0){
+                        if (otherBall.dvy > 0){
+                            otherBall.dvy *= -1;
+                        }
+                    } else if (otherBallFinalDvy > 0){
+                        if (otherBall.dvy < 0){
+                            otherBall.dvy *= -1;
+                        }
+                    }
+
+                    float initialLen = Utils.getVectorMagnitude(dvx, dvy);
+                    Log.e(TAG, "initialLen " + initialLen);
+                    float otherBallInitialLen = Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy);
+                    Log.e(TAG, "otherBallInitialLen " + otherBallInitialLen);
 
                     float finalLen = Utils.getVectorMagnitude(finalDvx, finalDvy);
                     Log.e(TAG, "finalLen " + finalLen);

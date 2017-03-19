@@ -628,8 +628,6 @@ public class Game {
 
         } else if (state == GAME_STATE_DERROTA){
 
-            MenuHandler.menuInGame.getMenuOptionByName("Continuar").textObject.setText(getContext().getResources().getString(R.string.tentarNovamente));
-
             mainActivity.showAdView();
 
             stopAndReleaseMusic();
