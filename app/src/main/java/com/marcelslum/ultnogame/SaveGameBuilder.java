@@ -26,9 +26,15 @@ public class SaveGameBuilder {
     public int[]starsSecretLevels;
     public boolean[] secretLevelsUnlocked;
     public boolean[] secretLevelsSeen;
+    public int levelsPlayed;
 
 
     public SaveGameBuilder(){
+    }
+
+    public SaveGameBuilder setLevelsPlayed(int v){
+        this.levelsPlayed = v;
+        return this;
     }
     
     public SaveGameBuilder setPointsSecretLevels(long [] v){

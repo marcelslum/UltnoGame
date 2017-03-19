@@ -178,7 +178,6 @@ public class Game {
         Log.e("game", "init()");
 
         Splash.loaderConclude = false;
-        MyAchievements.loaded = false;
 
         initPrograms();
         initFont();
@@ -451,6 +450,9 @@ public class Game {
             MessagesHandler.messageSubMenu.display();
             MessagesHandler.messageSubMenu.setText(currentLevelsGroupDataSelected.name);
             ButtonHandler.buttonReturn.unblockAndDisplay();
+
+            ButtonHandler.buttonGroupLeaderboard.unblockAndDisplay();
+
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
 
@@ -627,6 +629,7 @@ public class Game {
             stopAndReleaseMusic();
             Sound.play(Sound.soundGameOver, 1, 1, 0);
 
+            SaveGame.addLevelPlayed();
 
             int totalStars = 0;
             for (int i = 0; i < Level.levelObject.levelGoalsObject.levelGoals.size(); i++){
@@ -649,18 +652,15 @@ public class Game {
                 if (SaveGame.saveGame.currentLevelNumber < 1000) {
                     if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] < points) {
                         SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] = points;
-                        ScoreHandler.setMaxScoreTotal();
-                        SaveGame.save();
-                        GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), points);
                     }
                 } else {
                     if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1000] < points) {
                         SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1000] = points;
-                        ScoreHandler.setMaxScoreTotal();
-                        SaveGame.save();
-                        GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), points);
                     }
                 }
+                ScoreHandler.setMaxScoreTotal();
+                SaveGame.save();
+                ScoreHandler.submitScores();
             }
         } else if (state == GAME_STATE_PAUSE){
 
@@ -668,7 +668,6 @@ public class Game {
 
             ButtonHandler.buttonReturnObjectivesPause.block();
             ButtonHandler.buttonReturnObjectivesPause.clearDisplay();
-
 
             TimeHandler.stopTimeOfLevelPlay();
 
@@ -713,6 +712,8 @@ public class Game {
         } else if (state == GAME_STATE_VITORIA){
 
             Level.levelObject.levelGoalsObject.setFinish(TimeHandler.stopTimeOfLevelPlay());
+
+            SaveGame.addLevelPlayed();
 
             //MessagesHandler.messageConqueredStarsTotal.y =  resolutionY*0.21f;
             //MessagesHandler.starForMessage.y = resolutionY*0.21f;
@@ -807,7 +808,7 @@ public class Game {
                 } else {
                     SaveGame.saveGame.pointsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000] = pointsTotal;
                 }
-                ScoreHandler.setMaxScoreTotal();
+                ScoreHandler.submitScores();
             }
             if (StarsHandler.previousStars < StarsHandler.newStars) {
                 if (SaveGame.saveGame.currentLevelNumber < 1000) {
@@ -816,8 +817,6 @@ public class Game {
                     SaveGame.saveGame.starsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000] = StarsHandler.newStars;
                 }
             }
-
-            GooglePlayGames.submitScore(mainActivity.mGoogleApiClient, mainActivity.getResources().getString(R.string.leaderboard_ranking), pointsTotal);
             SaveGame.save();
 
             // verifica a quantidade de bolas azuis, e atualiza a pontuação
@@ -915,6 +914,13 @@ public class Game {
             final int starsDiference = StarsHandler.newStars - StarsHandler.previousStars;
 
             int newStarsTotal = StarsHandler.conqueredStarsTotal + (StarsHandler.newStars - StarsHandler.previousStars);
+
+            GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                    Game.getContext().getResources().getString(R.string.achievement_coleta_mnima), starsDiference);
+            GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                    Game.getContext().getResources().getString(R.string.achievement_coleta_mdia), starsDiference);
+            GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                    Game.getContext().getResources().getString(R.string.achievement_coleta_mxima), starsDiference);
 
             if (StarsHandler.newStars > StarsHandler.previousStars){
                 float groupsUnblockedSize = resolutionX * 0.16f;
@@ -1861,6 +1867,8 @@ public class Game {
         if (ButtonHandler.buttonReturnObjectivesPause != null)
             ButtonHandler.buttonReturnObjectivesPause.prepareRender(matrixView, matrixProjection);
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.prepareRender(matrixView, matrixProjection);
+        if (ButtonHandler.buttonGroupLeaderboard != null) ButtonHandler.buttonGroupLeaderboard.prepareRender(matrixView, matrixProjection);
+
 
         MessagesHandler.bottomTextBox.prepareRender(matrixView, matrixProjection);
 
@@ -1899,6 +1907,8 @@ public class Game {
         if (ButtonHandler.buttonReturnObjectivesPause != null)
             ButtonHandler.buttonReturnObjectivesPause.verifyListener();
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.verifyListener();
+        if (ButtonHandler.buttonGroupLeaderboard != null) ButtonHandler.buttonGroupLeaderboard.verifyListener();
+
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.verifyListener();
         if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.verifyListener();
@@ -1932,6 +1942,7 @@ public class Game {
         list.add(ButtonHandler.buttonReturn);
         list.add(ButtonHandler.buttonReturnObjectivesPause);
         list.add(ButtonHandler.buttonContinue);
+        list.add(ButtonHandler.buttonGroupLeaderboard);
         list.add(MenuHandler.menuInGameOptions);
         list.add(SelectorHandler.selectorVibration);
         list.add(SelectorHandler.selectorMusic);

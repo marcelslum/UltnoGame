@@ -105,13 +105,6 @@ public class BallBehaviourData {
             velocityChanged = true;   
         }
             
-
-        if (finalLen > initialLen) {
-                MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_acelerando, 1);
-        } else if (initialLen > finalLen) {
-                MyAchievements.increment(Game.mainActivity.mGoogleApiClient, R.string.achievement_pisando_no_freio, 1);
-        }
-
         if (!velocityChanged){
             Level.levelObject.levelGoalsObject.notifyNotSpeedChange();
         }

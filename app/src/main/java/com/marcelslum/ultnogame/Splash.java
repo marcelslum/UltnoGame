@@ -34,7 +34,6 @@ public class Splash {
     private static Text message2;
 
     static boolean loaderConclude = false;
-    private static boolean loadingAchievements = false;
     private static boolean loadingSaveGame = false;
 
     static void init(){
@@ -150,6 +149,10 @@ public class Splash {
             animationMessageLoading.start();
             message2 = null;
         } else if (id == MESSAGE_INTERNET_NAO_CONECTADA){
+
+            timeInitConectando = Utils.getTime();
+            googleConnectionAttempts = 0;
+
             Log.e("setSplashState", "MESSAGE_INTERNET_NAO_CONECTADA");
             message1.clearAnimations();
             message1 = new Text("messageSplash1",
@@ -163,6 +166,10 @@ public class Splash {
             message1.display();
             message2.display();
         } else if (id == MESSAGE_GOOGLE_NAO_CONECTADO){
+
+            timeInitConectando = Utils.getTime();
+            googleConnectionAttempts = 0;
+
             Log.e("setSplashState", "MESSAGE_GOOGLE_NAO_CONECTADO");
             message1.clearAnimations();
             message1 = new Text("messageSplash1",
@@ -215,9 +222,6 @@ public class Splash {
                         Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
                         Storage.init(Game.mainActivity.getApplicationContext(), Game.currentPlayerId);
                     }
-                    if (MyAchievements.loaded) {
-                        Log.e("splash", "achievements carregados");
-                        loadingAchievements = false;
                         if (SaveGame.loaded){
                             Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
                             loadingSaveGame = false;
@@ -240,12 +244,6 @@ public class Splash {
                             Log.e("splash", "ainda carregando SaveGame");
 
                         }
-                    } else if (!loadingAchievements){
-                        Log.e("splash", "iniciando carregamento dos achievements");
-                        
-                        loadingAchievements = true;
-                        new LoadAchievementsAsyncTask().execute("");
-                    }
                 } else {
                     Log.e("splash", "ainda não conectado ao google");
                     if (googleConnectionAttempts < 6) {

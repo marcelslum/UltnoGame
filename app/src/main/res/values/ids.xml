@@ -6,8 +6,47 @@ Save this file as res/values/games-ids.xml in your project.
 <resources>
     <string name="app_id">672110194188</string>
     <string name="package_name">com.marcelslum.ultno</string>
-    <string name="achievement_acelerando">CgkIjNyO58cTEAIQBA</string>
-    <string name="achievement_pisando_no_freio">CgkIjNyO58cTEAIQBQ</string>
-    <string name="achievement_acelerando_2">CgkIjNyO58cTEAIQCQ</string>
-    <string name="leaderboard_ranking">CgkIjNyO58cTEAIQAw</string>
+
+    <string name="leaderboard_geral">CgkIjNyO58cTEAIQAw</string>
+    <string name="leaderboard_1">CgkIjNyO58cTEAIQCg</string>
+    <string name="leaderboard_2">CgkIjNyO58cTEAIQCw</string>
+    <string name="leaderboard_3">CgkIjNyO58cTEAIQDA</string>
+    <string name="leaderboard_4">CgkIjNyO58cTEAIQDQ</string>
+    <string name="leaderboard_5">CgkIjNyO58cTEAIQDg</string>
+    <string name="leaderboard_6">CgkIjNyO58cTEAIQDw</string>
+    <string name="leaderboard_7">CgkIjNyO58cTEAIQEA</string>
+    <string name="leaderboard_8">CgkIjNyO58cTEAIQEQ</string>
+    <string name="leaderboard_9">CgkIjNyO58cTEAIQEg</string>
+    <string name="leaderboard_10">CgkIjNyO58cTEAIQEw</string>
+    <string name="leaderboard_11">CgkIjNyO58cTEAIQFA</string>
+    <string name="leaderboard_12">CgkIjNyO58cTEAIQFQ</string>
+    <string name="leaderboard_13">CgkIjNyO58cTEAIQFg</string>
+    <string name="leaderboard_14">CgkIjNyO58cTEAIQFw</string>
+    <string name="leaderboard_15">CgkIjNyO58cTEAIQGA</string>
+    <string name="leaderboard_16">CgkIjNyO58cTEAIQGQ</string>
+    <string name="leaderboard_17">CgkIjNyO58cTEAIQGg</string>
+    <string name="leaderboard_18">CgkIjNyO58cTEAIQGw</string>
+    <string name="leaderboard_19">CgkIjNyO58cTEAIQHA</string>
+    <string name="leaderboard_20">CgkIjNyO58cTEAIQHQ</string>
+
+    <string name="achievement_iniciante">CgkIjNyO58cTEAIQHg</string>
+    <string name="achievement_aprendiz">CgkIjNyO58cTEAIQHw</string>
+    <string name="achievement_mestre">CgkIjNyO58cTEAIQIA</string>
+    <string name="achievement_coleta_mnima">CgkIjNyO58cTEAIQIQ</string>
+    <string name="achievement_coleta_mdia">CgkIjNyO58cTEAIQIg</string>
+    <string name="achievement_coleta_mxima">CgkIjNyO58cTEAIQIw</string>
+    <string name="achievement_segredo_1">CgkIjNyO58cTEAIQJA</string>
+    <string name="achievement_segredo_2">CgkIjNyO58cTEAIQJQ</string>
+    <string name="achievement_segredo_3">CgkIjNyO58cTEAIQJg</string>
+    <string name="achievement_segredo_4">CgkIjNyO58cTEAIQJw</string>
+    <string name="achievement_acelerar">CgkIjNyO58cTEAIQKA</string>
+    <string name="achievement_desacelerar">CgkIjNyO58cTEAIQKQ</string>
+    <string name="achievement_velocidade_mxima">CgkIjNyO58cTEAIQKg</string>
+    <string name="achievement_velocidade_mnima">CgkIjNyO58cTEAIQKw</string>
+    <string name="achievement_inclinao_negativa">CgkIjNyO58cTEAIQLA</string>
+    <string name="achievement_inclinao_positiva">CgkIjNyO58cTEAIQLQ</string>
+    <string name="achievement_inclinao_mnima">CgkIjNyO58cTEAIQLg</string>
+    <string name="achievement_inclinao_mxima">CgkIjNyO58cTEAIQLw</string>
+
+
 </resources>

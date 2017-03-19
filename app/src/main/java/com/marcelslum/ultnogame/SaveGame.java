@@ -41,11 +41,14 @@ public class SaveGame {
     public int lastStars;
     public boolean newGroupsSeen;
 
+    public int levelsPlayed;
+
 
     public static boolean loaded = false;
 
     public SaveGame(SaveGameBuilder builder) {
         maxNumberOfLevels = builder.maxNumberOfLevels;
+        levelsPlayed = builder.levelsPlayed;
         currentLevelNumber = builder.currentLevelNumber;
         pointsLevels = builder.pointsLevels;
         starsLevels = builder.starsLevels;
@@ -158,6 +161,7 @@ public class SaveGame {
 
             saveGame = new SaveGameBuilder()
                     .setMaxNumberOfLevels(Level.maxNumberOfLevels)
+                    .setLevelsPlayed(0)
                     .setCurrentLevelNumber(1)
                     .setPointsLevels(_pointsLevels)
                     .setStarsLevels(_starsLevels)
@@ -182,6 +186,7 @@ public class SaveGame {
 
     public static SaveGame mergeReturningHigher(SaveGame sg1, SaveGame sgLocal) {
         int fmaxNumberOfLevels;
+        int flevelsPlayed;
         int fcurrentLevelNumber;
         long[] fpointsLevels;
         int[] fstarsLevels;
@@ -198,6 +203,7 @@ public class SaveGame {
         int flastStars;
 
         fmaxNumberOfLevels = getHigher(sg1.maxNumberOfLevels, sgLocal.maxNumberOfLevels);
+        flevelsPlayed = getHigher(sg1.levelsPlayed, sgLocal.levelsPlayed);
         fcurrentLevelNumber = sgLocal.currentLevelNumber;
         ftutorialsViwed = getHigher(sg1.tutorialsViwed, sgLocal.tutorialsViwed);
         
@@ -220,6 +226,7 @@ public class SaveGame {
 
         return new SaveGameBuilder()
                 .setMaxNumberOfLevels(fmaxNumberOfLevels)
+                .setLevelsPlayed(flevelsPlayed)
                 .setCurrentLevelNumber(fcurrentLevelNumber)
                 .setTutorialsViwed(ftutorialsViwed)
                 .setPointsLevels(fpointsLevels)
@@ -339,6 +346,13 @@ public class SaveGame {
             }
 
             saveGameBuilder.setMaxNumberOfLevels(obj.getInt("maxNumberOfLevels"));
+
+            try {
+                saveGameBuilder.setLevelsPlayed(obj.getInt("levelsPlayed"));
+            } catch(JSONException e){
+                saveGameBuilder.setLevelsPlayed(0);
+            }
+
             saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
             
             
@@ -523,6 +537,7 @@ public class SaveGame {
         try {
             JSONObject obj = new JSONObject();
             obj.put("version", SERIAL_VERSION);
+            obj.put("levelsPlayed", saveGame.levelsPlayed);
             obj.put("maxNumberOfLevels", saveGame.maxNumberOfLevels);
             obj.put("currentLevelNumber", saveGame.currentLevelNumber);
             obj.put("pointsLevels", new JSONArray(saveGame.pointsLevels));
@@ -555,5 +570,16 @@ public class SaveGame {
             }
 
         }
+    }
+
+    public static void addLevelPlayed() {
+        saveGame.levelsPlayed += 1;
+
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_iniciante), 1);
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_aprendiz), 1);
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_mestre), 1);
     }
 }

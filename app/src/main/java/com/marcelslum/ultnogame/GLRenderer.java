@@ -184,7 +184,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             Game.verifyListeners();
 
 
-            /*
+
             if (frameDurations == null){
                 frameDurations = new ArrayList<>();
             }
@@ -205,11 +205,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
                 frameDurations.clear();
                 longestFrame = 0;
             }
-            */
 
-            if (elapsed > (frameDuration*2) && Game.gameState == Game.GAME_STATE_JOGAR){
-                Log.e("GLRenderer", "frame muito longo, reduzindo de " + elapsed + " para " + (frameDuration*2));
-                elapsed = (long)frameDuration*2;
+
+            if (elapsed > (frameDuration*3) && Game.gameState == Game.GAME_STATE_JOGAR){
+                Log.e("GLRenderer", "frame muito longo, reduzindo de " + elapsed + " para " + (frameDuration*3));
+                elapsed = (long)frameDuration*3;
             }
 
             Game.simulate(elapsed, frameDuration);

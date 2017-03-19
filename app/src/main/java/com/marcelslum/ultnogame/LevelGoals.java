@@ -104,29 +104,47 @@ public class LevelGoals {
         }
     }
 
+
+
     public void notifySecretLevelUnblocked(int i){
+
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"secretLevelUnblocked "+i);
         if (i == 1){
+
+            GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
+                    Game.getContext().getResources().getString(R.string.achievement_segredo_1));
+
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
             Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, Game.background.height * 0.0001f).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 2){
+
+            GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
+                    Game.getContext().getResources().getString(R.string.achievement_segredo_2));
+
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 3){
+            GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
+                    Game.getContext().getResources().getString(R.string.achievement_segredo_3));
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 4){ // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
+            GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
+                    Game.getContext().getResources().getString(R.string.achievement_segredo_4));
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
             Game.messages.showMessage("???");
             SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
+
+
+
         }
     }
 
@@ -294,6 +312,10 @@ public class LevelGoals {
     }
 
     public void notifyMaxAngleReached(){
+
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_inclinao_mxima), 1);
+
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxAngleReached");
         timesOfDecelerationWithoutReachingMaxAngle = 0;
 
@@ -310,6 +332,10 @@ public class LevelGoals {
     }
 
     public void notifyMinAngleReached(){
+
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_inclinao_mnima), 1);
+
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMinAngleReached");
         timesOfAccelerationWithoutReachingMinAngle = 0;
 
@@ -326,6 +352,10 @@ public class LevelGoals {
     }
 
     public void increaseAngle(){
+
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_inclinao_positiva), 1);
+
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"increaseAngle");
         timesWhereAngleIncreased += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -342,6 +372,10 @@ public class LevelGoals {
     }
 
     public void decreaseAngle(){
+
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_inclinao_negativa), 1);
+
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"decreaseAngle");
         timesWhereAngleDecreased += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -525,6 +559,10 @@ public class LevelGoals {
     }
 
     public void notifyMaxVelocityReached(){
+
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_velocidade_mxima), 1);
+
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxVelocityReached");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -536,6 +574,10 @@ public class LevelGoals {
     }
 
     public void notifyMinVelocityReached(){
+
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_velocidade_mnima), 1);
+
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMinVelocityReached");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -579,6 +621,10 @@ public class LevelGoals {
     public void accelerate(){
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerate");
 
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_acelerar),
+                1);
+
         // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
         if(secretLevel4Step == 0 || secretLevel4Step == 1 || secretLevel4Step == 4 || secretLevel4Step == 6 || secretLevel4Step == 9){
             secretLevel4Step += 1;
@@ -616,6 +662,11 @@ public class LevelGoals {
     }
 
     public void decelerate(){
+
+        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                Game.getContext().getResources().getString(R.string.achievement_desacelerar), 1);
+
+
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerate");
 
         // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10

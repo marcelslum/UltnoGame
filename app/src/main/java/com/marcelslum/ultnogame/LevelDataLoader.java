@@ -117,7 +117,7 @@ public class LevelDataLoader {
         LevelsGroupData.levelsGroupData.add(l);
 
         //GRUPO 7
-        levelsQuantity = 2;
+        levelsQuantity = 4;
         l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group7name), 7, nl, nl+levelsQuantity-1, 25, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
                 // ---------- LEVEL24
                 nl += 1;
@@ -384,7 +384,7 @@ public class LevelDataLoader {
         LevelsGroupData.levelsGroupData.add(l);
         
          //GRUPO 20
-        levelsQuantity = 12;
+        levelsQuantity = 10;
         l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group20name), 20, nl, nl+levelsQuantity-1, 35, LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_GROUP_ICONS, 3);
             // ---------- LEVEL91
             nl += 1;

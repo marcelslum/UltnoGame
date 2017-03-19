@@ -9,6 +9,7 @@ public class ButtonHandler {
     static Button buttonReturn;
     static Button buttonReturnObjectivesPause;
     static Button buttonContinue;
+    static Button buttonGroupLeaderboard;
     static Button button1Left;
     static Button button1Right;
     static Button button2Left;
@@ -58,6 +59,95 @@ public class ButtonHandler {
                 if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 }
+            }
+        });
+
+        buttonGroupLeaderboard = new Button("buttonGroupLeaderboard", Game.resolutionX - buttonSize*1.5f,
+                        Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize,
+                        Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
+
+        buttonGroupLeaderboard.setTextureMap(14);
+        buttonGroupLeaderboard.textureMapUnpressed = 14;
+        buttonGroupLeaderboard.textureMapPressed = 6;
+        buttonGroupLeaderboard.setOnPress(new Button.OnPress() {
+            @Override
+            public void onPress() {
+
+                Game.vibrate(Game.VIBRATE_SMALL);
+                Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
+
+                    String id;
+                    switch (Game.currentLevelsGroupDataSelected.number){
+                        case 1:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_1);
+                            break;
+                        case 2:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_2);
+                            break;
+                        case 3:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_3);
+                            break;
+                        case 4:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_4);
+                            break;
+                        case 5:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_5);
+                            break;
+                        case 6:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_6);
+                            break;
+                        case 7:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_7);
+                            break;
+                        case 8:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_8);
+                            break;
+                        case 9:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_9);
+                            break;
+                        case 10:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_10);
+                            break;
+                        case 11:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_11);
+                            break;
+                        case 12:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_12);
+                            break;
+                        case 13:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_13);
+                            break;
+                        case 14:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_14);
+                            break;
+                        case 15:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_15);
+                            break;
+                        case 16:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_16);
+                            break;
+                        case 17:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_17);
+                            break;
+                        case 18:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_18);
+                            break;
+                        case 19:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_19);
+                            break;
+                        case 20:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_20);
+                            break;
+                        default:
+                            id = Game.mainActivity.getResources().getString(R.string.leaderboard_1);
+                            break;
+                    }
+
+                    GooglePlayGames.showLeaderboards(Game.mainActivity.mGoogleApiClient, Game.mainActivity, id);
+
+                }
+
             }
         });
 

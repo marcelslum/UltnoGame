@@ -101,9 +101,9 @@ public class WindowGame extends PhysicalObject{
             Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
         }
         
-        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
-        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
-        this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        indicesBuffer = Utils.generateShortBuffer(indicesData);
+        uvsBuffer = Utils.generateFloatBuffer(uvsData);
 
 
         swgM.setDrawInfo(distanceToDraw, quantityOfLines);
@@ -250,9 +250,9 @@ public class WindowGame extends PhysicalObject{
                 Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
             }
 
-            this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
-            this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
-            this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+            verticesBuffer = Utils.generateFloatBuffer(verticesData);
+            indicesBuffer = Utils.generateShortBuffer(indicesData);
+            uvsBuffer = Utils.generateFloatBuffer(uvsData);
         }
 
         public void move(float vx, float maxDistance) {

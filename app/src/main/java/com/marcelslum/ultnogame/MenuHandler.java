@@ -746,7 +746,8 @@ public class MenuHandler {
         menuMain.addMenuOption("ranking", Game.getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                GooglePlayGames.showLeaderboards(Game.mainActivity.mGoogleApiClient, Game.mainActivity);
+                GooglePlayGames.showLeaderboards(Game.mainActivity.mGoogleApiClient, Game.mainActivity,
+                        Game.mainActivity.getResources().getString(R.string.leaderboard_geral));
             }
         });
 

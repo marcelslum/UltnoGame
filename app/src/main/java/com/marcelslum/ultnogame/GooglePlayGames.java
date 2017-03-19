@@ -30,10 +30,10 @@ public class GooglePlayGames {
         }
     }
 
-    public static void showLeaderboards(GoogleApiClient mGoogleApiClient, MainActivity fragmentActivity) {
+    public static void showLeaderboards(GoogleApiClient mGoogleApiClient, MainActivity fragmentActivity, String id) {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             fragmentActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                    Game.mainActivity.getResources().getString(R.string.leaderboard_ranking)), REQUEST_LEADERBOARD);
+                    id), REQUEST_LEADERBOARD);
         } else {
             Game.setGameState(Game.GAME_STATE_INTRO);
         }
