@@ -266,7 +266,82 @@ public class Ball extends Circle{
 
         super.prepareRender(matrixView, matrixProjection);
     }
-    
+
+
+    public void changeSpeedAndAngleAfterBallCollision(boolean angleAdd, boolean speedAdd){
+
+        Log.e(TAG, "changeSpeedAndAngleAfterBallCollision "+angleAdd+" "+speedAdd);
+
+        float mAngleToRotate;
+        if (angleAdd) {
+            mAngleToRotate = angleToRotate;
+        } else {
+            mAngleToRotate = -angleToRotate;
+        }
+
+        Log.e(TAG, "mAngleToRotate "+mAngleToRotate);
+
+        vx = dvx;
+        vy = dvy;
+
+        float lenOfInitialVelocity = Utils.getVectorMagnitude(initialDVX, initialDVY);
+        Log.e(TAG, "lenOfInitialVelocity "+lenOfInitialVelocity);
+        float maxLen = lenOfInitialVelocity * velocityMax_BI;
+        Log.e(TAG, "maxLen "+maxLen);
+        float minLen = lenOfInitialVelocity * velocityMin_BI;
+        Log.e(TAG, "minLen "+minLen);
+
+        final_vx  = vx;
+        final_vy  = vy;
+
+
+        float velocityScalePorcentage = ((maxLen - minLen) * velocityVariation)/(maxLen - minLen);
+
+        Log.e(TAG, "velocityScalePorcentage "+velocityScalePorcentage);
+
+        float scalePorcentage = 1f;
+        if (speedAdd){
+            scalePorcentage += velocityScalePorcentage;
+        } else  {
+            scalePorcentage -= velocityScalePorcentage;
+        }
+
+        Log.e(TAG, "scalePorcentage "+scalePorcentage);
+
+        float possibleVelocityLen = Utils.getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
+
+        Log.e(TAG, "possibleVelocityLen "+possibleVelocityLen);
+
+        if (possibleVelocityLen > minLen && possibleVelocityLen < maxLen){
+            Log.e(TAG, "possibleVelocityLen > minLen && possibleVelocityLen < maxLen ");
+            final_vx = final_vx * scalePorcentage;
+            final_vy = final_vy * scalePorcentage;
+        } else {
+            if (possibleVelocityLen <= minLen){
+                Log.e(TAG, "possibleVelocityLen <= minLen ");
+                final_vx = final_vx * scalePorcentage;
+                final_vy = final_vy * scalePorcentage;
+                float lenAfter = Utils.getVectorMagnitude(final_vx, final_vy);
+                float scaleToMin = minLen/lenAfter;
+                final_vx = final_vx * scaleToMin;
+                final_vy = final_vy * scaleToMin;
+            } else if (possibleVelocityLen >= maxLen){
+                Log.e(TAG, "possibleVelocityLen >= maxLen ");
+                final_vx = final_vx * scalePorcentage;
+                final_vy = final_vy * scalePorcentage;
+                float lenAfter = Utils.getVectorMagnitude(final_vx, final_vy);
+                float scaleToMax = maxLen/lenAfter;
+                final_vx = final_vx * scaleToMax;
+                final_vy = final_vy * scaleToMax;
+            }
+        }
+
+        // ROTAÇÃO
+        rotateTestingAngle(final_vx, final_vy, mAngleToRotate, false);
+
+        dvx = final_vx;
+        dvy = final_vy;
+    }
 
 
     public void onCollision(){
@@ -359,7 +434,7 @@ public class Ball extends Circle{
                     Log.e(TAG, "                  moveAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
                     
                     
-                    float starX = 0f;
+                    float starX;
                     if (positionX > otherBall.positionX){
                         starX = positionX + ((positionX - otherBall.positionX)/2f);
                     } else {
@@ -440,18 +515,49 @@ public class Ball extends Circle{
                     //Log.e(TAG, "v1y " + v1y);
                     //Log.e(TAG, "v2x " + v2x);
                     //Log.e(TAG, "v2y " + v2y);
+
+                    float initialLen = Utils.getVectorMagnitude(dvx, dvy);
+                    Log.e(TAG, "initialLen " + initialLen);
+                    float otherBallInitialLen = Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy);
+                    Log.e(TAG, "otherBallInitialLen " + otherBallInitialLen);
+
+                    float finalDvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall1+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall1);
+                    Log.e(TAG, "finalDvx " + finalDvx);
+                    float finalDvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall1+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall1);
+                    Log.e(TAG, "finalDvy " + finalDvy);
+
+                    float otherBallFinalDvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall2+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall2);
+                    Log.e(TAG, "otherBallFinalDvx " + otherBallFinalDvx);
+                    float otherBallFinalDvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall2+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall2);
+                    Log.e(TAG, "otherBallFinalDvy " + otherBallFinalDvy);
+
+                    float finalLen = Utils.getVectorMagnitude(finalDvx, finalDvy);
+                    Log.e(TAG, "finalLen " + finalLen);
+                    float otherBallFinalLen = Utils.getVectorMagnitude(otherBallFinalDvx, otherBallFinalDvy);
+                    Log.e(TAG, "otherBallFinalLen " + otherBallFinalLen);
+
+                    float initialAngle =  (float) Math.toDegrees(Math.atan2(dvy, dvx));
+                    Log.e(TAG, "initialAngle " + initialAngle);
+                    float otherBallInitialAngle =  (float) Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx));
+                    Log.e(TAG, "otherBallInitialAngle " + otherBallInitialAngle);
+
+                    float finalAngle =  (float) Math.toDegrees(Math.atan2(finalDvy, finalDvx));
+                    Log.e(TAG, "finalAngle " + finalAngle);
+                    float otherBallFinalAngle =  (float) Math.toDegrees(Math.atan2(otherBallFinalDvy, otherBallFinalDvx));
+                    Log.e(TAG, "otherBallFinalAngle " + otherBallFinalAngle);
+
+                    changeSpeedAndAngleAfterBallCollision(finalAngle > initialAngle, finalLen > initialLen);
+                    otherBall.changeSpeedAndAngleAfterBallCollision(otherBallFinalAngle > otherBallInitialAngle, otherBallFinalLen > otherBallInitialLen);
+
+                    //dvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall1+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall1);
+                    //dvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall1+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall1);
+                    //otherBall.dvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall2+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall2);
+                    //otherBall.dvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall2+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall2);
                     
-                    dvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall1+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall1);
-                    dvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall1+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall1);
-                    otherBall.dvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall2+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall2);
-                    otherBall.dvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall2+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall2);
-                    
-                    double magBall1After = Math.sqrt((dvx * dvx)+(dvy * dvy));
-                                        
-                    verifyMagnitudeVariation((float)magBall1, (float)magBall1After, velocityVariation * 2);
-                    
-                    double magBall2After = Math.sqrt((otherBall.dvx * otherBall.dvx)+(otherBall.dvy * otherBall.dvy));
-                    otherBall.verifyMagnitudeVariation((float)magBall2, (float)magBall2After, otherBall.velocityVariation * 2);
+                    //double magBall1After = Math.sqrt((dvx * dvx)+(dvy * dvy));
+                    //verifyMagnitudeVariation((float)magBall1, (float)magBall1After, velocityVariation * 2);
+                    //double magBall2After = Math.sqrt((otherBall.dvx * otherBall.dvx)+(otherBall.dvy * otherBall.dvy));
+                    //otherBall.verifyMagnitudeVariation((float)magBall2, (float)magBall2After, otherBall.velocityVariation * 2);
 
                     //dvx = (float)Utils.getXRotatedFromRad(f1x, f1y, -theta);
                     //dvy = (float)Utils.getYRotatedFromRad(f1x, f1y, -theta);
@@ -526,8 +632,7 @@ public class Ball extends Circle{
                     
                     
                     */
-
-                    checkDataAfterAnotherBallCollision();
+                    //??????????????????/////////////////////////////////////checkDataAfterAnotherBallCollision();
 
                     //Log.e("ball", "dv final " + dvx + " " + dvy);
                     //Log.e("ball", "dv final len --------" + Utils.getVectorMagnitude(dvx, dvy));
@@ -538,7 +643,7 @@ public class Ball extends Circle{
                     //Log.e("ball", "otherBall.dv initial" + otherBall.dvx + " " + otherBall.dvy);
                     //Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
 
-                    otherBall.checkDataAfterAnotherBallCollision();
+                    //??????????????????/////////////////////////////////otherBall.checkDataAfterAnotherBallCollision();
 
                     //Log.e("ball", "otherBall.dv final" + otherBall.dvx + " " + otherBall.dvy);
                     //Log.e("ball", "otherBall.dv len  --------" + Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy));
@@ -562,9 +667,6 @@ public class Ball extends Circle{
                     Log.e(TAG, "                  dvx "+ (otherBall.dvx));
                     Log.e(TAG, "                  dvy "+ (otherBall.dvy));
                     Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
-
-
-
                     /*
                     float projectedDistanceBetweenBall = Vector.distanceBetweenTwoPoints(positionX + dvx, positionY + dvy, otherBall.positionX + dvx, otherBall.positionY + dvy);
                     float radiusOfTwoBalls = radius + otherBall.radius;
@@ -761,7 +863,7 @@ public class Ball extends Circle{
             }
         }
 
-        if(this.collisionBar){
+        if(collisionBar){
 
             if (isFake){
                 Level.levelObject.levelGoalsObject.notifyFakeBallHited();
@@ -1008,7 +1110,7 @@ public class Ball extends Circle{
 
                 }
                 // ROTAÇÃO
-                rotateTestingAngle(final_vx, final_vy, mAngleToRotate);
+                rotateTestingAngle(final_vx, final_vy, mAngleToRotate, true);
                 ballBehaviourData.setFinalLen(Utils.getVectorMagnitude(final_vx, final_vy));
             }
             accelerate(150, final_vx, final_vy);
@@ -1209,7 +1311,7 @@ public class Ball extends Circle{
         }
     }
 
-    public void rotateTestingAngle(float vx, float vy, float angleToRotateToTest) {
+    public void rotateTestingAngle(float vx, float vy, float angleToRotateToTest, boolean notifyBehaviour) {
 
         float mAngleToRotate = angleToRotateToTest;
 
@@ -1223,8 +1325,10 @@ public class Ball extends Circle{
         if (testAngle < maxAngle && testAngle > minAngle) {
             final_vx = possibleVelocityRotateX;
             final_vy = possibleVelocityRotateY;
-            ballBehaviourData.notifyNotMinOrMaxAngleReached();
-            ballBehaviourData.setFinalAngle(testAngle);
+            if (notifyBehaviour) {
+                ballBehaviourData.notifyNotMinOrMaxAngleReached();
+                ballBehaviourData.setFinalAngle(testAngle);
+            }
         } else {
             if (testAngle >= maxAngle) {
                 Log.e("ball", "testAngle > maxAngle");
@@ -1250,8 +1354,10 @@ public class Ball extends Circle{
 
             final_vx = (float) Utils.getXRotatedFromDegrees(vx, vy, mAngleToRotate);
             final_vy = (float) Utils.getYRotatedFromDegrees(vx, vy, mAngleToRotate);
-            
-            ballBehaviourData.setFinalAngle((float) Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx))));
+
+            if (notifyBehaviour) {
+                ballBehaviourData.setFinalAngle((float) Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx))));
+            }
         }
     }
 
@@ -1577,7 +1683,7 @@ public class Ball extends Circle{
             Log.e(TAG, "------------- ALTERANDO ACELERAÇÃO");
             if (v == Acelerometer.MOVE_LEFT) {
                 Log.e(TAG, "------------- ROTATE LEFT");
-                rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, angleToRotate);
+                rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, angleToRotate, true);
 
                 if (accelFinalVelocityX > 0) {
                     ballBehaviourData.setAngleDecreaseWithBarInclination();
@@ -1588,7 +1694,7 @@ public class Ball extends Circle{
 
             } else if (v == Acelerometer.MOVE_RIGHT) {
                 Log.e(TAG, "------------- ROTATE RIGHT");
-                rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate);
+                rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate, true);
 
                 if (accelFinalVelocityX > 0) {
                     ballBehaviourData.setAngleIncreaseWithBarInclination();
@@ -1605,7 +1711,7 @@ public class Ball extends Circle{
             Log.e(TAG, "------------- ALTERANDO ROTAÇÃO");
             if (v == Acelerometer.MOVE_LEFT) {
                 Log.e(TAG, "------------- ROTATE LEFT");
-                rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, angleToRotate);
+                rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, angleToRotate, true);
 
                 if (accelFinalVelocityX > 0) {
                     ballBehaviourData.setAngleDecreaseWithBarInclination();
@@ -1615,7 +1721,7 @@ public class Ball extends Circle{
 
             } else if (v == Acelerometer.MOVE_RIGHT) {
                 Log.e(TAG, "------------- ROTATE RIGHT");
-                rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate);
+                rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate, true);
 
                 if (accelFinalVelocityX > 0) {
                     ballBehaviourData.setAngleIncreaseWithBarInclination();

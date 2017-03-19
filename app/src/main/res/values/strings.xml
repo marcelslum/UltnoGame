@@ -11,7 +11,8 @@
     <string name="messageGameOver">GAME OVER</string>
     <string name="score">score</string>
     <string name="pause">PAUSE</string>
-    <string name="continuarJogar">Continuar a jogar</string>
+    <string name="continuarJogar">Continuar</string>
+    <string name="tentarNovamente">Tentar novamente</string>
     <string name="continuarDepoisVitoria">Continuar</string>
     <string name="nivelConcluido1">NÍVEL </string>
     <string name="nivelConcluido2"> CONCLUÍDO</string>

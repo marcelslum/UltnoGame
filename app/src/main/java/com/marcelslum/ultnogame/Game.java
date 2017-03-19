@@ -95,6 +95,9 @@ public class Game {
 
     static int ballCollidedFx = 0;
 
+    static int timesInterstitialOnGameOver = 0;
+    static boolean interstitialNextPreparar = true;
+
     // options
     public static boolean isBlocked;
     
@@ -622,7 +625,10 @@ public class Game {
             resetTimeForPointsDecay();
 
             freeAllGameEntities();
+
         } else if (state == GAME_STATE_DERROTA){
+
+            MenuHandler.menuInGame.getMenuOptionByName("Continuar").textObject.setText(getContext().getResources().getString(R.string.tentarNovamente));
 
             mainActivity.showAdView();
 

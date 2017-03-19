@@ -1,5 +1,8 @@
 package com.marcelslum.ultnogame;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 /**
@@ -93,5 +96,18 @@ public class ConnectionHandler {
     public static void verify() {
         verifying = true;
         new InternetConnectionAsyncTask().execute("-");
+    }
+
+    public static boolean isConnectedWifi(){
+        ConnectivityManager cm = (ConnectivityManager)
+                Game.mainActivity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isAvailable() && info.isConnected()){
+            if (info.getType() == ConnectivityManager.TYPE_WIFI){
+                return true;
+            }
+        }
+        return false;
     }
 }

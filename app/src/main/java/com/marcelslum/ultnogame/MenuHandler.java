@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import static com.marcelslum.ultnogame.Game.GAME_STATE_PAUSE;
 import static com.marcelslum.ultnogame.Game.font;
+import static com.marcelslum.ultnogame.Game.interstitialNextPreparar;
 
 /**
  * Created by marcel on 26/01/2017.
@@ -766,11 +767,24 @@ public class MenuHandler {
         menuGameOver.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                menuGameOver.block();
-                Game.blockAndWaitTouchRelease();
-                LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                menuInGame.clearDisplay();
-                Game.setGameState(Game.GAME_STATE_PREPARAR);
+
+                Game.timesInterstitialOnGameOver += 1;
+
+                if (Game.timesInterstitialOnGameOver >= 3 || Game.timesInterstitialOnGameOver < 0) {
+                    Game.timesInterstitialOnGameOver = 0;
+                    menuGameOver.block();
+                    Game.blockAndWaitTouchRelease();
+                    menuInGame.clearDisplay();
+                    Game.interstitialNextPreparar = true;
+                    Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
+
+                } else {
+                    menuGameOver.block();
+                    Game.blockAndWaitTouchRelease();
+                    menuInGame.clearDisplay();
+                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+                    Game.setGameState(Game.GAME_STATE_PREPARAR);
+                }
             }
         });
 

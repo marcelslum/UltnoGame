@@ -35,8 +35,6 @@ import com.google.android.gms.games.Games;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import android.os.Vibrator;
 
-import java.text.NumberFormat;
-
 public class MainActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener,
         SensorEventListener{
@@ -46,7 +44,13 @@ public class MainActivity extends FragmentActivity implements
     public static Sensor mAccelerometer;
 
     private GLSurfaceView glSurfaceView;
-    private InterstitialAd interstitial;
+    private InterstitialAd interstitialWithVideo;
+    private InterstitialAd interstitialNoVideo;
+    private int interstitialActualMode = 0;
+    public final static int INTERSTITIAL_MODE_WITH_VIDEO = 1;
+    public final static int INTERSTITIAL_MODE_NO_VIDEO = 2;
+
+
     public GoogleApiClient mGoogleApiClient;
     AdView mAdView;
     private final static String TAG = "MainActivity";
@@ -159,9 +163,11 @@ public class MainActivity extends FragmentActivity implements
                 .build();
         mAdView.loadAd(adRequestBanner);
 
+		interstitialWithVideo = new InterstitialAd(MainActivity.this);
+        interstitialWithVideo.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
 
-		interstitial = new InterstitialAd(MainActivity.this);
-		interstitial.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
+        interstitialNoVideo = new InterstitialAd(MainActivity.this);
+        interstitialNoVideo.setAdUnitId("ca-app-pub-2413920269734587/7806070555");
 	
 		final AdRequest adRequest = new AdRequest.Builder()
 		    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -169,8 +175,8 @@ public class MainActivity extends FragmentActivity implements
             .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
             .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
             .build();
-		interstitial.loadAd(adRequest);
-		interstitial.setAdListener(new AdListener() {
+
+        interstitialWithVideo.setAdListener(new AdListener() {
 		    @Override
 		    public void onAdLoaded() {
 			}
@@ -188,13 +194,17 @@ public class MainActivity extends FragmentActivity implements
 
                 //ConnectionHandler.verify();
 
-                if (SaveGame.saveGame.currentLevelNumber < 1000){
+                if (Game.interstitialNextPreparar){
+                    Game.interstitialNextPreparar = false;
+                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+                    Game.setGameState(Game.GAME_STATE_PREPARAR);
+                } else if (SaveGame.saveGame.currentLevelNumber < 1000){
                     Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
                 } else {
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                 }
 
-                interstitial.loadAd(adRequest);
+                loadInterstitialAd();
 		    }
 
 		    @Override
@@ -205,11 +215,9 @@ public class MainActivity extends FragmentActivity implements
                 //    return;
                 //}
                 if (ConnectionHandler.internetState != ConnectionHandler.INTERNET_STATE_NOT_CONNECTED){
-                    interstitial.loadAd(adRequest);
+                    loadInterstitialAd();
                 }
-
 		    }
-
 		    @Override
 		    public void onAdLeftApplication() {
 		    }
@@ -218,9 +226,73 @@ public class MainActivity extends FragmentActivity implements
 		    public void onAdOpened() {
 		    }
 		});
-		interstitial.loadAd(adRequest);
-		
+
+        interstitialNoVideo.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdClosed() {
+
+                //ConnectionHandler.menuConnectionAttempts = 0;
+
+                Game.bordaB.y = Game.resolutionY;
+
+                Game.stopAndReleaseMusic();
+                Game.eraseAllGameEntities();
+                Game.eraseAllHudEntities();
+
+                //ConnectionHandler.verify();
+
+                if (SaveGame.saveGame.currentLevelNumber < 1000){
+                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                } else {
+                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                }
+                loadInterstitialAd();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Log.e("findStateMenu", "2" + "loader conclude "+Splash.loaderConclude);
+                //if (Splash.loaderConclude && Game.gameState != Game.GAME_STATE_INTRO) {
+                //    Game.setGameState(Game.GAME_STATE_MENU);
+                //    return;
+                //}
+                if (ConnectionHandler.internetState != ConnectionHandler.INTERNET_STATE_NOT_CONNECTED){
+                    loadInterstitialAd();
+                }
+            }
+            @Override
+            public void onAdLeftApplication() {
+            }
+
+            @Override
+            public void onAdOpened() {
+            }
+        });
+        loadInterstitialAd();
 	}
+
+	public void loadInterstitialAd(){
+
+        final AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
+                .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
+                .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
+                .build();
+        if (ConnectionHandler.isConnectedWifi()) {
+            Log.e(TAG, "Conectado ao Wiji - carregando interstitialWithVideo");
+            interstitialWithVideo.loadAd(adRequest);
+            interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
+        } else {
+            Log.e(TAG, "Conectado ao Wiji - carregando interstitialNoVideo");
+            interstitialActualMode = INTERSTITIAL_MODE_NO_VIDEO;
+            interstitialNoVideo.loadAd(adRequest);
+        }
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -304,17 +376,31 @@ public class MainActivity extends FragmentActivity implements
     public void showInterstitial() {
         runOnUiThread(new Runnable() {
             public void run() {
-            if (interstitial.isLoaded()) {
-                interstitial.show();
-            } else {
-                Log.e("MainActivity", "Interstitial ad is not loaded yet");
-                if (Game.gameState != Game.GAME_STATE_INTRO){
-                    Log.e("findStateMenu", "4");
 
-                    if (SaveGame.saveGame.currentLevelNumber < 1000){
-                        Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-                    } else {
-                        Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+            InterstitialAd interstitialAd;
+
+
+            if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {
+                Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
+                interstitialAd = interstitialWithVideo;
+            } else if (interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO){
+                Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
+                interstitialAd = interstitialNoVideo;
+            } else {
+                interstitialAd = interstitialNoVideo;
+            }
+            if (interstitialAd != null) {
+                if (interstitialAd.isLoaded()) {
+                    interstitialAd.show();
+                } else {
+                    Log.e("MainActivity", "Interstitial ad is not loaded yet");
+                    if (Game.gameState != Game.GAME_STATE_INTRO) {
+                        Log.e("findStateMenu", "4");
+                        if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                            Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                        } else {
+                            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                        }
                     }
                 }
             }

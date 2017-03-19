@@ -222,6 +222,7 @@ public class Splash {
                         Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
                         Storage.init(Game.mainActivity.getApplicationContext(), Game.currentPlayerId);
                     }
+
                         if (SaveGame.loaded){
                             Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
                             loadingSaveGame = false;
