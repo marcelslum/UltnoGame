@@ -50,6 +50,7 @@ public class Target extends Rectangle {
         program = Game.imageProgram;
         isMovable = false;
         isGhost = ghost;
+        alpha = 1;
 
         if (isGhost){
             ghostAlpha = 0f;

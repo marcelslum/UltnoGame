@@ -919,12 +919,14 @@ public class Game {
 
             int newStarsTotal = StarsHandler.conqueredStarsTotal + (StarsHandler.newStars - StarsHandler.previousStars);
 
-            GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
-                    Game.getContext().getResources().getString(R.string.achievement_coleta_mnima), starsDiference);
-            GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
-                    Game.getContext().getResources().getString(R.string.achievement_coleta_mdia), starsDiference);
-            GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
-                    Game.getContext().getResources().getString(R.string.achievement_coleta_mxima), starsDiference);
+            if (starsDiference > 0) {
+                GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                        Game.getContext().getResources().getString(R.string.achievement_coleta_mnima), starsDiference);
+                GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                        Game.getContext().getResources().getString(R.string.achievement_coleta_mdia), starsDiference);
+                GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                        Game.getContext().getResources().getString(R.string.achievement_coleta_mxima), starsDiference);
+            }
 
             if (StarsHandler.newStars > StarsHandler.previousStars){
                 float groupsUnblockedSize = resolutionX * 0.16f;
