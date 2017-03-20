@@ -9,15 +9,15 @@ android {
             storePassword 'marcelslum'
         }
     }
-    compileSdkVersion 24
+    compileSdkVersion 23
     buildToolsVersion '25.0.0'
     apply plugin: 'com.android.application'
     defaultConfig {
         applicationId 'com.marcelslum.ultno'
         minSdkVersion 19
-        targetSdkVersion 19
+        targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0-alpha"
     }
     buildTypes {
         release {
