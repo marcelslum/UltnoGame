@@ -132,6 +132,15 @@ public class MainActivity extends FragmentActivity implements
 
         initAds();
     }
+		
+		
+	private boolean detectOpenGLES30()
+	{
+	      ActivityManager am =
+		 ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
+	      ConfigurationInfo info = am.getDeviceConfigurationInfo();
+	      return ( info.reqGlEsVersion >= 0x30000 );
+	}
 
     public void hideAdView(){
         runOnUiThread(new Runnable() {
