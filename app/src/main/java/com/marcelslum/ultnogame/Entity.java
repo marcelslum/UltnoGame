@@ -12,6 +12,10 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Entity{
+    
+    final public static int ATTRIB_POS = 0;
+    final public static int ATTRIB_UV = 1;
+    final public static int ATTRIB_COLOR = 2;
 
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
@@ -451,6 +455,15 @@ public class Entity{
         setMatrixModel();
 
         GLES20.glUseProgram(program.get());
+        
+        
+        if (Game.isOpenGL30){
+            
+            glVertexAttribPointer( ATTRIB_POS, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+            glVertexAttribPointer( ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, 0, 0 );   
+            glVertexAttribPointer( ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0 );   
+            
+        }
 
         // get handle to vertex shader's vPosition member and add vertices
         int av4_verticesHandle = GLES20.glGetAttribLocation(program.get(), "av4_vertices");
