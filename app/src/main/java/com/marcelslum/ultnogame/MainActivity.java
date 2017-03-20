@@ -353,24 +353,24 @@ public class MainActivity extends FragmentActivity implements
         } else if (Game.gameState == Game.GAME_STATE_MENU) {
             onPause();
             moveTaskToBack(true);
-        } else if (Game.gameState != Game.GAME_STATE_INTRO){
-            Game.setGameState(Game.GAME_STATE_MENU);
-        } else if (Game.gameState != Game.GAME_STATE_PAUSE){
-            Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
-        } else if (Game.gameState != Game.GAME_STATE_OBJETIVO_PAUSE){
+         
+        } else if (Game.gameState == Game.GAME_STATE_PAUSE){
+            Game.setGameState(Game.GAME_STATE_INTERSTITIAL);//TODO continuar a jogar
+        } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
             Game.setGameState(Game.GAME_STATE_PAUSE);
-        } else if (Game.gameState != Game.GAME_STATE_VITORIA){
+        } else if (Game.gameState == Game.GAME_STATE_VITORIA){
             Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
-        } else if (Game.gameState != Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
+        } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
             Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
         } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
-
             if (SaveGame.saveGame.currentLevelNumber < 1000){
                 Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
             } else {
                 Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
             }
-	    }
+	} else if (Game.gameState != Game.GAME_STATE_INTRO){
+            Game.setGameState(Game.GAME_STATE_MENU);
+	}
     }
 
     public void showInterstitial() {
