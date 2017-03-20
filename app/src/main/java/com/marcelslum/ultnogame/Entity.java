@@ -446,6 +446,23 @@ public class Entity{
     
     public static void createVao(){
         
+        GLES30.glGenVertexArrays( 1, vao );
+        GLES30.glBindVertexArray( vao );
+
+        // Set the vertex attributes as usual
+        GLES30.glEnableVertexAttribArray( ATTRIBUTE_LOCATION_POSITIONS );
+        GLES30.glVertexAttribPointer( ATTRIBUTE_LOCATION_POSITIONS, 3, GL_FLOAT, GL_FALSE, 32, 0 );
+
+        GLES30.glEnableVertexAttribArray( ATTRIBUTE_LOCATION_TEXTUREUV );
+        GLES30.glVertexAttribPointer( ATTRIBUTE_LOCATION_TEXTUREUV, 2, GL_FLOAT, GL_FALSE, 32, 12 );
+
+        GLES30.glEnableVertexAttribArray( ATTRIBUTE_LOCATION_NORMALS );
+        GLES30.glVertexAttribPointer( ATTRIBUTE_LOCATION_NORMALS, 3, GL_FLOAT, GL_FALSE, 32, 20 );
+
+        // Unbind the VAO to avoid accidentally overwriting the state
+        // Skip this if you are confident your code will not do so
+        GLES30.glBindVertexArray(0);
+        
         
     }
 
@@ -465,6 +482,10 @@ public class Entity{
             }
             
             
+            GLES30.glBindVertexArray(vao);
+            GLES30.glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, 0);
+            
+            
         } else {
 
                     GLES20.glUseProgram(program.get());
@@ -472,9 +493,9 @@ public class Entity{
 
                     if (Game.isOpenGL30){
 
-                        glVertexAttribPointer( ATTRIB_POS, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-                        glVertexAttribPointer( ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, 0, 0 );   
-                        glVertexAttribPointer( ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0 );   
+                        GLES30.glVertexAttribPointer( ATTRIB_POS, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+                        GLES30.glVertexAttribPointer( ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, 0, 0 );   
+                        GLES30.glVertexAttribPointer( ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0 );   
 
                     }
 
