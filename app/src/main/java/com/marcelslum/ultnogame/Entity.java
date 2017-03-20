@@ -17,7 +17,8 @@ public class Entity{
     final public static int ATTRIB_UV = 1;
     final public static int ATTRIB_COLOR = 2;
     
-    public static int vao = -1;
+    public static int [] vao = new int[1];
+    public static int [] vbo = new int[2];
 
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
