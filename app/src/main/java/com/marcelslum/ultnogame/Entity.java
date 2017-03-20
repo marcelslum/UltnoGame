@@ -16,6 +16,8 @@ public class Entity{
     final public static int ATTRIB_POS = 0;
     final public static int ATTRIB_UV = 1;
     final public static int ATTRIB_COLOR = 2;
+    
+    public static int vao = -1;
 
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
@@ -441,145 +443,154 @@ public class Entity{
             render(matrixView, matrixProjection);
         }
     }
+    
+    public static void createVao(){
+        
+        
+    }
 
     public void render(float[] matrixView, float[] matrixProjection) {
-        //if (name == "messageStars" && MessagesHandler.messageStars != null) {
-        //Log.e("entity", "messageStars "+ MessagesHandler.messageStars.isVisible);
-        //}
-        //Log.e("entity", "rendering wind");}
-
+        
         if (!isVisible){
             return;
         }
-
+        
         setMatrixModel();
-
-        GLES20.glUseProgram(program.get());
+        
         
         
         if (Game.isOpenGL30){
-            
-            glVertexAttribPointer( ATTRIB_POS, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-            glVertexAttribPointer( ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, 0, 0 );   
-            glVertexAttribPointer( ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0 );   
-            
-        }
-
-        // get handle to vertex shader's vPosition member and add vertices
-        int av4_verticesHandle = GLES20.glGetAttribLocation(program.get(), "av4_vertices");
-        GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, verticesBuffer);
-        GLES20.glEnableVertexAttribArray(av4_verticesHandle);
-        //Log.e("render", " ");
-
-        int av2_uvHandle = -1;
-        if (this.textureId != -1) {
-            // Get handle to texture coordinates location and load the texture uvs
-            av2_uvHandle = GLES20.glGetAttribLocation(program.get(), "av2_uv");
-            GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, this.uvsBuffer);
-            GLES20.glEnableVertexAttribArray(av2_uvHandle);
-        }
-
-        int av4_colorsHandle = -1;
-        if (this.colorsBuffer != null){
-            //Log.e("tag "+this.name, "tem cor");
-            av4_colorsHandle = GLES20.glGetAttribLocation(program.get(), "av4_colors" );
-            GLES20.glVertexAttribPointer ( av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, this.colorsBuffer);
-            GLES20.glEnableVertexAttribArray ( av4_colorsHandle );
-        }
-
-        int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
-        GLES20.glUniform1f(uf_alphaHandle, alpha);
-
-        
-        // Get handle to shape's transformation matrix and add our matrix
-        int um4_projectionHandle = GLES20.glGetUniformLocation(program.get(), "um4_projection");
-        GLES20.glUniformMatrix4fv(um4_projectionHandle, 1, false, matrixProjection, 0);
-        //Log.e("render", " ");
-
-        // Get handle to shape's transformation matrix and add our matrix
-        int um4_viewHandle = GLES20.glGetUniformLocation(program.get(), "um4_view");
-        GLES20.glUniformMatrix4fv(um4_viewHandle, 1, false, matrixView, 0);
-        //Log.e("render", " ");
-
-        // Get handle to shape's transformation matrix and add our matrix
-        int um4_modelHandle = GLES20.glGetUniformLocation(program.get(), "um4_model");
-        GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, this.matrixModel, 0);
-        //Log.e("render", " ");
-
-        // TODO verificar se a inversão do eixo y considera o offset
-
-        if (program == Game.windProgram || program == Game.specialBallProgram){
-            float time = ((Utils.getTime() - Game.initTime)) / 1000f;
-            if (program == Game.windProgram) {
-               time = (time - (((float)Math.floor(time/color.b)) * color.b))/color.b;//Log.e("entity", "time " + time);
+            if (vao == -1){
+                createVao();   
             }
-
-
-            int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
-            GLES20.glUniform1f(uf_time, (float)time);
-            int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");
-            GLES20.glUniform2f(uv2_resolution, Game.effectiveScreenWidth, Game.effectiveScreenHeight);
-            // TODO adicionar screen offset ao wind
-        }
-
-        if (this.program == Game.imageColorizedFxProgram){
-
-            float variation;
-            if (Game.ballCollidedFx > 0) {
-                if (Game.ballCollidedFx > 30){
-                    variation = 0.007f;
-                } else if (Game.ballCollidedFx > 20){
-                    variation = 0.0055f;
-                } else if (Game.ballCollidedFx > 10){
-                    variation = 0.004f;
-                } else{
-                    variation = 0.002f;
-                }
-
-                if (timeVar) {
-                    time += variation;
-                    if (time > 0.001f) {
-                        timeVar = false;
-                    }
-                } else {
-                    time -= variation;
-                    if (time < -0.001f) {
-                        timeVar = true;
-                    }
-                }
-            }
-            int uf_timeHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
-            GLES20.glUniform1f(uf_timeHandle, time);
-        }
-        // TODO verificar se a inversão do eixo y considera o offset
-
-
-
-        if (textureId != -1) {
-            // Get handle to textures locations
-            int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
-            GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
-        }
-
-        if (isLineGL) {
-            GLES20.glLineWidth(lineWidth);
-            GLES20.glDrawElements(GLES20.GL_LINES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
+            
+            
         } else {
-            GLES20.glDrawElements(GLES20.GL_TRIANGLES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
-        }
 
-        // Disable vertex array
-        GLES20.glDisableVertexAttribArray(av4_verticesHandle);
-        if (av2_uvHandle != -1) {
-            GLES20.glDisableVertexAttribArray(av2_uvHandle);
-        }
-        if (av4_colorsHandle != -1){
-            GLES20.glDisableVertexAttribArray(av4_colorsHandle);
-        }
+                    GLES20.glUseProgram(program.get());
 
-        //if (name == "specialBall")
-            //Log.e("entity", GLES20.glGetProgramInfoLog(program.get()));
-            //Log.e("entity2", GLES20.glGetProgram(program.get()));
+
+                    if (Game.isOpenGL30){
+
+                        glVertexAttribPointer( ATTRIB_POS, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+                        glVertexAttribPointer( ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, 0, 0 );   
+                        glVertexAttribPointer( ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0 );   
+
+                    }
+
+                    // get handle to vertex shader's vPosition member and add vertices
+                    int av4_verticesHandle = GLES20.glGetAttribLocation(program.get(), "av4_vertices");
+                    GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, verticesBuffer);
+                    GLES20.glEnableVertexAttribArray(av4_verticesHandle);
+                    //Log.e("render", " ");
+
+                    int av2_uvHandle = -1;
+                    if (this.textureId != -1) {
+                        // Get handle to texture coordinates location and load the texture uvs
+                        av2_uvHandle = GLES20.glGetAttribLocation(program.get(), "av2_uv");
+                        GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, this.uvsBuffer);
+                        GLES20.glEnableVertexAttribArray(av2_uvHandle);
+                    }
+
+                    int av4_colorsHandle = -1;
+                    if (this.colorsBuffer != null){
+                        //Log.e("tag "+this.name, "tem cor");
+                        av4_colorsHandle = GLES20.glGetAttribLocation(program.get(), "av4_colors" );
+                        GLES20.glVertexAttribPointer ( av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, this.colorsBuffer);
+                        GLES20.glEnableVertexAttribArray ( av4_colorsHandle );
+                    }
+
+                    int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
+                    GLES20.glUniform1f(uf_alphaHandle, alpha);
+
+
+                    // Get handle to shape's transformation matrix and add our matrix
+                    int um4_projectionHandle = GLES20.glGetUniformLocation(program.get(), "um4_projection");
+                    GLES20.glUniformMatrix4fv(um4_projectionHandle, 1, false, matrixProjection, 0);
+                    //Log.e("render", " ");
+
+                    // Get handle to shape's transformation matrix and add our matrix
+                    int um4_viewHandle = GLES20.glGetUniformLocation(program.get(), "um4_view");
+                    GLES20.glUniformMatrix4fv(um4_viewHandle, 1, false, matrixView, 0);
+                    //Log.e("render", " ");
+
+                    // Get handle to shape's transformation matrix and add our matrix
+                    int um4_modelHandle = GLES20.glGetUniformLocation(program.get(), "um4_model");
+                    GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, this.matrixModel, 0);
+                    //Log.e("render", " ");
+
+                    // TODO verificar se a inversão do eixo y considera o offset
+
+                    if (program == Game.windProgram || program == Game.specialBallProgram){
+                        float time = ((Utils.getTime() - Game.initTime)) / 1000f;
+                        if (program == Game.windProgram) {
+                           time = (time - (((float)Math.floor(time/color.b)) * color.b))/color.b;//Log.e("entity", "time " + time);
+                        }
+
+
+                        int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
+                        GLES20.glUniform1f(uf_time, (float)time);
+                        int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");
+                        GLES20.glUniform2f(uv2_resolution, Game.effectiveScreenWidth, Game.effectiveScreenHeight);
+                        // TODO adicionar screen offset ao wind
+                    }
+
+                    if (this.program == Game.imageColorizedFxProgram){
+
+                        float variation;
+                        if (Game.ballCollidedFx > 0) {
+                            if (Game.ballCollidedFx > 30){
+                                variation = 0.007f;
+                            } else if (Game.ballCollidedFx > 20){
+                                variation = 0.0055f;
+                            } else if (Game.ballCollidedFx > 10){
+                                variation = 0.004f;
+                            } else{
+                                variation = 0.002f;
+                            }
+
+                            if (timeVar) {
+                                time += variation;
+                                if (time > 0.001f) {
+                                    timeVar = false;
+                                }
+                            } else {
+                                time -= variation;
+                                if (time < -0.001f) {
+                                    timeVar = true;
+                                }
+                            }
+                        }
+                        int uf_timeHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
+                        GLES20.glUniform1f(uf_timeHandle, time);
+                    }
+                    // TODO verificar se a inversão do eixo y considera o offset
+
+
+
+                    if (textureId != -1) {
+                        // Get handle to textures locations
+                        int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
+                        GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
+                    }
+
+                    if (isLineGL) {
+                        GLES20.glLineWidth(lineWidth);
+                        GLES20.glDrawElements(GLES20.GL_LINES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
+                    } else {
+                        GLES20.glDrawElements(GLES20.GL_TRIANGLES, this.indicesData.length, GLES20.GL_UNSIGNED_SHORT, this.indicesBuffer);
+                    }
+
+                    // Disable vertex array
+                    GLES20.glDisableVertexAttribArray(av4_verticesHandle);
+                    if (av2_uvHandle != -1) {
+                        GLES20.glDisableVertexAttribArray(av2_uvHandle);
+                    }
+                    if (av4_colorsHandle != -1){
+                        GLES20.glDisableVertexAttribArray(av4_colorsHandle);
+                    }
+
+        }
     }
 
     public void display(){
