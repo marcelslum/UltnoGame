@@ -9,7 +9,8 @@ class TargetGroup extends Entity{
 
 static final String TAG = "TargetGroup";
     
-    public static int [] vbo = new int[4];
+    public static int [] vbo = new int[3];
+    public static int [] ibo = new int[1];
 
 public ArrayList<TargetGroupData> targets;
     
@@ -26,7 +27,8 @@ public ArrayList<TargetGroupData> targets;
     
     public void setDrawInfo(){
         
-            GLES30.glGenBuffers (4, vbo, 0);
+            GLES20.glGenBuffers(3, vbo, 0);
+            GLES20.glGenBuffers(1, ibo, 0);
         
          
           initializeData(12 * targets.size(), 6 * targets.size(), 8 * targets.size(), 16 * targets.size());
@@ -78,17 +80,40 @@ public ArrayList<TargetGroupData> targets;
             }
 
             verticesBuffer = Utils.generateFloatBuffer(verticesData);
-            colorsBuffer = Utils.generateFloatBuffer(colorsData);
             indicesBuffer = Utils.generateShortBuffer(indicesData);
             uvsBuffer = Utils.generateFloatBuffer(uvsData);
+            colorsBuffer = Utils.generateFloatBuffer(colorsData);
+            
+            
         
-        glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0])
-        glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0])
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
                         verticesBuffer, GLES20.GL_STATIC_DRAW);
+        
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1])
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                        uvsBuffer, GLES20.GL_STATIC_DRAW);
+        
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2])
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
+                        colorsBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0])
+        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
+                        vbo_indices, GLES20.GL_STATIC_DRAW);
+        
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0)
         
         
-        
+        verticesBuffer.limit(0);
+		verticesBuffer = null;
+		uvsBuffer.limit(0);
+		uvsBuffer = null;
+		colorsBuffer.limit(0);
+        colorsBuffer = null;
+        vbo_indices.limit(0);
+        vbo_indices = null;   
     }
     
     @Overrid
@@ -126,7 +151,23 @@ public ArrayList<TargetGroupData> targets;
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
         GLES20.glEnableVertexAttribArray(av4_verticesHandle);
         GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, 0);
+        
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glEnableVertexAttribArray(av2_uvHandle);
+        GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, 0);
+        
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
+        GLES20.glEnableVertexAttribArray(av4_colorsHandle);
+        GLES20.glVertexAttribPointer(av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, 0);
+       
+        //GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, mActualCubeFactor * mActualCubeFactor * mActualCubeFactor * 36);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
+        GLES20.glDrawElements(GLES20.GL_LINES, indicesData.length, GLES20.GL_UNSIGNED_SHORT, 0);
+        
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        
+        
         
         
         // function for deleting buffers
