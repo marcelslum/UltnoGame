@@ -1,7 +1,9 @@
 package com.marcelslum.ultnogame;
 
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ConfigurationInfo;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
@@ -20,19 +22,37 @@ public class GLSurf extends GLSurfaceView {
 
         Log.e("GLSURF", "createGlSurf");
 
-        // Create an OpenGL ES 2.0 context.
-        setEGLContextClientVersion(2);
-        //setEGLConfigChooser(mConfigChooser = new MultisampleConfigChooser());
-
-        setEGLConfigChooser(8, 8, 8, 8, 0, 0);
-        getHolder().setFormat(PixelFormat.RGBA_8888);
-
-        // Set the Renderer for drawing on the GLSurfaceView
         mRenderer = new GLRenderer(context);
-        setRenderer(mRenderer);
 
-        // Render the view only when there is a change in the drawing data
-        setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        if ( detectOpenGLES30()  && Game.isOpenGL30)
+        {
+            // Tell the surface view we want to create an OpenGL ES 3.0-compatible
+            // context, and set an OpenGL ES 3.0-compatible renderer.
+            setEGLContextClientVersion (3);
+            setRenderer (mRenderer);
+        }
+        else {
+
+            // Create an OpenGL ES 2.0 context.
+            setEGLContextClientVersion(2);
+            //setEGLConfigChooser(mConfigChooser = new MultisampleConfigChooser());
+
+            setEGLConfigChooser(8, 8, 8, 8, 0, 0);
+            getHolder().setFormat(PixelFormat.RGBA_8888);
+
+            // Set the Renderer for drawing on the GLSurfaceView
+            setRenderer(mRenderer);
+
+            // Render the view only when there is a change in the drawing data
+            setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        }
+    }
+
+    private boolean detectOpenGLES30() {
+        ActivityManager am =
+                ( ActivityManager ) Game.mainActivity.getSystemService ( Context.ACTIVITY_SERVICE );
+        ConfigurationInfo info = am.getDeviceConfigurationInfo();
+        return ( info.reqGlEsVersion >= 0x30000 );
     }
 
     @Override

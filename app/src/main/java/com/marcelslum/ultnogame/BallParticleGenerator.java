@@ -15,7 +15,9 @@ public class BallParticleGenerator extends Entity {
         super(name, x, y, Entity.TYPE_PARTICLE);
         program = Game.imageColorizedProgram;
         textureId = Texture.TEXTURE_NUMBERS_EXPLOSION;
-        particlesArray= new ArrayList<>();
+        particlesArray= new ArrayList<>(10);
+
+
     }
 
   public void activate(){
@@ -49,8 +51,9 @@ public class BallParticleGenerator extends Entity {
                 velocity_variation_y, alpha_decay, size, textureMap);
             particlesArray.add(particle);
             
-            if (particlesArray.size() > maxNumberOfParticles)
+            if (particlesArray.size() > maxNumberOfParticles) {
                 particlesArray.remove(0);
+            }
         }
     }
 
@@ -100,7 +103,11 @@ public class BallParticleGenerator extends Entity {
             }
         }
 
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        //if (verticesBuffer == null) {
+            verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        //} else {
+        //    Utils.updateFloatBuffer(verticesData, verticesBuffer);
+        //}
         indicesBuffer = Utils.generateShortBuffer(indicesData);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
         colorsBuffer = Utils.generateFloatBuffer(colorsData);

@@ -216,7 +216,7 @@ public class Bar extends Rectangle{
                 color.g = 0f;
                 color.b = 0f;
             }
-            Log.e("bar", "color r "+color.r+ " g "+color.g+ " b "+color.b);
+            //Log.e("bar", "color r "+color.r+ " g "+color.g+ " b "+color.b);
             Utils.insertRectangleColorsData(colorsData, 0, color);
             colorsBuffer = Utils.generateFloatBuffer(colorsData);
             shine.setColor(new Color(color.r, color.g, color.b, 1.0f));
@@ -378,10 +378,10 @@ public class Bar extends Rectangle{
             if (collisionsData.get(i).object.type == Entity.TYPE_LEFT_BORDER) {
                 Level.levelObject.levelGoalsObject.notifyLeftBorderTouch();
 
-                Log.e(TAG, " - notify secretLevel2Steps on left "+secretLevel2Steps);
+                //Log.e(TAG, " - notify secretLevel2Steps on left "+secretLevel2Steps);
 
                 if (secretLevel2Steps == 0 || secretLevel2Steps == 2 || secretLevel2Steps == 3 || secretLevel2Steps == 4 || secretLevel2Steps == 7 || secretLevel2Steps == 9){
-                    Log.e(TAG, " - notify secretLevel2LockStep "+secretLevel2LockStep);
+                    //Log.e(TAG, " - notify secretLevel2LockStep "+secretLevel2LockStep);
                     if (!secretLevel2LockStep) {
                         secretLevel2Steps += 1;
                         secretLevel2LockStep = true;
@@ -392,7 +392,7 @@ public class Bar extends Rectangle{
                     }
                 } else {
                     if (!secretLevel2LockStep) {
-                        Log.e(TAG, " - notify secretLevel2Steps = 0");
+                        //Log.e(TAG, " - notify secretLevel2Steps = 0");
                         secretLevel2Steps = 0;
                     }
 
@@ -404,17 +404,17 @@ public class Bar extends Rectangle{
             if (collisionsData.get(i).object.type == Entity.TYPE_RIGHT_BORDER){
                 Level.levelObject.levelGoalsObject.notifyRightBorderTouch();
 
-                Log.e(TAG, " - notify secretLevel2Steps on right"+secretLevel2Steps);
+                //Log.e(TAG, " - notify secretLevel2Steps on right"+secretLevel2Steps);
 
                 if (secretLevel2Steps == 1 || secretLevel2Steps == 5 || secretLevel2Steps == 6 || secretLevel2Steps == 8){
-                    Log.e(TAG, " - notify secretLevel2LockStep "+secretLevel2LockStep);
+                    //Log.e(TAG, " - notify secretLevel2LockStep "+secretLevel2LockStep);
                     if (!secretLevel2LockStep) {
                         secretLevel2Steps += 1;
                         secretLevel2LockStep = true;
                         Level.levelGoalsObject.notifySecretStepsToConquer(10 - secretLevel2Steps);
                     }
                 } else {
-                    Log.e(TAG, " - notify secretLevel2Steps = 0");
+                    //Log.e(TAG, " - notify secretLevel2Steps = 0");
                     if (!secretLevel2LockStep) {
                         secretLevel2Steps = 0;
                     }

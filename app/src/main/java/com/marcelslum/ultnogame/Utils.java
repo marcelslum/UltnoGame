@@ -77,6 +77,14 @@ public abstract class Utils {
         return buffer;
     }
 
+    public static void updateFloatBuffer(float[] data, FloatBuffer buffer) {
+        //buffer.position(0);
+        buffer.put(data, 0, data.length);
+        // set the cursor position to the beginning of the buffer
+        buffer.position(0);
+
+    }
+
     public static ShortBuffer generateShortBuffer(short[] data) {
         // a float has 4 bytes so we allocate for each coordinate 4 bytes
         ByteBuffer factory = ByteBuffer.allocateDirect(data.length * 4);

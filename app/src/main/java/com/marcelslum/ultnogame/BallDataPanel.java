@@ -124,11 +124,11 @@ public class BallDataPanel extends Entity{
             previousAnglePercent = anglePercent;
         }
 
-        Log.e(TAG, "previousVelocityPercent "+previousVelocityPercent);
-        Log.e(TAG, "previousAnglePercent "+previousAnglePercent);
+        //Log.e(TAG, "previousVelocityPercent "+previousVelocityPercent);
+        //Log.e(TAG, "previousAnglePercent "+previousAnglePercent);
 
-        Log.e(TAG, "velocityPercentage "+velocityPercentage);
-        Log.e(TAG, "anglePercentage "+anglePercentage);
+        //Log.e(TAG, "velocityPercentage "+velocityPercentage);
+        //Log.e(TAG, "anglePercentage "+anglePercentage);
 
         if (velocityPercentage < 0.005f){
             velocityPercentage = 0.005f;

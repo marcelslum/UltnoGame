@@ -1,12 +1,14 @@
 package com.marcelslum.ultnogame;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ConfigurationInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -134,13 +136,7 @@ public class MainActivity extends FragmentActivity implements
     }
 		
 		
-	private boolean detectOpenGLES30()
-	{
-	      ActivityManager am =
-		 ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
-	      ConfigurationInfo info = am.getDeviceConfigurationInfo();
-	      return ( info.reqGlEsVersion >= 0x30000 );
-	}
+
 
     public void hideAdView(){
         runOnUiThread(new Runnable() {

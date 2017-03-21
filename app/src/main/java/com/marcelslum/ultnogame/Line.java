@@ -20,7 +20,7 @@ public class Line extends Entity{
 
     public void setDrawInfo(){
         initializeData(6, 2, 0, 8);
-        Log.e("line set draw info", " "+x+" "+y+" "+x2+" "+y2);
+        //Log.e("line set draw info", " "+x+" "+y+" "+x2+" "+y2);
         Utils.insertLineVerticesData(verticesData, 0,  0f, 0f, x2-x, y2-y, 0f);
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
 

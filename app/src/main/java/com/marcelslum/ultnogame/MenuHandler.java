@@ -80,12 +80,12 @@ public class MenuHandler {
                 }
 
                 int cStars = LevelsGroupData.getLevelsConqueredStars(lgd.firstLevel, lgd.finalLevel);
-                Log.e(TAG, "cStars of world "+ 1 + ": "+ cStars);
+                //Log.e(TAG, "cStars of world "+ 1 + ": "+ cStars);
                 int totalStarsToConquer = (lgd.finalLevel - lgd.firstLevel + 1) * 5;
-                Log.e(TAG, "totalStarsToConquer of world "+ 1 + ": "+ totalStarsToConquer);
+                //Log.e(TAG, "totalStarsToConquer of world "+ 1 + ": "+ totalStarsToConquer);
                 float percentage = (float)cStars/(float)totalStarsToConquer;
 
-                Log.e(TAG, "percentage of world "+ 1 + ": "+ percentage);
+                //Log.e(TAG, "percentage of world "+ 1 + ": "+ percentage);
 
                 groupMenu.graph.get(groupMenu.graph.size() - 1).setPercentage(percentage);
             }
@@ -678,7 +678,7 @@ public class MenuHandler {
         menuOptions.addMenuOption("retornar", Game.getContext().getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                Log.e("findStateMenu", "11");
+                //Log.e("findStateMenu", "11");
                 Game.setGameState(Game.GAME_STATE_MENU);
             }
         });
@@ -807,7 +807,7 @@ public class MenuHandler {
                 menuInGame.block();
                 Game.blockAndWaitTouchRelease();
                 if (Game.gameState == GAME_STATE_PAUSE){
-                    Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
+                    //Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
                     Game.increaseAllGameEntitiesAlpha(500);
                     MessagesHandler.messageInGame.reduceAlpha(500,0f);
                     menuInGame.reduceAlpha(500,0f, new Animation.AnimationListener() {

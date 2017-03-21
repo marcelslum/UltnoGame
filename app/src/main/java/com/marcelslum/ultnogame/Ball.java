@@ -270,7 +270,7 @@ public class Ball extends Circle{
 
     public void changeSpeedAndAngleAfterBallCollision(boolean angleAdd, boolean speedAdd){
 
-        Log.e(TAG, "changeSpeedAndAngleAfterBallCollision "+angleAdd+" "+speedAdd);
+        //Log.e(TAG, "changeSpeedAndAngleAfterBallCollision "+angleAdd+" "+speedAdd);
 
         float mAngleToRotate;
         if (angleAdd) {
@@ -279,17 +279,17 @@ public class Ball extends Circle{
             mAngleToRotate = -angleToRotate;
         }
 
-        Log.e(TAG, "mAngleToRotate "+mAngleToRotate);
+        //Log.e(TAG, "mAngleToRotate "+mAngleToRotate);
 
         vx = dvx;
         vy = dvy;
 
         float lenOfInitialVelocity = Utils.getVectorMagnitude(initialDVX, initialDVY);
-        Log.e(TAG, "lenOfInitialVelocity "+lenOfInitialVelocity);
+        //Log.e(TAG, "lenOfInitialVelocity "+lenOfInitialVelocity);
         float maxLen = lenOfInitialVelocity * velocityMax_BI;
-        Log.e(TAG, "maxLen "+maxLen);
+        //Log.e(TAG, "maxLen "+maxLen);
         float minLen = lenOfInitialVelocity * velocityMin_BI;
-        Log.e(TAG, "minLen "+minLen);
+        //Log.e(TAG, "minLen "+minLen);
 
         final_vx  = vx;
         final_vy  = vy;
@@ -297,7 +297,7 @@ public class Ball extends Circle{
 
         float velocityScalePorcentage = ((maxLen - minLen) * velocityVariation)/(maxLen - minLen);
 
-        Log.e(TAG, "velocityScalePorcentage "+velocityScalePorcentage);
+        //Log.e(TAG, "velocityScalePorcentage "+velocityScalePorcentage);
 
         float scalePorcentage = 1f;
         if (speedAdd){
@@ -306,19 +306,19 @@ public class Ball extends Circle{
             scalePorcentage -= velocityScalePorcentage;
         }
 
-        Log.e(TAG, "scalePorcentage "+scalePorcentage);
+        //Log.e(TAG, "scalePorcentage "+scalePorcentage);
 
         float possibleVelocityLen = Utils.getVectorMagnitude(vx * scalePorcentage, vy * scalePorcentage);
 
-        Log.e(TAG, "possibleVelocityLen "+possibleVelocityLen);
+        //Log.e(TAG, "possibleVelocityLen "+possibleVelocityLen);
 
         if (possibleVelocityLen > minLen && possibleVelocityLen < maxLen){
-            Log.e(TAG, "possibleVelocityLen > minLen && possibleVelocityLen < maxLen ");
+            //Log.e(TAG, "possibleVelocityLen > minLen && possibleVelocityLen < maxLen ");
             final_vx = final_vx * scalePorcentage;
             final_vy = final_vy * scalePorcentage;
         } else {
             if (possibleVelocityLen <= minLen){
-                Log.e(TAG, "possibleVelocityLen <= minLen ");
+                //Log.e(TAG, "possibleVelocityLen <= minLen ");
                 final_vx = final_vx * scalePorcentage;
                 final_vy = final_vy * scalePorcentage;
                 float lenAfter = Utils.getVectorMagnitude(final_vx, final_vy);
@@ -326,7 +326,7 @@ public class Ball extends Circle{
                 final_vx = final_vx * scaleToMin;
                 final_vy = final_vy * scaleToMin;
             } else if (possibleVelocityLen >= maxLen){
-                Log.e(TAG, "possibleVelocityLen >= maxLen ");
+                //Log.e(TAG, "possibleVelocityLen >= maxLen ");
                 final_vx = final_vx * scalePorcentage;
                 final_vy = final_vy * scalePorcentage;
                 float lenAfter = Utils.getVectorMagnitude(final_vx, final_vy);
@@ -413,25 +413,25 @@ public class Ball extends Circle{
                     Ball otherBall = (Ball) collisionsData.get(i).object;
 
 
-                    Log.e(TAG, "DADOS INICIAIS");
+                    //Log.e(TAG, "DADOS INICIAIS");
 
 
-                    Log.e(TAG, "------------------BOLA1");
-                    Log.e(TAG, "                  textureMap "+textureMap);
-                    Log.e(TAG, "                  positionX "+ (positionX));
-                    Log.e(TAG, "                  positionY "+ (positionY));
-                    Log.e(TAG, "                  dvx "+ (dvx));
-                    Log.e(TAG, "                  dvy "+ (dvy));
-                    Log.e(TAG, "                  moveAngle " + Math.toDegrees(Math.atan2(dvy, dvx)));
+                    //Log.e(TAG, "------------------BOLA1");
+                    //Log.e(TAG, "                  textureMap "+textureMap);
+                    //Log.e(TAG, "                  positionX "+ (positionX));
+                    //Log.e(TAG, "                  positionY "+ (positionY));
+                    //Log.e(TAG, "                  dvx "+ (dvx));
+                    //Log.e(TAG, "                  dvy "+ (dvy));
+                    //Log.e(TAG, "                  moveAngle " + Math.toDegrees(Math.atan2(dvy, dvx)));
 
 
-                    Log.e(TAG, "------------------BOLA2");
-                    Log.e(TAG, "                  textureMap "+otherBall.textureMap);
-                    Log.e(TAG, "                  positionX "+ (otherBall.positionX));
-                    Log.e(TAG, "                  positionY "+ (otherBall.positionY));
-                    Log.e(TAG, "                  dvx "+ (otherBall.dvx));
-                    Log.e(TAG, "                  dvy "+ (otherBall.dvy));
-                    Log.e(TAG, "                  moveAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
+                    //Log.e(TAG, "------------------BOLA2");
+                    //Log.e(TAG, "                  textureMap "+otherBall.textureMap);
+                    //Log.e(TAG, "                  positionX "+ (otherBall.positionX));
+                    //Log.e(TAG, "                  positionY "+ (otherBall.positionY));
+                    //Log.e(TAG, "                  dvx "+ (otherBall.dvx));
+                    //Log.e(TAG, "                  dvy "+ (otherBall.dvy));
+                    //Log.e(TAG, "                  moveAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
                     
                     
                     float starX;
@@ -448,7 +448,7 @@ public class Ball extends Circle{
                         starY = otherBall.positionY + ((otherBall.positionY - positionY)/2f);
                     }
 
-                    Log.e(TAG, "incluindo estrela na posicao "+starX+" "+starY );
+                    //Log.e(TAG, "incluindo estrela na posicao "+starX+" "+starY );
 
 
                     final Image star = new Image("ballCollisionStar", starX - radius*8f, starY - radius*8f, radius*16f, radius*16f, Texture.TEXTURE_NUMBERS_EXPLOSION,
@@ -523,9 +523,9 @@ public class Ball extends Circle{
 
 
                     float finalDvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall1+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall1);
-                    Log.e(TAG, "finalDvx " + finalDvx);
+                    //Log.e(TAG, "finalDvx " + finalDvx);
                     float finalDvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall1+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall1);
-                    Log.e(TAG, "finalDvy " + finalDvy);
+                    //Log.e(TAG, "finalDvy " + finalDvy);
 
                     if (finalDvx < 0){
                         if (dvx > 0){
@@ -548,9 +548,9 @@ public class Ball extends Circle{
                     }
 
                     float otherBallFinalDvx = (float)(Math.cos(collisionAngle)*finalxSpeedBall2+Math.cos(collisionAngle+Math.PI/2)*finalySpeedBall2);
-                    Log.e(TAG, "otherBallFinalDvx " + otherBallFinalDvx);
+                    //Log.e(TAG, "otherBallFinalDvx " + otherBallFinalDvx);
                     float otherBallFinalDvy = (float)(Math.sin(collisionAngle)*finalxSpeedBall2+Math.sin(collisionAngle+Math.PI/2)*finalySpeedBall2);
-                    Log.e(TAG, "otherBallFinalDvy " + otherBallFinalDvy);
+                    //Log.e(TAG, "otherBallFinalDvy " + otherBallFinalDvy);
 
                     if (otherBallFinalDvx < 0){
                         if (otherBall.dvx > 0){
@@ -573,24 +573,24 @@ public class Ball extends Circle{
                     }
 
                     float initialLen = Utils.getVectorMagnitude(dvx, dvy);
-                    Log.e(TAG, "initialLen " + initialLen);
+                    //Log.e(TAG, "initialLen " + initialLen);
                     float otherBallInitialLen = Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy);
-                    Log.e(TAG, "otherBallInitialLen " + otherBallInitialLen);
+                    //Log.e(TAG, "otherBallInitialLen " + otherBallInitialLen);
 
                     float finalLen = Utils.getVectorMagnitude(finalDvx, finalDvy);
-                    Log.e(TAG, "finalLen " + finalLen);
+                    //Log.e(TAG, "finalLen " + finalLen);
                     float otherBallFinalLen = Utils.getVectorMagnitude(otherBallFinalDvx, otherBallFinalDvy);
-                    Log.e(TAG, "otherBallFinalLen " + otherBallFinalLen);
+                    //Log.e(TAG, "otherBallFinalLen " + otherBallFinalLen);
 
                     float initialAngle =  (float) Math.toDegrees(Math.atan2(dvy, dvx));
-                    Log.e(TAG, "initialAngle " + initialAngle);
+                    //Log.e(TAG, "initialAngle " + initialAngle);
                     float otherBallInitialAngle =  (float) Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx));
-                    Log.e(TAG, "otherBallInitialAngle " + otherBallInitialAngle);
+                    //Log.e(TAG, "otherBallInitialAngle " + otherBallInitialAngle);
 
                     float finalAngle =  (float) Math.toDegrees(Math.atan2(finalDvy, finalDvx));
-                    Log.e(TAG, "finalAngle " + finalAngle);
+                    //Log.e(TAG, "finalAngle " + finalAngle);
                     float otherBallFinalAngle =  (float) Math.toDegrees(Math.atan2(otherBallFinalDvy, otherBallFinalDvx));
-                    Log.e(TAG, "otherBallFinalAngle " + otherBallFinalAngle);
+                    //Log.e(TAG, "otherBallFinalAngle " + otherBallFinalAngle);
 
                     changeSpeedAndAngleAfterBallCollision(finalAngle > initialAngle, finalLen > initialLen);
                     otherBall.changeSpeedAndAngleAfterBallCollision(otherBallFinalAngle > otherBallInitialAngle, otherBallFinalLen > otherBallInitialLen);
@@ -699,20 +699,20 @@ public class Ball extends Circle{
                     addQuarantineBall(otherBall);
                     otherBall.addQuarantineBall(this);
 
-                    Log.e(TAG, "DADOS FINAIS");
+                    //Log.e(TAG, "DADOS FINAIS");
 
-                    Log.e(TAG, "------------------BOLA1");
-                    Log.e(TAG, "                  textureMap "+textureMap);
-                    Log.e(TAG, "                  dvx "+ (dvx));
-                    Log.e(TAG, "                  dvy "+ (dvy));
-                    Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(dvy, dvx)));
+                    //Log.e(TAG, "------------------BOLA1");
+                    //Log.e(TAG, "                  textureMap "+textureMap);
+                    //Log.e(TAG, "                  dvx "+ (dvx));
+                    //Log.e(TAG, "                  dvy "+ (dvy));
+                    //Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(dvy, dvx)));
 
 
-                    Log.e(TAG, "------------------BOLA2");
-                    Log.e(TAG, "                  textureMap "+otherBall.textureMap);
-                    Log.e(TAG, "                  dvx "+ (otherBall.dvx));
-                    Log.e(TAG, "                  dvy "+ (otherBall.dvy));
-                    Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
+                    //Log.e(TAG, "------------------BOLA2");
+                    //Log.e(TAG, "                  textureMap "+otherBall.textureMap);
+                    //Log.e(TAG, "                  dvx "+ (otherBall.dvx));
+                    //Log.e(TAG, "                  dvy "+ (otherBall.dvy));
+                    //Log.e(TAG, "                  collisionAngle " + Math.toDegrees(Math.atan2(otherBall.dvy, otherBall.dvx)));
                     /*
                     float projectedDistanceBetweenBall = Vector.distanceBetweenTwoPoints(positionX + dvx, positionY + dvy, otherBall.positionX + dvx, otherBall.positionY + dvy);
                     float radiusOfTwoBalls = radius + otherBall.radius;
@@ -1002,7 +1002,7 @@ public class Ball extends Circle{
             boolean collidedWithLeftBorder = false;
             boolean collidedWithRightBorder = false;
             for (int i = 0; i < collisionsData.get(collisionBarNumber).object.collisionsData.size(); i++) {
-                Log.e(TAG, i+" name  " + collisionsData.get(collisionBarNumber).object.collisionsData.get(i));
+                //Log.e(TAG, i+" name  " + collisionsData.get(collisionBarNumber).object.collisionsData.get(i));
                 totalResponseX += collisionsData.get(collisionBarNumber).object.collisionsData.get(i).responseX;
                 if (collisionsData.get(collisionBarNumber).object.collisionsData.get(i).object.type == Entity.TYPE_LEFT_BORDER){
                     collidedWithLeftBorder = true;
@@ -1011,11 +1011,11 @@ public class Ball extends Circle{
                 }
             }
 
-            Log.e(TAG, "collidedWithLeftBorder " + collidedWithLeftBorder);
-            Log.e(TAG, "collidedWithRightBorder " + collidedWithRightBorder);
+            //Log.e(TAG, "collidedWithLeftBorder " + collidedWithLeftBorder);
+            //Log.e(TAG, "collidedWithRightBorder " + collidedWithRightBorder);
 
-            Log.e(TAG, "collisionsData.get(collisionBarNumber).object.vx " + collisionsData.get(collisionBarNumber).object.vx);
-            Log.e(TAG, "totalResponseX " + totalResponseX);
+            //Log.e(TAG, "collisionsData.get(collisionBarNumber).object.vx " + collisionsData.get(collisionBarNumber).object.vx);
+            //Log.e(TAG, "totalResponseX " + totalResponseX);
 
             float speedToConsider = collisionsData.get(collisionBarNumber).object.vx + totalResponseX;
 
@@ -1026,7 +1026,7 @@ public class Ball extends Circle{
             }
 
 
-            Log.e(TAG, "speedToConsider " + speedToConsider);
+            //Log.e(TAG, "speedToConsider " + speedToConsider);
 
             if (dvx < 0 && speedToConsider < 0){
                 velocityAdd = false;
@@ -1151,7 +1151,7 @@ public class Ball extends Circle{
                             final_vy = final_vy * scaleToMax;
                             //Log.e("ball", "scaleFinal: "+Utils.getVectorMagnitude(vx, final_vy));
                         }
-                        Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
+                        //Log.e(TAG, "            final dv "+ final_vx + " " + final_vy);
                     }
 
                 }
@@ -1224,7 +1224,7 @@ public class Ball extends Circle{
                 float maxMagPercentage = 1 + maxVelocityVariation;
                 if (magPercentage > maxMagPercentage){    
                     
-                    Log.e(TAG,"verifyMagnitudeVariation - ajustando velocidade da bola - DIMINUINDO");
+                    //Log.e(TAG,"verifyMagnitudeVariation - ajustando velocidade da bola - DIMINUINDO");
                     
                     dvx *= (maxMagPercentage / magPercentage);
                     dvy *= (maxMagPercentage / magPercentage);
@@ -1234,7 +1234,7 @@ public class Ball extends Circle{
                 float minMagPercentage = 1 - maxVelocityVariation;
                 if (magPercentage < minMagPercentage){    
                     
-                    Log.e(TAG,"verifyMagnitudeVariation - ajustando velocidade da bola - AUMENTANDO");
+                    //Log.e(TAG,"verifyMagnitudeVariation - ajustando velocidade da bola - AUMENTANDO");
                     
                     dvx *= (minMagPercentage / magPercentage);
                     dvy *= (minMagPercentage / magPercentage);
@@ -1338,8 +1338,8 @@ public class Ball extends Circle{
                 float testAngleOriginal = (float) Math.toDegrees(Math.atan2(dvy, dvx));
                 float testAngleFake = (float) Math.toDegrees(Math.atan2(ball.dvy, ball.dvx));
                 
-                Log.e(TAG, "fake ball angle of original "+testAngleOriginal);
-                Log.e(TAG, "fake ball angle of fake "+testAngleFake);
+                //Log.e(TAG, "fake ball angle of original "+testAngleOriginal);
+                //Log.e(TAG, "fake ball angle of fake "+testAngleFake);
 
                 ball.maxAngle = this.maxAngle;
                 ball.minAngle = this.minAngle;
@@ -1365,7 +1365,7 @@ public class Ball extends Circle{
         float possibleVelocityRotateY = (float) Utils.getYRotatedFromDegrees(vx, vy, angleToRotateToTest);
 
         float testAngle = (float) Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotateY), Math.abs(possibleVelocityRotateX)));
-        Log.e("ball", "possible angle " + testAngle);
+        //Log.e("ball", "possible angle " + testAngle);
         
 
         if (testAngle < maxAngle && testAngle > minAngle) {
@@ -1377,26 +1377,26 @@ public class Ball extends Circle{
             }
         } else {
             if (testAngle >= maxAngle) {
-                Log.e("ball", "testAngle > maxAngle");
+                //Log.e("ball", "testAngle > maxAngle");
                 if (mAngleToRotate < 0f) {
-                    Log.e("ball", "angleToRotate < 0f");
+                    //Log.e("ball", "angleToRotate < 0f");
                     mAngleToRotate += testAngle - maxAngle;
                 } else {
-                    Log.e("ball", "angleToRotate > 0f");
+                    //Log.e("ball", "angleToRotate > 0f");
                     mAngleToRotate -= testAngle - maxAngle;
                 }
             } else if (testAngle <= minAngle) {
-                Log.e("ball", "testAngle < minAngle");
+                //Log.e("ball", "testAngle < minAngle");
                 if (mAngleToRotate > 0f) {
-                    Log.e("ball", "angleToRotate > 0f");
+                    //Log.e("ball", "angleToRotate > 0f");
                     mAngleToRotate -= minAngle - testAngle;
                 } else {
-                    Log.e("ball", "angleToRotate < 0f");
+                    //Log.e("ball", "angleToRotate < 0f");
                     mAngleToRotate += minAngle - testAngle;
                 }
             }
 
-            Log.e("ball", "angulo que a bola será rotacionada " + mAngleToRotate);
+            //Log.e("ball", "angulo que a bola será rotacionada " + mAngleToRotate);
 
             final_vx = (float) Utils.getXRotatedFromDegrees(vx, vy, mAngleToRotate);
             final_vy = (float) Utils.getYRotatedFromDegrees(vx, vy, mAngleToRotate);
@@ -1456,9 +1456,9 @@ public class Ball extends Circle{
 
     public void checkDataAfterAnotherBallCollision(){
         // quadrantes invertidos no eixo y
-        Log.e("ball", "teste de angulo ---------------");
+        //Log.e("ball", "teste de angulo ---------------");
         double angle = Math.toDegrees(Math.atan2(dvy, dvx));
-        Log.e("ball", "angle " + angle);
+        //Log.e("ball", "angle " + angle);
 
         if (angle <0) {
             angle = 360d-(angle * -1d);
@@ -1480,31 +1480,31 @@ public class Ball extends Circle{
             thisMaxAngle = 360 - minAngle;
         }
 
-        Log.e("ball", "this minAngle " + thisMinAngle + "this maxAngle "+thisMaxAngle);
+        //Log.e("ball", "this minAngle " + thisMinAngle + "this maxAngle "+thisMaxAngle);
 
-        Log.e("ball", "testAngle " + angle);
+        //Log.e("ball", "testAngle " + angle);
 
         double angleToRotate = 0d;
         if (angle <= thisMinAngle) {
             angleToRotate = thisMinAngle - angle;
-            Log.e("ball", "angulo menor que o esperado, rotacao de " + angleToRotate);
+            //Log.e("ball", "angulo menor que o esperado, rotacao de " + angleToRotate);
         } else if (angle >= thisMaxAngle) {
             angleToRotate = thisMaxAngle - angle;
-            Log.e("ball", "angulo maior que o esperado, rotacao de " + angleToRotate);
+            //Log.e("ball", "angulo maior que o esperado, rotacao de " + angleToRotate);
         }
             
 
         if (angleToRotate != 0d) {
-            Log.e("ball", "ajuste do angulo");
-            Log.e("ball", "v antes da rotacao " + dvx + " " + dvy);
+            //Log.e("ball", "ajuste do angulo");
+            //Log.e("ball", "v antes da rotacao " + dvx + " " + dvy);
 
-            Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+            //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
 
             dvx = (float)Utils.getXRotatedFromDegrees(dvx, dvy, angleToRotate);
             dvy = (float)Utils.getYRotatedFromDegrees(dvx, dvy, angleToRotate);
-            Log.e("ball", "v depois da rotacao " + dvx + " " + dvy);
-            Log.e("ball", "angulo depois"+Math.toDegrees(Math.atan2(dvy, dvx)));
-            Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+            //Log.e("ball", "v depois da rotacao " + dvx + " " + dvy);
+            //Log.e("ball", "angulo depois"+Math.toDegrees(Math.atan2(dvy, dvx)));
+            //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
         }
 
 
@@ -1515,22 +1515,22 @@ public class Ball extends Circle{
         float actualLen = Utils.getVectorMagnitude(dvx, dvy);
 
         if (actualLen >= maxLen){
-            Log.e("ball", "ajustando velocidade - diminuindo");
+            //Log.e("ball", "ajustando velocidade - diminuindo");
             dvx *= (maxLen/actualLen);
             dvy *= (maxLen/actualLen);
 
-            Log.e("ball", "v " + dvx + " " + dvy);
-            Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
-            Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+            //Log.e("ball", "v " + dvx + " " + dvy);
+            //Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
+            //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
         } else if (actualLen <= minLen){
-            Log.e("ball", "ajustando velocidade - aumentando");
+            //Log.e("ball", "ajustando velocidade - aumentando");
             dvx *= (minLen/actualLen);
             dvy *= (minLen/actualLen);
-            Log.e("ball", "v " + dvx + " " + dvy);
+            //Log.e("ball", "v " + dvx + " " + dvy);
         }
 
-        Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
-        Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
+        //Log.e("ball", "angulo "+Math.toDegrees(Math.atan2(dvy, dvx)));
+        //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
 
     }
 
@@ -1554,7 +1554,7 @@ public class Ball extends Circle{
     public void explode(){
 
 
-        Log.e(TAG, "explode");
+        //Log.e(TAG, "explode");
 
         Game.vibrate(Game.VIBRATE_HARD);
         
@@ -1649,14 +1649,14 @@ public class Ball extends Circle{
             ball.velocityMax_BI = velocityMax_BI;
             ball.velocityMin_BI = velocityMin_BI;
 
-            Log.e("ball", "this.maxAngle "+maxAngle);
-            Log.e("ball", "this.minAngle "+minAngle);
+            //Log.e("ball", "this.maxAngle "+maxAngle);
+            //Log.e("ball", "this.minAngle "+minAngle);
 
             ball.maxAngle = this.maxAngle;
             ball.minAngle = this.minAngle;
 
-            Log.e("ball", "ball.maxAngle "+ball.maxAngle);
-            Log.e("ball", "ball.minAngle "+ball.minAngle);
+            //Log.e("ball", "ball.maxAngle "+ball.maxAngle);
+            //Log.e("ball", "ball.minAngle "+ball.minAngle);
 
             ball.initialDVX = initialDVX;
             ball.initialDVY = initialDVY;
@@ -1722,13 +1722,13 @@ public class Ball extends Circle{
     public void notifyBarMovementAfterCollision(int v) {
 
         double angle = Math.toDegrees(Math.atan2(dvy, dvx));
-        Log.e("ball", "BAR MOVE DEPOIS" + angle);
+        //Log.e("ball", "BAR MOVE DEPOIS" + angle);
 
         if (accelStarted == true){
 
-            Log.e(TAG, "------------- ALTERANDO ACELERAÇÃO");
+            //Log.e(TAG, "------------- ALTERANDO ACELERAÇÃO");
             if (v == Acelerometer.MOVE_LEFT) {
-                Log.e(TAG, "------------- ROTATE LEFT");
+                //Log.e(TAG, "------------- ROTATE LEFT");
                 rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, angleToRotate, true);
 
                 if (accelFinalVelocityX > 0) {
@@ -1739,7 +1739,7 @@ public class Ball extends Circle{
 
 
             } else if (v == Acelerometer.MOVE_RIGHT) {
-                Log.e(TAG, "------------- ROTATE RIGHT");
+                //Log.e(TAG, "------------- ROTATE RIGHT");
                 rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate, true);
 
                 if (accelFinalVelocityX > 0) {
@@ -1754,9 +1754,9 @@ public class Ball extends Circle{
             accelFinalVelocityY = final_vy;
 
         } else {
-            Log.e(TAG, "------------- ALTERANDO ROTAÇÃO");
+            //Log.e(TAG, "------------- ALTERANDO ROTAÇÃO");
             if (v == Acelerometer.MOVE_LEFT) {
-                Log.e(TAG, "------------- ROTATE LEFT");
+                //Log.e(TAG, "------------- ROTATE LEFT");
                 rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, angleToRotate, true);
 
                 if (accelFinalVelocityX > 0) {
@@ -1766,7 +1766,7 @@ public class Ball extends Circle{
                 }
 
             } else if (v == Acelerometer.MOVE_RIGHT) {
-                Log.e(TAG, "------------- ROTATE RIGHT");
+                //Log.e(TAG, "------------- ROTATE RIGHT");
                 rotateTestingAngle(accelFinalVelocityX, accelFinalVelocityY, -angleToRotate, true);
 
                 if (accelFinalVelocityX > 0) {

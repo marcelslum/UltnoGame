@@ -58,7 +58,7 @@ public class Background extends Entity {
         }
 
 
-        Log.e("background", "change bitmap of texture "+textureId);
+        //Log.e("background", "change bitmap of texture "+textureId);
 
         Texture.getTextureById(textureId).changeBitmap(bitmap);
 

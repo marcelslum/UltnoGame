@@ -1,10 +1,12 @@
 package com.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
+import android.opengl.GLES30;
 import android.opengl.Matrix;
 import android.util.Log;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 import java.util.ArrayList;
 
@@ -12,12 +14,14 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Entity{
+
+    public boolean inUse = false;
     
     final public static int ATTRIB_POS = 0;
     final public static int ATTRIB_UV = 1;
     final public static int ATTRIB_COLOR = 2;
     
-    public static int [] vao = new int[1];
+
     public static int [] vbo = new int[2];
 
     final public static int TYPE_OTHER = 0;
@@ -51,8 +55,10 @@ public class Entity{
     public final static String TAG = "Entity";
     final public static int SHOW_POINTS_ON = 1;
     final public static int SHOW_POINTS_OFF = 0;
+    private static int[] vao = new int[1];
+    private static int[] mVBOIds = new int[3];
+    //private static IntBuffer vao;
 
-    
     public int type;
     public String name;
     public float x;
@@ -447,22 +453,24 @@ public class Entity{
     
     public static void createVao(){
         
-        GLES30.glGenVertexArrays( 1, vao );
-        GLES30.glBindVertexArray( vao );
+        GLES30.glGenVertexArrays( 1, vao, 0 );
+        GLES30.glBindVertexArray(vao[0]);
 
         // Set the vertex attributes as usual
-        GLES30.glEnableVertexAttribArray( ATTRIBUTE_LOCATION_POSITIONS );
-        GLES30.glVertexAttribPointer( ATTRIBUTE_LOCATION_POSITIONS, 3, GL_FLOAT, GL_FALSE, 32, 0 );
+        GLES30.glEnable(ATTRIB_POS);
+        GLES30.glVertexAttribPointer(ATTRIB_POS, 3, GLES30.GL_FLOAT, false, 32, 0 );
 
-        GLES30.glEnableVertexAttribArray( ATTRIBUTE_LOCATION_TEXTUREUV );
-        GLES30.glVertexAttribPointer( ATTRIBUTE_LOCATION_TEXTUREUV, 2, GL_FLOAT, GL_FALSE, 32, 12 );
+        GLES30.glEnableVertexAttribArray(ATTRIB_UV);
+        GLES30.glVertexAttribPointer(ATTRIB_UV, 2, GLES30.GL_FLOAT, false, 32, 12 );
 
-        GLES30.glEnableVertexAttribArray( ATTRIBUTE_LOCATION_NORMALS );
-        GLES30.glVertexAttribPointer( ATTRIBUTE_LOCATION_NORMALS, 3, GL_FLOAT, GL_FALSE, 32, 20 );
+        GLES30.glEnableVertexAttribArray(ATTRIB_COLOR);
+        GLES30.glVertexAttribPointer(ATTRIB_COLOR, 3, GLES30.GL_FLOAT, false, 32, 20 );
 
         // Unbind the VAO to avoid accidentally overwriting the state
         // Skip this if you are confident your code will not do so
         GLES30.glBindVertexArray(0);
+
+        GLES30.glGenBuffers ( 3, mVBOIds, 0 );
         
         
     }
@@ -478,27 +486,31 @@ public class Entity{
         
         
         if (Game.isOpenGL30){
-            if (vao == -1){
-                createVao();   
-            }
-            
-            
-            GLES30.glBindVertexArray(vao);
-            GLES30.glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, 0);
-            
-            
+            GLES30.glUseProgram(Game.openGl30TextProgram.get());
+
+
+
+
+            GLES30.glBindBuffer ( GLES30.GL_ARRAY_BUFFER, mVBOIds[0] );
+            GLES30.glBufferData ( GLES30.GL_ARRAY_BUFFER, verticesData.length * 4,
+                    verticesBuffer, GLES30.GL_STATIC_DRAW );
+
+            GLES30.glBindBuffer ( GLES30.GL_ELEMENT_ARRAY_BUFFER, mVBOIds[1] );
+            GLES30.glBufferData ( GLES30.GL_ELEMENT_ARRAY_BUFFER, 2 * indicesData.length,
+                    indicesBuffer, GLES30.GL_STATIC_DRAW );
+
+            GLES30.glBindBuffer ( GLES30.GL_ARRAY_BUFFER, mVBOIds[2] );
+            GLES30.glBufferData ( GLES30.GL_ARRAY_BUFFER, 4 * colorsData.length,
+                    colorsBuffer, GLES30.GL_STATIC_DRAW );
+
+
+            GLES30.glBindVertexArray(vao[0]);
+            GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesData.length, GLES30.GL_UNSIGNED_SHORT, indicesBuffer);
+
+            return;
+
         } else {
-
                     GLES20.glUseProgram(program.get());
-
-
-                    if (Game.isOpenGL30){
-
-                        GLES30.glVertexAttribPointer( ATTRIB_POS, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-                        GLES30.glVertexAttribPointer( ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, 0, 0 );   
-                        GLES30.glVertexAttribPointer( ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0 );   
-
-                    }
 
                     // get handle to vertex shader's vPosition member and add vertices
                     int av4_verticesHandle = GLES20.glGetAttribLocation(program.get(), "av4_vertices");

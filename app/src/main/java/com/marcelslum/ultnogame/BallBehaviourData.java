@@ -178,23 +178,23 @@ public class BallBehaviourData {
 
     public void logData() {
         
-        Log.e(TAG, "active " + active);
-        Log.e(TAG, "angleDecreasedWithBarMovement " + angleDecreasedWithBarMovement);
-        Log.e(TAG, "angleIncreasedWithBarMovement " + angleIncreasedWithBarMovement);
-        Log.e(TAG, "angleDecreasedWithBarInclination " + angleDecreasedWithBarInclination);
-        Log.e(TAG, "angleIncreasedWithBarInclination " + angleIncreasedWithBarInclination);
-        Log.e(TAG, "minVelocityReached " + minVelocityReached);
-        Log.e(TAG, "maxVelocityReached " + maxVelocityReached);
-        Log.e(TAG, "minAngleReached " + minAngleReached);
-        Log.e(TAG, "maxAngleReached " + maxAngleReached);
-        Log.e(TAG, "initialLen " + initialLen);
-        Log.e(TAG, "minLen " + minLen);
-        Log.e(TAG, "maxLen " + maxLen);
-        Log.e(TAG, "finalLen " + finalLen);
-        Log.e(TAG, "initialAngle " + initialAngle);
-        Log.e(TAG, "minAngle " + minAngle);
-        Log.e(TAG, "maxAngle " + maxAngle);
-        Log.e(TAG, "finalAngle " + finalAngle);
+        //Log.e(TAG, "active " + active);
+        //Log.e(TAG, "angleDecreasedWithBarMovement " + angleDecreasedWithBarMovement);
+        //Log.e(TAG, "angleIncreasedWithBarMovement " + angleIncreasedWithBarMovement);
+        //Log.e(TAG, "angleDecreasedWithBarInclination " + angleDecreasedWithBarInclination);
+        //Log.e(TAG, "angleIncreasedWithBarInclination " + angleIncreasedWithBarInclination);
+        //Log.e(TAG, "minVelocityReached " + minVelocityReached);
+        //Log.e(TAG, "maxVelocityReached " + maxVelocityReached);
+        //Log.e(TAG, "minAngleReached " + minAngleReached);
+        //Log.e(TAG, "maxAngleReached " + maxAngleReached);
+        //Log.e(TAG, "initialLen " + initialLen);
+        //Log.e(TAG, "minLen " + minLen);
+        //Log.e(TAG, "maxLen " + maxLen);
+        //Log.e(TAG, "finalLen " + finalLen);
+        //Log.e(TAG, "initialAngle " + initialAngle);
+        //Log.e(TAG, "minAngle " + minAngle);
+        //Log.e(TAG, "maxAngle " + maxAngle);
+        //Log.e(TAG, "finalAngle " + finalAngle);
     }
 
     public void setFinalAngle(float v) {

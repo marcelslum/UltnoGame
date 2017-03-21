@@ -19,6 +19,10 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class Game {
 
 
+    public static boolean isOpenGL30 = false;
+    public static Program openGl30TextProgram;
+
+
     public static final long TIME_OF_BALL_LISTENER = 250;
     static Vibrator vibrator;
 
@@ -144,6 +148,7 @@ public class Game {
     public static String currentPlayerId;
     private static TargetGroup targetGroup;
 
+
     private Game() {}
     
     
@@ -178,7 +183,7 @@ public class Game {
     
 
     public static void init(){
-        Log.e("game", "init()");
+        //Log.e("game", "init()");
 
         Splash.loaderConclude = false;
 
@@ -272,6 +277,13 @@ public class Game {
 
 
     public static void initPrograms(){
+
+        if (isOpenGL30) {
+            openGl30TextProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_text),
+                    Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
+            return;
+        }
+
         imageProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_text),
                 Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
         targetProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_target),
@@ -1272,11 +1284,11 @@ public class Game {
 
         // Before doing something that requires a lot of memory,
         // check to see whether the device is in a low memory state.
-        ActivityManager.MemoryInfo memoryInfo = getAvailableMemory();
+        //ActivityManager.MemoryInfo memoryInfo = getAvailableMemory();
 
-        if (memoryInfo.lowMemory) {
-            Log.e(TAG, "lowMemory");
-        }
+        //if (memoryInfo.lowMemory) {
+        //    Log.e(TAG, "lowMemory");
+        //}
 
 
         ballCollidedFx -= 1;
@@ -1429,7 +1441,7 @@ public class Game {
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
-                    Log.e(TAG, "verificando explosão da bola "+i);
+                    //Log.e(TAG, "verificando explosão da bola "+i);
                     if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode
                             && balls.get(i).y < gameAreaResolutionY * 0.8f) {
 

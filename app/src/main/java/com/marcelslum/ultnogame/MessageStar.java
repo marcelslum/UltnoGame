@@ -79,15 +79,15 @@ public class MessageStar extends Entity {
 
     public void show(int totalStars, int newStars, boolean stay){
 
-        Log.e(TAG, "show Message Stars");
-        Log.e(TAG, "totalStars "+totalStars);
+        //Log.e(TAG, "show Message Stars");
+        //Log.e(TAG, "totalStars "+totalStars);
 
         if (!isShowing){
             isShowing = true;
             Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
         } else {
 
-            Log.e(TAG, "showing");
+            //Log.e(TAG, "showing");
 
             if (activeAnimation != null && activeAnimation.elapsedTime < 2000){
 
@@ -99,8 +99,8 @@ public class MessageStar extends Entity {
                     stars.get(i).animations.clear();
                 }
 
-                Log.e(TAG, "newStars "+newStars);
-                Log.e(TAG, "currentNewStars "+currentNewStars);
+                //Log.e(TAG, "newStars "+newStars);
+                //Log.e(TAG, "currentNewStars "+currentNewStars);
 
                 if ((newStars + currentNewStars) > 0) {
                     // adiciona animação na primeira estrela

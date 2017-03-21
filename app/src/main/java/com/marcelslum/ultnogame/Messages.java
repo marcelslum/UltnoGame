@@ -102,7 +102,7 @@ public class Messages extends Entity {
                 for (int a = 0; a < childs2.get(i).animations.size(); a++) {
 
                     if (childs2.get(i).animations.get(a).started) {
-                        Log.e(TAG, childs2.get(i).animations.get(a).name);
+                        //Log.e(TAG, childs2.get(i).animations.get(a).name);
                         childs2.get(i).animations.get(a).doAnimation();
                     }
                 }

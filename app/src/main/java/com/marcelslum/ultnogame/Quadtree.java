@@ -9,7 +9,11 @@ public class Quadtree {
     public static ArrayList<Entity> outs;
 
     public Quadtree(RectangleM bounds, int maxDepth, int maxChildren){
-        outs = new ArrayList<Entity>();
+        if (outs == null){
+            outs = new ArrayList<Entity>();
+        } else {
+            outs.clear();
+        }
         this.root = new Node(bounds, 0, maxDepth, maxChildren);
 
     }

@@ -193,7 +193,7 @@ public class Target extends Rectangle {
 
         if (isGhost){
             if (ghostAlphaAnim != null) {
-                Log.e("target", "ghostanimstarted");
+                //Log.e("target", "ghostanimstarted");
                 ghostAlphaAnim.start();
             }
             if (states[this.currentState] == 0){
