@@ -78,11 +78,20 @@ public abstract class Utils {
     }
 
     public static void updateFloatBuffer(float[] data, FloatBuffer buffer) {
-        //buffer.position(0);
-        buffer.put(data, 0, data.length);
-        // set the cursor position to the beginning of the buffer
-        buffer.position(0);
-
+        
+        Log.e(TAG, " buffer.capacity() " +  buffer.capacity());
+        Log.e(TAG, " data.length * 4 " +  data.length * 4);
+        
+        
+        if (buffer != null && buffer.capacity() == data.length * 4){
+            Log.e(TAG, " atualizando buffer ");
+            buffer.position(0);
+            buffer.put(data);
+            buffer.position(0);
+        } else {
+            Log.e(TAG, " realocando buffer ");
+            buffer = generateFloatBuffer (float[] data);   
+        }
     }
 
     public static ShortBuffer generateShortBuffer(short[] data) {
