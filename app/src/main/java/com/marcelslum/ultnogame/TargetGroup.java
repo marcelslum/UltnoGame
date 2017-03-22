@@ -8,24 +8,24 @@ import java.util.ArrayList;
 
 class TargetGroup extends Entity{
 
-static final String TAG = "TargetGroup";
-    private static final int SIZEOF_FLOAT = 4;
-    private static final int SIZEOF_SHORT = 2;
+	static final String TAG = "TargetGroup";
+    	private static final int SIZEOF_FLOAT = 4;
+    	private static final int SIZEOF_SHORT = 2;
 
 
-    public static int [] vbo = new int[3];
-    public static int [] ibo = new int[1];
+    	public static int [] vbo = new int[3];
+    	public static int [] ibo = new int[1];
 	
 	public float[] individualUvsData;
 	public float[] individualColorsData;
 
-public ArrayList<TargetGroupData> targets;
+	public ArrayList<TargetGroupData> targets;
     
-    public static final int POSITION_DATA_SIZE = 3;
-    public static final int TEXTURE_CORDINATE_DATA_ZIE = 2;
-    public static final int COLOR_DATA_SIZE = 4;
-    public final int BYTES_PER_FLOAT = 4;
-    public final int BYTES_PER_SHORT = 2;
+    	public static final int POSITION_DATA_SIZE = 3;
+    	public static final int TEXTURE_CORDINATE_DATA_ZIE = 2;
+    	public static final int COLOR_DATA_SIZE = 4;
+    	public final int BYTES_PER_FLOAT = 4;
+    	public final int BYTES_PER_SHORT = 2;
 
   TargetGroup(){
       super("targetGroup", 0f, 0f, Entity.TYPE_TARGET_GROUP);
