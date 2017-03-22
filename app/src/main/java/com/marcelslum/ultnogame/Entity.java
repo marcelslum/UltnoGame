@@ -21,6 +21,8 @@ public class Entity{
     final public static int ATTRIB_UV = 1;
     final public static int ATTRIB_COLOR = 2;
     
+    
+    
 
     public static int [] vbo = new int[2];
 
@@ -59,6 +61,10 @@ public class Entity{
     private static int[] mVBOIds = new int[3];
     //private static IntBuffer vao;
 
+    
+    final public boolean uvChange = false;
+    final public boolean colorChange = false;
+    
     public int type;
     public String name;
     public float x;
