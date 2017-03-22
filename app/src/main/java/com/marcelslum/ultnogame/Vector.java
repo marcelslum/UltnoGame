@@ -8,10 +8,21 @@ package com.marcelslum.ultnogame;
 //
 // Represents a vector in two dimensions with `x` and `y` properties.
 
-public class Vector{
+public class Vector implements Poolable<Vector>{
 
     public float x;
     public float y;
+    private int poolID;
+
+    Vector(){
+        this.x = 0;
+        this.y = 0;
+    }
+
+    public void setData(float x, float y){
+        this.x = x;
+        this.y = y;
+    }
 
     Vector(float x, float y){
         this.x = x;
@@ -147,5 +158,26 @@ public class Vector{
     // Get the length of this vector.
     public float len(){
         return (float)Math.sqrt((double)this.len2());
+    }
+
+    @Override
+    public void setPoolID(int id) {
+        poolID = id;
+    }
+
+    @Override
+    public int getPoolID() {
+        return poolID;
+    }
+
+    @Override
+    public Vector get() {
+        return this;
+    }
+
+    @Override
+    public void clean() {
+        x = 0;
+        y = 0;
     }
 }

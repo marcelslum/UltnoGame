@@ -1,44 +1,73 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Stack;
+
 /**
  * Created by Marcel on 21/03/2017.
  */
 
-public class ObjectPool<T extends ObjectPool.Pooled> {
-    private PooledCreator mCreator;
-    private Pooled[] mObjects;
-    private int mFreeIndex;
+public class ObjectPool<Type> implements Pool<Type> {
 
-    public ObjectPool(int poolSize, PooledCreator creator) {
-        mCreator = creator;
-        mObjects = new Pooled[poolSize];
-        mFreeIndex = -1;
+    private final Stack<Integer> freeObjectsID;
+    private final ArrayList<Poolable<Type>> objects;
+    private PoolObjectFactory<Type> factory;
+
+    public ObjectPool() {
+        freeObjectsID = new Stack<Integer>();
+        objects = new ArrayList<Poolable<Type>>();
     }
 
-    public T borrow() {
-        if (mFreeIndex < 0) {
-            return (T) mCreator.create();
+    public void recycle(final Poolable<Type> data) {
+        freeObjectsID.push(data.getPoolID());
+    }
+
+    @SuppressWarnings("unchecked")
+    public Type get() {
+
+        //Log.e("ObjectPool", "get new object ");
+
+        if (freeObjectsID.isEmpty()) {
+
+            //Log.e("ObjectPool", "freeObjectsID " + freeObjectsID.size());
+
+            final Poolable<Type> obj = (Poolable<Type>) factory.newObject();
+            obj.setPoolID(objects.size());
+
+            //Log.e("ObjectPool", "objects " + objects.size());
+
+            objects.add(obj);
+
+            return obj.get();
         }
 
-        return (T) mObjects[mFreeIndex--];
+        int idReuse = freeObjectsID.pop();
+        //Log.e("ObjectPool", "obj idReuse" + idReuse);
+
+        final Poolable<Type> obj = objects.get(idReuse);
+
+        obj.clean();
+
+        return obj.get();
     }
 
-    public void release(Pooled obj) {
-        if (obj == null) {
-            return;
+    public void setFactory(final PoolObjectFactory<Type> factory) {
+        this.factory = factory;
+    }
+
+    public void reset() {
+        freeObjectsID.clear();
+        final Iterator<Poolable<Type>> it = objects.iterator();
+
+        while (it.hasNext()) {
+            freeObjectsID.push(it.next().getPoolID());
         }
-
-        if (mFreeIndex >= mObjects.length - 1) {
-            return;
-        }
-
-        mObjects[++mFreeIndex] = obj;
     }
 
-    public interface Pooled {
-    }
-
-    public interface PooledCreator {
-        Pooled create();
+    public String debug() {
+        return "Current Pool Size: " + freeObjectsID.size();
     }
 }

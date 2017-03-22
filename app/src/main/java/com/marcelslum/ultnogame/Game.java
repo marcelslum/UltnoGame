@@ -18,6 +18,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
 
 public class Game {
 
+    public static Pool<Vector> vectorPool;
 
     public static boolean isOpenGL30 = false;
     public static Program openGl30TextProgram;
@@ -146,7 +147,7 @@ public class Game {
     static long initialTimePointsDecay;
 
     public static String currentPlayerId;
-    private static TargetGroup targetGroup;
+    public static TargetGroup targetGroup;
 
 
     private Game() {}
@@ -241,6 +242,11 @@ public class Game {
         messages = new Messages();
         lines = new ArrayList<> ();
         groupsUnblocked = new ArrayList<>();
+
+
+        vectorPool = new ObjectPool<Vector>();
+        vectorPool.setFactory(new VectorFactory());
+
     }
 
     public static void initEdges(){
@@ -1538,6 +1544,19 @@ public class Game {
             verifyWin();
             verifyBallBehaviourData();
         }
+
+        if (Quadtree.nodePool != null){
+            //Log.e(TAG, "Debug Data BEFORE reset: " + Quadtree.nodePool.debug());
+            // reset the vectorPool, it is considered a temporary pool, all objects will become reusable
+            Quadtree.nodePool.reset();
+        }
+
+        if (vectorPool != null){
+            //Log.e(TAG, "Debug Data BEFORE reset: " + vectorPool.debug());
+            // reset the vectorPool, it is considered a temporary pool, all objects will become reusable
+            vectorPool.reset();
+        }
+
     }
 
     static void verifyBallBehaviourData(){
@@ -1786,14 +1805,9 @@ public class Game {
                 }
 
 
-                newTargetGroup = true;
+
 
             }
-
-            if (newTargetGroup){
-                targetGroup.setDrawInfo();
-            }
-
 
             if (targets.size() > 0) {
 

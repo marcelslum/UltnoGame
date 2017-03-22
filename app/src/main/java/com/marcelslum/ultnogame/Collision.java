@@ -17,6 +17,32 @@ public abstract class Collision {
     private static SatCircle circle1;
     private static SatCircle circle2;
 
+    private static float [] velocities;
+
+    private static float aPreviousX;
+    private static float aPreviousY;
+    private static float bPreviousX;
+    private static float bPreviousY;
+
+    private static boolean isHadCollision;
+    private static SatResponse response;
+    private static boolean onQuarentine;
+    private static boolean aType;
+    private static boolean bType;
+    private static float max;
+    private static int maxIndex;
+    private static int quantityPassagens;
+    private static float aDiferencaPosicaoX;
+    private static float aDiferencaPosicaoY;
+    private static float bDiferencaPosicaoX;
+    private static float bDiferencaPosicaoY;
+    private static float porcentagem;
+    private static float porcentagemAplicadaNaPassagem;
+    private static float aPosAConsiderarX;
+    private static float aPosAConsiderarY;
+    private static float bPosAConsiderarX;
+    private static float bPosAConsiderarY;
+
     private static final String TAG = "Collision";
 
     public static boolean checkCollision(ArrayList<? extends PhysicalObject> aEntities, Quadtree quad, int bWeight, boolean respond, boolean updateData){
@@ -25,9 +51,14 @@ public abstract class Collision {
         }
 
         collided = false;
-        boolean isHadCollision = false;
+
+        isHadCollision = false;
+
         ArrayList<Entity> out;
-        SatResponse response = new SatResponse();
+        response = new SatResponse();
+
+
+
 
         for (int iLoop = 0; iLoop < NUMBER_OF_ITERATIONS; iLoop++){
             // entidades a
@@ -42,7 +73,10 @@ public abstract class Collision {
                 for (int bCount = 0; bCount < out.size(); bCount++){
                     PhysicalObject b = (PhysicalObject)out.get(bCount);
 
-                    boolean onQuarentine = false;
+                    onQuarentine = false;
+
+
+
                     if (a.type == Entity.TYPE_BALL && b.type == Entity.TYPE_BALL) {
 
                         Ball ball1 = (Ball) a;
@@ -78,8 +112,9 @@ public abstract class Collision {
                         // transfere os dados da entidade para o objeto do game
 
                         //type false: polygon true: circle
-                        boolean aType = false;
-                        boolean bType = false;
+                        aType = false;
+                        bType = false;
+
 
                         if (a.circleData != null){
                             circle1.pos.x = a.circleData.pos.x;
@@ -103,7 +138,7 @@ public abstract class Collision {
                             polygon2.setPoints(b.polygonData.points);
                         }
 
-                        float [] velocities = new float[4];
+                        velocities = new float[4];
 
                         //Log.e("pos bola sat cc2", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
@@ -118,8 +153,8 @@ public abstract class Collision {
                         //}
 
 
-                        float max = -100000;
-                        int maxIndex = -1;
+                        max = -100000;
+                        maxIndex = -1;
                         for (int n = 0; n < 4; n++){
                             if (velocities[n] > max){
                                 maxIndex = n;
@@ -134,7 +169,7 @@ public abstract class Collision {
                         //    Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
                         //}
 
-                        int quantityPassagens;
+
 
                         // definir quantas passagens serão realidades, com base na maior velocidade
                         // quanto maior o número divisor, menor o número de passagens
@@ -149,10 +184,10 @@ public abstract class Collision {
                         //Log.e("Game", " b.previousPositionX "+b.previousPositionX);
                         //Log.e("Game", " b.previousPositionY "+b.previousPositionY);
 
-                        float aPreviousX = a.previousPositionX;
-                        float aPreviousY = a.previousPositionY;
-                        float bPreviousX = b.previousPositionX;
-                        float bPreviousY = b.previousPositionY;
+                        aPreviousX = a.previousPositionX;
+                        aPreviousY = a.previousPositionY;
+                        bPreviousX = b.previousPositionX;
+                        bPreviousY = b.previousPositionY;
 
                         //if (a.name == "bar" && b.name == "bar"){
                         //    Log.e(TAG, " quantityPassagens "+quantityPassagens);
@@ -166,14 +201,18 @@ public abstract class Collision {
                         // Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
                         // calcula a diferença entre as posições
-                        float aDiferencaPosicaoX = a.positionX - aPreviousX;
-                        float aDiferencaPosicaoY = a.positionY - aPreviousY;
 
-                        float bDiferencaPosicaoX = b.positionX - bPreviousX;
-                        float bDiferencaPosicaoY = b.positionY - bPreviousY;
+
+
+
+                        aDiferencaPosicaoX = a.positionX - aPreviousX;
+                        aDiferencaPosicaoY = a.positionY - aPreviousY;
+
+                        bDiferencaPosicaoX = b.positionX - bPreviousX;
+                        bDiferencaPosicaoY = b.positionY - bPreviousY;
 
                         // calcula a porcentagem de cada passada;
-                        float porcentagem = (100f/quantityPassagens)/100f;
+                        porcentagem = (100f/quantityPassagens)/100f;
 
                         //if (a.name == "bar" && b.name == "bar"){
                         //    Log.e(TAG, " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
@@ -181,11 +220,13 @@ public abstract class Collision {
 
 
                         //Log.e("Game", " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
-                        float porcentagemAplicadaNaPassagem;
-                        float aPosAConsiderarX = -1000f;
-                        float aPosAConsiderarY = -1000f;
-                        float bPosAConsiderarX = -1000f;
-                        float bPosAConsiderarY = -1000f;
+
+                        aPosAConsiderarX = -1000f;
+                        aPosAConsiderarY = -1000f;
+                        bPosAConsiderarX = -1000f;
+                        bPosAConsiderarY = -1000f;
+
+
 
                         //if (b.name == "obstacle"){
                         //    Log.e("game", " x"+ this.polygon2.pos.x);

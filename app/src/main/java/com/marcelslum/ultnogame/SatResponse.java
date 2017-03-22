@@ -23,8 +23,8 @@ public class SatResponse {
         this.cb = null;
         this.pa = null;
         this.pb = null;
-        this.overlapN = new Vector(0,0);
-        this.overlapV = new Vector(0,0);
+        this.overlapN = Game.vectorPool.get();
+        this.overlapV = Game.vectorPool.get();
         this.clear();
     }
 
