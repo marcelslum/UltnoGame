@@ -1,6 +1,7 @@
 package com.marcelslum.ultnogame;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +23,11 @@ public abstract class Utils {
     public static float y1;
     public static float y2;
     public static float z = 0f;
+
+    public final static int BYTES_PER_FLOAT = 4;
+    public final static int BYTES_PER_SHORT = 2;
+
+    public static final String TAG = "Utils";
 
     public static float getVectorMagnitude(float x, float y){
         return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
@@ -66,7 +72,7 @@ public abstract class Utils {
     
     public static FloatBuffer generateFloatBuffer(float[] data) {
         // a float has 4 bytes so we allocate for each coordinate 4 bytes
-        ByteBuffer factory = ByteBuffer.allocateDirect(data.length * 4);
+        ByteBuffer factory = ByteBuffer.allocateDirect(data.length * BYTES_PER_FLOAT);
         factory.order(ByteOrder.nativeOrder());
         // allocates the memory from the byte buffer
         FloatBuffer buffer = factory.asFloatBuffer();
@@ -78,25 +84,26 @@ public abstract class Utils {
     }
 
     public static void updateFloatBuffer(float[] data, FloatBuffer buffer) {
+        if (buffer != null) {
+            Log.e(TAG, " buffer.capacity() " + buffer.capacity());
+            Log.e(TAG, " data.length * 4 " + data.length * (BYTES_PER_FLOAT));
+        }
         
-        Log.e(TAG, " buffer.capacity() " +  buffer.capacity());
-        Log.e(TAG, " data.length * 4 " +  data.length * 4);
         
-        
-        if (buffer != null && buffer.capacity() == data.length * 4){
+        if (buffer != null && buffer.capacity() == data.length * BYTES_PER_FLOAT){
             Log.e(TAG, " atualizando buffer ");
             buffer.position(0);
             buffer.put(data);
             buffer.position(0);
         } else {
             Log.e(TAG, " realocando buffer ");
-            buffer = generateFloatBuffer (float[] data);   
+            buffer = generateFloatBuffer (data);
         }
+
     }
 
     public static ShortBuffer generateShortBuffer(short[] data) {
-        // a float has 4 bytes so we allocate for each coordinate 4 bytes
-        ByteBuffer factory = ByteBuffer.allocateDirect(data.length * 4);
+        ByteBuffer factory = ByteBuffer.allocateDirect(data.length * BYTES_PER_SHORT);
         factory.order(ByteOrder.nativeOrder());
         // allocates the memory from the byte buffer
         ShortBuffer buffer = factory.asShortBuffer();

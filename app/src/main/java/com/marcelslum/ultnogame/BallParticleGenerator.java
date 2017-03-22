@@ -106,8 +106,13 @@ public class BallParticleGenerator extends Entity {
         //if (verticesBuffer == null) {
         //    verticesBuffer = Utils.generateFloatBuffer(verticesData);
         //} else {
-            Utils.updateFloatBuffer(verticesData, verticesBuffer);
+
         //}
+
+        //Utils.updateFloatBuffer(verticesData, verticesBuffer);
+
+        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+
         indicesBuffer = Utils.generateShortBuffer(indicesData);
         uvsBuffer = Utils.generateFloatBuffer(uvsData);
         colorsBuffer = Utils.generateFloatBuffer(colorsData);

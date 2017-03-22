@@ -1750,6 +1750,7 @@ public class Game {
 
 
         boolean targetRenderIndividual = false;
+        boolean newTargetGroup = false;
 
         if (targetRenderIndividual) {
 
@@ -1766,6 +1767,8 @@ public class Game {
                 targetGroup.targets.clear();
             }
 
+
+
             for (int i = 0; i < targets.size(); i++) {
                 targets.get(i).checkAnimations();
                 if (targets.get(i).isVisible) {
@@ -1781,10 +1784,19 @@ public class Game {
                             targets.get(i).width, targets.get(i).height,
                             targets.get(i).alpha * targets.get(i).ghostAlpha, targets.get(i).type, percentage));
                 }
+
+
+                newTargetGroup = true;
+
             }
 
-            if (targets.size() > 0) {
+            if (newTargetGroup){
                 targetGroup.setDrawInfo();
+            }
+
+
+            if (targets.size() > 0) {
+
                 targetGroup.render(matrixView, matrixProjection);
             }
 
