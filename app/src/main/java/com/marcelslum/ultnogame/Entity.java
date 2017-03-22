@@ -25,6 +25,7 @@ public class Entity{
     
 
     public static int [] vbo = new int[2];
+    public static int [] ibo = new int[1];
 
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
@@ -165,7 +166,7 @@ public class Entity{
         childs = new ArrayList<>();
         checkTransformations(false);
     }
-    
+        
     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
         if (verticesSize > 0){
             if (this.verticesData == null || this.verticesData.length != verticesSize){
