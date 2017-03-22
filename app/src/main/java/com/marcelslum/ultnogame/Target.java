@@ -107,6 +107,12 @@ public class Target extends Rectangle {
         decayState(points);
         verifySpecialBall();
     }
+    
+    public void setColorsData(){
+     
+        
+        
+    }
 
     public void verifySpecialBall(){
         if (Level.levelObject.specialBallPercentage > 0f){
@@ -252,14 +258,17 @@ public class Target extends Rectangle {
     }
 
     public void setDrawInfo(){
-        initializeData(12, 6, 8, 0);
+        
+        initializeData(12, 6, 8, 16);
         
         Utils.insertRectangleVerticesData(verticesData,0, 0f, width, 0f, height, 0f);
         verticesBuffer = Utils.generateFloatBuffer(verticesData);
         
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
         indicesBuffer = Utils.generateShortBuffer(indicesData);
-
+        
+        Utils.insertRectangleColorsData(colorsData,0 , 0f, 0f, 0f, 1f)
+        
         setUvInfo(type);
 
     }
