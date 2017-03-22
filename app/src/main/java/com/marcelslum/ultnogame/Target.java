@@ -30,6 +30,8 @@ public class Target extends Rectangle {
     boolean alive = true;
     public long timeOfLastDecay = 0;
     public float percentageOfDecay = 0f;
+    
+    
 
 
     @Override
@@ -231,6 +233,9 @@ public class Target extends Rectangle {
         }
 
         setUvInfo(type);
+        
+        uvChange = true;
+        
     }
 
     public void setUvInfo(int type){
