@@ -15,6 +15,9 @@ static final String TAG = "TargetGroup";
 
     public static int [] vbo = new int[3];
     public static int [] ibo = new int[1];
+	
+	public float[] individualUvsData;
+	public float[] individualColorsData;
 
 public ArrayList<TargetGroupData> targets;
     
@@ -111,7 +114,7 @@ public ArrayList<TargetGroupData> targets;
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
         
         
-        verticesBuffer.limit(0);
+        	verticesBuffer.limit(0);
 		verticesBuffer = null;
 		uvsBuffer.limit(0);
 		uvsBuffer = null;
@@ -120,10 +123,77 @@ public ArrayList<TargetGroupData> targets;
         indicesBuffer.limit(0);
         indicesBuffer = null;
     }
+	
+	public void checkBufferChange(){
+		
+	for (int i = 0; i < targets.size(); i++){
+		
+                if (targets.get(i).colorChange){
+			
+			Utils.insertRectangleColorsData(targets.get(i).colorsData, 0 , 0f, 0f, 0f, targets.get(i).alpha * targets.get(i).ghostAlpha);
+			
+			colorsBuffer = Utils.generateFloatBuffer(targets.get(i).colorsData);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
+        		GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER,  
+					       	i*(colorsBuffer.capacity() * SIZEOF_FLOAT),
+					       	colorsBuffer.capacity() * SIZEOF_FLOAT,
+                        			colorsBuffer);
+			
+			colorsBuffer.limit(0);
+			colorsBuffer = null;
+
+		}
+		
+		if (targets.get(i).uvChange){
+			uvsBuffer = Utils.generateShortBuffer(targets.get(i).indicesData);
+			GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[2]);
+        		GLES20.glBufferSubData(GLES20.GL_ELEMENT_ARRAY_BUFFER,  
+					       	i*(uvsBuffer.capacity() * SIZEOF_SHORT),
+					       	uvsBuffer.capacity() * SIZEOF_SHORT,
+                        			uvsBuffer);
+			uvsBuffer.limit(0);
+			uvsBuffer = null;
+		}
+
+                
+
+                if (targets.get(i).type == Target.TARGET_RED){
+                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
+                } else if (targets.get(i).type == Target.TARGET_BLUE){
+                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 624f/1024f, 830f/1024f);
+                } else if (targets.get(i).type == Target.TARGET_GREEN){
+                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 208f/1024f, 414f/1024f);
+                } else if (targets.get(i).type == Target.TARGET_BLACK){
+                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
+                }
+
+
+                float finalPorcentage = ((float)Math.pow(((targets.get(i).lastDecayPercentage)-0.5f),2)*-1) + 0.25f;
+
+
+                if (finalPorcentage != 0) {
+                    if (targets.get(i).type == Target.TARGET_BLUE) {
+                        Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 4f, finalPorcentage / 2f, finalPorcentage / 4f, targets.get(i).alpha);
+                    } else if (targets.get(i).type == Target.TARGET_BLACK) {
+                        Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 2f, finalPorcentage / 2f, finalPorcentage, targets.get(i).alpha);
+                    } else {
+                        Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, targets.get(i).alpha);
+                    }
+                } else {
+                    if (SaveGame.saveGame.currentLevelNumber >= 1000) {
+                        Utils.insertRectangleColorsData(colorsData, i * 16, Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), targets.get(i).alpha);
+                    } else {
+                        Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, targets.get(i).alpha);
+                    }
+                }
+
+            }
 
     @Override
     public void render(float[] matrixView, float[] matrixProjection) {
 
+	 checkBufferChange();   
+	    
         if (!isVisible){
             return;
         }
