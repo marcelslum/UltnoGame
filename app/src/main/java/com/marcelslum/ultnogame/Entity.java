@@ -227,6 +227,7 @@ public class Entity{
                 break;
             case "alpha":
                 alpha = value;
+                colorChange = true;
                 break;
             case "numberForAnimation":
                 numberForAnimation = value;
@@ -249,6 +250,7 @@ public class Entity{
                 break;
             case "ghostAlpha":
                 ghostAlpha = value;
+                colorChange = true;
                 break;
             default:
                 break;
