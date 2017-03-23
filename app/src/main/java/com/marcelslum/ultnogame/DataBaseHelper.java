@@ -5,6 +5,8 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         //The Android's default system path of your application database.
         private static String DB_PATH = "/data/data/com.marcelslum.ultnogame/databases/";
      
+       private static final int DATABASE_VERSION = 1;
+     
         private static String DB_NAME = "ultno";
      
         private SQLiteDatabase myDataBase; 
@@ -18,7 +20,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
          */
         public DataBaseHelper(Context context) {
   
-        	super(context, DB_NAME, null, 1);
+        	super(context, DB_NAME, null, DATABASE_VERSION);
             myContext = context;
         }	
      
@@ -130,7 +132,8 @@ public class DataBaseHelper extends SQLiteOpenHelper{
      
     	@Override
     	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-     
+          //db.execSQL("DROP TABLE IF EXISTS " + SampleDBContract.Employer.TABLE_NAME);
+          //onCreate(sqLiteDatabase); 
     	}
      
             // Add your public helper methods to access and get content from the database.
