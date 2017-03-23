@@ -125,7 +125,7 @@ public class Level {
 
     public void loadEntities() {
         Game.eraseAllGameEntities();
-        Game.quad = new Quadtree(new RectangleM(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY),5,5);
+        Game.quad = new Quadtree(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY,5,5);
 
         MessagesHandler.messageTime.setText("00:00");
         if (SaveGame.saveGame.currentLevelNumber < 1000) {
@@ -249,32 +249,7 @@ public class Level {
             }
         }
 
-        if (Game.targetGroup == null) {
-            Game.targetGroup = new TargetGroup();
-            Game.targetGroup.targets = new ArrayList<>();
-        } else {
-            Game.targetGroup.targets.clear();
-        }
-
-
-
-        for (int i = 0; i < Game.targets.size(); i++) {
-            Game.targets.get(i).checkAnimations();
-            if (Game.targets.get(i).isVisible) {
-
-                float percentage;
-                if (Utils.getTime() - Game.targets.get(i).timeOfLastDecay < 300){
-                    percentage = (float)(Utils.getTime() - Game.targets.get(i).timeOfLastDecay)/300f;
-                } else {
-                    percentage = 0;
-                }
-
-                Game.targetGroup.targets.add(new TargetGroupData(i, Game.targets.get(i).positionX, Game.targets.get(i).positionY,
-                        Game.targets.get(i).width, Game.targets.get(i).height,
-                        Game.targets.get(i).alpha * Game.targets.get(i).ghostAlpha, Game.targets.get(i).type, percentage));
-            }
-        }
-
+        Game.targetGroup = new TargetGroup();
         Game.targetGroup.setDrawInfo();
 
         // adiciona os obstáculos

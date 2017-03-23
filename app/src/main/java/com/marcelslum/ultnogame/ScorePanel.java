@@ -120,9 +120,9 @@ public class ScorePanel extends Entity {
 
         }
 
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
     public void showMessage(String message, int duration) {
@@ -185,7 +185,10 @@ public class ScorePanel extends Entity {
             prepareUvData(subInteger);
             Utils.insertRectangleUvData(uvsData, i * 8);
         }
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+
+        //Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
     public void setValue(int newValue, boolean animatePanel, int duration, boolean playSound){

@@ -20,6 +20,8 @@ public class Game {
 
     public static Pool<Vector> vectorPool;
 
+    public static Pool<MyArrayList> arrayListPool;
+
     public static boolean isOpenGL30 = false;
     public static Program openGl30TextProgram;
 
@@ -246,6 +248,9 @@ public class Game {
 
         vectorPool = new ObjectPool<Vector>();
         vectorPool.setFactory(new VectorFactory());
+
+        arrayListPool = new ObjectPool<>();
+        arrayListPool.setFactory(new MyArrayListFactory());
 
     }
 
@@ -1551,11 +1556,26 @@ public class Game {
             Quadtree.nodePool.reset();
         }
 
+        if (Quadtree.rectangleMPool != null){
+            Quadtree.rectangleMPool.reset();
+        }
+
+        if (BallParticleGenerator.particlePool != null){
+            BallParticleGenerator.particlePool.reset();
+        }
+
         if (vectorPool != null){
             //Log.e(TAG, "Debug Data BEFORE reset: " + vectorPool.debug());
             // reset the vectorPool, it is considered a temporary pool, all objects will become reusable
             vectorPool.reset();
         }
+
+        if (arrayListPool != null){
+            //Log.e(TAG, "Debug Data BEFORE reset: " + vectorPool.debug());
+            // reset the vectorPool, it is considered a temporary pool, all objects will become reusable
+            arrayListPool.reset();
+        }
+
 
     }
 
@@ -1609,9 +1629,9 @@ public class Game {
     static void verifyDead() {
         ballsNotInvencibleAlive = 0;
         ballsInvencible = 0;
-        for (Ball b : balls){
-            if (b.isAlive){
-                if (!b.isInvencible){
+        for (int i = 0; i < balls.size(); i++) {
+            if (balls.get(i).isAlive){
+                if (!balls.get(i).isInvencible){
                     ballsNotInvencibleAlive += 1;
                 } else {
                     ballsInvencible += 1;
@@ -1628,7 +1648,6 @@ public class Game {
         
         for (int i = 0; i < ballCollisionStars.size(); i++){
             if (!ballCollisionStars.get(i).isVisible){
-                //Log.e(TAG, "removing starball "+i);
                 ballCollisionStars.remove(i);
                 break;
             }
@@ -1766,57 +1785,13 @@ public class Game {
             }
         }
 
-
-
-        boolean targetRenderIndividual = false;
-        boolean newTargetGroup = false;
-
-        if (targetRenderIndividual) {
-
-            for (int i = 0; i < targets.size(); i++) {
-                targets.get(i).prepareRender(matrixView, matrixProjection);
-            }
-        } else {
-
-
-            if (targetGroup == null) {
-                targetGroup = new TargetGroup();
-                targetGroup.targets = new ArrayList<>();
-            } else {
-                targetGroup.targets.clear();
-            }
-
-
-
-            for (int i = 0; i < targets.size(); i++) {
-                targets.get(i).checkAnimations();
-                if (targets.get(i).isVisible) {
-
-                    float percentage;
-                    if (Utils.getTime() - targets.get(i).timeOfLastDecay < 300){
-                        percentage = (float)(Utils.getTime() - targets.get(i).timeOfLastDecay)/300f;
-                    } else {
-                        percentage = 0;
-                    }
-
-                    targetGroup.targets.add(new TargetGroupData(i, targets.get(i).positionX, targets.get(i).positionY,
-                            targets.get(i).width, targets.get(i).height,
-                            targets.get(i).alpha * targets.get(i).ghostAlpha, targets.get(i).type, percentage));
-                }
-
-
-
-
-            }
-
-            if (targets.size() > 0) {
-
-                targetGroup.render(matrixView, matrixProjection);
-            }
-
+        for (int i = 0; i < targets.size(); i++) {
+            targets.get(i).checkAnimations();
         }
 
-
+        if (targetGroup != null && targets.size() > 0) {
+            targetGroup.render(matrixView, matrixProjection);
+        }
 
         for (int i = 0; i < bars.size(); i++){
             bars.get(i).prepareRender(matrixView, matrixProjection);

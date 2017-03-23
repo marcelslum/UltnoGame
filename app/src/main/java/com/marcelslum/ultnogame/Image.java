@@ -59,7 +59,7 @@ public class Image extends Entity{
     public void setColor(Color color){
         this.color = color;
         Utils.insertRectangleColorsData(colorsData, 0, color);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class Image extends Entity{
         this.y1 = y1;
         this.y2 = y2;
         Utils.insertRectangleUvData(uvsData, 0, x1, x2, y1, y2);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
     public void setDrawInfo(){
@@ -89,17 +89,17 @@ public class Image extends Entity{
         }
 
         Utils.insertRectangleVerticesData(verticesData, 0,  0f, width, 0f, height, 0f);
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
         Utils.insertRectangleUvData(uvsData, 0, x1, x2, y1, y2);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
 
         if (color != null){
             Utils.insertRectangleColorsData(colorsData, 0, color);
-            colorsBuffer = Utils.generateFloatBuffer(colorsData);
+            colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
         }
     }
 }

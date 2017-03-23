@@ -50,8 +50,9 @@ public class Ball extends Circle{
 
     public int textureMap = COLOR_BALL_BLACK;
     
-    public ArrayList<Float> historicPositionX;
-    public ArrayList<Float> historicPositionY;
+    float [] historicPositionX = new float[7];
+    int historicNumberOfElements = 0;
+    float [] historicPositionY = new float[7];
 
     Color color;
     boolean isAlive = true;
@@ -89,8 +90,7 @@ public class Ball extends Circle{
        	mass = Math.pow(radius,3);
 
         isMovable = true;
-        historicPositionX = new ArrayList<>();
-        historicPositionY = new ArrayList<>();
+        historicNumberOfElements = 0;
         setDrawInfo();
         ballParticleGenerator = new BallParticleGenerator(name+"pg", 0f, 0f);
     }
@@ -154,18 +154,18 @@ public class Ball extends Circle{
         //Log.e("ball", " "+verticesData.length);
 
         Utils.insertRectangleVerticesData(verticesData, 0, 0f - radius, radius, 0f - radius, radius, 0f);
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
         Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
 
 
         colorsData = new float[16];
         Utils.insertRectangleColorsData(colorsData, 0, color);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
 
 
     }
@@ -173,25 +173,37 @@ public class Ball extends Circle{
     public void setTextureMapAndUvData(int textureMap){
         this.textureMap = textureMap;
         Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
     
     @Override
     public void translate(float tx, float ty) {
         super.translate(tx, ty);
         if (isMovable && isFree){
-            if (historicPositionX.size() < 7){
-                historicPositionX.add(x + accumulatedTranslateX + tx);
-                historicPositionY.add(y + accumulatedTranslateY + ty);
+            if (historicNumberOfElements < 7){
+                historicPositionX[historicNumberOfElements] = x + accumulatedTranslateX + tx;
+                historicPositionY[historicNumberOfElements] = y + accumulatedTranslateY + ty;
+                historicNumberOfElements += 1;
             } else {
-                historicPositionX.add(0, x + accumulatedTranslateX + tx);
-                historicPositionX.remove(7);
-                historicPositionY.add(0, y + accumulatedTranslateY + ty);
-                historicPositionY.remove(7);
+                historicPositionX[6] = historicPositionX[5];
+                historicPositionX[5] = historicPositionX[4];
+                historicPositionX[4] = historicPositionX[3];
+                historicPositionX[3] = historicPositionX[2];
+                historicPositionX[2] = historicPositionX[1];
+                historicPositionX[1] = historicPositionX[0];
+                historicPositionX[0] = x + accumulatedTranslateX + tx;
+
+                historicPositionY[6] = historicPositionY[5];
+                historicPositionY[5] = historicPositionY[4];
+                historicPositionY[4] = historicPositionY[3];
+                historicPositionY[3] = historicPositionY[2];
+                historicPositionY[2] = historicPositionY[1];
+                historicPositionY[1] = historicPositionY[0];
+                historicPositionY[0] = y + accumulatedTranslateY + ty;
             }
 
             int numberOfParticles;
-            for (int i = 0; i < historicPositionX.size(); i++){
+            for (int i = 0; i < historicNumberOfElements; i++){
                 if (i == 0){
                     numberOfParticles = 4;
                 } else if (i == 2){
@@ -203,7 +215,7 @@ public class Ball extends Circle{
                 } else {
                     numberOfParticles = 0;
                 }
-                ballParticleGenerator.generate(historicPositionX.get(i), historicPositionY.get(i), radius, numberOfParticles);
+                ballParticleGenerator.generate(historicPositionX[i], historicPositionY[i], radius, numberOfParticles);
             }
         }
     }
@@ -212,8 +224,7 @@ public class Ball extends Circle{
         if (ballParticleGenerator != null) {
             ballParticleGenerator.isActive = false;
         }
-        historicPositionX.clear();
-        historicPositionY.clear();
+        historicNumberOfElements = 0;
     }
 
     @Override
@@ -260,7 +271,7 @@ public class Ball extends Circle{
             }
 
             Utils.insertRectangleColorsData(colorsData, 0, color);
-            colorsBuffer = Utils.generateFloatBuffer(colorsData);
+            colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
         }
 
 

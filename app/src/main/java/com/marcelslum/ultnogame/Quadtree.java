@@ -6,40 +6,59 @@ public class Quadtree {
 
     Node root;
 
-    public static ArrayList<Entity> outs;
-    public static Pool<Node> nodePool;
+    //public static ArrayList<Entity> outs;
 
-    public Quadtree(RectangleM bounds, int maxDepth, int maxChildren){
+    public static Entity [] outs;
+    public static int outsInsertIndex = 0;
+
+    public static Pool<Node> nodePool;
+    public static Pool<RectangleM> rectangleMPool;
+
+    public Quadtree(float x, float y, float w, float h, int maxDepth, int maxChildren){
+
+        outs = new Entity[300];
+        /*
         if (outs == null){
             outs = new ArrayList<Entity>();
         } else {
             outs.clear();
         }
+        */
 
-        nodePool = new ObjectPool<Node>();
+        nodePool = new ObjectPool<>();
         nodePool.setFactory(new NodeFactory());
 
         root = new Node();
-        root.setData(bounds, 0, maxDepth, maxChildren);
+        root.setData(x, y, w, h, 0, maxDepth, maxChildren);
 
     }
 
     public void insert(Entity item){
-        this.root.insert(item);
+        root.insert(item);
     }
 
     public void clear(){
         this.root.clear();
     }
 
-    public ArrayList<Entity> retrieve(Entity item){
+    //public ArrayList<Entity> retrieve(Entity item){
+    public void retrieve(Entity item){
 
-        outs = new ArrayList<>();
-        this.root.retrieve(item, outs);
+        for (int i = 0; i < outs.length; i++){
+            outs[i] = null;
+        }
+        outsInsertIndex = 0;
+        //outs = new ArrayList<>();
 
+        root.retrieve(item);
 
+        if (item.type == Entity.TYPE_BALL) {
+            for (int i = 0; i < outsInsertIndex; i++) {
+                System.out.println("resultado " + outs[i].name);
+            }
+        }
 
-        return outs;
+        //return outs;
     }
 
 }

@@ -125,9 +125,9 @@ public class BallGoalsPanel extends Entity{
         lastXBall = xOfTriangle + size/2f;
 
 
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
 
     }
     

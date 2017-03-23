@@ -63,8 +63,8 @@ public class Entity{
     //private static IntBuffer vao;
 
     
-    final public boolean uvChange = false;
-    final public boolean colorChange = false;
+    public boolean uvChange = false;
+    public boolean colorChange = false;
     
     public int type;
     public String name;
@@ -169,24 +169,24 @@ public class Entity{
         
     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
         if (verticesSize > 0){
-            if (this.verticesData == null || this.verticesData.length != verticesSize){
-                this.verticesData = new float[verticesSize];                
+            if (verticesData == null || verticesData.length != verticesSize){
+                verticesData = new float[verticesSize];
             }
         }
         if (indicesSize > 0){
-            if (this.indicesData == null || this.indicesData.length != indicesSize){
-                this.indicesData = new short[indicesSize];                
+            if (indicesData == null || indicesData.length != indicesSize){
+                indicesData = new short[indicesSize];
             } 
             
         }
         if (uvsSize > 0){
-            if (this.uvsData == null || this.uvsData.length != uvsSize){
-                this.uvsData = new float[uvsSize];                
+            if (uvsData == null || uvsData.length != uvsSize){
+                uvsData = new float[uvsSize];
             }
         }
         if (colorsSize > 0){
-            if (this.colorsData == null || this.colorsData.length != colorsSize){
-                this.colorsData = new float[colorsSize];                
+            if (colorsData == null || colorsData.length != colorsSize){
+                colorsData = new float[colorsSize];
             }
         }
     }    

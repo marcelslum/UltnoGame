@@ -10,14 +10,14 @@ public class BallParticleGenerator extends Entity {
     ArrayList<Particle> particlesArray;
     boolean isActive = true;
     boolean isVisible = true;
+
+    public static Pool<Particle> particlePool;
     
     BallParticleGenerator(String name, float x, float y) {
         super(name, x, y, Entity.TYPE_PARTICLE);
         program = Game.imageColorizedProgram;
         textureId = Texture.TEXTURE_NUMBERS_EXPLOSION;
-        particlesArray= new ArrayList<>(10);
-
-
+        particlesArray = new ArrayList<>();
     }
 
   public void activate(){
@@ -46,9 +46,16 @@ public class BallParticleGenerator extends Entity {
             
             float px = Utils.getRandonFloat(x - radius, x + radius);
             float py = Utils.getRandonFloat(y - radius, y + radius);
-            
-            Particle particle = new Particle(px, py, vx, vy, velocity_variation_x,
+
+            if (particlePool == null){
+                particlePool = new ObjectPool<>();
+                particlePool.setFactory(new ParticleFactory());
+            }
+
+            Particle particle = particlePool.get();
+            particle.setData(px, py, vx, vy, velocity_variation_x,
                 velocity_variation_y, alpha_decay, size, textureMap);
+
             particlesArray.add(particle);
             
             if (particlesArray.size() > maxNumberOfParticles) {
@@ -112,20 +119,26 @@ public class BallParticleGenerator extends Entity {
         //Utils.updateFloatBuffer(verticesData, verticesBuffer);
 
 
-
-        if (verticesBuffer == null || verticesBuffer.capacity() != verticesData.length * Utils.BYTES_PER_FLOAT){
+        if (verticesBuffer == null || verticesBuffer.capacity() != verticesData.length){
             verticesBuffer = Utils.generateFloatBuffer(verticesData);
         } else {
             Utils.updateFloatBuffer(verticesData, verticesBuffer);
         }
         //verticesBuffer = Utils.generateFloatBuffer(verticesData);
 
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
     }
 
-    private class Particle{
+    private class ParticleFactory implements PoolObjectFactory<Particle>{
+        @Override
+        public Particle newObject() {
+            return new Particle();
+        }
+    }
+
+    private class Particle implements Poolable<Particle>{
         float initX;
         float initY;
         float x;
@@ -138,8 +151,13 @@ public class BallParticleGenerator extends Entity {
         float velocity_variation_x;
         float velocity_variation_y;
         int textureMap;
+        private int poolID;
 
-        public Particle(float initX, float initY, float vx, float vy, 
+        public Particle(){
+
+        }
+
+        public void setData(float initX, float initY, float vx, float vy,
             float velocity_variation_x, float velocity_variation_y, float alpha_decay, float size, int textureMap) {
             this.initX = initX;
             this.initY = initY;
@@ -153,6 +171,38 @@ public class BallParticleGenerator extends Entity {
             this.alpha_decay = alpha_decay;
             this.size = size;
             this.textureMap = textureMap;
+        }
+
+        @Override
+        public void setPoolID(int id) {
+            this.poolID = id;
+        }
+
+        @Override
+        public int getPoolID() {
+            return this.poolID;
+        }
+
+        @Override
+        public Particle get() {
+            return this;
+        }
+
+        @Override
+        public void clean() {
+            initX = 0;
+            initY = 0;
+            x = 0;
+            y = 0;
+            vx = 0;
+            vy = 0;
+            velocity_variation_x = 0;
+            velocity_variation_y = 0;
+            alpha = 0.2f;
+            alpha_decay = 0;
+            size = 0;
+            textureMap = 0;
+
         }
     }
 }

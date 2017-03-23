@@ -22,12 +22,12 @@ public class Line extends Entity{
         initializeData(6, 2, 0, 8);
         //Log.e("line set draw info", " "+x+" "+y+" "+x2+" "+y2);
         Utils.insertLineVerticesData(verticesData, 0,  0f, 0f, x2-x, y2-y, 0f);
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
 
         Utils.insertLineIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
         Utils.insertLineColorsData(colorsData, 0, color);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
     }
 }

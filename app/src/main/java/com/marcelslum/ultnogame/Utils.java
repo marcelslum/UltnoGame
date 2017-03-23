@@ -83,26 +83,40 @@ public abstract class Utils {
         return buffer;
     }
 
-    public static void updateFloatBuffer(float[] data, FloatBuffer buffer) {
-        if (buffer != null) {
-            Log.e(TAG, " buffer.capacity() " + buffer.capacity());
-            Log.e(TAG, " data.length * 4 " + data.length * (BYTES_PER_FLOAT));
+    public static FloatBuffer generateOrUpdateFloatBuffer(float[] data, FloatBuffer floatBuffer) {
+        // a float has 4 bytes so we allocate for each coordinate 4 bytes
+        if (floatBuffer == null || floatBuffer.capacity() != data.length){
+            floatBuffer = Utils.generateFloatBuffer(data);
+        } else {
+            Utils.updateFloatBuffer(data, floatBuffer);
         }
-        
-        
-        if (buffer != null && buffer.capacity() == data.length * BYTES_PER_FLOAT){
-            Log.e(TAG, " atualizando buffer ");
+        return floatBuffer;
+    }
+
+    public static ShortBuffer generateOrUpdateShortBuffer(short[] data, ShortBuffer shortBuffer) {
+        // a float has 4 bytes so we allocate for each coordinate 4 bytes
+        if (shortBuffer == null || shortBuffer.capacity() != data.length){
+            shortBuffer = Utils.generateShortBuffer(data);
+        } else {
+            Utils.updateShortBuffer(data, shortBuffer);
+        }
+        return shortBuffer;
+    }
+
+    public static void updateFloatBuffer(float[] data, FloatBuffer buffer) {
             buffer.position(0);
             buffer.put(data);
             buffer.position(0);
-        } else {
-            Log.e(TAG, " realocando buffer ");
-            buffer = generateFloatBuffer (data);
-        }
-
     }
 
-    public static ShortBuffer generateShortBuffer(short[] data) {
+    public static void updateShortBuffer(short[] data, ShortBuffer buffer) {
+        //Log.e(TAG, " atualizando buffer ");
+        buffer.position(0);
+        buffer.put(data);
+        buffer.position(0);
+    }
+
+    private static ShortBuffer generateShortBuffer(short[] data) {
         ByteBuffer factory = ByteBuffer.allocateDirect(data.length * BYTES_PER_SHORT);
         factory.order(ByteOrder.nativeOrder());
         // allocates the memory from the byte buffer

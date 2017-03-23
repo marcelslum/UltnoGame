@@ -125,7 +125,7 @@ public class Background extends Entity {
         }
 
         Utils.insertRectangleUvData(uvsData, 0, uvx1, uvx2, uvy1, uvy2);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
     @Override
@@ -142,13 +142,13 @@ public class Background extends Entity {
         initializeData(12, 6, 8, 0);
 
         Utils.insertRectangleVerticesData(verticesData, 0, -10f, width+20, -10f, height+20, 0f);
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
         Utils.insertRectangleUvData(uvsData, 0, uvx1, uvx2, uvy1, uvy2);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
 
         //Utils.insertRectangleColorsData(colorsData, 0, Utils.getRandonFloat(-0.1f, 0.1f),
         //        0f, Utils.getRandonFloat(-0.1f, 0.1f), 1f);

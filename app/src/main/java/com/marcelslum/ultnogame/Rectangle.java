@@ -78,9 +78,9 @@ public class Rectangle extends PhysicalObject {
             }
         }
 
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
     }
 
     @Override
@@ -257,7 +257,7 @@ public class Rectangle extends PhysicalObject {
                     }
                 }
             }
-            verticesBuffer = Utils.generateFloatBuffer(verticesData);
+            verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
         }
         super.checkTransformations(updatePrevious);
     }

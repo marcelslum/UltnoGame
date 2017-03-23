@@ -88,12 +88,12 @@ public class Point extends Entity {
                     textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT0;
                     break;
             }
-            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, textureMap);
+            Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, textureMap);
         }
         
-        this.verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
-        this.indicesBuffer = Utils.generateShortBuffer(this.indicesData);
-        this.uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
    

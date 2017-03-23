@@ -8,100 +8,93 @@ import java.util.ArrayList;
 
 class TargetGroup extends Entity{
 
-	static final String TAG = "TargetGroup";
-    	private static final int SIZEOF_FLOAT = 4;
-    	private static final int SIZEOF_SHORT = 2;
+    static final String TAG = "TargetGroup";
+    private static final int SIZEOF_FLOAT = 4;
+    private static final int SIZEOF_SHORT = 2;
 
 
-    	public static int [] vbo = new int[3];
-    	public static int [] ibo = new int[1];
-	
-	public float[] individualUvsData;
-	public float[] individualColorsData;
+    public static int [] vbo = new int[3];
+    public static int [] ibo = new int[1];
 
-	public ArrayList<TargetGroupData> targets;
-    
-    	public static final int POSITION_DATA_SIZE = 3;
-    	public static final int TEXTURE_CORDINATE_DATA_ZIE = 2;
-    	public static final int COLOR_DATA_SIZE = 4;
-    	public final int BYTES_PER_FLOAT = 4;
-    	public final int BYTES_PER_SHORT = 2;
+    public float[] individualUvsData;
+    public float[] individualColorsData;
 
-  TargetGroup(){
-      super("targetGroup", 0f, 0f, Entity.TYPE_TARGET_GROUP);
-      textureId = Texture.TEXTURE_TARGETS;
-      program = Game.imageColorizedProgram;
-  }
+    public final int BYTES_PER_FLOAT = 4;
+    public final int BYTES_PER_SHORT = 2;
+
+    TargetGroup(){
+        super("targetGroup", 0f, 0f, Entity.TYPE_TARGET_GROUP);
+        textureId = Texture.TEXTURE_TARGETS;
+        program = Game.imageColorizedProgram;
+        setDrawInfo();
+    }
     
     public void setDrawInfo(){
-        
-            GLES20.glGenBuffers(3, vbo, 0);
-            GLES20.glGenBuffers(1, ibo, 0);
-        
-         
-          initializeData(12 * targets.size(), 6 * targets.size(), 8 * targets.size(), 16 * targets.size());
 
-          //Log.e(TAG, " desenhando targets "+targets.size());
+        GLES20.glGenBuffers(3, vbo, 0);
+        GLES20.glGenBuffers(1, ibo, 0);
 
-            for (int i = 0; i < targets.size(); i++){
-                //Log.e(TAG, " inserindo target "+
-                //        targets.get(i).x + " " +
-                //        (targets.get(i).x + targets.get(i).width) + " " +
-                //        targets.get(i).y + " " +
-                //        (targets.get(i).y + targets.get(i).height));
+        initializeData(12 * Game.targets.size(), 6 * Game.targets.size(), 8 * Game.targets.size(), 16 * Game.targets.size());
 
-                Utils.insertRectangleVerticesData(verticesData, i * 12, targets.get(i).x,
-                            targets.get(i).x + targets.get(i).width, targets.get(i).y, targets.get(i).y + targets.get(i).height, targets.get(i).alpha);
+        for (int i = 0; i < Game.targets.size(); i++){
 
-                Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+            Utils.insertRectangleVerticesData(verticesData, i * 12, Game.targets.get(i).x,
+                    Game.targets.get(i).x + Game.targets.get(i).width, Game.targets.get(i).y, Game.targets.get(i).y + Game.targets.get(i).height, 0f);
 
-                if (targets.get(i).type == Target.TARGET_RED){
-                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
-                } else if (targets.get(i).type == Target.TARGET_BLUE){
-                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 624f/1024f, 830f/1024f);
-                } else if (targets.get(i).type == Target.TARGET_GREEN){
-                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 208f/1024f, 414f/1024f);
-                } else if (targets.get(i).type == Target.TARGET_BLACK){
-                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
-                }
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
 
-
-                float finalPorcentage = ((float)Math.pow(((targets.get(i).lastDecayPercentage)-0.5f),2)*-1) + 0.25f;
-
-
-                if (finalPorcentage != 0) {
-                    if (targets.get(i).type == Target.TARGET_BLUE) {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 4f, finalPorcentage / 2f, finalPorcentage / 4f, targets.get(i).alpha);
-                    } else if (targets.get(i).type == Target.TARGET_BLACK) {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 2f, finalPorcentage / 2f, finalPorcentage, targets.get(i).alpha);
-                    } else {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, targets.get(i).alpha);
-                    }
-                } else {
-                    if (SaveGame.saveGame.currentLevelNumber >= 1000) {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), targets.get(i).alpha);
-                    } else {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, targets.get(i).alpha);
-                    }
-                }
-
+            if (Game.targets.get(i).type == Target.TARGET_RED){
+                  Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
+            } else if (Game.targets.get(i).type == Target.TARGET_BLUE){
+                  Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 624f/1024f, 830f/1024f);
+            } else if (Game.targets.get(i).type == Target.TARGET_GREEN){
+                  Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 208f/1024f, 414f/1024f);
+            } else if (Game.targets.get(i).type == Target.TARGET_BLACK){
+                  Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
             }
 
-            verticesBuffer = Utils.generateFloatBuffer(verticesData);
-            indicesBuffer = Utils.generateShortBuffer(indicesData);
-            uvsBuffer = Utils.generateFloatBuffer(uvsData);
-            colorsBuffer = Utils.generateFloatBuffer(colorsData);
-            
-            
-        
+            float percentage;
+            if (Utils.getTime() - Game.targets.get(i).timeOfLastDecay < 300){
+                percentage = (float)(Utils.getTime() - Game.targets.get(i).timeOfLastDecay)/300f;
+            } else {
+                percentage = 0;
+            }
+
+            /*
+            float finalPorcentage = ((float)Math.pow(((percentage)-0.5f),2)*-1) + 0.25f;
+
+            if (finalPorcentage != 0) {
+                if (Game.targets.get(i).type == Target.TARGET_BLUE) {
+                    Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 4f, finalPorcentage / 2f, finalPorcentage / 4f, Game.targets.get(i).alpha);
+                } else if (Game.targets.get(i).type == Target.TARGET_BLACK) {
+                    Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 2f, finalPorcentage / 2f, finalPorcentage, Game.targets.get(i).alpha);
+                } else {
+                    Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
+                }
+            } else {
+                if (SaveGame.saveGame.currentLevelNumber >= 1000) {
+                    Utils.insertRectangleColorsData(colorsData, i * 16, Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Game.targets.get(i).alpha);
+                } else {
+                    Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
+                }
+            }
+            */
+            Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
+        }
+
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
+
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
                         verticesBuffer, GLES20.GL_STATIC_DRAW);
-        
+
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
                         uvsBuffer, GLES20.GL_STATIC_DRAW);
-        
+
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
                         colorsBuffer, GLES20.GL_STATIC_DRAW);
@@ -109,85 +102,63 @@ class TargetGroup extends Entity{
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
                         indicesBuffer, GLES20.GL_STATIC_DRAW);
-        
+
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
-        
-        
-        	verticesBuffer.limit(0);
-		verticesBuffer = null;
-		uvsBuffer.limit(0);
-		uvsBuffer = null;
-		colorsBuffer.limit(0);
+
+        verticesBuffer.limit(0);
+        verticesBuffer = null;
+        uvsBuffer.limit(0);
+        uvsBuffer = null;
+        colorsBuffer.limit(0);
         colorsBuffer = null;
         indicesBuffer.limit(0);
         indicesBuffer = null;
     }
 	
-	public void checkBufferChange(){
-		
-	for (int i = 0; i < targets.size(); i++){
-		
-                if (targets.get(i).colorChange){
-			
-			Utils.insertRectangleColorsData(targets.get(i).colorsData, 0 , 0f, 0f, 0f, targets.get(i).alpha * targets.get(i).ghostAlpha);
-			
-			colorsBuffer = Utils.generateFloatBuffer(targets.get(i).colorsData);
-			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
-        		GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER,  
-					       	i*(colorsBuffer.capacity() * SIZEOF_FLOAT),
-					       	colorsBuffer.capacity() * SIZEOF_FLOAT,
-                        			colorsBuffer);
-			
-			colorsBuffer.limit(0);
-			colorsBuffer = null;
+	public void checkBufferChange() {
 
-		}
-		
-		if (targets.get(i).uvChange){
-			uvsBuffer = Utils.generateShortBuffer(targets.get(i).indicesData);
-			GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[2]);
-        		GLES20.glBufferSubData(GLES20.GL_ELEMENT_ARRAY_BUFFER,  
-					       	i*(uvsBuffer.capacity() * SIZEOF_SHORT),
-					       	uvsBuffer.capacity() * SIZEOF_SHORT,
-                        			uvsBuffer);
-			uvsBuffer.limit(0);
-			uvsBuffer = null;
-		}
+        for (int i = 0; i < Game.targets.size(); i++) {
 
-                
+            Game.targets.get(i).checkAnimations();
 
-                if (targets.get(i).type == Target.TARGET_RED){
-                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
-                } else if (targets.get(i).type == Target.TARGET_BLUE){
-                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 624f/1024f, 830f/1024f);
-                } else if (targets.get(i).type == Target.TARGET_GREEN){
-                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 208f/1024f, 414f/1024f);
-                } else if (targets.get(i).type == Target.TARGET_BLACK){
-                      Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
+            if (Game.targets.get(i).colorChange) {
+
+                float alphaMultiply = 0;
+                if (Game.targets.get(i).isVisible){
+                    alphaMultiply = 1f;
                 }
 
+                Utils.insertRectangleColorsData(Game.targets.get(i).colorsData, 0, 0f, 0f, 0f, Game.targets.get(i).alpha * Game.targets.get(i).ghostAlpha * alphaMultiply);
 
-                float finalPorcentage = ((float)Math.pow(((targets.get(i).lastDecayPercentage)-0.5f),2)*-1) + 0.25f;
-
-
-                if (finalPorcentage != 0) {
-                    if (targets.get(i).type == Target.TARGET_BLUE) {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 4f, finalPorcentage / 2f, finalPorcentage / 4f, targets.get(i).alpha);
-                    } else if (targets.get(i).type == Target.TARGET_BLACK) {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 2f, finalPorcentage / 2f, finalPorcentage, targets.get(i).alpha);
-                    } else {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, targets.get(i).alpha);
-                    }
+                if (colorsBuffer == null || colorsBuffer.capacity() != Game.targets.get(i).colorsData.length) {
+                    colorsBuffer = Utils.generateOrUpdateFloatBuffer(Game.targets.get(i).colorsData, colorsBuffer);
                 } else {
-                    if (SaveGame.saveGame.currentLevelNumber >= 1000) {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), targets.get(i).alpha);
-                    } else {
-                        Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, targets.get(i).alpha);
-                    }
+                    Utils.updateFloatBuffer(Game.targets.get(i).colorsData, colorsBuffer);
                 }
 
+                GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
+                GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER,
+                        i * (colorsBuffer.capacity() * SIZEOF_FLOAT),
+                        colorsBuffer.capacity() * SIZEOF_FLOAT,
+                        colorsBuffer);
             }
+
+            /*
+            if (Game.targets.get(i).uvChange) {
+                uvsBuffer = Utils.generateOrUpdateFloatBuffer(Game.targets.get(i).uvsData, );
+                GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+                GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER,
+                        i * (uvsBuffer.capacity() * SIZEOF_SHORT),
+                        uvsBuffer.capacity() * SIZEOF_SHORT,
+                        uvsBuffer);
+                uvsBuffer.limit(0);
+                uvsBuffer = null;
+            }
+            */
+        }
+
+    }
 
     @Override
     public void render(float[] matrixView, float[] matrixProjection) {

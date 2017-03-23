@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import static com.marcelslum.ultnogame.Game.GAME_STATE_JOGAR;
 import static com.marcelslum.ultnogame.Game.GAME_STATE_PAUSE;
 import static com.marcelslum.ultnogame.Game.font;
 import static com.marcelslum.ultnogame.Game.interstitialNextPreparar;
@@ -706,9 +707,13 @@ public class MenuHandler {
             @Override
             public void onChange() {
                 if (option.numberForAnimation == 1f){
-                    option.setColor(new Color(0.3f, 0.3f, 0.3f, 1f));
+                    if (Game.gameState != GAME_STATE_JOGAR) {
+                        option.setColor(new Color(0.3f, 0.3f, 0.3f, 1f));
+                    }
                 } else if (option.numberForAnimation == 2f) {
-                    option.setColor(new Color(1f, 0f, 0f, 1f));
+                    if (Game.gameState != GAME_STATE_JOGAR) {
+                        option.setColor(new Color(1f, 0f, 0f, 1f));
+                    }
                 }
             }
         });

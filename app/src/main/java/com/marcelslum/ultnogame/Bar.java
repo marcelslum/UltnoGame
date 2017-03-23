@@ -117,7 +117,7 @@ public class Bar extends Rectangle{
                 break;
         }
         Utils.insertRectangleUvData(uvsData, 0);
-        uvsBuffer = Utils.generateFloatBuffer(this.uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
 
@@ -140,18 +140,18 @@ public class Bar extends Rectangle{
     public void setDrawInfo(){
         verticesData = new float[12];
         insertVerticesData(this.verticesData,0);
-        verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
 
         indicesData = new short[6];
         insertIndicesData(this.indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(this.indicesData);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
         uvsData = new float[12];
         setTextureMap(textureMap);
 
         colorsData = new float[16];
         Utils.insertRectangleColorsData(colorsData, 0, color);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
     }
 
 
@@ -218,7 +218,7 @@ public class Bar extends Rectangle{
             }
             //Log.e("bar", "color r "+color.r+ " g "+color.g+ " b "+color.b);
             Utils.insertRectangleColorsData(colorsData, 0, color);
-            colorsBuffer = Utils.generateFloatBuffer(colorsData);
+            colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
             shine.setColor(new Color(color.r, color.g, color.b, 1.0f));
         }
         super.prepareRender(matrixView, matrixProjection);

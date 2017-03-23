@@ -115,16 +115,16 @@ public class Button extends Entity{
         initializeData(12, 6, 12, 0);
 
         Utils.insertRectangleVerticesData(verticesData, 0, 0f, width, 0f, height, 0f);
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
         if (buttonType == BUTTON_TYPE_BUTTONS_AND_BALLS) {
             Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
         } else {
             Utils.insertRectangleUvData256(uvsData, 0, textureMap);
         }
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 }

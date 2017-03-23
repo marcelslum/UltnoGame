@@ -101,9 +101,9 @@ public class WindowGame extends PhysicalObject{
             Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
         }
         
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
 
 
         swgM.setDrawInfo(distanceToDraw, quantityOfLines);
@@ -186,9 +186,9 @@ public class WindowGame extends PhysicalObject{
                 Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, 29);
             }
 
-            verticesBuffer = Utils.generateFloatBuffer(verticesData);
-            indicesBuffer = Utils.generateShortBuffer(indicesData);
-            uvsBuffer = Utils.generateFloatBuffer(uvsData);
+            verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+            indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+            uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
         }
 
         public void move(float vx, float maxDistance) {
@@ -250,9 +250,9 @@ public class WindowGame extends PhysicalObject{
                 Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
             }
 
-            verticesBuffer = Utils.generateFloatBuffer(verticesData);
-            indicesBuffer = Utils.generateShortBuffer(indicesData);
-            uvsBuffer = Utils.generateFloatBuffer(uvsData);
+            verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+            indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+            uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
         }
 
         public void move(float vx, float maxDistance) {

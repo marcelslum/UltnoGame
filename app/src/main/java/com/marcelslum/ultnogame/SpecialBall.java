@@ -29,13 +29,13 @@ public class SpecialBall extends Circle{
         colorsData = new float[16];
 
         Utils.insertRectangleVerticesData(verticesData, 0, 0f - radius, radius, 0f - radius, radius, 0f);
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
         Utils.insertRectangleColorsData(colorsData, 0, 1.0f, 1.0f, 1.0f, 0.0f);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
 
         setUvData();
     }
@@ -89,7 +89,7 @@ public class SpecialBall extends Circle{
             Utils.x2 = (1024f - 1.5f)/1024f;
         }
         Utils.insertRectangleUvData(uvsData, 0);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
     @Override

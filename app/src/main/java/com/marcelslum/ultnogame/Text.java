@@ -120,10 +120,10 @@ public class Text extends Entity{
 
         convertTextToTriangleInfo(xOffset);
         
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData,verticesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData,uvsBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData,indicesBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData,colorsBuffer);
 
         width = calculateWidth();
     }

@@ -77,8 +77,8 @@ public class ParticleGenerator extends Entity {
             Utils.insertRectangleVerticesData(this.verticesData, i * 12, p.x, p.x + p.size, p.y, p.y + p.size, 0f);
             Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
         }
-        verticesBuffer = Utils.generateFloatBuffer(this.verticesData);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
         if (ended){
             isActive = false;
         }
@@ -95,10 +95,10 @@ public class ParticleGenerator extends Entity {
             Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
             Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
         }
-        verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        indicesBuffer = Utils.generateShortBuffer(indicesData);
-        uvsBuffer = Utils.generateFloatBuffer(uvsData);
-        colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
     }
 
     private class Particle{
