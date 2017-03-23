@@ -1,7 +1,9 @@
-    public class DataBaseHelper extends SQLiteOpenHelper{
+package com.marcelslum.ultnogame;    
+
+public class DataBaseHelper extends SQLiteOpenHelper{
      
         //The Android's default system path of your application database.
-        private static String DB_PATH = "/data/data/YOUR_PACKAGE/databases/";
+        private static String DB_PATH = "/data/data/com.marcelslum.ultnogame/databases/";
      
         private static String DB_NAME = "ultno";
      
@@ -15,9 +17,9 @@
          * @param context
          */
         public DataBaseHelper(Context context) {
-     
+  
         	super(context, DB_NAME, null, 1);
-            this.myContext = context;
+            myContext = context;
         }	
      
       /**
@@ -67,9 +69,7 @@
         	}
      
         	if(checkDB != null){
-     
         		checkDB.close();
-     
         	}
      
         	return checkDB != null ? true : false;
