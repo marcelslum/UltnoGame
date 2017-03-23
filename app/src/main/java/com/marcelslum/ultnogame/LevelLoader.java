@@ -15,6 +15,43 @@ public class LevelLoader {
 
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
         
+        
+        SQLiteDatabase database = new DataBaseHelper(this).getReadableDatabase();
+        
+        String[] projection = {
+           DataBaseContract.Balls._ID,
+            DataBaseContract.Balls.COLUMN_RADIUS,
+            DataBaseContract.Balls.COLUMN_X,
+            DataBaseContract.Balls.COLUMN_Y,
+            DataBaseContract.Balls.COLUMN_VX,
+            DataBaseContract.Balls.COLUMN_VY,
+            DataBaseContract.Balls.COLUMN_TEXTURE_MAP,
+            DataBaseContract.Balls.COLUMN_INVENCIBLE,
+            DataBaseContract.Balls.COLUMN_ANGLE_TO_ROTATE,
+            DataBaseContract.Balls.COLUMN_MAX_AGLE,
+            DataBaseContract.Balls.COLUMN_MIN_ANGLE,
+            DataBaseContract.Balls.COLUMN_VELOCITY_VARIATION,
+            DataBaseContract.Balls.COLUMN_MAX_VELOCITY,
+            DataBaseContract.Balls.COLUMN_MIN_VELOCITY,
+            DataBaseContract.Balls.COLUMN_FREE
+        };
+        
+        String selection =
+                SampleDBContract.Employer.LEVEL + " like ?";
+
+        String[] selectionArgs = {"%" + levelNumber + "%"};
+        
+        Cursor cursor = database.query(
+                SampleDBContract.Employer.TABLE_NAME,     // The table to query
+                projection,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // don't sort
+        );
+  
+        
         if (levelNumber < 1000) {
             levelBuilder
                     .setBallsQuantity(LevelLoaderData.ballsQuantity[levelNumber - 1])
