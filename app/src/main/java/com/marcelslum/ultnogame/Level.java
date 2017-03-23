@@ -125,7 +125,7 @@ public class Level {
 
     public void loadEntities() {
         Game.eraseAllGameEntities();
-        Game.quad = new Quadtree(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY,5,5);
+        Game.quad = new Quadtree(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY,2,8);
 
         MessagesHandler.messageTime.setText("00:00");
         if (SaveGame.saveGame.currentLevelNumber < 1000) {

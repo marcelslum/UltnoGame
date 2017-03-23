@@ -20,8 +20,6 @@ public class Game {
 
     public static Pool<Vector> vectorPool;
 
-    public static Pool<MyArrayList> arrayListPool;
-
     public static boolean isOpenGL30 = false;
     public static Program openGl30TextProgram;
 
@@ -245,12 +243,8 @@ public class Game {
         lines = new ArrayList<> ();
         groupsUnblocked = new ArrayList<>();
 
-
         vectorPool = new ObjectPool<Vector>();
         vectorPool.setFactory(new VectorFactory());
-
-        arrayListPool = new ObjectPool<>();
-        arrayListPool.setFactory(new MyArrayListFactory());
 
     }
 
@@ -1569,14 +1563,6 @@ public class Game {
             // reset the vectorPool, it is considered a temporary pool, all objects will become reusable
             vectorPool.reset();
         }
-
-        if (arrayListPool != null){
-            //Log.e(TAG, "Debug Data BEFORE reset: " + vectorPool.debug());
-            // reset the vectorPool, it is considered a temporary pool, all objects will become reusable
-            arrayListPool.reset();
-        }
-
-
     }
 
     static void verifyBallBehaviourData(){

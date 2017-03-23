@@ -144,18 +144,16 @@ class TargetGroup extends Entity{
                         colorsBuffer);
             }
 
-            /*
+
             if (Game.targets.get(i).uvChange) {
-                uvsBuffer = Utils.generateOrUpdateFloatBuffer(Game.targets.get(i).uvsData, );
+                uvsBuffer = Utils.generateOrUpdateFloatBuffer(Game.targets.get(i).uvsData, uvsBuffer);
                 GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
                 GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER,
-                        i * (uvsBuffer.capacity() * SIZEOF_SHORT),
-                        uvsBuffer.capacity() * SIZEOF_SHORT,
+                        i * (uvsBuffer.capacity() * SIZEOF_FLOAT),
+                        uvsBuffer.capacity() * SIZEOF_FLOAT,
                         uvsBuffer);
-                uvsBuffer.limit(0);
-                uvsBuffer = null;
             }
-            */
+
         }
 
     }

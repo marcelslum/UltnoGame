@@ -198,7 +198,7 @@ public class MainActivity extends FragmentActivity implements
                 Game.eraseAllHudEntities();
 
                 //ConnectionHandler.verify();
-
+                Log.e(TAG, "onAdClose Game.interstitialNextPreparar " + Game.interstitialNextPreparar);
                 if (Game.interstitialNextPreparar){
                     Game.interstitialNextPreparar = false;
                     LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
@@ -250,7 +250,13 @@ public class MainActivity extends FragmentActivity implements
 
                 //ConnectionHandler.verify();
 
-                if (SaveGame.saveGame.currentLevelNumber < 1000){
+                //ConnectionHandler.verify();
+                Log.e(TAG, "onAdClose Game.interstitialNextPreparar " + Game.interstitialNextPreparar);
+                if (Game.interstitialNextPreparar){
+                    Game.interstitialNextPreparar = false;
+                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+                    Game.setGameState(Game.GAME_STATE_PREPARAR);
+                } else if (SaveGame.saveGame.currentLevelNumber < 1000){
                     Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
                 } else {
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);

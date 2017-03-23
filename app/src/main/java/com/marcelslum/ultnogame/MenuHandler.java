@@ -775,7 +775,7 @@ public class MenuHandler {
 
                 Game.timesInterstitialOnGameOver += 1;
 
-                if (Game.timesInterstitialOnGameOver >= 3 || Game.timesInterstitialOnGameOver < 0) {
+                if (Game.timesInterstitialOnGameOver >= 3) {
                     Game.timesInterstitialOnGameOver = 0;
                     menuGameOver.block();
                     Game.blockAndWaitTouchRelease();
@@ -788,6 +788,7 @@ public class MenuHandler {
                     Game.blockAndWaitTouchRelease();
                     menuInGame.clearDisplay();
                     LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+                    Game.interstitialNextPreparar = true;
                     Game.setGameState(Game.GAME_STATE_PREPARAR);
                 }
             }

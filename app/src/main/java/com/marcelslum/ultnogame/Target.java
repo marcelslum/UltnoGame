@@ -254,7 +254,7 @@ public class Target extends Rectangle {
         } else if (type == TARGET_BLACK){
             Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
         }
-        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+        //uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
     public void setDrawInfo(){
@@ -262,10 +262,10 @@ public class Target extends Rectangle {
         initializeData(12, 6, 8, 16);
         
         Utils.insertRectangleVerticesData(verticesData,0, 0f, width, 0f, height, 0f);
-        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        //verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
         
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        //indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
         
         Utils.insertRectangleColorsData(colorsData,0 , 0f, 0f, 0f, 1f);
         

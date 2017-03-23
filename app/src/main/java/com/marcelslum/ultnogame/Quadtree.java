@@ -6,6 +6,7 @@ public class Quadtree {
 
     Node root;
 
+
     //public static ArrayList<Entity> outs;
 
     public static Entity [] outs;
@@ -41,24 +42,13 @@ public class Quadtree {
         this.root.clear();
     }
 
-    //public ArrayList<Entity> retrieve(Entity item){
     public void retrieve(Entity item){
-
         for (int i = 0; i < outs.length; i++){
             outs[i] = null;
         }
         outsInsertIndex = 0;
-        //outs = new ArrayList<>();
-
         root.retrieve(item);
 
-        if (item.type == Entity.TYPE_BALL) {
-            for (int i = 0; i < outsInsertIndex; i++) {
-                System.out.println("resultado " + outs[i].name);
-            }
-        }
-
-        //return outs;
     }
 
 }
