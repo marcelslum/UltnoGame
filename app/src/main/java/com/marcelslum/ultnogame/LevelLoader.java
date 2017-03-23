@@ -19,7 +19,7 @@ public class LevelLoader {
         SQLiteDatabase database = new DataBaseHelper(this).getReadableDatabase();
         
         String[] projection = {
-           DataBaseContract.Balls._ID,
+            DataBaseContract.Balls._ID,
             DataBaseContract.Balls.COLUMN_RADIUS,
             DataBaseContract.Balls.COLUMN_X,
             DataBaseContract.Balls.COLUMN_Y,
@@ -42,7 +42,7 @@ public class LevelLoader {
         String[] selectionArgs = {"%" + levelNumber + "%"};
         
         Cursor cursor = database.query(
-                SampleDBContract.Employer.TABLE_NAME,     // The table to query
+                DataBaseContract.Balls.TABLE_NAME,     // The table to query
                 projection,                               // The columns to return
                 selection,                                // The columns for the WHERE clause
                 selectionArgs,                            // The values for the WHERE clause
@@ -50,6 +50,10 @@ public class LevelLoader {
                 null,                                     // don't filter by row groups
                 null                                      // don't sort
         );
+        
+        Cursor.getCount();
+        mCursor.moveToPosition(position);
+        cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMNS_RADIUS));
   
         
         if (levelNumber < 1000) {
