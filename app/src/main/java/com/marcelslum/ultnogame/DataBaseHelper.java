@@ -193,7 +193,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                      null                                      // don't sort
              );
 
-             
           ArrayList<BallDataBaseData> list = new ArrayList<>();
           while(cursor.moveToNext()){
                BallDataBaseData b = new BallDataBaseData(
@@ -216,7 +215,84 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                )
                list.add(b);  
           }
-          
+          close();
+  		return list
+     }
+     
+     public ArrayList<BarDataBaseData> getBars(int level){
+          openDataBase();
+          String[] projection = {
+                 DataBaseContract.Bars.COLUMN_WIDTH,
+                 DataBaseContract.Bars.COLUMN_HIEGHT,
+                 DataBaseContract.Bars.COLUMN_X,
+                 DataBaseContract.Bars.COLUMN_Y,
+                 DataBaseContract.Bars.COLUMN_VX
+                 
+             };
+
+             String selection =
+                     DataBaseContract.Bars.COLUMN_LEVEL + " = "+levelNumber;
+
+             //String[] selectionArgs = {String.valueOf(levelNumber)};
+             Cursor cursor = myDatabase.query(
+                     DataBaseContract.Bars.TABLE_NAME,        // The table to query
+                     projection,                               // The columns to return
+                     selection,                                // The columns for the WHERE clause
+                     null,                            // The values for the WHERE clause
+                     null,                                     // don't group the rows
+                     null,                                     // don't filter by row groups
+                     null                                      // don't sort
+             );
+
+          ArrayList<BarDataBaseData> list = new ArrayList<>();
+          while(cursor.moveToNext()){
+               BarDataBaseData b = new BarDataBaseData(
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_WIDHT)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_HEIGHT)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_X)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_X)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VX))
+               )
+               list.add(b);  
+          }
+          close();
+  		return list
+     }
+     
+     public ArrayList<TargetDataBaseData> getTargets(int id){
+          openDataBase();
+          String[] projection = {
+                 DataBaseContract.Targets.COLUMN_WIDTH,
+                 DataBaseContract.Targets.COLUMN_HIEGHT,
+                 DataBaseContract.Targets.COLUMN_DISTANCE,
+                 DataBaseContract.Targets.COLUMN_PADD
+                 
+             };
+
+             String selection =
+                     DataBaseContract.Targets.COLUMN_ID + " = "+id;
+
+             //String[] selectionArgs = {String.valueOf(levelNumber)};
+             Cursor cursor = myDatabase.query(
+                     DataBaseContract.Targets.TABLE_NAME,        // The table to query
+                     projection,                               // The columns to return
+                     selection,                                // The columns for the WHERE clause
+                     null,                            // The values for the WHERE clause
+                     null,                                     // don't group the rows
+                     null,                                     // don't filter by row groups
+                     null                                      // don't sort
+             );
+
+          ArrayList<TargetDataBaseData> list = new ArrayList<>();
+          while(cursor.moveToNext()){
+               TargetDataBaseData b = new TargetDataBaseData(
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_WIDHT)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_HEIGHT)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_DISTANCE)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_PADD))
+               )
+               list.add(b);
+          }
           close();
   		return list
      }
