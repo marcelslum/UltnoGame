@@ -1,4 +1,4 @@
-public class BallDataBaseData{
+public class BarDataBaseData{
     public float width;
     public float height;
     public float x;
