@@ -20,6 +20,7 @@ public class LevelLoader {
         
         
         SQLiteDatabase database = new DataBaseHelper(Game.getContext()).getReadableDatabase();
+        database.openDataBase();
         
         String[] projection = {
             DataBaseContract.Balls._ID,
@@ -45,7 +46,7 @@ public class LevelLoader {
         String[] selectionArgs = {"%" + levelNumber + "%"};
         
         Cursor cursor = database.query(
-                "levels",//DataBaseContract.Balls.TABLE_NAME,     // The table to query
+                "balls",//DataBaseContract.Balls.TABLE_NAME,     // The table to query
                 projection,                               // The columns to return
                 selection,                                // The columns for the WHERE clause
                 selectionArgs,                            // The values for the WHERE clause
