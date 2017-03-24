@@ -1,26 +1,9 @@
-http://kvazars.com/littera/
+This game uses many sounds from freesound, for the full list see here: http://www.mysite.com/work-credits.html
 
-
-Arquivo: target1.jpg
-Textura retirada de:
-http://www.textures.com/download/plasterbare0129/65046?q=plaster
-Nome: PlasterBare0129
-
-Arquivo: background.jpg
-http://www.textures.com/download/plasterwhite0147/69620
-PlasterWhite0147
-
-Arquivo: back.jpg
-http://www.textures.com/download/bokehnight0079/112089
-BokehNight0079
-
-
-This game uses many sounds from freesound,
-for the full list see here: http://www.mysite.com/work-credits.html
-
-
+This game uses these sounds from freesound:
 "Success 01" by rhodesmas (https://www.freesound.org/people/rhodesmas/sounds/320653/)
 "UI 02" by rhodesmas (https://www.freesound.org/people/rhodesmas/sounds/322898/)
+"Switch ON - bedlight.wav" by MasterDisaster (http://www.freesound.org/people/MastersDisaster/sounds/218114/)
 "Billiard balls single hit-dry.wav" by juskiddink (https://www.freesound.org/people/juskiddink/sounds/108615/)
 "item1.wav" by Vicces1212 (https://www.freesound.org/people/Vicces1212/sounds/123758/)
 "Menu Click - Tish" by Soughtaftersounds (https://www.freesound.org/people/Soughtaftersounds/sounds/145446/)
@@ -40,9 +23,9 @@ for the full list see here: http://www.mysite.com/work-credits.html
 "Sch 07 schwebend V.wav" by Peter Lustig (https://www.freesound.org/people/Peter%20Lustig/sounds/94203/)
 "Roland JF8000 sound effect.mp3" by gmegas (https://www.freesound.org/people/gmegas/sounds/337733/)
 "success 1" by fins (https://www.freesound.org/people/fins/sounds/171671/)
-"succes 2" by fins (https://www.freesound.org/people/fins/sounds/171670/)
-
-
+"success 2" by fins (https://www.freesound.org/people/fins/sounds/171670/)
+"sf3-sfx-menu-select-L.wav" by broumbroum (http://www.freesound.org/people/broumbroum/sounds/50559/)
+"hydrolic hatch_bip.mp3" by Jadester64 (https://www.freesound.org/people/Jadester64/sounds/370741/)??????????
 
 
 
@@ -50,14 +33,14 @@ Sounds
 (attribution license)
 win.wav: https://www.freesound.org/people/rhodesmas/sounds/320653/
 menuSelectBig.wav: https://www.freesound.org/people/rhodesmas/sounds/322898/
-menuSelectSmall.wav: https://www.freesound.org/people/MastersDisaster/sounds/218114/??????????????????????????????
+menuSelectSmall.wav: http://www.freesound.org/people/MastersDisaster/sounds/218114/
 ballHit.wav: https://www.freesound.org/people/juskiddink/sounds/108615/
 destroyTarget.wav: https://www.freesound.org/people/Vicces1212/sounds/123758/
 ballFall.wav: https://www.freesound.org/people/Soughtaftersounds/sounds/145446/
 alarm.wav: https://www.freesound.org/people/Chocobaggy/sounds/248211/
 explosion1: https://www.freesound.org/people/n_audioman/sounds/273587/
 explosion2: https://www.freesound.org/people/jalastram/sounds/317645/
-counter:???????????????????????????????
+counter: http://www.freesound.org/people/broumbroum/sounds/50559/
 gameOver.wav: https://www.freesound.org/people/rhodesmas/sounds/342756/
 score: https://www.freesound.org/people/xtrgamr/sounds/253546/
 blueBallExplosion1: https://www.freesound.org/people/soneproject/sounds/346425/
@@ -68,24 +51,16 @@ barsize: http://www.freesound.org/people/NenadSimic/sounds/171756/
 starsUp: http://www.freesound.org/people/nsstudios/sounds/321103/
 secretUnblocked: https://www.freesound.org/people/jobro/sounds/33523/ + https://www.freesound.org/people/cdrk/sounds/379865/
 secretUnblockedMenu: https://www.freesound.org/people/Deatlev/sounds/257425/ +
-https://www.freesound.org/people/hykenfreak/sounds/218072/?????????????????????????
+https://www.freesound.org/people/hykenfreak/sounds/218072/????????????????????????? (estou mesmo usando)
 secretPart:https://www.freesound.org/people/Peter%20Lustig/sounds/94203/
 duplicateBall: https://www.freesound.org/people/gmegas/sounds/337733/
-
-
-
-creative commons 0:
+https://www.freesound.org/people/Jadester64/sounds/370741/????????????????? (vou usar ainda)
 success1: https://www.freesound.org/people/fins/sounds/171671/
 success2: https://www.freesound.org/people/fins/sounds/171670/
 
 
-???
-https://www.freesound.org/people/Jadester64/sounds/370741/
 
-https://www.freesound.org/people/ShadyDave/sounds/277325/
-
-beat-loop-120: http://www.dl-sounds.com/royalty-free/beat-loop-120/
-
+http://www.dl-sounds.com/royalty-free/beat-loop-120/
 http://www.dl-sounds.com/royalty-free/im-a-rocker/
 http://www.dl-sounds.com/royalty-free/groove2-90/
 http://www.dl-sounds.com/royalty-free/sum-loop-102/
@@ -101,18 +76,14 @@ Pattern:
 Designed by Layerace - Freepik.com
 <a href='http://www.freepik.com/free-vector/abstract-dotted-pattern_722386.htm'>Designed by Freepik</a>
 
-
-
 Button arrow
 <a href='http://www.freepik.com/free-vector/multimedia-control-panel_730987.htm'>Designed by Freepik</a>
-
 
 Possíveis musicas para trailer:
 inicio
 http://www.dl-sounds.com/royalty-free/cybernetic-stinger/
 meio
 www.dl-sounds.com/royalty-free/cinematic-intro/
-
 
 http://www.dl-sounds.com/royalty-free/corporate-intro1/
 
