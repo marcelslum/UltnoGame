@@ -215,19 +215,11 @@ public class Game {
         setGameState(Game.GAME_STATE_INTRO);
 
         myDbHelper = new DataBaseHelper(Game.getContext());
-
         try {
-            myDbHelper.createDataBase();
+            myDbHelper.prepareDatabase();
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
-
-        try {
-            myDbHelper.openDataBase();
-        }catch(SQLException sqle){
-            throw sqle;
-        }
-
     }
 
     public static void activateFrame(int duration){
