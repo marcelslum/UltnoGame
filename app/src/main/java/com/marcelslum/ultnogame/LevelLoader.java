@@ -17,61 +17,8 @@ public class LevelLoader {
         Log.e("LevelLoader", "levelNumber "+levelNumber);
 
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
-        
-        
-        SQLiteDatabase database = new DataBaseHelper(Game.getContext()).getReadableDatabase();
-        
-        String[] projection = {
-            DataBaseContract.Balls._ID,
-            DataBaseContract.Balls.COLUMN_RADIUS,
-            DataBaseContract.Balls.COLUMN_X,
-            DataBaseContract.Balls.COLUMN_Y,
-            DataBaseContract.Balls.COLUMN_VX,
-            DataBaseContract.Balls.COLUMN_VY,
-            DataBaseContract.Balls.COLUMN_TEXTURE_MAP,
-            DataBaseContract.Balls.COLUMN_INVENCIBLE,
-            DataBaseContract.Balls.COLUMN_ANGLE_TO_ROTATE,
-            DataBaseContract.Balls.COLUMN_MAX_AGLE,
-            DataBaseContract.Balls.COLUMN_MIN_ANGLE,
-            DataBaseContract.Balls.COLUMN_VELOCITY_VARIATION,
-            DataBaseContract.Balls.COLUMN_MAX_VELOCITY,
-            DataBaseContract.Balls.COLUMN_MIN_VELOCITY,
-            DataBaseContract.Balls.COLUMN_FREE
-        };
-        
-        String selection =
-                DataBaseContract.Balls.COLUMN_LEVEL + " like ?";
 
-        String[] selectionArgs = {"%" + levelNumber + "%"};
-        
-        Cursor cursor = database.query(
-                "balls",//DataBaseContract.Balls.TABLE_NAME,     // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                      // don't sort
-        );
-
-        cursor.getCount();
-        cursor.moveToPosition(0);
-
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_RADIUS)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_X)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_Y)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VX)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VY)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_ANGLE_TO_ROTATE)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MAX_AGLE)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MIN_ANGLE)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VELOCITY_VARIATION)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MAX_VELOCITY)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MIN_VELOCITY)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_FREE)));
-        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_INVENCIBLE)));
-
-        
+ 
         if (levelNumber < 1000) {
             levelBuilder
                     .setBallsQuantity(LevelLoaderData.ballsQuantity[levelNumber - 1])
