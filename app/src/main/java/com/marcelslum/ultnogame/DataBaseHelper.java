@@ -159,4 +159,67 @@ public class DataBaseHelper extends SQLiteOpenHelper {
            // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
            // to you to create adapters for your views.
      
+     
+     public ArrayList<BallDataBaseData> getBalls(int level){
+          openDataBase();
+          String[] projection = {
+                 DataBaseContract.Balls.COLUMN_RADIUS,
+                 DataBaseContract.Balls.COLUMN_X,
+                 DataBaseContract.Balls.COLUMN_Y,
+                 DataBaseContract.Balls.COLUMN_VX,
+                 DataBaseContract.Balls.COLUMN_VY,
+                 DataBaseContract.Balls.COLUMN_TEXTURE_MAP,
+                 DataBaseContract.Balls.COLUMN_INVENCIBLE,
+                 DataBaseContract.Balls.COLUMN_ANGLE_TO_ROTATE,
+                 DataBaseContract.Balls.COLUMN_MAX_AGLE,
+                 DataBaseContract.Balls.COLUMN_MIN_ANGLE,
+                 DataBaseContract.Balls.COLUMN_VELOCITY_VARIATION,
+                 DataBaseContract.Balls.COLUMN_MAX_VELOCITY,
+                 DataBaseContract.Balls.COLUMN_MIN_VELOCITY,
+                 DataBaseContract.Balls.COLUMN_FREE
+             };
+
+             String selection =
+                     DataBaseContract.Balls.COLUMN_LEVEL + " = "+levelNumber;
+
+             //String[] selectionArgs = {String.valueOf(levelNumber)};
+             Cursor cursor = myDatabase.query(
+                     DataBaseContract.Balls.TABLE_NAME,        // The table to query
+                     projection,                               // The columns to return
+                     selection,                                // The columns for the WHERE clause
+                     null,                            // The values for the WHERE clause
+                     null,                                     // don't group the rows
+                     null,                                     // don't filter by row groups
+                     null                                      // don't sort
+             );
+
+             
+          ArrayList<BallDataBaseData> list = new ArrayList<>();
+          while(cursor.moveToNext()){
+               BallDataBaseData b = new BallDataBaseData(
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_RADIUS)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_X)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_X)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VX)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VY)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_TEXTURE_MAP)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_INVENCIBLE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_ANGLE_TO_ROTATE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MAX_AGLE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MIN_ANGLE)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VELOCITY_VARIATION)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MAX_VELOCITY)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MIN_VELOCITY)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_FREE))
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_X)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_X))
+               )
+               list.add(b);  
+          }
+          
+          close();
+  		return list
+     }
+     
+     
     }
