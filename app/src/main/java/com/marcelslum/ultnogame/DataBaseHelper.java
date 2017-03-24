@@ -64,7 +64,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             	try {
         			copyDataBase();
         		} catch (IOException e) {
-            		throw new Error("Error copying database");
+            		Log.e(TAG, e.getMessage());
             	}
         	}
         }
@@ -113,7 +113,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
      
      
-      public void deletDataBase() {
+      public void deleteDataBase() {
             File file = new File(DB_PATH + DB_NAME);
             if(file.exists()) {
                   file.delete();
