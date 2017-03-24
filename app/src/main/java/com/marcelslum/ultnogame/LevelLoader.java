@@ -1,5 +1,8 @@
 package com.marcelslum.ultnogame;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ public class LevelLoader {
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
         
         
-        SQLiteDatabase database = new DataBaseHelper(this).getReadableDatabase();
+        SQLiteDatabase database = new DataBaseHelper(Game.getContext()).getReadableDatabase();
         
         String[] projection = {
             DataBaseContract.Balls._ID,
@@ -37,12 +40,12 @@ public class LevelLoader {
         };
         
         String selection =
-                SampleDBContract.Employer.LEVEL + " like ?";
+                DataBaseContract.Balls.COLUMN_LEVEL + " like ?";
 
         String[] selectionArgs = {"%" + levelNumber + "%"};
         
         Cursor cursor = database.query(
-                DataBaseContract.Balls.TABLE_NAME,     // The table to query
+                "levels",//DataBaseContract.Balls.TABLE_NAME,     // The table to query
                 projection,                               // The columns to return
                 selection,                                // The columns for the WHERE clause
                 selectionArgs,                            // The values for the WHERE clause
@@ -50,11 +53,24 @@ public class LevelLoader {
                 null,                                     // don't filter by row groups
                 null                                      // don't sort
         );
-        
-        Cursor.getCount();
-        mCursor.moveToPosition(position);
-        cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMNS_RADIUS));
-  
+
+        cursor.getCount();
+        cursor.moveToPosition(0);
+
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_RADIUS)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_X)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_Y)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VX)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VY)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_ANGLE_TO_ROTATE)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MAX_AGLE)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MIN_ANGLE)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_VELOCITY_VARIATION)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MAX_VELOCITY)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_MIN_VELOCITY)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_FREE)));
+        Log.e("LevelLoader", " "+cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Balls.COLUMN_INVENCIBLE)));
+
         
         if (levelNumber < 1000) {
             levelBuilder

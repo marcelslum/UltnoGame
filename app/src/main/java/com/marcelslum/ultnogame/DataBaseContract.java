@@ -1,6 +1,12 @@
+package com.marcelslum.ultnogame;
+
+import android.provider.BaseColumns;
+
 public final class DataBaseContract {
     private DataBaseContract() {
     }
+
+
 
     public static class Balls implements BaseColumns {
         public static final String TABLE_NAME = "balls";

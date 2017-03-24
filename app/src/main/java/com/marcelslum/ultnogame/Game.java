@@ -2,8 +2,11 @@ package com.marcelslum.ultnogame;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.database.SQLException;
 import android.media.MediaPlayer;
 import android.util.Log;
+
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -210,6 +213,21 @@ public class Game {
         Game.frame.alpha = 0f;
 
         setGameState(Game.GAME_STATE_INTRO);
+
+        myDbHelper = new DataBaseHelper(Game.getContext());
+
+        try {
+            myDbHelper.createDataBase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+
+        try {
+            myDbHelper.openDataBase();
+        }catch(SQLException sqle){
+            throw sqle;
+        }
+
     }
 
     public static void activateFrame(int duration){
@@ -247,23 +265,6 @@ public class Game {
 
         vectorPool = new ObjectPool<Vector>();
         vectorPool.setFactory(new VectorFactory());
-        
-        myDbHelper = new DataBaseHelper();
-        myDbHelper = new DataBaseHelper(this);
- 
-        try {
-        	myDbHelper.createDataBase();
-        } catch (IOException ioe) {
-            throw new Error("Unable to create database");
-        }
-
-        try {
-            myDbHelper.openDataBase();
-        }catch(SQLException sqle){
-            throw sqle;
-        }
-        
-        
 
     }
 

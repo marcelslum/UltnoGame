@@ -1,15 +1,26 @@
-package com.marcelslum.ultnogame;    
+package com.marcelslum.ultnogame;
 
-public class DataBaseHelper extends SQLiteOpenHelper{
+import android.content.Context;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class DataBaseHelper extends SQLiteOpenHelper {
      
         //The Android's default system path of your application database.
-        private static String DB_PATH = "/data/data/com.marcelslum.ultnogame/databases/";
+        private static String DB_PATH = "/data/data/com.marcelslum.ultno/databases/";
      
        private static final int DATABASE_VERSION = 1;
      
-        private static String DB_NAME = "ultno";
+        private static String DB_NAME = "ultno_alpha_test";
      
-        private SQLiteDatabase myDataBase; 
+        private SQLiteDatabase myDataBase;
      
         private final Context myContext;
      
@@ -27,7 +38,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
       /**
          * Creates a empty database on the system and rewrites it with your own database.
          * */
-        public void createDataBase() throws IOException{
+        public void createDataBase() throws IOException {
      
         	boolean dbExist = checkDataBase();
      
@@ -107,7 +118,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
      
         }
      
-        public void openDataBase() throws SQLException{
+        public void openDataBase() throws SQLException {
      
         	//Open the database
             String myPath = DB_PATH + DB_NAME;
