@@ -16,7 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //The Android's default system path of your application database.
         private static String DB_PATH = "/data/data/com.marcelslum.ultno/databases/";
      
-       private static final int DATABASE_VERSION = 1;
+       private static final int DATABASE_VERSION = 2;
      
         private static String DB_NAME = "ultno_alpha_test";
      
