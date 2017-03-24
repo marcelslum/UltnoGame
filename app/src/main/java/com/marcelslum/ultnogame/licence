@@ -15,20 +15,43 @@ http://www.textures.com/download/bokehnight0079/112089
 BokehNight0079
 
 
+This game uses many sounds from freesound,
+for the full list see here: http://www.mysite.com/work-credits.html
+
+
+"Success 01" by rhodesmas (https://www.freesound.org/people/rhodesmas/sounds/320653/)
+"UI 02" by rhodesmas (https://www.freesound.org/people/rhodesmas/sounds/322898/)
+"Billiard balls single hit-dry.wav" by juskiddink (https://www.freesound.org/people/juskiddink/sounds/108615/)
+"item1.wav" by Vicces1212 (https://www.freesound.org/people/Vicces1212/sounds/123758/)
+"Menu Click - Tish" by Soughtaftersounds (https://www.freesound.org/people/Soughtaftersounds/sounds/145446/)
+"" by Chocobaggy (https://www.freesound.org/people/Chocobaggy/sounds/248211/)
+"mag explosion" by n_audioman (https://www.freesound.org/people/n_audioman/sounds/273587/)
+"Failure 01" by rhodesmas (https://www.freesound.org/people/rhodesmas/sounds/342756/)
+"SCORE COUNT.wav" by xtrgamr (https://www.freesound.org/people/xtrgamr/sounds/253546/)
+"ecofuture2" by soneproject (https://www.freesound.org/people/soneproject/sounds/346425/)
+"BombHit01.wav" by coby12388 (https://www.freesound.org/people/coby12388/sounds/222575/)
+"1 Super Fast Throwing Sound.mp3" by orginaljun (https://www.freesound.org/people/orginaljun/sounds/149802/)
+"windloop.wav" by warwickallison (http://www.freesound.org/people/warwickallison/sounds/115759/)
+"Picked Coin Echo 2" by NenadSimic (http://www.freesound.org/people/NenadSimic/sounds/171756/)
+"blip1.wav" by nsstudios (http://www.freesound.org/people/nsstudios/sounds/321103/)
+"Big boom.wav" by jobro (https://www.freesound.org/people/jobro/sounds/33523/)
+"Gong-Cambodia" by cdrk (https://www.freesound.org/people/cdrk/sounds/379865/)
+
+
+
 Sounds
 (attribution license)
 win.wav: https://www.freesound.org/people/rhodesmas/sounds/320653/
 menuSelectBig.wav: https://www.freesound.org/people/rhodesmas/sounds/322898/
-menuSelectSmall.wav: https://www.freesound.org/people/MastersDisaster/sounds/218114/
+menuSelectSmall.wav: https://www.freesound.org/people/MastersDisaster/sounds/218114/??????????????????????????????
 ballHit.wav: https://www.freesound.org/people/juskiddink/sounds/108615/
 destroyTarget.wav: https://www.freesound.org/people/Vicces1212/sounds/123758/
 ballFall.wav: https://www.freesound.org/people/Soughtaftersounds/sounds/145446/
 alarm.wav: https://www.freesound.org/people/Chocobaggy/sounds/248211/
 explosion1: https://www.freesound.org/people/n_audioman/sounds/273587/
-explosion2: https://www.freesound.org/people/jalastram/sounds/317645/]
-counter:
+explosion2: https://www.freesound.org/people/jalastram/sounds/317645/
+counter:???????????????????????????????
 gameOver.wav: https://www.freesound.org/people/rhodesmas/sounds/342756/
-music.wav: https://www.freesound.org/people/RokZRooM/sounds/344778/
 score: https://www.freesound.org/people/xtrgamr/sounds/253546/
 blueBallExplosion1: https://www.freesound.org/people/soneproject/sounds/346425/
 blueBallExplosion2: https://www.freesound.org/people/coby12388/sounds/222575/
@@ -36,9 +59,7 @@ textBoxApper: https://www.freesound.org/people/orginaljun/sounds/149802/
 wind: http://www.freesound.org/people/warwickallison/sounds/115759/
 barsize: http://www.freesound.org/people/NenadSimic/sounds/171756/
 starsUp: http://www.freesound.org/people/nsstudios/sounds/321103/
-
 secretUnblocked: https://www.freesound.org/people/jobro/sounds/33523/ + https://www.freesound.org/people/cdrk/sounds/379865/
-
 secretUnblockedMenu: https://www.freesound.org/people/Deatlev/sounds/257425/ +
 https://www.freesound.org/people/hykenfreak/sounds/218072/
 
