@@ -13,15 +13,12 @@ import java.io.OutputStream;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
      
+        private final static String TAG = "DataBaseHelper"
+     
         //The Android's default system path of your application database.
-        private static String DB_PATH = "/data/data/com.marcelslum.ultno/databases/";
-     
-       private static final int DATABASE_VERSION = 2;
-     
-        private static String DB_NAME = "ultno_alpha_test";
-     
+        private static String DB_PATH;// = "/data/data/com.marcelslum.ultno/databases/";
+        private static String DB_NAME = "ultno_alpha_test.db";
         private SQLiteDatabase myDataBase;
-     
         private final Context myContext;
      
         /**
@@ -30,37 +27,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
          * @param context
          */
         public DataBaseHelper(Context context) {
-  
-        	super(context, DB_NAME, null, DATABASE_VERSION);
-            myContext = context;
+        	super(context, DB_NAME, null, context.getResources().getInteger(R.string.databaseVersion));
+          myContext = context;  
+          DB_PATH = myContext.getDatabasePath(DB_NAME).getAbsolutePath();
         }	
      
-      /**
+          /**
          * Creates a empty database on the system and rewrites it with your own database.
          * */
-        public void createDataBase() throws IOException {
+        public void prepareDatabase() throws IOException {
      
         	boolean dbExist = checkDataBase();
+          SQLiteDatabase db_Read = null;
      
         	if(dbExist){
+               Log.e(TAG, "banco de dados já existe");
         		//do nothing - database already exist
+               
+               int currentDBVersion = getVersionId();
+                  if (DATABASE_VERSION > currentDBVersion) {
+                      Log.d(TAG, "Database version is higher than old.");
+                      deleteDb();
+                         try {
+                    	     copyDataBase();
+        		          } catch (IOException e) {
+    				          Log.e(TAG, e.getMessage());
+    			          }
+                  }
+               
         	}else{
-     
         		//By calling this method and empty database will be created into the default system path
                    //of your application so we are gonna be able to overwrite that database with our database.
-            	this.getReadableDatabase();
+            	db_Read = getReadableDatabase();
+               db_Read.close();
      
             	try {
-     
         			copyDataBase();
-     
         		} catch (IOException e) {
-     
             		throw new Error("Error copying database");
-     
             	}
         	}
-     
         }
      
         /**
@@ -68,24 +74,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
          * @return true if it exists, false if it doesn't
          */
         private boolean checkDataBase(){
-     
-        	SQLiteDatabase checkDB = null;
-     
-        	try{
-        		String myPath = DB_PATH + DB_NAME;
-        		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-     
-        	}catch(SQLiteException e){
-     
-        		//database does't exist yet.
-     
-        	}
-     
-        	if(checkDB != null){
-        		checkDB.close();
-        	}
-     
-        	return checkDB != null ? true : false;
+               SQLiteDatabase checkDB = null;
+               try{
+                    String myPath = DB_PATH + DB_NAME;
+                    checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+                    Log.e(TAG, "verificando se existe o banco de dados na pasta " + myPath);
+               }catch(SQLiteException e){
+                    //database does't exist yet.
+                    Log.e(TAG, "banco de dados não existe ainda ");
+               }
+               if(checkDB != null){
+                    Log.e(TAG, "banco de dados já existe ");
+                    checkDB.close();
+               }
+               return checkDB != null ? true : false;
         }
      
         /**
@@ -94,46 +96,52 @@ public class DataBaseHelper extends SQLiteOpenHelper {
          * This is done by transfering bytestream.
          * */
         private void copyDataBase() throws IOException{
-     
-        	//Open your local db as the input stream
-        	InputStream myInput = myContext.getAssets().open(DB_NAME);
-     
-        	// Path to the just created empty db
-        	String outFileName = DB_PATH + DB_NAME;
-     
-        	//Open the empty db as the output stream
-        	OutputStream myOutput = new FileOutputStream(outFileName);
-     
-        	//transfer bytes from the inputfile to the outputfile
-        	byte[] buffer = new byte[1024];
-        	int length;
-        	while ((length = myInput.read(buffer))>0){
-        		myOutput.write(buffer, 0, length);
-        	}
-     
-        	//Close the streams
-        	myOutput.flush();
-        	myOutput.close();
-        	myInput.close();
-     
+               //Open your local db as the input stream
+               InputStream myInput = myContext.getAssets().open(DB_NAME);
+               //Open the empty db as the output stream
+               OutputStream myOutput = new FileOutputStream(DB_PATH + DB_NAME);
+               //transfer bytes from the inputfile to the outputfile
+               byte[] buffer = new byte[1024];
+               int length;
+               while ((length = myInput.read(buffer))>0){
+                    myOutput.write(buffer, 0, length);
+               }
+               //Close the streams
+               myOutput.flush();
+               myOutput.close();
+               myInput.close();
         }
      
-        public void openDataBase() throws SQLException {
      
-        	//Open the database
-            String myPath = DB_PATH + DB_NAME;
+      public void deletDataBase() {
+            File file = new File(DB_PATH + DB_NAME);
+            if(file.exists()) {
+                  file.delete();
+                  Log.d(TAG, "Banco de dados " + DB_NAME + " deletado.");
+            }
+      }
+     
+     public void openDataBase() throws SQLException {
+          String myPath = DB_PATH + DB_NAME;
         	myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
      
-        }
+     }
      
-        @Override
+     private int getVersionId() {
+          openDataBase(); 
+ 		String query = "SELECT version_id FROM dbVersion";
+  		Cursor cursor = myDataBase.rawQuery(query, null);
+  		cursor.moveToFirst();
+  		int v =  cursor.getInt(0);
+  		db.close();
+  		return v; 
+     }
+     
+     @Override
     	public synchronized void close() {
-     
         	    if(myDataBase != null)
         		    myDataBase.close();
-     
         	    super.close();
-     
     	}
      
     	@Override
