@@ -20,7 +20,6 @@ public class LevelLoader {
         
         
         SQLiteDatabase database = new DataBaseHelper(Game.getContext()).getReadableDatabase();
-        database.openDataBase();
         
         String[] projection = {
             DataBaseContract.Balls._ID,
