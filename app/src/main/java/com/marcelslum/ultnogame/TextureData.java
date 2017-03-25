@@ -204,6 +204,9 @@ public class TextureData {
     public static final int TEXTURE_STAR_SHINE_ID = 78;
     public static final int TEXTURE_TITTLE_ID = 79;
     public static final int TEXTURE_WINDOW_ID = 80;
+    public static final int TEXTURE_BUTTON_GROUP_LEADERBOARD_ID = 81;
+    public static final int TEXTURE_BUTTON_GROUP_LEADERBOARD_PRESS_ID = 82;
+
 
     String name;
     float x, y, w, h;
@@ -224,7 +227,6 @@ public class TextureData {
             return null;
         }
         for (int i = 0; i < texturesData.size(); i++){
-
             if (texturesData.get(i).name.equals(n)) {
                 currentTextureData = texturesData.get(i);
                 return texturesData.get(i);
@@ -237,8 +239,13 @@ public class TextureData {
         if (texturesData == null){
             return null;
         }
-        currentTextureData = texturesData.get(id);
-        return currentTextureData;
+        for (int i = 0; i < texturesData.size(); i++){
+            if (texturesData.get(i).id == id){
+                currentTextureData = texturesData.get(i);
+                return texturesData.get(i);
+            }
+        }
+        return null;
     }
 
     public static void getTextureData() {
@@ -271,7 +278,7 @@ public class TextureData {
         map.put(TEXTURE_BAR_TOP_ID, "bar_top.png"); 
         map.put(TEXTURE_BAR_YELLOW_ID, "bar_yellow.png"); 
         map.put(TEXTURE_BE2_ID, "be2.png"); 
-        map.put(TEXTURE_BE2_ID, "be3.png"); 
+        map.put(TEXTURE_BE3_ID, "be3.png");
         map.put(TEXTURE_BE4_ID, "be4.png"); 
         map.put(TEXTURE_BE5_ID, "be5.png"); 
         map.put(TEXTURE_BE6_ID, "be6.png"); 
@@ -287,7 +294,7 @@ public class TextureData {
         map.put(TEXTURE_BUTTON_BAR_RIGHT_PRESS_ID, "button_bar_right_press.png"); 
         map.put(TEXTURE_ARROW_DOWN_PRESS_ID, "button_down_press.png"); 
         map.put(TEXTURE_ARROW_LEFT_PRESS_ID, "button_left_press.png"); 
-        map.put(TEXTURE_ARROW_RIGHT_ID, "button_right_press.png"); 
+        map.put(TEXTURE_ARROW_RIGHT_PRESS_ID, "button_right_press.png");
         map.put(TEXTURE_ARROW_UP_PRESS_ID, "button_up_press.png"); 
         map.put(TEXTURE_EXPLOSION_BLUE_1_ID, "explosion_blue_1.png"); 
         map.put(TEXTURE_EXPLOSION_BLUE_2_ID, "explosion_blue_2.png"); 
@@ -324,7 +331,9 @@ public class TextureData {
         map.put(TEXTURE_STAR_SHINE_ID, "star_shine.png"); 
         map.put(TEXTURE_TITTLE_ID, "tittle.png"); 
         map.put(TEXTURE_WINDOW_ID, "window.png");
-    
+        map.put(TEXTURE_BUTTON_GROUP_LEADERBOARD_ID, "button_leaderboard.png");
+        map.put(TEXTURE_BUTTON_GROUP_LEADERBOARD_PRESS_ID, "button_leaderboard_pressed.png");
+
         JSONObject obj;
 
         try {
@@ -345,21 +354,21 @@ public class TextureData {
                 String fileName = arr.getJSONObject(i).getString("filename");
                 int id = 0;
 
-                Iterator it = map.entrySet().iterator();
+
+                Iterator<Map.Entry<Integer, String>> it = map.entrySet().iterator();
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
+                    Map.Entry<Integer, String> pair = it.next();
+
                     if (pair.getValue().equals(fileName)){
-                        id = (int) pair.getKey();
+                        id = pair.getKey();
                         break;
                     }
-                    it.remove();
                 }
-
                 texturesData.add(new TextureData(
                         id,
                         fileName,
                         (float)objFrame.getInt("x")/textureSize,
-                        (textureSize - (float)objFrame.getInt("y") - (float)objFrame.getInt("h"))/textureSize,
+                        (float)objFrame.getInt("y")/textureSize,
                         (float)objFrame.getInt("w")/textureSize,
                         (float)objFrame.getInt("h")/textureSize
                 ));

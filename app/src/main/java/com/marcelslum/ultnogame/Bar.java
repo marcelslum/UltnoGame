@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 /**
  * Created by marcel on 07/08/2016.
  */
@@ -15,12 +13,12 @@ public class Bar extends Rectangle{
     long startTimeSpecialBallAnim = 0;
     long specialBallAnimDuration = 1000;
     boolean specialBallAnimActive = false;
-    int textureMap = COLOR_BLACK;
 
     boolean leftPress = false;
     boolean rightPress = false;
 
-    static final int [] UV_MAP = new int[]{0, 72, 144, 216, 288, 360, 432, 504, 576};
+    public int textureColorId = COLOR_BLACK;
+
     static final int COLOR_RED = 1;
     static final int COLOR_BLUE = 2;
     static final int COLOR_GREEN = 3;
@@ -39,85 +37,64 @@ public class Bar extends Rectangle{
     Animation shineDecreaseAfterAccelerate;
     Animation shineAfterBallCollision;
 
-    public void changeTextureMap(int textureMap){
-        if (textureMap == this.textureMap){
-            return;
-        }
-        setTextureMap(textureMap);
-    }
-
-    public void setTextureMap(int textureMap){
-        this.textureMap = textureMap;
-        Utils.x1 = 0f;
-        Utils.x2 = 1f;
-        switch (textureMap){
+    public void setBarColor(int textureColorId){
+        this.textureColorId = textureColorId;
+        switch (textureColorId){
             case COLOR_RED:
-                Utils.y1 = (UV_MAP[0] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[1] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_RED_ID));
                 if (shine != null) {
                     shine.color = new Color(0.65f, 0f, 0f, 1f);
                 }
-                
                 break;
             case COLOR_BLUE:
-                Utils.y1 = (UV_MAP[1] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[2] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_BLUE_ID));
                 if (shine != null) {
                     shine.color = new Color(0f, 0.04f, 0.69f, 1f);
                 }
                 break;
             case COLOR_GREEN:
-                Utils.y1 = (UV_MAP[2] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[3] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_GREEN_ID));
                 if (shine != null) {
                     shine.color = new Color(0.02f, 0.41f, 0.10f, 1f);
                 }
                 break;
             case COLOR_YELLOW:
-                Utils.y1 = (UV_MAP[3] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[4] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_YELLOW_ID));
                 if (shine != null) {
                     shine.color = new Color(0.74f, 0.73f, 0.33f, 1f);
                 }
                 break;
             case COLOR_ORANGE:
-                Utils.y1 = (UV_MAP[4] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[5] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_ORANGE_ID));
                 if (shine != null) {
                     shine.color = new Color(0.61f, 0.43f, 0.06f, 1f);
                 }
                 break;
             case COLOR_PINK:
-                Utils.y1 = (UV_MAP[5] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[6] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_PINK_ID));;
                 if (shine != null) {
                     shine.color = new Color(0.54f, 0.14f, 0.48f, 1f);
                 }
                 break;
             case COLOR_PURPLE:
-                Utils.y1 = (UV_MAP[6] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[7] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_PURPLE_ID));
                 if (shine != null) {
                     shine.color = new Color(0.31f, 0.04f, 0.69f, 1f);
                 }
                 break;
             case COLOR_BLACK:
-                Utils.y1 = (UV_MAP[7] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[8] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_BLACK_ID));
                 if (shine != null) {
                     shine.color = new Color(1f, 1f, 1f, 1f);
                 }
                 break;
             default:
-                Utils.y1 = (UV_MAP[7] + 0.5f)/1024f;
-                Utils.y2 = (UV_MAP[8] - 0.5f)/1024f;
+                updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_BLACK_ID));
                 if (shine != null) {
                     shine.color = new Color(1f, 1f, 1f, 1f);
                 }
                 break;
         }
-        Utils.insertRectangleUvData(uvsData, 0);
-        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
 
@@ -125,10 +102,10 @@ public class Bar extends Rectangle{
     Bar(String name, float x, float y, float width, float height){
         super(name, x, y, Entity.TYPE_BAR, width, height, Game.BAR_WEIGHT, new Color(0.0f, 0.0f, 0.0f, 1.0f));
         program = Game.imageColorizedProgram;
-        textureId = Texture.TEXTURE_BARS;
+        textureId = Texture.TEXTURES;
         isCollidable = true;
         isSolid = true;
-        shine = new Image("shine", x, y, width, height, Texture.TEXTURE_BARS, 0f, 1f, 576f/1024f, 648f/1024f, new Color(1f, 1f, 1f, 1f));
+        shine = new Image("shine", x, y, width, height, Texture.TEXTURES, TextureData.getTextureDataById(TextureData.TEXTURE_BAR_TOP_ID), new Color(1f, 1f, 1f, 1f));
         shine.alpha = 0f;
         shineDecreaseAfterAccelerate = Utils.createSimpleAnimation(shine, "shineDecreaseAfterAccelerate", "numberForAnimation", 500, 0f, 0f);
         shineAfterBallCollision = Utils.createAnimation3v(shine, "shineAfterBallCollision", "numberForAnimation2", 1000, 0f, 0, 0.2f, 1f, 1f, 0f, false, true);
@@ -147,7 +124,7 @@ public class Bar extends Rectangle{
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
         uvsData = new float[12];
-        setTextureMap(textureMap);
+        setBarColor(textureColorId);
 
         colorsData = new float[16];
         Utils.insertRectangleColorsData(colorsData, 0, color);
@@ -157,9 +134,9 @@ public class Bar extends Rectangle{
 
     public void insertVerticesData(float[] array, int startIndex){
         float x1 = 0f;
-        float x2 = this.width;
+        float x2 = width;
         float y1 = 0f;
-        float y2 = this.height;
+        float y2 = height;
 
         array[startIndex] = x1;
         array[1 + (startIndex)] = y2;

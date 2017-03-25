@@ -6,20 +6,20 @@ public class ParticleGenerator extends Entity {
     int numberOfParticles = 300;
     ArrayList<Particle> particlesArray;
     boolean isActive;
-    int [] textureMaps;
+    TextureData [] texturesData;
 
-    ParticleGenerator(String name, float x, float y, int textureMap1, int textureMap2, int textureMap3) {
+    ParticleGenerator(String name, float x, float y, TextureData td1, TextureData td2, TextureData td3) {
         super(name, x, y, Entity.TYPE_PARTICLE);
         program = Game.imageColorizedProgram;
-        textureId = Texture.TEXTURE_NUMBERS_EXPLOSION;
-        this.textureMaps = new int []{textureMap1, textureMap2, textureMap3};
+        textureId = Texture.TEXTURES;
+        texturesData = new TextureData []{td1, td2, td3};
         generate();
     }
 
     public void activate(){
         setDrawInfo();
-        this.isVisible = true;
-        this.isActive = true;
+        isVisible = true;
+        isActive = true;
     }
 
     public void deactivate(){
@@ -35,18 +35,22 @@ public class ParticleGenerator extends Entity {
             float velocity_variation_y = Utils.getRandonFloat(-0.1f, 0.1f);
             float alpha_decay = Utils.getRandonFloat(0.01f, 0.005f);
             float size = Utils.getRandonFloat(1f, 7f);
-            int textureMap;
+
             float textureMapFilter = Utils.getRandonFloat(0f, 1f);
+
+
+            TextureData td;
+
             if (textureMapFilter < 0.33f) {
-                textureMap = textureMaps[0];
-            } else if (textureMapFilter < 0.33f) {
-                textureMap = textureMaps[0];
+                td = texturesData[0];
+            } else if (textureMapFilter < 0.66f) {
+                td = texturesData[1];
             } else {
-                textureMap = textureMaps[0];
+                td = texturesData[2];
             }
             
             Particle particle = new Particle(0, 0, vx, vy, velocity_variation_x, 
-                velocity_variation_y, alpha_decay, size, textureMap);
+                velocity_variation_y, alpha_decay, size, td);
             particlesArray.add(particle);
         }
     }
@@ -92,7 +96,7 @@ public class ParticleGenerator extends Entity {
             Particle p = particlesArray.get(i);
             Utils.insertRectangleVerticesData(verticesData, i * 12, 0, p.size, 0f, p.size, 0f);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
+            Utils.insertRectangleUvData(uvsData, i * 8, textureData);
             Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
         }
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
@@ -113,10 +117,10 @@ public class ParticleGenerator extends Entity {
         float alpha_decay;
         float velocity_variation_x;
         float velocity_variation_y;
-        int textureMap;
+        TextureData textureData;
 
         public Particle(float initX, float initY, float vx, float vy, 
-            float velocity_variation_x, float velocity_variation_y, float alpha_decay, float size, int textureMap) {
+            float velocity_variation_x, float velocity_variation_y, float alpha_decay, float size, TextureData textureData) {
             this.initX = initX;
             this.initY = initY;
             this.x = initX;
@@ -128,7 +132,7 @@ public class ParticleGenerator extends Entity {
             this.alpha = 0.85f;
             this.alpha_decay = alpha_decay;
             this.size = size;
-            this.textureMap = textureMap;
+            this.textureData = textureData;
         }
     }
 }

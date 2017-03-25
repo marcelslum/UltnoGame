@@ -249,51 +249,22 @@ public abstract class Utils {
 
     public static void insertRectangleUvData(float[] array, int startIndex){
             array[startIndex] = x1;
-            array[1 + (startIndex)] = 1f-y1;
+            array[1 + (startIndex)] = y1;
             array[2 + (startIndex)] = x2;
-            array[3 + (startIndex)] = 1-y1;
+            array[3 + (startIndex)] = y1;
             array[4 + (startIndex)] = x2;
-            array[5 + (startIndex)] = 1-y2;
+            array[5 + (startIndex)] = y2;
             array[6 + (startIndex)] = x1;
-            array[7 + (startIndex)] = 1-y2;
+            array[7 + (startIndex)] = y2;
     }
 
-    public static void insertRectangleUvData256(float[] array, int startIndex, int textureMap){
-
-        float [] data = new float [] {0f, 256f, 512f, 768f, 1024f};
-
-        if (textureMap < 5){
-            Utils.y1 = (data[0] + 2f)/1024f;
-            Utils.y2 = (data[1] - 2f)/1024f;
-        } else if (textureMap < 9){
-            Utils.y1 = (data[1] + 2f)/1024f;
-            Utils.y2 = (data[2] - 2f)/1024f;
-        } else if (textureMap < 13){
-            Utils.y1 = (data[2] + 2f)/1024f;
-            Utils.y2 = (data[3] - 2f)/1024f;
-        } else if (textureMap < 17){
-            Utils.y1 = (data[3] + 2f)/1024f;
-            Utils.y2 = (data[4] - 2f)/1024f;
-        }
-
-        if (textureMap == 1 || textureMap == 5 || textureMap == 9 || textureMap == 13){
-            Utils.x1 = (data[0] + 2f)/1024f;
-            Utils.x2 = (data[1] - 2f)/1024f;
-        } else if (textureMap == 2 || textureMap == 6 || textureMap == 10 || textureMap == 14){
-            Utils.x1 = (data[1] + 2f)/1024f;
-            Utils.x2 = (data[2] - 2f)/1024f;
-        } else if (textureMap == 3 || textureMap == 7 || textureMap == 11 || textureMap == 15){
-            Utils.x1 = (data[2] + 2f)/1024f;
-            Utils.x2 = (data[3] - 2f)/1024f;
-        } else if (textureMap == 4 || textureMap == 8 || textureMap == 12 || textureMap == 16){
-            Utils.x1 = (data[3] + 2f)/1024f;
-            Utils.x2 = (data[4] - 2f)/1024f;
-        }
-
+    public static void insertRectangleUvData(float[] array, int startIndex, TextureData td){
+        x1 = td.x;
+        x2 = td.x + td.w;
+        y2 = td.y;
+        y1 = td.y + td.h;
         insertRectangleUvData(array, startIndex);
     }
-    
-    
     
    public static float[] getUvData256(int textureMap){
        
@@ -330,244 +301,16 @@ public abstract class Utils {
        return new float[]{Utils.x1, Utils.x2, Utils.y1, Utils.y2};
        
     }
-    
-    
-    
-    
-    public static void insertRectangleUvDataButtonsAndBalls(float[] array, int startIndex, int textureMap){
-        
-        if (textureMap < 9){
-            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[0] + 2f)/1024f;
-            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[1] - 2f)/1024f;
-        } else if (textureMap < 17){
-            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[1] + 2f)/1024f;
-            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[2] - 2f)/1024f;
-        } else if (textureMap < 21){
-            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[2] + 2f)/1024f;
-            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[4] - 2f)/1024f;
-        } else if (textureMap < 25){
-            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[4] + 2f)/1024f;
-            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[6] - 2f)/1024f;
-        } else {
-            Utils.y1 = (Game.textButtonsAndBallsColumnsAndLines[6] + 2f)/1024f;
-            Utils.y2 = (Game.textButtonsAndBallsColumnsAndLines[8] - 2f)/1024f;
-        } 
-        
-        if (textureMap < 17){
-            if (textureMap == 1 || textureMap == 9){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[0] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[1] - 2f)/1024f;
-            } else if (textureMap == 2 || textureMap == 10){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[1] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[2] - 2f)/1024f;
-            } else if (textureMap == 3 || textureMap == 11){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[2] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[3] - 2f)/1024f;
-            } else if (textureMap == 4 || textureMap == 12){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[3] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[4] - 2f)/1024f;
-            } else if (textureMap == 5 || textureMap == 13){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[4] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[5] - 2f)/1024f;
-            } else if (textureMap == 6 || textureMap == 14){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[5] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[6] - 2f)/1024f;
-            } else if (textureMap == 7 || textureMap == 15){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[6] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[7] - 2f)/1024f;
-            } else if (textureMap == 8 || textureMap == 16){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[7] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[8] - 2f)/1024f;
-            }
-        } else {
-             if (textureMap == 17 || textureMap == 21 || textureMap == 25){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[0] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[2] - 2f)/1024f;
-            } else if (textureMap == 18 || textureMap == 22 || textureMap == 26){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[2] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[4] - 2f)/1024f;
-            } else if (textureMap == 19 || textureMap == 23 || textureMap == 27){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[4] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[6] - 2f)/1024f;
-            } else if (textureMap == 20 || textureMap == 24 || textureMap == 28){
-                Utils.x1 = (Game.textButtonsAndBallsColumnsAndLines[6] + 2f)/1024f;
-                Utils.x2 = (Game.textButtonsAndBallsColumnsAndLines[8] - 2f)/1024f;
-            }
-        }
-        insertRectangleUvData(array, startIndex);
-    }
 
-    public static void insertObstacleUvData(float[] array, int startIndex, float pX, float pY) {
-        Utils.y1 = -1f * pY;
-        Utils.y2 = 1f * pY;
-        Utils.x1 = -1f * pY;
-        Utils.x2 = 1f * pX;
-        insertRectangleUvData(array, startIndex);
-    }
-
-    public static void insertRectangleUvDataNumbersExplosion(float[] array, int startIndex, int textureMap){
-        
-        if (textureMap < 8){
-            Utils.y1 = (0f + 2f)/1024f;
-            Utils.y2 = (256f - 2f)/1024f;
-            switch(textureMap){
-                case 1:
-                    Utils.x1 = (0f + 2f)/1024f;
-                    Utils.x2 = (142f - 2f)/1024f;
-                    break;
-                case 2:
-                    Utils.x1 = (142f + 2f)/1024f;
-                    Utils.x2 = (284f - 2f)/1024f;
-                    break;
-                case 3:
-                    Utils.x1 = (284f + 2f)/1024f;
-                    Utils.x2 = (426f - 2f)/1024f;
-                    break;
-                case 4:
-                    Utils.x1 = (426f + 2f)/1024f;
-                    Utils.x2 = (568f - 2f)/1024f;
-                    break;
-                case 5:
-                    Utils.x1 = (568f + 2f)/1024f;
-                    Utils.x2 = (710f - 2f)/1024f;
-                    break;
-                case 6:
-                    Utils.x1 = (710f + 2f)/1024f;
-                    Utils.x2 = (852f - 2f)/1024f;
-                    break;
-                case 7:
-                    Utils.x1 = (852f + 2f)/1024f;
-                    Utils.x2 = (994f - 2f)/1024f;
-                    break;
-            }
-        } else if (textureMap < 11){
-            Utils.y1 = (256f + 2f)/1024f;
-            Utils.y2 = (512f - 2f)/1024f;
-                switch(textureMap){
-                case 8:
-                    Utils.x1 = (0f + 2f)/1024f;
-                    Utils.x2 = (142f - 2f)/1024f;
-                    break;
-                case 9:
-                    Utils.x1 = (142f + 2f)/1024f;
-                    Utils.x2 = (284f - 2f)/1024f;
-                    break;
-                case 10:
-                    Utils.x1 = (284f + 2f)/1024f;
-                    Utils.x2 = (426f - 2f)/1024f;
-                    break;
-            }
-        } else if (textureMap < 21){
-            Utils.y1 = (512f + 2f)/1024f;
-            Utils.y2 = (640f - 2f)/1024f;
-            
-            switch(textureMap){
-                case 11:
-                    Utils.x1 = (0f + 2f)/1024f;
-                    Utils.x2 = (100f - 2f)/1024f;
-                    break;
-                case 12:
-                    Utils.x1 = (100f + 2f)/1024f;
-                    Utils.x2 = (200f - 2f)/1024f;
-                    break;
-                case 13:
-                    Utils.x1 = (200f + 2f)/1024f;
-                    Utils.x2 = (300f - 2f)/1024f;
-                    break;
-                case 14:
-                    Utils.x1 = (300f + 2f)/1024f;
-                    Utils.x2 = (400f - 2f)/1024f;
-                    break;
-                case 15:
-                    Utils.x1 = (400f + 2f)/1024f;
-                    Utils.x2 = (500f - 2f)/1024f;
-                    break;
-                case 16:
-                    Utils.x1 = (500f + 2f)/1024f;
-                    Utils.x2 = (600f - 2f)/1024f;
-                    break;
-                case 17:
-                    Utils.x1 = (600f + 2f)/1024f;
-                    Utils.x2 = (700f - 2f)/1024f;
-                    break;
-                case 18:
-                    Utils.x1 = (700f + 2f)/1024f;
-                    Utils.x2 = (800f - 2f)/1024f;
-                    break;
-                case 19:
-                    Utils.x1 = (800f + 2f)/1024f;
-                    Utils.x2 = (900f - 2f)/1024f;
-                    break;
-                case 20:
-                    Utils.x1 = (900f + 2f)/1024f;
-                    Utils.x2 = (1000f - 2f)/1024f;
-                    break;
-            }
-        } else if (textureMap < 29){
-            Utils.y1 = (640f + 2f)/1024f;
-            Utils.y2 = (768f - 2f)/1024f;
-
-            switch(textureMap){
-                case 21:
-                    Utils.x1 = (0f + 2f)/1024f;
-                    Utils.x2 = (128f - 2f)/1024f;
-                    break;
-                case 22:
-                    Utils.x1 = (128f + 2f)/1024f;
-                    Utils.x2 = (256f - 2f)/1024f;
-                    break;
-                case 23:
-                    Utils.x1 = (256f + 2f)/1024f;
-                    Utils.x2 = (384f - 2f)/1024f;
-                    break;
-                case 24:
-                    Utils.x1 = (384f + 2f)/1024f;
-                    Utils.x2 = (512f - 2f)/1024f;
-                    break;
-                case 25:
-                    Utils.x1 = (512f + 2f)/1024f;
-                    Utils.x2 = (640f - 2f)/1024f;
-                    break;
-                case 26:
-                    Utils.x1 = (640f + 2f)/1024f;
-                    Utils.x2 = (768f - 2f)/1024f;
-                    break;
-                case 27:
-                    Utils.x1 = (768f + 2f)/1024f;
-                    Utils.x2 = (896f - 2f)/1024f;
-                    break;
-                case 28:
-                    Utils.x1 = (896f + 2f)/1024f;
-                    Utils.x2 = (1024f - 2f)/1024f;
-                    break;
-            }
-        } else if (textureMap > 28) {
-            Utils.y1 = (768f + 2f)/1024f;
-            Utils.y2 = (1024f - 2f)/1024f;
-            switch(textureMap) {
-                case 29:
-                    Utils.x1 = (256f + 2f) / 1024f;
-                    Utils.x2 = (512f - 2f) / 1024f;
-                    break;
-                case 30:
-                    Utils.x1 = (512f + 2f) / 1024f;
-                    Utils.x2 = (1024f - 2f) / 1024f;
-                    break;
-            }
-        }
-        insertRectangleUvData(array, startIndex);
-    }
-    
-    
     public static void insertRectangleUvData(float[] array, int startIndex, float x1, float x2, float y1, float y2){
             array[startIndex] = x1;
-            array[1 + (startIndex)] = 1f-y1;
+            array[1 + (startIndex)] = y1;
             array[2 + (startIndex)] = x2;
-            array[3 + (startIndex)] = 1-y1;
+            array[3 + (startIndex)] = y1;
             array[4 + (startIndex)] = x2;
-            array[5 + (startIndex)] = 1-y2;
+            array[5 + (startIndex)] = y2;
             array[6 + (startIndex)] = x1;
-            array[7 + (startIndex)] = 1-y2;
+            array[7 + (startIndex)] = y2;
     }
 
     public static Animation createSimpleAnimation(Entity object, String name, String parameter, int duration, float v1, float v2){

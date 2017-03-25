@@ -80,7 +80,8 @@ public class TextBox extends Entity{
 
         if (isHaveFrame){
             if (frameType == TextBoxBuilder.FRAME_TYPE_IMAGE) {
-                frame = new Image("frame", x, y, frameWidth, height, Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f / 1024f);
+                frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
+                        //new Image("frame", x, y, frameWidth, height, Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f / 1024f);
             } else if (frameType == TextBoxBuilder.FRAME_TYPE_SOLID) {
                 frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
             }
@@ -88,10 +89,9 @@ public class TextBox extends Entity{
         }
         
         if (isHaveArrowContinue){
-            arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, lastTextY - textPadding, size, size, Texture.TEXTURE_BUTTONS_BALLS_STARS, 3f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
-            arrowContinuar.setTextureMap(14);
-            arrowContinuar.textureMapUnpressed = 14;
-            arrowContinuar.textureMapPressed = 6;
+            arrowContinuar = new Button("arrowContinuar", x + width - size*0.5f, lastTextY - textPadding, size, size, Texture.TEXTURES, 3f,
+                    TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
+                    TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));
             arrowContinuar.setOnPress(new Button.OnPress() {
                 @Override
                 public void onPress() {
@@ -166,8 +166,8 @@ public class TextBox extends Entity{
     public void appendMiniArrow(float arrowX, float arrowY){
         isHaveMiniArrow = true;
         float arrowSize = size * 2f;
-        miniArrow = new Image("miniArrow", arrowX - arrowSize, arrowY, arrowSize, arrowSize, Texture.TEXTURE_BUTTONS_BALLS_STARS,
-                (128f + 2.5f) / 1024f, (256f - 2.5f) / 1024f, (128f + 2.5f) / 1024f, (256f - 2.5f) / 1024f);
+        miniArrow = new Image("miniArrow", arrowX - arrowSize, arrowY, arrowSize, arrowSize, Texture.TEXTURES,
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_ID));
     }
     
     

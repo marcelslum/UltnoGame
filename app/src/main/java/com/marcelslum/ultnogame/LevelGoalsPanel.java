@@ -183,11 +183,11 @@ public class LevelGoalsPanel extends Entity{
             float starX = x - (size * 2f);
             for (int i = 0; i < quantityOfStars; i++) {
                 if (shineStars) {
-                    im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURE_BUTTONS_BALLS_STARS,
-                            (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+                    im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURES,
+                            TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
                 } else {
-                    im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURE_BUTTONS_BALLS_STARS,
-                            (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+                    im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURES,
+                            TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
                 }
                 stars.add(im);
                 addChild(im);
@@ -207,9 +207,9 @@ public class LevelGoalsPanel extends Entity{
         public void changeShineStars(boolean shine) {
             for (int i = 0; i < stars.size(); i++){
                 if (shine){
-                    stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+                    stars.get(i).updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
                 } else {
-                    stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+                    stars.get(i).updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
                 }
             }
         }

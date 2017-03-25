@@ -2,7 +2,6 @@ package com.marcelslum.ultnogame;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.database.SQLException;
 import android.media.MediaPlayer;
 import android.util.Log;
 
@@ -203,14 +202,14 @@ public class Game {
         }
 
         Texture.clear();
-        Texture.textures.add(new Texture(Texture.TEXTURE_TITTLE, "drawable/tittle"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_FONT, "drawable/jetset"));
-
+        Texture.textures.add(new Texture(Texture.TEXTURES, "drawable/textures1"));
         Texture.init();
 
         Game.frame = new Rectangle("frame", 0f, 0f, Entity.TYPE_OTHER, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
         Game.frame.clearDisplay();
         Game.frame.alpha = 0f;
+
+        TextureData.getTextureData();
 
         setGameState(Game.GAME_STATE_INTRO);
 
@@ -221,7 +220,7 @@ public class Game {
             throw new Error("Unable to create database");
         }
 
-        TextureData.getTextureData();
+
 
     }
 
@@ -272,16 +271,11 @@ public class Game {
 
     public static void initTittle(){
 
-        TextureData td = TextureData.getTextureDataById(TextureData.TEXTURE_TITTLE_ID);
-
         tittle = new Image("tittle",
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.2f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.47f * 0.3671875f,
-                Texture.TEXTURES1,
-                td.x,
-                td.x + td.w,
-                td.y,
-                td.y + td.h,
+                Texture.TEXTURES,
+                TextureData.getTextureDataById(TextureData.TEXTURE_TITTLE_ID),
                 new Color(0.5f, 0.2f, 0.8f, 1f));
 
         Animation animTittle = Utils.createAnimation5v(tittle, "numberForAnimation", "numberForAnimation", 5000, 0f, 1f, 0.15f, 2f, 0.45f, 3f, 0.6f, 4f, 0.85f, 5f, true, false);
@@ -333,7 +327,7 @@ public class Game {
     }
 
     static void initFont(){
-        font = new Font(Texture.TEXTURE_FONT,textProgram);
+        font = new Font(Texture.TEXTURES,textProgram);
     }
     static void addBall(Ball ball){
         balls.add(ball);
@@ -429,6 +423,8 @@ public class Game {
 
             ButtonHandler.buttonContinue.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
+            MessagesHandler.messageContinue.display();
+            MessagesHandler.messageBack.display();
 
         } else if (state == GAME_STATE_OBJETIVO_PAUSE){
 
@@ -444,6 +440,9 @@ public class Game {
                 MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 999));
             }
             ButtonHandler.buttonReturnObjectivesPause.unblockAndDisplay();
+            MessagesHandler.messageBack.setY(Game.gameAreaResolutionY - (ButtonHandler.buttonReturnObjectivesPause.width*0.5f));
+            MessagesHandler.messageBack.setColor(new Color(0f, 0f, 0f, 1f));
+            MessagesHandler.messageBack.display();
 
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
 
@@ -894,6 +893,7 @@ public class Game {
                     } else{
                         ButtonHandler.buttonContinue.display();
                         ButtonHandler.buttonContinue.unblock();
+                        MessagesHandler.messageContinue.display();
                         cancel();
                     }
                 }
@@ -979,7 +979,8 @@ public class Game {
                                new Image("groupsUnblocked"+i, 0f,
                                resolutionY * 0.7f,
                                groupsUnblockedSize, groupsUnblockedSize,
-                               lgd.textureUnit,Utils.getUvData256(lgd.textureMap))
+                               lgd.textureUnit,
+                               TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID))
                            );
                    }
                 }
@@ -1086,6 +1087,7 @@ public class Game {
                 public void onAnimationEnd() {
                     ButtonHandler.buttonContinue.display();
                     ButtonHandler.buttonContinue.unblock();
+                    MessagesHandler.messageContinue.display();
                 }
             });
             animMessageConqueredStarsTotal.start();
@@ -1744,6 +1746,8 @@ public class Game {
         MessagesHandler.starForMessage.checkTransformations(true);
         MessagesHandler.bottomTextBox.checkTransformations(true);
         MessagesHandler.messageGroupsUnblocked.checkTransformations(true);
+        MessagesHandler.messageBack.checkTransformations(true);
+        MessagesHandler.messageContinue.checkTransformations(true);
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.checkTransformations(true);
         if (MessageStar.messageStars != null) MessageStar.messageStars.checkTransformations(true);
 
@@ -1873,6 +1877,8 @@ public class Game {
         MessagesHandler.messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
         MessagesHandler.starForMessage.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageGroupsUnblocked.prepareRender(matrixView, matrixProjection);
+        MessagesHandler.messageBack.prepareRender(matrixView, matrixProjection);
+        MessagesHandler.messageContinue.prepareRender(matrixView, matrixProjection);
         if (MessageStar.messageStars != null) MessageStar.messageStars.prepareRender(matrixView, matrixProjection);
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.prepareRender(matrixView, matrixProjection);
 
@@ -1987,6 +1993,8 @@ public class Game {
         list.add(MessagesHandler.messageMaxScoreTotal);
         list.add(MessagesHandler.messageConqueredStarsTotal);
         list.add(MessagesHandler.starForMessage);
+        list.add(MessagesHandler.messageBack);
+        list.add(MessagesHandler.messageContinue);
         list.add(MessagesHandler.bottomTextBox);
         
         return list;

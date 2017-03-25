@@ -9,22 +9,25 @@ public class ButtonOnOff extends Button{
     public boolean on;
     private OnOffBehavior onOffBehavior;
 
-    ButtonOnOff(String name, float x, float y, float width, float height, int textureUnit, float listenerScale, int buttonType){
-        super(name, x, y, width, height, textureUnit, listenerScale, buttonType);
-        this.on = false;
+    ButtonOnOff(String name, float x, float y, float width, float height, int textureUnit, float listenerScale,
+                TextureData textureDataUnpressed, TextureData textureDataPressed){
+        super(name, x, y, width, height, textureUnit, listenerScale, textureDataUnpressed, textureDataPressed);
+        on = false;
     }
 
     public void setOn(){
-        this.on = true;
-        setTextureMap(textureMapPressed);
+        on = true;
+        isPressed = true;
+        setUvInfo();
         if (onOffBehavior != null){
             onOffBehavior.onBehavior();
         }
     }
 
     public void setOff(){
-        this.on = false;
-        setTextureMap(textureMapUnpressed);
+        on = false;
+        isPressed = false;
+        setUvInfo();
         if (onOffBehavior != null){
             onOffBehavior.offBehavior();
         }

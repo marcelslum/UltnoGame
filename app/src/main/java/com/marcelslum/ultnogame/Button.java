@@ -55,6 +55,8 @@ public class Button extends Entity{
                 }
             }
         ));
+
+        setDrawInfo();
     }
 
     public void setMoveListener(InteractionListener.MoveListener moveListener){
@@ -106,6 +108,22 @@ public class Button extends Entity{
         void onUnpress();
     }
 
+    public void setUvInfo(){
+
+        if (isPressed) {
+            Utils.insertRectangleUvData(uvsData, 0,
+                    textureDataPressed);
+        } else {
+            Utils.insertRectangleUvData(uvsData, 0,
+                   textureDataUnpressed);
+
+        }
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+
+
+
+    }
+
     public void setDrawInfo(){
         initializeData(12, 6, 12, 0);
 
@@ -115,22 +133,6 @@ public class Button extends Entity{
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
-        if (isPressed) {
-            Utils.insertRectangleUvData(uvsData, 0, 
-                    textureDataPressed.x,
-                    textureDataPressed.x + textureDataPressed.w,
-                    textureDataPressed.y,
-                    textureDataPressed.y + textureDataPressed.h);
-        } else {
-            Utils.insertRectangleUvData(uvsData, 0,
-                    textureDataUnpressed.x,
-                    textureDataUnpressed.x + textureDataUnpressed.w,
-                    textureDataUnpressed.y,
-                    textureDataUnpressed.y + textureDataUnpressed.h);
-            
-        }
-        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
-
-        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+        setUvInfo();
     }
 }

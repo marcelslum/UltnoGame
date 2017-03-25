@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -48,7 +46,7 @@ public class Target extends Rectangle {
         this.currentState = currentState;
         this.special = special;
         setType();
-        textureId = Texture.TEXTURE_TARGETS;
+        textureId = Texture.TEXTURES;
         program = Game.imageProgram;
         isMovable = false;
         isGhost = ghost;
@@ -240,36 +238,27 @@ public class Target extends Rectangle {
 
         setUvInfo(type);
         
-        uvChange = true;
+        uvChangeFlag = true;
         
     }
 
     public void setUvInfo(int type){
         if (type == TARGET_RED){
-            Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
+            Utils.insertRectangleUvData(uvsData, 0, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_RED_ID));
         } else if (type == TARGET_BLUE){
-            Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 624f/1024f, 830f/1024f);
+            Utils.insertRectangleUvData(uvsData, 0, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_BLUE_ID));
         } else if (type == TARGET_GREEN){
-            Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 208f/1024f, 414f/1024f);
+            Utils.insertRectangleUvData(uvsData, 0, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_GREEN_ID));
         } else if (type == TARGET_BLACK){
-            Utils.insertRectangleUvData(uvsData, 0, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
+            Utils.insertRectangleUvData(uvsData, 0, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_BLACK_ID));
         }
-        //uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
     public void setDrawInfo(){
-        
         initializeData(12, 6, 8, 16);
-        
         Utils.insertRectangleVerticesData(verticesData,0, 0f, width, 0f, height, 0f);
-        //verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
-        
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        //indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
-        
         Utils.insertRectangleColorsData(colorsData,0 , 0f, 0f, 0f, 1f);
-        
         setUvInfo(type);
-
     }
 }

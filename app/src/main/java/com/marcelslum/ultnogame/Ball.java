@@ -1,5 +1,4 @@
 package com.marcelslum.ultnogame;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -48,7 +47,7 @@ public class Ball extends Circle{
     public float rotationAngle = 0;
     boolean isInvencible = false;
 
-    public int textureMap = COLOR_BALL_BLACK;
+    public int textureColorId = COLOR_BALL_BLACK;
     
     float [] historicPositionX = new float[7];
     int historicNumberOfElements = 0;
@@ -76,11 +75,12 @@ public class Ball extends Circle{
     public boolean isFake = false;
     public boolean fakeOnTop = false;
 
-    Ball(String name, float x, float y, float radius, int textureMap){
+    Ball(String name, float x, float y, float radius, int textureColorId){
         super(name, x, y, Entity.TYPE_BALL, radius, Game.BALL_WEIGHT);
-        textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
+        this.textureColorId = textureColorId;
+        textureId = Texture.TEXTURES;
         program = Game.imageColorizedProgram;
-        this.textureMap = textureMap;
+
         ballsCollidedProcessed = new ArrayList<>();
         color = new Color(0f, 0f, 0f, 1f);
         
@@ -130,15 +130,15 @@ public class Ball extends Circle{
                 @Override
                 public void onChange() {
                     if (innerBall.numberForAnimation == 1f){
-                        setTextureMapAndUvData(COLOR_BALL_YELLOW);
+                        setBallColor(COLOR_BALL_YELLOW);
                     } else if (innerBall.numberForAnimation == 2f) {
-                        setTextureMapAndUvData(COLOR_BALL_PINK);
+                        setBallColor(COLOR_BALL_PINK);
                     } else if (innerBall.numberForAnimation == 3f) {
-                        setTextureMapAndUvData(COLOR_BALL_BLUE);
+                        setBallColor(COLOR_BALL_BLUE);
                     } else if (innerBall.numberForAnimation == 4f) {
-                        setTextureMapAndUvData(COLOR_BALL_GREEN);
+                        setBallColor(COLOR_BALL_GREEN);
                     } else if (innerBall.numberForAnimation == 4f) {
-                        setTextureMapAndUvData(COLOR_BALL_RED);
+                        setBallColor(COLOR_BALL_RED);
                     }
                 }
             });
@@ -151,29 +151,38 @@ public class Ball extends Circle{
 
         verticesData = new float[12];
 
-        //Log.e("ball", " "+verticesData.length);
-
         Utils.insertRectangleVerticesData(verticesData, 0, 0f - radius, radius, 0f - radius, radius, 0f);
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
 
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
-        Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
-        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
-
+        setBallColor(textureColorId);
 
         colorsData = new float[16];
         Utils.insertRectangleColorsData(colorsData, 0, color);
         colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
-
-
     }
     
-    public void setTextureMapAndUvData(int textureMap){
-        this.textureMap = textureMap;
-        Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
-        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+    public void setBallColor(int colorId){
+        textureColorId = colorId;
+        if (textureColorId == COLOR_BALL_BLACK){
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_BLACK_ID));
+        } else if (textureColorId == COLOR_BALL_BLUE){
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_BLUE_ID));
+        } else if (textureColorId == COLOR_BALL_GREEN){
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_GREEN_ID));
+        } else if (textureColorId == COLOR_BALL_ORANGE){
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_ORANGE_ID));
+        } else if (textureColorId == COLOR_BALL_PINK){
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_PINK_ID));
+        } else if (textureColorId == COLOR_BALL_PURPLE){
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_PURPLE_ID));
+        } else if (textureColorId == COLOR_BALL_RED){
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_RED_ID));
+        } else if (textureColorId == COLOR_BALL_YELLOW){
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_YELLOW_ID));
+        }
     }
     
     @Override
@@ -462,8 +471,8 @@ public class Ball extends Circle{
                     //Log.e(TAG, "incluindo estrela na posicao "+starX+" "+starY );
 
 
-                    final Image star = new Image("ballCollisionStar", starX - radius*8f, starY - radius*8f, radius*16f, radius*16f, Texture.TEXTURE_NUMBERS_EXPLOSION,
-                        (896f + 1.5f) / 1024f, (1024f - 1.5f) / 1024f, (640f + 1.5f) / 1024f, (768f - 1.5f) / 1024f);
+                    final Image star = new Image("ballCollisionStar", starX - radius*8f, starY - radius*8f, radius*16f, radius*16f, Texture.TEXTURES,
+                        TextureData.getTextureDataById(TextureData.TEXTURE_BALL_COLLISION_ID));
                     star.display();
                     Animation anim = Utils.createAnimation3v(star, "star", "alpha", 800, 0f, 0f, 0.1f, 1f, 1f, 0f, false, true);
 
@@ -946,22 +955,22 @@ public class Ball extends Circle{
             barCollided.shineAfterBallCollision.start();
 
             if (isAlive){
-                if (textureMap == COLOR_BALL_RED){
-                    barCollided.changeTextureMap(Bar.COLOR_RED);
-                } else if (textureMap == COLOR_BALL_BLUE){
-                    barCollided.changeTextureMap(Bar.COLOR_BLUE);
-                } else if (textureMap == COLOR_BALL_GREEN){
-                    barCollided.changeTextureMap(Bar.COLOR_GREEN);
-                } else if (textureMap == COLOR_BALL_YELLOW){
-                    barCollided.changeTextureMap(Bar.COLOR_YELLOW);
-                } else if (textureMap == COLOR_BALL_ORANGE){
-                    barCollided.changeTextureMap(Bar.COLOR_ORANGE);
-                } else if (textureMap == COLOR_BALL_PINK){
-                    barCollided.changeTextureMap(Bar.COLOR_PINK);
-                } else if (textureMap == COLOR_BALL_PURPLE){
-                    barCollided.changeTextureMap(Bar.COLOR_PURPLE);
+                if (textureColorId == COLOR_BALL_RED){
+                    barCollided.setBarColor(Bar.COLOR_RED);
+                } else if (textureColorId == COLOR_BALL_BLUE){
+                    barCollided.setBarColor(Bar.COLOR_BLUE);
+                } else if (textureColorId == COLOR_BALL_GREEN){
+                    barCollided.setBarColor(Bar.COLOR_GREEN);
+                } else if (textureColorId == COLOR_BALL_YELLOW){
+                    barCollided.setBarColor(Bar.COLOR_YELLOW);
+                } else if (textureColorId == COLOR_BALL_ORANGE){
+                    barCollided.setBarColor(Bar.COLOR_ORANGE);
+                } else if (textureColorId == COLOR_BALL_PINK){
+                    barCollided.setBarColor(Bar.COLOR_PINK);
+                } else if (textureColorId == COLOR_BALL_PURPLE){
+                    barCollided.setBarColor(Bar.COLOR_PURPLE);
                 } else{
-                    barCollided.changeTextureMap(Bar.COLOR_BLACK);
+                    barCollided.setBarColor(Bar.COLOR_BLACK);
                 }
             }
 
@@ -1315,10 +1324,10 @@ public class Ball extends Circle{
                 float newPositionY = positionY;
                 float newRadius = radius;
                 
-                Ball ball = new Ball("ball", newPositionX, newPositionY, newRadius, textureMap);
+                Ball ball = new Ball("ball", newPositionX, newPositionY, newRadius, textureColorId);
                 ball.markAsFakeBall();
                 ball.program = Game.imageProgram;
-                ball.textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
+                ball.textureId = Texture.TEXTURES;
 
 
                 //Log.e(TAG, "fake ball dvx dvy antes "+dvx + " " + dvy);
@@ -1551,7 +1560,7 @@ public class Ball extends Circle{
         alarmId = Sound.play(Sound.soundAlarm, 1, 1, 100);
         initialTimeWaitingExplosion = Utils.getTime();
 
-        setTextureMapAndUvData(COLOR_BALL_RED);
+        setBallColor(COLOR_BALL_RED);
         
         ArrayList<float[]> valuesAlphaRedBall = new ArrayList<>();
         valuesAlphaRedBall.add(new float[]{0f,1f});
@@ -1571,7 +1580,9 @@ public class Ball extends Circle{
         
         clearAnimations();
         ParticleGenerator pg = new ParticleGenerator("explode", x + accumulatedTranslateX, y + accumulatedTranslateY,
-                Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1, Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2, Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3);
+                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_1_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_2_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_3_ID));
         particleGenerator = pg;
         pg.activate();
 
@@ -1602,7 +1613,7 @@ public class Ball extends Circle{
         
         accelerate(500, rotateX, rotateY*-1);
         
-        setTextureMapAndUvData(COLOR_BALL_BLACK);
+        setBallColor(COLOR_BALL_BLACK);
         
         float explodeX = 0;
         float explodeY = 0;
@@ -1648,7 +1659,7 @@ public class Ball extends Circle{
             
             Ball ball = new Ball("ball", explodeX, explodeY, explodeRadius, explodeColor);
             ball.program = Game.imageProgram;
-            ball.textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
+            ball.textureId = Texture.TEXTURES;
 
             ball.dvx = 0f;
             ball.dvy = 0f;

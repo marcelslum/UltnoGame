@@ -20,7 +20,7 @@ public class WindowGame extends PhysicalObject{
         this.quantityOfLines = quantityOfLines;
         this.distance = distance;
         program = Game.imageProgram;
-        textureId = Texture.TEXTURE_NUMBERS_EXPLOSION;
+        textureId = Texture.TEXTURES;
         isActive = false;
         swgM = new SubWindowGameM(this, 0f, y);
         swgF = new SubWindowGameF(this, 0f, y);
@@ -98,13 +98,12 @@ public class WindowGame extends PhysicalObject{
         
         for (int i = 0; i < quantityOfSquares; i++){
             Utils.insertRectangleIndicesData(this.indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
+            Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_WINDOW_ID));
         }
         
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
-
 
         swgM.setDrawInfo(distanceToDraw, quantityOfLines);
         swgF.setDrawInfo(distanceToDraw, quantityOfLines);
@@ -183,7 +182,7 @@ public class WindowGame extends PhysicalObject{
 
             for (int i = 0; i < quantityOfSquares; i++) {
                 Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-                Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, 29);
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_WINDOW_ID));
             }
 
             verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
@@ -247,7 +246,7 @@ public class WindowGame extends PhysicalObject{
 
             for (int i = 0; i < quantityOfSquares; i++) {
                 Utils.insertRectangleIndicesData(this.indicesData, i * 6, i * 4);
-                Utils.insertRectangleUvDataNumbersExplosion(this.uvsData, i * 8, 29);
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_WINDOW_ID));
             }
 
             verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);

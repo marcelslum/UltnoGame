@@ -22,25 +22,22 @@ public class LevelLoader {
         ArrayList<BarDataBaseData> barDataBaseData = Game.myDbHelper.getBars(levelNumber);
         ArrayList<TargetDataBaseData> targetlDataBaseData = Game.myDbHelper.getTargets(levelNumber < 1000 ? 1 : 2);
 
-        if (levelNumber < 1000) {
-            levelBuilder
-                    .setMinBallsAlive(LevelLoaderData.minBallsAlive[levelNumber - 1])
-                    .setBallDataBaseData(ballDataBaseData)
-                    .setBarDataBaseData(barDataBaseData)
-                    .setTargetDataBaseData(targetlDataBaseData)
-                             .setBarsScaleVariationOff()
-                    .setObstaclesScaleVariationOff()
-                    .setObstaclesPositionVariationOff()
-                    .setWindType(Level.WIND_TYPE_NO)
-                    .setInvertedButtons(false)
-                    .setSpecialBallPercentage(0f)
-                    .setFakeBallPercentage(0f)
-                    .setObstaclesQuantity(0)
-                    .setWindowsQuantity(0)
-                    .setTutorialAttached(Tutorial.TUTORIAL_INICIO)
-                    .setBallsTargetsAppend(new ArrayList<int[]>())
-                    .setTargetsStates(new int[]{0, 1, 2, 3});
-        }
+        levelBuilder
+                .setMinBallsAlive(1)//TODO PUXAR DO BANCO DE DADOS
+                .setBallDataBaseData(ballDataBaseData)
+                .setBarDataBaseData(barDataBaseData)
+                .setTargetDataBaseData(targetlDataBaseData)
+                         .setBarsScaleVariationOff()
+                .setObstaclesScaleVariationOff()
+                .setObstaclesPositionVariationOff()
+                .setWindType(Level.WIND_TYPE_NO)
+                .setInvertedButtons(false)
+                .setSpecialBallPercentage(0f)
+                .setFakeBallPercentage(0f)
+                .setObstaclesQuantity(0)
+                .setWindowsQuantity(0)
+                .setBallsTargetsAppend(new ArrayList<int[]>())
+                .setTargetsStates(new int[]{0, 1, 2, 3});
 
         if (levelNumber >= 50){
             LevelLoader2.loadLevel(levelNumber, levelBuilder);

@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -66,10 +64,9 @@ public class Selector extends Entity{
         float buttonSize = size*0.90f;
         final Selector innerSelector = this;
 
-        arrowUp = new Button("arrowUp", mainTextWidth + x - (buttonSize/2), y - (buttonSize), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
-        arrowUp.setTextureMap(16);
-        arrowUp.textureMapUnpressed = 16;
-        arrowUp.textureMapPressed = 8;
+        arrowUp = new Button("arrowUp", mainTextWidth + x - (buttonSize/2), y - (buttonSize), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_UP_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_UP_ID));
         arrowUp.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
@@ -82,10 +79,9 @@ public class Selector extends Entity{
         arrowUp.setPersistent(50);
         addChild(arrowUp);
 
-        arrowDown = new Button("arrowDown", mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.6f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
-        arrowDown.setTextureMap(15);
-        arrowDown.textureMapUnpressed = 15;
-        arrowDown.textureMapPressed = 7;
+        arrowDown = new Button("arrowDown", mainTextWidth + x -(buttonSize/2), y + size + (buttonSize*0.6f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_DOWN_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_DOWN_PRESS_ID));
         arrowDown.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
@@ -105,10 +101,9 @@ public class Selector extends Entity{
             arrowBackX = x - (buttonSize * 1.5f);
         }
 
-        arrowBack = new Button("arrowBack", arrowBackX, y + (buttonSize * 0.4f), buttonSize, buttonSize, Texture.TEXTURE_BUTTONS_BALLS_STARS, 1.2f, Button.BUTTON_TYPE_BUTTONS_AND_BALLS);
-        arrowBack.setTextureMap(13);
-        arrowBack.textureMapUnpressed = 13;
-        arrowBack.textureMapPressed = 5;
+        arrowBack = new Button("arrowBack", arrowBackX, y + (buttonSize * 0.4f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID));
         addChild(arrowBack);
 
 

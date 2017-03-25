@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Level {
 
     public static Game game;
-    public int tutorialAttached;
     public static final int WIND_TYPE_NO = 0;
     public static final int WIND_TYPE_RIGHT = 1;
     public static final int WIND_TYPE_LEFT = 2;
@@ -73,7 +72,6 @@ public class Level {
         specialBallPercentage = LevelBuilder.specialBallPercentage;
         fakeBallPercentage = LevelBuilder.fakeBallPercentage;
         windType = LevelBuilder.windType;
-        tutorialAttached = LevelBuilder.tutorialAttached;
         invertedButtons = LevelBuilder.invertedButtons;
     }
 
@@ -315,7 +313,6 @@ public class Level {
         private static float specialBallPercentage = 0f;
         private static float fakeBallPercentage = 0f;
         private static int windType = Level.WIND_TYPE_NO;
-        private static int tutorialAttached;
         private static boolean invertedButtons = false;
 
         public LevelBuilder setBallDataBaseData(ArrayList<BallDataBaseData> v) {
@@ -335,11 +332,6 @@ public class Level {
 
         public LevelBuilder setInvertedButtons(boolean v) {
             invertedButtons = v;
-            return this;
-        }
-
-        public LevelBuilder setTutorialAttached(int v) {
-            tutorialAttached = v;
             return this;
         }
 

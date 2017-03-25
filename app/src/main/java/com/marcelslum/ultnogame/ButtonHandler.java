@@ -18,7 +18,7 @@ public class ButtonHandler {
     public static void initButtons(){
         float buttonSize = Game.resolutionX * 0.05f;
         buttonReturn = new Button("buttonReturn", buttonSize*0.5f,
-                Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES1, 1.2f,
+                Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));
         buttonReturn.setOnPress(new Button.OnPress() {
@@ -45,7 +45,7 @@ public class ButtonHandler {
             }
         });
 
-        buttonReturnObjectivesPause = new Button("buttonReturnObjectivesPause", buttonSize*0.5f, Game.gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES1, 1.2f,
+        buttonReturnObjectivesPause = new Button("buttonReturnObjectivesPause", buttonSize*0.5f, Game.gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));
         buttonReturnObjectivesPause.setOnPress(new Button.OnPress() {
@@ -56,15 +56,18 @@ public class ButtonHandler {
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
+                    MessagesHandler.messageBack.clearDisplay();
+                    MessagesHandler.messageBack.setY(MessagesHandler.yOfMessageBackAndContinue);
+                    MessagesHandler.messageBack.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
                 }
             }
         });
 
         buttonGroupLeaderboard = new Button("buttonGroupLeaderboard", Game.resolutionX - buttonSize*1.5f,
                         Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize,
-                        Texture.TEXTURES1, 1.2f,
-                        buttonGroupLeaderboard.textureDataUnpressed,
-                        buttonGroupLeaderboard.textureDataPressed);
+                        Texture.TEXTURES, 1.2f,
+                        TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_GROUP_LEADERBOARD_ID),
+                        TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_GROUP_LEADERBOARD_PRESS_ID));
         buttonGroupLeaderboard.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
@@ -147,9 +150,9 @@ public class ButtonHandler {
             }
         });
 
-        buttonContinue = new Button("buttonContinue", Game.resolutionX - buttonSize*1.5f, Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES1, 1.2f,
-                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
-                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));
+        buttonContinue = new Button("buttonContinue", Game.resolutionX - buttonSize*1.5f, Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_PRESS_ID));
         buttonContinue.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
@@ -185,7 +188,7 @@ public class ButtonHandler {
             x = Game.resolutionX * 0.03f;
         }
 
-        ButtonHandler.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURES1, 2f,
+        ButtonHandler.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_PRESS_ID));
         ButtonHandler.button1Left.alpha = 0.7f;
@@ -200,7 +203,7 @@ public class ButtonHandler {
             x = Game.resolutionX * 0.87f;
         }
 
-        ButtonHandler.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURES1, 2f,
+        ButtonHandler.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_PRESS_ID));
 
@@ -211,7 +214,7 @@ public class ButtonHandler {
             } else {
                 x = Game.resolutionX * 0.22f;
             }
-            ButtonHandler.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURES1, 2f,
+            ButtonHandler.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_ID),
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_PRESS_ID));
             ButtonHandler.button1Right.alpha = 0.7f;
@@ -222,7 +225,7 @@ public class ButtonHandler {
             } else {
                 x = Game.resolutionX * 0.68f;
             }
-            ButtonHandler.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURES1, 2f,
+            ButtonHandler.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_ID),
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_PRESS_ID));
         }

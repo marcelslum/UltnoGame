@@ -2,9 +2,6 @@ package com.marcelslum.ultnogame;
 
 
 import android.opengl.GLES20;
-import android.util.Log;
-
-import java.util.ArrayList;
 
 class TargetGroup extends Entity{
 
@@ -24,7 +21,7 @@ class TargetGroup extends Entity{
 
     TargetGroup(){
         super("targetGroup", 0f, 0f, Entity.TYPE_TARGET_GROUP);
-        textureId = Texture.TEXTURE_TARGETS;
+        textureId = Texture.TEXTURES;
         program = Game.imageColorizedProgram;
         setDrawInfo();
     }
@@ -43,14 +40,15 @@ class TargetGroup extends Entity{
 
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
 
+
             if (Game.targets.get(i).type == Target.TARGET_RED){
-                  Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 1f/1024f, 206f/1024f);
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_RED_ID));
             } else if (Game.targets.get(i).type == Target.TARGET_BLUE){
-                  Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 624f/1024f, 830f/1024f);
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_BLUE_ID));
             } else if (Game.targets.get(i).type == Target.TARGET_GREEN){
-                  Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 208f/1024f, 414f/1024f);
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_GREEN_ID));
             } else if (Game.targets.get(i).type == Target.TARGET_BLACK){
-                  Utils.insertRectangleUvData(uvsData, i * 8, 0f, 816f/1024f, 416f/1024f, 622f/1024f);
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_BLACK_ID));
             }
 
             float percentage;
@@ -122,7 +120,7 @@ class TargetGroup extends Entity{
 
             Game.targets.get(i).checkAnimations();
 
-            if (Game.targets.get(i).colorChange) {
+            if (Game.targets.get(i).colorChangeFlag) {
 
                 float alphaMultiply = 0;
                 if (Game.targets.get(i).isVisible){
@@ -145,7 +143,7 @@ class TargetGroup extends Entity{
             }
 
 
-            if (Game.targets.get(i).uvChange) {
+            if (Game.targets.get(i).uvChangeFlag) {
                 uvsBuffer = Utils.generateOrUpdateFloatBuffer(Game.targets.get(i).uvsData, uvsBuffer);
                 GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
                 GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER,

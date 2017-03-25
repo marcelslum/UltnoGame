@@ -40,7 +40,9 @@ public class Splash {
         tittle = new Image("tittle",
                 Game.resolutionX * 0.2f, Game.resolutionY * 0.25f,
                 Game.resolutionX * 0.6f, Game.resolutionX * 0.6f * 0.3671875f,
-                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6328125f, 1f, new Color(0.0f, 0.0f, 0.0f, 1f));
+                Texture.TEXTURES,
+                TextureData.getTextureDataById(TextureData.TEXTURE_TITTLE_ID),
+                new Color(0.0f, 0.0f, 0.0f, 1f));
 
         ArrayList<float[]> valuesAnimationTittleSplash = new ArrayList<>();
         valuesAnimationTittleSplash.add(new float[]{0f,1f});

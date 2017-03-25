@@ -31,11 +31,12 @@ public class Text extends Entity{
         this.size = size;
         this.color = color;
         this.font = font;
-        this.program = font.program;
-        this.textureId = font.textureId;
         this.align = align;
-        this.charData = new float[7];
-        this.setDrawInfo();
+        program = font.program;
+        textureId = font.textureId;
+        charData = new float[7];
+        textureData = TextureData.getTextureDataById(TextureData.TEXTURE_JEFT_SET_ID);
+        setDrawInfo();
 
     }
 
@@ -45,12 +46,12 @@ public class Text extends Entity{
         this.size = size;
         this.color = color;
         this.font = font;
-        this.program = this.font.program;
-        this.textureId = font.textureId;
-        this.align = TEXT_ALIGN_LEFT;
-
-        this.charData = new float[7];
-        this.setDrawInfo();
+        program = font.program;
+        textureId = font.textureId;
+        align = TEXT_ALIGN_LEFT;
+        textureData = TextureData.getTextureDataById(TextureData.TEXTURE_JEFT_SET_ID);
+        charData = new float[7];
+        setDrawInfo();
     }
 
     public Text(String name, float x, float y, float size, String text, Font font) {
@@ -60,12 +61,12 @@ public class Text extends Entity{
 
         this.color = new Color(0f,0f,0f,1f);
         this.font = font;
-        this.program = this.font.program;
-        this.textureId = font.textureId;
-        this.align = TEXT_ALIGN_LEFT;
-
-        this.charData = new float[7];
-        this.setDrawInfo();
+        program = this.font.program;
+        textureId = font.textureId;
+        align = TEXT_ALIGN_LEFT;
+        textureData = TextureData.getTextureDataById(TextureData.TEXTURE_JEFT_SET_ID);
+        charData = new float[7];
+        setDrawInfo();
     }
 
     public void setText(String text){
@@ -73,7 +74,7 @@ public class Text extends Entity{
         if (shadowText != null) {
             addShadow(shadowColor);
         }
-        this.setDrawInfo();
+        setDrawInfo();
     }
 
     public void translate(float translateX, float translateY) {
@@ -149,10 +150,17 @@ public class Text extends Entity{
                 continue;
             }
 
+            /*
             float x = charData[0]/font.textureSize;
             float x2 = (charData[0] + charData[2])/font.textureSize;
             float y = charData[1]/font.textureSize;
             float y2 = (charData[1] + charData[3])/font.textureSize;
+            */
+
+            float x = textureData.x + (charData[0]/TextureData.textureSize);
+            float x2 = textureData.x + ((charData[0] + charData[2])/TextureData.textureSize);
+            float y = textureData.y + (charData[1]/TextureData.textureSize);
+            float y2 = textureData.y + ((charData[1] + charData[3])/TextureData.textureSize);
 
             // Creating the triangle information
             float[] vec = new float[12];

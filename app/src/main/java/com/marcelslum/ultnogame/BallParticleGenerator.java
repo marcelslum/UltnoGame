@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
@@ -16,7 +14,7 @@ public class BallParticleGenerator extends Entity {
     BallParticleGenerator(String name, float x, float y) {
         super(name, x, y, Entity.TYPE_PARTICLE);
         program = Game.imageColorizedProgram;
-        textureId = Texture.TEXTURE_NUMBERS_EXPLOSION;
+        textureId = Texture.TEXTURES;
         particlesArray = new ArrayList<>();
     }
 
@@ -42,7 +40,6 @@ public class BallParticleGenerator extends Entity {
             float velocity_variation_y = Utils.getRandonFloat(-0.08f, 0.08f);
             float alpha_decay = Utils.getRandonFloat(0.01f, 0.05f);
             float size = Utils.getRandonFloat(radius/2f, radius*3f);
-            int textureMap = Texture.TEXTURE_MAP_NUMBERS_EXPLODE_BALL;
             
             float px = Utils.getRandonFloat(x - radius, x + radius);
             float py = Utils.getRandonFloat(y - radius, y + radius);
@@ -54,7 +51,8 @@ public class BallParticleGenerator extends Entity {
 
             Particle particle = particlePool.get();
             particle.setData(px, py, vx, vy, velocity_variation_x,
-                velocity_variation_y, alpha_decay, size, textureMap);
+                velocity_variation_y, alpha_decay, size,
+                    TextureData.getTextureDataById(TextureData.TEXTURE_PARTICLE_BALL_ID));
 
             particlesArray.add(particle);
             
@@ -106,7 +104,7 @@ public class BallParticleGenerator extends Entity {
             if (createBuffers) {
                 Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0.1f, 0.1f, 0.1f, p.alpha));
                 Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-                Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, p.textureMap);
+                Utils.insertRectangleUvData(uvsData, i * 8, p.textureData);
             }
         }
 
@@ -150,7 +148,7 @@ public class BallParticleGenerator extends Entity {
         float alpha_decay;
         float velocity_variation_x;
         float velocity_variation_y;
-        int textureMap;
+        TextureData textureData;
         private int poolID;
 
         public Particle(){
@@ -158,7 +156,7 @@ public class BallParticleGenerator extends Entity {
         }
 
         public void setData(float initX, float initY, float vx, float vy,
-            float velocity_variation_x, float velocity_variation_y, float alpha_decay, float size, int textureMap) {
+            float velocity_variation_x, float velocity_variation_y, float alpha_decay, float size, TextureData textureData) {
             this.initX = initX;
             this.initY = initY;
             this.x = initX;
@@ -170,7 +168,7 @@ public class BallParticleGenerator extends Entity {
             this.alpha = 0.2f;
             this.alpha_decay = alpha_decay;
             this.size = size;
-            this.textureMap = textureMap;
+            this.textureData = textureData;
         }
 
         @Override
@@ -201,7 +199,7 @@ public class BallParticleGenerator extends Entity {
             alpha = 0.2f;
             alpha_decay = 0;
             size = 0;
-            textureMap = 0;
+            textureData = null;
 
         }
     }

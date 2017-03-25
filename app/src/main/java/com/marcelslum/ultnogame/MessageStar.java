@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class MessageStar extends Entity {
@@ -25,8 +23,8 @@ public class MessageStar extends Entity {
         for (int i = 0; i < 5; i++){
             Image star = new Image("starMessageStar"+i, x,
                     y + ((4 - i) * size * 1.2f),
-                    size, size, Texture.TEXTURE_BUTTONS_BALLS_STARS,
-                    (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+                    size, size, Texture.TEXTURES,
+                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
             stars.add(star);
             addChild(star);
         }
@@ -44,7 +42,7 @@ public class MessageStar extends Entity {
         }
 
         for (int i = 0; i < totalStars; i++){
-            stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+            stars.get(i).updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
         }
 
 
@@ -64,7 +62,7 @@ public class MessageStar extends Entity {
                     public void onAnimationEnd() {
                         a2.start();
                         ab2.start();
-                        star.setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+                        star.updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
                     }
                 });
                 a.start();
@@ -92,7 +90,7 @@ public class MessageStar extends Entity {
             if (activeAnimation != null && activeAnimation.elapsedTime < 2000){
 
                 for (int i = 0; i < totalStars; i++){
-                    stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+                    stars.get(i).updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
                 }
 
                 for (int i = 0; i < 5; i++){
@@ -151,7 +149,7 @@ public class MessageStar extends Entity {
         }
 
         for (int i = 0; i < totalStars; i++){
-            stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f);
+            stars.get(i).updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
         }
 
 
@@ -216,7 +214,7 @@ public class MessageStar extends Entity {
 
     public void reset() {
         for (int i = 0; i < 5; i++){
-            stars.get(i).setUvData((0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+            stars.get(i).updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
         }
     }
 

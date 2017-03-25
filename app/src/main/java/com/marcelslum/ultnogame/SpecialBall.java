@@ -16,7 +16,7 @@ public class SpecialBall extends Circle{
         isCollidable = false;
         isSolid = false;
         isVisible = true;
-        textureId = Texture.TEXTURE_SPECIAL_BALL;
+        textureId = Texture.TEXTURES;
         textureMap = 0;
         textureSituation = 0;
         setDrawInfo();

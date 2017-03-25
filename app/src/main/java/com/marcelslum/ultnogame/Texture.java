@@ -14,53 +14,25 @@ import java.util.ArrayList;
  */
 public class Texture {
 
-    public final static int TEXTURE_BUTTONS_BALLS_STARS = 0;
-    public final static int TEXTURE_FONT = 1;
-    public final static int TEXTURE_TARGETS = 2;
-    public final static int TEXTURE_BARS = 3;
+    //public final static int TEXTURE_BUTTONS_BALLS_STARS = 0;
+    //public final static int TEXTURE_FONT = 1;
+    //public final static int TEXTURE_TARGETS = 2;
+    //public final static int TEXTURE_BARS = 3;
     public final static int TEXTURE_BACKGROUND = 4;
-    public final static int TEXTURE_NUMBERS_EXPLOSION = 5;
-    public final static int TEXTURE_TITTLE = 6;
-    public final static int TEXTURE_SPECIAL_BALL = 7;
-    public final static int TEXTURE_LEVEL_ICONS = 8;
-    public final static int TEXTURE_TUTORIALS1 = 9;
-    public final static int TEXTURE_TUTORIALS2 = 10;
-    public final static int TEXTURE_TUTORIALS3 = 13;
-    public final static int TEXTURE_TUTORIALS4 = 14;
-    public final static int TEXTURE_TUTORIAL_ICONS = 11;
-    public final static int TEXTURE_GROUP_ICONS = 12;
+    //public final static int TEXTURE_NUMBERS_EXPLOSION = 5;
+    //public final static int TEXTURE_TITTLE = 6;
+    //public final static int TEXTURE_SPECIAL_BALL = 7;
+    //public final static int TEXTURE_LEVEL_ICONS = 8;
+    //////public final static int TEXTURE_TUTORIALS1 = 9;
+    //public final static int TEXTURE_TUTORIALS2 = 10;
+    //public final static int TEXTURE_TUTORIALS3 = 13;
+    ////public final static int TEXTURE_TUTORIALS4 = 14;
+    //public final static int TEXTURE_TUTORIAL_ICONS = 11;
+    //public final static int TEXTURE_GROUP_ICONS = 12;
 
-    public final static int TEXTURES1 = 100;
-
-    final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
-    final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
-    final static int TEXTURE_MAP_NUMBERS_SCORE3 = 3;
-    final static int TEXTURE_MAP_NUMBERS_SCORE4 = 4;
-    final static int TEXTURE_MAP_NUMBERS_SCORE5 = 5;
-    final static int TEXTURE_MAP_NUMBERS_SCORE6 = 6;
-    final static int TEXTURE_MAP_NUMBERS_SCORE7 = 7;
-    final static int TEXTURE_MAP_NUMBERS_SCORE8 = 8;
-    final static int TEXTURE_MAP_NUMBERS_SCORE9 = 9;
-    final static int TEXTURE_MAP_NUMBERS_SCORE0 = 10;
-    final static int TEXTURE_MAP_NUMBERS_POINT1 = 11;
-    final static int TEXTURE_MAP_NUMBERS_POINT2 = 12;
-    final static int TEXTURE_MAP_NUMBERS_POINT3 = 13;
-    final static int TEXTURE_MAP_NUMBERS_POINT4 = 14;
-    final static int TEXTURE_MAP_NUMBERS_POINT5 = 15;
-    final static int TEXTURE_MAP_NUMBERS_POINT6 = 16;
-    final static int TEXTURE_MAP_NUMBERS_POINT7 = 17;
-    final static int TEXTURE_MAP_NUMBERS_POINT8 = 18;
-    final static int TEXTURE_MAP_NUMBERS_POINT9 = 19;
-    final static int TEXTURE_MAP_NUMBERS_POINT0 = 20;
-    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR1 = 21;
-    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR2 = 22;
-    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR3 = 23;
-    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4 = 24;
-    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5 = 25;
-    final static int TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6 = 26;
-    final static int TEXTURE_MAP_NUMBERS_EXPLODE_BALL = 27;
-    final static int TEXTURE_MAP_NUMBERS_COLLIDE_BALL = 27;
-
+    public final static int TEXTURES = 100;
+    public final static int TEXTURE_ICONS = 101;
+    public final static int TEXTURE_TUTORIALS = 101;
 
     public static int MAX_TEXTURES = 8;
 
@@ -74,7 +46,7 @@ public class Texture {
     int resoureIdentifierId;
     int textureUnit;
     int id;
-    Bitmap bitmap;
+    static Bitmap bitmap;
     boolean bounded = false;
     public static final String TAG = "Texture";
 
@@ -85,20 +57,24 @@ public class Texture {
 
     public static void init() {
         Log.e(TAG, "initTextures");
-        Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_BALLS_STARS, "drawable/buttons_balls_stars"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION, "drawable/numbers_explosion_star"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/special_ball"));
+
+        //Texture.textures.add(new Texture(Texture.TEXTURES, "drawable/textures1"));
+
+        Texture.textures.add(new Texture(Texture.TEXTURE_ICONS, "drawable/textures1"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS, "drawable/textures1"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_BALLS_STARS, "drawable/buttons_balls_stars"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION, "drawable/numbers_explosion_star"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/special_ball"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1c"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_LEVEL_ICONS, "drawable/level_icons"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/tutorial_icons"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_GROUP_ICONS, "drawable/group_icons"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS1, "drawable/tutorials1"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS2, "drawable/tutorials2"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS3, "drawable/tutorials3"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS4, "drawable/tutorials4"));
-        Texture.textures.add(new Texture(Texture.TEXTURES1, "drawable/textures1"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_LEVEL_ICONS, "drawable/level_icons"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/tutorial_icons"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_GROUP_ICONS, "drawable/group_icons"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS1, "drawable/tutorials1"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS2, "drawable/tutorials2"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS3, "drawable/tutorials3"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS4, "drawable/tutorials4"));
     }
 
     Texture(int id, String resourceIdentifier){

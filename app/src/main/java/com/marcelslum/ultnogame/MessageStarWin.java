@@ -15,8 +15,8 @@ public class MessageStarWin extends MessageStar {
         for (int i = 0; i < 5; i++){
             Image star = new Image("starMessageStar"+i,
                     x - (size * 1.2f * 2.5f) + (i * size * 1.2f),
-                    y, size, size, Texture.TEXTURE_BUTTONS_BALLS_STARS,
-                    (0f + 1.5f) / 1024f, (128f - 1.5f) / 1024f, (128f + 1.5f) / 1024f, (256f - 1.5f) / 1024f);
+                    y, size, size, Texture.TEXTURES,
+                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
             stars.add(star);
             addChild(star);
         }

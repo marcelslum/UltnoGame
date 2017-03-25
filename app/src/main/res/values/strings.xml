@@ -347,6 +347,8 @@
     <string name="secretLevelUnblocked"></string>
     <string name="messageCurrentLevelSecret">Nível secreto</string>
     <string name="databaseVersion">2</string>
+    <string name="voltar">Voltar</string>
+    <string name="continuar">Continuar</string>
 
 
 </resources>

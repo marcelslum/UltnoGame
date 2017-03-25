@@ -25,7 +25,7 @@ public class BallGoalsPanel extends Entity{
         isCollidable = false;
         isVisible = true;
         alpha = 1;
-        this.textureId = Texture.TEXTURE_BUTTONS_BALLS_STARS;
+        this.textureId = Texture.TEXTURES;
         this.program = Game.imageProgram;
         ballsAlive = 4;
         minBallsAlive = 2;
@@ -90,7 +90,7 @@ public class BallGoalsPanel extends Entity{
             if (ballsInvecibleDraw > 0) {
                 Utils.insertRectangleVerticesData(verticesData, i * 12, xOfTriangle, xOfTriangle+size, 0f, size, 0f);
                 Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, i * 8, 3);
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_PANEL_INVENCIBLE_ID));
                 ballsInvecibleDraw -= 1;
                 if (ballsInvecibleDraw == 0){
                     xOfTriangle += size*2;
@@ -100,7 +100,7 @@ public class BallGoalsPanel extends Entity{
             } else if (ballsBlackDraw > 0){
                 Utils.insertRectangleVerticesData(verticesData, i * 12, xOfTriangle, xOfTriangle+size, 0f, size, 0f);
                 Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, i * 8, 4);
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_PANEL_BLACK_ID));
 
                 ballsBlackDraw -= 1;
                 if (ballsBlackDraw == 0){
@@ -112,10 +112,7 @@ public class BallGoalsPanel extends Entity{
 
                 Utils.insertRectangleVerticesData(verticesData, i * 12, xOfTriangle, xOfTriangle+size, 0f, size, 0f);
                 Utils.insertRectangleIndicesData(indicesData,i * 6, i * 4);
-                Utils.insertRectangleUvDataButtonsAndBalls(uvsData, i * 8, 11);
-                
-
-                
+                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_PANEL_BLUE_ID));
 
                 ballsBlueDraw -= 1;
                 xOfTriangle += size;
@@ -140,9 +137,9 @@ public class BallGoalsPanel extends Entity{
             
             ParticleGenerator pg = new ParticleGenerator("explode",
                                 initialX + animTranslateX + ((lastXBall)*animScaleX), y + animTranslateY + ((size/2f)*animScaleY),
-                                Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR4,
-                                Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR5,
-                                Texture.TEXTURE_MAP_NUMBERS_EXPLODE_COLOR6);
+                                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_1_ID),
+                                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_2_ID),
+                                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_3_ID));
                             particleGenerators.add(pg);
                             pg.activate();
         }

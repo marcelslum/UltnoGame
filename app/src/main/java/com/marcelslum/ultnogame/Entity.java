@@ -3,10 +3,8 @@ package com.marcelslum.ultnogame;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 import java.util.ArrayList;
 
@@ -20,6 +18,8 @@ public class Entity{
     final public static int ATTRIB_POS = 0;
     final public static int ATTRIB_UV = 1;
     final public static int ATTRIB_COLOR = 2;
+
+    public TextureData textureData;
     
     
     
@@ -63,8 +63,9 @@ public class Entity{
     //private static IntBuffer vao;
 
     
-    public boolean uvChange = false;
-    public boolean colorChange = false;
+    public boolean uvChangeFlag = false;
+    public boolean colorChangeFlag = false;
+    public boolean verticesChangeFlag = false;
     
     public int type;
     public String name;
@@ -166,6 +167,16 @@ public class Entity{
         childs = new ArrayList<>();
         checkTransformations(false);
     }
+
+    public void updateTextureData(TextureData td){
+        textureData = td;
+        setUvData();
+    }
+
+    public void setUvData(){
+        Utils.insertRectangleUvData(uvsData, 0, textureData);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+    }
         
     public void initializeData(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
         if (verticesSize > 0){
@@ -228,7 +239,7 @@ public class Entity{
                 break;
             case "alpha":
                 alpha = value;
-                colorChange = true;
+                colorChangeFlag = true;
                 break;
             case "numberForAnimation":
                 numberForAnimation = value;
@@ -251,7 +262,7 @@ public class Entity{
                 break;
             case "ghostAlpha":
                 ghostAlpha = value;
-                colorChange = true;
+                colorChangeFlag = true;
                 break;
             default:
                 break;

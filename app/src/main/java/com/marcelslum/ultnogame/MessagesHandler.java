@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.app.Notification;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -16,6 +14,8 @@ public class MessagesHandler {
     static Text messageGameOver;
     static Text messagePreparation;
     static Text messageMaxScoreTotal;
+    static Text messageContinue;
+    static Text messageBack;
     static Text messageConqueredStarsTotal;
     static Image starForMessage;
     static Text messageSplash1;
@@ -25,8 +25,12 @@ public class MessagesHandler {
     static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
 
+    static float yOfMessageBackAndContinue;
+
 
     public static void initMessages(){
+
+        yOfMessageBackAndContinue = Game.resolutionY*0.898f;
 
         MessageStar.initMessageStars();
         MessageStarWin.initMessageStarsWin();
@@ -84,7 +88,8 @@ public class MessagesHandler {
         messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));
 
         starForMessage = new Image("frame", Game.resolutionX*0.85f, MessagesHandler.messageConqueredStarsTotal.y - (Game.resolutionY*0.05f*0.02f),
-                Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURE_BUTTONS_BALLS_STARS, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f, (0f + 1.5f)/1024f, (128f - 1.5f)/1024f);
+                Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURES,
+                TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
 
         Utils.createAnimation2v(starForMessage, "rotate", "rotate", 10000, 0f, 0f, 1f, 360f, true, true).start();
         Utils.createAnimation2v(starForMessage, "translateX", "translateX", 10000, 0f, 0f, 1f, -Game.resolutionX*0.001f, true, true).start();
@@ -105,6 +110,16 @@ public class MessagesHandler {
         MessagesHandler.messageCurrentLevel = new Text("messageCurrentLevel",
                 Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.885f, Game.resolutionY*0.051f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
         MessagesHandler.messageCurrentLevel.setAlpha(0.7f);
+
+        MessagesHandler.messageBack = new Text("messageBack",
+                Game.resolutionX*0.095f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,
+                Game.getContext().getResources().getString(R.string.voltar), Game.font, new Color(0.5f, 0.5f, 0.5f, 1f), Text.TEXT_ALIGN_LEFT);
+
+
+        MessagesHandler.messageContinue = new Text("messageContinue",
+                Game.resolutionX*0.91f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,
+                Game.getContext().getResources().getString(R.string.continuar), Game.font, new Color(0.5f, 0.5f, 0.5f, 1f), Text.TEXT_ALIGN_RIGHT);
+
     }
 
     public static void setMessageTime(){

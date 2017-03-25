@@ -17,7 +17,7 @@ public class Point extends Entity {
         isCollidable = false;
         isVisible = true;
         alpha = 1;
-        textureId = Texture.TEXTURE_NUMBERS_EXPLOSION;
+        textureId = Texture.TEXTURES;
         program = Game.imageProgram;
     }
 
@@ -45,50 +45,51 @@ public class Point extends Entity {
 
             //Log.e("point", "subInteger "+subInteger);
 
-            Utils.insertRectangleVerticesData(this.verticesData, i * 12, x, x+width, 0f, size, 0f);
+
             
             if (subInteger == 1) {
-                x += width*0.46199f;
+                Utils.insertRectangleVerticesData(verticesData, i * 12, x, x+(width*0.5f), 0f, size, 0f);
+                x += width*0.5f;
+                //x += width*0.46199f;
             } else {
+                Utils.insertRectangleVerticesData(verticesData, i * 12, x, x+width, 0f, size, 0f);
                 x += width;
             }
             
-            Utils.insertRectangleIndicesData(this.indicesData, i * 6, i * 4);
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
 
-            int textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT1;
             switch (subInteger){
                 case 1:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT1;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT1_ID));
                     break;
                 case 2:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT2;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT2_ID));
                     break;
                 case 3:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT3;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT3_ID));
                     break;
                 case 4:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT4;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT4_ID));
                     break;
                 case 5:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT5;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT5_ID));
                     break;
                 case 6:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT6;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT6_ID));
                     break;
                 case 7:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT7;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT7_ID));
                     break;
                 case 8:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT8;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT8_ID));
                     break;
                 case 9:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT9;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT9_ID));
                     break;
                 case 0:
-                    textureMap = Texture.TEXTURE_MAP_NUMBERS_POINT0;
+                    Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_POINT0_ID));
                     break;
             }
-            Utils.insertRectangleUvDataNumbersExplosion(uvsData, i * 8, textureMap);
         }
         
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);

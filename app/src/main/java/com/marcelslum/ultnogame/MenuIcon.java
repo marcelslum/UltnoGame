@@ -390,10 +390,9 @@ public class MenuIcon extends Entity{
         }
 
         float positionX = getPositionXFromIconNumber(icons.size()+1);
-        Button button = new Button(Integer.toString(id), positionX, y, size, size, textureUnit, 1, Button.BUTTON_TYPE_256);
-        button.setTextureMap(textureMap);
-        button.textureMapUnpressed = textureMap;
-        button.textureMapPressed = textureMap;
+        Button button = new Button(Integer.toString(id), positionX, y, size, size, Texture.TEXTURES, 1,
+                TextureData.getTextureDataById(TextureData.TEXTURE_WINDOW_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_WINDOW_ID));
         final Button innerButton = button;
         final MenuIcon innerMenuIcon = this;
         final Animation.AnimationListener innerOnSelect = onSelect;
