@@ -220,6 +220,9 @@ public class Game {
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
+
+        TextureData.getTextureData();
+
     }
 
     public static void activateFrame(int duration){
@@ -268,10 +271,18 @@ public class Game {
     }
 
     public static void initTittle(){
+
+        TextureData td = TextureData.getTextureDataById(TextureData.TEXTURE_TITTLE_ID);
+
         tittle = new Image("tittle",
                 gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.2f,
                 gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.47f * 0.3671875f,
-                Texture.TEXTURE_TITTLE, 0f, 1f, 0.6228125f, 1f, new Color(0.5f, 0.2f, 0.8f, 1f));
+                Texture.TEXTURES1,
+                td.x,
+                td.x + td.w,
+                td.y,
+                td.y + td.h,
+                new Color(0.5f, 0.2f, 0.8f, 1f));
 
         Animation animTittle = Utils.createAnimation5v(tittle, "numberForAnimation", "numberForAnimation", 5000, 0f, 1f, 0.15f, 2f, 0.45f, 3f, 0.6f, 4f, 0.85f, 5f, true, false);
         animTittle.setOnChangeNotFluid(new Animation.OnChange() {

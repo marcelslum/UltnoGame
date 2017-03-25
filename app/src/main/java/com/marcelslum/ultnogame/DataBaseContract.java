@@ -6,8 +6,6 @@ public final class DataBaseContract {
     private DataBaseContract() {
     }
 
-
-
     public static class Balls implements BaseColumns {
         public static final String TABLE_NAME = "balls";
         public static final String COLUMN_LEVEL = "level";

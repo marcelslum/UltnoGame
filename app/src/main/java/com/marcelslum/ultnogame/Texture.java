@@ -30,6 +30,8 @@ public class Texture {
     public final static int TEXTURE_TUTORIAL_ICONS = 11;
     public final static int TEXTURE_GROUP_ICONS = 12;
 
+    public final static int TEXTURES1 = 100;
+
     final static int TEXTURE_MAP_NUMBERS_SCORE1 = 1;
     final static int TEXTURE_MAP_NUMBERS_SCORE2 = 2;
     final static int TEXTURE_MAP_NUMBERS_SCORE3 = 3;
@@ -96,6 +98,7 @@ public class Texture {
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS2, "drawable/tutorials2"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS3, "drawable/tutorials3"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS4, "drawable/tutorials4"));
+        Texture.textures.add(new Texture(Texture.TEXTURES1, "drawable/textures1"));
     }
 
     Texture(int id, String resourceIdentifier){
@@ -253,4 +256,7 @@ public class Texture {
 
         return textureUnit;
     }
+
+
+
 }

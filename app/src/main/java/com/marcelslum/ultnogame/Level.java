@@ -15,35 +15,12 @@ public class Level {
     public static final int WIND_TYPE_NO = 0;
     public static final int WIND_TYPE_RIGHT = 1;
     public static final int WIND_TYPE_LEFT = 2;
-    public int ballsQuantity;
+    public ArrayList<BallDataBaseData> ballDataBaseData;
+    public ArrayList<BarDataBaseData> barDataBaseData;
+    public ArrayList<TargetDataBaseData> targetDataBaseData;
     public int minBallsAlive;
-    public float[] ballsRadius;
-    public float[] ballsX;
-    public float[] ballsY;
-    public float[] ballsVX;
-    public float[] ballsVY;
-    public int [] ballsTextureMap;
-    public boolean[] ballsInvencible;
-    public float[] ballsAngleToRotate;
-    public float[] ballsMaxAngle;
-    public float[] ballsMinAngle;
-    public float[] ballsVelocityVariation;
-    public float[] ballsMaxVel;
-    public float[] ballsMinVel;
     public ArrayList<int[]> ballsTargetsAppend;
-    public boolean[] ballsFree;
-    public int barsQuantity;
-    public float[] barsWidth;
-    public float[] barsHeight;
-    public float[] barsX;
-    public float[] barsY;
-    public float[] barsVX;
-    public float[] barsVY;
     public ScaleVariationDataBuilder[] barsScaleVariationData;
-    public float targetWidth;
-    public float targetHeight;
-    public float targetDistance;
-    public float targetPadding;
     public int [][] targetsMap;
     public int [] targetsStates;
     public int obstaclesQuantity;
@@ -64,7 +41,6 @@ public class Level {
     public boolean invertedButtons = false;
     public float windType;
 
-
     public static Level levelObject;
     public static LevelGoals levelGoalsObject;
 
@@ -72,35 +48,13 @@ public class Level {
     public static final int numberOfSecretLevels = 10;
 
     private Level(){
-        ballsQuantity = LevelBuilder.ballsQuantity;
+
+        ballDataBaseData = LevelBuilder.ballDataBaseData;
+        barDataBaseData = LevelBuilder.barDataBaseData;
+        targetDataBaseData = LevelBuilder.targetDataBaseData;
         minBallsAlive = LevelBuilder.minBallsAlive;
-        ballsRadius = LevelBuilder.ballsRadius;
-        ballsX = LevelBuilder.ballsX;
-        ballsY = LevelBuilder.ballsY;
-        ballsVX = LevelBuilder.ballsVX;
-        ballsVY = LevelBuilder.ballsVY;
-        ballsTextureMap = LevelBuilder.ballsTextureMap;
-        ballsInvencible = LevelBuilder.ballsInvencible;
-        ballsAngleToRotate = LevelBuilder.ballsAngleToRotate;
-        ballsMaxAngle = LevelBuilder.ballsMaxAngle;
-        ballsMinAngle = LevelBuilder.ballsMinAngle;
-        ballsVelocityVariation = LevelBuilder.ballsVelocityVariation;
-        ballsMaxVel = LevelBuilder.ballsMaxVel;
-        ballsMinVel = LevelBuilder.ballsMinVel;
         ballsTargetsAppend = LevelBuilder.ballsTargetsAppend;
-        ballsFree = LevelBuilder.ballsFree;
-        barsQuantity = LevelBuilder.barsQuantity;
-        barsWidth = LevelBuilder.barsWidth;
-        barsHeight = LevelBuilder.barsHeight;
-        barsX = LevelBuilder.barsX;
-        barsY = LevelBuilder.barsY;
-        barsVX = LevelBuilder.barsVX;
-        barsVY = LevelBuilder.barsVY;
         barsScaleVariationData = LevelBuilder.barsScaleVariationData;
-        targetWidth = LevelBuilder.targetsWidht;
-        targetHeight = LevelBuilder.targetsHeight;
-        targetDistance = LevelBuilder.targetsDistance;
-        targetPadding = LevelBuilder.targetsPadding;
         targetsMap = LevelBuilder.targetsMap;
         targetsStates = LevelBuilder.targetsStates;
         obstaclesQuantity = LevelBuilder.obstaclesQuantity;
@@ -169,7 +123,7 @@ public class Level {
 
         //Log.e("Level loadEnt", "1");
 
-        ButtonHandler.createGameButtons(barsQuantity, invertedButtons);
+        ButtonHandler.createGameButtons(barDataBaseData.size(), invertedButtons);
 
         InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea111", 0f, 0f,
                 Game.gameAreaResolutionX, Game.gameAreaResolutionY * 0.8f, 0, Game.background);
@@ -190,15 +144,15 @@ public class Level {
         });
         Game.addInteracionListener(gameAreaInteractionListener);
 
-        for (int i = 0; i < this.barsQuantity; i++){
+        for (int i = 0; i < barDataBaseData.size(); i++){
 
-            float barX = Game.gameAreaResolutionX * barsX[i];
-            float barY = Game.gameAreaResolutionY - (Game.gameAreaResolutionY * barsY[i]);
+            float barX = Game.gameAreaResolutionX * barDataBaseData.get(i).x;
+            float barY = Game.gameAreaResolutionY - (Game.gameAreaResolutionY * barDataBaseData.get(i).y);
 
-            float barWidth = Game.gameAreaResolutionX * barsWidth[i];
-            float barHeight = Game.gameAreaResolutionY * barsHeight[i];
+            float barWidth = Game.gameAreaResolutionX * barDataBaseData.get(i).width;
+            float barHeight = Game.gameAreaResolutionY * barDataBaseData.get(i).height;
 
-            float barVelocityX = Game.gameAreaResolutionX * barsVX[i];
+            float barVelocityX = Game.gameAreaResolutionX * barDataBaseData.get(i).vx;
 
             Bar bar = new Bar("bar", barX, barY, barWidth, barHeight);
             Game.addBar(bar);
@@ -212,8 +166,8 @@ public class Level {
             }
         }
 
-        float targetWidth = Game.gameAreaResolutionX * levelObject.targetWidth;
-        float targetHeight = Game.gameAreaResolutionY * levelObject.targetHeight;
+        float targetWidth = Game.gameAreaResolutionX * targetDataBaseData.get(0).width;
+        float targetHeight = Game.gameAreaResolutionY * targetDataBaseData.get(0).height;
         float targetX;
         float targetY;
 
@@ -222,12 +176,12 @@ public class Level {
         for (int iY = 0; iY < targetsMap.length;iY++){
             for (int iX = 0; iX < targetsMap[iY].length; iX++) {
                 if (targetsMap[iY][iX] != 0) {
-                    targetX = (Game.gameAreaResolutionX * targetPadding) +
-                            (iX * ((Game.gameAreaResolutionX * this.targetWidth) +
-                                    (Game.gameAreaResolutionX * targetDistance)));
-                    targetY = (Game.gameAreaResolutionX * targetPadding) +
-                            (iY * ((Game.gameAreaResolutionY * this.targetHeight) +
-                                    (Game.gameAreaResolutionX * targetDistance)));
+                    targetX = (Game.gameAreaResolutionX * targetDataBaseData.get(0).padd) +
+                            (iX * ((Game.gameAreaResolutionX * targetDataBaseData.get(0).width) +
+                                    (Game.gameAreaResolutionX * targetDataBaseData.get(0).distance)));
+                    targetY = (Game.gameAreaResolutionX * targetDataBaseData.get(0).padd) +
+                            (iY * ((Game.gameAreaResolutionY * targetDataBaseData.get(0).height) +
+                                    (Game.gameAreaResolutionX * targetDataBaseData.get(0).distance)));
 
                     Target t = new TargetBuilder()
                             .name("target")
@@ -288,21 +242,21 @@ public class Level {
             Game.addWindow(new WindowGame("windows", wY, windowsQuantityOfLines[i], wHeight, windowsDistance[i], wVelocity));
         }
 
-        for (int i = 0; i < this.ballsQuantity; i++){
+        for (int i = 0; i < ballDataBaseData.size(); i++){
 
-            float ballX = Game.gameAreaResolutionX * this.ballsX[i];
-            float ballY = Game.gameAreaResolutionY * this.ballsY[i];
-            float radius = Game.gameAreaResolutionY * this.ballsRadius[i];
-            float ballVelocityX = Game.gameAreaResolutionX * this.ballsVX[i];
-            float ballVelocityY = Game.gameAreaResolutionY * this.ballsVY[i]; //* Game.difficultyVelocityBallMultiplicator;
+            float ballX = Game.gameAreaResolutionX * ballDataBaseData.get(i).x;
+            float ballY = Game.gameAreaResolutionY * ballDataBaseData.get(i).y;
+            float radius = Game.gameAreaResolutionY * ballDataBaseData.get(i).radius;
+            float ballVelocityX = Game.gameAreaResolutionX * ballDataBaseData.get(i).vx;
+            float ballVelocityY = Game.gameAreaResolutionY * ballDataBaseData.get(i).vy; //* Game.difficultyVelocityBallMultiplicator;
 
-            Ball ball = new Ball("ball", ballX, ballY, radius, this.ballsTextureMap[i]);
-            ball.angleToRotate = this.ballsAngleToRotate[i];
-            ball.velocityVariation = this.ballsVelocityVariation[i];
-            ball.velocityMax_BI = ballsMaxVel[i];
-            ball.velocityMin_BI = ballsMinVel[i];
-            ball.maxAngle = this.ballsMaxAngle[i];
-            ball.minAngle = this.ballsMinAngle[i];
+            Ball ball = new Ball("ball", ballX, ballY, radius, ballDataBaseData.get(i).textureMap);
+            ball.angleToRotate = ballDataBaseData.get(i).angleToRotate;
+            ball.velocityVariation = ballDataBaseData.get(i).velocityVariation;
+            ball.velocityMax_BI = ballDataBaseData.get(i).maxVelocity;
+            ball.velocityMin_BI = ballDataBaseData.get(i).minVelocity;
+            ball.maxAngle = ballDataBaseData.get(i).maxAngle;
+            ball.minAngle = ballDataBaseData.get(i).minAngle;
             ball.initialDVX = ballVelocityX;
             ball.initialDVY = ballVelocityY;
             ball.initialX = ballX;
@@ -325,9 +279,9 @@ public class Level {
                 }
             }
 
-            ball.isFree = this.ballsFree[i];
+            ball.isFree = ballDataBaseData.get(i).free == 1 ? true : false;
 
-            if (this.ballsInvencible[i]){
+            if (ballDataBaseData.get(i).invencible == 1 ? true : false){
                 ball.setInvencible();
             }
 
@@ -337,35 +291,12 @@ public class Level {
     }
 
     static public class LevelBuilder {
-        private static int ballsQuantity = 1;
+        private static ArrayList<BallDataBaseData> ballDataBaseData;
+        private static ArrayList<BarDataBaseData> barDataBaseData;
+        private static ArrayList<TargetDataBaseData> targetDataBaseData;
         private static int minBallsAlive = 1;
-        private static float[] ballsRadius = new float[]{0f};
-        private static float[] ballsX = new float[]{0f};
-        private static float[] ballsY = new float[]{0f};
-        private static float[] ballsVX = new float[]{0f};
-        private static float[] ballsVY = new float[]{0f};
-        private static int[] ballsTextureMap = new int []{Ball.COLOR_BALL_BLACK};
-        private static boolean[] ballsInvencible = new boolean[]{false};
-        private static float[] ballsAngleToRotate = new float[]{0f};
-        private static float[] ballsMaxAngle = new float[]{0f};
-        private static float[] ballsMinAngle = new float[]{0f};
-        private static float[] ballsVelocityVariation = new float[]{0f};
-        private static float[] ballsMaxVel = new float[]{0f};
-        private static float[] ballsMinVel = new float[]{0f};
         private static ArrayList<int[]> ballsTargetsAppend = new ArrayList<int[]>();
-        private static boolean[] ballsFree = new boolean[]{true};
-        private static int barsQuantity = 1;
-        private static float[] barsWidth = new float[]{0f};
-        private static float[] barsHeight = new float[]{0f};
-        private static float[] barsX = new float[]{0.3f};
-        private static float[] barsY = new float[]{0f};
-        private static float[] barsVX = new float[]{0f};
-        private static float[] barsVY = new float[]{0f};
         private static ScaleVariationDataBuilder[] barsScaleVariationData;
-        private static float targetsWidht = 0.1f;
-        private static float targetsHeight = 0.1f;
-        private static float targetsDistance = 0.01f;
-        private static float targetsPadding = 0.01f;
         private static int [] targetsStates;
         private static int [][] targetsMap;
         private static int obstaclesQuantity = 0;
@@ -374,7 +305,7 @@ public class Level {
         private static float[] obstaclesX;
         private static float[] obstaclesY;
         private static ScaleVariationDataBuilder[] obstaclesScaleVariationData;
-        public static PositionVariationDataBuilder[] obstaclesPositionVariationData;
+        private static PositionVariationDataBuilder[] obstaclesPositionVariationData;
         private static int windowsQuantity;
         private static float[] windowsY;
         private static float[] windowsHeight;
@@ -384,24 +315,31 @@ public class Level {
         private static float specialBallPercentage = 0f;
         private static float fakeBallPercentage = 0f;
         private static int windType = Level.WIND_TYPE_NO;
-        private static ArrayList<LevelGoal> levelGoals;
-        public static int tutorialAttached;
-        public static boolean invertedButtons = false;
+        private static int tutorialAttached;
+        private static boolean invertedButtons = false;
 
+        public LevelBuilder setBallDataBaseData(ArrayList<BallDataBaseData> v) {
+            ballDataBaseData = v;
+            return this;
+        }
+
+        public LevelBuilder setBarDataBaseData(ArrayList<BarDataBaseData> v) {
+            barDataBaseData = v;
+            return this;
+        }
+
+        public LevelBuilder setTargetDataBaseData(ArrayList<TargetDataBaseData> v) {
+            targetDataBaseData = v;
+            return this;
+        }
 
         public LevelBuilder setInvertedButtons(boolean v) {
             invertedButtons = v;
             return this;
         }
 
-
         public LevelBuilder setTutorialAttached(int v) {
             tutorialAttached = v;
-            return this;
-        }
-
-        public LevelBuilder setBallsQuantity(int v) {
-            ballsQuantity = v;
             return this;
         }
 
@@ -410,164 +348,8 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setBallsRadius(float... v) {
-            ballsRadius = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsRadius[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsX(float... v) {
-            ballsX = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsX[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsY(float... v) {
-            ballsY = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsY[i] = v[i];
-            }
-            return this;
-        }
-
-
-        public LevelBuilder setBallsVX(float... v) {
-            ballsVX = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsVX[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsVY(float... v) {
-            ballsVY = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsVY[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsTextureMap(int... v) {
-            ballsTextureMap = new int[v.length];
-            System.arraycopy(v, 0, ballsTextureMap, 0, v.length);
-            return this;
-        }
-
-        public LevelBuilder setBallsInvencible(boolean... v) {
-            ballsInvencible = new boolean[v.length];
-            System.arraycopy(v, 0, ballsInvencible, 0, v.length);
-            return this;
-        }
-
-        public LevelBuilder setBallsAngleToRotate(float... v) {
-            ballsAngleToRotate = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsAngleToRotate[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsMaxAngle(float... v) {
-            ballsMaxAngle = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsMaxAngle[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsMinAngle(float... v) {
-            ballsMinAngle = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsMinAngle[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsVelocityVariation(float... v) {
-            ballsVelocityVariation = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsVelocityVariation[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsVelocityMax(float... v) {
-            ballsMaxVel = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsMaxVel[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBallsVelocityMin(float... v) {
-            ballsMinVel = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                ballsMinVel[i] = v[i];
-            }
-            return this;
-        }
-
         public LevelBuilder setBallsTargetsAppend(ArrayList<int[]> _ballsTargetsAppend) {
             ballsTargetsAppend = _ballsTargetsAppend;
-            return this;
-        }
-
-        public LevelBuilder setBallsFree(boolean... v) {
-            ballsFree = new boolean[v.length];
-            System.arraycopy(v, 0, ballsFree, 0, v.length);
-            return this;
-        }
-
-        public LevelBuilder setBarsQuantity(int v) {
-            barsQuantity = v;
-            return this;
-        }
-
-        public LevelBuilder setBarsWidth(float... v) {
-            barsWidth = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                barsWidth[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBarsHeight(float... v){
-            barsHeight = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                barsHeight[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBarsX(float... v) {
-            barsX = new float[v.length];
-            System.arraycopy(v, 0, barsX, 0, v.length);
-            return this;
-        }
-
-        public LevelBuilder setBarsY(float... v) {
-            barsY = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                barsY[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBarsVX(float... v) {
-            barsVX = new float[v.length];
-            for (int i = 0; i < v.length; i++){
-                barsVX[i] = v[i];
-            }
-            return this;
-        }
-
-        public LevelBuilder setBarsVY(float... v) {
-            barsVY = new float[v.length];
-            System.arraycopy(v, 0, barsVY, 0, v.length);
             return this;
         }
 
@@ -582,16 +364,6 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setTargetWidth(float v) {
-            targetsWidht = v;
-            return this;
-        }
-
-        public LevelBuilder setTargetHeight(float v) {
-            targetsHeight = v;
-            return this;
-        }
-
         public LevelBuilder setTargetsMap(int [][] v) {
             targetsMap = v;
             return this;
@@ -599,16 +371,6 @@ public class Level {
 
         public LevelBuilder setTargetsStates(int [] v) {
             targetsStates = v;
-            return this;
-        }
-
-        public LevelBuilder setTargetDistance(float v) {
-            targetsDistance = v;
-            return this;
-        }
-
-        public LevelBuilder setTargetPadd(float v) {
-            targetsPadding = v;
             return this;
         }
 

@@ -10,15 +10,12 @@ public class Button extends Entity{
     public float width;
     OnPress onPress;
     OnUnpress onUnpress;
-    int textureMapPressed;
-    int textureMapUnpressed;
-    int textureMap;
-    int buttonType;
+    TextureData textureDataPressed;
+    TextureData textureDataUnpressed;
 
-    public static final int BUTTON_TYPE_BUTTONS_AND_BALLS = 1;
-    public static final int BUTTON_TYPE_256 = 2;
 
-    Button(String name, float x, float y, float width, float height, int textureUnit, float listenerScale, int buttonType) {
+    Button(String name, float x, float y, float width, float height, int textureUnit, float listenerScale,
+           TextureData textureDataUnpressed, TextureData textureDataPressed) {
         super(name, x, y, Entity.TYPE_BUTTON);
         this.height = height;
         this.width = width;
@@ -26,9 +23,11 @@ public class Button extends Entity{
         isVisible = true;
         isMovable = false;
         isSolid =  false;
-        this.buttonType = buttonType;
 
+        this.textureDataUnpressed = textureDataUnpressed;
+        this.textureDataPressed = textureDataPressed;
         this.textureId = textureUnit;
+
         program = Game.imageProgram;
 
         float lw = width * listenerScale;
@@ -64,10 +63,6 @@ public class Button extends Entity{
         }
     }
 
-    public void setTextureMap(int _textureMap){
-        textureMap = _textureMap;
-        setDrawInfo();
-    }
 
     @Override
     public void translate(float translateX, float translateY) {
@@ -79,12 +74,12 @@ public class Button extends Entity{
 
     public void setPressed() {
         isPressed = true;
-        setTextureMap(textureMapPressed);
+        setDrawInfo();
     }
 
     public void setUnpressed() {
         isPressed = false;
-        setTextureMap(textureMapUnpressed);
+        setDrawInfo();
     }
 
     public void setPersistent(int frequencyPersistent){
@@ -120,11 +115,22 @@ public class Button extends Entity{
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
-        if (buttonType == BUTTON_TYPE_BUTTONS_AND_BALLS) {
-            Utils.insertRectangleUvDataButtonsAndBalls(uvsData, 0, textureMap);
+        if (isPressed) {
+            Utils.insertRectangleUvData(uvsData, 0, 
+                    textureDataPressed.x,
+                    textureDataPressed.x + textureDataPressed.w,
+                    textureDataPressed.y,
+                    textureDataPressed.y + textureDataPressed.h);
         } else {
-            Utils.insertRectangleUvData256(uvsData, 0, textureMap);
+            Utils.insertRectangleUvData(uvsData, 0,
+                    textureDataUnpressed.x,
+                    textureDataUnpressed.x + textureDataUnpressed.w,
+                    textureDataUnpressed.y,
+                    textureDataUnpressed.y + textureDataUnpressed.h);
+            
         }
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 }
