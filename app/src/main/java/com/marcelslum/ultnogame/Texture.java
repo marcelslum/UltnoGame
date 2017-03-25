@@ -32,7 +32,7 @@ public class Texture {
 
     public final static int TEXTURES = 100;
     public final static int TEXTURE_ICONS = 101;
-    public final static int TEXTURE_TUTORIALS = 101;
+    public final static int TEXTURE_TUTORIALS = 102;
 
     public static int MAX_TEXTURES = 8;
 
@@ -57,24 +57,9 @@ public class Texture {
 
     public static void init() {
         Log.e(TAG, "initTextures");
-
-        //Texture.textures.add(new Texture(Texture.TEXTURES, "drawable/textures1"));
-
-        Texture.textures.add(new Texture(Texture.TEXTURE_ICONS, "drawable/textures1"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS, "drawable/textures1"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_BUTTONS_BALLS_STARS, "drawable/buttons_balls_stars"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_TARGETS, "drawable/targets"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_BARS, "drawable/bars"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_NUMBERS_EXPLOSION, "drawable/numbers_explosion_star"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_SPECIAL_BALL, "drawable/special_ball"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_ICONS, "drawable/icons"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS, "drawable/tutorials"));
         Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1c"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_LEVEL_ICONS, "drawable/level_icons"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIAL_ICONS, "drawable/tutorial_icons"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_GROUP_ICONS, "drawable/group_icons"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS1, "drawable/tutorials1"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS2, "drawable/tutorials2"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS3, "drawable/tutorials3"));
-        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS4, "drawable/tutorials4"));
     }
 
     Texture(int id, String resourceIdentifier){

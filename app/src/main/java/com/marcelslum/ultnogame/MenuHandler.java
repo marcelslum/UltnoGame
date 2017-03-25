@@ -42,7 +42,7 @@ public class MenuHandler {
             final LevelsGroupData lgd = LevelsGroupData.levelsGroupData.get(i);
 
             if (StarsHandler.conqueredStarsTotal >= lgd.starsToUnlock){
-                groupMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
+                groupMenu.addOption(i, lgd.textureUnit, lgd.textureData, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
 
@@ -89,7 +89,7 @@ public class MenuHandler {
             }
 
             if (StarsHandler.conqueredStarsTotal < lgd.starsToUnlock){
-                groupMenu.addOption(i, lgd.textureUnit, lgd.textureMap, new Animation.AnimationListener() {
+                groupMenu.addOption(i, lgd.textureUnit, lgd.textureData, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_sem_estrelas), 2000);
@@ -111,7 +111,7 @@ public class MenuHandler {
 
                if (SaveGame.saveGame.secretLevelsUnlocked[i]){
 
-                   groupMenu.addOption(lastId+i, Texture.TEXTURE_ICONS, 2, new Animation.AnimationListener() {
+                   groupMenu.addOption(lastId+i, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         SaveGame.saveGame.currentLevelNumber = numberOfCurrentLevelNumber;
@@ -168,7 +168,7 @@ public class MenuHandler {
 
         for (int i = 0; i < Game.currentLevelsGroupDataSelected.levelsData.size(); i++){
             final LevelsGroupData.LevelData ld = Game.currentLevelsGroupDataSelected.levelsData.get(i);
-            levelMenu.addOption(i, ld.textureUnit, ld.textureMap, new Animation.AnimationListener() {
+            levelMenu.addOption(i, ld.textureUnit, ld.textureData, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     SaveGame.saveGame.currentLevelNumber = ld.number;
@@ -216,7 +216,7 @@ public class MenuHandler {
 
         //TUTORIAL1
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INSTRUCOES_INICIAIS)){
-            tutorialMenu.addOption(1, Texture.TEXTURE_ICONS, 1, new Animation.AnimationListener() {
+            tutorialMenu.addOption(1, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_INSTRUCOES_INICIAIS;
@@ -234,7 +234,7 @@ public class MenuHandler {
 
         //TUTORIAL2
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INICIO)) {
-            tutorialMenu.addOption(2, Texture.TEXTURE_ICONS, 2, new Animation.AnimationListener() {
+            tutorialMenu.addOption(2, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_INICIO;
@@ -250,10 +250,9 @@ public class MenuHandler {
             }
         }
 
-
         //TUTORIAL3
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_MOVIMENTO_BARRA)) {
-            tutorialMenu.addOption(3, Texture.TEXTURE_ICONS, 2, new Animation.AnimationListener() {
+            tutorialMenu.addOption(3, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_MOVIMENTO_BARRA;
@@ -271,7 +270,7 @@ public class MenuHandler {
 
         //TUTORIAL4
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INCLINACAO_BARRA)) {
-            tutorialMenu.addOption(4, Texture.TEXTURE_ICONS, 2, new Animation.AnimationListener() {
+            tutorialMenu.addOption(4, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_INCLINACAO_BARRA;
@@ -289,7 +288,7 @@ public class MenuHandler {
 
         //TUTORIAL5
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_OBSTACULO)){
-            tutorialMenu.addOption(5, Texture.TEXTURE_ICONS, 3, new Animation.AnimationListener() {
+            tutorialMenu.addOption(5, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_OBSTACULO;
@@ -307,7 +306,7 @@ public class MenuHandler {
 
         //TUTORIAL6
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_CORES)){
-            tutorialMenu.addOption(6, Texture.TEXTURE_ICONS, 4, new Animation.AnimationListener() {
+            tutorialMenu.addOption(6, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_CORES;
@@ -326,7 +325,7 @@ public class MenuHandler {
 
         //TUTORIAL7
         if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_EXPLOSAO)){
-            tutorialMenu.addOption(7, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+            tutorialMenu.addOption(7, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     Tutorial.currentTutorial = Tutorial.TUTORIAL_EXPLOSAO;
@@ -344,7 +343,7 @@ public class MenuHandler {
 
         //TUTORIAL8
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_ALVO_FANTASMA)){
-                tutorialMenu.addOption(8, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(8, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_ALVO_FANTASMA;
@@ -363,7 +362,7 @@ public class MenuHandler {
 
         //TUTORIAL9
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS)){
-                tutorialMenu.addOption(9, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(9, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS;
@@ -382,7 +381,7 @@ public class MenuHandler {
 
         //TUTORIAL10
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLAS_INVENCIVEIS)){
-                tutorialMenu.addOption(10, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(10, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLAS_INVENCIVEIS;
@@ -401,7 +400,7 @@ public class MenuHandler {
 
         //TUTORIAL11
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLAS_PRESAS)){
-                tutorialMenu.addOption(11, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(11, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLAS_PRESAS;
@@ -420,7 +419,7 @@ public class MenuHandler {
 
         //TUTORIAL12
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_VENTO)){
-                tutorialMenu.addOption(12, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(12, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_VENTO;
@@ -439,7 +438,7 @@ public class MenuHandler {
 
         //TUTORIAL13
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BARRA_DINAMICA)){
-                tutorialMenu.addOption(13, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(13, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BARRA_DINAMICA;
@@ -458,7 +457,7 @@ public class MenuHandler {
 
         //TUTORIAL14
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_COMIDA)){
-                tutorialMenu.addOption(14, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(14, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_COMIDA;
@@ -477,7 +476,7 @@ public class MenuHandler {
 
         //TUTORIAL15
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLA_FALSA)){
-                tutorialMenu.addOption(15, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(15, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLA_FALSA;
@@ -495,7 +494,7 @@ public class MenuHandler {
 
         //TUTORIAL16
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOTAO_INVERTIDO)){
-                tutorialMenu.addOption(16, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(16, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_BOTAO_INVERTIDO;
@@ -513,7 +512,7 @@ public class MenuHandler {
 
         //TUTORIAL17
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_DUAS_BARRAS)){
-                tutorialMenu.addOption(17, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(17, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_DUAS_BARRAS;
@@ -531,7 +530,7 @@ public class MenuHandler {
 
         //TUTORIAL18
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_DUAS_BOLAS)){
-                tutorialMenu.addOption(18, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(18, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_DUAS_BOLAS;
@@ -549,7 +548,7 @@ public class MenuHandler {
 
         //TUTORIAL19
        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_GRADE)){
-                tutorialMenu.addOption(19, Texture.TEXTURE_ICONS, 5, new Animation.AnimationListener() {
+                tutorialMenu.addOption(19, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = Tutorial.TUTORIAL_GRADE;

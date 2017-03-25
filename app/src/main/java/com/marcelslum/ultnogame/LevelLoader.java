@@ -22,8 +22,16 @@ public class LevelLoader {
         ArrayList<BarDataBaseData> barDataBaseData = Game.myDbHelper.getBars(levelNumber);
         ArrayList<TargetDataBaseData> targetlDataBaseData = Game.myDbHelper.getTargets(levelNumber < 1000 ? 1 : 2);
 
+
+        int minBallsAlive = 1;
+        for (int i = 0; i < Game.levelsDataBaseData.size(); i++){
+            if (Game.levelsDataBaseData.get(i).number == levelNumber){
+                minBallsAlive = Game.levelsDataBaseData.get(i).min_balls_alive;
+            }
+        }
+
         levelBuilder
-                .setMinBallsAlive(1)//TODO PUXAR DO BANCO DE DADOS
+                .setMinBallsAlive(minBallsAlive)
                 .setBallDataBaseData(ballDataBaseData)
                 .setBarDataBaseData(barDataBaseData)
                 .setTargetDataBaseData(targetlDataBaseData)

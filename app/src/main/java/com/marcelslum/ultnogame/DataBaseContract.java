@@ -41,8 +41,20 @@ public final class DataBaseContract {
         public static final String COLUMN_HEIGHT = "height";
         public static final String COLUMN_DISTANCE = "distance";
         public static final String COLUMN_PADD = "padd";
-        
-       
+    }
+
+    public static class Groups implements BaseColumns {
+        public static final String TABLE_NAME = "groups";
+        public static final String COLUMN_NUMBER = "number";
+        public static final String COLUMN_LEVELS = "levels";
+        public static final String COLUMN_STARS_TO_UNLOCK = "stars_to_unlock";
+    }
+
+    public static class Levels implements BaseColumns {
+        public static final String TABLE_NAME = "levels";
+        public static final String COLUMN_NUMBER = "number";
+        public static final String COLUMN_GROUP = "group";
+        public static final String COLUMN_MIN_BALLS_ALIVE = "min_balls_alive";
     }
     
     

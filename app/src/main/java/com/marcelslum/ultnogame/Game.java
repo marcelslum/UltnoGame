@@ -130,8 +130,9 @@ public class Game {
     public final static int GAME_STATE_OBJETIVO_PAUSE =  26;
     public final static int GAME_STATE_VITORIA_COMPLEMENTACAO =  27;
 
-    final static float [] textButtonsAndBallsColumnsAndLines = new float[]{0f, 128f, 256f, 384f, 512f, 640f, 768f, 896f, 1024f};
-    
+    public static ArrayList<GroupDataBaseData> groupsDataBaseData;
+    public static ArrayList<LevelDataBaseData> levelsDataBaseData;
+
     static long initTime;
     static float effectiveScreenHeight;
     static float effectiveScreenWidth;
@@ -220,8 +221,8 @@ public class Game {
             throw new Error("Unable to create database");
         }
 
-
-
+        groupsDataBaseData = myDbHelper.getGroupsDataBaseData();
+        levelsDataBaseData = myDbHelper.getLevelsDataBaseData();
     }
 
     public static void activateFrame(int duration){
@@ -423,8 +424,12 @@ public class Game {
 
             ButtonHandler.buttonContinue.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
+
             MessagesHandler.messageContinue.display();
             MessagesHandler.messageBack.display();
+
+            MessagesHandler.messageContinue.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
+            MessagesHandler.messageBack.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
 
         } else if (state == GAME_STATE_OBJETIVO_PAUSE){
 
@@ -894,6 +899,8 @@ public class Game {
                         ButtonHandler.buttonContinue.display();
                         ButtonHandler.buttonContinue.unblock();
                         MessagesHandler.messageContinue.display();
+                        MessagesHandler.messageContinue.setColor(new Color(0f, 0f, 0f, 1f));
+
                         cancel();
                     }
                 }
@@ -1088,6 +1095,7 @@ public class Game {
                     ButtonHandler.buttonContinue.display();
                     ButtonHandler.buttonContinue.unblock();
                     MessagesHandler.messageContinue.display();
+                    MessagesHandler.messageContinue.setColor(new Color(0f, 0f, 0f, 1f));
                 }
             });
             animMessageConqueredStarsTotal.start();

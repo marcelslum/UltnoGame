@@ -300,6 +300,69 @@ public class DataBaseHelper extends SQLiteOpenHelper {
           close();
   		return list;
      }
-     
-     
+
+
+
+    public ArrayList<GroupDataBaseData> getGroupsDataBaseData(){
+        openDataBase();
+        String[] projection = {
+                DataBaseContract.Groups.COLUMN_NUMBER,
+                DataBaseContract.Groups.COLUMN_LEVELS,
+                DataBaseContract.Groups.COLUMN_STARS_TO_UNLOCK
+        };
+
+
+        Cursor cursor = myDataBase.query(
+                DataBaseContract.Groups.TABLE_NAME,      // The table to query
+                projection,                               // The columns to return
+                null,                                     // The columns for the WHERE clause
+                null,                                     // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // don't sort
+        );
+
+        ArrayList<GroupDataBaseData> list = new ArrayList<>();
+        while(cursor.moveToNext()){
+            GroupDataBaseData b = new GroupDataBaseData(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Groups.COLUMN_NUMBER)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Groups.COLUMN_LEVELS)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Groups.COLUMN_STARS_TO_UNLOCK))
+            );
+            list.add(b);
+        }
+        close();
+        return list;
     }
+
+    public ArrayList<LevelDataBaseData> getLevelsDataBaseData(){
+        openDataBase();
+        String[] projection = {
+                DataBaseContract.Levels.COLUMN_NUMBER,
+                DataBaseContract.Levels.COLUMN_GROUP,
+                DataBaseContract.Levels.COLUMN_MIN_BALLS_ALIVE
+        };
+
+        Cursor cursor = myDataBase.query(
+                DataBaseContract.Levels.TABLE_NAME,      // The table to query
+                projection,                               // The columns to return
+                null,                                     // The columns for the WHERE clause
+                null,                                     // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // don't sort
+        );
+
+        ArrayList<LevelDataBaseData> list = new ArrayList<>();
+        while(cursor.moveToNext()){
+            LevelDataBaseData b = new LevelDataBaseData(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Levels.COLUMN_NUMBER)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Levels.COLUMN_GROUP)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Levels.COLUMN_MIN_BALLS_ALIVE))
+            );
+            list.add(b);
+        }
+        close();
+        return list;
+    }
+}

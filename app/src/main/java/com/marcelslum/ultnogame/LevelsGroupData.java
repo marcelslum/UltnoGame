@@ -12,7 +12,7 @@ public class LevelsGroupData {
     public static ArrayList<LevelsGroupData> levelsGroupData;
 
     int textureUnit;
-    int textureMap;
+    TextureData textureData;
     int starsToUnlock;
     int conqueredStars;
     String name;
@@ -22,7 +22,7 @@ public class LevelsGroupData {
     ArrayList<LevelData> levelsData;
     int number;
 
-    public LevelsGroupData(String name, int number, int firstLevel, int finalLevel, int starsToUnlock, int conqueredStars, int textureUnit, int textureMap) {
+    public LevelsGroupData(String name, int number, int firstLevel, int finalLevel, int starsToUnlock, int conqueredStars, int textureUnit, TextureData textureData) {
         this.starsToUnlock = starsToUnlock;
         this.number = number;
         this.conqueredStars = conqueredStars;
@@ -30,28 +30,28 @@ public class LevelsGroupData {
         this.firstLevel = firstLevel;
         this.finalLevel = finalLevel;
         this.textureUnit = textureUnit;
-        this.textureMap = textureMap;
+        this.textureData = textureData;
         isLocked = true;
     }
 
-    public void addLevel(String name, int number, int textureUnit, int textureMap){
+    public void addLevel(String name, int number, int textureUnit, TextureData textureData){
         if (levelsData == null){
             levelsData = new ArrayList<>();
         }
-        levelsData.add(new LevelData(name, number, textureUnit, textureMap));
+        levelsData.add(new LevelData(name, number, textureUnit, textureData));
     }
 
     class LevelData {
         String name;
         int number;
         int textureUnit;
-        int textureMap;
+        TextureData textureData;
 
-        LevelData(String name, int number, int textureUnit, int textureMap) {
-            this.name=name;
-            this.number=number;
-            this.textureUnit=textureUnit;
-            this.textureMap=textureMap;
+        LevelData(String name, int number, int textureUnit, TextureData textureData) {
+            this.name = name;
+            this.number = number;
+            this.textureUnit = textureUnit;
+            this.textureData = textureData;
         }
     }
 

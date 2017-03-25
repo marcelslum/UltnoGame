@@ -341,7 +341,7 @@ public class MenuIcon extends Entity{
 
     public MenuIconGraph addGraph(String name, float paddFromBottom, float height, int type, boolean delayShow){
         float padd = size * 0.1f;
-        float positionX = x + padd + (graph.size() * size * 1.1f);
+        float positionX = x + padd + (icons.size() * size * 1.1f);
         positionX += size * 0.15f;
         MenuIconGraph g = new MenuIconGraph(name, positionX, y + size + paddFromBottom, size * 0.7f, height, type);
         graph.add(g);
@@ -350,7 +350,7 @@ public class MenuIcon extends Entity{
         return g;
     }
 
-    public void addOption(int id, int textureUnit, int textureMap, Animation.AnimationListener onSelect, boolean optionBlocked, boolean delayShow){
+    public void addOption(int id, int textureUnit, TextureData textureData, Animation.AnimationListener onSelect, boolean optionBlocked, boolean delayShow){
         
         if (listener == null){
             final MenuIcon innerMenuIcon = this;
@@ -390,9 +390,9 @@ public class MenuIcon extends Entity{
         }
 
         float positionX = getPositionXFromIconNumber(icons.size()+1);
-        Button button = new Button(Integer.toString(id), positionX, y, size, size, Texture.TEXTURES, 1,
-                TextureData.getTextureDataById(TextureData.TEXTURE_WINDOW_ID),
-                TextureData.getTextureDataById(TextureData.TEXTURE_WINDOW_ID));
+        Button button = new Button(Integer.toString(id), positionX, y, size, size, textureUnit, 1,
+                textureData,
+                textureData);
         final Button innerButton = button;
         final MenuIcon innerMenuIcon = this;
         final Animation.AnimationListener innerOnSelect = onSelect;

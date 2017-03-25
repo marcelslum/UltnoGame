@@ -274,15 +274,15 @@ public class Tutorial {
         if (Tutorial.currentTutorial == Tutorial.TUTORIAL_INSTRUCOES_INICIAIS) {
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL1_ID));
 
             Image i2 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL2_ID));
 
             Image i3 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL3_ID));
 
             Tutorial.currentTutorialObject = new Tutorial();
 
@@ -352,15 +352,15 @@ public class Tutorial {
 
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL4_ID));
 
             Image i2 = new Image("i2", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL5_ID));
 
             Image i3 = new Image("i3", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL6_ID));
 
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t2t1), textBoxY, textBoxSize);
@@ -374,16 +374,16 @@ public class Tutorial {
 
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL7_ID));
 
             Image i2 = new Image("i2", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL8_ID));
             
             
             Image i3 = new Image("i3", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL9_ID));
 
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t3t1), textBoxY, textBoxSize);
@@ -406,23 +406,23 @@ public class Tutorial {
 
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL10_ID));
 
             Image i2 = new Image("i2", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL11_ID));
 
             Image i3 = new Image("i3", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL12_ID));
 
             Image i4 = new Image("i4", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL13_ID));
 
             Image i5 = new Image("i5", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL14_ID));
 
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t4t1), textBoxY, textBoxSize);
@@ -441,7 +441,7 @@ public class Tutorial {
 
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL15_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t5t1), textBoxY, textBoxSize, Game.resolutionX * 0.46f, Game.resolutionY * 0.46f);
 
@@ -449,7 +449,7 @@ public class Tutorial {
 
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL16_ID));
             currentTutorialObject = new Tutorial();//
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t6t1), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t6t2), textBoxY, textBoxSize, Game.resolutionX * 0.15f, Game.resolutionY * 0.2f);
@@ -459,7 +459,7 @@ public class Tutorial {
 
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL17_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t1), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t2), textBoxY, textBoxSize, Game.resolutionX * 0.15f, Game.resolutionY * 0.16f);
@@ -479,7 +479,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL18_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t8t1), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t8t2), textBoxY, textBoxSize);
@@ -488,7 +488,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL19_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t9t1), textBoxY, textBoxSize, Game.resolutionX * 0.17f, Game.resolutionY * 0.4f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t9t2), textBoxY, textBoxSize, Game.resolutionX * 0.55f, Game.resolutionY * 0.6f);
@@ -497,7 +497,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL20_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t1), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t10t2), textBoxY, textBoxSize, Game.resolutionX * 0.1f, Game.resolutionY * 0.52f);
@@ -509,7 +509,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL21_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t11t1), textBoxY, textBoxSize, Game.resolutionX * 0.12f, Game.resolutionY * 0.15f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t11t2), textBoxY, textBoxSize);
@@ -519,7 +519,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL22_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t12t1), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t12t2), textBoxY, textBoxSize);
@@ -531,7 +531,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL23_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t13t1), textBoxY, textBoxSize);
             
@@ -539,7 +539,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL24_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t1), textBoxY, textBoxSize, Game.resolutionX * 0.18f, Game.resolutionY * 0.69f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t14t2), textBoxY, textBoxSize, Game.resolutionX * 0.6f, Game.resolutionY * 0.69f);
@@ -549,7 +549,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL25_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t1), textBoxY, textBoxSize, Game.resolutionX * 0.5f, Game.resolutionY * 0.31f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t15t2), textBoxY, textBoxSize);
@@ -562,7 +562,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL26_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t16t1), textBoxY, textBoxSize, Game.resolutionX * 0.06f, Game.resolutionY * 0.5f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t16t2), textBoxY, textBoxSize);
@@ -571,7 +571,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL27_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t17t1), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t17t2), textBoxY, textBoxSize, Game.resolutionX * 0.76f, Game.resolutionY * 0.64f);
@@ -581,7 +581,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL28_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t18t1), textBoxY, textBoxSize, Game.resolutionX * 0.45f, Game.resolutionY * 0.62f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t18t2), textBoxY, textBoxSize);
@@ -590,7 +590,7 @@ public class Tutorial {
             
             Image i1 = new Image("i1", Game.resolutionX * 0.05f, Game.resolutionX * 0.025f,
                     Game.resolutionX * 0.9f, Game.resolutionX * 0.45f, Texture.TEXTURE_TUTORIALS,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+                    TextureData.getTextureDataById(TextureData.TEXTURE_TUTORIAL29_ID));
             currentTutorialObject = new Tutorial();
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t19t1), textBoxY, textBoxSize, Game.resolutionX * 0.2f, Game.resolutionY * 0.41f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t19t2), textBoxY, textBoxSize);

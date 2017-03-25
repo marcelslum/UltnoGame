@@ -26,103 +26,6 @@ public class TextureData {
 
     public static final String TAG = "TextureData";
 
-    public static final String TEXTURE_TARGET_BLACK_NAME = "alvo_black.png";
-    public static final String TEXTURE_TARGET_BLUE_NAME = "alvo_blue.png";
-    public static final String TEXTURE_TARGET_GREEN_NAME = "alvo_green.png";
-    public static final String TEXTURE_TARGET_RED_NAME = "alvo_red.png";
-
-    public static final String TEXTURE_ARROW_NAME = "arrow.png";
-
-    public static final String TEXTURE_ARROW_DOWN_NAME = "arrow_down.png";
-    public static final String TEXTURE_ARROW_LEFT_NAME = "arrow_left.png";
-    public static final String TEXTURE_ARROW_RIGHT_NAME = "arrow_right.png";
-    public static final String TEXTURE_ARROW_UP_NAME = "arrow_up.png";
-
-    public static final String TEXTURE_BALL_BLACK_NAME = "ball_black.png";
-    public static final String TEXTURE_BALL_BLUE_NAME = "ball_blue.png";
-    public static final String TEXTURE_BALL_COLLISION_NAME = "ball_collision.png";
-    public static final String TEXTURE_BALL_GREEN_NAME = "ball_green.png";
-    public static final String TEXTURE_BALL_ORANGE_NAME = "ball_orange.png";
-    public static final String TEXTURE_BALL_PINK_NAME = "ball_pink.png";
-    public static final String TEXTURE_BALL_PURPLE_NAME = "ball_purple.png";
-    public static final String TEXTURE_BALL_RED_NAME = "ball_red.png";
-    public static final String TEXTURE_BALL_YELLOW_NAME = "ball_yellow.png";
-
-    public static final String TEXTURE_BAR_BLACK_NAME = "bar_black.png";
-    public static final String TEXTURE_BAR_BLUE_NAME = "bar_blue.png";
-    public static final String TEXTURE_BAR_GREEN_NAME = "bar_green.png";
-    public static final String TEXTURE_BAR_ORANGE_NAME = "bar_orange.png";
-    public static final String TEXTURE_BAR_PINK_NAME = "bar_pink.png";
-    public static final String TEXTURE_BAR_PURPLE_NAME = "bar_purple.png";
-    public static final String TEXTURE_BAR_RED_NAME = "bar_red.png";
-    public static final String TEXTURE_BAR_TOP_NAME = "bar_top.png";
-    public static final String TEXTURE_BAR_YELLOW_NAME = "bar_yellow.png";
-
-    public static final String TEXTURE_BE2_NAME = "be2.png";
-    public static final String TEXTURE_BE3_NAME = "be3.png";
-    public static final String TEXTURE_BE4_NAME = "be4.png";
-    public static final String TEXTURE_BE5_NAME = "be5.png";
-    public static final String TEXTURE_BE6_NAME = "be6.png";
-    public static final String TEXTURE_BE7_NAME = "be7.png";
-    public static final String TEXTURE_BE8_NAME = "be8.png";
-    public static final String TEXTURE_BE9_NAME = "be9.png";
-    public static final String TEXTURE_BE10_NAME = "be10.png";
-    public static final String TEXTURE_BE11_NAME = "be11.png";
-    public static final String TEXTURE_BE12_NAME = "be12.png";
-    //todo falta be1
-
-    public static final String TEXTURE_BUTTON_BAR_LEFT_NAME = "button_bar_left.png";
-    public static final String TEXTURE_BUTTON_BAR_LEFT_PRESS_NAME = "button_bar_left_press.png";
-    public static final String TEXTURE_BUTTON_BAR_RIGHT_NAME = "button_bar_right.png";
-    public static final String TEXTURE_BUTTON_BAR_RIGHT_PRESS_NAME = "button_bar_right_press.png";
-
-    public static final String TEXTURE_ARROW_DOWN_PRESS_NAME = "button_down_press.png";
-    public static final String TEXTURE_ARROW_LEFT_PRESS_NAME = "button_left_press.png";
-    public static final String TEXTURE_ARROW_RIGHT_PRESS_NAME = "button_right_press.png";
-    public static final String TEXTURE_ARROW_UP_PRESS_NAME = "button_up_press.png";
-
-    public static final String TEXTURE_EXPLOSION_BLUE_1_NAME = "explosion_blue_1.png";
-    public static final String TEXTURE_EXPLOSION_BLUE_2_NAME = "explosion_blue_2.png";
-    public static final String TEXTURE_EXPLOSION_BLUE_3_NAME = "explosion_blue_3.png";
-
-    public static final String TEXTURE_EXPLOSION_RED_1_NAME = "explosion_red_1.png";
-    public static final String TEXTURE_EXPLOSION_RED_2_NAME = "explosion_red_2.png";
-    public static final String TEXTURE_EXPLOSION_RED_3_NAME = "explosion_red_3.png";
-
-    public static final String TEXTURE_JEFT_SET_NAME = "jetset.png";
-
-    public static final String TEXTURE_PANEL_BLUE_NAME = "panel_blue.png";
-    public static final String TEXTURE_PANEL_INVENCIBLE_NAME = "panel_invencible.png";
-    public static final String TEXTURE_PANEL_BLACK_NAME = "panel_black.png";
-
-    public static final String TEXTURE_PARTICLE_BALL_NAME = "particle_ball.png";
-
-    public static final String TEXTURE_POINT0_NAME = "point0.png";
-    public static final String TEXTURE_POINT1_NAME = "point1.png";
-    public static final String TEXTURE_POINT2_NAME = "point2.png";
-    public static final String TEXTURE_POINT3_NAME = "point3.png";
-    public static final String TEXTURE_POINT4_NAME = "point4.png";
-    public static final String TEXTURE_POINT5_NAME = "point5.png";
-    public static final String TEXTURE_POINT6_NAME = "point6.png";
-    public static final String TEXTURE_POINT7_NAME = "point7.png";
-    public static final String TEXTURE_POINT8_NAME = "point8.png";
-    public static final String TEXTURE_POINT9_NAME = "point9.png";
-
-    public static final String TEXTURE_POINT_PANEL0_NAME = "point_panel_0.png";
-    public static final String TEXTURE_POINT_PANEL1_NAME = "point_panel_1.png";
-    public static final String TEXTURE_POINT_PANEL2_NAME = "point_panel_2.png";
-    public static final String TEXTURE_POINT_PANEL3_NAME = "point_panel_3.png";
-    public static final String TEXTURE_POINT_PANEL4_NAME = "point_panel_4.png";
-    public static final String TEXTURE_POINT_PANEL5_NAME = "point_panel_5.png";
-    public static final String TEXTURE_POINT_PANEL6_NAME = "point_panel_6.png";
-    public static final String TEXTURE_POINT_PANEL7_NAME = "point_panel_7.png";
-    public static final String TEXTURE_POINT_PANEL8_NAME = "point_panel_8.png";
-    public static final String TEXTURE_POINT_PANEL9_NAME = "point_panel_9.png";
-    public static final String TEXTURE_STAR_OFF_NAME = "star_off.png";
-    public static final String TEXTURE_STAR_SHINE_NAME = "star_shine.png";
-    public static final String TEXTURE_TITTLE_NAME = "tittle.png";
-    public static final String TEXTURE_WINDOW_NAME = "window.png";
-
     public static final int TEXTURE_TARGET_BLACK_ID = 0;
     public static final int TEXTURE_TARGET_BLUE_ID = 1;
     public static final int TEXTURE_TARGET_GREEN_ID = 2;
@@ -206,6 +109,57 @@ public class TextureData {
     public static final int TEXTURE_WINDOW_ID = 80;
     public static final int TEXTURE_BUTTON_GROUP_LEADERBOARD_ID = 81;
     public static final int TEXTURE_BUTTON_GROUP_LEADERBOARD_PRESS_ID = 82;
+
+    public static final int TEXTURE_TUTORIAL1_ID = 1001;
+    public static final int TEXTURE_TUTORIAL2_ID = 1002;
+    public static final int TEXTURE_TUTORIAL3_ID = 1003;
+    public static final int TEXTURE_TUTORIAL4_ID = 1004;
+    public static final int TEXTURE_TUTORIAL5_ID = 1005;
+    public static final int TEXTURE_TUTORIAL6_ID = 1006;
+    public static final int TEXTURE_TUTORIAL7_ID = 1007;
+    public static final int TEXTURE_TUTORIAL8_ID = 1008;
+    public static final int TEXTURE_TUTORIAL9_ID = 1009;
+    public static final int TEXTURE_TUTORIAL10_ID = 1010;
+    public static final int TEXTURE_TUTORIAL11_ID = 1011;
+    public static final int TEXTURE_TUTORIAL12_ID = 1012;
+    public static final int TEXTURE_TUTORIAL13_ID = 1013;
+    public static final int TEXTURE_TUTORIAL14_ID = 1014;
+    public static final int TEXTURE_TUTORIAL15_ID = 1015;
+    public static final int TEXTURE_TUTORIAL16_ID = 1016;
+    public static final int TEXTURE_TUTORIAL17_ID = 1017;
+    public static final int TEXTURE_TUTORIAL18_ID = 1018;
+    public static final int TEXTURE_TUTORIAL19_ID = 1019;
+    public static final int TEXTURE_TUTORIAL20_ID = 1020;
+    public static final int TEXTURE_TUTORIAL21_ID = 1021;
+    public static final int TEXTURE_TUTORIAL22_ID = 1022;
+    public static final int TEXTURE_TUTORIAL23_ID = 1023;
+    public static final int TEXTURE_TUTORIAL24_ID = 1024;
+    public static final int TEXTURE_TUTORIAL25_ID = 1025;
+    public static final int TEXTURE_TUTORIAL26_ID = 1026;
+    public static final int TEXTURE_TUTORIAL27_ID = 1027;
+    public static final int TEXTURE_TUTORIAL28_ID = 1028;
+    public static final int TEXTURE_TUTORIAL29_ID = 1029;
+
+    public static final int TEXTURE_G1_ID = 2001;
+    public static final int TEXTURE_G2_ID = 2001;
+    public static final int TEXTURE_G3_ID = 2001;
+    public static final int TEXTURE_G4_ID = 2001;
+    public static final int TEXTURE_G5_ID = 2001;
+    public static final int TEXTURE_G6_ID = 2001;
+    public static final int TEXTURE_G7_ID = 2001;
+    public static final int TEXTURE_G8_ID = 2001;
+    public static final int TEXTURE_G9_ID = 2001;
+    public static final int TEXTURE_G10_ID = 2001;
+    public static final int TEXTURE_G11_ID = 2001;
+    public static final int TEXTURE_G12_ID = 2001;
+    public static final int TEXTURE_G13_ID = 2001;
+    public static final int TEXTURE_G14_ID = 2001;
+    public static final int TEXTURE_G15_ID = 2001;
+    public static final int TEXTURE_G16_ID = 2001;
+    public static final int TEXTURE_G17_ID = 2001;
+    public static final int TEXTURE_G18_ID = 2001;
+    public static final int TEXTURE_G19_ID = 2001;
+    public static final int TEXTURE_G20_ID = 2001;
 
 
     String name;
@@ -334,27 +288,110 @@ public class TextureData {
         map.put(TEXTURE_BUTTON_GROUP_LEADERBOARD_ID, "button_leaderboard.png");
         map.put(TEXTURE_BUTTON_GROUP_LEADERBOARD_PRESS_ID, "button_leaderboard_pressed.png");
 
-        JSONObject obj;
 
-        try {
-            obj = new JSONObject(Utils.readJSONFromAsset("texture_data.json"));
-        } catch(JSONException e){
-            return;
-        }
+        map.put(TEXTURE_TUTORIAL1_ID, "ti1.png");
+        map.put(TEXTURE_TUTORIAL2_ID, "ti2.png");
+        map.put(TEXTURE_TUTORIAL3_ID, "ti3.png");
+        map.put(TEXTURE_TUTORIAL4_ID, "ti4.png");
+        map.put(TEXTURE_TUTORIAL5_ID, "ti5.png");
+        map.put(TEXTURE_TUTORIAL6_ID, "ti6.png");
+        map.put(TEXTURE_TUTORIAL7_ID, "ti7.png");
+        map.put(TEXTURE_TUTORIAL8_ID, "ti8.png");
+        map.put(TEXTURE_TUTORIAL9_ID, "ti9.png");
+        map.put(TEXTURE_TUTORIAL10_ID, "ti10.png");
+        map.put(TEXTURE_TUTORIAL11_ID, "ti11.png");
+        map.put(TEXTURE_TUTORIAL12_ID, "ti12.png");
+        map.put(TEXTURE_TUTORIAL13_ID, "ti13.png");
+        map.put(TEXTURE_TUTORIAL14_ID, "ti14.png");
+        map.put(TEXTURE_TUTORIAL15_ID, "ti15.png");
+        map.put(TEXTURE_TUTORIAL16_ID, "ti16.png");
+        map.put(TEXTURE_TUTORIAL17_ID, "ti17.png");
+        map.put(TEXTURE_TUTORIAL18_ID, "ti18.png");
+        map.put(TEXTURE_TUTORIAL19_ID, "ti19.png");
+        map.put(TEXTURE_TUTORIAL20_ID, "ti20.png");
+        map.put(TEXTURE_TUTORIAL21_ID, "ti21.png");
+        map.put(TEXTURE_TUTORIAL22_ID, "ti22.png");
+        map.put(TEXTURE_TUTORIAL23_ID, "ti23.png");
+        map.put(TEXTURE_TUTORIAL24_ID, "ti24.png");
+        map.put(TEXTURE_TUTORIAL25_ID, "ti25.png");
+        map.put(TEXTURE_TUTORIAL26_ID, "ti26.png");
+        map.put(TEXTURE_TUTORIAL27_ID, "ti27.png");
+        map.put(TEXTURE_TUTORIAL28_ID, "ti28.png");
+        map.put(TEXTURE_TUTORIAL29_ID, "ti29.png");
+
+        map.put(TEXTURE_G1_ID, "l1.png");
+
+        JSONObject obj;
+        JSONArray arr;
 
         texturesData = new ArrayList<>();
 
         try {
-
-            JSONArray arr = obj.getJSONArray("frames");
+            obj = new JSONObject(Utils.readJSONFromAsset("texture_data.json"));
+            arr = obj.getJSONArray("frames");
 
             for (int i = 0; i < arr.length(); i++)
             {
                 JSONObject objFrame = arr.getJSONObject(i).getJSONObject("frame");
                 String fileName = arr.getJSONObject(i).getString("filename");
+
+                int id = -1;
+                Iterator<Map.Entry<Integer, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<Integer, String> pair = it.next();
+
+                    if (pair.getValue().equals(fileName)){
+                        id = pair.getKey();
+                        break;
+                    }
+                }
+
+                texturesData.add(new TextureData(
+                        id,
+                        fileName,
+                        (float)objFrame.getInt("x")/textureSize,
+                        (float)objFrame.getInt("y")/textureSize,
+                        (float)objFrame.getInt("w")/textureSize,
+                        (float)objFrame.getInt("h")/textureSize
+                ));
+            }
+
+            obj = new JSONObject(Utils.readJSONFromAsset("tutorials_data.json"));
+            arr = obj.getJSONArray("frames");
+            for (int i = 0; i < arr.length(); i++)
+            {
+                JSONObject objFrame = arr.getJSONObject(i).getJSONObject("frame");
+                String fileName = arr.getJSONObject(i).getString("filename");
+
                 int id = 0;
+                Iterator<Map.Entry<Integer, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<Integer, String> pair = it.next();
 
+                    if (pair.getValue().equals(fileName)){
+                        id = pair.getKey();
+                        break;
+                    }
+                }
 
+                texturesData.add(new TextureData(
+                        id,
+                        fileName,
+                        (float)objFrame.getInt("x")/textureSize,
+                        (float)objFrame.getInt("y")/textureSize,
+                        (float)objFrame.getInt("w")/textureSize,
+                        (float)objFrame.getInt("h")/textureSize
+                ));
+            }
+
+            obj = new JSONObject(Utils.readJSONFromAsset("icons_data.json"));
+            arr = obj.getJSONArray("frames");
+            for (int i = 0; i < arr.length(); i++)
+            {
+                JSONObject objFrame = arr.getJSONObject(i).getJSONObject("frame");
+                String fileName = arr.getJSONObject(i).getString("filename");
+
+                int id = 0;
                 Iterator<Map.Entry<Integer, String>> it = map.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry<Integer, String> pair = it.next();
@@ -373,7 +410,6 @@ public class TextureData {
                         (float)objFrame.getInt("h")/textureSize
                 ));
             }
-
 
         } catch (JSONException ex) {
             ex.printStackTrace();
