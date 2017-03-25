@@ -750,10 +750,10 @@
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "teste2.png",
+	"image": "textures1.png",
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:eeac59e26ff8021c74a67a785275bd7a:552d02c9a66f4a42a0c185aa3667750e:0e660a6c853964469c7a050c660a18d8$"
+	"smartupdate": "$TexturePacker:SmartUpdate:13e219c655e0afd6b5d47ffe76324182:54c168fc325bcf1b1ceedd629fe0fb37:a33f03e96a1c00c6a1faf3824007b923$"
 }
 }

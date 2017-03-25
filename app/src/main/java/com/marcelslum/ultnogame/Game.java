@@ -22,7 +22,7 @@ public class Game {
 
     public static Pool<Vector> vectorPool;
     
-    public static DataBaseHelper myDbHelper;
+    public static DataBaseLevelDataHelper myDbHelper;
 
     public static boolean isOpenGL30 = false;
     public static Program openGl30TextProgram;
@@ -105,7 +105,7 @@ public class Game {
     static int ballCollidedFx = 0;
 
     static int timesInterstitialOnGameOver = 0;
-    static boolean interstitialNextPreparar = true;
+    static boolean prepareAfterInterstitialFlag = true;
 
     // options
     public static boolean isBlocked;
@@ -153,6 +153,7 @@ public class Game {
 
     public static String currentPlayerId;
     public static TargetGroup targetGroup;
+    static boolean initPausedFlag;
 
 
     private Game() {}
@@ -214,15 +215,18 @@ public class Game {
 
         setGameState(Game.GAME_STATE_INTRO);
 
-        myDbHelper = new DataBaseHelper(Game.getContext());
+        myDbHelper = new DataBaseLevelDataHelper(Game.getContext());
         try {
             myDbHelper.prepareDatabase();
+
+            groupsDataBaseData = myDbHelper.getGroupsDataBaseData();
+            levelsDataBaseData = myDbHelper.getLevelsDataBaseData();
+
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
 
-        groupsDataBaseData = myDbHelper.getGroupsDataBaseData();
-        levelsDataBaseData = myDbHelper.getLevelsDataBaseData();
+
     }
 
     public static void activateFrame(int duration){
@@ -445,7 +449,7 @@ public class Game {
                 MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 999));
             }
             ButtonHandler.buttonReturnObjectivesPause.unblockAndDisplay();
-            MessagesHandler.messageBack.setY(Game.gameAreaResolutionY - (ButtonHandler.buttonReturnObjectivesPause.width*0.5f));
+            MessagesHandler.messageBack.setY(Game.gameAreaResolutionY * 0.895f);
             MessagesHandler.messageBack.setColor(new Color(0f, 0f, 0f, 1f));
             MessagesHandler.messageBack.display();
 
@@ -515,7 +519,6 @@ public class Game {
         } else if (state == GAME_STATE_OPCOES){
 
             mainActivity.showAdView();
-
             tittle.display();
             MenuHandler.menuOptions.appearAndUnblock(50);
 
@@ -527,6 +530,7 @@ public class Game {
             MenuHandler.menuInGameOptions.appearAndUnblock(100);
             MessagesHandler.messageInGame.y = gameAreaResolutionY*0.25f;
             MessagesHandler.messageInGame.display();
+
         } else if (state == GAME_STATE_MENU){
 
             ConnectionHandler.menuConnectionAttempts = 0;
@@ -562,6 +566,10 @@ public class Game {
             ConnectionHandler.verify();
 
         } else if (state == GAME_STATE_PREPARAR){
+            eraseAllGameEntities();
+            eraseAllHudEntities();
+            LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+
             mainActivity.hideAdView();
             Acelerometer.secretLevel3Steps = 0;
 
@@ -586,8 +594,6 @@ public class Game {
                 activateFrame(2500);
             }
 
-
-            LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
             Level.levelObject.loadEntities();
             int musicNumber = SaveGame.saveGame.currentLevelNumber - ((int)Math.floor(SaveGame.saveGame.currentLevelNumber / 7)*SaveGame.saveGame.currentLevelNumber);
             //if (musicNumber == 1){
@@ -642,33 +648,39 @@ public class Game {
             verifyDead();
 
         } else if (state == GAME_STATE_JOGAR){
-            mainActivity.hideAdView();
-            TimeHandler.resumeTimeOfLevelPlay();
-            if (SaveGame.saveGame.music) {
-                Sound.music.start();
-            }
 
-
-            MessageStar.messageStars.reset();
-
-            for (int i = 0; i < bars.size(); i++) {
-                if (bars.get(i).scaleVariationData != null){
-                    bars.get(i).initScaleVariation();
+            if (initPausedFlag){
+                initPausedFlag = false;
+                setGameState(GAME_STATE_PAUSE);
+            } else {
+                mainActivity.hideAdView();
+                TimeHandler.resumeTimeOfLevelPlay();
+                if (SaveGame.saveGame.music) {
+                    Sound.music.start();
                 }
-            }
 
-            for (int i = 0; i < obstacles.size(); i++) {
-                if (obstacles.get(i).scaleVariationData != null){
-                    obstacles.get(i).initScaleVariation();
+
+                MessageStar.messageStars.reset();
+
+                for (int i = 0; i < bars.size(); i++) {
+                    if (bars.get(i).scaleVariationData != null) {
+                        bars.get(i).initScaleVariation();
+                    }
                 }
-                if (obstacles.get(i).positionVariationData != null){
-                    obstacles.get(i).initPositionVariation();
+
+                for (int i = 0; i < obstacles.size(); i++) {
+                    if (obstacles.get(i).scaleVariationData != null) {
+                        obstacles.get(i).initScaleVariation();
+                    }
+                    if (obstacles.get(i).positionVariationData != null) {
+                        obstacles.get(i).initPositionVariation();
+                    }
                 }
+
+                resetTimeForPointsDecay();
+
+                freeAllGameEntities();
             }
-
-            resetTimeForPointsDecay();
-
-            freeAllGameEntities();
 
         } else if (state == GAME_STATE_DERROTA){
 
@@ -1224,7 +1236,7 @@ public class Game {
         specialBalls.clear();
         obstacles.clear();
         ballCollisionStars.clear();
-        
+        targetGroup = null;
         wind = null;
     }
 

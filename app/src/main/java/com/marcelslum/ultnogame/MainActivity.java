@@ -1,14 +1,12 @@
 package com.marcelslum.ultnogame;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
-import android.content.pm.ConfigurationInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -181,79 +179,21 @@ public class MainActivity extends FragmentActivity implements
             .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
             .build();
 
-        interstitialWithVideo.setAdListener(new AdListener() {
-		    @Override
-		    public void onAdLoaded() {
-			}
-
-		    @Override
-		    public void onAdClosed() {
-
-                //ConnectionHandler.menuConnectionAttempts = 0;
-
-                Game.bordaB.y = Game.resolutionY;
-
-                Game.stopAndReleaseMusic();
-                Game.eraseAllGameEntities();
-                Game.eraseAllHudEntities();
-
-                //ConnectionHandler.verify();
-                Log.e(TAG, "onAdClose Game.interstitialNextPreparar " + Game.interstitialNextPreparar);
-                if (Game.interstitialNextPreparar){
-                    Game.interstitialNextPreparar = false;
-                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                    Game.setGameState(Game.GAME_STATE_PREPARAR);
-                } else if (SaveGame.saveGame.currentLevelNumber < 1000){
-                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-                } else {
-                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-                }
-
-                loadInterstitialAd();
-		    }
-
-		    @Override
-		    public void onAdFailedToLoad(int errorCode) {
-                Log.e("findStateMenu", "2" + "loader conclude "+Splash.loaderConclude);
-                //if (Splash.loaderConclude && Game.gameState != Game.GAME_STATE_INTRO) {
-                //    Game.setGameState(Game.GAME_STATE_MENU);
-                //    return;
-                //}
-                if (ConnectionHandler.internetState != ConnectionHandler.INTERNET_STATE_NOT_CONNECTED){
-                    loadInterstitialAd();
-                }
-		    }
-		    @Override
-		    public void onAdLeftApplication() {
-		    }
-
-		    @Override
-		    public void onAdOpened() {
-		    }
-		});
-
-        interstitialNoVideo.setAdListener(new AdListener() {
+        AdListener adListener = new AdListener() {
             @Override
             public void onAdLoaded() {
             }
 
             @Override
             public void onAdClosed() {
-
-                //ConnectionHandler.menuConnectionAttempts = 0;
-
                 Game.bordaB.y = Game.resolutionY;
-
                 Game.stopAndReleaseMusic();
                 Game.eraseAllGameEntities();
                 Game.eraseAllHudEntities();
 
-                //ConnectionHandler.verify();
-
-                //ConnectionHandler.verify();
-                Log.e(TAG, "onAdClose Game.interstitialNextPreparar " + Game.interstitialNextPreparar);
-                if (Game.interstitialNextPreparar){
-                    Game.interstitialNextPreparar = false;
+                Log.e(TAG, "onAdClose Game.prepareAfterInterstitialFlag " + Game.prepareAfterInterstitialFlag);
+                if (Game.prepareAfterInterstitialFlag){
+                    Game.prepareAfterInterstitialFlag = false;
                     LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
                     Game.setGameState(Game.GAME_STATE_PREPARAR);
                 } else if (SaveGame.saveGame.currentLevelNumber < 1000){
@@ -267,10 +207,7 @@ public class MainActivity extends FragmentActivity implements
             @Override
             public void onAdFailedToLoad(int errorCode) {
                 Log.e("findStateMenu", "2" + "loader conclude "+Splash.loaderConclude);
-                //if (Splash.loaderConclude && Game.gameState != Game.GAME_STATE_INTRO) {
-                //    Game.setGameState(Game.GAME_STATE_MENU);
-                //    return;
-                //}
+
                 if (ConnectionHandler.internetState != ConnectionHandler.INTERNET_STATE_NOT_CONNECTED){
                     loadInterstitialAd();
                 }
@@ -282,7 +219,11 @@ public class MainActivity extends FragmentActivity implements
             @Override
             public void onAdOpened() {
             }
-        });
+        };
+
+        interstitialWithVideo.setAdListener(adListener);
+        interstitialNoVideo.setAdListener(adListener);
+
         loadInterstitialAd();
 	}
 
@@ -364,24 +305,42 @@ public class MainActivity extends FragmentActivity implements
         } else if (Game.gameState == Game.GAME_STATE_MENU) {
             onPause();
             moveTaskToBack(true);
-         
         } else if (Game.gameState == Game.GAME_STATE_PAUSE){
-            Game.setGameState(Game.GAME_STATE_INTERSTITIAL);//TODO continuar a jogar
+            Game.increaseAllGameEntitiesAlpha(500);
+            MessagesHandler.messageInGame.reduceAlpha(500,0f);
+            MenuHandler.menuInGame.reduceAlpha(500,0f, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    Game.setGameState(Game.GAME_STATE_JOGAR);
+                }
+            });
         } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
             Game.setGameState(Game.GAME_STATE_PAUSE);
         } else if (Game.gameState == Game.GAME_STATE_VITORIA){
             Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
         } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
             Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
+        } else if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
+            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+        } else if (Game.gameState == Game.GAME_STATE_SELECAO_GRUPO) {
+            Game.setGameState(Game.GAME_STATE_MENU);
+        }else if (Game.gameState == Game.GAME_STATE_PREPARAR){
+            Game.initPausedFlag = true;
+        }else if (Game.gameState == Game.GAME_STATE_DERROTA){
+            if (SaveGame.saveGame.currentLevelNumber < 1000){
+                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+            } else {
+                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+            }
         } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
             if (SaveGame.saveGame.currentLevelNumber < 1000){
                 Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
             } else {
                 Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
             }
-	} else if (Game.gameState != Game.GAME_STATE_INTRO){
+	    } else if (Game.gameState != Game.GAME_STATE_INTRO){
             Game.setGameState(Game.GAME_STATE_MENU);
-	}
+	    }
     }
 
     public void showInterstitial() {

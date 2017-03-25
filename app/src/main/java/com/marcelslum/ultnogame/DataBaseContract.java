@@ -47,15 +47,39 @@ public final class DataBaseContract {
         public static final String TABLE_NAME = "groups";
         public static final String COLUMN_NUMBER = "number";
         public static final String COLUMN_LEVELS = "levels";
-        public static final String COLUMN_STARS_TO_UNLOCK = "stars_to_unlock";
+        public static final String COLUMN_STARS_TO_UNLOCK = "starstounlock";
     }
 
     public static class Levels implements BaseColumns {
         public static final String TABLE_NAME = "levels";
         public static final String COLUMN_NUMBER = "number";
-        public static final String COLUMN_GROUP = "group";
-        public static final String COLUMN_MIN_BALLS_ALIVE = "min_balls_alive";
+        public static final String COLUMN_GROUP = "lgroup";
+        public static final String COLUMN_MIN_BALLS_ALIVE = "minballsalive";
     }
-    
-    
+
+    public static class Data implements BaseColumns {
+        public static final String TABLE_NAME = "data";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_CURRENT_LEVEL = "current_level";
+        public static final String COLUMN_CURRENT_GROUP = "current_group";
+        public static final String COLUMN_MUSIC = "music";
+        public static final String COLUMN_SOUND = "sound";
+        public static final String COLUMN_VIBRATION = "vibration";
+        public static final String COLUMN_GROUP_MENU_TRANSLATE_X = "group_menu_translate_x";
+        public static final String COLUMN_LEVEL_MENU_TRANSLATE_X = "level_menu_translate_x";
+        public static final String COLUMN_TUTORIAL_MENU_TRANSLATE_X = "tutorial_menu_translate_x";
+        public static final String COLUMN_LAST_STARS = "last_stars";
+        public static final String COLUMN_NEW_GROUPS_SEEN = "new_groups_seen";
+        public static final String COLUMN_LEVELS_PLAYED = "levels_played";
+    }
+
+    public static class DataLevels implements BaseColumns {
+        public static final String TABLE_NAME = "levels";
+        public static final String COLUMN_NUMBER = "number";
+        public static final String COLUMN_POINTS = "points";
+        public static final String COLUMN_STARS = "stars";
+        public static final String COLUMN_UNLOCKED = "unlocked";
+        public static final String COLUMN_SEEN = "seen";
+    }
+
 }

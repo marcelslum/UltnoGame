@@ -61,9 +61,10 @@ public class MenuHandler {
 
                 int totalPoints = 0;
                 for (int i2 = 0; i2 < lgd.levelsData.size(); i2++){
-                    totalPoints += (int)SaveGame.saveGame.pointsLevels[lgd.levelsData.get(i2).number - 1];
+                    if (lgd.levelsData.get(i2).number < 1000) {
+                        totalPoints += (int) SaveGame.saveGame.pointsLevels[lgd.levelsData.get(i2).number - 1];
+                    }
                 }
-
 
                 groupMenu.addGraph("graph "+i, Game.resolutionY * 0.07f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_BAR, false);
 
@@ -776,15 +777,13 @@ public class MenuHandler {
                     menuGameOver.block();
                     Game.blockAndWaitTouchRelease();
                     menuInGame.clearDisplay();
-                    Game.interstitialNextPreparar = true;
+                    Game.prepareAfterInterstitialFlag = true;
                     Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
-
                 } else {
                     menuGameOver.block();
                     Game.blockAndWaitTouchRelease();
                     menuInGame.clearDisplay();
-                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                    Game.interstitialNextPreparar = true;
+                    Game.prepareAfterInterstitialFlag = false;
                     Game.setGameState(Game.GAME_STATE_PREPARAR);
                 }
             }
@@ -794,6 +793,8 @@ public class MenuHandler {
         menuGameOver.addMenuOption("RetornarAoMenuPrincipal", Game.getContext().getResources().getString(R.string.sairDoJogo), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                Game.timesInterstitialOnGameOver = 0;
+                Game.prepareAfterInterstitialFlag = false;
                 Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
             }
         });
@@ -846,6 +847,8 @@ public class MenuHandler {
         menuInGame.addMenuOption("RetornarAoMenuPrincipal", Game.getContext().getResources().getString(R.string.sairDoJogo), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                Game.timesInterstitialOnGameOver = 0;
+                Game.prepareAfterInterstitialFlag = false;
                 Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
             }
         });

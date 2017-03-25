@@ -140,12 +140,14 @@ public class LevelDataLoader {
                 }
             }
 
-            g.addLevel(
-                Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(d.number),
-                d.number,
-                Texture.TEXTURE_ICONS,
-                TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID)
-            );
+            if (d.number < 1000) {
+                g.addLevel(
+                        Game.getContext().getResources().getString(R.string.messageCurrentLevel) + String.valueOf(d.number),
+                        d.number,
+                        Texture.TEXTURE_ICONS,
+                        TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID)
+                );
+            }
         }
 
         /*

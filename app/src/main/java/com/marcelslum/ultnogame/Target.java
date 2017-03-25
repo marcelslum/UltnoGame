@@ -45,6 +45,8 @@ public class Target extends Rectangle {
         this.states = states;
         this.currentState = currentState;
         this.special = special;
+        colorChangeFlag = true;
+
         setType();
         textureId = Texture.TEXTURES;
         program = Game.imageProgram;

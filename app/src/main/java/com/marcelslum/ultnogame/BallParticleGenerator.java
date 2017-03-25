@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
     
-    int maxNumberOfParticles = 35;
+    int maxNumberOfParticles = 22;
     ArrayList<Particle> particlesArray;
     boolean isActive = true;
     boolean isVisible = true;

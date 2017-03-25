@@ -164,8 +164,7 @@ public class ButtonHandler {
                 } else   if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
                     Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
-                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                        Game.setGameState(Game.GAME_STATE_PREPARAR);
+                    Game.setGameState(Game.GAME_STATE_PREPARAR);
                 } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){
                         Tutorial.currentTutorialObject.next();
                 }

@@ -31,9 +31,9 @@ public class GooglePlayGames {
     }
 
     public static void showLeaderboards(GoogleApiClient mGoogleApiClient, MainActivity fragmentActivity, String id) {
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            fragmentActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                    id), REQUEST_LEADERBOARD);
+        if (mGoogleApiClient.isConnected()) {
+            fragmentActivity.startActivityForResult(
+                    Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, id), REQUEST_LEADERBOARD);
         } else {
             Game.setGameState(Game.GAME_STATE_INTRO);
         }

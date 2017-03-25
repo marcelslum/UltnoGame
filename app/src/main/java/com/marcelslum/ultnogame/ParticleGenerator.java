@@ -96,7 +96,7 @@ public class ParticleGenerator extends Entity {
             Particle p = particlesArray.get(i);
             Utils.insertRectangleVerticesData(verticesData, i * 12, 0, p.size, 0f, p.size, 0f);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvData(uvsData, i * 8, textureData);
+            Utils.insertRectangleUvData(uvsData, i * 8, p.textureData);
             Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
         }
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);

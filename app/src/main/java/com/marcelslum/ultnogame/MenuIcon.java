@@ -341,7 +341,7 @@ public class MenuIcon extends Entity{
 
     public MenuIconGraph addGraph(String name, float paddFromBottom, float height, int type, boolean delayShow){
         float padd = size * 0.1f;
-        float positionX = x + padd + (icons.size() * size * 1.1f);
+        float positionX = x + padd + ((icons.size()-1) * size * 1.1f);
         positionX += size * 0.15f;
         MenuIconGraph g = new MenuIconGraph(name, positionX, y + size + paddFromBottom, size * 0.7f, height, type);
         graph.add(g);
