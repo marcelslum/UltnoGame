@@ -105,7 +105,7 @@ public class Game {
     static int ballCollidedFx = 0;
 
     static int timesInterstitialOnGameOver = 0;
-    static boolean prepareAfterInterstitialFlag = true;
+    static boolean prepareAfterInterstitialFlag = false;
 
     // options
     public static boolean isBlocked;

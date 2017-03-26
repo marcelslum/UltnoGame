@@ -62,8 +62,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase checkDB = null;
         try{
             Log.e(TAG, DB_NAME + " verificando se existe o banco de dados na pasta ");
-            String myPath = DB_PATH;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+            checkDB = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
 
         }catch(SQLiteException e){
             Log.e(TAG, DB_NAME + " banco de dados não existe ainda ");
@@ -102,8 +101,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
      
      public SQLiteDatabase openDataBase() throws SQLException {
-         String myPath = DB_PATH + DB_NAME;
-         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+         myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
          return myDataBase;
      }
      
