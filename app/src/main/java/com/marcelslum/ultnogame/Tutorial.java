@@ -42,7 +42,7 @@ public class Tutorial {
     public static boolean isTutorialUnblocked(int tutorialNumber){
         int starsToUnlock = 9999;
         if (tutorialNumber == TUTORIAL_INSTRUCOES_INICIAIS){
-            
+           
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
             
         } else if ((tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.tutorialsSeen[TUTORIAL_INSTRUCOES_INICIAIS])||
@@ -136,17 +136,58 @@ public class Tutorial {
         test = TUTORIAL_INICIO;
         if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
 
+        test = TUTORIAL_MOVIMENTO_BARRA;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+
+        test = TUTORIAL_INCLINACAO_BARRA;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+
         test = TUTORIAL_OBSTACULO;
         if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
-
+        
         test = TUTORIAL_CORES;
         if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
-
+        
         test = TUTORIAL_EXPLOSAO;
         if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
-
+        
+        test = TUTORIAL_ALVO_FANTASMA;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_OBSTACULOS_DINAMICOS;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_BOLAS_INVENCIVEIS;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_BOLAS_PRESAS;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_VENTO;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_BARRA_DINAMICA;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_COMIDA;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_BOLA_FALSA;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_BOTAO_INVERTIDO;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_DUAS_BARRAS;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_DUAS_BOLAS;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
+        test = TUTORIAL_GRADE;
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
+        
         return false;
-
     }
 
 
