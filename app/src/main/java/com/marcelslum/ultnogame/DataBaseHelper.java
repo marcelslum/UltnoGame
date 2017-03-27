@@ -14,21 +14,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class DataBaseHelper extends SQLiteOpenHelper {
+public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     private final static String TAG = "DataBaseLevelDataHelper";
-    public static String DB_PATH;// = "/data/data/com.marcelslum.ultno/databases/";
-    public static String DB_NAME = "ultno_alpha_test.db";
-    public SQLiteDatabase myDataBase;
-    public final Context myContext;
+    public String DB_PATH;
+    public String DB_NAME = "";
+    private SQLiteDatabase myDataBase;
+    private Context myContext;
     public int version;
 
     public DataBaseHelper(Context context, String dbName, int version) {
         super(context, dbName, null, version);
-        myContext = context;
+        this.myContext = context;
         this.version = version;
-        DB_NAME = dbName;
-        DB_PATH = myContext.getDatabasePath(DB_NAME).getAbsolutePath();
+        this.DB_NAME = dbName;
+        this.DB_PATH = myContext.getDatabasePath(DB_NAME).getAbsolutePath();
     }
 
     public void prepareDatabase() throws IOException {
@@ -101,7 +101,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
      
      public SQLiteDatabase openDataBase() throws SQLException {
-         myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
+         if (!myDataBase.isOpen()){
+            myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
+         }
          return myDataBase;
      }
      
