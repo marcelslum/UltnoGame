@@ -25,6 +25,7 @@ public class SaveGame {
     private boolean[] levelsUnlocked;
     private boolean[] levelsSeen;
     private boolean[] tutorialsSeen;
+    private boolean[] groupsSeen;
     public long date;
     public int currentLevelNumber;
     public int currentGroupNumber;
@@ -35,7 +36,6 @@ public class SaveGame {
     public float currentLevelMenuTranslateX;
     public float currentTutorialMenuTranslateX;
     public int lastStars;
-    public boolean newGroupsSeen;
     public int levelsPlayed;
 
     public static boolean loaded = false;
@@ -46,6 +46,7 @@ public class SaveGame {
         levelsUnlocked = builder.levelsUnlocked;
         levelsSeen = builder.levelsSeen;
         tutorialsSeen = builder.tutorialsSeen;
+        groupsSeen = builder.groupsSeen;
         date = builder.date;
         currentLevelNumber = builder.currentLevelNumber;
         currentGroupNumber = builder.currentGroupNumber;
@@ -81,18 +82,9 @@ public class SaveGame {
             int[] _levelsStars = new int[Level.NUMBER_OF_LEVELS];
             boolean[] _levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
             boolean[] _levelsSeen = new boolean[Level.NUMBER_OF_LEVELS];
-
-            _levelsSeen[100] = false;
-            _levelsSeen[101] = false;
-            _levelsSeen[102] = false;
-            _levelsSeen[103] = false;
-
-            _levelsUnlocked[100] = false;
-            _levelsUnlocked[101] = false;
-            _levelsUnlocked[102] = false;
-            _levelsUnlocked[103] = false;
-
             boolean[] _tutorialsSeen = new boolean[Tutorial.NUMBER_OF_TUTORIALS];
+            boolean[] _groupsSeen = new boolean[Level.NUMBER_OF_GROUPS];
+                _groupsSeen[0] = true;
 
             saveGame = new SaveGameBuilder()
                     .setLevelsPoints(_levelsPoints)
@@ -100,6 +92,7 @@ public class SaveGame {
                     .setLevelsUnlocked(_levelsUnlocked)
                     .setLevelsSeen(_levelsSeen)
                     .setTutorialsSeen(_tutorialsSeen)
+                    .setGroupsSeen(_groupsSeen)
                     .setDate()
                     .setMusic(true)
                     .setSound(true)
@@ -110,7 +103,6 @@ public class SaveGame {
                     .setCurrentLevelMenuTranslateX(0)
                     .setCurrentTutorialMenuTranslateX(0)
                     .setLastStars(0)
-                    .setNewGroupsSeen(true)
                     .setLevelsPlayed(0)
                     .build();
         }
@@ -186,7 +178,11 @@ public class SaveGame {
             Log.e(TAG, "tutorial "+ (i + 1) " -> " + s.tutorialsSeen[i])   
         }
               
-         
+        Log.e(TAG, "grupos vistos --------------- ";
+        for (int i = 0; i < s.groupsSeen.length; i++){
+            Log.e(TAG, "tutorial "+ (i + 1) " -> " + s.groupsSeen[i])   
+        }
+              
         Log.e(TAG, "date -> " + s.date)   ;
         Log.e(TAG, "date -> " + s.currentLevelNumber);
         Log.e(TAG, "currentLevelNumber -> " + s.date);
@@ -198,7 +194,6 @@ public class SaveGame {
         Log.e(TAG, "currentLevelMenuTranslateX -> " + s.currentLevelMenuTranslateX);
         Log.e(TAG, "currentTutorialMenuTranslateX -> " + s.currentTutorialMenuTranslateX);
         Log.e(TAG, "lastStars -> " + s.lastStars);
-        Log.e(TAG, "newGroupsSeen  -> " + s.newGroupsSeen );
         Log.e(TAG, "levelsPlayed -> " + s.levelsPlayed);   
     }
                   
@@ -210,6 +205,7 @@ public class SaveGame {
         boolean[] flevelsUnlocked;
         boolean[] flevelsSeen;
         boolean[] ftutorialsSeen;
+        boolean[] fgroupsSeen;
         long fdate;
         int fcurrentLevelNumber;
         int fcurrentGroupNumber;
@@ -228,6 +224,7 @@ public class SaveGame {
         flevelsUnlocked = Utils.getHigher(saveGame1.levelsUnlocked, saveGame2.levelsUnlocked);
         flevelsSeen = Utils.getHigher(saveGame1.levelsSeen, saveGame2.levelsSeen);
         ftutorialsSeen = Utils.getHigher(saveGame1.tutorialsSeen, saveGame2.tutorialsSeen);
+        fgroupsSeen = Utils.getHigher(saveGame1.groupsSeen, saveGame2.groupsSeen);
         fdate = Utils.getHigher(saveGame1.date, saveGame2.date);
         fcurrentLevelNumber = Utils.getHigher(saveGame1.currentLevelNumber, saveGame2.currentLevelNumber);
         fcurrentGroupNumber = Utils.getHigher(saveGame1.currentGroupNumber, saveGame2.currentGroupNumber);
@@ -238,7 +235,6 @@ public class SaveGame {
         fcurrentLevelMenuTranslateX = Utils.getHigher(saveGame1.currentLevelMenuTranslateX, saveGame2.currentLevelMenuTranslateX);
         fcurrentTutorialMenuTranslateX = Utils.getHigher(saveGame1.currentTutorialMenuTranslateX, saveGame2.currentTutorialMenuTranslateX);
         flastStars = Utils.getHigher(saveGame1.lastStars, saveGame2.lastStars);
-        fnewGroupsSeen = Utils.getHigher(saveGame1.newGroupsSeen, saveGame2.newGroupsSeen);
         flevelsPlayed = Utils.getHigher(saveGame1.levelsPlayed, saveGame2.levelsPlayed);
 
         return new SaveGameBuilder()
@@ -247,6 +243,7 @@ public class SaveGame {
                 .setLevelsUnlocked(flevelsUnlocked)
                 .setLevelsSeen(flevelsSeen)
                 .setTutorialsSeen(ftutorialsSeen)
+                .setGroupsSeen(fgroupsSeen)
                 .setDate(fdate)
                 .setMusic(fmusic)
                 .setSound(fsound)
@@ -338,6 +335,20 @@ public class SaveGame {
                 }
             }
             saveGameBuilder.setTutorialsSeen(fTutorialsSeen);
+            
+            boolean[] fGroupsSeen = new boolean[Tutorial.NUMBER_OF_GROUPS];
+            try {
+                JSONArray array = obj.getJSONArray("groupsSeen");
+                for (int i = 0; i < fGroupsSeen.length; i++) {
+                    fGroupsSeen[i] = array.getBoolean(i);
+                }
+            } catch(JSONException e) {
+                for (int i = 0; i < fGroupsSeen.length; i++) {
+                    fGroupsSeen[i] = false;
+                }
+                fGroupsSeen[0] = true;
+            }
+            saveGameBuilder.setGroupsSeen(fGroupsSeen);
 
             saveGameBuilder.setDate(obj.getLong("date"));
             saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
@@ -367,12 +378,6 @@ public class SaveGame {
                 saveGameBuilder.setLastStars(obj.getInt("lastStars"));
             } catch(JSONException e) {
                 saveGameBuilder.setLastStars(0);
-            }
-
-            try {
-                saveGameBuilder.setNewGroupsSeen(obj.getBoolean("newGroupsSeen"));
-            } catch(JSONException e) {
-                saveGameBuilder.setNewGroupsSeen(true);
             }
 
             try {
@@ -420,6 +425,7 @@ public class SaveGame {
             obj.put("levelsUnlocked", new JSONArray(saveGame.levelsUnlocked));
             obj.put("levelsSeen", new JSONArray(saveGame.levelsSeen));
             obj.put("tutorialsSeen", new JSONArray(saveGame.tutorialsSeen));
+            obj.put("groupsSeen", new JSONArray(saveGame.groupsSeen));
             obj.put("date", saveGame.date);
             obj.put("music", saveGame.music);
             obj.put("sound", saveGame.sound);
@@ -482,13 +488,14 @@ public class SaveGame {
         DataBaseSaveGameHelper.getInstance().setLevelSeen(int number);
     }
               
+    public static void setGroupSeen(int number){
+        saveGame.groupsSeen[number - 1]  = true;
+        DataBaseSaveGameHelper.getInstance().setGroupsSeen(int number);
+    }
+              
     public static int getLevelStars(int number){
         return saveGame.levelsStars[number - 1];
     }
 }
-    
-    
-    
-    
-    
+  
 }
