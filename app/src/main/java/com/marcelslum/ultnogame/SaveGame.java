@@ -69,7 +69,7 @@ public class SaveGame {
         Log.e(TAG, "Não carregou Snapshot");
 
         if (MainActivity.dataBaseSaveDataHelper.isNew()){
-            Log.e(TAG, "Carregando apenas localmente");
+            Log.e(TAG, "Carregando apenas localmente.");
             saveGame.getSaveGameFromDataBase();
             //saveGame = getSaveGameFromJson(getStringFromLocal());
         } else {
