@@ -34,7 +34,6 @@ public class MenuHandler {
             final LevelsGroupData lgd = LevelsGroupData.levelsGroupData.get(i);
             
             if (StarsHandler.conqueredStarsTotal >= lgd.starsToUnlock){
-                
                 groupMenu.addOption(i, lgd.textureUnit, lgd.textureData, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
@@ -134,13 +133,13 @@ public class MenuHandler {
         levelMenu.clear();
 
         if (Game.currentLevelsGroupDataSelected == null){
+            Log.e(TAG, "verificar se é util essa linha");
             Game.currentLevelsGroupDataSelected = LevelsGroupData.levelsGroupData.get(0);
         } else {
             if (Game.currentLevelsGroupDataSelected.number != SaveGame.saveGame.currentGroupNumber){
                 SaveGame.saveGame.currentGroupNumber = Game.currentLevelsGroupDataSelected.number;
                 levelMenu.currentTranslateX = 0;
             }
-
         }
 
         for (int i = 0; i < Game.currentLevelsGroupDataSelected.levelsData.size(); i++){
@@ -154,7 +153,7 @@ public class MenuHandler {
                     Game.currentLevelIcon = new Image("Game.currentLevelIcon", (Game.resolutionX * 0.5f) - size * 0.5f,
                             Game.resolutionY * 0.2f,
                             size, size,
-                            ld.textureUnit,TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID)
+                            ld.textureUnit,ld.textureData
                     );
                     Game.currentLevelIcon.clearDisplay();
                     Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
@@ -190,356 +189,109 @@ public class MenuHandler {
         
         float innerTextSize = Game.resolutionY * 0.08f;
         float textSize = Game.resolutionY * 0.032f;
-
-        //TUTORIAL1
-        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INSTRUCOES_INICIAIS)){
-            tutorialMenu.addOption(1, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    Tutorial.currentTutorial = Tutorial.TUTORIAL_INSTRUCOES_INICIAIS;
-                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                }
-            }, false, false);
-
-                tutorialMenu.addText(1, "t1", Game.getContext().getResources().getString(R.string.tutorial1Tittle),
-                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
+        
+        
+        for (int i = 0; i < Tutorial.NUMBER_OF_TUTORIALS; i++){
             
-            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_INSTRUCOES_INICIAIS]){
-                tutorialMenu.addInnerText("t1i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
+            TextureData textureData;
+            switch (i){
+                case TUTORIAL_INSTRUCOES_INICIAIS;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial1Tittle);
+                    break;
+                case TUTORIAL_INICIO;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial2Tittle);
+                    break;
+                case TUTORIAL_MOVIMENTO_BARRA;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial3Tittle);
+                    break;
+                case TUTORIAL_INCLINACAO_BARRA;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial4Tittle);
+                    break;
+                case TUTORIAL_OBSTACULO;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial5Tittle);
+                    break;
+                case TUTORIAL_CORES;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial6Tittle);
+                    break;
+                case TUTORIAL_EXPLOSAO;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial7Tittle);
+                    break;
+                case TUTORIAL_ALVO_FANTASMA;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial8Tittle);
+                    break;
+                case TUTORIAL_OBSTACULOS_DINAMICOS;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial9Tittle);
+                    break;
+                case TUTORIAL_BOLAS_INVENCIVEIS;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial10Tittle);
+                    break;
+                case TUTORIAL_BOLAS_PRESAS;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial11Tittle);
+                    break;
+                case TUTORIAL_VENTO;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial12Tittle);
+                    break;
+                case TUTORIAL_BARRA_DINAMICA;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial13Tittle);
+                    break;
+                case TUTORIAL_COMIDA;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial14Tittle);
+                    break;
+                case TUTORIAL_BOLA_FALSA;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial15Tittle);
+                    break;
+                case TUTORIAL_BOTAO_INVERTIDO;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial16Tittle);
+                    break;
+                case TUTORIAL_DUAS_BARRAS;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial17Tittle);
+                    break;
+                case TUTORIAL_DUAS_BOLAS;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial18Tittle);
+                    break;
+                case TUTORIAL_GRADE;
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial19Tittle);
+                    break;
             }
-        }
 
-        //TUTORIAL2
-        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INICIO)) {
-            tutorialMenu.addOption(2, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    Tutorial.currentTutorial = Tutorial.TUTORIAL_INICIO;
-                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                }
-            }, false, false);
+            final int tutorialNumber = i + 1;
+            if (Tutorial.isTutorialUnblocked(i)){
+                tutorialMenu.addOption(i, Texture.TEXTURE_ICONS, textureData, new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        Tutorial.currentTutorial = tutorialNumber;
+                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
+                    }
+                }, false, false);
 
-            tutorialMenu.addText(1, "t2", Game.getContext().getResources().getString(R.string.tutorial2Tittle),
+                tutorialMenu.addText(1, "t"+i, text,
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_INICIO]) {
-                tutorialMenu.addInnerText("t2i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-            }
-        }
-
-        //TUTORIAL3
-        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_MOVIMENTO_BARRA)) {
-            tutorialMenu.addOption(3, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    Tutorial.currentTutorial = Tutorial.TUTORIAL_MOVIMENTO_BARRA;
-                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                }
-            }, false, false);
-
-            tutorialMenu.addText(1, "t3", Game.getContext().getResources().getString(R.string.tutorial3Tittle),
-                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_MOVIMENTO_BARRA]) {
-                tutorialMenu.addInnerText("t3i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-            }
-        }
-
-        //TUTORIAL4
-        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_INCLINACAO_BARRA)) {
-            tutorialMenu.addOption(4, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    Tutorial.currentTutorial = Tutorial.TUTORIAL_INCLINACAO_BARRA;
-                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                }
-            }, false, false);
-
-            tutorialMenu.addText(1, "t4", Game.getContext().getResources().getString(R.string.tutorial4Tittle),
-                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_INCLINACAO_BARRA]) {
-                tutorialMenu.addInnerText("t4i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-            }
-        }
-
-        //TUTORIAL5
-        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_OBSTACULO)){
-            tutorialMenu.addOption(5, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    Tutorial.currentTutorial = Tutorial.TUTORIAL_OBSTACULO;
-                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                }
-            }, false, false);
-            
-            tutorialMenu.addText(1, "t5", Game.getContext().getResources().getString(R.string.tutorial5Tittle),
-                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-            
-            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_OBSTACULO]){
-                tutorialMenu.addInnerText("t5i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-            }
-        }
-
-        //TUTORIAL6
-        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_CORES)){
-            tutorialMenu.addOption(6, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    Tutorial.currentTutorial = Tutorial.TUTORIAL_CORES;
-                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                }
-            }, false, false);
-
-            tutorialMenu.addText(1, "t6", Game.getContext().getResources().getString(R.string.tutorial6Tittle),
-                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-            
-            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_CORES]){
-                tutorialMenu.addInnerText("t6i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-            }
-
-        }
-
-        //TUTORIAL7
-        if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_EXPLOSAO)){
-            tutorialMenu.addOption(7, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    Tutorial.currentTutorial = Tutorial.TUTORIAL_EXPLOSAO;
-                    Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                }
-            }, false, false);
-
-            tutorialMenu.addText(1, "t7", Game.getContext().getResources().getString(R.string.tutorial7Tittle),
-                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-            
-            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_EXPLOSAO]){
-                tutorialMenu.addInnerText("t7i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-            }
-        }
-
-        //TUTORIAL8
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_ALVO_FANTASMA)){
-                tutorialMenu.addOption(8, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_ALVO_FANTASMA;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t8", Game.getContext().getResources().getString(R.string.tutorial8Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_ALVO_FANTASMA]){
-                    tutorialMenu.addInnerText("t8i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-        }
-
-
-        //TUTORIAL9
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS)){
-                tutorialMenu.addOption(9, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t9", Game.getContext().getResources().getString(R.string.tutorial9Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS]){
-                    tutorialMenu.addInnerText("t9i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-        }
-
-
-        //TUTORIAL10
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLAS_INVENCIVEIS)){
-                tutorialMenu.addOption(10, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLAS_INVENCIVEIS;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t10", Game.getContext().getResources().getString(R.string.tutorial10Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BOLAS_INVENCIVEIS]){
-                    tutorialMenu.addInnerText("t10i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
+                if (!SaveGame.saveGame.tutorialsSeen[i]){
+                    tutorialMenu.addInnerText("ti"+i, Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
-
-
-        //TUTORIAL11
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLAS_PRESAS)){
-                tutorialMenu.addOption(11, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLAS_PRESAS;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t11", Game.getContext().getResources().getString(R.string.tutorial11Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BOLAS_PRESAS]){
-                    tutorialMenu.addInnerText("t11i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-            }
-
-
-        //TUTORIAL12
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_VENTO)){
-                tutorialMenu.addOption(12, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_VENTO;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t12", Game.getContext().getResources().getString(R.string.tutorial12Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_VENTO]){
-                    tutorialMenu.addInnerText("t12i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-            }
-
-
-        //TUTORIAL13
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BARRA_DINAMICA)){
-                tutorialMenu.addOption(13, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_BARRA_DINAMICA;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t13", Game.getContext().getResources().getString(R.string.tutorial13Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BARRA_DINAMICA]){
-                    tutorialMenu.addInnerText("t13i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-            }
-
-
-        //TUTORIAL14
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_COMIDA)){
-                tutorialMenu.addOption(14, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_COMIDA;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t14", Game.getContext().getResources().getString(R.string.tutorial14Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_COMIDA]){
-                    tutorialMenu.addInnerText("t14i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-            }
-
-
-        //TUTORIAL15
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOLA_FALSA)){
-                tutorialMenu.addOption(15, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_BOLA_FALSA;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t15", Game.getContext().getResources().getString(R.string.tutorial15Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BOLA_FALSA]){
-                    tutorialMenu.addInnerText("t15i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
+   
         }
-
-        //TUTORIAL16
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_BOTAO_INVERTIDO)){
-                tutorialMenu.addOption(16, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_BOTAO_INVERTIDO;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t16", Game.getContext().getResources().getString(R.string.tutorial16Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BOTAO_INVERTIDO]){
-                    tutorialMenu.addInnerText("t16i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-        }
-
-        //TUTORIAL17
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_DUAS_BARRAS)){
-                tutorialMenu.addOption(17, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_DUAS_BARRAS;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t17", Game.getContext().getResources().getString(R.string.tutorial17Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_DUAS_BARRAS]){
-                    tutorialMenu.addInnerText("t17i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-        }
-
-        //TUTORIAL18
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_DUAS_BOLAS)){
-                tutorialMenu.addOption(18, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_DUAS_BOLAS;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t18", Game.getContext().getResources().getString(R.string.tutorial18Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_DUAS_BOLAS]){
-                    tutorialMenu.addInnerText("t18i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-        }
-
-        //TUTORIAL19
-       if (Tutorial.isTutorialUnblocked(Tutorial.TUTORIAL_GRADE)){
-                tutorialMenu.addOption(19, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        Tutorial.currentTutorial = Tutorial.TUTORIAL_GRADE;
-                        Game.setGameState(Game.GAME_STATE_TUTORIAL);
-                    }
-                }, false, false);
-
-                tutorialMenu.addText(1, "t19", Game.getContext().getResources().getString(R.string.tutorial19Tittle),
-                        textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-
-                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_GRADE]){
-                    tutorialMenu.addInnerText("t19i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
-                }
-            }
     }
 
 
