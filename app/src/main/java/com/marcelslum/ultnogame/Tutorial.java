@@ -12,7 +12,7 @@ public class Tutorial {
     static Tutorial currentTutorialObject;
     static Image tutorialImage;
     static TextBox tutorialTextBox;
-    static int numberOfTutorials = 20;
+    static final int NUMBER_OF_TUTORIALS = 20;
 
     public ArrayList<Frame> frames;
     int currentFrame;
@@ -45,18 +45,18 @@ public class Tutorial {
             
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
             
-        } else if ((tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.tutorialsViwed[TUTORIAL_INSTRUCOES_INICIAIS])||
-                (tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.pointsLevels[0] > 0)){
+        } else if ((tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.tutorialsSeen[TUTORIAL_INSTRUCOES_INICIAIS])||
+                (tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.levelsPoints[0] > 0)){
             
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
             
-        } else if (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && SaveGame.saveGame.tutorialsViwed[TUTORIAL_INICIO] ||
-                (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && SaveGame.saveGame.pointsLevels[0] > 0)){
+        } else if (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && SaveGame.saveGame.tutorialsSeen[TUTORIAL_INICIO] ||
+                (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && SaveGame.saveGame.levelsPoints[0] > 0)){
             
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
             
-        } else if (tutorialNumber == TUTORIAL_INCLINACAO_BARRA && SaveGame.saveGame.tutorialsViwed[TUTORIAL_MOVIMENTO_BARRA]||
-                (tutorialNumber == TUTORIAL_INCLINACAO_BARRA && SaveGame.saveGame.pointsLevels[0] > 0)){
+        } else if (tutorialNumber == TUTORIAL_INCLINACAO_BARRA && SaveGame.saveGame.tutorialsSeen[TUTORIAL_MOVIMENTO_BARRA]||
+                (tutorialNumber == TUTORIAL_INCLINACAO_BARRA && SaveGame.saveGame.levelsPoints[0] > 0)){
             
             starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
             
@@ -131,19 +131,19 @@ public class Tutorial {
     public static boolean hasUnvisitedTutorial(){
 
         int test = TUTORIAL_INSTRUCOES_INICIAIS;
-        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
 
         test = TUTORIAL_INICIO;
-        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
 
         test = TUTORIAL_OBSTACULO;
-        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
 
         test = TUTORIAL_CORES;
-        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
 
         test = TUTORIAL_EXPLOSAO;
-        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsViwed[test]){return true;}
+        if (isTutorialUnblocked(test) && !SaveGame.saveGame.tutorialsSeen[test]){return true;}
 
         return false;
 
@@ -237,7 +237,7 @@ public class Tutorial {
             tutorialImage.clearDisplay();
             tutorialTextBox.clearDisplay();
             
-            SaveGame.saveGame.tutorialsViwed[currentTutorial] = true;
+            SaveGame.saveGame.tutorialsSeen[currentTutorial] = true;
             Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
         }
     }

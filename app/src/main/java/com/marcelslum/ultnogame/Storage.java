@@ -52,7 +52,7 @@ public class Storage {
     }
 
         /*
-        for (int i = 0; i < maxNumberOfLevels; i++){
+        for (int i = 0; i < NUMBER_OF_LEVELS; i++){
             int levelToTest = i + 1;
             if (!Storage.contains("tutorial"+ levelToTest +"visto")) {
                 Log.e("Storage", "not contains tutorial visto level " + levelToTest);
@@ -77,12 +77,12 @@ public class Storage {
             Storage.setInt("currentDifficulty", 0);
 
 
-        Levels.pointsLevels = new int[maxNumberOfLevels];
-        Levels.difficultyLevels = new int[maxNumberOfLevels];
+        Levels.levelsPoints = new int[NUMBER_OF_LEVELS];
+        Levels.difficultyLevels = new int[NUMBER_OF_LEVELS];
 
-        for (int i = 0; i < maxNumberOfLevels; i++){
-            Levels.pointsLevels[i] = getLevelMaxScore(i+1);
-            if (Levels.pointsLevels[i] > 0){
+        for (int i = 0; i < NUMBER_OF_LEVELS; i++){
+            Levels.levelsPoints[i] = getLevelMaxScore(i+1);
+            if (Levels.levelsPoints[i] > 0){
                 Levels.difficultyLevels[i] = Levels.LEVEL_COMPLETE_EASY;
             } else {
                 Levels.difficultyLevels[i] = Levels.LEVEL_NOT_COMPLETED;

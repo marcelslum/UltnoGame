@@ -18,16 +18,16 @@ public class ScoreHandler {
     static long getMaxScoreTotal(){
         //Log.e("Game", "getMaxScoreTotal");
         long scoreTotal = 0;
-        for (int i = 0; i < Level.maxNumberOfLevels; i++){
-            scoreTotal += SaveGame.saveGame.pointsLevels[i];
-            //Log.e("Game", "level "+(i+1)+ " pontos "+SaveGame.saveGame.pointsLevels[i]);
+        for (int i = 0; i < Level.NUMBER_OF_LEVELS; i++){
+            scoreTotal += SaveGame.saveGame.levelsPoints[i];
+            //Log.e("Game", "level "+(i+1)+ " pontos "+SaveGame.saveGame.levelsPoints[i]);
             //Log.e("Game", "scoreTotal "+scoreTotal);
 
         }
 
         for (int i = 0; i < Level.numberOfSecretLevels; i++){
             scoreTotal += SaveGame.saveGame.pointsSecretLevels[i];
-            //Log.e("Game", "level "+(i+1)+ " pontos "+SaveGame.saveGame.pointsLevels[i]);
+            //Log.e("Game", "level "+(i+1)+ " pontos "+SaveGame.saveGame.levelsPoints[i]);
             //Log.e("Game", "scoreTotal "+scoreTotal);
         }
 
@@ -70,7 +70,7 @@ public class ScoreHandler {
 
         int totalPointsGroup = 0;
         for (int i = 0; i < Game.currentLevelsGroupDataSelected.levelsData.size(); i++){
-                totalPointsGroup += SaveGame.saveGame.pointsLevels[Game.currentLevelsGroupDataSelected.levelsData.get(i).number-1];
+                totalPointsGroup += SaveGame.saveGame.levelsPoints[Game.currentLevelsGroupDataSelected.levelsData.get(i).number-1];
         }
 
         String id;

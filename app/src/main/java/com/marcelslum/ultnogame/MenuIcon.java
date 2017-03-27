@@ -210,7 +210,7 @@ public class MenuIcon extends Entity{
                         @Override
                         public void onAnimationEnd() {
                             innerMenuIcon.unblock();
-                            SaveGame.setAllSecretSenn();
+                            SaveGame.setAllSecretSeen();
                         }
                     });
                     delayShowUnblockMarked = true;

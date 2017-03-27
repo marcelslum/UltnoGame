@@ -34,7 +34,6 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
             return null;
         }
 
-
         Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
                 MySnapshots.SNAPSHOT_FILE_NAME, true).await(5000L, TimeUnit.MILLISECONDS);
         return result;
@@ -63,7 +62,8 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
             data = snapshot.getSnapshotContents().readFully();
         } catch (IOException e) {
             Log.e(TAG, "Error while reading Snapshot.", e);
-            data = null;
+            SaveGame.onFailLoadFromSnapshot();
+            return;
         }
         
         Log.e(TAG, data.toString() + " data " + data + " size "+  data.toString().length());
@@ -77,44 +77,8 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
         } else {
             SaveGame.onLoadFromSnapshot(stringData);
         }
-
-        // TODO retirar ao final
-
-        /*
-
-        SaveGame.saveGame.starsLevels[0] = 5;
-        SaveGame.saveGame.starsLevels[1] = 5;
-        SaveGame.saveGame.starsLevels[2] = 5;
-        SaveGame.saveGame.starsLevels[3] = 5;
-        SaveGame.saveGame.starsLevels[4] = 5;
-        SaveGame.saveGame.starsLevels[5] = 5;
-
-*/
-
-        //SaveGame.saveGame.secretLevelsSeen[0] = false;
-        //SaveGame.saveGame.secretLevelsSeen[1] = false;
-        //SaveGame.saveGame.secretLevelsSeen[2] = false;
-        //SaveGame.saveGame.secretLevelsSeen[3] = false;
-        //SaveGame.saveGame.secretLevelsSeen[4] = false;
-
-        //SaveGame.saveGame.secretLevelsUnlocked[0] = false;
-        //SaveGame.saveGame.secretLevelsUnlocked[1] = false;
-        //SaveGame.saveGame.secretLevelsUnlocked[2] = false;
-        //SaveGame.saveGame.secretLevelsUnlocked[3] = false;
-        //SaveGame.saveGame.secretLevelsUnlocked[4] = false;
-
-
-        //SaveGame.saveGame.tutorialsViwed[0] = true;
-        //SaveGame.saveGame.tutorialsViwed[1] = true;
-        //SaveGame.saveGame.tutorialsViwed[2] = true;
-        //SaveGame.saveGame.tutorialsViwed[3] = true;
-        //SaveGame.saveGame.tutorialsViwed[4] = true;
-
-        SaveGame.save();
-
     }
 
     protected void onProgressUpdate(){
-        //Codigo
     }
 }

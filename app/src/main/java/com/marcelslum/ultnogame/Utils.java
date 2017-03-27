@@ -388,4 +388,101 @@ public abstract class Utils {
 
         return text.toString();
     }
+
+    public static boolean[] getHigher(boolean[] array1, boolean[] array2) {
+        int size = getHigher(array1.length, array2.length);
+        boolean[] result = new boolean[size];
+        boolean v1;
+        boolean v2;
+        for (int i = 0; i < result.length; i++) {
+            if (array1.length > i) {
+                v1 = array1[i];
+            } else {
+                v1 = false;
+            }
+
+            if (array2.length > i) {
+                v2 = array2[i];
+            } else {
+                v2 = false;
+            }
+
+            result[i] = v1 || v2;
+        }
+        return result;
+    }
+
+    public static int[] getHigher(int[] array1, int[] array2) {
+        int size = getHigher(array1.length, array2.length);
+        int[] result = new int[size];
+        int v1;
+        int v2;
+        for (int i = 0; i < result.length; i++) {
+            if (array1.length > i) {
+                v1 = array1[i];
+            } else {
+                v1 = 0;
+            }
+
+            if (array2.length > i) {
+                v2 = array2[i];
+            } else {
+                v2 = 0;
+            }
+
+            result[i] = getHigher(v1, v2);
+        }
+        return result;
+    }
+
+    public static long[] getHigher(long[] array1, long[] array2) {
+        int size = getHigher(array1.length, array2.length);
+        long[] result = new long[size];
+        long v1;
+        long v2;
+        for (int i = 0; i < result.length; i++) {
+            if (array1.length > i) {
+                v1 = array1[i];
+            } else {
+                v1 = 0;
+            }
+
+            if (array2.length > i) {
+                v2 = array2[i];
+            } else {
+                v2 = 0;
+            }
+
+            result[i] = getHigher(v1, v2);
+        }
+        return result;
+    }
+
+    public static int getHigher(int value1, int value2) {
+        if (value1 == value2 || value1 > value2) {
+            return value1;
+        } else {
+            return value2;
+        }
+    }
+
+    public static boolean getHigher(boolean value1, boolean value2) {
+        return value1 || value2;
+    }
+
+    public static long getHigher(long value1, long value2) {
+        if (value1 == value2 || value1 > value2) {
+            return value1;
+        } else {
+            return value2;
+        }
+    }
+
+    public static float getHigher(float value1, float value2) {
+        if (value1 == value2 || value1 > value2) {
+            return value1;
+        } else {
+            return value2;
+        }
+    }
 }

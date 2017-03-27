@@ -62,7 +62,7 @@ public class MenuHandler {
                 int totalPoints = 0;
                 for (int i2 = 0; i2 < lgd.levelsData.size(); i2++){
                     if (lgd.levelsData.get(i2).number < 1000) {
-                        totalPoints += (int) SaveGame.saveGame.pointsLevels[lgd.levelsData.get(i2).number - 1];
+                        totalPoints += (int) SaveGame.saveGame.levelsPoints[lgd.levelsData.get(i2).number - 1];
                     }
                 }
 
@@ -188,11 +188,11 @@ public class MenuHandler {
             levelMenu.addText(1, ld.name, ld.name,Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
             levelMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, false);
 
-            levelMenu.addText(2, ld.name+"2",  (int)SaveGame.saveGame.pointsLevels[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),
+            levelMenu.addText(2, ld.name+"2",  (int)SaveGame.saveGame.levelsPoints[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),
                     Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f), false);
 
             float percentage = 0f;
-            float starsOfLevel = SaveGame.saveGame.starsLevels[ld.number-1];
+            float starsOfLevel = SaveGame.saveGame.levelsStars[ld.number-1];
             if (starsOfLevel == 1){
                 percentage = 0.2f;
             } else if (starsOfLevel == 2){
@@ -228,7 +228,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t1", Game.getContext().getResources().getString(R.string.tutorial1Tittle),
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
             
-            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_INSTRUCOES_INICIAIS]){
+            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_INSTRUCOES_INICIAIS]){
                 tutorialMenu.addInnerText("t1i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
             }
         }
@@ -246,7 +246,7 @@ public class MenuHandler {
             tutorialMenu.addText(1, "t2", Game.getContext().getResources().getString(R.string.tutorial2Tittle),
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_INICIO]) {
+            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_INICIO]) {
                 tutorialMenu.addInnerText("t2i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
             }
         }
@@ -264,7 +264,7 @@ public class MenuHandler {
             tutorialMenu.addText(1, "t3", Game.getContext().getResources().getString(R.string.tutorial3Tittle),
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_MOVIMENTO_BARRA]) {
+            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_MOVIMENTO_BARRA]) {
                 tutorialMenu.addInnerText("t3i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
             }
         }
@@ -282,7 +282,7 @@ public class MenuHandler {
             tutorialMenu.addText(1, "t4", Game.getContext().getResources().getString(R.string.tutorial4Tittle),
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_INCLINACAO_BARRA]) {
+            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_INCLINACAO_BARRA]) {
                 tutorialMenu.addInnerText("t4i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
             }
         }
@@ -300,7 +300,7 @@ public class MenuHandler {
             tutorialMenu.addText(1, "t5", Game.getContext().getResources().getString(R.string.tutorial5Tittle),
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
             
-            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_OBSTACULO]){
+            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_OBSTACULO]){
                 tutorialMenu.addInnerText("t5i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
             }
         }
@@ -318,7 +318,7 @@ public class MenuHandler {
             tutorialMenu.addText(1, "t6", Game.getContext().getResources().getString(R.string.tutorial6Tittle),
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
             
-            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_CORES]){
+            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_CORES]){
                 tutorialMenu.addInnerText("t6i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
             }
 
@@ -337,7 +337,7 @@ public class MenuHandler {
             tutorialMenu.addText(1, "t7", Game.getContext().getResources().getString(R.string.tutorial7Tittle),
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
             
-            if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_EXPLOSAO]){
+            if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_EXPLOSAO]){
                 tutorialMenu.addInnerText("t7i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
             }
         }
@@ -355,7 +355,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t8", Game.getContext().getResources().getString(R.string.tutorial8Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_ALVO_FANTASMA]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_ALVO_FANTASMA]){
                     tutorialMenu.addInnerText("t8i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
         }
@@ -374,7 +374,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t9", Game.getContext().getResources().getString(R.string.tutorial9Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS]){
                     tutorialMenu.addInnerText("t9i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
         }
@@ -393,7 +393,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t10", Game.getContext().getResources().getString(R.string.tutorial10Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_BOLAS_INVENCIVEIS]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BOLAS_INVENCIVEIS]){
                     tutorialMenu.addInnerText("t10i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
@@ -412,7 +412,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t11", Game.getContext().getResources().getString(R.string.tutorial11Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_BOLAS_PRESAS]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BOLAS_PRESAS]){
                     tutorialMenu.addInnerText("t11i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
@@ -431,7 +431,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t12", Game.getContext().getResources().getString(R.string.tutorial12Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_VENTO]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_VENTO]){
                     tutorialMenu.addInnerText("t12i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
@@ -450,7 +450,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t13", Game.getContext().getResources().getString(R.string.tutorial13Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_BARRA_DINAMICA]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BARRA_DINAMICA]){
                     tutorialMenu.addInnerText("t13i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
@@ -469,7 +469,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t14", Game.getContext().getResources().getString(R.string.tutorial14Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_COMIDA]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_COMIDA]){
                     tutorialMenu.addInnerText("t14i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }
@@ -488,7 +488,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t15", Game.getContext().getResources().getString(R.string.tutorial15Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_BOLA_FALSA]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BOLA_FALSA]){
                     tutorialMenu.addInnerText("t15i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
         }
@@ -506,7 +506,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t16", Game.getContext().getResources().getString(R.string.tutorial16Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_BOTAO_INVERTIDO]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_BOTAO_INVERTIDO]){
                     tutorialMenu.addInnerText("t16i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
         }
@@ -524,7 +524,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t17", Game.getContext().getResources().getString(R.string.tutorial17Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_DUAS_BARRAS]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_DUAS_BARRAS]){
                     tutorialMenu.addInnerText("t17i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
         }
@@ -542,7 +542,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t18", Game.getContext().getResources().getString(R.string.tutorial18Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_DUAS_BOLAS]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_DUAS_BOLAS]){
                     tutorialMenu.addInnerText("t18i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
         }
@@ -560,7 +560,7 @@ public class MenuHandler {
                 tutorialMenu.addText(1, "t19", Game.getContext().getResources().getString(R.string.tutorial19Tittle),
                         textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
 
-                if (!SaveGame.saveGame.tutorialsViwed[Tutorial.TUTORIAL_GRADE]){
+                if (!SaveGame.saveGame.tutorialsSeen[Tutorial.TUTORIAL_GRADE]){
                     tutorialMenu.addInnerText("t19i", Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                 }
             }

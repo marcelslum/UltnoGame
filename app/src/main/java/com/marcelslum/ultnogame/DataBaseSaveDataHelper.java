@@ -13,6 +13,17 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
     public DataBaseSaveDataHelper(Context context) {
         super(context, DB_NAME, Integer.valueOf(context.getResources().getString(R.string.databaseLevelVersion)));
     }
+
+    public boolean isNew() {
+        openDataBase();
+        String query = "SELECT new FROM dbVersion";
+        Cursor cursor = myDataBase.rawQuery(query, null);
+        cursor.moveToFirst();
+        int v =  cursor.getInt(0);
+        close();
+        return v == 1 ? true : false;
+    }
+
      
      public ArrayList<BallDataBaseData> getBalls(int level){
          myDataBase = openDataBase();

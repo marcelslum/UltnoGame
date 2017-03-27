@@ -35,10 +35,15 @@ import com.google.android.gms.games.Games;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import android.os.Vibrator;
 
+import java.io.IOException;
+
 public class MainActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener,
         SensorEventListener{
 
+
+    public static DataBaseLevelDataHelper dataBaseLevelDataHelper;
+    public static DataBaseSaveDataHelper dataBaseSaveDataHelper;
 
     public static SensorManager mSensorManager;
     public static Sensor mAccelerometer;
@@ -69,6 +74,24 @@ public class MainActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         Log.e("mainActivity", "create");
         super.onCreate(savedInstanceState);
+
+        dataBaseLevelDataHelper = new DataBaseLevelDataHelper(this);
+        try {
+            dataBaseLevelDataHelper.prepareDatabase();
+            Game.groupsDataBaseData = dataBaseLevelDataHelper.getGroupsDataBaseData();
+            Game.levelsDataBaseData = dataBaseLevelDataHelper.getLevelsDataBaseData();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+
+        dataBaseSaveDataHelper = new DataBaseSaveDataHelper(this);
+        try {
+            dataBaseSaveDataHelper.prepareDatabase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+
+
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -281,6 +304,14 @@ public class MainActivity extends FragmentActivity implements
 
     @Override
     protected void onPause() {
+
+        if (dataBaseLevelDataHelper != null) {
+            dataBaseLevelDataHelper.close();
+        }
+        if (dataBaseSaveDataHelper != null) {
+            dataBaseSaveDataHelper.close();
+        }
+
         isPaused = true;
         Log.e("MainActivity", "onPause()");
         SaveGame.save();

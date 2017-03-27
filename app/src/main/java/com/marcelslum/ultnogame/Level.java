@@ -43,8 +43,7 @@ public class Level {
     public static Level levelObject;
     public static LevelGoals levelGoalsObject;
 
-    public static final int maxNumberOfLevels = 100;
-    public static final int numberOfSecretLevels = 10;
+    public static final int NUMBER_OF_LEVELS = 104;
 
     private Level(){
 

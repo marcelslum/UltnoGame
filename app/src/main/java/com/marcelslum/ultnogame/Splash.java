@@ -242,6 +242,17 @@ public class Splash {
                                 loadingSaveGame = true;
                                 Log.e("splash", "iniciando carregamento do SaveGame");
                                 SaveGame.load();
+
+                                if (MenuHandler.groupMenu != null) {
+                                    MenuHandler.groupMenu.currentTranslateX =
+                                            SaveGame.saveGame.currentGroupMenuTranslateX;
+                                }
+
+                                if (MenuHandler.tutorialMenu != null) {
+                                    MenuHandler.tutorialMenu.currentTranslateX =
+                                            SaveGame.saveGame.currentTutorialMenuTranslateX;
+                                }
+
                             }
 
                             Log.e("splash", "ainda carregando SaveGame");

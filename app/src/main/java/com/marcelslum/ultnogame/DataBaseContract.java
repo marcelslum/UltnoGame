@@ -82,4 +82,9 @@ public final class DataBaseContract {
         public static final String COLUMN_SEEN = "seen";
     }
 
+    public static class DataTutorials implements BaseColumns {
+        public static final String TABLE_NAME = "tutorials";
+        public static final String COLUMN_NUMBER = "number";
+        public static final String COLUMN_POINTS = "seen";
+    }
 }

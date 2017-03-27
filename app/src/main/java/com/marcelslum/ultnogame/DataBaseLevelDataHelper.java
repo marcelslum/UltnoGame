@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class DataBaseLevelDataHelper extends DataBaseHelper {
 
     private final static String TAG = "DataBaseLevelDataHelper";
-    private static String DB_NAME = "ultno_alpha_test.db";
+    private static String DB_NAME = "level.db";
 
     public DataBaseLevelDataHelper(Context context) {
         super(context, DB_NAME, Integer.valueOf(context.getResources().getString(R.string.databaseLevelVersion)));

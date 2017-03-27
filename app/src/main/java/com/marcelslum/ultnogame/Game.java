@@ -5,7 +5,6 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -21,8 +20,8 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class Game {
 
     public static Pool<Vector> vectorPool;
-    
-    public static DataBaseLevelDataHelper myDbHelper;
+
+
 
     public static boolean isOpenGL30 = false;
     public static Program openGl30TextProgram;
@@ -210,23 +209,8 @@ public class Game {
         Game.frame = new Rectangle("frame", 0f, 0f, Entity.TYPE_OTHER, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
         Game.frame.clearDisplay();
         Game.frame.alpha = 0f;
-
         TextureData.getTextureData();
-
         setGameState(Game.GAME_STATE_INTRO);
-
-        myDbHelper = new DataBaseLevelDataHelper(Game.getContext());
-        try {
-            myDbHelper.prepareDatabase();
-
-            groupsDataBaseData = myDbHelper.getGroupsDataBaseData();
-            levelsDataBaseData = myDbHelper.getLevelsDataBaseData();
-
-        } catch (IOException ioe) {
-            throw new Error("Unable to create database");
-        }
-
-
     }
 
     public static void activateFrame(int duration){
@@ -710,12 +694,12 @@ public class Game {
                 int points = ScoreHandler.scorePanel.value / 2;
                 ScoreHandler.scorePanel.setValue(points, true, 1000, true);
                 if (SaveGame.saveGame.currentLevelNumber < 1000) {
-                    if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] < points) {
-                        SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] = points;
+                    if (SaveGame.saveGame.levelsPoints[SaveGame.saveGame.currentLevelNumber - 1] < points) {
+                        SaveGame.saveGame.levelsPoints[SaveGame.saveGame.currentLevelNumber - 1] = points;
                     }
                 } else {
-                    if (SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1000] < points) {
-                        SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1000] = points;
+                    if (SaveGame.saveGame.levelsPoints[SaveGame.saveGame.currentLevelNumber - 1000] < points) {
+                        SaveGame.saveGame.levelsPoints[SaveGame.saveGame.currentLevelNumber - 1000] = points;
                     }
                 }
                 ScoreHandler.setMaxScoreTotal();
@@ -836,7 +820,7 @@ public class Game {
             anim2.start();
 
             if (SaveGame.saveGame.currentLevelNumber < 1000) {
-                StarsHandler.previousStars = SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1];
+                StarsHandler.previousStars = SaveGame.saveGame.levelsStars[SaveGame.saveGame.currentLevelNumber - 1];
             } else {
                 StarsHandler.previousStars = SaveGame.saveGame.starsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000];
             }
@@ -855,7 +839,7 @@ public class Game {
             long previousPointsVerify;
 
             if (SaveGame.saveGame.currentLevelNumber < 1000) {
-                previousPointsVerify = SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1];
+                previousPointsVerify = SaveGame.saveGame.levelsPoints[SaveGame.saveGame.currentLevelNumber - 1];
             } else {
                 previousPointsVerify = SaveGame.saveGame.pointsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000];
             }
@@ -864,7 +848,7 @@ public class Game {
 
             if (previousPoints < pointsTotal) {
                 if (SaveGame.saveGame.currentLevelNumber < 1000) {
-                    SaveGame.saveGame.pointsLevels[SaveGame.saveGame.currentLevelNumber - 1] = pointsTotal;
+                    SaveGame.saveGame.levelsPoints[SaveGame.saveGame.currentLevelNumber - 1] = pointsTotal;
                 } else {
                     SaveGame.saveGame.pointsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000] = pointsTotal;
                 }
@@ -872,7 +856,7 @@ public class Game {
             }
             if (StarsHandler.previousStars < StarsHandler.newStars) {
                 if (SaveGame.saveGame.currentLevelNumber < 1000) {
-                    SaveGame.saveGame.starsLevels[SaveGame.saveGame.currentLevelNumber - 1] = StarsHandler.newStars;
+                    SaveGame.saveGame.levelsStars[SaveGame.saveGame.currentLevelNumber - 1] = StarsHandler.newStars;
                 } else {
                     SaveGame.saveGame.starsSecretLevels[SaveGame.saveGame.currentLevelNumber - 1000] = StarsHandler.newStars;
                 }
