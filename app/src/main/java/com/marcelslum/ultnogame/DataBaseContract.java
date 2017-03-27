@@ -48,6 +48,7 @@ public final class DataBaseContract {
         public static final String COLUMN_NUMBER = "number";
         public static final String COLUMN_LEVELS = "levels";
         public static final String COLUMN_STARS_TO_UNLOCK = "starstounlock";
+        public static final String COLUMN_SEEN = "seen"; // CRIAR NO BANCO DE DADOS
     }
 
     public static class Levels implements BaseColumns {
