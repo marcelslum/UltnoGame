@@ -14,32 +14,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class DataBaseHelper extends SQLiteOpenHelper {
+public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     private final static String TAG = "DataBaseLevelDataHelper";
-    public static String DB_PATH;
-    public static String DB_NAME;
+    public static String DB_PATH;// = "/data/data/com.marcelslum.ultno/databases/";
+    public static String DB_NAME = "ultno_alpha_test.db";
     public SQLiteDatabase myDataBase;
     public final Context myContext;
     public int version;
 
     public DataBaseHelper(Context context, String dbName, int version) {
         super(context, dbName, null, version);
-        myContext = context;
+        this.myContext = context;
         this.version = version;
-        DB_NAME = dbName;
-        DB_PATH = myContext.getDatabasePath(DB_NAME).getAbsolutePath();
+        this.DB_NAME = dbName;
+        this.DB_PATH = myContext.getDatabasePath(DB_NAME).getAbsolutePath();
     }
 
     public void prepareDatabase() throws IOException {
-        deleteDataBase();
         boolean dbExist = checkDataBase();
         SQLiteDatabase db_Read = null;
         if(dbExist){
            Log.e(TAG, DB_NAME + " banco de dados já existe");
            int currentDBVersion = getVersionId();
            Log.e(TAG, DB_NAME + " currentDBVersion "+currentDBVersion);
-            Log.e(TAG, DB_NAME + " version "+version);
               if (version > currentDBVersion) {
                   Log.d(TAG, DB_NAME + " Database version is higher than old.");
                   deleteDataBase();
@@ -77,8 +75,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
      
     private void copyDataBase() throws IOException{
-
-            Log.e(TAG, DB_NAME + " copiando arquivo ");
            //Open your local db as the input stream
            InputStream myInput = myContext.getAssets().open(DB_NAME);
            //Open the empty db as the output stream
@@ -94,7 +90,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
            myOutput.close();
            myInput.close();
     }
-
+     
+     
     public void deleteDataBase() {
         File file = new File(DB_PATH);
         if(file.exists()) {
@@ -104,7 +101,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
      
      public SQLiteDatabase openDataBase() throws SQLException {
-         myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
+         if (!myDataBase.isOpen()){
+            myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
+         }
          return myDataBase;
      }
      
