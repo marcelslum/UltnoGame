@@ -12,7 +12,7 @@ public class Tutorial {
     static Tutorial currentTutorialObject;
     static Image tutorialImage;
     static TextBox tutorialTextBox;
-    static final int NUMBER_OF_TUTORIALS = 20;
+    static final int NUMBER_OF_TUTORIALS = 19;
 
     public ArrayList<Frame> frames;
     int currentFrame;
