@@ -235,7 +235,17 @@ public class Splash {
                             Game.initEdges();
                             ButtonHandler.initButtons();
 
-                            //Game.changeDifficulty(SaveGame.saveGame.currentDifficulty);
+                            if (MenuHandler.groupMenu != null) {
+                                    MenuHandler.groupMenu.currentTranslateX =
+                                            SaveGame.saveGame.currentGroupMenuTranslateX;
+                            }
+
+                            if (MenuHandler.tutorialMenu != null) {
+                                MenuHandler.tutorialMenu.currentTranslateX =
+                                        SaveGame.saveGame.currentTutorialMenuTranslateX;
+                            }
+                            
+                            
                             Game.setGameState(Game.GAME_STATE_MENU);    
                         } else {
                             if (!loadingSaveGame){
@@ -243,15 +253,7 @@ public class Splash {
                                 Log.e("splash", "iniciando carregamento do SaveGame");
                                 SaveGame.load();
 
-                                if (MenuHandler.groupMenu != null) {
-                                    MenuHandler.groupMenu.currentTranslateX =
-                                            SaveGame.saveGame.currentGroupMenuTranslateX;
-                                }
-
-                                if (MenuHandler.tutorialMenu != null) {
-                                    MenuHandler.tutorialMenu.currentTranslateX =
-                                            SaveGame.saveGame.currentTutorialMenuTranslateX;
-                                }
+                                
 
                             }
 
