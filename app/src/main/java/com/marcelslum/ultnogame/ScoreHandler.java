@@ -16,23 +16,11 @@ public class ScoreHandler {
     }
 
     static long getMaxScoreTotal(){
-        //Log.e("Game", "getMaxScoreTotal");
         long scoreTotal = 0;
         for (int i = 0; i < Level.NUMBER_OF_LEVELS; i++){
             scoreTotal += SaveGame.saveGame.levelsPoints[i];
-            //Log.e("Game", "level "+(i+1)+ " pontos "+SaveGame.saveGame.levelsPoints[i]);
-            //Log.e("Game", "scoreTotal "+scoreTotal);
-
         }
-
-        for (int i = 0; i < Level.numberOfSecretLevels; i++){
-            scoreTotal += SaveGame.saveGame.pointsSecretLevels[i];
-            //Log.e("Game", "level "+(i+1)+ " pontos "+SaveGame.saveGame.levelsPoints[i]);
-            //Log.e("Game", "scoreTotal "+scoreTotal);
-        }
-
         maxScoreTotal = scoreTotal;
-        //Log.e("Game", "score total retornando após calculo "+ scoreTotal);
         return scoreTotal;
     }
 
