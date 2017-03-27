@@ -8,8 +8,7 @@ import java.text.NumberFormat;
 
 public class StarsHandler {
 
-
-    public static int conqueredStarsTotal;
+    static int conqueredStarsTotal;
     static int newStars;
     static int previousStars;
 
@@ -19,18 +18,10 @@ public class StarsHandler {
             numberOfStars += SaveGame.saveGame.levelsStars[i];
         }
 
-        for (int i = 0; i < Level.numberOfSecretLevels; i++){
-            numberOfStars += SaveGame.saveGame.starsSecretLevels[i];
-        }
-
         conqueredStarsTotal = numberOfStars;
         if (MessagesHandler.messageConqueredStarsTotal != null) {
             MessagesHandler.messageConqueredStarsTotal.setText(Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                     "\u0020" + NumberFormat.getInstance().format(conqueredStarsTotal));
-
-
-
-
         }
         return numberOfStars;
     }
