@@ -70,7 +70,10 @@ public class SaveGame {
 
         if (!DataBaseSaveDataHelper.getInstance().isNew()){
             Log.e(TAG, "Carregando apenas localmente.");
-            saveGame.getSaveGameFromDataBase();
+            saveGame = getSaveGameFromDataBase();
+            
+            saveGame.log();
+
             //saveGame = getSaveGameFromJson(getStringFromLocal());
         } else {
             Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
@@ -112,27 +115,32 @@ public class SaveGame {
                     .build();
         }
         loaded = true;
+        saveGame.log();
         SaveGame.save();
     }
 
     public static void onLoadFromSnapshot(String data) {
-        Log.e(TAG, "Snapshot aberto:  " + data);
+
+        Log.e(TAG, "onLoadFromSnapshot");
+        
+        Log.e(TAG, "local");
         SaveGame localSaveGame = DataBaseSaveDataHelper.getInstance().getSaveGame();
+        localSaveGame.log();
+        
+        Log.e(TAG, "cloud");
         SaveGame cloudSaveGame = getSaveGameFromJson(data);
+        cloudSaveGame.log();
+        
+        Log.e(TAG, "merged");
         saveGame = mergeSaveGames(localSaveGame, cloudSaveGame);
+        saveGame.log();
+        
         loaded = true;
     }
 
-    public static void saveLocally(){
-        if (SaveGame.saveGame == null){
-            return;
-        }
-        String saveString = getStringFromSaveGame(saveGame);
-        Log.e(TAG, "Salvando localmente "+saveString);
-        Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
-    }
-
     public static void save(){
+        Log.e(TAG, "save()");
+        
         if (SaveGame.saveGame == null){
             Log.e(TAG, "erro ao salvar - objeto saveGame nulo);
             return;
@@ -142,7 +150,10 @@ public class SaveGame {
         }
         lastSave = Utils.getTime();
 
-        String saveString = getStringFromSaveGame(saveGame);
+        String saveString = getStringFromSaveGame(saveGame);          
+        saveGame.log(); //RETIRAR DEPOIS
+        Log.e(TAG, " " + saveString);
+                  
         Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
         AsyncTasks.saveSnapshot = new SaveSnapshotAsyncTask().execute(saveString);
         DataBaseSaveDataHelper.getInstance().saveDataFromSaveGame(saveGame);
@@ -406,8 +417,8 @@ public class SaveGame {
             obj.put("version", SERIAL_VERSION);
             obj.put("levelsPoints", new JSONArray(saveGame.levelsPoints));
             obj.put("levelsStars", new JSONArray(saveGame.levelsStars));
-            obj.put("levelsUnlocked", new JSONArray(saveGame.levelsStars));
-            obj.put("levelsSeen", new JSONArray(saveGame.levelsStars));
+            obj.put("levelsUnlocked", new JSONArray(saveGame.levelsUnlocked));
+            obj.put("levelsSeen", new JSONArray(saveGame.levelsSeen));
             obj.put("tutorialsSeen", new JSONArray(saveGame.tutorialsSeen));
             obj.put("date", saveGame.date);
             obj.put("music", saveGame.music);
