@@ -22,44 +22,32 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         }
         return mInstance
     }
+    
+    public SaveGame getSaveGame(){
+        openDataBase();
 
-
-
-
-     public ArrayList<BallDataBaseData> getBalls(int level){
-         myDataBase = openDataBase();
-
-          String[] projection = {
-                 DataBaseContract.Balls.COLUMN_RADIUS,
-                 DataBaseContract.Balls.COLUMN_X,
-                 DataBaseContract.Balls.COLUMN_Y,
-                 DataBaseContract.Balls.COLUMN_VX,
-                 DataBaseContract.Balls.COLUMN_VY,
-                 DataBaseContract.Balls.COLUMN_TEXTURE_MAP,
-                 DataBaseContract.Balls.COLUMN_INVENCIBLE,
-                 DataBaseContract.Balls.COLUMN_ANGLE_TO_ROTATE,
-                 DataBaseContract.Balls.COLUMN_MAX_AGLE,
-                 DataBaseContract.Balls.COLUMN_MIN_ANGLE,
-                 DataBaseContract.Balls.COLUMN_VELOCITY_VARIATION,
-                 DataBaseContract.Balls.COLUMN_MAX_VELOCITY,
-                 DataBaseContract.Balls.COLUMN_MIN_VELOCITY,
-                 DataBaseContract.Balls.COLUMN_FREE
+        
+        SaveGameBuilder saveGameBuilder = new SaveGameBuilder();
+        
+        // DADOS LEVELS
+       String[] projection = {
+                 DataBaseContract.DataLevels.COLUMN_NUMBER,
+                 DataBaseContract.DataLevels.COLUMN_POINTS,
+                 DataBaseContract.DataLevels.COLUMN_STARS,
+                 DataBaseContract.DataLevels.COLUMN_UNLOCKED,
+                 DataBaseContract.DataLevels.COLUMN_SEEN,
              };
 
-             String selection =
-                     DataBaseContract.Balls.COLUMN_LEVEL + " = "+level;
-
-             //String[] selectionArgs = {String.valueOf(levelNumber)};
-             Cursor cursor = myDataBase.query(
-                     DataBaseContract.Balls.TABLE_NAME,        // The table to query
-                     projection,                               // The columns to return
-                     selection,                                // The columns for the WHERE clause
-                     null,                            // The values for the WHERE clause
-                     null,                                     // don't group the rows
-                     null,                                     // don't filter by row groups
-                     null                                      // don't sort
-             );
-
+         Cursor cursor = myDataBase.query(
+                 DataBaseContract.DataLevels.TABLE_NAME,        // The table to query
+                 projection,                               // The columns to return
+                 null,                                // The columns for the WHERE clause
+                 null,                            // The values for the WHERE clause
+                 null,                                     // don't group the rows
+                 null,                                     // don't filter by row groups
+                 null                                      // don't sort
+        );
+       
 
          int[] levelsPoints = new int[Level.NUMBER_OF_LEVELS];
          int[] levelsStars = new int[Level.NUMBER_OF_LEVELS];
@@ -68,179 +56,107 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
          int i = 0;
          while(cursor.moveToNext()){
-            levelsPoints[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS));
-            levelsStars[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_STARS));
-            levelsUnlocked[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_UNLOCKED)) == 1 ? true : false;
-            levelsSeen[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_SEEN)) == 1 ? true : false;
+             if (i = levelsPoints.lenght){
+                 break;
+             }
+             if (cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_NUMBER)) == i + 1){
+                levelsPoints[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS));
+                levelsStars[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_STARS));
+                levelsUnlocked[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_UNLOCKED)) == 1 ? true : false;
+                levelsSeen[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_SEEN)) == 1 ? true : false;
+             }
+             i += 1;
          }
+        
+                    saveGameBuilder
+                        .setLevelsPoints(levelsPoints)
+                        .setLevelsStars(levelsStars)
+                        .setLevelsUnlocked(levelsUnlocked)
+                        .setLevelsSeen(levelsSeen);
 
-          String[] projection = {
-                 DataBaseContract.DataLevels.COLUMN_NUMBER,
-                 DataBaseContract.DataLevels.COLUMN_POINTS,
-                 DataBaseContract.DataLevels.COLUMN_STARS,
-                 DataBaseContract.DataLevels.COLUMN_UNLOCKED,
-                 DataBaseContract.DataLevels.COLUMN_SEEN,
-             };
-
-             Cursor cursor = myDataBase.query(
-                     DataBaseContract.DataLevels.TABLE_NAME,        // The table to query
-                     projection,                               // The columns to return
-                     null,                                // The columns for the WHERE clause
-                     null,                            // The values for the WHERE clause
-                     null,                                     // don't group the rows
-                     null,                                     // don't filter by row groups
-                     null                                      // don't sort
-             );
-
-         int[] tutorialsSeen = new int[Tutorial.NUMBER_OF_TUTORIALS];
-
-
-
-
-
-        return list;
-     }
-     
-     public ArrayList<BarDataBaseData> getBars(int level){
-          myDataBase = openDataBase();
-          String[] projection = {
-                 DataBaseContract.Bars.COLUMN_WIDTH,
-                 DataBaseContract.Bars.COLUMN_HEIGHT,
-                 DataBaseContract.Bars.COLUMN_X,
-                 DataBaseContract.Bars.COLUMN_Y,
-                 DataBaseContract.Bars.COLUMN_VX
-                 
-             };
-
-             String selection =
-                     DataBaseContract.Bars.COLUMN_LEVEL + " = "+level;
-
-             //String[] selectionArgs = {String.valueOf(levelNumber)};
-             Cursor cursor = myDataBase.query(
-                     DataBaseContract.Bars.TABLE_NAME,        // The table to query
-                     projection,                               // The columns to return
-                     selection,                                // The columns for the WHERE clause
-                     null,                            // The values for the WHERE clause
-                     null,                                     // don't group the rows
-                     null,                                     // don't filter by row groups
-                     null                                      // don't sort
-             );
-
-          ArrayList<BarDataBaseData> list = new ArrayList<>();
-          while(cursor.moveToNext()){
-               BarDataBaseData b = new BarDataBaseData(
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Bars.COLUMN_WIDTH)),
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Bars.COLUMN_HEIGHT)),
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Bars.COLUMN_X)),
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Bars.COLUMN_Y)),
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Bars.COLUMN_VX))
-               );
-               list.add(b);  
-          }
-          close();
-  		return list;
-     }
-     
-     public ArrayList<TargetDataBaseData> getTargets(int id){
-         myDataBase = openDataBase();
-          String[] projection = {
-                 DataBaseContract.Targets.COLUMN_WIDTH,
-                 DataBaseContract.Targets.COLUMN_HEIGHT,
-                 DataBaseContract.Targets.COLUMN_DISTANCE,
-                 DataBaseContract.Targets.COLUMN_PADD
-                 
-             };
-
-             String selection =
-                     DataBaseContract.Targets._ID + " = "+id;
-
-             //String[] selectionArgs = {String.valueOf(levelNumber)};
-             Cursor cursor = myDataBase.query(
-                     DataBaseContract.Targets.TABLE_NAME,        // The table to query
-                     projection,                               // The columns to return
-                     selection,                                // The columns for the WHERE clause
-                     null,                            // The values for the WHERE clause
-                     null,                                     // don't group the rows
-                     null,                                     // don't filter by row groups
-                     null                                      // don't sort
-             );
-
-          ArrayList<TargetDataBaseData> list = new ArrayList<>();
-          while(cursor.moveToNext()){
-               TargetDataBaseData b = new TargetDataBaseData(
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Targets.COLUMN_WIDTH)),
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Targets.COLUMN_HEIGHT)),
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Targets.COLUMN_DISTANCE)),
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(DataBaseContract.Targets.COLUMN_PADD))
-               );
-               list.add(b);
-          }
-          close();
-  		return list;
-     }
-
-
-
-    public ArrayList<GroupDataBaseData> getGroupsDataBaseData(){
-        myDataBase = openDataBase();
+        // DADOS TUTORIALS
         String[] projection = {
-                DataBaseContract.Groups.COLUMN_NUMBER,
-                DataBaseContract.Groups.COLUMN_LEVELS,
-                DataBaseContract.Groups.COLUMN_STARS_TO_UNLOCK
-        };
+                 DataBaseContract.DataTutorials.COLUMN_NUMBER,
+                 DataBaseContract.DataTutorials.COLUMN_SEEN
+             };
 
-
-        Cursor cursor = myDataBase.query(
-                DataBaseContract.Groups.TABLE_NAME,      // The table to query
-                projection,                               // The columns to return
-                null,                                     // The columns for the WHERE clause
-                null,                                     // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                      // don't sort
+         cursor = myDataBase.query(
+                 DataBaseContract.DataTutorials.TABLE_NAME,        // The table to query
+                 projection,                               // The columns to return
+                 null,                                // The columns for the WHERE clause
+                 null,                            // The values for the WHERE clause
+                 null,                                     // don't group the rows
+                 null,                                     // don't filter by row groups
+                 null                                      // don't sort
         );
 
-        ArrayList<GroupDataBaseData> list = new ArrayList<>();
+        int[] tutorialsSeen = new int[Tutorial.NUMBER_OF_TUTORIALS];
+ 
+        i = 0;
         while(cursor.moveToNext()){
-            GroupDataBaseData b = new GroupDataBaseData(
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Groups.COLUMN_NUMBER)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Groups.COLUMN_LEVELS)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Groups.COLUMN_STARS_TO_UNLOCK))
-            );
-            list.add(b);
-        }
-        close();
-        return list;
-    }
-
-    public ArrayList<LevelDataBaseData> getLevelsDataBaseData(){
-        myDataBase = openDataBase();
+             if (i = levelsPoints.lenght){
+                 break;
+             }
+             if (cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_NUMBER)) == i + 1){
+                levelsPoints[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS));
+                levelsStars[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_STARS));
+                levelsUnlocked[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_UNLOCKED)) == 1 ? true : false;
+                levelsSeen[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_SEEN)) == 1 ? true : false;
+             }
+             i += 1;
+         }
+        saveGameBuilder.setTutorialsSeen(tutorialsSeen);
+        
+        
+        // DADOS GERAIS
+        
         String[] projection = {
-                DataBaseContract.Levels.COLUMN_NUMBER,
-                DataBaseContract.Levels.COLUMN_GROUP,
-                DataBaseContract.Levels.COLUMN_MIN_BALLS_ALIVE
+            DataBaseContract.Data.COLUMN_DATE,
+            DataBaseContract.Data.COLUMN_DATE,
+            DataBaseContract.Data.COLUMN_CURRENT_LEVEL,
+            DataBaseContract.Data.COLUMN_CURRENT_GROUP,
+            DataBaseContract.Data.COLUMN_MUSIC,
+            DataBaseContract.Data.COLUMN_SOUND,
+            DataBaseContract.Data.COLUMN_VIBRATION,
+            DataBaseContract.Data.COLUMN_GROUP_MENU_TRANSLATE_X,
+            DataBaseContract.Data.COLUMN_LEVEL_MENU_TRANSLATE_X,
+            DataBaseContract.Data.COLUMN_TUTORIAL_MENU_TRANSLATE_X,
+            DataBaseContract.Data.COLUMN_LAST_STARS,
+            DataBaseContract.Data.COLUMN_NEW_GROUPS_SEEN,
+            DataBaseContract.Data.COLUMN_LEVELS_PLAYED
         };
+        
+        String selection =
+                     DataBaseContract.Targets._ID + " = 1";
 
-        Cursor cursor = myDataBase.query(
-                DataBaseContract.Levels.TABLE_NAME,      // The table to query
-                projection,                               // The columns to return
-                null,                                     // The columns for the WHERE clause
-                null,                                     // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                      // don't sort
+         cursor = myDataBase.query(
+                 DataBaseContract.Data.TABLE_NAME,          // The table to query
+                 projection,                                // The columns to return
+                 selection,                                 // The columns for the WHERE clause
+                 null,                                      // The values for the WHERE clause
+                 null,                                      // don't group the rows
+                 null,                                      // don't filter by row groups
+                 null                                       // don't sort
         );
-
-        ArrayList<LevelDataBaseData> list = new ArrayList<>();
+        
         while(cursor.moveToNext()){
-            LevelDataBaseData b = new LevelDataBaseData(
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Levels.COLUMN_NUMBER)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Levels.COLUMN_GROUP)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Levels.COLUMN_MIN_BALLS_ALIVE))
-            );
-            list.add(b);
+            saveGameBuilder
+                .setDate(cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_DATE)))
+                .setMusic(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_MUSIC)) == 1 ? true : false)
+                .setSound(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_SOUND)) == 1 ? true : false)
+                .setVibration(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_VIBRATION)) == 1 ? true : false)
+                .setCurrentLevelNumber(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_CURRENT_LEVEL)))
+                .setCurrentGroupNumber(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_CURRENT_GROUP)))
+                .setCurrentGroupMenuTranslateX(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_GROUP_MENU_TRANSLATE_X)))
+                .setCurrentLevelMenuTranslateX(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_LEVEL_MENU_TRANSLATE_X)))
+                .setCurrentTutorialMenuTranslateX(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_TUTORIAL_MENU_TRANSLATE_X)))
+                .setLastStars(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_LAST_STARS)))
+                .setNewGroupsSeen(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_NEW_GROUPS_SEEN)) == 1 ? true : false)
+                .setLevelsPlayed(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_LEVELS_PLAYED)))
+                break;
         }
-        close();
-        return list;
+        return saveGameBuilder.build();
     }
+     
+   
 }
