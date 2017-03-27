@@ -106,6 +106,12 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
          }
          return myDataBase;
      }
+    
+     public SQLiteDatabase getWritable() throws SQLException {
+         openDataBase();
+         myDataBase = getWritableDatabase();
+         return myDataBase;
+     }
      
      private int getVersionId() {
         openDataBase();
