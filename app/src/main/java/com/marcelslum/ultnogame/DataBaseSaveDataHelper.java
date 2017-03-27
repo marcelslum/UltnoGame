@@ -157,6 +157,96 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         }
         return saveGameBuilder.build();
     }
-     
+    
+    
+    public void setLevelPoints(int number, int v){
+        myDataBase = getWritable();        
+        ContentValues values = new ContentValues();
+            values.put(DataBaseContract.DataLevels.COLUMN_POINTS, v);
+        String selection = DataBaseContract.DataLevels.COLUMN_NUMBER + " LIKE ?";
+        String[] selectionArgs = new String[]{Integer.toString(number)};
+        myDataBase.update(
+            DataBaseContract.DataLevels.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs);
+    }
+    
+    public void setLevelStars(int number, int v){
+        myDataBase = getWritable();        
+        ContentValues values = new ContentValues();
+            values.put(DataBaseContract.DataLevels.COLUMN_STARS, v);
+        String selection = DataBaseContract.DataLevels.COLUMN_NUMBER + " LIKE ?";
+        String[] selectionArgs = new String[]{Integer.toString(number)};
+        myDataBase.update(
+            DataBaseContract.DataLevels.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs);
+    }
+    
+    public void setLevelUnlocked(int number, boolean v){
+        myDataBase = getWritable();        
+        ContentValues values = new ContentValues();
+            values.put(DataBaseContract.DataLevels.COLUMN_UNLOCKED, v ? 1 : 0);
+        String selection = DataBaseContract.DataLevels.COLUMN_NUMBER + " LIKE ?";
+        String[] selectionArgs = new String[]{Integer.toString(number)};
+        myDataBase.update(
+            DataBaseContract.DataLevels.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs);
+    }
+    
+    public void setLevelSeen(int number, boolean v){
+        myDataBase = getWritable();        
+        ContentValues values = new ContentValues();
+            values.put(DataBaseContract.DataLevels.COLUMN_SEEN, v ? 1 : 0);
+        String selection = DataBaseContract.DataLevels.COLUMN_NUMBER + " LIKE ?";
+        String[] selectionArgs = new String[]{Integer.toString(number)};
+        myDataBase.update(
+            DataBaseContract.DataLevels.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs);
+    }
+    
+    public void setTutorialSeen(int number, boolean v){
+        myDataBase = getWritable();        
+        ContentValues values = new ContentValues();
+            values.put(DataBaseContract.DataTutorials.COLUMN_SEEN, v ? 1 : 0);
+        String selection = DataBaseContract.DataTutorials.COLUMN_NUMBER + " LIKE ?";
+        String[] selectionArgs = new String[]{Integer.toString(number)};
+        myDataBase.update(
+            DataBaseContract.DataTutorials.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs);
+    }
+    
+    public void saveDataFromSaveGame(SaveGame saveGame){
+        myDataBase = getWritable();  
+        ContentValues values = new ContentValues();
+            values.put(DataBaseContract.DataTutorials.COLUMN_DATE, saveGame.date);
+            values.put(DataBaseContract.DataTutorials.COLUMN_CURRENT_LEVEL, saveGame.currentLevelNumber);
+            values.put(DataBaseContract.DataTutorials.COLUMN_CURRENT_GROUP, saveGame.currentGroupNumber);
+            values.put(DataBaseContract.DataTutorials.COLUMN_MUSIC, saveGame.music ? 1 : 0);
+            values.put(DataBaseContract.DataTutorials.COLUMN_SOUND, saveGame.sound ? 1 : 0);
+            values.put(DataBaseContract.DataTutorials.COLUMN_VIBRATION, saveGame.vibration ? 1 : 0);
+            values.put(DataBaseContract.DataTutorials.COLUMN_GROUP_MENU_TRANSLATE_X, saveGame.currentGroupMenuTranslateX);
+            values.put(DataBaseContract.DataTutorials.COLUMN_LEVEL_MENU_TRANSLATE_X, saveGame.currentLevelMenuTranslateX);
+            values.put(DataBaseContract.DataTutorials.COLUMN_TUTORIAL_MENU_TRANSLATE_X, saveGame.currentTutorialMenuTranslateX);
+            values.put(DataBaseContract.DataTutorials.COLUMN_LAST_STARS, saveGame.lastStars);
+            values.put(DataBaseContract.DataTutorials.COLUMN_NEW_GROUPS_SEEN, saveGame.newGroupsSeen ? 1 : 0);
+            values.put(DataBaseContract.DataTutorials.COLUMN_LEVELS_PLAYED, saveGame.levelsPlayed);
+        
+        String selection = DataBaseContract.Data.COLUMN_ID + " LIKE 1";
+        
+        myDataBase.update(
+            DataBaseContract.Data.TABLE_NAME,
+            values,
+            selection,
+            null);
+    }
    
 }
