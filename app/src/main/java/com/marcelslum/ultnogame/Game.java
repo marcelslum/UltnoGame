@@ -457,6 +457,10 @@ public class Game {
 
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
 
+            if (!SaveGame.saveGame.groupsSeen[SaveGame.saveGame.currentGroupNumber - 1]){
+                SaveGame.setGroupSeen();
+            }
+            
             mainActivity.showAdView();
 
             MenuHandler.updateLevelMenu();
