@@ -17,9 +17,9 @@ import java.io.OutputStream;
 public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     private final static String TAG = "DataBaseLevelDataHelper";
-    public static String DB_PATH;// = "/data/data/com.marcelslum.ultno/databases/";
-    public static String DB_NAME = "ultno_alpha_test.db";
-    public SQLiteDatabase myDataBase;
+    public String DB_PATH;// = "/data/data/com.marcelslum.ultno/databases/";
+    public String DB_NAME = "ultno_alpha_test.db";
+    private SQLiteDatabase myDataBase;
     public final Context myContext;
     public int version;
 
