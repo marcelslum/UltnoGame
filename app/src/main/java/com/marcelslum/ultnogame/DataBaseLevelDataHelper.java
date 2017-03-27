@@ -6,18 +6,26 @@ import android.database.Cursor;
 import java.util.ArrayList;
 
 public class DataBaseLevelDataHelper extends DataBaseHelper {
+    
+    private static DataBaseLevelDataHelper mInstance = null;
 
-    private final static String TAG = "DataBaseLevelDataHelper";
-    private static String DB_NAME = "ultno_alpha_test.db";
+    private final String TAG = "DataBaseLevelDataHelper";
+    private final String DB_NAME = "ultno_alpha_test.db";
 
-    public DataBaseLevelDataHelper(Context context) {
+    private DataBaseLevelDataHelper(Context context) {
         super(context, DB_NAME, Integer.valueOf(context.getResources().getString(R.string.databaseLevelVersion)));
     }
-
+    
+    public static DataBaseLevelDataHelper getInstance(Context ctx){
+        if (mInstance == null){
+            mInstance = new DataBaseLevelDataHelper(ctx)
+        }
+        return mInstance
+    }
      
      public ArrayList<BallDataBaseData> getBalls(int level){
-          openDataBase();
-          String[] projection = {
+         openDataBase();
+         String[] projection = {
                  DataBaseContract.Balls.COLUMN_RADIUS,
                  DataBaseContract.Balls.COLUMN_X,
                  DataBaseContract.Balls.COLUMN_Y,
