@@ -68,7 +68,7 @@ public class SaveGame {
     public static void onFailLoadFromSnapshot() {
         Log.e(TAG, "Não carregou Snapshot");
 
-        if (MainActivity.dataBaseSaveDataHelper.isNew()){
+        if (!DataBaseSaveDataHelper.getInstance().isNew()){
             Log.e(TAG, "Carregando apenas localmente.");
             saveGame.getSaveGameFromDataBase();
             //saveGame = getSaveGameFromJson(getStringFromLocal());
@@ -133,24 +133,67 @@ public class SaveGame {
     }
 
     public static void save(){
-
         if (SaveGame.saveGame == null){
+            Log.e(TAG, "erro ao salvar - objeto saveGame nulo);
             return;
         }
-
         if (Utils.getTime() - lastSave < MIN_TIME_BEFORE_RESAVE) {
             return;
         }
         lastSave = Utils.getTime();
 
         String saveString = getStringFromSaveGame(saveGame);
-        Log.e(TAG, "Salvando localmente "+saveString);
         Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
         AsyncTasks.saveSnapshot = new SaveSnapshotAsyncTask().execute(saveString);
+        DataBaseSaveDataHelper.getInstance().saveDataFromSaveGame(saveGame);
     }
+                  
+    public static logSaveGame(SaveGame s){
+        Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
+        Log.e(TAG, "pontos --------------- ";
+        for (int i = 0; i < s.levelsPoints.length; i++){
+            Log.e(TAG, "level "+ (i + 1) " -> " + s.levelsPoints[i])   
+        }
+         
+        Log.e(TAG, "estrelas --------------- ";
+        for (int i = 0; i < s.levelsStars.length; i++){
+            Log.e(TAG, "level "+ (i + 1) " -> " + s.levelsStars[i])   
+        }
+              
+        Log.e(TAG, "desbloqueados --------------- ";
+        for (int i = 0; i < s.levelsUnlocked.length; i++){
+            Log.e(TAG, "level "+ (i + 1) " -> " + s.levelsUnlocked[i])   
+        }
+              
+        Log.e(TAG, "vistos --------------- ";
+        for (int i = 0; i < s.levelsSeen.length; i++){
+            Log.e(TAG, "level "+ (i + 1) " -> " + s.levelsSeen[i])   
+        }
+              
+        Log.e(TAG, "tutoriais vistos --------------- ";
+        for (int i = 0; i < s.tutorialsSeen.length; i++){
+            Log.e(TAG, "tutorial "+ (i + 1) " -> " + s.tutorialsSeen[i])   
+        }
+              
+         
+        Log.e(TAG, "date -> " + s.date)   ;
+        Log.e(TAG, "date -> " + s.currentLevelNumber);
+        Log.e(TAG, "currentLevelNumber -> " + s.date);
+        Log.e(TAG, "currentGroupNumber -> " + s.currentGroupNumber);
+        Log.e(TAG, "music  -> " + s.music );
+        Log.e(TAG, "sound  -> " + s.sound );
+        Log.e(TAG, "vibration  -> " + s.vibration );
+        Log.e(TAG, "currentGroupMenuTranslateX -> " + s.currentGroupMenuTranslateX);
+        Log.e(TAG, "currentLevelMenuTranslateX -> " + s.currentLevelMenuTranslateX);
+        Log.e(TAG, "currentTutorialMenuTranslateX -> " + s.currentTutorialMenuTranslateX);
+        Log.e(TAG, "lastStars -> " + s.lastStars);
+        Log.e(TAG, "newGroupsSeen  -> " + s.newGroupsSeen );
+        Log.e(TAG, "levelsPlayed -> " + s.levelsPlayed);   
+    }
+                  
+                  
 
     public static SaveGame mergeSaveGames(SaveGame saveGame1, SaveGame saveGame2) {
-
         int[] flevelsPoints;
         int[] flevelsStars;
         boolean[] flevelsUnlocked;
