@@ -142,7 +142,7 @@ public class SaveGame {
         Log.e(TAG, "save()");
         
         if (SaveGame.saveGame == null){
-            Log.e(TAG, "erro ao salvar - objeto saveGame nulo);
+            Log.e(TAG, "erro ao salvar - objeto saveGame nulo");
             return;
         }
         if (Utils.getTime() - lastSave < MIN_TIME_BEFORE_RESAVE) {
