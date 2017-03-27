@@ -459,27 +459,31 @@ public class SaveGame {
     }
     
     public static void setLevelPoints(int number, int points){
-        if (levelsPoints[number - 1] < points){
-            levelsPoints[number - 1] = points;
+        if (saveGame.levelsPoints[number - 1] < points){
+            saveGame.levelsPoints[number - 1] = points;
             DataBaseSaveGameHelper.getInstance().setLevelPoints(int number, int points);
         }
     }
     
     public static void setLevelStars(int number, int stars){
-        if (levelsStars[number - 1] < stars){
-            levelsStars[number - 1] = stars;
+        if (saveGame.levelsStars[number - 1] < stars){
+            saveGame.levelsStars[number - 1] = stars;
             DataBaseSaveGameHelper.getInstance().setLevelStars(int number, int stars);
         }
     }
     
     public static void setLevelUnblocked(int number){
-        levelsUnblocked[number - 1]  = true;
+        saveGame.levelsUnblocked[number - 1]  = true;
         DataBaseSaveGameHelper.getInstance().setLevelUnblocked(int number);
     }
     
     public static void setLevelSeen(int number){
-        levelsSeen[number - 1]  = true;
+        saveGame.levelsSeen[number - 1]  = true;
         DataBaseSaveGameHelper.getInstance().setLevelSeen(int number);
+    }
+              
+    public static int getLevelStars(int number){
+        return saveGame.levelsStars[number - 1];
     }
 }
     
