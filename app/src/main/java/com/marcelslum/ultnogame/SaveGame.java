@@ -20,11 +20,11 @@ public class SaveGame {
     public static long lastSave;
     public static final int MIN_TIME_BEFORE_RESAVE = 2000;
 
-    public int[] levelsPoints;
-    public int[] levelsStars;
-    public boolean[] levelsUnlocked;
-    public boolean[] levelsSeen;
-    public boolean[] tutorialsSeen;
+    private int[] levelsPoints;
+    private int[] levelsStars;
+    private boolean[] levelsUnlocked;
+    private boolean[] levelsSeen;
+    private boolean[] tutorialsSeen;
     public long date;
     public int currentLevelNumber;
     public int currentGroupNumber;
@@ -117,7 +117,7 @@ public class SaveGame {
 
     public static void onLoadFromSnapshot(String data) {
         Log.e(TAG, "Snapshot aberto:  " + data);
-        SaveGame localSaveGame = getSaveGameFromDataBase();
+        SaveGame localSaveGame = DataBaseSaveDataHelper.getInstance().getSaveGame();
         SaveGame cloudSaveGame = getSaveGameFromJson(data);
         saveGame = mergeSaveGames(localSaveGame, cloudSaveGame);
         loaded = true;
@@ -403,4 +403,34 @@ public class SaveGame {
         GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
                 Game.getContext().getResources().getString(R.string.achievement_mestre), 1);
     }
+    
+    public static void setLevelPoints(int number, int points){
+        if (levelsPoints[number - 1] < points){
+            levelsPoints[number - 1] = points;
+            DataBaseSaveGameHelper.getInstance().setLevelPoints(int number, int points);
+        }
+    }
+    
+    public static void setLevelStars(int number, int stars){
+        if (levelsStars[number - 1] < stars){
+            levelsStars[number - 1] = stars;
+            DataBaseSaveGameHelper.getInstance().setLevelStars(int number, int stars);
+        }
+    }
+    
+    public static void setLevelUnblocked(int number){
+        levelsUnblocked[number - 1]  = true;
+        DataBaseSaveGameHelper.getInstance().setLevelUnblocked(int number);
+    }
+    
+    public static void setLevelSeen(int number){
+        levelsSeen[number - 1]  = true;
+        DataBaseSaveGameHelper.getInstance().setLevelSeen(int number);
+    }
+}
+    
+    
+    
+    
+    
 }
