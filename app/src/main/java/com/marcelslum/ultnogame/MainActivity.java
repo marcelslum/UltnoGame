@@ -329,7 +329,9 @@ public class MainActivity extends FragmentActivity implements
     public void onBackPressed() {
         if (Game.gameState == Game.GAME_STATE_OPCOES_GAME) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
-        } else if (Game.gameState == Game.GAME_STATE_JOGAR) {
+        } else if (Game.gameState == Game.GAME_STATE_SOBRE){
+                    Game.setGameState(Game.GAME_STATE_OPCOES);
+	} else if (Game.gameState == Game.GAME_STATE_JOGAR) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
         } else if (Game.gameState == Game.GAME_STATE_MENU) {
             onPause();
