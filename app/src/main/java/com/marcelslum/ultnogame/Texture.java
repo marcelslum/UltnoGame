@@ -140,7 +140,7 @@ public class Texture {
                break;    
            case DisplayMetrics.DENSITY_MEDIUM:
                Toast.makeText(this, "medium density", Toast.LENGTH_SHORT).show();
-               sampleSize = 2;
+               sampleSize = 4;
                break;                
            case DisplayMetrics.DENSITY_HIGH:
                Toast.makeText(this, "high density", Toast.LENGTH_SHORT).show();
@@ -148,7 +148,7 @@ public class Texture {
                break;    
            case DisplayMetrics.DENSITY_XHIGH:
                Toast.makeText(this, "xhigh density", Toast.LENGTH_SHORT).show();
-               sampleSize = 1;
+               sampleSize = 2;
                break;                  
            case DisplayMetrics.DENSITY_XXHIGH:
                Toast.makeText(this, "xxhigh density", Toast.LENGTH_SHORT).show();
@@ -159,6 +159,8 @@ public class Texture {
                sampleSize = 1;
                break;      
         }
+        
+        textureSize = 2048 / sampleSize;
         
         options.inSampleSize = sampleSize;
         
