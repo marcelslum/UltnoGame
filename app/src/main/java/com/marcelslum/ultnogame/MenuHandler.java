@@ -403,6 +403,13 @@ public class MenuHandler {
                 }
             }
         });
+        
+       menuOptions.addMenuOption("sobre", Game.getContext().getResources().getString(R.string.lerSobre), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.setGameState(Game.GAME_STATE_SOBRE);
+            }
+        });
 
         menuOptions.addMenuOption("retornar", Game.getContext().getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
             @Override
