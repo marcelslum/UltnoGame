@@ -39,6 +39,8 @@ public class Texture {
     public static int lastTextureUsed = -1;
 
     public static ArrayList<Texture> textures;
+    
+    public static int textureSize = 2048;
 
     public static int[] textureNames;
     public static boolean[] textureNamesUsed;
@@ -129,7 +131,36 @@ public class Texture {
         
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 2;
+        
+        int sampleSize;
+        switch(Game.dpiClassification) {
+           case DisplayMetrics.DENSITY_LOW:
+               sampleSize = 4;
+               Toast.makeText(this, "low density", Toast.LENGTH_SHORT).show();
+               break;    
+           case DisplayMetrics.DENSITY_MEDIUM:
+               Toast.makeText(this, "medium density", Toast.LENGTH_SHORT).show();
+               sampleSize = 2;
+               break;                
+           case DisplayMetrics.DENSITY_HIGH:
+               Toast.makeText(this, "high density", Toast.LENGTH_SHORT).show();
+               sampleSize = 2;
+               break;    
+           case DisplayMetrics.DENSITY_XHIGH:
+               Toast.makeText(this, "xhigh density", Toast.LENGTH_SHORT).show();
+               sampleSize = 1;
+               break;                  
+           case DisplayMetrics.DENSITY_XXHIGH:
+               Toast.makeText(this, "xxhigh density", Toast.LENGTH_SHORT).show();
+               sampleSize = 1;
+               break;                  
+           case DisplayMetrics.DENSITY_XXXHIGH:
+               Toast.makeText(this, "xxxhigh density", Toast.LENGTH_SHORT).show();
+               sampleSize = 1;
+               break;      
+        }
+        
+        options.inSampleSize = sampleSize;
         
         resoureIdentifierId = Game.mainActivity.getApplicationContext().getResources().getIdentifier(this.resoureIdentifier, null, Game.mainActivity.getApplicationContext().getPackageName());
         bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), 
