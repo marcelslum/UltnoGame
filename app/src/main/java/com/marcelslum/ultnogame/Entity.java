@@ -19,8 +19,10 @@ public class Entity{
     final public static int ATTRIB_UV = 1;
     final public static int ATTRIB_COLOR = 2;
     
-    private static final int SIZEOF_FLOAT = 4;
-    private static final int SIZEOF_SHORT = 2;
+    static final int SIZEOF_FLOAT = 4;
+    static final int SIZEOF_SHORT = 2;
+    
+    public static int currentBoundedTextureId;
 
     public TextureData textureData;
 
@@ -622,9 +624,12 @@ public class Entity{
 
 
                     if (textureId != -1) {
-                        // Get handle to textures locations
-                        int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
-                        GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
+                        if (textureId != currentBoundedTextureId){
+                            currentBoundedTextureId = textureId;
+                            // Get handle to textures locations
+                            int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
+                            GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
+                        }
                     }
 
                     if (isLineGL) {
@@ -654,14 +659,18 @@ public class Entity{
             int um4_projectionHandle = GLES20.glGetUniformLocation(program.get(), "um4_projection");
             int um4_viewHandle = GLES20.glGetUniformLocation(program.get(), "um4_view");
             int um4_modelHandle = GLES20.glGetUniformLocation(program.get(), "um4_model");
-            int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
 
             GLES20.glUniformMatrix4fv(um4_projectionHandle, 1, false, matrixProjection, 0);
             GLES20.glUniformMatrix4fv(um4_viewHandle, 1, false, matrixView, 0);
             GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, matrixModel, 0);
 
              if (textureId != -1) {
-                GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
+                if (textureId != currentBoundedTextureId){
+                    currentBoundedTextureId = textureId;
+                    // Get handle to textures locations
+                    int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
+                    GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
+                }
             }
 
             GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
