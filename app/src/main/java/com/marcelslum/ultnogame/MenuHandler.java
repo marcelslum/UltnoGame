@@ -53,7 +53,7 @@ public class MenuHandler {
 
                 Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
 
-                if (!SaveGame.saveGame.groupsSeen[lgd.number - 1]){
+                if (!SaveGame.saveGame.groupsSeen[i]){
                     groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                     groupMenu.iconNumberToShow = i;
                 }
