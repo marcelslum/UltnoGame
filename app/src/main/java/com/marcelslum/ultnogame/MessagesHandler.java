@@ -29,6 +29,20 @@ public class MessagesHandler {
 
 
     public static void initMessages(){
+        
+        Game.aboutTextView = new TextView("about", Game.resolutionX * 0.1, 
+                                          Game.resolutionY * 0.2,
+                                          Game.resolutionX * 0.8, 
+                                          Game.resolutionY * 0.8,
+                                          Game.gameAreaResolutionY*0.05f,
+                                          Game.font);
+        
+        
+        Game.aboutTextView.addText("Criação e desenvolvimento: Marcel Sluminsky");
+        Game.aboutTextView.addText("Música: Fernando Nicknich");
+        Game.aboutTextView.addText("Copyright @ 2017");
+        Game.aboutTextView.addText("Este jogo usa vários sons de ...");
+        
 
         yOfMessageBackAndContinue = Game.resolutionY*0.898f;
 
