@@ -42,6 +42,8 @@ public class ButtonHandler {
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){
                     Tutorial.currentTutorialObject.previous();}
+                } else if (Game.gameState == Game.GAME_STATE_SOBRE){
+                    Game.setGameState(Game.GAME_STATE_OPCOES);}
             }
         });
 
