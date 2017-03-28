@@ -254,7 +254,7 @@ public class SaveGame {
                 .setLevelsUnlocked(flevelsUnlocked)
                 .setLevelsSeen(flevelsSeen)
                 .setTutorialsSeen(ftutorialsSeen)
-                .setTutorialsSeen(fgroupsSeen)
+                .setGroupsSeen(fgroupsSeen)
                 .setGroupsSeen(fgroupsSeen)
                 .setDate(fdate)
                 .setMusic(fmusic)
