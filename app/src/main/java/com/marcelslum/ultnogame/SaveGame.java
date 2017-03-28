@@ -20,12 +20,12 @@ public class SaveGame {
     public static long lastSave;
     public static final int MIN_TIME_BEFORE_RESAVE = 2000;
 
-    private int[] levelsPoints;
-    private int[] levelsStars;
-    private boolean[] levelsUnlocked;
-    private boolean[] levelsSeen;
-    private boolean[] tutorialsSeen;
-    private boolean[] groupsSeen;
+    public int[] levelsPoints;
+    public int[] levelsStars;
+    public boolean[] levelsUnlocked;
+    public boolean[] levelsSeen;
+    public boolean[] tutorialsSeen;
+    public boolean[] groupsSeen;
     public long date;
     public int currentLevelNumber;
     public int currentGroupNumber;
@@ -57,7 +57,6 @@ public class SaveGame {
         currentLevelMenuTranslateX = builder.currentLevelMenuTranslateX;
         currentTutorialMenuTranslateX = builder.currentTutorialMenuTranslateX;
         lastStars = builder.lastStars;
-        newGroupsSeen = builder.newGroupsSeen;
         levelsPlayed = builder.levelsPlayed;
     }
 
@@ -69,11 +68,11 @@ public class SaveGame {
     public static void onFailLoadFromSnapshot() {
         Log.e(TAG, "Não carregou Snapshot");
 
-        if (!DataBaseSaveDataHelper.getInstance().isNew()){
+        if (!DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew()){
             Log.e(TAG, "Carregando apenas localmente.");
-            saveGame = getSaveGameFromDataBase();
+            saveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
             
-            saveGame.log();
+            log(saveGame);
 
             //saveGame = getSaveGameFromJson(getStringFromLocal());
         } else {
@@ -107,7 +106,7 @@ public class SaveGame {
                     .build();
         }
         loaded = true;
-        saveGame.log();
+        log(saveGame);
         SaveGame.save();
     }
 
@@ -116,16 +115,16 @@ public class SaveGame {
         Log.e(TAG, "onLoadFromSnapshot");
         
         Log.e(TAG, "local");
-        SaveGame localSaveGame = DataBaseSaveDataHelper.getInstance().getSaveGame();
-        localSaveGame.log();
+        SaveGame localSaveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
+        log(localSaveGame);
         
         Log.e(TAG, "cloud");
         SaveGame cloudSaveGame = getSaveGameFromJson(data);
-        cloudSaveGame.log();
+        log(cloudSaveGame);
         
         Log.e(TAG, "merged");
         saveGame = mergeSaveGames(localSaveGame, cloudSaveGame);
-        saveGame.log();
+        log(saveGame);
         
         loaded = true;
     }
@@ -143,49 +142,61 @@ public class SaveGame {
         lastSave = Utils.getTime();
 
         String saveString = getStringFromSaveGame(saveGame);          
-        saveGame.log(); //RETIRAR DEPOIS
+        log(saveGame); //RETIRAR DEPOIS
         Log.e(TAG, " " + saveString);
                   
         Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
         AsyncTasks.saveSnapshot = new SaveSnapshotAsyncTask().execute(saveString);
-        DataBaseSaveDataHelper.getInstance().saveDataFromSaveGame(saveGame);
+        DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
     }
                   
-    public static logSaveGame(SaveGame s){
-        Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
-        Log.e(TAG, "pontos --------------- ";
+    public static void log(SaveGame s){
+        Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        Log.e(TAG, "pontos --------------- ");
+
+        String log= " ";
         for (int i = 0; i < s.levelsPoints.length; i++){
-            Log.e(TAG, "level "+ (i + 1) " -> " + s.levelsPoints[i])   
+            log = log + " " + "level "+ (i + 1) +" -> " + s.levelsPoints[i];
         }
-         
-        Log.e(TAG, "estrelas --------------- ";
+        Log.e(TAG, "level "+ log);
+
+        log= " ";
+        Log.e(TAG, "estrelas --------------- ");
         for (int i = 0; i < s.levelsStars.length; i++){
-            Log.e(TAG, "level "+ (i + 1) " -> " + s.levelsStars[i])   
+            log = log + " " + "level "+ (i + 1) +" -> " + s.levelsStars[i];
         }
-              
-        Log.e(TAG, "desbloqueados --------------- ";
+        Log.e(TAG, "level "+ log);
+
+        log= " ";
+        Log.e(TAG, "desbloqueados --------------- ");
         for (int i = 0; i < s.levelsUnlocked.length; i++){
-            Log.e(TAG, "level "+ (i + 1) " -> " + s.levelsUnlocked[i])   
+            log = log + " " + "level "+ (i + 1) +" -> " + s.levelsUnlocked[i];
         }
-              
-        Log.e(TAG, "vistos --------------- ";
+        Log.e(TAG, "level "+ log);
+
+        log= " ";
+        Log.e(TAG, "vistos --------------- ");
         for (int i = 0; i < s.levelsSeen.length; i++){
-            Log.e(TAG, "level "+ (i + 1) " -> " + s.levelsSeen[i])   
+            log = log + " " + "level "+ (i + 1) +" -> " + s.levelsSeen[i];
         }
-              
-        Log.e(TAG, "tutoriais vistos --------------- ";
+        Log.e(TAG, "level "+ log);
+
+        log= " ";
+        Log.e(TAG, "tutoriais vistos --------------- ");
         for (int i = 0; i < s.tutorialsSeen.length; i++){
-            Log.e(TAG, "tutorial "+ (i + 1) " -> " + s.tutorialsSeen[i])   
+            log = log + " " + "level "+ (i + 1) +" -> " + s.tutorialsSeen[i];
         }
-              
-        Log.e(TAG, "grupos vistos --------------- ";
+        Log.e(TAG, "level "+ log);
+
+        log= " ";
+        Log.e(TAG, "grupos vistos --------------- ");
         for (int i = 0; i < s.groupsSeen.length; i++){
-            Log.e(TAG, "tutorial "+ (i + 1) " -> " + s.groupsSeen[i])   
+            log = log + " " + "level "+ (i + 1) +" -> " + s.groupsSeen[i];
         }
+        Log.e(TAG, "level "+ log);
               
         Log.e(TAG, "date -> " + s.date)   ;
-        Log.e(TAG, "date -> " + s.currentLevelNumber);
-        Log.e(TAG, "currentLevelNumber -> " + s.date);
+        Log.e(TAG, "currentLevelNumber -> " + s.currentLevelNumber);
         Log.e(TAG, "currentGroupNumber -> " + s.currentGroupNumber);
         Log.e(TAG, "music  -> " + s.music );
         Log.e(TAG, "sound  -> " + s.sound );
@@ -243,6 +254,7 @@ public class SaveGame {
                 .setLevelsUnlocked(flevelsUnlocked)
                 .setLevelsSeen(flevelsSeen)
                 .setTutorialsSeen(ftutorialsSeen)
+                .setTutorialsSeen(fgroupsSeen)
                 .setGroupsSeen(fgroupsSeen)
                 .setDate(fdate)
                 .setMusic(fmusic)
@@ -254,7 +266,6 @@ public class SaveGame {
                 .setCurrentLevelMenuTranslateX(fcurrentLevelMenuTranslateX)
                 .setCurrentTutorialMenuTranslateX(fcurrentTutorialMenuTranslateX)
                 .setLastStars(flastStars)
-                .setNewGroupsSeen(fnewGroupsSeen)
                 .setLevelsPlayed(flevelsPlayed)
                 .build();
     }
@@ -336,7 +347,7 @@ public class SaveGame {
             }
             saveGameBuilder.setTutorialsSeen(fTutorialsSeen);
             
-            boolean[] fGroupsSeen = new boolean[Tutorial.NUMBER_OF_GROUPS];
+            boolean[] fGroupsSeen = new boolean[Level.NUMBER_OF_GROUPS];
             try {
                 JSONArray array = obj.getJSONArray("groupsSeen");
                 for (int i = 0; i < fGroupsSeen.length; i++) {
@@ -350,12 +361,46 @@ public class SaveGame {
             }
             saveGameBuilder.setGroupsSeen(fGroupsSeen);
 
-            saveGameBuilder.setDate(obj.getLong("date"));
-            saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
-            saveGameBuilder.setCurrentGroupNumber(obj.getInt("currentGroupNumber"));
-            saveGameBuilder.setMusic(obj.getBoolean("music"));
-            saveGameBuilder.setSound(obj.getBoolean("sound"));
-            saveGameBuilder.setVibration(obj.getBoolean("vibration"));
+            try {
+                saveGameBuilder.setDate(obj.getLong("date"));
+            } catch(JSONException e) {
+                saveGameBuilder.setDate(0);
+            }
+
+            try {
+                saveGameBuilder.setCurrentLevelNumber(obj.getInt("currentLevelNumber"));
+            } catch(JSONException e) {
+                saveGameBuilder.setCurrentLevelNumber(1);
+            }
+
+            try {
+                saveGameBuilder.setCurrentGroupNumber(obj.getInt("currentGroupNumber"));
+            } catch(JSONException e) {
+                saveGameBuilder.setCurrentGroupNumber(1);
+            }
+
+            try {
+                saveGameBuilder.setMusic(obj.getBoolean("music"));
+            } catch(JSONException e) {
+                saveGameBuilder.setMusic(true);
+            }
+
+            try {
+                saveGameBuilder.setSound(obj.getBoolean("sound"));
+            } catch(JSONException e) {
+                saveGameBuilder.setSound(true);
+            }
+
+            try {
+                saveGameBuilder.setVibration(obj.getBoolean("vibration"));
+            } catch(JSONException e) {
+                saveGameBuilder.setVibration(true);
+            }
+
+
+
+
+
             try {
                 saveGameBuilder.setCurrentGroupMenuTranslateX((float)obj.getDouble("currentGroupMenuTranslateX"));
             } catch(JSONException e) {
@@ -437,7 +482,6 @@ public class SaveGame {
             obj.put("currentLevelMenuTranslateX", (double)saveGame.currentLevelMenuTranslateX);
             obj.put("currentTutorialMenuTranslateX", (double)saveGame.currentTutorialMenuTranslateX);
             obj.put("lastStars", saveGame.lastStars);
-            obj.put("newGroupsSeen", saveGame.newGroupsSeen);
             obj.put("levelsPlayed", saveGame.levelsPlayed);
             return obj.toString();
         } catch (JSONException ex) {
@@ -467,30 +511,30 @@ public class SaveGame {
     public static void setLevelPoints(int number, int points){
         if (saveGame.levelsPoints[number - 1] < points){
             saveGame.levelsPoints[number - 1] = points;
-            DataBaseSaveGameHelper.getInstance().setLevelPoints(int number, int points);
+            DataBaseSaveDataHelper.getInstance(Game.mainActivity).setLevelPoints(number, points);
         }
     }
     
     public static void setLevelStars(int number, int stars){
         if (saveGame.levelsStars[number - 1] < stars){
             saveGame.levelsStars[number - 1] = stars;
-            DataBaseSaveGameHelper.getInstance().setLevelStars(int number, int stars);
+            DataBaseSaveDataHelper.getInstance(Game.mainActivity).setLevelStars(number, stars);
         }
     }
     
     public static void setLevelUnblocked(int number){
-        saveGame.levelsUnblocked[number - 1]  = true;
-        DataBaseSaveGameHelper.getInstance().setLevelUnblocked(int number);
+        saveGame.levelsUnlocked[number - 1]  = true;
+        DataBaseSaveDataHelper.getInstance(Game.mainActivity).setLevelUnlocked(number, true);
     }
     
     public static void setLevelSeen(int number){
         saveGame.levelsSeen[number - 1]  = true;
-        DataBaseSaveGameHelper.getInstance().setLevelSeen(int number);
+        DataBaseSaveDataHelper.getInstance(Game.mainActivity).setLevelSeen(number, true);
     }
               
     public static void setGroupSeen(int number){
         saveGame.groupsSeen[number - 1]  = true;
-        DataBaseSaveGameHelper.getInstance().setGroupsSeen(int number);
+        DataBaseSaveDataHelper.getInstance(Game.mainActivity).setGroupSeen(number, true);
     }
               
     public static int getLevelStars(int number){
@@ -498,4 +542,4 @@ public class SaveGame {
     }
 }
   
-}
+

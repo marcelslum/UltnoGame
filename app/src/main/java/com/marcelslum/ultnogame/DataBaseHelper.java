@@ -17,11 +17,11 @@ import java.io.OutputStream;
 public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     private final static String TAG = "DataBaseLevelDataHelper";
-    public String DB_PATH;// = "/data/data/com.marcelslum.ultno/databases/";
-    public String DB_NAME = "ultno_alpha_test.db";
-    private SQLiteDatabase myDataBase;
-    public final Context myContext;
-    public int version;
+    protected String DB_PATH;// = "/data/data/com.marcelslum.ultno/databases/";
+    protected String DB_NAME;
+    protected SQLiteDatabase myDataBase;
+    protected Context myContext;
+    protected int version;
 
     public DataBaseHelper(Context context, String dbName, int version) {
         super(context, dbName, null, version);
@@ -32,6 +32,9 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void prepareDatabase() throws IOException {
+
+        deleteDataBase();
+
         boolean dbExist = checkDataBase();
         SQLiteDatabase db_Read = null;
         if(dbExist){
@@ -51,6 +54,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
             db_Read = getReadableDatabase();
             db_Read.close();
             try {
+                Log.e(TAG, DB_NAME + " copiando database");
                 copyDataBase();
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
@@ -101,7 +105,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
     }
      
      public SQLiteDatabase openDataBase() throws SQLException {
-         if (!myDataBase.isOpen()){
+         if (myDataBase == null || !myDataBase.isOpen()){
             myDataBase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
          }
          return myDataBase;
@@ -113,15 +117,24 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
          return myDataBase;
      }
      
-     private int getVersionId() {
+     protected int getVersionId() {
         openDataBase();
         String query = "SELECT version_id FROM dbVersion";
         Cursor cursor = myDataBase.rawQuery(query, null);
         cursor.moveToFirst();
         int v =  cursor.getInt(0);
-        close();
         return v;
      }
+
+    public boolean isNew() {
+        openDataBase();
+        String query = "SELECT isNew FROM dbVersion";
+        Cursor cursor = myDataBase.rawQuery(query, null);
+        cursor.moveToFirst();
+        int v =  cursor.getInt(0);
+
+        return v == 1 ? true : false;
+    }
      
      @Override
     public synchronized void close() {

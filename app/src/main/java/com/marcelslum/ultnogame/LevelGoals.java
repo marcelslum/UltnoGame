@@ -108,17 +108,12 @@ public class LevelGoals {
 
     public void notifySecretLevelUnblocked(int i){
 
-        //Log.e(TAG, " NOTIFICANDO ->->->-> "+"secretLevelUnblocked "+i);
         if (i == 1){
-
             GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
                     Game.getContext().getResources().getString(R.string.achievement_segredo_1));
-
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
             Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, Game.background.height * 0.0001f).start();
-            Game.messages.showMessage("???");
-            SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 2){
 
             GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
@@ -126,30 +121,20 @@ public class LevelGoals {
 
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-            Game.messages.showMessage("???");
-            SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 3){
             GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
                     Game.getContext().getResources().getString(R.string.achievement_segredo_3));
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-            Game.messages.showMessage("???");
-            SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
         } else if (i == 4){ // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
             GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
                     Game.getContext().getResources().getString(R.string.achievement_segredo_4));
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-            Game.messages.showMessage("???");
-            SaveGame.saveGame.secretLevelsUnlocked[i-1] = true;
-
-
-
         }
-    }
 
-    public void notifyBarMoveLeft(){
-
+        Game.messages.showMessage("???");
+        SaveGame.saveGame.setLevelSeen(99 + i);
     }
 
     public void ballReachedWithMaximunBarSpped(){

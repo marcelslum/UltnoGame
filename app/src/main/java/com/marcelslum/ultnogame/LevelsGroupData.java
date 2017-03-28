@@ -57,7 +57,7 @@ public class LevelsGroupData {
 
     public static int getLevelsConqueredStars(int minLevel, int maxLevel){
         int numberOfStars = 0;
-        for (int i = 0; i < SaveGame.saveGame.maxNumberOfLevels; i++){
+        for (int i = 0; i < Level.NUMBER_OF_LEVELS; i++){
             if (i + 1 >= minLevel && i + 1 <= maxLevel) {
                 numberOfStars += SaveGame.saveGame.levelsStars[i];
             }

@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class MenuHandler {
@@ -21,13 +23,7 @@ public class MenuHandler {
         groupMenu.clear();
         
         StarsHandler.updateConqueredStars();
-
-        if (SaveGame.saveGame.newGroupsSeen){
-            if (SaveGame.saveGame.lastStars != StarsHandler.conqueredStarsTotal){
-                SaveGame.saveGame.newGroupsSeen = false;
-            }
-        }
-
+        
         int lastId = 0;
         for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++){
             
@@ -55,7 +51,9 @@ public class MenuHandler {
                 groupMenu.addText(2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
                         Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, new Color(0.35f, 0.35f, 0.35f, 1f), false);
 
-                if (SaveGame.saveGame.groupsSeen[lgd.number - 1]){
+                Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
+
+                if (!SaveGame.saveGame.groupsSeen[lgd.number - 1]){
                     groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                     groupMenu.iconNumberToShow = i;
                 }
@@ -84,7 +82,7 @@ public class MenuHandler {
         lastId += 1;
         
         int firstSecretLevelOnArray = 100;
-        for (int i = 0; i < Level.numberOfSecretLevels; i++){
+        for (int i = 0; i < Level.NUMBER_OF_SECRET; i++){
             
                final int numberOfCurrentLevelNumber = firstSecretLevelOnArray + 1 + i;
             
@@ -104,11 +102,11 @@ public class MenuHandler {
                         }
                     }, false, !SaveGame.saveGame.levelsSeen[firstSecretLevelOnArray + i]);
                    
-                   groupMenu.addText(1, "Level secreto " + (i + 1), "Level secreto " + (i + 1), Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), !SaveGame.saveGame.secretLevelsSeen[firstSecretLevelOnArray + i]);
-                   MenuIconGraph menuGraph = groupMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, !SaveGame.saveGame.secretLevelsSeen[firstSecretLevelOnArray + i]);
+                   groupMenu.addText(1, "Level secreto " + (i + 1), "Level secreto " + (i + 1), Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), !SaveGame.saveGame.levelsSeen[firstSecretLevelOnArray + i]);
+                   MenuIconGraph menuGraph = groupMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, !SaveGame.saveGame.levelsSeen[firstSecretLevelOnArray + i]);
 
-                   groupMenu.addText(2, "Level secreto " + (i + 1) + "2",  (int)SaveGame.saveGame.pointsSecretLevels[0]+" "+Game.getContext().getResources().getString(R.string.pontos),
-                            Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f), !SaveGame.saveGame.secretLevelsSeen[firstSecretLevelOnArray + i]);
+                   groupMenu.addText(2, "Level secreto " + (i + 1) + "2",  (int)SaveGame.saveGame.levelsPoints[firstSecretLevelOnArray + i]+" "+Game.getContext().getResources().getString(R.string.pontos),
+                            Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f), !SaveGame.saveGame.levelsSeen[firstSecretLevelOnArray + i]);
 
                     float percentage = 0f;
                     float starsOfLevel = SaveGame.saveGame.levelsStars[firstSecretLevelOnArray + i];
@@ -138,6 +136,7 @@ public class MenuHandler {
         } else {
             if (Game.currentLevelsGroupDataSelected.number != SaveGame.saveGame.currentGroupNumber){
                 SaveGame.saveGame.currentGroupNumber = Game.currentLevelsGroupDataSelected.number;
+                Log.e(TAG, "zerando translateX");
                 levelMenu.currentTranslateX = 0;
             }
         }
@@ -189,85 +188,89 @@ public class MenuHandler {
         
         float innerTextSize = Game.resolutionY * 0.08f;
         float textSize = Game.resolutionY * 0.032f;
-        
-        
+
+        TextureData textureData;
+        String text;
+
         for (int i = 0; i < Tutorial.NUMBER_OF_TUTORIALS; i++){
-            
-            TextureData textureData;
             switch (i){
-                case TUTORIAL_INSTRUCOES_INICIAIS;
+                case Tutorial.TUTORIAL_INSTRUCOES_INICIAIS:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial1Tittle);
                     break;
-                case TUTORIAL_INICIO;
+                case Tutorial.TUTORIAL_INICIO:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial2Tittle);
                     break;
-                case TUTORIAL_MOVIMENTO_BARRA;
+                case Tutorial.TUTORIAL_MOVIMENTO_BARRA:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial3Tittle);
                     break;
-                case TUTORIAL_INCLINACAO_BARRA;
+                case Tutorial.TUTORIAL_INCLINACAO_BARRA:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial4Tittle);
                     break;
-                case TUTORIAL_OBSTACULO;
+                case Tutorial.TUTORIAL_OBSTACULO:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial5Tittle);
                     break;
-                case TUTORIAL_CORES;
+                case Tutorial.TUTORIAL_CORES:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial6Tittle);
                     break;
-                case TUTORIAL_EXPLOSAO;
+                case Tutorial.TUTORIAL_EXPLOSAO:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial7Tittle);
                     break;
-                case TUTORIAL_ALVO_FANTASMA;
+                case Tutorial.TUTORIAL_ALVO_FANTASMA:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial8Tittle);
                     break;
-                case TUTORIAL_OBSTACULOS_DINAMICOS;
+                case Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial9Tittle);
                     break;
-                case TUTORIAL_BOLAS_INVENCIVEIS;
+                case Tutorial.TUTORIAL_BOLAS_INVENCIVEIS:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial10Tittle);
                     break;
-                case TUTORIAL_BOLAS_PRESAS;
+                case Tutorial.TUTORIAL_BOLAS_PRESAS:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial11Tittle);
                     break;
-                case TUTORIAL_VENTO;
+                case Tutorial.TUTORIAL_VENTO:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial12Tittle);
                     break;
-                case TUTORIAL_BARRA_DINAMICA;
+                case Tutorial.TUTORIAL_BARRA_DINAMICA:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial13Tittle);
                     break;
-                case TUTORIAL_COMIDA;
+                case Tutorial.TUTORIAL_COMIDA:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial14Tittle);
                     break;
-                case TUTORIAL_BOLA_FALSA;
+                case Tutorial.TUTORIAL_BOLA_FALSA:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial15Tittle);
                     break;
-                case TUTORIAL_BOTAO_INVERTIDO;
+                case Tutorial.TUTORIAL_BOTAO_INVERTIDO:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial16Tittle);
                     break;
-                case TUTORIAL_DUAS_BARRAS;
+                case Tutorial.TUTORIAL_DUAS_BARRAS:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial17Tittle);
                     break;
-                case TUTORIAL_DUAS_BOLAS;
+                case Tutorial.TUTORIAL_DUAS_BOLAS:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial18Tittle);
                     break;
-                case TUTORIAL_GRADE;
+                case Tutorial.TUTORIAL_GRADE:
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    text = Game.getContext().getResources().getString(R.string.tutorial19Tittle);
+                    break;
+                default:
                     textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
                     text = Game.getContext().getResources().getString(R.string.tutorial19Tittle);
                     break;
@@ -318,11 +321,11 @@ public class MenuHandler {
         //menuObjectives.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.iniciar_jogo), new MenuOption.OnChoice() {@Override public void onChoice() {}});
 
         // -------------------------------------------MENU OPTIONS
-        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.56f, fontSize, font);
+        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.56f, fontSize, Game.font);
 
         // SELETOR MUSICA
         SelectorHandler.selectorMusic = new Selector("Game.selectorMusic", 0f,0f, fontSize, "",
-                new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, font);
+                new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, Game.font);
 
         menuOptions.addMenuOption("music", Game.getContext().getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override
@@ -346,7 +349,7 @@ public class MenuHandler {
 
         // SELETOR SOM
         SelectorHandler.selectorSound = new Selector("Game.selectorSound", 0f,0f, fontSize, "",
-                new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, font);
+                new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, Game.font);
 
         menuOptions.addMenuOption("sound", Game.getContext().getResources().getString(R.string.sons), new MenuOption.OnChoice() {
             @Override
@@ -375,7 +378,7 @@ public class MenuHandler {
         SelectorHandler.selectorVibration = new Selector("Game.selectorVibration", 0f,0f, fontSize, "",
                 new String[]{Game.getContext().getResources().getString(R.string.desligado),
                         Game.getContext().getResources().getString(R.string.ligado)},
-                font);
+                Game.font);
 
         menuOptions.addMenuOption("vibration", Game.getContext().getResources().getString(R.string.vibracao), new MenuOption.OnChoice() {
             @Override
@@ -410,8 +413,8 @@ public class MenuHandler {
         });
 
 
-        // -------------------------------------------MENU TUTORIAL
-        menuTutorialUnvisited = new Menu("menuTutorialUnvisited", Game.gameAreaResolutionX/2, Game.resolutionY*0.9f, fontSize*0.6f, font);
+        // -------------------------------------------MENU Tutorial.TUTORIAL
+        menuTutorialUnvisited = new Menu("menuTutorialUnvisited", Game.gameAreaResolutionX/2, Game.resolutionY*0.9f, fontSize*0.6f, Game.font);
 
         // adiciona a opção de visualizar tutoriais
         menuTutorialUnvisited.addMenuOption("verTutoriais", Game.getContext().getResources().getString(R.string.menuTutoriais), new MenuOption.OnChoice() {
@@ -432,11 +435,11 @@ public class MenuHandler {
             @Override
             public void onChange() {
                 if (option.numberForAnimation == 1f){
-                    if (Game.gameState != GAME_STATE_JOGAR) {
+                    if (Game.gameState != Game.GAME_STATE_JOGAR) {
                         option.setColor(new Color(0.3f, 0.3f, 0.3f, 1f));
                     }
                 } else if (option.numberForAnimation == 2f) {
-                    if (Game.gameState != GAME_STATE_JOGAR) {
+                    if (Game.gameState != Game.GAME_STATE_JOGAR) {
                         option.setColor(new Color(1f, 0f, 0f, 1f));
                     }
                 }
@@ -445,7 +448,7 @@ public class MenuHandler {
         animOption.start();
 
         // -------------------------------------------MENU MAIN
-        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.53f, fontSize, font);
+        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.53f, fontSize, Game.font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -491,7 +494,7 @@ public class MenuHandler {
         });
 
         // ----------------------------------------------------MENU GAME OVER
-        menuGameOver = new Menu("menuGameOver",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, font);
+        menuGameOver = new Menu("menuGameOver",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
 
         // adiciona a opção continuar
         menuGameOver.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.tentarNovamente), new MenuOption.OnChoice() {
@@ -529,7 +532,7 @@ public class MenuHandler {
 
 
         // ----------------------------------------------------MENU IN GAME
-        menuInGame = new Menu("menuInGame",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, font);
+        menuInGame = new Menu("menuInGame",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
 
         // adiciona a opção continuar
         menuInGame.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
@@ -537,7 +540,7 @@ public class MenuHandler {
             public void onChoice() {
                 menuInGame.block();
                 Game.blockAndWaitTouchRelease();
-                if (Game.gameState == GAME_STATE_PAUSE){
+                if (Game.gameState == Game.GAME_STATE_PAUSE){
                     //Log.e("game", "menu continuar quando game state = GAME_STATE_PAUSE");
                     Game.increaseAllGameEntitiesAlpha(500);
                     MessagesHandler.messageInGame.reduceAlpha(500,0f);
@@ -557,7 +560,7 @@ public class MenuHandler {
             public void onChoice() {
                 menuInGame.block();
                 Game.blockAndWaitTouchRelease();
-                if (Game.gameState == GAME_STATE_PAUSE){
+                if (Game.gameState == Game.GAME_STATE_PAUSE){
                     Game.setGameState(Game.GAME_STATE_OBJETIVO_PAUSE);
                 }
             }
@@ -582,7 +585,7 @@ public class MenuHandler {
         });
 
         // ----------------------------------------------------MENU IN GAME OPTIONS
-        menuInGameOptions = new Menu("menuInGameOptions",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, font);
+        menuInGameOptions = new Menu("menuInGameOptions",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
 
         menuInGameOptions.addMenuOption("music", Game.getContext().getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override

@@ -21,7 +21,7 @@ public class Game {
 
     public static Pool<Vector> vectorPool;
     public static boolean isOpenGL30 = false;
-    //public static Program openGl30TextProgram;
+    public static Program openGl30TextProgram;
 
     public static final long TIME_OF_BALL_LISTENER = 250;
     static Vibrator vibrator;
@@ -457,9 +457,12 @@ public class Game {
 
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
 
-            if (!SaveGame.saveGame.groupsSeen[SaveGame.saveGame.currentGroupNumber - 1]){
-                SaveGame.setGroupSeen();
+            if (!SaveGame.saveGame.groupsSeen[Game.currentLevelsGroupDataSelected.number - 1]){
+                SaveGame.setGroupSeen(Game.currentLevelsGroupDataSelected.number - 1);
             }
+
+            SaveGame.saveGame.currentGroupNumber = Game.currentLevelsGroupDataSelected.number;
+
             
             mainActivity.showAdView();
 
@@ -662,7 +665,7 @@ public class Game {
                 ScoreHandler.scorePanel.showMessage("-50%", 1000);
                 int points = ScoreHandler.scorePanel.value / 2;
                 ScoreHandler.scorePanel.setValue(points, true, 1000, true);
-                SaveGame.saveGame.setLevelPoints(SaveGame.saveGame.currentLevelNumber, points)
+                SaveGame.saveGame.setLevelPoints(SaveGame.saveGame.currentLevelNumber, points);
                 SaveGame.save();
                 ScoreHandler.setMaxScoreTotal();
                 ScoreHandler.submitScores();

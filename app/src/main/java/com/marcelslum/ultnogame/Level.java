@@ -44,6 +44,8 @@ public class Level {
     public static LevelGoals levelGoalsObject;
 
     public static final int NUMBER_OF_LEVELS = 104;
+    public static final int NUMBER_OF_GROUPS = 20;
+    public static final int NUMBER_OF_SECRET = 4;
 
     private Level(){
 

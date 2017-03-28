@@ -10,17 +10,18 @@ public class DataBaseLevelDataHelper extends DataBaseHelper {
     private static DataBaseLevelDataHelper mInstance = null;
 
     private final String TAG = "DataBaseLevelDataHelper";
-    private final String DB_NAME = "ultno_alpha_test.db";
+    //private final String DB_NAME = "ultno_alpha_test.db";
 
-    private DataBaseLevelDataHelper(Context context) {
-        super(context, DB_NAME, Integer.valueOf(context.getResources().getString(R.string.databaseLevelVersion)));
+    private DataBaseLevelDataHelper(Context context, String dbName) {
+        super(context, dbName, Integer.valueOf(context.getResources().getString(R.string.databaseLevelVersion)));
+        this.DB_NAME = dbName;
     }
 
     public static DataBaseLevelDataHelper getInstance(Context ctx){
         if (mInstance == null){
-            mInstance = new DataBaseLevelDataHelper(ctx)
+            mInstance = new DataBaseLevelDataHelper(ctx, "level.db");
         }
-        return mInstance
+        return mInstance;
     }
      
      public ArrayList<BallDataBaseData> getBalls(int level){

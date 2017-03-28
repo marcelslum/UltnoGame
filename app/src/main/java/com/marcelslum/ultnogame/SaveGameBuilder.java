@@ -12,9 +12,8 @@ public class SaveGameBuilder {
     public int[] levelsStars;
     public boolean[] levelsUnlocked;
     public boolean[] levelsSeen;
-
+    public boolean[] groupsSeen;
     public boolean[] tutorialsSeen;
-
     public long date;
     public int currentLevelNumber;
     public int currentGroupNumber;
@@ -25,7 +24,6 @@ public class SaveGameBuilder {
     public float currentLevelMenuTranslateX;
     public float currentTutorialMenuTranslateX;
     public int lastStars;
-    public boolean newGroupsSeen;
     public int levelsPlayed;
 
 
@@ -58,8 +56,8 @@ public class SaveGameBuilder {
         return this;
     }
 
-    public SaveGameBuilder setNewGroupsSeen(boolean newGroupsSeen) {
-        this.newGroupsSeen = newGroupsSeen;
+    public SaveGameBuilder setGroupsSeen(boolean [] groupsSeen) {
+        this.groupsSeen = groupsSeen;
         return this;
     }
 

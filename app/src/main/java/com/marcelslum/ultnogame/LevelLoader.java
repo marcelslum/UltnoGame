@@ -18,9 +18,9 @@ public class LevelLoader {
 
         Level.LevelBuilder levelBuilder = new Level.LevelBuilder();
 
-        ArrayList<BallDataBaseData> ballDataBaseData = MainActivity.dataBaseLevelDataHelper.getBalls(levelNumber);
-        ArrayList<BarDataBaseData> barDataBaseData = MainActivity.dataBaseLevelDataHelper.getBars(levelNumber);
-        ArrayList<TargetDataBaseData> targetlDataBaseData = MainActivity.dataBaseLevelDataHelper.getTargets(levelNumber < 1000 ? 1 : 2);
+        ArrayList<BallDataBaseData> ballDataBaseData = DataBaseLevelDataHelper.getInstance(Game.mainActivity).getBalls(levelNumber);
+        ArrayList<BarDataBaseData> barDataBaseData = DataBaseLevelDataHelper.getInstance(Game.mainActivity).getBars(levelNumber);
+        ArrayList<TargetDataBaseData> targetlDataBaseData = DataBaseLevelDataHelper.getInstance(Game.mainActivity).getTargets(levelNumber < 1000 ? 1 : 2);
 
         int minBallsAlive = 1;
         for (int i = 0; i < Game.levelsDataBaseData.size(); i++){

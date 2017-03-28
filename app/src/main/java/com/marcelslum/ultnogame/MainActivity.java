@@ -75,18 +75,20 @@ public class MainActivity extends FragmentActivity implements
         Log.e("mainActivity", "create");
         super.onCreate(savedInstanceState);
 
-        dataBaseLevelDataHelper = new DataBaseLevelDataHelper(this);
+
         try {
-            dataBaseLevelDataHelper.prepareDatabase();
-            Game.groupsDataBaseData = dataBaseLevelDataHelper.getGroupsDataBaseData();
-            Game.levelsDataBaseData = dataBaseLevelDataHelper.getLevelsDataBaseData();
+
+
+            DataBaseLevelDataHelper.getInstance(this).prepareDatabase();
+            Game.groupsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getGroupsDataBaseData();
+            Game.levelsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getLevelsDataBaseData();
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
 
-        dataBaseSaveDataHelper = new DataBaseSaveDataHelper(this);
+
         try {
-            dataBaseSaveDataHelper.prepareDatabase();
+            DataBaseSaveDataHelper.getInstance(this).prepareDatabase();
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
@@ -305,12 +307,8 @@ public class MainActivity extends FragmentActivity implements
     @Override
     protected void onPause() {
 
-        if (dataBaseLevelDataHelper != null) {
-            dataBaseLevelDataHelper.close();
-        }
-        if (dataBaseSaveDataHelper != null) {
-            dataBaseSaveDataHelper.close();
-        }
+        DataBaseLevelDataHelper.getInstance(this).close();
+        DataBaseSaveDataHelper.getInstance(this).close();
 
         isPaused = true;
         Log.e("MainActivity", "onPause()");
