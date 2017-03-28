@@ -75,6 +75,7 @@ public class Game {
     static LevelsGroupData currentLevelsGroupDataSelected;
     static Image imageTutorialTop;
     static Image imageTutorialDown;
+    static TextView aboutTextView;
 
     // quadtree objects
     static Quadtree quad;
@@ -117,6 +118,7 @@ public class Game {
     public final static int GAME_STATE_INTERSTITIAL =  25;
     public final static int GAME_STATE_OBJETIVO_PAUSE =  26;
     public final static int GAME_STATE_VITORIA_COMPLEMENTACAO =  27;
+    public final static int GAME_STATE_SOBRE =  27;
 
     public static ArrayList<GroupDataBaseData> groupsDataBaseData;
     public static ArrayList<LevelDataBaseData> levelsDataBaseData;
@@ -371,6 +373,13 @@ public class Game {
         if (state == GAME_STATE_INTERSTITIAL){
             
             mainActivity.showInterstitial();
+            
+        } else if (state == GAME_STATE_SOBRE){
+            
+            mainActivity.showAdView();
+            MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuAbout));
+            aboutTextView.display();
+            ButtonHandler.buttonReturn.unblockAndDisplay();
             
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
 
@@ -1663,6 +1672,8 @@ public class Game {
             }
         }
 
+        if (aboutTextView != null) aboutTextView.checkTransformations(true);
+        
         MessagesHandler.messageGameOver.checkTransformations(true);
         MessagesHandler.messagePreparation.checkTransformations(true);
         MessagesHandler.messageInGame.checkTransformations(true);
@@ -1765,7 +1776,9 @@ public class Game {
         if (wind != null) {
             wind.prepareRender(matrixView, matrixProjection);
         }
-
+       
+        
+        
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.prepareRender(matrixView, matrixProjection);
@@ -1793,6 +1806,8 @@ public class Game {
             }
         }
 
+        if (aboutTextView != null) aboutTextView.prepareRender(matrixView, matrixProjection);
+        
         MessagesHandler.messageGameOver.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messagePreparation.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageInGame.prepareRender(matrixView, matrixProjection);
@@ -1861,13 +1876,15 @@ public class Game {
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.verifyListener();
         if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.verifyListener();
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.verifyListener();
-        // levelGoalsPanel não precisa de listener???
+
         if (ButtonHandler.buttonReturn != null) ButtonHandler.buttonReturn.verifyListener();
         if (ButtonHandler.buttonReturnObjectivesPause != null)
             ButtonHandler.buttonReturnObjectivesPause.verifyListener();
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.verifyListener();
         if (ButtonHandler.buttonGroupLeaderboard != null) ButtonHandler.buttonGroupLeaderboard.verifyListener();
 
+        if (aboutTextView != null) aboutTextView.verifyListener();
+        
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.verifyListener();
         if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.verifyListener();
@@ -1909,6 +1926,7 @@ public class Game {
         list.add(MenuHandler.menuInGame);
         list.add(MenuHandler.menuGameOver);
         list.add(tittle);
+        list.add(aboutTextView);
         list.add(MessagesHandler.messageGameOver);
         list.add(MessagesHandler.messagePreparation);
         list.add(MessagesHandler.messageInGame);
