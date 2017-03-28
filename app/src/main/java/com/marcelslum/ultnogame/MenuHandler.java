@@ -276,7 +276,7 @@ public class MenuHandler {
                     break;
             }
 
-            final int tutorialNumber = i + 1;
+            final int tutorialNumber = i;
             if (Tutorial.isTutorialUnblocked(i)){
                 tutorialMenu.addOption(i, Texture.TEXTURE_ICONS, textureData, new Animation.AnimationListener() {
                     @Override
