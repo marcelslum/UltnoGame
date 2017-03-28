@@ -126,8 +126,15 @@ public class Texture {
 
     public void changeBitmap(String resoureIdentifier){
         this.resoureIdentifier = resoureIdentifier;
+        
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
+        
         resoureIdentifierId = Game.mainActivity.getApplicationContext().getResources().getIdentifier(this.resoureIdentifier, null, Game.mainActivity.getApplicationContext().getPackageName());
-        bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
+        bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), 
+                                              resoureIdentifierId,
+                                              options);
 
         if (textureUnit == 0){
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
