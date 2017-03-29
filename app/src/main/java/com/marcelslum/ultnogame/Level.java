@@ -100,14 +100,16 @@ public class Level {
         Game.ballGoalsPanel.alpha = 0.9f;
 
         // escolhe o background de acordo com o número do nível
-        int back;
-        if (SaveGame.saveGame.currentLevelNumber < 9) {
-            back = SaveGame.saveGame.currentLevelNumber;
-        } else {
-            back = SaveGame.saveGame.currentLevelNumber % 9;
-        }
+        //int back;
+        //if (SaveGame.saveGame.currentLevelNumber < 9) {
+        //    back = SaveGame.saveGame.currentLevelNumber;
+        //} else {
+        //    back = SaveGame.saveGame.currentLevelNumber % 9;
+        //}
 
-        Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY, back);
+        //Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY, back);
+        
+        Game.brickBackground = new Background("brickBackground", 0f, 0f, Game.gameAreaResolutionX,Game.gameAreaResolutionY);
 
         if (windType == Level.WIND_TYPE_NO){
             Game.wind = null;
