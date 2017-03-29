@@ -61,6 +61,7 @@ public class Game {
     static Messages messages;
     static ArrayList<Line> lines;
     static Background background;
+    static BrickBackground brickBackground;
     static Wind wind;
     static ArrayList<SpecialBall> specialBalls;
     static ArrayList<Image> ballCollisionStars;
@@ -1183,6 +1184,7 @@ public class Game {
         ButtonHandler.button2Left = null;
         ButtonHandler.button2Right = null;
         background = null;
+        brickBackground = null;
         MessagesHandler.messageTime.clearDisplay();
         MessagesHandler.messageCurrentLevel.clearDisplay();
     }
@@ -1646,7 +1648,7 @@ public class Game {
         }
         
         for (int i = 0; i < ballCollisionStars.size(); i++){
-                ballCollisionStars.get(i).checkTransformations(true);
+            ballCollisionStars.get(i).checkTransformations(true);
         }
         
         for (int i = 0; i < targets.size(); i++){
@@ -1727,12 +1729,13 @@ public class Game {
         if (imageTutorialTop != null) imageTutorialTop.checkTransformations(true);
 
         if (messages != null) messages.checkTransformations(true);
+        
+        if (brickBackground != null) brickBackground.checkTransformations(true);
     }
 
     static void render(float[] matrixView, float[] matrixProjection){
-        if (background != null) {
-            background.prepareRender(matrixView, matrixProjection);
-        }
+        if (background != null) {background.prepareRender(matrixView, matrixProjection);}
+        if (brickBackground != null) brickBackground.prepareRender(matrixView, matrixProjection);
 
         if (MessagesHandler.messageCurrentLevel != null) MessagesHandler.messageCurrentLevel.prepareRender(matrixView, matrixProjection);
 
