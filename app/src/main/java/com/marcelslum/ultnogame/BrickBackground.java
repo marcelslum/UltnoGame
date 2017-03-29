@@ -17,6 +17,16 @@ public class BrickBackground extends Entity {
     float uvHeight;
     boolean uvXUp;
     boolean uvYUp;
+    float brickSize;
+    float [] bricksX;
+    float [] bricksY;
+    float [] bricksUvMap;
+    
+    int numberOfBricksOnX;
+    int numberOfBricksOnY;
+    int numberOfBricks;
+    
+    
 
     Background(String name, float x, float y, float width, float height, int variationNumber) {
         super(name, x, y, Entity.TYPE_BACKGROUND);
@@ -26,39 +36,16 @@ public class BrickBackground extends Entity {
         isCollidable = false;
         isVisible = true;
         textureId = Texture.TEXTURE1;
-        //String bitmap;
 
-        switch (variationNumber){
-            case 1:
-                bitmap = "drawable/finalback1c";
-                break;
-            case 12:
-                bitmap = "drawable/finalback2";
-                break;
-            case 13:
-                bitmap = "drawable/finalback3";
-                break;
-            case 14:
-                bitmap = "drawable/finalback4";
-                break;
-            case 15:
-                bitmap = "drawable/finalback5";
-                break;
-            case 16:
-                bitmap = "drawable/finalback6";
-                break;
-            case 17:
-                bitmap = "drawable/finalback7";
-                break;
-            case 18:
-                bitmap = "drawable/finalback8";
-                break;
-            default:
-                bitmap = "drawable/finalback1c";
-        }
-
-
-        //Log.e("background", "change bitmap of texture "+textureId);
+        brickSize = width/30f;
+        
+        
+        numberOfBricksOnX = Math.round(width / brickSize);
+        numberOfBricksOnY = Math.round(height / brickSize);
+        numberOfBricks =  numberOfBricksOnX * numberOfBricksOnY;
+        
+        
+        
 
         Texture.getTextureById(textureId).changeBitmap(bitmap);
 
@@ -82,6 +69,8 @@ public class BrickBackground extends Entity {
 
         setDrawInfo();
     }
+    
+    
 
     public void move(int velocity) {
 
