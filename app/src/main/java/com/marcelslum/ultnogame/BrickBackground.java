@@ -5,6 +5,8 @@ import android.util.Log;
 public class BrickBackground extends Entity {
     float width;
     float height;
+    
+    /*
     float uvx1;
     float uvx2;
     float uvy1;
@@ -17,17 +19,17 @@ public class BrickBackground extends Entity {
     float uvHeight;
     boolean uvXUp;
     boolean uvYUp;
+    */
+    
     float brickSize;
     float [] bricksX;
     float [] bricksY;
-    float [] bricksUvMap;
+    TextureData [] bricksTextureData; 
     
     int numberOfBricksOnX;
     int numberOfBricksOnY;
     int numberOfBricks;
     
-    
-
     Background(String name, float x, float y, float width, float height, int variationNumber) {
         super(name, x, y, Entity.TYPE_BACKGROUND);
         this.width = width;
@@ -39,10 +41,40 @@ public class BrickBackground extends Entity {
 
         brickSize = width/30f;
         
-        
         numberOfBricksOnX = Math.round(width / brickSize);
         numberOfBricksOnY = Math.round(height / brickSize);
         numberOfBricks =  numberOfBricksOnX * numberOfBricksOnY;
+        
+        bricksX = new float[numberOfBricks];
+        bricksY = new float[numberOfBricks];
+        
+        
+        int i = 0;
+        
+        for (int iy = 0; iy < numberOfBricksOnY; iy++){
+            for (int ix = 0; ix < numberOfBricksOnY; ix++){
+                bricksX[i] = ix * brickSize;
+                bricksY[i] = iy * brickSize;
+                
+                int texture = Util.getRandonFloat(0f, 1f);
+                if (texture < 0.2f){
+                    bricksTextureData[i] = 0;
+                } else if (texture < 0.2f) {
+                    bricksTextureData[i] = 0;
+                } else if (texture < 0.4f) {
+                    bricksTextureData[i] = 0;
+                } else if (texture < 0.6f) {
+                    bricksTextureData[i] = 0;
+                } else if (texture < 0.7f){
+                    bricksTextureData[i] = 0;
+                } else {
+                    bricksTextureData[i] = 0;
+                }   
+                i += 1;
+            }    
+        }
+        
+        
         
         
         
