@@ -68,8 +68,12 @@ public class TextView extends Entity{
 		texts.addAll(newTexts);
 		Text.doLinesWithStringCollection(texts, y, size, size * padding, false);
 		
+		for (int i = 0; i < texts.size(); i++){
+			texts.get(i).setX(x);
+		}
+		
 		if (childs != null){
-            childs.clear();
+            		childs.clear();
 		}
 		
 		for (int i = 0; i < texts.size(); i++){
