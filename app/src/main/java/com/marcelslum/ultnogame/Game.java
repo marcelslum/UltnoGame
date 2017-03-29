@@ -139,6 +139,7 @@ public class Game {
     static Program imageColorizedFxProgram;
     static Program windProgram;
     static Program specialBallProgram;
+    static Program vertex_e_uv_com_alpha_program;
     
     static int ballsNotInvencibleAlive;
     static int ballsInvencible;
@@ -299,6 +300,13 @@ public class Game {
                     Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
             return;
         }
+        
+        
+        vertex_e_uv_com_alpha_program = new Program(
+            Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_uv_com_alpha),
+            Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_uv_com_alpha)
+        );
+        
 
         imageProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_text),
                 Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
