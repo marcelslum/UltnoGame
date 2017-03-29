@@ -33,7 +33,7 @@ public class BrickBackground extends Entity {
     int numberOfBricksOnY;
     int numberOfBricks;
     
-    Background(String name, float x, float y, float width, float height, int variationNumber) {
+    BrickBackground(String name, float x, float y, float width, float height) {
         super(name, x, y, Entity.TYPE_BACKGROUND);
         this.width = width;
         this.height = height;
