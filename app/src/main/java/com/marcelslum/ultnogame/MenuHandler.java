@@ -42,11 +42,14 @@ public class MenuHandler {
                         } else {
                             SaveGame.saveGame.currentLevelMenuTranslateX = levelMenu.currentTranslateX;
                         }
-                        Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-
+                        
                         if (!SaveGame.saveGame.groupsSeen[lgd.number - 1]){
                             SaveGame.setGroupSeen(lgd.number);
                         }
+                        
+                        Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+
+                        
 
 
                     }
