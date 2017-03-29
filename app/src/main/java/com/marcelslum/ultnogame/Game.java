@@ -1512,14 +1512,23 @@ public class Game {
         // verifica se morreu
         // verifica se está vivo
         // verifica se o score deve ser reduzido
+        
+        
         if (gameState == GAME_STATE_JOGAR) {
-            background.move(1);
+            if (background != null){
+                background.move(1);
+            }
             verifyDead();
             ScoreHandler.verifyScoreDecay();
             verifyTargetsAppend();
         } else if(gameState == GAME_STATE_VITORIA){
-            background.move(3);
+            if (background != null){
+                background.move(3);
+            }
         }
+       
+        
+        
         if (gameState == GAME_STATE_JOGAR) {
             verifyWin();
             verifyBallBehaviourData();
