@@ -6,6 +6,9 @@ public class BrickBackground extends Entity {
     float width;
     float height;
     
+    
+    
+    
     /*
     float uvx1;
     float uvx2;
@@ -37,7 +40,8 @@ public class BrickBackground extends Entity {
         isSolid = false;
         isCollidable = false;
         isVisible = true;
-        textureId = Texture.TEXTURE1;
+        textureId = Texture.TEXTURES;
+        program = Game.vertex_e_uv_com_alpha_program;
 
         brickSize = width/30f;
         
@@ -74,106 +78,56 @@ public class BrickBackground extends Entity {
             }    
         }
         
-        
-        
-        
-        
-
-        Texture.getTextureById(textureId).changeBitmap(bitmap);
-
-        program = Game.imageColorizedFxProgram;
-        alpha = 0.8f;
-
-        uvXUp = true;
-        uvYUp = true;
-
-        uvxMin = 0.001f;
-        uvxMax = 0.999f;
-        uvyMin = 0.001f;
-        uvyMax = 0.585937f;
-
-        uvWidth = 0.5f;
-        uvHeight = 0.4f;
-        uvx1 = 0.401f;
-        uvx2 = uvx1 + uvWidth;
-        uvy1 = 0.2f;
-        uvy2 = uvy1 + uvHeight;
-
         setDrawInfo();
     }
-    
-    
 
-    public void move(int velocity) {
-
-        float vel = (float)velocity/10000;
-        
-        if (uvXUp){
-            uvx1 += vel;
-            uvx2 = uvx1 + uvWidth;
-            if (uvx2 >= uvxMax){
-                uvXUp = false;
-                uvx1 -= vel*2;
-                uvx2 = uvx1 + uvWidth;
-            }
-        } else {
-            uvx1 -= vel;
-            uvx2 = uvx1 + uvWidth;
-            if (uvx1 <= uvxMin){
-                uvXUp = true;
-                uvx1 += vel*2;
-                uvx2 = uvx1 + uvWidth;
-            }
-        }
-
-        if (uvYUp){
-            uvy1 += vel;
-            uvy2 = uvy1 + uvHeight;
-            if (uvy2 >= uvyMax){
-                uvYUp = false;
-                uvy1 -= vel*2;
-                uvy2 = uvy1 + uvHeight;
-            }
-        } else {
-            uvy1 -= vel;
-            uvy2 = uvy1 + uvHeight;
-
-            if (uvy1 <= uvyMin){
-                uvYUp = true;
-                uvy1 += vel*2;
-                uvy2 = uvy1 + uvHeight;
-            }
-        }
-
-        Utils.insertRectangleUvData(uvsData, 0, uvx1, uvx2, uvy1, uvy2);
-        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
-    }
-
-    @Override
-    public float getWidth() {
-        return width;
-    }
-
-    @Override
-    public float getHeight() {
-        return height;
-    }
 
     public void setDrawInfo() {
-        initializeData(12, 6, 8, 0);
-
-        Utils.insertRectangleVerticesData(verticesData, 0, -10f, width+20, -10f, height+20, 0f);
+        
+        if (vbo == null || vbo.length == 0){
+            GLES20.glGenBuffers(2, vbo, 0);
+            GLES20.glGenBuffers(1, ibo, 0);
+        }
+        
+        initializeData(8 * numberOfBricks, 6 * numberOfBricks, 12 * numberOfBricks, 0);
+        
+        for (int i = 0; i < numberOfBricks; i++){
+            Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
+                                                bricksX[i]
+                                                bricksX[i] + brickSize
+                                                bricksY[i], 
+                                                bricksY[i] + brickSize,
+                                                );
+            
+            
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+            
+            Utils.insertRectangleUvAndAlphaData(uvData, i * 12, bricksTextureData[i], 1f){
+            
+        }
+            
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
-
-        Utils.insertRectangleIndicesData(indicesData, 0, 0);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
-
-        Utils.insertRectangleUvData(uvsData, 0, uvx1, uvx2, uvy1, uvy2);
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
 
-        //Utils.insertRectangleColorsData(colorsData, 0, Utils.getRandonFloat(-0.1f, 0.1f),
-        //        0f, Utils.getRandonFloat(-0.1f, 0.1f), 1f);
-        //colorsBuffer = Utils.generateFloatBuffer(colorsData);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                        verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                        uvsBuffer, GLES20.GL_STATIC_DRAW);
+
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
+        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
+                        indicesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        verticesBuffer.limit(0);
+        verticesBuffer = null;
     }
 
     @Override
