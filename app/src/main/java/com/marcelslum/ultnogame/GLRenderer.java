@@ -16,7 +16,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class GLRenderer implements GLSurfaceView.Renderer {
 
-    
+    public static final String TAG = "GLRenderer";
     
     // Our matrices
     private final float[] matrixProjection = new float[16];
@@ -103,14 +103,13 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         display.getRealMetrics(metrics);
   
         
-        Game.dpiClassification = metrics.densityDpf;
+        Game.dpiClassification = metrics.densityDpi;
+
+        Log.e(TAG, "dpiClassification "+Game.dpiClassification);
 
         // We need to know the current width and height.
         mScreenWidth = metrics.widthPixels;
         mScreenHeight = metrics.heightPixels;
-        
-        
-        getResources().getDisplayMetrics().density;
         
 
         // Redo the Viewport, making it fullscreen.

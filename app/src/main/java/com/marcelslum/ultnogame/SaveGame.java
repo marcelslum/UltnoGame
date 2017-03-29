@@ -533,7 +533,8 @@ public class SaveGame {
     }
               
     public static void setGroupSeen(int number){
-        saveGame.groupsSeen[number - 1]  = true;
+
+        saveGame.groupsSeen[number - 1] = true;
         DataBaseSaveDataHelper.getInstance(Game.mainActivity).setGroupSeen(number, true);
     }
               

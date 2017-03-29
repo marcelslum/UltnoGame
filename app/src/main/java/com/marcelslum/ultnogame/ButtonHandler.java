@@ -41,9 +41,10 @@ public class ButtonHandler {
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){
-                    Tutorial.currentTutorialObject.previous();}
+                    Tutorial.currentTutorialObject.previous();
                 } else if (Game.gameState == Game.GAME_STATE_SOBRE){
-                    Game.setGameState(Game.GAME_STATE_OPCOES);}
+                    Game.setGameState(Game.GAME_STATE_OPCOES);
+                }
             }
         });
 
@@ -161,19 +162,20 @@ public class ButtonHandler {
 
                 Game.vibrate(Game.VIBRATE_SMALL);
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
-                if (Game.gameState == Game.GAME_STATE_VITORIA){
+                if (Game.gameState == Game.GAME_STATE_VITORIA) {
                     Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
-                } else   if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
+                } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {
                     Game.prepareAfterInterstitialFlag = false;
                     Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
-                } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
+                } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL) {
                     Game.setGameState(Game.GAME_STATE_PREPARAR);
-                } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){
-                        Tutorial.currentTutorialObject.next();
+                } else if (Game.gameState == Game.GAME_STATE_TUTORIAL) {
+                    Tutorial.currentTutorialObject.next();
                 }
             }
         });
     }
+
 
     public static void createGameButtons(int barsQuantity, boolean invertedButtons) {
         float y = Game.resolutionY * 0.86f;

@@ -350,6 +350,8 @@
     <string name="databaseDataVersion">1</string>
     <string name="voltar">Voltar</string>
     <string name="continuar">Continuar</string>
+    <string name="lerSobre">Sobre</string>
+    <string name="messageMenuAbout">Sobre:</string>
 
 
 </resources>

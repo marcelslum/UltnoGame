@@ -10,14 +10,15 @@ public class TextView extends Entity{
 	public float size;
 	public Font font;
 	public float padding = 0.2f;
+	public float currentTranslateY;
 	
 	boolean desacelerationActivated = false;
-    	float lastMovement;
+    float lastMovement;
 	private boolean cancelNextPress;
 
 	float translateY = 0;
   
-	public TextView(String name, float x, float y, float width, float height, Font font){
+	public TextView(String name, float x, float y, float width, float height, float size, Font font){
 		
 		super(name, x, y, Entity.TYPE_TEXT_VIEW);
 		this.width = width;
@@ -25,6 +26,7 @@ public class TextView extends Entity{
 		this.size = size;
 		this.font = font;
 		texts = new ArrayList<>();
+		color = new Color(0f, 0f, 0f, 1f);
 		
 		final TextView innerTextView = this;
 		setListener(new InteractionListener(this.name, x, y, width, height, 5000, this));
@@ -62,7 +64,7 @@ public class TextView extends Entity{
 	}
 	
 	public void addText(String text){
-		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth(text.name, text, font, text.color, size, width);
+		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth("novo text", text, font, color, size, width);
 		texts.addAll(newTexts);
 		Text.doLinesWithStringCollection(texts, y, size, size * padding, false);
 		
@@ -77,7 +79,7 @@ public class TextView extends Entity{
 	
 	public void render(float[] matrixView, float[] matrixProjection){
 		for (int i = 0; i < texts.size(); i++){
-			texts.get(i).render(float[] matrixView, float[] matrixProjection);
+			texts.get(i).render(matrixView, matrixProjection);
 		}
 	}
 	
@@ -106,7 +108,7 @@ public class TextView extends Entity{
 		float padd = size * 0.5f;
 
 		Text lastText = texts.get(texts.size()-1);
-		if (lastText.positionY + size + iconTranslateY < (Game.resolutionY - padd){
+		if (lastText.positionY + size + iconTranslateY < Game.resolutionY - padd){
 		    iconTranslateY = (Game.resolutionY - padd) - (lastText.positionY + size);
 		    if (desacelerationActivated){
 			desacelerationActivated = false;
@@ -121,7 +123,7 @@ public class TextView extends Entity{
 		    }
 		}
 
-		Log.e(TAG, "movendo depois "+ iconTranslateX);
+		Log.e(TAG, "movendo depois "+ iconTranslateY);
 
 		for (int i = 0; i < texts.size(); i++){
 		    texts.get(i).translate(0f, iconTranslateY);

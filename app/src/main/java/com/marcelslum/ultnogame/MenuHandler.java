@@ -34,8 +34,21 @@ public class MenuHandler {
                     @Override
                     public void onAnimationEnd() {
                         Game.currentLevelsGroupDataSelected = lgd;
-                        SaveGame.saveGame.currentGroupNumber = lgd.number;
+
+                        if (SaveGame.saveGame.currentGroupNumber != lgd.number){
+                            Log.e(TAG, "alterando currentGroupNumber de " + SaveGame.saveGame.currentGroupNumber + " para " + lgd.number);
+                            SaveGame.saveGame.currentLevelMenuTranslateX = 0;
+                            SaveGame.saveGame.currentGroupNumber = lgd.number;
+                        } else {
+                            SaveGame.saveGame.currentLevelMenuTranslateX = levelMenu.currentTranslateX;
+                        }
                         Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+
+                        if (!SaveGame.saveGame.groupsSeen[lgd.number - 1]){
+                            SaveGame.setGroupSeen(lgd.number);
+                        }
+
+
                     }
                 }, false, false);
 
@@ -53,7 +66,10 @@ public class MenuHandler {
 
                 Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
 
+
+                Log.e(TAG, "group i = "+ i + " seen "+SaveGame.saveGame.groupsSeen[i]);
                 if (!SaveGame.saveGame.groupsSeen[i]){
+
                     groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
                     groupMenu.iconNumberToShow = i;
                 }
@@ -130,16 +146,7 @@ public class MenuHandler {
 
         levelMenu.clear();
 
-        if (Game.currentLevelsGroupDataSelected == null){
-            Log.e(TAG, "verificar se é util essa linha");
-            Game.currentLevelsGroupDataSelected = LevelsGroupData.levelsGroupData.get(0);
-        } else {
-            if (Game.currentLevelsGroupDataSelected.number != SaveGame.saveGame.currentGroupNumber){
-                SaveGame.saveGame.currentGroupNumber = Game.currentLevelsGroupDataSelected.number;
-                Log.e(TAG, "zerando translateX");
-                levelMenu.currentTranslateX = 0;
-            }
-        }
+        levelMenu.currentTranslateX = SaveGame.saveGame.currentLevelMenuTranslateX;
 
         for (int i = 0; i < Game.currentLevelsGroupDataSelected.levelsData.size(); i++){
             final LevelsGroupData.LevelData ld = Game.currentLevelsGroupDataSelected.levelsData.get(i);
@@ -303,10 +310,8 @@ public class MenuHandler {
         float fontSize = Game.gameAreaResolutionY*0.08f;
 
         groupMenu = new MenuIcon("groupMenu", 0f, Game.resolutionY * 0.3f, Game.resolutionY * 0.4f);
-        updateGroupMenu();
 
         levelMenu = new MenuIcon("levelMenu", 0f, Game.resolutionY * 0.3f, Game.resolutionY * 0.4f);
-        updateLevelMenu();
 
         tutorialMenu = new MenuIcon("tutorialMenu", 0f, Game.resolutionY * 0.3f, Game.resolutionY * 0.4f);
 

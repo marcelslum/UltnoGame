@@ -161,14 +161,14 @@ public class MenuIcon extends Entity{
 
         if (hasDelayShow) {
             currentTranslateX = - getPositionXFromIconNumber(delayIcon - 1);
+            SaveGame.saveGame.currentGroupMenuTranslateX = currentTranslateX;
         //    currentTranslateX = 0;
         }
 
         move(currentTranslateX, false);
 
-
         if (iconNumberToShow != -1){
-            moveToIcon(iconNumberToShow);
+            //moveToIcon(iconNumberToShow);
         }
 
         boolean delayShowUnblockMarked = false;
@@ -511,8 +511,10 @@ public class MenuIcon extends Entity{
             //Log.e(TAG, "ativando translate do graph " + i);
             graph.get(i).accumulatedTranslateX = 0f;
         }
-        
-         if (icons.size() > iconNumber){
+
+        currentTranslateX = 0;
+
+        if (icons.size() > iconNumber){
             move(-getPositionXFromIconNumber(iconNumber), true);
         }
     }

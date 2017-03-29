@@ -33,7 +33,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     public void prepareDatabase() throws IOException {
 
-        deleteDataBase();
+        //deleteDataBase();
 
         boolean dbExist = checkDataBase();
         SQLiteDatabase db_Read = null;

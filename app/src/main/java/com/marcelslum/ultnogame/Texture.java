@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -132,37 +134,37 @@ public class Texture {
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         
-        int sampleSize;
+        int sampleSize = 1;
         switch(Game.dpiClassification) {
            case DisplayMetrics.DENSITY_LOW:
                sampleSize = 4;
-               Toast.makeText(this, "low density", Toast.LENGTH_SHORT).show();
+               Log.e(TAG, "low density");
                break;    
            case DisplayMetrics.DENSITY_MEDIUM:
-               Toast.makeText(this, "medium density", Toast.LENGTH_SHORT).show();
+               Log.e(TAG, "medium density");
                sampleSize = 4;
                break;                
            case DisplayMetrics.DENSITY_HIGH:
-               Toast.makeText(this, "high density", Toast.LENGTH_SHORT).show();
+               Log.e(TAG, "high density");
                sampleSize = 2;
                break;    
            case DisplayMetrics.DENSITY_XHIGH:
-               Toast.makeText(this, "xhigh density", Toast.LENGTH_SHORT).show();
+               Log.e(TAG, "xhigh density");
                sampleSize = 2;
                break;                  
            case DisplayMetrics.DENSITY_XXHIGH:
-               Toast.makeText(this, "xxhigh density", Toast.LENGTH_SHORT).show();
+               Log.e(TAG, "xxhigh density");
                sampleSize = 1;
                break;                  
            case DisplayMetrics.DENSITY_XXXHIGH:
-               Toast.makeText(this, "xxxhigh density", Toast.LENGTH_SHORT).show();
+               Log.e(TAG, "xxxhigh density");
                sampleSize = 1;
                break;      
         }
         
         textureSize = 2048 / sampleSize;
         
-        options.inSampleSize = sampleSize;
+        //options.inSampleSize = sampleSize;
         
         resoureIdentifierId = Game.mainActivity.getApplicationContext().getResources().getIdentifier(this.resoureIdentifier, null, Game.mainActivity.getApplicationContext().getPackageName());
         bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), 

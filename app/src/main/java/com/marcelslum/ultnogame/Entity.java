@@ -3,6 +3,7 @@ package com.marcelslum.ultnogame;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Entity{
+
 
     public boolean inUse = false;
     
@@ -26,8 +28,8 @@ public class Entity{
 
     public TextureData textureData;
 
-    public static int [] vbo;
-    public static int [] ibo ;
+    public int [] vbo;
+    public int [] ibo ;
 
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
@@ -54,6 +56,7 @@ public class Entity{
     final public static int TYPE_WIND = 22;
     final public static int TYPE_WINDOW_GAME = 23;
     final public static int TYPE_TARGET_GROUP = 24;
+    final public static int TYPE_TEXT_VIEW = 25;
     
     
 
@@ -502,6 +505,12 @@ public class Entity{
         if (!isVisible){
             return;
         }
+
+        //if (vbo == null){
+        //    Log.e(TAG, name + " -> vbo null");
+        //} else {
+        //    Log.e(TAG, name + " -> " + vbo.length);
+        //}
         
         setMatrixModel();
         
@@ -529,7 +538,7 @@ public class Entity{
 
             return;
 
-        } else if (vbo == null || vbo.lenght == 0){
+        } else if (vbo == null || vbo.length == 0){
             
                     GLES20.glUseProgram(program.get());
 
@@ -624,12 +633,12 @@ public class Entity{
 
 
                     if (textureId != -1) {
-                        if (textureId != currentBoundedTextureId){
-                            currentBoundedTextureId = textureId;
+                        //if (textureId != currentBoundedTextureId){
+                            //currentBoundedTextureId = textureId;
                             // Get handle to textures locations
                             int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
                             GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
-                        }
+                        //}
                     }
 
                     if (isLineGL) {

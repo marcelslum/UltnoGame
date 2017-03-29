@@ -30,10 +30,10 @@ public class MessagesHandler {
 
     public static void initMessages(){
         
-        Game.aboutTextView = new TextView("about", Game.resolutionX * 0.1, 
-                                          Game.resolutionY * 0.2,
-                                          Game.resolutionX * 0.8, 
-                                          Game.resolutionY * 0.8,
+        Game.aboutTextView = new TextView("about", Game.resolutionX * 0.1f,
+                                          Game.resolutionY * 0.2f,
+                                          Game.resolutionX * 0.8f,
+                                          Game.resolutionY * 0.8f,
                                           Game.gameAreaResolutionY*0.05f,
                                           Game.font);
         

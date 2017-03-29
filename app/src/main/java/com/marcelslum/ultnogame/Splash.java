@@ -235,6 +235,8 @@ public class Splash {
                             Game.initEdges();
                             ButtonHandler.initButtons();
 
+                            //SaveGame.saveGame.currentGroupMenuTranslateX = 0;
+
                             if (MenuHandler.groupMenu != null) {
                                     MenuHandler.groupMenu.currentTranslateX =
                                             SaveGame.saveGame.currentGroupMenuTranslateX;
@@ -244,6 +246,8 @@ public class Splash {
                                 MenuHandler.tutorialMenu.currentTranslateX =
                                         SaveGame.saveGame.currentTutorialMenuTranslateX;
                             }
+
+                            MenuHandler.levelMenu.currentTranslateX = 0;
                             
                             
                             Game.setGameState(Game.GAME_STATE_MENU);    

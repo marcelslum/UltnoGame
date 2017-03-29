@@ -3,6 +3,8 @@ package com.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
 
+import java.util.ArrayList;
+
 class TextGroupDraw extends Entity{
 
     static final String TAG = "TextGroup";
@@ -19,7 +21,7 @@ class TextGroupDraw extends Entity{
     ArrayList<Text> textsForDraw;
 
     TextGroupDraw(){
-        super("targetGroup", 0f, 0f, Entity.TYPE_GROUP_DRAW);
+        super("targetGroup", 0f, 0f, Entity.TYPE_TARGET_GROUP);
         textureId = Texture.TEXTURES;
         program = Game.imageColorizedProgram;
         GLES20.glGenBuffers(3, vbo, 0);
@@ -27,8 +29,9 @@ class TextGroupDraw extends Entity{
     }
     
     public void collectTextsForDraw(){
-        textsForDraw.clear()
+        textsForDraw.clear();
         int quantityOfMenus = 6;
+        Menu  menu = MenuHandler.menuMain;
         for (int m = 0; m < quantityOfMenus; m++){
             switch (m){
                 case 0:
@@ -64,10 +67,11 @@ class TextGroupDraw extends Entity{
     }
 
     public void setDrawInfo(){
-
+/*
         initializeData(12 * textsForDraw.size(), 6 * textsForDraw.size(), 8 * textsForDraw.size(), 16 * textsForDraw.size())
 
         for (int i = 0; i < Game.textsForDraw.size(); i++){
+
 
             Utils.insertRectangleVerticesData(verticesData, i * 12, Game.targets.get(i).x,
                     Game.targets.get(i).x + Game.targets.get(i).width, Game.targets.get(i).y, Game.targets.get(i).y + Game.targets.get(i).height, 0f);
@@ -92,24 +96,7 @@ class TextGroupDraw extends Entity{
                 percentage = 0;
             }
 
-            /*
-            float finalPorcentage = ((float)Math.pow(((percentage)-0.5f),2)*-1) + 0.25f;
-            if (finalPorcentage != 0) {
-                if (Game.targets.get(i).type == Target.TARGET_BLUE) {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 4f, finalPorcentage / 2f, finalPorcentage / 4f, Game.targets.get(i).alpha);
-                } else if (Game.targets.get(i).type == Target.TARGET_BLACK) {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 2f, finalPorcentage / 2f, finalPorcentage, Game.targets.get(i).alpha);
-                } else {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
-                }
-            } else {
-                if (SaveGame.saveGame.currentLevelNumber >= 1000) {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Game.targets.get(i).alpha);
-                } else {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
-                }
-            }
-            */
+
             Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
         }
 
@@ -145,6 +132,7 @@ class TextGroupDraw extends Entity{
         colorsBuffer = null;
         indicesBuffer.limit(0);
         indicesBuffer = null;
+        */
     }
 	
 	public void checkBufferChange() {

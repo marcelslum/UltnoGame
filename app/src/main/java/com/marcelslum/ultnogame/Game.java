@@ -144,6 +144,7 @@ public class Game {
     
     public static String currentPlayerId;
     static boolean initPausedFlag;
+    public static int dpiClassification;
 
     private Game() {}
     
@@ -466,13 +467,6 @@ public class Game {
 
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
 
-            if (!SaveGame.saveGame.groupsSeen[Game.currentLevelsGroupDataSelected.number - 1]){
-                SaveGame.setGroupSeen(Game.currentLevelsGroupDataSelected.number - 1);
-            }
-
-            SaveGame.saveGame.currentGroupNumber = Game.currentLevelsGroupDataSelected.number;
-
-            
             mainActivity.showAdView();
 
             MenuHandler.updateLevelMenu();

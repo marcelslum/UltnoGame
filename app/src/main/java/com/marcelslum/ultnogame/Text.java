@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.opengl.GLES20;
+
 import java.util.ArrayList;
 
 public class Text extends Entity{
@@ -98,16 +100,18 @@ public class Text extends Entity{
     }
 
     public void setDrawInfo(){
-        
+        /*
         if (vbo == null || vbo.length == 0){
             vbo = new int[3];
             GLES20.glGenBuffers(3, vbo, 0);
         }
         
-        if (ibo == null || ibo.lenght == 0){
+        if (ibo == null || ibo.length == 0){
             ibo = new int[1];
             GLES20.glGenBuffers(1, ibo, 0);
         }
+
+        */
         
         float xOffset = 0f;
         if (align == TEXT_ALIGN_RIGHT) {
@@ -139,7 +143,7 @@ public class Text extends Entity{
         colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData,colorsBuffer);
 
         width = calculateWidth();
-
+/*
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
                         verticesBuffer, GLES20.GL_STATIC_DRAW);
@@ -158,6 +162,8 @@ public class Text extends Entity{
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        */
     }
 
     private void convertTextToTriangleInfo(float xOffset){
@@ -284,7 +290,7 @@ public class Text extends Entity{
         return cursor;
     }
     
-    public void updateVerticesData(){
+    public void updateVerticesData(float xOffset){
         
         convertTextToTriangleInfo(xOffset);
         
@@ -341,7 +347,7 @@ public class Text extends Entity{
 
     public void setX(float x) {
         this.x = x;
-        updateVerticesData();
+        setDrawInfo();
 
         if (shadowText != null){
             shadowText.setX(x + (size*0.05f));
@@ -374,6 +380,7 @@ public class Text extends Entity{
 
         colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
 
+        /*
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
                         colorsBuffer, GLES20.GL_STATIC_DRAW);
@@ -381,7 +388,7 @@ public class Text extends Entity{
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
         
-        
+        */
         this.setDrawInfo();
     }
 
