@@ -205,7 +205,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
                 longestFrame = elapsed;
             }
 
-            if (frameDurations.size() == 300){
+            if (frameDurations.size() == 60){
                 float soma = 0;
                 for (int i = 0; i < frameDurations.size(); i++){
                     soma += frameDurations.get(i);

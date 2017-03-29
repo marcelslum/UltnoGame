@@ -23,6 +23,8 @@ public class Game {
     public static boolean isOpenGL30 = false;
     public static Program openGl30TextProgram;
 
+    public static ArrayList<Text> textsForTest;
+
     public static final long TIME_OF_BALL_LISTENER = 250;
     static Vibrator vibrator;
 
@@ -197,6 +199,22 @@ public class Game {
         Game.frame.clearDisplay();
         Game.frame.alpha = 0f;
         TextureData.getTextureData();
+
+
+        textsForTest = new ArrayList<>();
+        /*
+        for (int i = 0; i < 1000; i++){
+            textsForTest.add(new Text("name "+ i, Utils.getRandonFloat(0f, Game.resolutionX),
+                    Utils.getRandonFloat(0f, Game.resolutionY),
+                    Utils.getRandonFloat(0f, Game.resolutionX*0.1f),
+                    "teste "+ i,
+                    font,
+                    new Color(Utils.getRandonFloat(0f, 1f), Utils.getRandonFloat(0f, 1f), Utils.getRandonFloat(0f, 1f), 1f)));
+        }
+        */
+
+
+
         setGameState(Game.GAME_STATE_INTRO);
     }
 
@@ -303,7 +321,7 @@ public class Game {
     }
 
     static void initFont(){
-        font = new Font(Texture.TEXTURES,textProgram);
+        font = new Font(Texture.TEXTURES, textProgram);
     }
     static void addBall(Ball ball){
         balls.add(ball);
@@ -1715,6 +1733,12 @@ public class Game {
         for (int i = 0; i < fakeBalls.size(); i++){
             if (!fakeBalls.get(i).fakeOnTop) {
                 fakeBalls.get(i).prepareRender(matrixView, matrixProjection);
+            }
+        }
+
+        if (textsForTest != null) {
+            for (int i = 0; i < textsForTest.size(); i++) {
+                textsForTest.get(i).prepareRender(matrixView, matrixProjection);
             }
         }
 

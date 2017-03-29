@@ -438,21 +438,21 @@ public class MenuHandler {
             }
         });
 
-        final Text option = menuTutorialUnvisited.getMenuOptionByName("verTutoriais").textObject;
+        final Text optionTutorialUnvisite = menuTutorialUnvisited.getMenuOptionByName("verTutoriais").textObject;
         ArrayList<float[]> valuesAnim = new ArrayList<>();
         valuesAnim.add(new float[]{0f,1f});
         valuesAnim.add(new float[]{0.6f,2f});
-        Animation animOption = new Animation(option, "numberForAnimation", "numberForAnimation", 2000, valuesAnim, true, false);
+        Animation animOption = new Animation(optionTutorialUnvisite, "numberForAnimation", "numberForAnimation", 2000, valuesAnim, true, false);
         animOption.setOnChangeNotFluid(new Animation.OnChange() {
             @Override
             public void onChange() {
-                if (option.numberForAnimation == 1f){
+                if (optionTutorialUnvisite.numberForAnimation == 1f){
                     if (Game.gameState != Game.GAME_STATE_JOGAR) {
-                        option.setColor(new Color(0.3f, 0.3f, 0.3f, 1f));
+                        optionTutorialUnvisite.setColor(new Color(0.3f, 0.3f, 0.3f, 1f));
                     }
-                } else if (option.numberForAnimation == 2f) {
+                } else if (optionTutorialUnvisite.numberForAnimation == 2f) {
                     if (Game.gameState != Game.GAME_STATE_JOGAR) {
-                        option.setColor(new Color(1f, 0f, 0f, 1f));
+                        optionTutorialUnvisite.setColor(new Color(1f, 0f, 0f, 1f));
                     }
                 }
             }

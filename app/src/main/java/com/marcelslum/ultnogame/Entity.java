@@ -663,8 +663,14 @@ public class Entity{
 
             int av4_verticesHandle = GLES20.glGetAttribLocation(program.get(), "av4_vertices");
             int av2_uvHandle = GLES20.glGetAttribLocation(program.get(), "av2_uv");
-            int av4_colorsHandle = GLES20.glGetAttribLocation(program.get(), "av4_colors" );
 
+
+            int av4_colorsHandle = -1;
+            if (colorsBuffer != null){
+                av4_colorsHandle = GLES20.glGetAttribLocation(program.get(), "av4_colors" );
+            }
+
+            int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
             int um4_projectionHandle = GLES20.glGetUniformLocation(program.get(), "um4_projection");
             int um4_viewHandle = GLES20.glGetUniformLocation(program.get(), "um4_view");
             int um4_modelHandle = GLES20.glGetUniformLocation(program.get(), "um4_model");
@@ -672,6 +678,7 @@ public class Entity{
             GLES20.glUniformMatrix4fv(um4_projectionHandle, 1, false, matrixProjection, 0);
             GLES20.glUniformMatrix4fv(um4_viewHandle, 1, false, matrixView, 0);
             GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, matrixModel, 0);
+            GLES20.glUniform1f(uf_alphaHandle, alpha);
 
              if (textureId != -1) {
                 if (textureId != currentBoundedTextureId){
@@ -682,6 +689,9 @@ public class Entity{
                 }
             }
 
+
+
+
             GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
             GLES20.glEnableVertexAttribArray(av4_verticesHandle);
             GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, 0);
@@ -690,15 +700,26 @@ public class Entity{
             GLES20.glEnableVertexAttribArray(av2_uvHandle);
             GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, 0);
 
-            GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
-            GLES20.glEnableVertexAttribArray(av4_colorsHandle);
-            GLES20.glVertexAttribPointer(av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, 0);
+            if (this.colorsBuffer != null){
+                GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
+                GLES20.glEnableVertexAttribArray(av4_colorsHandle);
+                GLES20.glVertexAttribPointer(av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, 0);
+            }
 
             GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indicesData.length, GLES20.GL_UNSIGNED_SHORT, 0);
 
             GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
             GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+
+            // Disable vertex array
+            GLES20.glDisableVertexAttribArray(av4_verticesHandle);
+            if (av2_uvHandle != -1) {
+                GLES20.glDisableVertexAttribArray(av2_uvHandle);
+            }
+            if (av4_colorsHandle != -1){
+                GLES20.glDisableVertexAttribArray(av4_colorsHandle);
+            }
             
         }
     }
