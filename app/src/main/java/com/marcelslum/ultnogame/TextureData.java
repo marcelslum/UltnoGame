@@ -120,6 +120,13 @@ public class TextureData {
     public static final int TEXTURE_BACK_GRAY3 = 206;
     public static final int TEXTURE_BACK_GRAY4 = 207;
     public static final int TEXTURE_BACK_GRAY5 = 208;
+    
+    public static final int TEXTURE_CLOUD1 = 300;
+    public static final int TEXTURE_CLOUD2 = 301;
+    public static final int TEXTURE_CLOUD3 = 302;
+    public static final int TEXTURE_CLOUD4 = 303;
+    public static final int TEXTURE_CLOUD5 = 304;
+    public static final int TEXTURE_CLOUD6 = 305;
 
     public static final int TEXTURE_TUTORIAL1_ID = 1001;
     public static final int TEXTURE_TUTORIAL2_ID = 1002;
@@ -308,6 +315,13 @@ public class TextureData {
         map.put(TEXTURE_BACK_GRAY3, "back_gray3.png");
         map.put(TEXTURE_BACK_GRAY4, "back_gray4.png");
         map.put(TEXTURE_BACK_GRAY5, "back_gray5.png");
+        
+        map.put(TEXTURE_CLOUD1, "nuvem1.png");
+        map.put(TEXTURE_CLOUD2, "nuvem2.png");
+        map.put(TEXTURE_CLOUD3, "nuvem3.png");
+        map.put(TEXTURE_CLOUD4, "nuvem4.png");
+        map.put(TEXTURE_CLOUD5, "nuvem5.png");
+        map.put(TEXTURE_CLOUD6, "nuvem6.png");
         
         map.put(TEXTURE_TUTORIAL1_ID, "ti1.png");
         map.put(TEXTURE_TUTORIAL2_ID, "ti2.png");
