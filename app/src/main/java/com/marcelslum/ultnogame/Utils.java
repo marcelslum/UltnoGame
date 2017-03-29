@@ -173,6 +173,17 @@ public abstract class Utils {
         array[10 + (startIndex)] = y1;
         array[11 + (startIndex)] = z;
     }
+    
+    public static void insertRectangleVerticesDataXY(float[] array, int startIndex, float x1, float x2, float y1, float y2){
+        array[startIndex] = x1;
+        array[1 + (startIndex)] = y2;
+        array[2 + (startIndex)] = x2;
+        array[3 + (startIndex)] = y2;
+        array[4 + (startIndex)] = x2;
+        array[5 + (startIndex)] = y1;
+        array[6 + (startIndex)] = x1;
+        array[7 + (startIndex)] = y1;
+    }
 
     public static void insertLineVerticesData(float[] array, int startIndex, float x1, float y1, float x2, float y2, float z){
         array[startIndex] = x1;
@@ -257,6 +268,22 @@ public abstract class Utils {
             array[6 + (startIndex)] = x1;
             array[7 + (startIndex)] = y2;
     }
+    
+    public static void insertRectangleUvAndAlphaData(float[] array, int startIndex, float alpha){
+            array[startIndex] = x1;
+            array[1 + (startIndex)] = y1;
+            array[2 + (startIndex)] = alpha;
+            array[3 + (startIndex)] = x2;
+            array[4 + (startIndex)] = y1;
+            array[5 + (startIndex)] = alpha;
+            array[6 + (startIndex)] = x2;
+            array[7 + (startIndex)] = y2;
+            array[8 + (startIndex)] = alpha;
+            array[9 + (startIndex)] = x1;
+            array[10 + (startIndex)] = y2;
+            array[11 + (startIndex)] = alpha;
+    }
+    
 
     public static void insertRectangleUvData(float[] array, int startIndex, TextureData td){
         x1 = td.x;
@@ -264,6 +291,14 @@ public abstract class Utils {
         y2 = td.y;
         y1 = td.y + td.h;
         insertRectangleUvData(array, startIndex);
+    }
+    
+    public static void insertRectangleUvAndAlphaData(float[] array, int startIndex, TextureData td, float alpha){
+        x1 = td.x;
+        x2 = td.x + td.w;
+        y2 = td.y;
+        y1 = td.y + td.h;
+        insertRectangleUvAndAlphaData(array, startIndex, alpha);
     }
     
    public static float[] getUvData256(int textureMap){
