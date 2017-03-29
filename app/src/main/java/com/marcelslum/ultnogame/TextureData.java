@@ -109,6 +109,17 @@ public class TextureData {
     public static final int TEXTURE_WINDOW_ID = 80;
     public static final int TEXTURE_BUTTON_GROUP_LEADERBOARD_ID = 81;
     public static final int TEXTURE_BUTTON_GROUP_LEADERBOARD_PRESS_ID = 82;
+    
+    
+    public static final int TEXTURE_BACK_BLACK = 200;
+    public static final int TEXTURE_BACK_BLUE = 201;
+    public static final int TEXTURE_BACK_GREEN = 202;
+    public static final int TEXTURE_BACK_RED = 203;
+    public static final int TEXTURE_BACK_GRAY1 = 204;
+    public static final int TEXTURE_BACK_GRAY2 = 205;
+    public static final int TEXTURE_BACK_GRAY3 = 206;
+    public static final int TEXTURE_BACK_GRAY4 = 207;
+    public static final int TEXTURE_BACK_GRAY5 = 208;
 
     public static final int TEXTURE_TUTORIAL1_ID = 1001;
     public static final int TEXTURE_TUTORIAL2_ID = 1002;
@@ -287,8 +298,17 @@ public class TextureData {
         map.put(TEXTURE_WINDOW_ID, "window.png");
         map.put(TEXTURE_BUTTON_GROUP_LEADERBOARD_ID, "button_leaderboard.png");
         map.put(TEXTURE_BUTTON_GROUP_LEADERBOARD_PRESS_ID, "button_leaderboard_pressed.png");
-
-
+        
+        map.put(TEXTURE_BACK_BLACK, "back_black.png");
+        map.put(TEXTURE_BACK_BLUE, "back_blue.png");
+        map.put(TEXTURE_BACK_GREEN, "back_green.png");
+        map.put(TEXTURE_BACK_RED, "back_red.png");
+        map.put(TEXTURE_BACK_GRAY1, "back_gray1.png");
+        map.put(TEXTURE_BACK_GRAY2, "back_gray2.png");
+        map.put(TEXTURE_BACK_GRAY3, "back_gray3.png");
+        map.put(TEXTURE_BACK_GRAY4, "back_gray4.png");
+        map.put(TEXTURE_BACK_GRAY5, "back_gray5.png");
+        
         map.put(TEXTURE_TUTORIAL1_ID, "ti1.png");
         map.put(TEXTURE_TUTORIAL2_ID, "ti2.png");
         map.put(TEXTURE_TUTORIAL3_ID, "ti3.png");
