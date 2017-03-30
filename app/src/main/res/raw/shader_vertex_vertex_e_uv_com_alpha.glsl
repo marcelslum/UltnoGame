@@ -1,6 +1,7 @@
 uniform mat4 um4_projection;
 uniform mat4 um4_view;
 uniform mat4 um4_model;
+uniform float uf_alpha;
 attribute vec2 av2_vertices;
 attribute vec3 av3_uv;
 varying vec2 vv2_texCoord;
