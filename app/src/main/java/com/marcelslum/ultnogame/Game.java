@@ -1515,13 +1515,14 @@ public class Game {
             //    background.move(1);
             //}
             //if (brickBackground != null){
-            //    brickBackground.changeDrawInfo();
+            //    
             //}
 
             verifyDead();
             ScoreHandler.verifyScoreDecay();
             verifyTargetsAppend();
             if (brickBackground != null){
+                brickBackground.changeDrawInfo();
                 brickBackground.move();
             }
         } else if(gameState == GAME_STATE_VITORIA){
