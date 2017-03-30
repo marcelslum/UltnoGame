@@ -85,7 +85,10 @@ public class MenuIcon extends Entity{
             icons.get(i).render(matrixView, matrixProjection);
         }
         for (int i = 0; i < texts.size();i++){
-            //Log.e("menu", "render text");
+            //Log.e(TAG, "render text " + texts.get(i).text + " "+ texts.get(i).alpha + " " + texts.get(i).isVisible +
+            //" "+ texts.get(i).positionX + " "+ texts.get(i).positionY +
+            //" "+texts.get(i).accumulatedTranslateX +
+            //" "+ texts.get(i).accumulatedTranslateY);
             if (texts.get(i).shadowText != null){
                 texts.get(i).shadowText.render(matrixView, matrixProjection);
             }

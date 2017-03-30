@@ -104,14 +104,14 @@ public class Target extends Rectangle {
             }
         }
         
-        if (type = TARGET_BLACK){
-            Game.brickBackground.ballCollidedBlack = 100;    
-        } else if (type = TARGET_BLUE){
-            Game.brickBackground.ballCollidedBlue = 100;    
-        } else if (type = TARGET_GREEN){
-            Game.brickBackground.ballCollidedGreen = 100;    
-        } else if (type = TARGET_RED){
-            Game.brickBackground.ballCollidedRed = 100;    
+        if (type == TARGET_BLACK){
+            BrickBackground.ballCollidedBlack = 2000;
+        } else if (type == TARGET_BLUE){
+            BrickBackground.ballCollidedBlue = 2000;
+        } else if (type == TARGET_GREEN){
+            BrickBackground.ballCollidedGreen = 2000;
+        } else if (type == TARGET_RED){
+            BrickBackground.ballCollidedRed = 2000;
         }
 
         decayState(points);

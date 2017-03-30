@@ -21,7 +21,7 @@ class MyConfigChooser implements GLSurfaceView.EGLConfigChooser {
             EGL10.EGL_RED_SIZE, 8,
             EGL10.EGL_GREEN_SIZE, 8,
             EGL10.EGL_BLUE_SIZE, 8,
-            EGL10.EGL_DEPTH_SIZE, 16,
+            EGL10.EGL_DEPTH_SIZE, 0,
             EGL10.EGL_SAMPLE_BUFFERS, 1,
             EGL10.EGL_SAMPLES, 4,  // This is for 4x MSAA.
             EGL10.EGL_NONE

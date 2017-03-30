@@ -457,10 +457,6 @@ public class Game {
 
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
 
-            stopAndReleaseMusic();
-            eraseAllGameEntities();
-            eraseAllHudEntities();
-
             if (Tutorial.hasUnvisitedTutorial()){
                 MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
             }
@@ -489,10 +485,6 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
 
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
-            
-            stopAndReleaseMusic();
-            eraseAllGameEntities();
-            eraseAllHudEntities();
 
             mainActivity.showAdView();
 

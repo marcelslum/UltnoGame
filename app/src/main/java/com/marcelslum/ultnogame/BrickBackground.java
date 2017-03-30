@@ -7,11 +7,11 @@ public class BrickBackground extends Entity {
     float width;
     float height;
     
-    int static ballCollidedFx;
-    int static ballCollidedBlue;
-    int static ballCollidedBlack;
-    int static ballCollidedRed;
-    int static ballCollidedGreen;
+    static int ballCollidedFx;
+    static int ballCollidedBlue;
+    static int ballCollidedBlack;
+    static int ballCollidedRed;
+    static int ballCollidedGreen;
 
     /*
     float uvx1;
@@ -101,10 +101,10 @@ public class BrickBackground extends Entity {
         }
         
         if (lastMovePositive){
-            accumulateTranslateX = ballCollidedFx;
+            accumulatedTranslateX = ballCollidedFx/4;
             lastMovePositive = false;
         } else {
-            accumulateTranslateX = -ballCollidedFx;
+            accumulatedTranslateX = -ballCollidedFx/4;
             lastMovePositive = true;
         }  
     }
@@ -112,6 +112,13 @@ public class BrickBackground extends Entity {
 
 
     public void changeDrawInfo(){
+
+
+        //Log.e(TAG, "ballCollidedGreen "+ballCollidedGreen);
+        //Log.e(TAG, "ballCollidedBlue "+ballCollidedBlue);
+        //Log.e(TAG, "ballCollidedRed "+ballCollidedRed);
+        //Log.e(TAG, "ballCollidedBlack "+ballCollidedBlack);
+
         
         
          for (int i = 0; i < numberOfBricks; i++){
@@ -120,24 +127,30 @@ public class BrickBackground extends Entity {
              
             float randonColor = Utils.getRandonFloat(0f, 1f);
             float randonGray = Utils.getRandonFloat(0f, 1f);
-            if (ballCollidedBlue == 100 && randonColor < 0.05f){
+            if (ballCollidedBlue == 2000 && randonColor < 0.07f){
+                //Log.e(TAG, "1");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLUE);
                 alpha = 0.5f;
-            } else if (ballCollidedBlack == 100 && randonColor > 0.05f && randonColor < 0.1f){
+            } else if (ballCollidedBlack == 2000 && randonColor > 0.07f && randonColor < 0.14f){
+                //Log.e(TAG, "2");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLACK);
                 alpha = 0.5f;
-            } else if (ballCollidedGreen == 100 && randonColor > 0.1f && randonColor < 0.15f){
+            } else if (ballCollidedGreen == 2000 && randonColor > 0.14f && randonColor < 0.21f){
+                //Log.e(TAG, "3");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GREEN);
                 alpha = 0.5f;
-            } else if (ballCollidedRed == 100 && randonColor > 0.15f && randonColor < 0.2f){
-                bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_RED;
+            } else if (ballCollidedRed == 2000 && randonColor > 0.21f && randonColor < 0.28f){
+                //Log.e(TAG, "4");
+                bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_RED);
                 alpha = 0.5f;
             } else if (
-                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLUE && randonColor >= ballCollidedBlue/100) ||
-                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLACK && randonColor >= ballCollidedBlack/100) ||
-                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_GREEN && randonColor >= ballCollidedGreen/100) ||
-                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_RED && randonColor >= bricksTextureData/100) ||
+                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLUE && randonColor >= (float)ballCollidedBlue/2000f) ||
+                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLACK && randonColor >= (float)ballCollidedBlack/2000f) ||
+                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_GREEN && randonColor >= (float)ballCollidedGreen/2000f) ||
+                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_RED && randonColor >= (float)ballCollidedRed/2000f)
             ){
+                //Log.e(TAG, "5");
+
                 if (randonGray < 0.2f) {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY1);
                 } else if (randonGray < 0.4f) {
@@ -148,9 +161,10 @@ public class BrickBackground extends Entity {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY4);
                 } else {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY5);
-                }       
-            } else if (Utils.getRandonFloat(0f, 1f) > 0.995f) {
-                
+                }
+
+            } else if (Utils.getRandonFloat(0f, 1f) > 0.9995f) {
+                //Log.e(TAG, "6");
                 alpha = 0.5f + (randonColor * 0.5f);
                 
                 if (randonGray < 0.2f) {

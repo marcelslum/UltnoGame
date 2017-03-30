@@ -1,19 +1,21 @@
 package com.marcelslum.ultnogame;
 
+import android.opengl.GLES20;
+
 public class WindNoShader extends Entity{
 
     public boolean isActive;
     int quantityOfWaves;
     int density;
     float frequenciaCentral;
-    Wave[]waves;
     float height;
     float width;
     boolean toRight;
     int soundStreamId;
     float waveWidth;
-    
-    int [] wavesTextureData;
+    float waveHeight;
+
+    TextureData [] wavesTextureData;
     float [] waveX;
     float [] waveY;
     float [] waveVx;
@@ -38,7 +40,7 @@ public class WindNoShader extends Entity{
         isCollidable = false;
         quantityOfWaves = 20;
         
-        wavesTextureData = new int[quantityOfWaves];
+        wavesTextureData = new TextureData[quantityOfWaves];
         waveX = new float[quantityOfWaves];
         waveY = new float[quantityOfWaves];
         waveVx = new float[quantityOfWaves];
@@ -71,9 +73,9 @@ public class WindNoShader extends Entity{
             waveY[i] = randonWaveY * height;
             
             if (toRight){
-                waveX[i] = - (waveSize + (waveSize * 2 * randonWaveY));
+                waveX[i] = - (waveWidth + (waveWidth * 2 * randonWaveY));
             } else {
-                waveX[i] = width + (waveSize * 2 * randonWaveY);
+                waveX[i] = width + (waveWidth * 2 * randonWaveY);
             }
             
             waveVx[i] = randonWaveVx;
@@ -95,9 +97,9 @@ public class WindNoShader extends Entity{
                     float randonWaveVx = Utils.getRandonFloat(1.0f, 3.0f);
                     
                     if (toRight){
-                        waveX[i] = - (waveSize + (waveSize * 2 * randonWaveY));
+                        waveX[i] = - (waveWidth + (waveWidth * 2 * randonWaveY));
                     } else {
-                        waveX[i] = width + (waveSize * 2 * randonWaveY);
+                        waveX[i] = width + (waveWidth * 2 * randonWaveY);
                     }
                     
                     waveY[i] = randonWaveY * height;

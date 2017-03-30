@@ -105,14 +105,36 @@ public class Text extends Entity{
         boolean useVbo = true;
 
         if (useVbo) {
+
+
+
             if (vbo == null || vbo.length == 0) {
+                Log.e(TAG, " text "+ text);
+                if (vbo == null){
+                    Log.e(TAG, "vbo null");
+                } else {
+                    Log.e(TAG, " vbo.length "+vbo.length);
+                }
+
                 vbo = new int[3];
                 GLES20.glGenBuffers(3, vbo, 0);
+                Log.e(TAG, " vbo[0] " + vbo[0]);
+                Log.e(TAG, " vbo[1] " + vbo[1]);
+                Log.e(TAG, " vbo[2] " + vbo[2]);
             }
 
+
+
             if (ibo == null || ibo.length == 0) {
+                Log.e(TAG, " text "+ text);
+                if (ibo == null){
+                    Log.e(TAG, "ibo null");
+                } else {
+                    Log.e(TAG, " ibo.length "+ibo.length);
+                }
                 ibo = new int[1];
                 GLES20.glGenBuffers(1, ibo, 0);
+                Log.e(TAG, " vbo[0] " + vbo[0]);
             }
         }
 

@@ -604,9 +604,9 @@ public class Entity{
                     }
 
                     if (this.program == Game.imageColorizedFxProgram){
-
+/*
                         float variation;
-                        if (Game.ballCollidedFx > 0) {
+                        if (Brick.ballCollidedFx > 0) {
                             if (Game.ballCollidedFx > 30){
                                 variation = 0.007f;
                             } else if (Game.ballCollidedFx > 20){
@@ -629,6 +629,7 @@ public class Entity{
                                 }
                             }
                         }
+                        */
                         int uf_timeHandle = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
                         GLES20.glUniform1f(uf_timeHandle, time);
                     }
@@ -767,12 +768,7 @@ public class Entity{
                     GLES20.glDisableVertexAttribArray(av4_colorsHandle);
                 }
             }
-            
         }
-
-
-
-
     }
 
     public void checkGLError() {

@@ -1202,7 +1202,7 @@ public class Ball extends Circle{
         if (!isFake){
             for (int i = 0; i < collisionsData.size(); i++) {
                 if (collisionsData.get(i).object.type == Entity.TYPE_TARGET && !collisionsData.get(i).isRepeated){
-                    Game.ballCollidedFx = 40;
+                    BrickBackground.ballCollidedFx = 40;
                     Target target = (Target)collisionsData.get(i).object;
                     target.onBallCollision();
 
