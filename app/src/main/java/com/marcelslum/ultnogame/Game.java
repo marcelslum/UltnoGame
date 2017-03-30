@@ -1275,7 +1275,7 @@ public class Game {
         //}
 
 
-        ballCollidedFx -= 1;
+        
 
         // atualiza posição da bola
         if (gameState == GAME_STATE_JOGAR) {
@@ -1513,18 +1513,19 @@ public class Game {
         
         
         if (gameState == GAME_STATE_JOGAR) {
-            if (background != null){
-                background.move(1);
-            }
-
-            if (brickBackground != null){
-                brickBackground.changeDrawInfo();
-            }
-
+            //if (background != null){
+            //    background.move(1);
+            //}
+            //if (brickBackground != null){
+            //    brickBackground.changeDrawInfo();
+            //}
 
             verifyDead();
             ScoreHandler.verifyScoreDecay();
             verifyTargetsAppend();
+            
+            ballCollidedFx -= 1;
+            
         } else if(gameState == GAME_STATE_VITORIA){
             if (background != null){
                 background.move(3);
