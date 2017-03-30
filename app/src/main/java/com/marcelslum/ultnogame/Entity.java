@@ -673,7 +673,10 @@ public class Entity{
                 int um4_projectionHandle = GLES20.glGetUniformLocation(program.get(), "um4_projection");
                 int um4_viewHandle = GLES20.glGetUniformLocation(program.get(), "um4_view");
                 int um4_modelHandle = GLES20.glGetUniformLocation(program.get(), "um4_model");
-
+                
+                int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
+                
+                GLES20.glUniform1f(uf_alphaHandle, alpha);
                 GLES20.glUniformMatrix4fv(um4_projectionHandle, 1, false, matrixProjection, 0);
                 GLES20.glUniformMatrix4fv(um4_viewHandle, 1, false, matrixView, 0);
                 GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, matrixModel, 0);
