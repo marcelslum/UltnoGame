@@ -49,6 +49,10 @@ public class WindNoShader extends Entity{
             float randonWaveTexture = Utils.getRandonFloat(0.0f, 1.0f);
             float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
             float randonWaveVx = Utils.getRandonFloat(1.0f, 3.0f);
+            if (!toRight){
+                randonWaveVx *= -1;
+            }
+            
             
             if (randonWaveTexture < 0.16f){
                 wavesTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_CLOUD1);
@@ -66,7 +70,11 @@ public class WindNoShader extends Entity{
             
             waveY[i] = randonWaveY * height;
             
-            waveX[i] = - (waveSize + (waveSize * 2 * randonWaveY));
+            if (toRight){
+                waveX[i] = - (waveSize + (waveSize * 2 * randonWaveY));
+            } else {
+                waveX[i] = width + (waveSize * 2 * randonWaveY);
+            }
             
             waveVx[i] = randonWaveVx;
         }
@@ -77,11 +85,21 @@ public class WindNoShader extends Entity{
     public void changeDrawInfo(){
         if (isActive){
             for (int i = 0; i < quantityOfWaves; i++){
-                waveX[i] += waveVx[i];
+                if (toRight){
+                    waveX[i] += waveVx[i];
+                } else {
+                    waveX[i] -= waveVx[i];
+                }
                 if (waveX[i] > width * 1.1f){
                     float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
                     float randonWaveVx = Utils.getRandonFloat(1.0f, 3.0f);
-                    waveX[i] = - (waveSize + (waveSize * 2 * randonWaveY));
+                    
+                    if (toRight){
+                        waveX[i] = - (waveSize + (waveSize * 2 * randonWaveY));
+                    } else {
+                        waveX[i] = width + (waveSize * 2 * randonWaveY);
+                    }
+                    
                     waveY[i] = randonWaveY * height;
                     waveVx[i] = randonWaveVx;
                 }
