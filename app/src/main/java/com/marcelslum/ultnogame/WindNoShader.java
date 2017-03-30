@@ -11,19 +11,21 @@ public class WindNoShader extends Entity{
     float width;
     boolean toRight;
     int soundStreamId;
-    float waveSize;
+    float waveWidth;
     
     int [] wavesTextureData;
     float [] waveX;
     float [] waveY;
     float [] waveVx;
 
-    public WindNoShader(String name, float x, float y, float height, float width, float waveSize, boolean toRight) {
+    public WindNoShader(String name, float x, float y, float height, float width, float waveWidth, boolean toRight) {
         super(name, x, y, Entity.TYPE_WIND);
         this.width = width;
         this.height = height;
         this.toRight = toRight;
-        this.waveSize = saveSize;
+        this.waveWidth = waveWidth;
+        this.waveHeight = waveWidth * 0.48f;
+        
         
         textureId = Texture.TEXTURES;
         program = Game.vertex_e_uv_com_alpha_program;
@@ -69,29 +71,52 @@ public class WindNoShader extends Entity{
     }
 
     public void setDrawInfo(){
-        verticesData = new float[12*quantityOfWaves];
-        indicesData = new short[6*quantityOfWaves];
-        colorsData = new float[16*quantityOfWaves];
-
-        //Log.e("wind", "quantityOfWaves "+quantityOfWaves);
-
-        for (int i = 0; i < quantityOfWaves; i++){
-
-            float y1 = (waves[i].y - 0.1f)*Game.resolutionY;
-            float y2 = (waves[i].y + 0.1f)*Game.resolutionY;
-            Utils.insertRectangleVerticesData(verticesData, i * 12,  0f, Game.resolutionX, y1, y2, 0.0f);
-
-            //Log.e("wind", "onda y1 "+y1+" y2 "+y2+" f"+waves[i].frequency);
-            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-
-            color = new Color(waves[i].initX, waves[i].finalX, waves[i].frequency, waves[i].y);
-
-            Utils.insertRectangleColorsData(colorsData, i * 16, waves[i].initX, waves[i].finalX, waves[i].frequency, waves[i].y);
+        
+        if (vbo == null || vbo.length == 0){
+            vbo = new int[2];
+            ibo = new int[1];
+            GLES20.glGenBuffers(2, vbo, 0);
+            GLES20.glGenBuffers(1, ibo, 0);
         }
-
+        
+        initializeData(8 * quantityOfWaves, 6 * quantityOfWaves, 12 * quantityOfWaves, 0);
+        
+        for (int i = 0; i < quantityOfWaves; i++){
+            
+            Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
+                                                waveX[i],
+                                                waveX[i] + waveWidth,
+                                                waveY[i], 
+                                                waveY[i] + waveHeight
+                                                );
+            
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, wavesTextureData[i], 1f);
+        }
+        
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
-        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                        verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                        uvsBuffer, GLES20.GL_STATIC_DRAW);
+
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
+        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
+                        indicesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        uvsBuffer.limit(0);
+        uvsBuffer = null;
+
     }
 
     public void stop(){
@@ -106,17 +131,4 @@ public class WindNoShader extends Entity{
         alpha = 1f;
     }
 
-    public class Wave{
-        float initX;
-        float y;
-        float finalX;
-        float frequency;
-
-        Wave(float initX, float finalX, float y, float frequency){
-            this.initX = initX;
-            this.finalX = finalX;
-            this.y = y;
-            this.frequency = frequency;
-        }
-    }
 }
