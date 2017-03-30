@@ -113,34 +113,44 @@ public class BrickBackground extends Entity {
 
     public void changeDrawInfo(){
         
-        if (ballCollidedBlue > -100){
-            ballCollidedBlue -= 1;
-        }
-        if (ballCollidedBlack > -100){
-            ballCollidedBlack;
-        }
-        if (ballCollidedRed > -100){
-            ballCollidedRed;
-        }
-        if (ballCollidedGreen > -100){
-            ballCollidedGreen;
-        }
         
-        if (Utils.getRandonFloat(0f, 1f) < 0.965f){
-            return;
-        }
-
-        for (int i = 0; i < numberOfBricks; i++){
-
-            if (Utils.getRandonFloat(0f, 1f) > 0.995f) {
-                float texture = Utils.getRandonFloat(0f, 1f);
-                if (texture < 0.2f) {
+         for (int i = 0; i < numberOfBricks; i++){
+             
+            float randonColor = Utils.getRandonFloat(0f, 1f);
+            float randonGray = Utils.getRandonFloat(0f, 1f);
+            if (ballCollidedBlue == 100 && randonColor < 0.05f){
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLUE);
+            } else if (ballCollidedBlack == 100 && randonColor > 0.05f && randonColor < 0.1f){
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLACK);
+            } else if (ballCollidedGreen == 100 && randonColor > 0.1f && randonColor < 0.15f){
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GREEN);
+            } else if (ballCollidedRed == 100 && randonColor > 0.15f && randonColor < 0.2f){
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_RED;
+            } else if (
+                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLUE && randonColor >= ballCollidedBlue/100) ||
+                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLACK && randonColor >= ballCollidedBlack/100) ||
+                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_GREEN && randonColor >= ballCollidedGreen/100) ||
+                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_RED && randonColor >= bricksTextureData/100) ||
+            ){
+                if (randonGray < 0.2f) {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY1);
-                } else if (texture < 0.4f) {
+                } else if (randonGray < 0.4f) {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY2);
-                } else if (texture < 0.6f) {
+                } else if (randonGray < 0.6f) {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY3);
-                } else if (texture < 0.8f) {
+                } else if (randonGray < 0.8f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY4);
+                } else {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY5);
+                }       
+            } else if (Utils.getRandonFloat(0f, 1f) > 0.995f) {
+                if (randonGray < 0.2f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY1);
+                } else if (randonGray < 0.4f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY2);
+                } else if (randonGray < 0.6f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY3);
+                } else if (randonGray < 0.8f) {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY4);
                 } else {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY5);
@@ -155,7 +165,20 @@ public class BrickBackground extends Entity {
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
                 uvsBuffer, GLES20.GL_STATIC_DRAW);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
-
+        
+        
+        if (ballCollidedBlue > 0){
+            ballCollidedBlue -= 1;
+        }
+        if (ballCollidedBlack > 0){
+            ballCollidedBlack -= 1;
+        }
+        if (ballCollidedRed > 0){
+            ballCollidedRed -= 1;
+        }
+        if (ballCollidedGreen > 0){
+            ballCollidedGreen -= 1;
+        }
     }
 
 
