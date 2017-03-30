@@ -94,8 +94,6 @@ public class Game {
     static float screenOffSetX;
     static float screenOffSetY;
 
-    static int ballCollidedFx = 0;
-
     static int timesInterstitialOnGameOver = 0;
     static boolean prepareAfterInterstitialFlag = false;
 
@@ -1523,13 +1521,13 @@ public class Game {
             verifyDead();
             ScoreHandler.verifyScoreDecay();
             verifyTargetsAppend();
-            
-            ballCollidedFx -= 1;
-            
-        } else if(gameState == GAME_STATE_VITORIA){
-            if (background != null){
-                background.move(3);
+            if (brickBackground != null){
+                brickBackground.move();
             }
+        } else if(gameState == GAME_STATE_VITORIA){
+            //if (background != null){
+            //    background.move(3);
+            //}
         }
        
         
