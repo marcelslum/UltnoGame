@@ -103,6 +103,16 @@ public class Target extends Rectangle {
                 points *= 2;
             }
         }
+        
+        if (type = TARGET_BLACK){
+            Game.brickBackground.ballCollidedBlack = 100;    
+        } else if (type = TARGET_BLUE){
+            Game.brickBackground.ballCollidedBlue = 100;    
+        } else if (type = TARGET_GREEN){
+            Game.brickBackground.ballCollidedGreen = 100;    
+        } else if (type = TARGET_RED){
+            Game.brickBackground.ballCollidedRed = 100;    
+        }
 
         decayState(points);
         verifySpecialBall();
