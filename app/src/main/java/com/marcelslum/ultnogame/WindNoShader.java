@@ -8,59 +8,63 @@ public class WindNoShader extends Entity{
     float frequenciaCentral;
     Wave[]waves;
     float height;
-    boolean rightDirection;
+    float width;
+    boolean toRight;
     int soundStreamId;
+    float waveSize;
+    
+    int [] wavesTextureData;
+    float [] waveX;
+    float [] waveY;
+    float [] waveVx;
 
-
-    public WindNoShader(String name, float x, float y, float height, boolean toRight) {
+    public WindNoShader(String name, float x, float y, float height, float width, float waveSize, boolean toRight) {
         super(name, x, y, Entity.TYPE_WIND);
+        this.width = width;
         this.height = height;
-        program = Game.windProgram;
+        this.toRight = toRight;
+        this.waveSize = saveSize;
+        
+        textureId = Texture.TEXTURES;
+        program = Game.vertex_e_uv_com_alpha_program;
         isActive = false;
         isSolid = false;
         isCollidable = false;
-
-        // quanto menor, mais ondas
-        density = 140;
-        frequenciaCentral = 3.0f;
-
-        quantityOfWaves = (int)Math.floor(height/(float)density);
-        waves = new Wave[quantityOfWaves];
-
-        rightDirection = toRight;
-
-        float frequency;
-        float initX;
-        float finalX;
-        float waveY;
-
+        quantityOfWaves = 20;
+        
+        wavesTextureData = new int[quantityOfWaves];
+        waveX = new float[quantityOfWaves];
+        waveY = new float[quantityOfWaves];
+        waveVx = new float[quantityOfWaves];
+        
+     
         for (int i = 0; i < quantityOfWaves; i++) {
-
-            frequency = frequenciaCentral + 0.8f * (float) Math.cos(Utils.getRandonFloat(0.0f, 360.0f));
-
-            if (!rightDirection){
-                frequency *= -1.0f;
-            }
-
-            if (i%4 == 1) {
-                initX = 0f;
-                finalX = 1f;
-                waveY = (float)i/(float)quantityOfWaves;
+            
+            float randonWaveTexture = Utils.getRandonFloat(0.0f, 1.0f);
+            float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
+            float randonWaveVx = Utils.getRandonFloat(1.0f, 3.0f);
+            
+            if (randonWaveTexture < 0.16f){
+                wavesTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_CLOUD1);
+            } else if (randonWaveTexture < 0.33f) {
+                wavesTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_CLOUD2);
+            } else if (randonWaveTexture < 0.5f) {
+                wavesTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_CLOUD3);
+            } else if (randonWaveTexture < 0.66f) {
+                wavesTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_CLOUD4);
+            } else if (randonWaveTexture < 0.83f){
+                wavesTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_CLOUD5);
             } else {
-                initX = 0.8f*Utils.getRandonFloat(0.0f, 1.0f);
-                finalX = initX + 0.2f + Utils.getRandonFloat(0.0f, 2.0f);
-                if (i%4 == 0) {
-                    waveY = Utils.getRandonFloat(0f,0.33f);
-                } else if(i%4 == 2) {
-                    waveY = Utils.getRandonFloat(0.34f, 0.66f);
-                } else if(i%4 == 3) {
-                    waveY = Utils.getRandonFloat(0.67f, 1f);
-                } else {
-                    waveY = 0f;
-                }
+                wavesTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_CLOUD6);
             }
-            waves[i] = new Wave(initX, finalX, waveY, frequency);
+            
+            waveY[i] = randonWaveY * height;
+            
+            waveX[i] = - (waveSize + (waveSize * 2 * randonWaveY));
+            
+            waveVx[i] = randonWaveVx;
         }
+        
         setDrawInfo();
     }
 
