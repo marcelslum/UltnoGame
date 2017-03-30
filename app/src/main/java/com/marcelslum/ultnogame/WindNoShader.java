@@ -17,6 +17,10 @@ public class WindNoShader extends Entity{
     float [] waveX;
     float [] waveY;
     float [] waveVx;
+    
+    float randonWaveTexture;
+    float randonWaveY;
+    float randonWaveVx;
 
     public WindNoShader(String name, float x, float y, float height, float width, float waveWidth, boolean toRight) {
         super(name, x, y, Entity.TYPE_WIND);
@@ -68,6 +72,36 @@ public class WindNoShader extends Entity{
         }
         
         setDrawInfo();
+    }
+    
+    public void changeDrawInfo(){
+        
+        for (int i = 0; i < quantityOfWaves; i++){
+            
+            waveX[i] += waveVx[i];
+            
+            if (waveX[i] > width * 1.1f){
+                float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
+                float randonWaveVx = Utils.getRandonFloat(1.0f, 3.0f);
+                waveX[i] = - (waveSize + (waveSize * 2 * randonWaveY));
+                waveY[i] = randonWaveY * height;
+                waveVx[i] = randonWaveVx;
+            }
+
+            Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
+                                                waveX[i],
+                                                waveX[i] + waveWidth,
+                                                waveY[i], 
+                                                waveY[i] + waveHeight
+                                                );
+        }
+        
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                        verticesBuffer, GLES20.GL_STATIC_DRAW);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
     }
 
     public void setDrawInfo(){
