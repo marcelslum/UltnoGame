@@ -6,6 +6,12 @@ import android.util.Log;
 public class BrickBackground extends Entity {
     float width;
     float height;
+    
+    int static ballCollidedFx;
+    int static ballCollidedBlue;
+    int static ballCollidedBlack;
+    int static ballCollidedRed;
+    int static ballCollidedGreen;
 
     /*
     float uvx1;
@@ -88,12 +94,17 @@ public class BrickBackground extends Entity {
         setDrawInfo();
     }
     
-    public void move(int value){
+    public void move(){
+        
+        if (ballCollidedFx > 0){
+            ballCollidedFx -= 1;
+        }
+        
         if (lastMovePositive){
-            accumulateTranslateX = value;
+            accumulateTranslateX = ballCollidedFx;
             lastMovePositive = false;
         } else {
-            accumulateTranslateX = value;
+            accumulateTranslateX = -ballCollidedFx;
             lastMovePositive = true;
         }  
     }
@@ -101,6 +112,20 @@ public class BrickBackground extends Entity {
 
 
     public void changeDrawInfo(){
+        
+        if (ballCollidedBlue > -100){
+            ballCollidedBlue -= 1;
+        }
+        if (ballCollidedBlack > -100){
+            ballCollidedBlack;
+        }
+        if (ballCollidedRed > -100){
+            ballCollidedRed;
+        }
+        if (ballCollidedGreen > -100){
+            ballCollidedGreen;
+        }
+        
         if (Utils.getRandonFloat(0f, 1f) < 0.965f){
             return;
         }
