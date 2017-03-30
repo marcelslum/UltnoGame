@@ -1,5 +1,6 @@
 package com.marcelslum.ultnogame;
 
+import android.opengl.GLES20;
 import android.util.Log;
 
 public class BrickBackground extends Entity {
@@ -43,37 +44,42 @@ public class BrickBackground extends Entity {
         textureId = Texture.TEXTURES;
         program = Game.vertex_e_uv_com_alpha_program;
 
-        brickSize = width/30f;
+        brickSize = width/30f;//width/30f;
         
         numberOfBricksOnX = Math.round(width / brickSize);
         numberOfBricksOnY = Math.round(height / brickSize);
         numberOfBricks =  numberOfBricksOnX * numberOfBricksOnY;
+
+        Log.e(TAG, "brickSize "+brickSize);
+        Log.e(TAG, "width "+width);
+        Log.e(TAG, "numberOfBricksOnX "+numberOfBricksOnX);
+        Log.e(TAG, "numberOfBricksOnY "+numberOfBricksOnY);
+        Log.e(TAG, "numberOfBricks "+numberOfBricks);
         
         bricksX = new float[numberOfBricks];
         bricksY = new float[numberOfBricks];
+        bricksTextureData = new TextureData[numberOfBricks];
         
         
         int i = 0;
         
         for (int iy = 0; iy < numberOfBricksOnY; iy++){
-            for (int ix = 0; ix < numberOfBricksOnY; ix++){
-                bricksX[i] = ix * brickSize;
+            for (int ix = 0; ix < numberOfBricksOnX; ix++){
+                bricksX[i] = ix * brickSize; //+ (ix * brickSize * 0.1f);
                 bricksY[i] = iy * brickSize;
                 
-                int texture = Util.getRandonFloat(0f, 1f);
+                float texture = Utils.getRandonFloat(0f, 1f);
                 if (texture < 0.2f){
-                    bricksTextureData[i] = 0;
-                } else if (texture < 0.2f) {
-                    bricksTextureData[i] = 0;
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY1);
                 } else if (texture < 0.4f) {
-                    bricksTextureData[i] = 0;
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY2);
                 } else if (texture < 0.6f) {
-                    bricksTextureData[i] = 0;
-                } else if (texture < 0.7f){
-                    bricksTextureData[i] = 0;
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY3);
+                } else if (texture < 0.8f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY4);
                 } else {
-                    bricksTextureData[i] = 0;
-                }   
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY5);
+                }
                 i += 1;
             }    
         }
@@ -82,9 +88,49 @@ public class BrickBackground extends Entity {
     }
 
 
+
+    public void changeDrawInfo(){
+        if (Utils.getRandonFloat(0f, 1f) < 0.965f){
+            return;
+        }
+
+        for (int i = 0; i < numberOfBricks; i++){
+
+            if (Utils.getRandonFloat(0f, 1f) > 0.995f) {
+                float texture = Utils.getRandonFloat(0f, 1f);
+                if (texture < 0.2f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY1);
+                } else if (texture < 0.4f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY2);
+                } else if (texture < 0.6f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY3);
+                } else if (texture < 0.8f) {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY4);
+                } else {
+                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY5);
+                }
+            }
+
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], 1f);
+        }
+
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                uvsBuffer, GLES20.GL_STATIC_DRAW);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+
+    }
+
+
+
     public void setDrawInfo() {
         
         if (vbo == null || vbo.length == 0){
+
+            vbo = new int[2];
+            ibo = new int[1];
+
             GLES20.glGenBuffers(2, vbo, 0);
             GLES20.glGenBuffers(1, ibo, 0);
         }
@@ -92,18 +138,22 @@ public class BrickBackground extends Entity {
         initializeData(8 * numberOfBricks, 6 * numberOfBricks, 12 * numberOfBricks, 0);
         
         for (int i = 0; i < numberOfBricks; i++){
+
             Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
-                                                bricksX[i]
-                                                bricksX[i] + brickSize
+                                                bricksX[i],
+                                                bricksX[i] + brickSize,
                                                 bricksY[i], 
-                                                bricksY[i] + brickSize,
+                                                bricksY[i] + brickSize
                                                 );
-            
+
+            Log.e(TAG, "inserindo data "+ i + " -> "+bricksX[i]+ " "+bricksY[i]+ " "+ brickSize);
+
             
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            
-            Utils.insertRectangleUvAndAlphaData(uvData, i * 12, bricksTextureData[i], 1f){
-            
+
+            Log.e(TAG, "inserindo textureData "+i + " -> "+bricksTextureData[i].x);
+
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], 1f);
         }
             
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);

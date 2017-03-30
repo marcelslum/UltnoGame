@@ -109,7 +109,7 @@ public class Level {
 
         //Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY, back);
         
-        Game.brickBackground = new Background("brickBackground", 0f, 0f, Game.gameAreaResolutionX,Game.gameAreaResolutionY);
+        Game.brickBackground = new BrickBackground("brickBackground", 0f, 0f, Game.gameAreaResolutionX,Game.gameAreaResolutionY);
 
         if (windType == Level.WIND_TYPE_NO){
             Game.wind = null;

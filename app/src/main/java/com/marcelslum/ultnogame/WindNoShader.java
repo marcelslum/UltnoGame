@@ -1,6 +1,6 @@
 package com.marcelslum.ultnogame;
 
-public class Wind extends Entity{
+public class WindNoShader extends Entity{
 
     public boolean isActive;
     int quantityOfWaves;
@@ -12,7 +12,7 @@ public class Wind extends Entity{
     int soundStreamId;
 
 
-    public Wind(String name, float x, float y, float height, boolean toRight) {
+    public WindNoShader(String name, float x, float y, float height, boolean toRight) {
         super(name, x, y, Entity.TYPE_WIND);
         this.height = height;
         program = Game.windProgram;

@@ -506,6 +506,10 @@ public class Entity{
             return;
         }
 
+        if (name == "brickBackground"){
+            //Log.e(TAG, "render");
+        }
+
         //if (vbo == null){
         //    Log.e(TAG, name + " -> vbo null");
         //} else {
@@ -696,7 +700,9 @@ public class Entity{
 
                 GLES20.glDisableVertexAttribArray(av2_verticesHandle);
                 GLES20.glDisableVertexAttribArray(av3_uvHandle);
-                
+
+                checkGLError();
+
             } else {
             
                 GLES20.glUseProgram(program.get());
@@ -759,6 +765,20 @@ public class Entity{
                 }
             }
             
+        }
+
+
+
+
+    }
+
+    public void checkGLError() {
+        int error;
+
+        //Log.e(TAG, ": glError ");
+
+        while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+            Log.e(TAG, ": glError " + error);
         }
     }
 

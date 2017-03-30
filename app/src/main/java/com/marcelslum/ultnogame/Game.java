@@ -307,8 +307,6 @@ public class Game {
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_uv_com_alpha),
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_uv_com_alpha)
         );
-        
-
         imageProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_text),
                 Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
         targetProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_target),
@@ -1518,6 +1516,12 @@ public class Game {
             if (background != null){
                 background.move(1);
             }
+
+            if (brickBackground != null){
+                brickBackground.changeDrawInfo();
+            }
+
+
             verifyDead();
             ScoreHandler.verifyScoreDecay();
             verifyTargetsAppend();
