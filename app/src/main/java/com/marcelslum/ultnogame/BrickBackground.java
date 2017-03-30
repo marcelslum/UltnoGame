@@ -6,10 +6,7 @@ import android.util.Log;
 public class BrickBackground extends Entity {
     float width;
     float height;
-    
-    
-    
-    
+
     /*
     float uvx1;
     float uvx2;
@@ -24,6 +21,8 @@ public class BrickBackground extends Entity {
     boolean uvXUp;
     boolean uvYUp;
     */
+    
+    boolean lastMovePositive;
     
     float brickSize;
     float [] bricksX;
@@ -46,8 +45,8 @@ public class BrickBackground extends Entity {
 
         brickSize = width/30f;//width/30f;
         
-        numberOfBricksOnX = Math.round(width / brickSize);
-        numberOfBricksOnY = Math.round(height / brickSize);
+        numberOfBricksOnX = Math.round(width / brickSize) + 2;
+        numberOfBricksOnY = Math.round(height / brickSize) + 2;
         numberOfBricks =  numberOfBricksOnX * numberOfBricksOnY;
 
         Log.e(TAG, "brickSize "+brickSize);
@@ -60,13 +59,15 @@ public class BrickBackground extends Entity {
         bricksY = new float[numberOfBricks];
         bricksTextureData = new TextureData[numberOfBricks];
         
-        
         int i = 0;
+        
+        float initX = -brickSize;
+        float initY = -brickSize;
         
         for (int iy = 0; iy < numberOfBricksOnY; iy++){
             for (int ix = 0; ix < numberOfBricksOnX; ix++){
-                bricksX[i] = ix * brickSize; //+ (ix * brickSize * 0.1f);
-                bricksY[i] = iy * brickSize;
+                bricksX[i] = initX + (ix * brickSize); //+ (ix * brickSize * 0.1f);
+                bricksY[i] = initY + (iy * brickSize);
                 
                 float texture = Utils.getRandonFloat(0f, 1f);
                 if (texture < 0.2f){
@@ -85,6 +86,16 @@ public class BrickBackground extends Entity {
         }
         
         setDrawInfo();
+    }
+    
+    public void move(int value){
+        if (lastMovePositive){
+            accumulateTranslateX = value;
+            lastMovePositive = false;
+        } else {
+            accumulateTranslateX = value;
+            lastMovePositive = true;
+        }  
     }
 
 
