@@ -489,9 +489,16 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
 
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
+            
+            stopAndReleaseMusic();
+            eraseAllGameEntities();
+            eraseAllHudEntities();
 
             mainActivity.showAdView();
 
+            MenuHandler.groupMenu.clearDisplay();
+            MenuHandler.groupMenu.block();
+            
             MenuHandler.updateLevelMenu();
             MenuHandler.levelMenu.appear();
 
