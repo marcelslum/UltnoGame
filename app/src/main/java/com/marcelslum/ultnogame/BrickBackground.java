@@ -116,16 +116,22 @@ public class BrickBackground extends Entity {
         
          for (int i = 0; i < numberOfBricks; i++){
              
+            float alpha = 1f;
+             
             float randonColor = Utils.getRandonFloat(0f, 1f);
             float randonGray = Utils.getRandonFloat(0f, 1f);
             if (ballCollidedBlue == 100 && randonColor < 0.05f){
-                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLUE);
+                bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLUE);
+                alpha = 0.5f;
             } else if (ballCollidedBlack == 100 && randonColor > 0.05f && randonColor < 0.1f){
-                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLACK);
+                bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLACK);
+                alpha = 0.5f;
             } else if (ballCollidedGreen == 100 && randonColor > 0.1f && randonColor < 0.15f){
-                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GREEN);
+                bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GREEN);
+                alpha = 0.5f;
             } else if (ballCollidedRed == 100 && randonColor > 0.15f && randonColor < 0.2f){
-                    bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_RED;
+                bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_RED;
+                alpha = 0.5f;
             } else if (
                 (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLUE && randonColor >= ballCollidedBlue/100) ||
                 (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLACK && randonColor >= ballCollidedBlack/100) ||
@@ -144,6 +150,9 @@ public class BrickBackground extends Entity {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY5);
                 }       
             } else if (Utils.getRandonFloat(0f, 1f) > 0.995f) {
+                
+                alpha = 0.5f + (randonColor * 0.5f);
+                
                 if (randonGray < 0.2f) {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY1);
                 } else if (randonGray < 0.4f) {
@@ -157,7 +166,7 @@ public class BrickBackground extends Entity {
                 }
             }
 
-            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], 1f);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], alpha);
         }
 
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
