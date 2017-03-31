@@ -16,12 +16,10 @@ public class BallParticleGenerator extends Entity {
     float [] palpha_decay;
     float [] psize;
     
-
-
-   BallParticleGenerator(String name, float x, float y) {
+    BallParticleGenerator(String name, float x, float y) {
         
         super(name, x, y, Entity.TYPE_PARTICLE);
-        program = Game.imageColorizedProgram;
+        program = Game.vertex_e_uv_com_alpha_program;
         textureId = Texture.TEXTURES;
         
         px = new float[number_of_particles];
