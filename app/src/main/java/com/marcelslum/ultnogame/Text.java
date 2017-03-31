@@ -105,9 +105,6 @@ public class Text extends Entity{
         boolean useVbo = true;
 
         if (useVbo) {
-
-
-
             if (vbo == null || vbo.length == 0) {
                 Log.e(TAG, " text "+ text);
                 if (vbo == null){
@@ -118,6 +115,7 @@ public class Text extends Entity{
 
                 vbo = new int[3];
                 GLES20.glGenBuffers(3, vbo, 0);
+
                 Log.e(TAG, " vbo[0] " + vbo[0]);
                 Log.e(TAG, " vbo[1] " + vbo[1]);
                 Log.e(TAG, " vbo[2] " + vbo[2]);

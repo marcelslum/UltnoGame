@@ -66,6 +66,8 @@ public class GLSurf extends GLSurfaceView {
     public void onResume() {
         Log.e("GLSURF", "onResume");
         super.onResume();
+
+
         mRenderer.onResume();
     }
 

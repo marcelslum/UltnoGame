@@ -209,23 +209,24 @@ public class MainActivity extends FragmentActivity implements
 
             @Override
             public void onAdClosed() {
-                Game.bordaB.y = Game.resolutionY;
-                Game.stopAndReleaseMusic();
-                Game.eraseAllGameEntities();
-                Game.eraseAllHudEntities();
 
-                Log.e(TAG, "onAdClose Game.prepareAfterInterstitialFlag " + Game.prepareAfterInterstitialFlag);
-                if (Game.prepareAfterInterstitialFlag){
-                    Game.prepareAfterInterstitialFlag = false;
-                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                    Game.setGameState(Game.GAME_STATE_PREPARAR);
-                } else if (SaveGame.saveGame.currentLevelNumber < 1000){
-                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-                    //Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-                } else {
-                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-                }
-                loadInterstitialAd();
+                        Game.bordaB.y = Game.resolutionY;
+                        Game.stopAndReleaseMusic();
+                        Game.eraseAllGameEntities();
+                        Game.eraseAllHudEntities();
+
+                        Log.e(TAG, "onAdClose Game.prepareAfterInterstitialFlag " + Game.prepareAfterInterstitialFlag);
+                        if (Game.prepareAfterInterstitialFlag){
+                            Game.prepareAfterInterstitialFlag = false;
+                            LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+                            Game.setGameState(Game.GAME_STATE_PREPARAR);
+                        } else if (SaveGame.saveGame.currentLevelNumber < 1000){
+                            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                            //Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                        } else {
+                            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                        }
+                        loadInterstitialAd();
             }
 
             @Override
