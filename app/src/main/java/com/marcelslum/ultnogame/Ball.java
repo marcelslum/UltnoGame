@@ -48,10 +48,6 @@ public class Ball extends Circle{
     boolean isInvencible = false;
 
     public int textureColorId = COLOR_BALL_BLACK;
-    
-    float [] historicPositionX = new float[7];
-    int historicNumberOfElements = 0;
-    float [] historicPositionY = new float[7];
 
     Color color;
     boolean isAlive = true;
@@ -191,54 +187,16 @@ public class Ball extends Circle{
     public void translate(float tx, float ty) {
         super.translate(tx, ty);
         if (isMovable && isFree){
-            if (historicOn){
-                if (historicNumberOfElements < 7){
-                    historicPositionX[historicNumberOfElements] = x + accumulatedTranslateX + tx;
-                    historicPositionY[historicNumberOfElements] = y + accumulatedTranslateY + ty;
-                    historicNumberOfElements += 1;
-                } else {
-                    historicPositionX[6] = historicPositionX[5];
-                    historicPositionX[5] = historicPositionX[4];
-                    historicPositionX[4] = historicPositionX[3];
-                    historicPositionX[3] = historicPositionX[2];
-                    historicPositionX[2] = historicPositionX[1];
-                    historicPositionX[1] = historicPositionX[0];
-                    historicPositionX[0] = x + accumulatedTranslateX + tx;
 
-                    historicPositionY[6] = historicPositionY[5];
-                    historicPositionY[5] = historicPositionY[4];
-                    historicPositionY[4] = historicPositionY[3];
-                    historicPositionY[3] = historicPositionY[2];
-                    historicPositionY[2] = historicPositionY[1];
-                    historicPositionY[1] = historicPositionY[0];
-                    historicPositionY[0] = y + accumulatedTranslateY + ty;
-                }
-                historicOn = false;
-            } else {
-                historicOn = true;   
+            float randon = Utils.getRandon(0f, 1f);
+            int numberOfParticles = 1;
+            
+            if (randon < 0.33f){
+                numberOfParticles = 3;
+            } else if (randon < 0.66f){
+                numberOfParticles = 2;
             }
-
-            int numberOfParticles;
-            for (int i = 0; i < historicNumberOfElements; i++){
-                if (i == 0){
-                    numberOfParticles = 1;
-                } else if (i == 1){
-                    numberOfParticles = 2;
-                } else if (i == 2){
-                    numberOfParticles = 3;
-                } else if (i == 3){
-                    numberOfParticles = 5;
-                } else if (i == 4){
-                    numberOfParticles = 3;
-                } else if (i == 5){
-                    numberOfParticles = 1;
-                } else if (i == 6){
-                    numberOfParticles = 2;
-                } else {
-                    numberOfParticles = 0;
-                }
-                ballParticleGenerator.generate(historicPositionX[i], historicPositionY[i], radius, numberOfParticles);
-            }
+            ballParticleGenerator.add(historicPositionX[i], historicPositionY[i], radius, numberOfParticles);
         }
     }
 
