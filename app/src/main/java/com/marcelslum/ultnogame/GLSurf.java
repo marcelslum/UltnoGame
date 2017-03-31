@@ -22,7 +22,7 @@ public class GLSurf extends GLSurfaceView {
 
         Log.e("GLSURF", "createGlSurf");
 
-        mRenderer = new GLRenderer(context);
+        mRenderer = new GLRenderer(context, this);
 
         if ( detectOpenGLES30()  && Game.isOpenGL30)
         {
@@ -69,6 +69,15 @@ public class GLSurf extends GLSurfaceView {
 
 
         mRenderer.onResume();
+    }
+
+    public void onCloseAd(){
+        queueEvent(new Runnable() {
+            // This method will be called on the rendering
+            // thread:
+            public void run() {
+                Game.returnFromAd();
+            }});
     }
 
     @Override

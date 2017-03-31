@@ -1,5 +1,6 @@
 package com.marcelslum.ultnogame;
 
+import android.opengl.GLES20;
 import android.util.Log;
 import java.util.ArrayList;
 
@@ -59,6 +60,19 @@ public class MenuIcon extends Entity{
     }
     
     public void clear(){
+
+        for (int i = 0; i < texts.size(); i++) {
+            Game.textPool.recycle(texts.get(i));
+        }
+
+        for (int i = 0; i < texts2.size(); i++) {
+            Game.textPool.recycle(texts2.get(i));
+        }
+
+        for (int i = 0; i < innerTexts.size(); i++) {
+            Game.textPool.recycle(innerTexts.get(i));
+        }
+
         icons.clear();
         texts.clear();
         texts2.clear();
@@ -289,7 +303,8 @@ public class MenuIcon extends Entity{
         float centerPosition = positionX + (size/2);
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
-        Text t = new Text(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+        Text t = Game.textPool.get();
+        t.setData(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
 
         if (number == 1){
             //t.addShadow(new Color(0.7f, 0.7f, 0.7f, 0.9f));
@@ -312,7 +327,9 @@ public class MenuIcon extends Entity{
         float centerPosition = positionX + (size/2);
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
-        final Text t = new Text(name, centerPosition, y + size - paddFromBottom - textSize, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+        final Text t = Game.textPool.get();
+        t.setData(name, centerPosition, y + size - paddFromBottom - textSize, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+
         innerTexts.add(t);
         innerTextsDelayShow.add(delayShow);
         Utils.createAnimation3v(t, "alphaOscilation", "alpha", 3000, 0f, 1f, 0.7f, 0.7f, 1f, 1f, true, true).start();

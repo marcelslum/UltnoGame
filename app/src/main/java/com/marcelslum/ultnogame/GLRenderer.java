@@ -17,6 +17,8 @@ import javax.microedition.khronos.opengles.GL10;
 public class GLRenderer implements GLSurfaceView.Renderer {
 
     public static final String TAG = "GLRenderer";
+
+    GLSurf myGlSurf;
     
     // Our matrices
     private final float[] matrixProjection = new float[16];
@@ -46,10 +48,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     public float screenOffSetY;
 
 
-    public GLRenderer(Context c) {
+    public GLRenderer(Context c, GLSurf myGlSurf) {
         Log.e("GLRenderer", "create");
         mContext = c;
         mLastTime = System.currentTimeMillis() + 100;
+        this.myGlSurf = myGlSurf;
     }
 
     public void onPause() {
@@ -167,6 +170,12 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 unused) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
         GLES20.glClearColor(0.902f, 0.89f, 0.922f, 1.0f);
+
+        //Log.e(TAG, "Game.returningFromInterstitialFlag "+ Game.returningFromInterstitialFlag);
+        if (Game.returningFromInterstitialFlag) {
+            Game.returningFromInterstitialFlag = false;
+            myGlSurf.onCloseAd();
+        }
 
         // Get the current time
         long now = System.currentTimeMillis();

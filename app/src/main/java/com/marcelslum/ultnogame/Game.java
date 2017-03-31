@@ -20,6 +20,8 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class Game {
 
     public static Pool<Vector> vectorPool;
+    public static Pool<Text> textPool;
+
     public static boolean isOpenGL30 = false;
     public static Program openGl30TextProgram;
 
@@ -147,8 +149,30 @@ public class Game {
     public static String currentPlayerId;
     static boolean initPausedFlag;
     public static int dpiClassification;
+    public static boolean returningFromInterstitialFlag = false;
 
     private Game() {}
+
+    public static void returnFromAd(){
+
+        Game.bordaB.y = Game.resolutionY;
+        Game.stopAndReleaseMusic();
+        Game.eraseAllGameEntities();
+        Game.eraseAllHudEntities();
+
+        Log.e(TAG, "onAdClose Game.prepareAfterInterstitialFlag " + Game.prepareAfterInterstitialFlag);
+        if (Game.prepareAfterInterstitialFlag){
+            Game.prepareAfterInterstitialFlag = false;
+            LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+            Game.setGameState(Game.GAME_STATE_PREPARAR);
+        } else if (SaveGame.saveGame.currentLevelNumber < 1000){
+            //Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+            Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+        } else {
+            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+        }
+
+    }
     
     
     static final int VIBRATE_SMALL = 0;
@@ -253,6 +277,9 @@ public class Game {
 
         vectorPool = new ObjectPool<Vector>();
         vectorPool.setFactory(new VectorFactory());
+
+        textPool = new ObjectPool<Text>();
+        textPool.setFactory(new TextFactory());
 
     }
 
@@ -1263,6 +1290,8 @@ public class Game {
 
 
 
+
+
         // Before doing something that requires a lot of memory,
         // check to see whether the device is in a low memory state.
         //ActivityManager.MemoryInfo memoryInfo = getAvailableMemory();
@@ -1368,6 +1397,8 @@ public class Game {
 
 
         }
+
+
 
         // atualiza os dados da entidade, aplicando todas as transformações setadas
         checkTransformations();

@@ -6,7 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Text extends Entity{
+public class Text extends Entity implements Poolable<Text>{
 
     public final static int TEXT_ALIGN_LEFT = 0;
     public final static int TEXT_ALIGN_CENTER = 1;
@@ -26,7 +26,59 @@ public class Text extends Entity{
     public float[] charData;
     public int align;
     public Text shadowText;
-    private Color shadowColor;  
+    private Color shadowColor;
+    private int poolID;
+
+
+    @Override
+    public void setPoolID(int id) {
+        poolID = id;
+    }
+
+    @Override
+    public int getPoolID() {
+        return poolID;
+    }
+
+    @Override
+    public Text get() {
+        return this;
+    }
+
+    @Override
+    public void clean() {
+        x = 0;
+        y = 0;
+        if (color != null) {
+            color.r = 0;
+            color.g = 0;
+            color.b = 0;
+            color.a = 0;
+        }
+        align = TEXT_ALIGN_LEFT;
+    }
+
+    public Text(){
+        super("name", 0, 0, Entity.TYPE_TEXT);
+    }
+
+    public void setData(String name, float x, float y, float size, String text, Font font, Color color, int align) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.text = text;
+        this.size = size;
+        this.color = color;
+        this.font = font;
+        this.align = align;
+        program = font.program;
+        textureId = font.textureId;
+        charData = new float[7];
+        textureData = TextureData.getTextureDataById(TextureData.TEXTURE_JEFT_SET_ID);
+        setDrawInfo();
+
+    }
+
 
     public Text(String name, float x, float y, float size, String text, Font font, Color color, int align) {
         
