@@ -32,8 +32,7 @@ public class BallParticleGenerator extends Entity {
 
         for (int i = 0; i < number_of_particles; i++){
             palpha[i] = 0f;
-        }
-        
+        }   
     }
     
     public void setDrawInfo(){
@@ -137,7 +136,7 @@ public class BallParticleGenerator extends Entity {
                                                     px[i] + psize,
                                                     py[i], 
                                                     py[i] + psize);
-                Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, TextureData.getTextureDataById(TextureData.TEXTURE_PARTICLE_BALL_ID), palpha[i]);
+                Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, null, palpha[i]);
             }
         }
         
