@@ -47,14 +47,7 @@ public class Text extends Entity implements Poolable<Text>{
 
     @Override
     public void clean() {
-        x = 0;
-        y = 0;
-        if (color != null) {
-            color.r = 0;
-            color.g = 0;
-            color.b = 0;
-            color.a = 0;
-        }
+        super.clean();
         align = TEXT_ALIGN_LEFT;
     }
 
