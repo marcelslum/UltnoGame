@@ -274,6 +274,7 @@ public class Entity{
         }
     }
 
+    // TODO trocar para cleanAnimations
     void clearAnimations() {
         for (int i = 0; i < animations.size(); i++) {
             if (animations.get(i).started && !this.animations.get(i).name.equals("ballInvencible")){
@@ -291,8 +292,16 @@ public class Entity{
         }
     }
     
-    void clear(){
+    void clean(){
         clearAnimations();
+        
+        if (color != null) {
+            color.r = 0;
+            color.g = 0;
+            color.b = 0;
+            color.a = 0;
+        }
+        
         x = 0f;
         y = 0f;
         positionX = 0f;
