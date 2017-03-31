@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.opengl.GLES20;
+
 import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
@@ -12,6 +14,8 @@ public class BallParticleGenerator extends Entity {
     float [] py;
     float [] pvx;
     float [] pvy;
+    float [] pvvx;
+    float [] pvvy;
     float [] palpha;
     float [] palpha_decay;
     float [] psize;
@@ -49,9 +53,9 @@ public class BallParticleGenerator extends Entity {
         for (int i = 0; i < number_of_particles; i++){
             Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
                                                 px[i],
-                                                px[i] + psize,
+                                                px[i] + psize[i],
                                                 py[i], 
-                                                py[i] + psize);
+                                                py[i] + psize[i]);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
             Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, TextureData.getTextureDataById(TextureData.TEXTURE_PARTICLE_BALL_ID), palpha[i]);
         }
@@ -105,7 +109,7 @@ public class BallParticleGenerator extends Entity {
                 pvvy[i] = Utils.getRandonFloat(-0.08f, 0.08f);
                 palpha[i] = 1f;
                 palpha_decay[i] = Utils.getRandonFloat(0.01f, 0.05f);
-                size[i] = radius;
+                psize[i] = radius;
             }
             if (particlesToCreate == 0){
                 break;
@@ -124,7 +128,7 @@ public class BallParticleGenerator extends Entity {
     private void updateDrawInfo() {
 
         for (int i = 0; i < number_of_particles; i++){
-                if (palpha > 0f){
+                if (palpha[i] > 0f){
                 px[i] += pvx[i];
                 py[i] += pvy[i];
                 pvx[i] += pvvx[i];
@@ -133,9 +137,9 @@ public class BallParticleGenerator extends Entity {
                 if(palpha[i] < 0f) {palpha[i] = 0f;}
                 Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
                                                     px[i],
-                                                    px[i] + psize,
+                                                    px[i] + psize[i],
                                                     py[i], 
-                                                    py[i] + psize);
+                                                    py[i] + psize[i]);
                 Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, null, palpha[i]);
             }
         }

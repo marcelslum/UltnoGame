@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.opengl.GLES20;
+
 import java.util.ArrayList;
 public class ParticleGenerator extends Entity {
     
@@ -83,7 +85,7 @@ public class ParticleGenerator extends Entity {
                                                     p.y + p.size);
             
             Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, 
-                                            null, palpha[i]);
+                                            null, p.alpha);
 
         }
         
@@ -116,13 +118,13 @@ public class ParticleGenerator extends Entity {
             GLES20.glGenBuffers(1, ibo, 0);
         }
         
-        initializeData(8 * number_of_particles, 6 * number_of_particles, 12 * number_of_particles, 0);
+        initializeData(8 * numberOfParticles, 6 * numberOfParticles, 12 * numberOfParticles, 0);
         
         for (int i = 0; i < numberOfParticles;i++) {
             Particle p = particlesArray.get(i);
             Utils.insertRectangleVerticesData(verticesData, i * 8, 0, p.size, 0f, p.size, 0f);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvData(uvsData, i * 12, p.textureData, p.alpha);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, p.textureData, p.alpha);
         }
         
         

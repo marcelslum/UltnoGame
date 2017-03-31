@@ -1,10 +1,12 @@
 package com.marcelslum.ultnogame;
 
 
+import android.opengl.GLES20;
+
 /**
  * Created by marcel on 07/08/2016.
  */
-public class Button extends Entity imprements Poolable<Button>{
+public class Button extends Entity implements Poolable<Button>{
 
     public float height;
     public float width;
@@ -45,7 +47,7 @@ public class Button extends Entity imprements Poolable<Button>{
         super("buttonEmpty", 0f, 0f, Entity.TYPE_BUTTON);
     }
     
-    public setData(String name, float x, float y, float width, float height, int textureUnit, float listenerScale,
+    public void setData(String name, float x, float y, float width, float height, int textureUnit, float listenerScale,
            TextureData textureDataUnpressed, TextureData textureDataPressed) {
         this.name = name;
         this.x = x;

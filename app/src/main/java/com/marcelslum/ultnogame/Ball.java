@@ -88,7 +88,6 @@ public class Ball extends Circle{
        	mass = Math.pow(radius,3);
 
         isMovable = true;
-        historicNumberOfElements = 0;
         setDrawInfo();
         ballParticleGenerator = new BallParticleGenerator(name+"pg", 0f, 0f);
     }
@@ -188,7 +187,7 @@ public class Ball extends Circle{
         super.translate(tx, ty);
         if (isMovable && isFree){
 
-            float randon = Utils.getRandon(0f, 1f);
+            float randon = Utils.getRandonFloat(0f, 1f);
             int numberOfParticles = 1;
             
             if (randon < 0.33f){
@@ -196,7 +195,7 @@ public class Ball extends Circle{
             } else if (randon < 0.66f){
                 numberOfParticles = 2;
             }
-            ballParticleGenerator.add(historicPositionX[i], historicPositionY[i], radius, numberOfParticles);
+            ballParticleGenerator.addParticles(positionX, positionY, radius, numberOfParticles);
         }
     }
 
@@ -204,7 +203,6 @@ public class Ball extends Circle{
         if (ballParticleGenerator != null) {
             ballParticleGenerator.isActive = false;
         }
-        historicNumberOfElements = 0;
     }
 
     @Override

@@ -284,7 +284,7 @@ public class Game {
         textPool.setFactory(new TextFactory());
         
         buttonPool = new ObjectPool<Button>();
-        buttonPool.setFactory
+        buttonPool.setFactory(new ButtonFactory());
 
     }
 
@@ -1583,9 +1583,6 @@ public class Game {
             Quadtree.rectangleMPool.reset();
         }
 
-        if (BallParticleGenerator.particlePool != null){
-            BallParticleGenerator.particlePool.reset();
-        }
 
         if (vectorPool != null){
             //Log.e(TAG, "Debug Data BEFORE reset: " + vectorPool.debug());
