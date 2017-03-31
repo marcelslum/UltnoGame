@@ -290,8 +290,26 @@ public class Entity{
             childs.get(i).clearAnimations();
         }
     }
-
-
+    
+    void clear(){
+        clearAnimations();
+        x = 0f;
+        y = 0f;
+        positionX = 0f;
+        positionY = 0f;
+        previousPositionX = 0f;
+        previousPositionY = 0f;
+        rotateAngle = 0f;
+        translateX = 0f;
+        translateY = 0f;
+        scaleX = 0f;
+        scaleY = 0f;
+        accumulatedRotate = 0f;
+        accumulatedTranslateX = 0f;
+        accumulatedTranslateY = 0f;
+        accumulatedScaleX = 1f;
+        accumulatedScaleY = 1f;
+    }
 
     void reduceAlpha(int duration, float finalValue){
         Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue).start();
