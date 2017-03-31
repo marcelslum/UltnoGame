@@ -3,14 +3,14 @@ package com.marcelslum.ultnogame;
 import java.util.ArrayList;
 public class ParticleGenerator extends Entity {
     
-    int numberOfParticles = 300;
+    int numberOfParticles = 500;
     ArrayList<Particle> particlesArray;
     boolean isActive;
     TextureData [] texturesData;
 
     ParticleGenerator(String name, float x, float y, TextureData td1, TextureData td2, TextureData td3) {
         super(name, x, y, Entity.TYPE_PARTICLE);
-        program = Game.imageColorizedProgram;
+        program = Game.vertex_e_uv_com_alpha_program;
         textureId = Texture.TEXTURES;
         texturesData = new TextureData []{td1, td2, td3};
         generate();
@@ -29,18 +29,16 @@ public class ParticleGenerator extends Entity {
     public void generate(){
         particlesArray= new ArrayList<>();
         for (int i = 0; i < numberOfParticles;i++) {
-            float vx = Utils.getRandonFloat(-1.1f, 1.1f);
-            float vy = Utils.getRandonFloat(-1.1f, .1f);
+            float vx = Utils.getRandonFloat(-2.1f, 2.1f);
+            float vy = Utils.getRandonFloat(-2.1f, 2.1f);
             float velocity_variation_x = Utils.getRandonFloat(-0.1f, 0.1f);
             float velocity_variation_y = Utils.getRandonFloat(-0.1f, 0.1f);
             float alpha_decay = Utils.getRandonFloat(0.01f, 0.005f);
-            float size = Utils.getRandonFloat(1f, 7f);
+            float size = Utils.getRandonFloat(0.5f, 5f);
 
             float textureMapFilter = Utils.getRandonFloat(0f, 1f);
 
-
             TextureData td;
-
             if (textureMapFilter < 0.33f) {
                 td = texturesData[0];
             } else if (textureMapFilter < 0.66f) {
@@ -51,6 +49,7 @@ public class ParticleGenerator extends Entity {
             
             Particle particle = new Particle(0, 0, vx, vy, velocity_variation_x, 
                 velocity_variation_y, alpha_decay, size, td);
+            
             particlesArray.add(particle);
         }
     }
@@ -65,7 +64,6 @@ public class ParticleGenerator extends Entity {
     private void updateDrawInfo() {
         boolean ended = true;
         for (int i = 0; i < numberOfParticles;i++) {
-            //Log.e("particle", "updateDraw da particula "+i);
             Particle p = particlesArray.get(i);
             p.x += p.vx;
             p.y += p.vy;
@@ -77,12 +75,31 @@ public class ParticleGenerator extends Entity {
             if (p.alpha > 0f){
                 ended = false;
             }
+            
+            Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
+                                                    p.x,
+                                                    p.x + p.size,
+                                                    p.y, 
+                                                    p.y + p.size);
+            
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, 
+                                            null, palpha[i]);
 
-            Utils.insertRectangleVerticesData(this.verticesData, i * 12, p.x, p.x + p.size, p.y, p.y + p.size, 0f);
-            Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
         }
+        
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
-        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                        verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                        uvsBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        
         if (ended){
             isActive = false;
         }
@@ -91,18 +108,44 @@ public class ParticleGenerator extends Entity {
 
     @Override
     public void setDrawInfo() {
-        initializeData(12*numberOfParticles, 6*numberOfParticles, 8*numberOfParticles, 16*numberOfParticles);
+        
+        if (vbo == null || vbo.length == 0){
+            vbo = new int[2];
+            ibo = new int[1];
+            GLES20.glGenBuffers(2, vbo, 0);
+            GLES20.glGenBuffers(1, ibo, 0);
+        }
+        
+        initializeData(8 * number_of_particles, 6 * number_of_particles, 12 * number_of_particles, 0);
+        
         for (int i = 0; i < numberOfParticles;i++) {
             Particle p = particlesArray.get(i);
-            Utils.insertRectangleVerticesData(verticesData, i * 12, 0, p.size, 0f, p.size, 0f);
+            Utils.insertRectangleVerticesData(verticesData, i * 8, 0, p.size, 0f, p.size, 0f);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvData(uvsData, i * 8, p.textureData);
-            Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0f, 0f, 0f, p.alpha));
+            Utils.insertRectangleUvData(uvsData, i * 12, p.textureData, p.alpha);
         }
+        
+        
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
-        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                        verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                        uvsBuffer, GLES20.GL_STATIC_DRAW);
+
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
+        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
+                        indicesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+        
     }
 
     private class Particle{
