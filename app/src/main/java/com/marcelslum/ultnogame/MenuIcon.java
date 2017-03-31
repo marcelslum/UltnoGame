@@ -72,6 +72,10 @@ public class MenuIcon extends Entity{
         for (int i = 0; i < innerTexts.size(); i++) {
             Game.textPool.recycle(innerTexts.get(i));
         }
+        
+        for (int i = 0; i < icons.size(); i++) {
+            Game.buttonPool.recycle(icons.get(i));
+        }
 
         icons.clear();
         texts.clear();
@@ -410,7 +414,9 @@ public class MenuIcon extends Entity{
         }
 
         float positionX = getPositionXFromIconNumber(icons.size()+1);
-        Button button = new Button(Integer.toString(id), positionX, y, size, size, textureUnit, 1,
+
+        Button button = Game.buttonPool.get();
+        button.setData(Integer.toString(id), positionX, y, size, size, textureUnit, 1,
                 textureData,
                 textureData);
         final Button innerButton = button;
