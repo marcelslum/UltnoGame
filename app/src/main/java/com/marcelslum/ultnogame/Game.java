@@ -21,6 +21,8 @@ public class Game {
 
     public static Pool<Vector> vectorPool;
     public static Pool<Text> textPool;
+    public static Pool<Button> buttonPool;
+    
 
     public static boolean isOpenGL30 = false;
     public static Program openGl30TextProgram;
@@ -280,6 +282,9 @@ public class Game {
 
         textPool = new ObjectPool<Text>();
         textPool.setFactory(new TextFactory());
+        
+        buttonPool = new ObjectPool<Button>();
+        buttonPool.setFactory
 
     }
 
