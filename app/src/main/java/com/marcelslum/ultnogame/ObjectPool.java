@@ -34,7 +34,11 @@ public class ObjectPool<Type> implements Pool<Type> {
 
             //Log.e("ObjectPool", "freeObjectsID " + freeObjectsID.size());
 
-            final Poolable<Type> obj = (Poolable<Type>) factory.newObject();
+            if (factory != null){
+                final Poolable<Type> obj = (Poolable<Type>) factory.newObject();
+            } else {
+                final Poolable<Type> obj = (Poolable<Type>) new Poolable<Type>();//// ver se funciona
+            }
             obj.setPoolID(objects.size());
 
             //Log.e("ObjectPool", "objects " + objects.size());
