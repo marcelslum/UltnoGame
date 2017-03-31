@@ -14,11 +14,11 @@ public class BallParticleGenerator extends Entity {
     float [] pvy;
     float [] palpha;
     float [] palpha_decay;
-    float [] size;
+    float [] psize;
     
 
 
-    BallParticleGenerator(String name, float x, float y) {
+   BallParticleGenerator(String name, float x, float y) {
         
         super(name, x, y, Entity.TYPE_PARTICLE);
         program = Game.imageColorizedProgram;
@@ -30,11 +30,57 @@ public class BallParticleGenerator extends Entity {
         pvy = new float[number_of_particles];
         palpha = new float[number_of_particles];
         palpha_decay = new float[number_of_particles];
-        size = new float[number_of_particles];
+        psize = new float[number_of_particles];
 
         for (int i = 0; i < number_of_particles; i++){
             palpha[i] = 0f;
         }
+        
+    }
+    
+    public void setDrawInfo(){
+        
+        if (vbo == null || vbo.length == 0){
+            vbo = new int[2];
+            ibo = new int[1];
+            GLES20.glGenBuffers(2, vbo, 0);
+            GLES20.glGenBuffers(1, ibo, 0);
+        }
+        
+        initializeData(8 * number_of_particles, 6 * number_of_particles, 12 * number_of_particles, 0);
+        
+        for (int i = 0; i < number_of_particles; i++){
+            Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
+                                                px[i],
+                                                px[i] + psize,
+                                                py[i], 
+                                                py[i] + psize);
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, TextureData.getTextureDataById(TextureData.TEXTURE_PARTICLE_BALL_ID), palpha[i]);
+        }
+        
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                        verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                        uvsBuffer, GLES20.GL_STATIC_DRAW);
+
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
+        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
+                        indicesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+        
+        indicesBuffer.limit(0);
+        indicesBuffer = null;
         
     }
 
@@ -49,8 +95,8 @@ public class BallParticleGenerator extends Entity {
 
 
     // recebe a posição central do circulo
-    public void generate(float x, float y, float radius, int quantityOfParticles){
-        int particlesToCreate = quantityOfParticles;
+    public void addParticles(float x, float y, float radius, int quantity){
+        int particlesToCreate = quantity;
         for (int i = 0; i < number_of_particles; i++){
             if (palpha[i] == 0f){
                 particlesToCreate -= 1;
@@ -67,161 +113,49 @@ public class BallParticleGenerator extends Entity {
             if (particlesToCreate == 0){
                 break;
             }
-        }
-      
-
-        
-
-            Particle particle = particlePool.get();
-            particle.setData(px, py, vx, vy, velocity_variation_x,
-                velocity_variation_y, alpha_decay, size,
-                    TextureData.getTextureDataById(TextureData.TEXTURE_PARTICLE_BALL_ID));
-
-            particlesArray.add(particle);
-            
-        
-        
+        }        
     }
 
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection){
-        if (isActive && particlesArray.size() > 0) {
+        if (isActive) {
             updateDrawInfo();
-            //Log.e("ballParticleGenerator", "render");
             super.prepareRender(matrixView, matrixProjection);
         }
     }
 
     private void updateDrawInfo() {
-        boolean createBuffers = false;
 
-
-        if (colorsData == null || particlesArray.size() != (colorsData.length/16)){
-            initializeData(12*particlesArray.size(), 6*particlesArray.size(), 8*particlesArray.size(), 16*particlesArray.size());
-            createBuffers = true;
-        }
-
-        for (int i = 0; i < particlesArray.size();i++) {
-            //Log.e("particle", "updateDraw da particula "+i);
-            Particle p = particlesArray.get(i);
-            
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vx += p.velocity_variation_x;
-            p.vy += p.velocity_variation_y;
-            p.alpha -= p.alpha_decay;
-            if(p.alpha < 0f) p.alpha = 0f;
-
-            //Log.e(TAG, " inserindo particle "+
-            //        (p.x - p.size/2f) + " " +
-            //        (p.x + p.size/2f) + " " +
-            //        (p.y- p.size/2f) + " " +
-            //        (p.y + p.size/2f));
-
-
-            Utils.insertRectangleVerticesData(verticesData, i * 12, p.x - p.size/2f, p.x + p.size/2f, p.y- p.size/2f, p.y + p.size/2f, 0f);
-            //Log.e("ballParticleGenerator", " "+p.x+" "+p.y+" "+p.size);
-
-            if (createBuffers) {
-                Utils.insertRectangleColorsData(colorsData, i * 16, new Color(0.1f, 0.1f, 0.1f, p.alpha));
-                Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-                Utils.insertRectangleUvData(uvsData, i * 8, p.textureData);
+        for (int i = 0; i < number_of_particles; i++){
+                if (palpha > 0f){
+                px[i] += pvx[i];
+                py[i] += pvy[i];
+                pvx[i] += pvvx[i];
+                pvy[i] += pvvy[i];
+                palpha[i] -= palpha_decay[i];
+                if(palpha[i] < 0f) {palpha[i] = 0f;}
+                Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
+                                                    px[i],
+                                                    px[i] + psize,
+                                                    py[i], 
+                                                    py[i] + psize);
+                Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, TextureData.getTextureDataById(TextureData.TEXTURE_PARTICLE_BALL_ID), palpha[i]);
             }
         }
-
-        //if (verticesBuffer == null) {
-        //    verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        //} else {
-
-        //}
-
-        //Utils.updateFloatBuffer(verticesData, verticesBuffer);
-
-
-        if (verticesBuffer == null || verticesBuffer.capacity() != verticesData.length){
-            verticesBuffer = Utils.generateFloatBuffer(verticesData);
-        } else {
-            Utils.updateFloatBuffer(verticesData, verticesBuffer);
-        }
-        //verticesBuffer = Utils.generateFloatBuffer(verticesData);
-
-        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+        
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
-        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
-    }
 
-    private class ParticleFactory implements PoolObjectFactory<Particle>{
-        @Override
-        public Particle newObject() {
-            return new Particle();
-        }
-    }
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                        verticesBuffer, GLES20.GL_STATIC_DRAW);
 
-    private class Particle implements Poolable<Particle>{
-        float initX;
-        float initY;
-        float x;
-        float y;
-        float vx;
-        float vy;
-        float size;
-        float alpha;
-        float alpha_decay;
-        float velocity_variation_x;
-        float velocity_variation_y;
-        TextureData textureData;
-        private int poolID;
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                        uvsBuffer, GLES20.GL_STATIC_DRAW);
 
-        public Particle(){
 
-        }
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
-        public void setData(float initX, float initY, float vx, float vy,
-            float velocity_variation_x, float velocity_variation_y, float alpha_decay, float size, TextureData textureData) {
-            this.initX = initX;
-            this.initY = initY;
-            this.x = initX;
-            this.y = initY;
-            this.vx = vx;
-            this.vy = vy;
-            this.velocity_variation_x = velocity_variation_x;
-            this.velocity_variation_y = velocity_variation_y;
-            this.alpha = 0.2f;
-            this.alpha_decay = alpha_decay;
-            this.size = size;
-            this.textureData = textureData;
-        }
-
-        @Override
-        public void setPoolID(int id) {
-            this.poolID = id;
-        }
-
-        @Override
-        public int getPoolID() {
-            return this.poolID;
-        }
-
-        @Override
-        public Particle get() {
-            return this;
-        }
-
-        @Override
-        public void clean() {
-            initX = 0;
-            initY = 0;
-            x = 0;
-            y = 0;
-            vx = 0;
-            vy = 0;
-            velocity_variation_x = 0;
-            velocity_variation_y = 0;
-            alpha = 0.2f;
-            alpha_decay = 0;
-            size = 0;
-            textureData = null;
-
-        }
     }
 }
