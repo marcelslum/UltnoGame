@@ -294,11 +294,18 @@ public abstract class Utils {
     }
     
     public static void insertRectangleUvAndAlphaData(float[] array, int startIndex, TextureData td, float alpha){
-        x1 = td.x;
-        x2 = td.x + td.w;
-        y2 = td.y;
-        y1 = td.y + td.h;
-        insertRectangleUvAndAlphaData(array, startIndex, alpha);
+        if (td != null){
+            x1 = td.x;
+            x2 = td.x + td.w;
+            y2 = td.y;
+            y1 = td.y + td.h;
+            insertRectangleUvAndAlphaData(array, startIndex, alpha);
+        } else {
+            array[2 + (startIndex)] = alpha;
+            array[5 + (startIndex)] = alpha;
+            array[8 + (startIndex)] = alpha;
+            array[11 + (startIndex)] = alpha;   
+        }
     }
     
    public static float[] getUvData256(int textureMap){
