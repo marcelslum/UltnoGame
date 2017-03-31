@@ -4,50 +4,73 @@ import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
     
-    int maxNumberOfParticles = 22;
-    ArrayList<Particle> particlesArray;
+    int number_of_particles = 30;
     boolean isActive = true;
     boolean isVisible = true;
-
-    public static Pool<Particle> particlePool;
     
+    float [] px;
+    float [] py;
+    float [] pvx;
+    float [] pvy;
+    float [] palpha;
+    float [] palpha_decay;
+    float [] size;
+    
+
+
     BallParticleGenerator(String name, float x, float y) {
+        
         super(name, x, y, Entity.TYPE_PARTICLE);
         program = Game.imageColorizedProgram;
         textureId = Texture.TEXTURES;
-        particlesArray = new ArrayList<>();
+        
+        px = new float[number_of_particles];
+        py = new float[number_of_particles];
+        pvx = new float[number_of_particles];
+        pvy = new float[number_of_particles];
+        palpha = new float[number_of_particles];
+        palpha_decay = new float[number_of_particles];
+        size = new float[number_of_particles];
+
+        for (int i = 0; i < number_of_particles; i++){
+            palpha[i] = 0f;
+        }
+        
     }
 
-  public void activate(){
-      this.isVisible = true;
-      this.isActive = true;
-  }
+    public void activate(){
+        this.isVisible = true;
+        this.isActive = true;
+    }
 
-  public void deactivate(){
+    public void deactivate(){
         this.isActive = false;
-  }
+    }
 
 
     // recebe a posição central do circulo
-  public void generate(float x, float y, float radius, int quantityOfParticles){
-
-        // TODO criar pool de particulas
-
-        for (int i = 0; i < quantityOfParticles;i++) {
-            float vx = Utils.getRandonFloat(-0.4f, 0.4f);
-            float vy = Utils.getRandonFloat(-0.4f, 0.4f);
-            float velocity_variation_x = Utils.getRandonFloat(-0.08f, 0.08f);
-            float velocity_variation_y = Utils.getRandonFloat(-0.08f, 0.08f);
-            float alpha_decay = Utils.getRandonFloat(0.01f, 0.05f);
-            float size = Utils.getRandonFloat(radius/2f, radius*3f);
-            
-            float px = Utils.getRandonFloat(x - radius, x + radius);
-            float py = Utils.getRandonFloat(y - radius, y + radius);
-
-            if (particlePool == null){
-                particlePool = new ObjectPool<>();
-                particlePool.setFactory(new ParticleFactory());
+    public void generate(float x, float y, float radius, int quantityOfParticles){
+        int particlesToCreate = quantityOfParticles;
+        for (int i = 0; i < number_of_particles; i++){
+            if (palpha[i] == 0f){
+                particlesToCreate -= 1;
+                px[i] = Utils.getRandonFloat(x - radius, x + radius);
+                py[i] = Utils.getRandonFloat(y - radius, y + radius);
+                pvx[i] = Utils.getRandonFloat(-0.4f, 0.4f);
+                pvy[i] =  Utils.getRandonFloat(-0.4f, 0.4f);
+                pvvx[i] = Utils.getRandonFloat(-0.08f, 0.08f);
+                pvvy[i] = Utils.getRandonFloat(-0.08f, 0.08f);
+                palpha[i] = 1f;
+                palpha_decay[i] = Utils.getRandonFloat(0.01f, 0.05f);
+                size[i] = radius;
             }
+            if (particlesToCreate == 0){
+                break;
+            }
+        }
+      
+
+        
 
             Particle particle = particlePool.get();
             particle.setData(px, py, vx, vy, velocity_variation_x,
@@ -56,10 +79,8 @@ public class BallParticleGenerator extends Entity {
 
             particlesArray.add(particle);
             
-            if (particlesArray.size() > maxNumberOfParticles) {
-                particlesArray.remove(0);
-            }
-        }
+        
+        
     }
 
     @Override
