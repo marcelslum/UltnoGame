@@ -54,6 +54,7 @@ public class Button extends Entity implements Poolable<Button>{
     
     public void setData(String name, float x, float y, float width, float height, int textureUnit, float listenerScale,
            TextureData textureDataUnpressed, TextureData textureDataPressed) {
+
         this.name = name;
         this.x = x;
         this.y = y;
@@ -68,7 +69,8 @@ public class Button extends Entity implements Poolable<Button>{
         this.textureDataPressed = textureDataPressed;
         this.textureId = textureUnit;
 
-        program = Game.vertex_e_uv_com_alpha_program;
+        //program = Game.vertex_e_uv_com_alpha_program;
+        program = Game.imageProgram;
 
         float lw = width * listenerScale;
         float lh = height * listenerScale;
@@ -96,6 +98,7 @@ public class Button extends Entity implements Poolable<Button>{
             }
         ));
 
+        super.setData();
         setDrawInfo();
     }
 
@@ -113,7 +116,8 @@ public class Button extends Entity implements Poolable<Button>{
         this.textureDataPressed = textureDataPressed;
         this.textureId = textureUnit;
 
-        program = Game.vertex_e_uv_com_alpha_program;
+        //program = Game.vertex_e_uv_com_alpha_program;
+        program = Game.imageProgram;
 
         float lw = width * listenerScale;
         float lh = height * listenerScale;
@@ -160,12 +164,12 @@ public class Button extends Entity implements Poolable<Button>{
 
     public void setPressed() {
         isPressed = true;
-        setUvInfo();
+        setDrawInfo();
     }
 
     public void setUnpressed() {
         isPressed = false;
-        setUvInfo();
+        setDrawInfo();
     }
 
     public void setPersistent(int frequencyPersistent){
@@ -195,6 +199,18 @@ public class Button extends Entity implements Poolable<Button>{
     public void setUvInfo(){
 
         if (isPressed) {
+            Utils.insertRectangleUvData(uvsData, 0,
+                    textureDataPressed);
+        } else {
+            Utils.insertRectangleUvData(uvsData, 0,
+                   textureDataUnpressed);
+        }
+
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+
+
+        /*
+        if (isPressed) {
             Utils.insertRectangleUvAndAlphaData(uvsData, 0, textureDataPressed, 1f);
         } else {
             Utils.insertRectangleUvAndAlphaData(uvsData, 0, textureDataUnpressed, 1f);
@@ -204,11 +220,27 @@ public class Button extends Entity implements Poolable<Button>{
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
-            uvsBuffer, GLES20.GL_STATIC_DRAW);
+                uvsBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+         */
+
     }
 
     public void setDrawInfo(){
-        
+
+        initializeData(12, 6, 12, 0);
+
+        Utils.insertRectangleVerticesData(verticesData, 0, 0f, width, 0f, height, 0f);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+
+        Utils.insertRectangleIndicesData(indicesData, 0, 0);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+
+        setUvInfo();
+
+
+        /*
         if (vbo == null || vbo.length == 0){
 
 
@@ -236,16 +268,12 @@ public class Button extends Entity implements Poolable<Button>{
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
             indicesBuffer, GLES20.GL_STATIC_DRAW);
-        
-        //verticesBuffer.limit(0);
-        //verticesBuffer = null;
-        
-        //indicesBuffer.limit(0);
-        //indicesBuffer = null;
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
         
         setUvInfo();
+        */
+
     }
 }

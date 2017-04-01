@@ -29,7 +29,7 @@ public class Entity{
     public TextureData textureData;
 
     public int [] vbo;
-    public int [] ibo ;
+    public int [] ibo;
 
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
@@ -63,8 +63,7 @@ public class Entity{
     public final static String TAG = "Entity";
     final public static int SHOW_POINTS_ON = 1;
     final public static int SHOW_POINTS_OFF = 0;
-    private static int[] vao = new int[1];
-    private static int[] mVBOIds = new int[3];
+
     //private static IntBuffer vao;
 
     
@@ -166,6 +165,14 @@ public class Entity{
         this.x = x;
         this.y = y;
         this.type = type;
+        previousPositionX = x;
+        previousPositionY = y;
+        animations = new ArrayList<>();
+        childs = new ArrayList<>();
+        checkTransformations(false);
+    }
+
+    public void setData(){
         previousPositionX = x;
         previousPositionY = y;
         animations = new ArrayList<>();
@@ -285,7 +292,6 @@ public class Entity{
         animTranslateY = 0;
         animScaleX = 1f;
         animScaleY = 1f;
-        alpha = 1;
 
         for (int i = 0; i < childs.size(); i++){
             childs.get(i).cleanAnimations();
@@ -293,6 +299,54 @@ public class Entity{
     }
     
     void clean(){
+        inUse = false;
+        textureData = null;
+        uvChangeFlag = false;
+        colorChangeFlag = false;
+        verticesChangeFlag = false;
+        type = -1;
+        x = 0f;
+        y = 0f;
+        positionX = 0f;
+        positionY = 0f;
+        previousPositionX = 0f;
+        previousPositionY = 0f;
+        rotateAngle = 0f;
+        translateX = 0f;
+        translateY = 0f;
+        scaleX = 0f;
+        scaleY = 0f;
+        accumulatedRotate = 0f;
+        accumulatedTranslateX = 0f;
+        accumulatedTranslateY = 0f;
+        accumulatedScaleX = 1f;
+        accumulatedScaleY = 1f;
+        dX = 0f;
+        dY = 0f;
+        isCollidable = false;
+        isVisible = true;
+        isMovable = false;
+        isSolid = false;
+        isBlocked = false;
+        isPressed = false;
+        isFree = true;
+        parent = null;
+        childs.clear();
+        animations.clear();
+        listener = null;
+        verticesData = null;
+        indicesData = null;
+        uvsData = null;
+        colorsData = null;
+        isLineGL = false;
+        lineWidth = 1;
+        verticesBuffer = null;
+        uvsBuffer = null;
+        indicesBuffer = null;
+        colorsBuffer = null;
+        program = null;
+        textureId = -1;
+
         Log.e(TAG, "cleaning "+ name);
         cleanAnimations();
         
@@ -302,7 +356,8 @@ public class Entity{
             color.b = 0;
             color.a = 0;
         }
-        
+
+        alpha = 1f;
         x = 0f;
         y = 0f;
         positionX = 0f;
@@ -505,7 +560,7 @@ public class Entity{
     }
     
     public static void createVao(){
-        
+        /*
         GLES30.glGenVertexArrays( 1, vao, 0 );
         GLES30.glBindVertexArray(vao[0]);
 
@@ -524,7 +579,7 @@ public class Entity{
         GLES30.glBindVertexArray(0);
 
         GLES30.glGenBuffers ( 3, mVBOIds, 0 );
-        
+        */
         
     }
 
@@ -547,6 +602,8 @@ public class Entity{
         setMatrixModel();
         
         if (Game.isOpenGL30){
+
+            /*
             GLES30.glUseProgram(Game.openGl30TextProgram.get());
 
 
@@ -569,6 +626,7 @@ public class Entity{
             GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesData.length, GLES30.GL_UNSIGNED_SHORT, indicesBuffer);
 
             return;
+            */
 
         } else if (vbo == null || vbo.length == 0){
             

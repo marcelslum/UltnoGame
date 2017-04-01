@@ -1181,12 +1181,21 @@ public class Game {
         for (Entity e : collectAllGameEntities()){
             e.increaseAlpha(duration, 1f);
         }
+        if (brickBackground != null){
+            brickBackground.increaseAlpha(duration, 1f);
+        }
+
     }
 
     private static void reduceAllGameEntitiesAlpha(int duration){
         for (Entity e : collectAllGameEntities()){
             e.reduceAlpha(duration, 0.2f);
         }
+
+        if (brickBackground != null){
+            brickBackground.reduceAlpha(duration, 0.5f);
+        }
+
     }
 
     public static void eraseAllGameEntities() {
@@ -1293,6 +1302,17 @@ public class Game {
             TimeHandler.updateTimeOfLevelPlay(elapsed);
         }
 
+
+        if (ButtonHandler.buttonReturn != null){
+            //Log.e(TAG, "buttonReturn ");
+            //Log.e(TAG, " " + ButtonHandler.buttonReturn.x);
+            //Log.e(TAG, " " + ButtonHandler.buttonReturn.y);
+            //Log.e(TAG, " " + ButtonHandler.buttonReturn.positionX);
+            //Log.e(TAG, " " + ButtonHandler.buttonReturn.positionY);
+            //Log.e(TAG, " " + ButtonHandler.buttonReturn.accumulatedTranslateX);
+            //Log.e(TAG, " " + ButtonHandler.buttonReturn.accumulatedTranslateY);
+            //Log.e(TAG, " " + ButtonHandler.buttonReturn.isVisible);
+        }
 
 
 

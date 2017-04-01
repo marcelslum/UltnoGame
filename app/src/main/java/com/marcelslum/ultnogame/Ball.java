@@ -188,12 +188,12 @@ public class Ball extends Circle{
         if (isMovable && isFree){
 
             float randon = Utils.getRandonFloat(0f, 1f);
-            int numberOfParticles = 1;
+            int numberOfParticles = 2;
             
             if (randon < 0.33f){
-                numberOfParticles = 3;
+                numberOfParticles = 6;
             } else if (randon < 0.66f){
-                numberOfParticles = 2;
+                numberOfParticles = 4;
             }
             ballParticleGenerator.addParticles(positionX, positionY, radius, numberOfParticles);
         }

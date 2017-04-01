@@ -51,7 +51,8 @@ public class ButtonHandler {
             }
         });
 
-        buttonReturnObjectivesPause = new Button("buttonReturnObjectivesPause", buttonSize*0.5f, Game.gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+        buttonReturnObjectivesPause = Game.buttonPool.get();
+        buttonReturnObjectivesPause.setData("buttonReturnObjectivesPause", buttonSize*0.5f, Game.gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));
         buttonReturnObjectivesPause.setOnPress(new Button.OnPress() {
@@ -69,7 +70,8 @@ public class ButtonHandler {
             }
         });
 
-        buttonGroupLeaderboard = new Button("buttonGroupLeaderboard", Game.resolutionX - buttonSize*1.5f,
+        buttonGroupLeaderboard = Game.buttonPool.get();
+        buttonGroupLeaderboard.setData("buttonGroupLeaderboard", Game.resolutionX - buttonSize*1.5f,
                         Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize,
                         Texture.TEXTURES, 1.2f,
                         TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_GROUP_LEADERBOARD_ID),
@@ -156,7 +158,8 @@ public class ButtonHandler {
             }
         });
 
-        buttonContinue = new Button("buttonContinue", Game.resolutionX - buttonSize*1.5f, Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+        buttonContinue = Game.buttonPool.get();
+        buttonContinue.setData("buttonContinue", Game.resolutionX - buttonSize*1.5f, Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_PRESS_ID));
         buttonContinue.setOnPress(new Button.OnPress() {
@@ -195,10 +198,11 @@ public class ButtonHandler {
             x = Game.resolutionX * 0.03f;
         }
 
-        ButtonHandler.button1Left = new Button("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
+        button1Left = Game.buttonPool.get();
+        button1Left.setData("button1Left", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_PRESS_ID));
-        ButtonHandler.button1Left.alpha = 0.7f;
+        button1Left.alpha = 0.7f;
 
         // BOTÃO 2 DIREITA
         if (invertedButtons){
@@ -210,7 +214,8 @@ public class ButtonHandler {
             x = Game.resolutionX * 0.87f;
         }
 
-        ButtonHandler.button2Right = new Button("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
+        button2Right = Game.buttonPool.get();
+        button2Right.setData("buttonRight", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_PRESS_ID));
 
@@ -221,7 +226,8 @@ public class ButtonHandler {
             } else {
                 x = Game.resolutionX * 0.22f;
             }
-            ButtonHandler.button1Right = new Button("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
+            button1Right = Game.buttonPool.get();
+            button1Right.setData("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_ID),
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_PRESS_ID));
             ButtonHandler.button1Right.alpha = 0.7f;
@@ -232,7 +238,8 @@ public class ButtonHandler {
             } else {
                 x = Game.resolutionX * 0.68f;
             }
-            ButtonHandler.button2Left = new Button("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
+            button2Left = Game.buttonPool.get();
+            button2Left.setData("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_ID),
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_PRESS_ID));
         }

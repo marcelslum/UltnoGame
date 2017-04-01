@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
     
-    int number_of_particles = 30;
+    int number_of_particles = 60;
     boolean isActive = true;
     boolean isVisible = true;
     
@@ -107,11 +107,11 @@ public class BallParticleGenerator extends Entity {
                 particlesToCreate -= 1;
                 px[i] = Utils.getRandonFloat(x - radius, x + radius);
                 py[i] = Utils.getRandonFloat(y - radius, y + radius);
-                pvx[i] = Utils.getRandonFloat(-0.4f, 0.4f);
-                pvy[i] =  Utils.getRandonFloat(-0.4f, 0.4f);
+                pvx[i] = Utils.getRandonFloat(-0.2f, 0.2f);
+                pvy[i] =  Utils.getRandonFloat(-0.2f, 0.2f);
                 pvvx[i] = Utils.getRandonFloat(-0.08f, 0.08f);
                 pvvy[i] = Utils.getRandonFloat(-0.08f, 0.08f);
-                palpha[i] = 1f;
+                palpha[i] = 0.5f;
                 palpha_decay[i] = Utils.getRandonFloat(0.01f, 0.05f);
                 psize[i] = radius;
             }

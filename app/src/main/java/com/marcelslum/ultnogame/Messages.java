@@ -32,20 +32,24 @@ public class Messages extends Entity {
         final Text textObject2;
         if (childToReplace != -1){
 
-            textObject = new Text("text", x, childs.get(childToReplace).y,
+            textObject = Game.textPool.get();
+            textObject.setData("text", x, childs.get(childToReplace).y,
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.set(childToReplace, textObject);
 
-            textObject2 = new Text("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), childs.get(childToReplace).y + (Game.gameAreaResolutionY * 0.045f * 0.07f),
+            textObject2 = Game.textPool.get();
+            textObject2.setData("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), childs.get(childToReplace).y + (Game.gameAreaResolutionY * 0.045f * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.2f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs2.set(childToReplace, textObject2);
 
         } else {
-            textObject = new Text("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
+            textObject = Game.textPool.get();
+            textObject.setData("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.add(textObject);
 
-            textObject2 = new Text("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f) + (Game.gameAreaResolutionY * 0.045f * 0.07f),
+            textObject2 = Game.textPool.get();
+            textObject2.setData("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f) + (Game.gameAreaResolutionY * 0.045f * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.2f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs2.add(textObject2);
         }

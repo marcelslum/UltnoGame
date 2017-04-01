@@ -111,18 +111,14 @@ public class BrickBackground extends Entity {
         }  
     }
 
-
-
     public void changeDrawInfo(){
-
 
         //Log.e(TAG, "ballCollidedGreen "+ballCollidedGreen);
         //Log.e(TAG, "ballCollidedBlue "+ballCollidedBlue);
         //Log.e(TAG, "ballCollidedRed "+ballCollidedRed);
         //Log.e(TAG, "ballCollidedBlack "+ballCollidedBlack);
 
-        
-        
+
          for (int i = 0; i < numberOfBricks; i++){
              
             float alpha = 1f;

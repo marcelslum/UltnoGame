@@ -127,7 +127,7 @@ public class Level {
         ButtonHandler.createGameButtons(barDataBaseData.size(), invertedButtons);
 
         InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea111", 0f, 0f,
-                Game.gameAreaResolutionX, Game.gameAreaResolutionY * 0.8f, 0, Game.background);
+                Game.gameAreaResolutionX, Game.gameAreaResolutionY * 0.8f, 0, Game.brickBackground);
 
         gameAreaInteractionListener.setPressListener(new InteractionListener.PressListener() {
             @Override

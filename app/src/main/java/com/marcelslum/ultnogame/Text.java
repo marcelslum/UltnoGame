@@ -68,6 +68,7 @@ public class Text extends Entity implements Poolable<Text>{
         textureId = font.textureId;
         charData = new float[7];
         textureData = TextureData.getTextureDataById(TextureData.TEXTURE_JEFT_SET_ID);
+        super.setData();
         setDrawInfo();
 
     }
