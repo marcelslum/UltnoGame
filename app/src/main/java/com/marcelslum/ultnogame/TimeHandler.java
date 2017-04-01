@@ -62,7 +62,7 @@ public class TimeHandler {
 
             MessagesHandler.messageTime.setText(displayMinutesString+":"+displaySecondsString);
             if (MessagesHandler.messageTime.animTranslateX != 0){
-                MessagesHandler.messageTime.clearAnimations();
+                MessagesHandler.messageTime.cleanAnimations();
             }
         }
     }

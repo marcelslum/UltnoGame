@@ -257,7 +257,7 @@ public class Tutorial {
             tutorialTextBox = frames.get(currentFrame).textBox;
             tutorialTextBox.alpha = 0;
             tutorialTextBox.display();
-            tutorialTextBox.clearAnimations();
+            tutorialTextBox.cleanAnimations();
             Utils.createSimpleAnimation(tutorialTextBox, "translateX", "translateX", 500, Game.resolutionX*2f, 0f).start();
             
             tutorialTextBox.animateMiniArrow(Game.resolutionX*1.5f, tutorialTextBox.size * 0.5f);

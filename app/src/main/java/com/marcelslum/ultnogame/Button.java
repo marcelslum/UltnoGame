@@ -2,6 +2,7 @@ package com.marcelslum.ultnogame;
 
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 /**
  * Created by marcel on 07/08/2016.
@@ -15,6 +16,9 @@ public class Button extends Entity implements Poolable<Button>{
     TextureData textureDataPressed;
     TextureData textureDataUnpressed;
     private int poolID;
+
+    public final String TAG = "Button";
+
 
     @Override
     public void setPoolID(int id) {
@@ -33,6 +37,7 @@ public class Button extends Entity implements Poolable<Button>{
 
     @Override
     public void clean() {
+        Log.e(TAG, "cleaning button "+ name);
         super.clean();
         height = 0f;
         width = 0f;
@@ -63,7 +68,7 @@ public class Button extends Entity implements Poolable<Button>{
         this.textureDataPressed = textureDataPressed;
         this.textureId = textureUnit;
 
-        program = Game.imageProgram;
+        program = Game.vertex_e_uv_com_alpha_program;
 
         float lw = width * listenerScale;
         float lh = height * listenerScale;
@@ -108,7 +113,7 @@ public class Button extends Entity implements Poolable<Button>{
         this.textureDataPressed = textureDataPressed;
         this.textureId = textureUnit;
 
-        program = Game.imageProgram;
+        program = Game.vertex_e_uv_com_alpha_program;
 
         float lw = width * listenerScale;
         float lh = height * listenerScale;
@@ -194,6 +199,7 @@ public class Button extends Entity implements Poolable<Button>{
         } else {
             Utils.insertRectangleUvAndAlphaData(uvsData, 0, textureDataUnpressed, 1f);
         }
+
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
@@ -204,10 +210,16 @@ public class Button extends Entity implements Poolable<Button>{
     public void setDrawInfo(){
         
         if (vbo == null || vbo.length == 0){
+
+
             vbo = new int[2];
             ibo = new int[1];
             GLES20.glGenBuffers(2, vbo, 0);
             GLES20.glGenBuffers(1, ibo, 0);
+
+            Log.e(TAG, "creating vbo button "+name);
+            Log.e(TAG, "vbo[0] "+vbo[0]);
+            Log.e(TAG, "vbo[1] "+vbo[1]);
         }
         initializeData(8, 6, 12, 0);
         
@@ -225,11 +237,11 @@ public class Button extends Entity implements Poolable<Button>{
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
             indicesBuffer, GLES20.GL_STATIC_DRAW);
         
-        verticesBuffer.limit(0);
-        verticesBuffer = null;
+        //verticesBuffer.limit(0);
+        //verticesBuffer = null;
         
-        indicesBuffer.limit(0);
-        indicesBuffer = null;
+        //indicesBuffer.limit(0);
+        //indicesBuffer = null;
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);

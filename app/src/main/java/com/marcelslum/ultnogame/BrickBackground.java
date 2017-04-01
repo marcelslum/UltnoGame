@@ -6,6 +6,8 @@ import android.util.Log;
 public class BrickBackground extends Entity {
     float width;
     float height;
+
+    public final String TAG = "BrickBackground";
     
     static int ballCollidedFx;
     static int ballCollidedBlue;

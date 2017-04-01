@@ -135,7 +135,7 @@ public class ScorePanel extends Entity {
             @Override
             public void onAnimationEnd() {
                 innerScorePanel.displayMessage = false;
-                innerScorePanel.messageText.clearAnimations();
+                innerScorePanel.messageText.cleanAnimations();
             }
         });
 

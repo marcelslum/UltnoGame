@@ -607,7 +607,7 @@ public class Game {
             LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
             mainActivity.hideAdView();
             Acelerometer.secretLevel3Steps = 0;
-            MessagesHandler.messageTime.clearAnimations();
+            MessagesHandler.messageTime.cleanAnimations();
             MessagesHandler.messageTime.display();
             MessagesHandler.messageCurrentLevel.display();
             MessagesHandler.setMessageTime();

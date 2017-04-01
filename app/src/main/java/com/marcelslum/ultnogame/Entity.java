@@ -275,7 +275,7 @@ public class Entity{
     }
 
     // TODO trocar para cleanAnimations
-    void clearAnimations() {
+    void cleanAnimations() {
         for (int i = 0; i < animations.size(); i++) {
             if (animations.get(i).started && !this.animations.get(i).name.equals("ballInvencible")){
                 animations.get(i).stopAndConclude();
@@ -288,12 +288,13 @@ public class Entity{
         alpha = 1;
 
         for (int i = 0; i < childs.size(); i++){
-            childs.get(i).clearAnimations();
+            childs.get(i).cleanAnimations();
         }
     }
     
     void clean(){
-        clearAnimations();
+        Log.e(TAG, "cleaning "+ name);
+        cleanAnimations();
         
         if (color != null) {
             color.r = 0;
@@ -910,7 +911,7 @@ public class Entity{
             @Override
             public void onAnimationEnd() {
                 clearDisplay();
-                clearAnimations();
+                cleanAnimations();
                 alpha = 1f;
             }
         });

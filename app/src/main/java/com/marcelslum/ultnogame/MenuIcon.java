@@ -74,7 +74,7 @@ public class MenuIcon extends Entity{
         }
         
         for (int i = 0; i < icons.size(); i++) {
-            Game.buttonPool.recycle(icons.get(i));
+            //Game.buttonPool.recycle(icons.get(i));
         }
 
         icons.clear();

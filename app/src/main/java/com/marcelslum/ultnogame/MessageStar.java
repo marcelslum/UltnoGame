@@ -35,10 +35,10 @@ public class MessageStar extends Entity {
 
 
     public void showAndGoAllGray(int totalStars){
-        clearAnimations();
+        cleanAnimations();
         display();
         for (int i = 0; i < 5; i++){
-            stars.get(i).clearAnimations();
+            stars.get(i).cleanAnimations();
         }
 
         for (int i = 0; i < totalStars; i++){
@@ -141,10 +141,10 @@ public class MessageStar extends Entity {
 
         display();
 
-        clearAnimations();
+        cleanAnimations();
 
         for (int i = 0; i < 5; i++){
-            stars.get(i).clearAnimations();
+            stars.get(i).cleanAnimations();
             stars.get(i).animTranslateX = Game.resolutionX;
         }
 

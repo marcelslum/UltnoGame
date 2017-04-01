@@ -17,7 +17,10 @@ public class ButtonHandler {
 
     public static void initButtons(){
         float buttonSize = Game.resolutionX * 0.05f;
-        buttonReturn = new Button("buttonReturn", buttonSize*0.5f,
+        buttonReturn = Game.buttonPool.get();
+
+
+        buttonReturn.setData("buttonReturn", buttonSize*0.5f,
                 Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));

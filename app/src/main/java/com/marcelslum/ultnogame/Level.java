@@ -120,7 +120,7 @@ public class Level {
         }
 
         Game.bordaB.y = Game.gameAreaResolutionY-2;
-        Game.bordaB.clearAnimations();
+        Game.bordaB.cleanAnimations();
 
         //Log.e("Level loadEnt", "1");
 

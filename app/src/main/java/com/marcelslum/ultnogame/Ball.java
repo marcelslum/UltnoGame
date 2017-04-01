@@ -1547,7 +1547,7 @@ public class Ball extends Circle{
 
         Game.vibrate(Game.VIBRATE_HARD);
         
-        clearAnimations();
+        cleanAnimations();
         ParticleGenerator pg = new ParticleGenerator("explode", x + accumulatedTranslateX, y + accumulatedTranslateY,
                 TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_1_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_2_ID),

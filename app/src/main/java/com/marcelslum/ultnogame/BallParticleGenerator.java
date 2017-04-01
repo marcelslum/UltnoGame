@@ -30,13 +30,17 @@ public class BallParticleGenerator extends Entity {
         py = new float[number_of_particles];
         pvx = new float[number_of_particles];
         pvy = new float[number_of_particles];
+        pvvx = new float[number_of_particles];
+        pvvy = new float[number_of_particles];
         palpha = new float[number_of_particles];
         palpha_decay = new float[number_of_particles];
         psize = new float[number_of_particles];
 
         for (int i = 0; i < number_of_particles; i++){
             palpha[i] = 0f;
-        }   
+        }
+
+        setDrawInfo();
     }
     
     public void setDrawInfo(){
@@ -140,6 +144,7 @@ public class BallParticleGenerator extends Entity {
                                                     px[i] + psize[i],
                                                     py[i], 
                                                     py[i] + psize[i]);
+
                 Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, null, palpha[i]);
             }
         }

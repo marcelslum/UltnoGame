@@ -156,7 +156,7 @@ public class Splash {
             googleConnectionAttempts = 0;
 
             Log.e("setSplashState", "MESSAGE_INTERNET_NAO_CONECTADA");
-            message1.clearAnimations();
+            message1.cleanAnimations();
             message1 = new Text("messageSplash1",
                     Game.resolutionX* 0.5f, Game.resolutionY  * 0.75f, Game.resolutionY * 0.04f,
                     Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_nao_foi_possivel_conectar1), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
@@ -173,7 +173,7 @@ public class Splash {
             googleConnectionAttempts = 0;
 
             Log.e("setSplashState", "MESSAGE_GOOGLE_NAO_CONECTADO");
-            message1.clearAnimations();
+            message1.cleanAnimations();
             message1 = new Text("messageSplash1",
                     Game.resolutionX* 0.5f, Game.resolutionY * 0.75f, Game.resolutionY * 0.04f,
                     Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_nao_foi_possivel_conectar_ao_google), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
