@@ -70,7 +70,6 @@ public class Text extends Entity implements Poolable<Text>{
         textureData = TextureData.getTextureDataById(TextureData.TEXTURE_JEFT_SET_ID);
         super.setData();
         setDrawInfo();
-
     }
 
 
@@ -122,7 +121,7 @@ public class Text extends Entity implements Poolable<Text>{
     public void setText(String text){
         this.text = text;
         if (shadowText != null) {
-            addShadow(shadowColor);
+            shadowText.setText(text);
         }
         setDrawInfo();
     }
@@ -134,6 +133,7 @@ public class Text extends Entity implements Poolable<Text>{
 
     public void addShadow(Color shadowColor){
         this.shadowColor = shadowColor;
+
         shadowText = new Text(name+"shadow", x + (size*0.09f), y + (size*0.09f), size, text, font, shadowColor, align);
         addChild(shadowText);
     }

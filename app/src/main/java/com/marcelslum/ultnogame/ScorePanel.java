@@ -34,7 +34,8 @@ public class ScorePanel extends Entity {
         value = 0;
         setDrawInfo();
 
-        messageText = new Text("text", x + (getWidth()*0.8f), y - size*0.3f, size*1.5f, "message", Game.font, new Color(1.0f, 0f, 0f, 1f));
+        messageText = Game.textPool.get();
+        messageText.setData("text", x + (getWidth()*0.8f), y - size*0.3f, size*1.5f, "message", Game.font, new Color(1.0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT);
         addChild(messageText);
     }
 

@@ -15,28 +15,22 @@ public class BrickBackground extends Entity {
     static int ballCollidedRed;
     static int ballCollidedGreen;
 
-    /*
-    float uvx1;
-    float uvx2;
-    float uvy1;
-    float uvy2;
-    float uvxMin;
-    float uvxMax;
-    float uvyMin;
-    float uvyMax;
-    float uvWidth;
-    float uvHeight;
-    boolean uvXUp;
-    boolean uvYUp;
-    */
-    
     boolean lastMovePositive;
     
     float brickSize;
     float [] bricksX;
     float [] bricksY;
-    TextureData [] bricksTextureData; 
-    
+    TextureData [] bricksTextureData;
+    float [] bricksAlpha;
+
+
+    float [] bricksVx;
+    float [] bricksVy;
+    float [] bricksTranslateX;
+    float [] bricksTranslateY;
+
+    boolean drawBack = false;
+
     int numberOfBricksOnX;
     int numberOfBricksOnY;
     int numberOfBricks;
@@ -50,6 +44,7 @@ public class BrickBackground extends Entity {
         isVisible = true;
         textureId = Texture.TEXTURES;
         program = Game.vertex_e_uv_com_alpha_program;
+
 
         brickSize = width/30f;//width/30f;
         
@@ -66,7 +61,13 @@ public class BrickBackground extends Entity {
         bricksX = new float[numberOfBricks];
         bricksY = new float[numberOfBricks];
         bricksTextureData = new TextureData[numberOfBricks];
-        
+        bricksAlpha = new float[numberOfBricks];
+
+        bricksVx = new float[numberOfBricks];
+        bricksVy = new float[numberOfBricks];
+        bricksTranslateX = new float[numberOfBricks];
+        bricksTranslateY = new float[numberOfBricks];
+
         int i = 0;
         
         float initX = -brickSize;
@@ -76,6 +77,10 @@ public class BrickBackground extends Entity {
             for (int ix = 0; ix < numberOfBricksOnX; ix++){
                 bricksX[i] = initX + (ix * brickSize); //+ (ix * brickSize * 0.1f);
                 bricksY[i] = initY + (iy * brickSize);
+                bricksAlpha[i] = 0.5f;
+
+                bricksVx[i] = (Game.resolutionX * Utils.getRandonFloat(0f, 0.001f)) - (Game.resolutionX * 0.0005f);
+                bricksVy[i] = (Game.resolutionX * Utils.getRandonFloat(0f, 0.001f)) - (Game.resolutionX * 0.0005f);
                 
                 float texture = Utils.getRandonFloat(0f, 1f);
                 if (texture < 0.2f){
@@ -103,10 +108,10 @@ public class BrickBackground extends Entity {
         }
         
         if (lastMovePositive){
-            accumulatedTranslateX = ballCollidedFx/4;
+            accumulatedTranslateX = ballCollidedFx/8;
             lastMovePositive = false;
         } else {
-            accumulatedTranslateX = -ballCollidedFx/4;
+            accumulatedTranslateX = -ballCollidedFx/8;
             lastMovePositive = true;
         }  
     }
@@ -120,27 +125,27 @@ public class BrickBackground extends Entity {
 
 
          for (int i = 0; i < numberOfBricks; i++){
-             
-            float alpha = 1f;
-             
+
             float randonColor = Utils.getRandonFloat(0f, 1f);
             float randonGray = Utils.getRandonFloat(0f, 1f);
-            if (ballCollidedBlue == 2000 && randonColor < 0.07f){
+
+
+            if (ballCollidedBlue == 2000 && randonColor < 0.04f){
                 //Log.e(TAG, "1");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLUE);
-                alpha = 0.5f;
-            } else if (ballCollidedBlack == 2000 && randonColor > 0.07f && randonColor < 0.14f){
+                bricksAlpha[i] = 0.3f;
+            } else if (ballCollidedBlack == 2000 && randonColor > 0.04f && randonColor < 0.08f){
                 //Log.e(TAG, "2");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLACK);
-                alpha = 0.5f;
-            } else if (ballCollidedGreen == 2000 && randonColor > 0.14f && randonColor < 0.21f){
+                bricksAlpha[i] = 0.3f;
+            } else if (ballCollidedGreen == 2000 && randonColor > 0.08f && randonColor < 0.12f){
                 //Log.e(TAG, "3");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GREEN);
-                alpha = 0.5f;
-            } else if (ballCollidedRed == 2000 && randonColor > 0.21f && randonColor < 0.28f){
+                bricksAlpha[i] = 0.3f;
+            } else if (ballCollidedRed == 2000 && randonColor > 0.12f && randonColor < 0.16f){
                 //Log.e(TAG, "4");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_RED);
-                alpha = 0.5f;
+                bricksAlpha[i] = 0.3f;
             } else if (
                 (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLUE && randonColor >= (float)ballCollidedBlue/2000f) ||
                 (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLACK && randonColor >= (float)ballCollidedBlack/2000f) ||
@@ -148,6 +153,7 @@ public class BrickBackground extends Entity {
                 (bricksTextureData[i].id == TextureData.TEXTURE_BACK_RED && randonColor >= (float)ballCollidedRed/2000f)
             ){
                 //Log.e(TAG, "5");
+                bricksAlpha[i] = 0.5f;
 
                 if (randonGray < 0.2f) {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY1);
@@ -161,9 +167,9 @@ public class BrickBackground extends Entity {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY5);
                 }
 
-            } else if (Utils.getRandonFloat(0f, 1f) > 0.9995f) {
+            } else if (Utils.getRandonFloat(0f, 1f) > 0.9997f) {
                 //Log.e(TAG, "6");
-                alpha = 0.5f + (randonColor * 0.5f);
+                bricksAlpha[i] = 0.5f;
                 
                 if (randonGray < 0.2f) {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY1);
@@ -178,7 +184,7 @@ public class BrickBackground extends Entity {
                 }
             }
 
-            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], alpha);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], bricksAlpha[i]);
         }
 
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
@@ -202,19 +208,54 @@ public class BrickBackground extends Entity {
         }
     }
 
+    public void animate(){
+
+        drawBack = true;
+
+        for (int i = 0; i < numberOfBricks; i++){
+
+            if (bricksTranslateX[i] > Game.resolutionX * 0.2f || bricksTranslateX[i] < -Game.resolutionX * 0.2f){
+                bricksVx[i] *= -1;
+            }
+
+            if (bricksTranslateY[i] > Game.resolutionX * 0.2f || bricksTranslateY[i] < -Game.resolutionX * 0.2f){
+                bricksVy[i] *= -1;
+            }
+
+            bricksTranslateX[i] += bricksVx[i];
+            bricksTranslateY[i] += bricksVy[i];
+
+            Utils.insertRectangleVerticesDataXY(verticesData, i * 8,
+                    bricksX[i] + bricksTranslateX[i],
+                    bricksX[i] + bricksTranslateX[i] + brickSize,
+                    bricksY[i] + bricksTranslateY[i],
+                    bricksY[i] + bricksTranslateY[i] + brickSize
+            );
+            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
+        }
+
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+
+    }
+
 
 
     public void setDrawInfo() {
         
         if (vbo == null || vbo.length == 0){
-
             vbo = new int[2];
             ibo = new int[1];
-
             GLES20.glGenBuffers(2, vbo, 0);
             GLES20.glGenBuffers(1, ibo, 0);
         }
-        
+
         initializeData(8 * numberOfBricks, 6 * numberOfBricks, 12 * numberOfBricks, 0);
         
         for (int i = 0; i < numberOfBricks; i++){
@@ -228,12 +269,11 @@ public class BrickBackground extends Entity {
 
             Log.e(TAG, "inserindo data "+ i + " -> "+bricksX[i]+ " "+bricksY[i]+ " "+ brickSize);
 
-            
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
 
             Log.e(TAG, "inserindo textureData "+i + " -> "+bricksTextureData[i].x);
 
-            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], 1f);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], bricksAlpha[i]);
         }
             
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
@@ -253,11 +293,9 @@ public class BrickBackground extends Entity {
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
                         indicesBuffer, GLES20.GL_STATIC_DRAW);
 
+
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
-
-        verticesBuffer.limit(0);
-        verticesBuffer = null;
     }
 
     @Override
@@ -265,3 +303,4 @@ public class BrickBackground extends Entity {
         super.render(matrixView, matrixProjection);
     }
 }
+

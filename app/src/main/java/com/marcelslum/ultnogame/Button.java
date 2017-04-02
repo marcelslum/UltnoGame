@@ -164,12 +164,12 @@ public class Button extends Entity implements Poolable<Button>{
 
     public void setPressed() {
         isPressed = true;
-        setDrawInfo();
+        setUvInfo();
     }
 
     public void setUnpressed() {
         isPressed = false;
-        setDrawInfo();
+        setUvInfo();
     }
 
     public void setPersistent(int frequencyPersistent){
@@ -274,6 +274,62 @@ public class Button extends Entity implements Poolable<Button>{
         
         setUvInfo();
         */
+
+    }
+
+
+    public void setDrawInfoVbo(){
+        if (vbo == null || vbo.length == 0){
+
+
+            vbo = new int[2];
+            ibo = new int[1];
+            GLES20.glGenBuffers(2, vbo, 0);
+            GLES20.glGenBuffers(1, ibo, 0);
+
+            Log.e(TAG, "creating vbo button "+name);
+            Log.e(TAG, "vbo[0] "+vbo[0]);
+            Log.e(TAG, "vbo[1] "+vbo[1]);
+
+            initializeData(8, 6, 12, 0);
+
+        }
+
+
+        Utils.insertRectangleVerticesDataXY(verticesData, 0, 0f, width, 0f, height);
+
+        Utils.insertRectangleIndicesData(indicesData, 0, 0);
+
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
+        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
+                indicesBuffer, GLES20.GL_STATIC_DRAW);
+
+
+
+        if (isPressed) {
+            Utils.insertRectangleUvAndAlphaData(uvsData, 0,
+                    textureDataPressed, 1f);
+        } else {
+            Utils.insertRectangleUvAndAlphaData(uvsData, 0,
+                    textureDataUnpressed, 1f);
+        }
+
+        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
+                uvsBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
 
     }
 }

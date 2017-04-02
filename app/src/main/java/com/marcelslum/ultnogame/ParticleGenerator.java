@@ -122,7 +122,7 @@ public class ParticleGenerator extends Entity {
         
         for (int i = 0; i < numberOfParticles;i++) {
             Particle p = particlesArray.get(i);
-            Utils.insertRectangleVerticesData(verticesData, i * 8, 0, p.size, 0f, p.size, 0f);
+            Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 0, p.size, 0f, p.size);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
             Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, p.textureData, p.alpha);
         }

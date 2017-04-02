@@ -123,7 +123,7 @@ public class Game {
     public final static int GAME_STATE_INTERSTITIAL =  25;
     public final static int GAME_STATE_OBJETIVO_PAUSE =  26;
     public final static int GAME_STATE_VITORIA_COMPLEMENTACAO =  27;
-    public final static int GAME_STATE_SOBRE =  27;
+    public final static int GAME_STATE_SOBRE =  28;
 
     public static ArrayList<GroupDataBaseData> groupsDataBaseData;
     public static ArrayList<LevelDataBaseData> levelsDataBaseData;
@@ -143,6 +143,7 @@ public class Game {
     static Program windProgram;
     static Program specialBallProgram;
     static Program vertex_e_uv_com_alpha_program;
+    static Program vertex_e_color;
     
     static int ballsNotInvencibleAlive;
     static int ballsInvencible;
@@ -336,6 +337,11 @@ public class Game {
         vertex_e_uv_com_alpha_program = new Program(
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_uv_com_alpha),
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_uv_com_alpha)
+        );
+
+        vertex_e_color = new Program(
+                Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_color),
+                Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_color)
         );
         imageProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_text),
                 Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
@@ -1579,8 +1585,10 @@ public class Game {
             if (brickBackground != null){
                 brickBackground.changeDrawInfo();
                 brickBackground.move();
+                brickBackground.animate();
             }
-        } else if(gameState == GAME_STATE_VITORIA){
+        } else if(gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO){
+            brickBackground.animate();
             //if (background != null){
             //    background.move(3);
             //}
