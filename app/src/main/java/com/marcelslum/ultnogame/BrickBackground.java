@@ -108,10 +108,10 @@ public class BrickBackground extends Entity {
         }
         
         if (lastMovePositive){
-            accumulatedTranslateX = ballCollidedFx/8;
+            accumulatedTranslateX = ballCollidedFx/12;
             lastMovePositive = false;
         } else {
-            accumulatedTranslateX = -ballCollidedFx/8;
+            accumulatedTranslateX = -ballCollidedFx/12;
             lastMovePositive = true;
         }  
     }
