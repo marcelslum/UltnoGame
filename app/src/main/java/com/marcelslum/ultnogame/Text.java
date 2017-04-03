@@ -29,6 +29,8 @@ public class Text extends Entity implements Poolable<Text>{
     private Color shadowColor;
     private int poolID;
 
+    boolean noDraw = false;
+
 
     @Override
     public void setPoolID(int id) {
@@ -87,6 +89,24 @@ public class Text extends Entity implements Poolable<Text>{
         textureData = TextureData.getTextureDataById(TextureData.TEXTURE_JEFT_SET_ID);
         setDrawInfo();
         
+    }
+
+    public Text(String name, float x, float y, float size, String text, Font font, Color color, boolean noDraw) {
+        super(name, x, y, Entity.TYPE_TEXT);
+        this.text = text;
+        this.size = size;
+        this.color = color;
+        this.font = font;
+        program = font.program;
+        textureId = font.textureId;
+        align = TEXT_ALIGN_LEFT;
+        if (noDraw) {
+            textureData = TextureData.getTextureDataById(TextureData.TEXTURE_JEFT_SET_ID);
+        }
+        charData = new float[7];
+        if (noDraw) {
+            setDrawInfo();
+        }
     }
 
     public Text(String name, float x, float y, float size, String text, Font font, Color color) {
@@ -152,19 +172,11 @@ public class Text extends Entity implements Poolable<Text>{
 
         if (useVbo) {
             if (vbo == null || vbo.length == 0) {
-                Log.e(TAG, " text "+ text);
-                if (vbo == null){
-                    Log.e(TAG, "vbo null");
-                } else {
-                    Log.e(TAG, " vbo.length "+vbo.length);
-                }
 
                 vbo = new int[3];
                 GLES20.glGenBuffers(3, vbo, 0);
 
-                Log.e(TAG, " vbo[0] " + vbo[0]);
-                Log.e(TAG, " vbo[1] " + vbo[1]);
-                Log.e(TAG, " vbo[2] " + vbo[2]);
+                Log.e(TAG, " text "+ text + "vbo create " + " vbo " + vbo[0] + " " + vbo[1]+ " " + vbo[2]);
             }
 
 
@@ -527,7 +539,7 @@ public class Text extends Entity implements Poolable<Text>{
             String stringToTest = splitedString[0];
 
             int elementToAdd = 1;
-            Text lastText = new Text("text", 0f, 0f, size, ".", font, color);
+            Text lastText = new Text("text", 0f, 0f, size, ".", font, color, true);
 
             int limite = 100;
             int contador = 0;
@@ -535,7 +547,7 @@ public class Text extends Entity implements Poolable<Text>{
             do {
                 do {
                     contador += 1;
-                    textForMeasure = new Text("text"+contador, 0f, 0f, size, stringToTest, font, color);
+                    textForMeasure = new Text("text"+contador, 0f, 0f, size, stringToTest, font, color, true);
                     widthOfText = textForMeasure.calculateWidth();
                     if (widthOfText > (maxWidth*0.9f)) {
                         elementToAdd -= 1;
@@ -552,7 +564,8 @@ public class Text extends Entity implements Poolable<Text>{
                     elementToAdd += 1;
                 } while (widthOfText < (maxWidth*0.9f) && (splitedString.length+1) > elementToAdd && contador < limite);
                 //Log.e("textBox", "adicionando texto: "+lastText.text);
-                returnText.add(lastText);
+                returnText.add(new Text(lastText.name, lastText.x, lastText.y, lastText.size, lastText.text,
+                        lastText.font, lastText.color));
                 //Log.e("textBox", "elementToAdd "+elementToAdd);
 
             } while ((splitedString.length+1) > elementToAdd && contador < limite);

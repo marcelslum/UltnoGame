@@ -81,7 +81,7 @@ public class Level {
         Game.quad = new Quadtree(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY,2,8);
 
         MessagesHandler.messageTime.setText("00:00");
-        if (SaveGame.saveGame.currentLevelNumber < 1000) {
+        if (SaveGame.saveGame.currentLevelNumber <= 100) {
             MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));
         } else {
             MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber - 999));
@@ -247,6 +247,9 @@ public class Level {
 
             float ballX = Game.gameAreaResolutionX * ballDataBaseData.get(i).x;
             float ballY = Game.gameAreaResolutionY * ballDataBaseData.get(i).y;
+
+            Log.e("Level", "adicionando ball " + ballX + " " + ballY);
+
             float radius = Game.gameAreaResolutionY * ballDataBaseData.get(i).radius;
             float ballVelocityX = Game.gameAreaResolutionX * ballDataBaseData.get(i).vx;
             float ballVelocityY = Game.gameAreaResolutionY * ballDataBaseData.get(i).vy; //* Game.difficultyVelocityBallMultiplicator;
@@ -273,9 +276,9 @@ public class Level {
 
             if (ballsTargetsAppend != null && ballsTargetsAppend.size() > 0) {
                 for (int ta = 0; ta < ballsTargetsAppend.get(i).length; ta++) {
-                    Log.e("Level", "adicionando target " + ballsTargetsAppend.get(i)[ta] + " à bola " + i);
+                    //Log.e("Level", "adicionando target " + ballsTargetsAppend.get(i)[ta] + " à bola " + i);
                     Target t = game.targets.get(ballsTargetsAppend.get(i)[ta]);
-                    Log.e("Level", t.x + " - " + t.y);
+                    //Log.e("Level", t.x + " - " + t.y);
                     ball.targetsAppend.add(t);
                 }
             }

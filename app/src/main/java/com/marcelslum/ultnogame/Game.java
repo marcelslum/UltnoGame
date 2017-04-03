@@ -168,7 +168,7 @@ public class Game {
             Game.prepareAfterInterstitialFlag = false;
             LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
             Game.setGameState(Game.GAME_STATE_PREPARAR);
-        } else if (SaveGame.saveGame.currentLevelNumber < 1000){
+        } else if (SaveGame.saveGame.currentLevelNumber < 101){
             //Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
             Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
         } else {
@@ -1585,7 +1585,7 @@ public class Game {
             if (brickBackground != null){
                 brickBackground.changeDrawInfo();
                 brickBackground.move();
-                brickBackground.animate();
+
             }
         } else if(gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO){
             brickBackground.animate();
@@ -1667,6 +1667,9 @@ public class Game {
     }
 
     static void verifyDead() {
+
+        //Log.e(TAG, "verifyDead");
+
         ballsNotInvencibleAlive = 0;
         ballsInvencible = 0;
         for (int i = 0; i < balls.size(); i++) {
@@ -1678,6 +1681,10 @@ public class Game {
                 }
             }
         }
+
+        //Log.e(TAG, "ballsNotInvencibleAlive "+ballsNotInvencibleAlive);
+
+        //Log.e(TAG, "Level.levelObject.minBallsAlive "+Level.levelObject.minBallsAlive);
 
         Level.levelObject.levelGoalsObject.notifyBallsAlive(ballsNotInvencibleAlive + ballsInvencible, TimeHandler.secondsOfLevelPlay);
 

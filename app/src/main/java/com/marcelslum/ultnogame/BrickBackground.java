@@ -46,17 +46,17 @@ public class BrickBackground extends Entity {
         program = Game.vertex_e_uv_com_alpha_program;
 
 
-        brickSize = width/30f;//width/30f;
+        brickSize = width/20f;//width/30f;
         
         numberOfBricksOnX = Math.round(width / brickSize) + 2;
         numberOfBricksOnY = Math.round(height / brickSize) + 2;
         numberOfBricks =  numberOfBricksOnX * numberOfBricksOnY;
 
-        Log.e(TAG, "brickSize "+brickSize);
-        Log.e(TAG, "width "+width);
-        Log.e(TAG, "numberOfBricksOnX "+numberOfBricksOnX);
-        Log.e(TAG, "numberOfBricksOnY "+numberOfBricksOnY);
-        Log.e(TAG, "numberOfBricks "+numberOfBricks);
+        //Log.e(TAG, "brickSize "+brickSize);
+        //Log.e(TAG, "width "+width);
+        //Log.e(TAG, "numberOfBricksOnX "+numberOfBricksOnX);
+        //Log.e(TAG, "numberOfBricksOnY "+numberOfBricksOnY);
+        //Log.e(TAG, "numberOfBricks "+numberOfBricks);
         
         bricksX = new float[numberOfBricks];
         bricksY = new float[numberOfBricks];
@@ -77,10 +77,10 @@ public class BrickBackground extends Entity {
             for (int ix = 0; ix < numberOfBricksOnX; ix++){
                 bricksX[i] = initX + (ix * brickSize); //+ (ix * brickSize * 0.1f);
                 bricksY[i] = initY + (iy * brickSize);
-                bricksAlpha[i] = 0.5f;
+                bricksAlpha[i] = 1f;
 
-                bricksVx[i] = (Game.resolutionX * Utils.getRandonFloat(0f, 0.001f)) - (Game.resolutionX * 0.0005f);
-                bricksVy[i] = (Game.resolutionX * Utils.getRandonFloat(0f, 0.001f)) - (Game.resolutionX * 0.0005f);
+                bricksVx[i] = (Game.resolutionX * Utils.getRandonFloat(0f, 0.0007f)) - (Game.resolutionX * 0.00035f);
+                bricksVy[i] = (Game.resolutionX * Utils.getRandonFloat(0f, 0.0007f)) - (Game.resolutionX * 0.00035f);
                 
                 float texture = Utils.getRandonFloat(0f, 1f);
                 if (texture < 0.2f){
@@ -116,6 +116,19 @@ public class BrickBackground extends Entity {
         }  
     }
 
+    @Override
+    public float getHeight(){
+        return this.height;
+    }
+
+    @Override
+    public float getWidth(){
+        return this.width;
+    }
+
+
+
+
     public void changeDrawInfo(){
 
         //Log.e(TAG, "ballCollidedGreen "+ballCollidedGreen);
@@ -124,25 +137,36 @@ public class BrickBackground extends Entity {
         //Log.e(TAG, "ballCollidedBlack "+ballCollidedBlack);
 
 
+        int totalBalls = Game.ballsNotInvencibleAlive + Game.ballsInvencible;
+
+        float percentage = 0.045f - (0.01f * totalBalls);
+        if (percentage < 0.005f){
+            percentage = 0.005f;
+        }
+
+
+        Log.e(TAG, " percentage "+percentage);
+
+
          for (int i = 0; i < numberOfBricks; i++){
 
             float randonColor = Utils.getRandonFloat(0f, 1f);
             float randonGray = Utils.getRandonFloat(0f, 1f);
 
 
-            if (ballCollidedBlue == 2000 && randonColor < 0.04f){
+            if (ballCollidedBlue == 2000 && randonColor < percentage){
                 //Log.e(TAG, "1");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLUE);
                 bricksAlpha[i] = 0.3f;
-            } else if (ballCollidedBlack == 2000 && randonColor > 0.04f && randonColor < 0.08f){
+            } else if (ballCollidedBlack == 2000 && randonColor > percentage && randonColor < percentage * 2f){
                 //Log.e(TAG, "2");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLACK);
                 bricksAlpha[i] = 0.3f;
-            } else if (ballCollidedGreen == 2000 && randonColor > 0.08f && randonColor < 0.12f){
+            } else if (ballCollidedGreen == 2000 && randonColor > percentage * 2f && randonColor < percentage * 3f){
                 //Log.e(TAG, "3");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GREEN);
                 bricksAlpha[i] = 0.3f;
-            } else if (ballCollidedRed == 2000 && randonColor > 0.12f && randonColor < 0.16f){
+            } else if (ballCollidedRed == 2000 && randonColor > percentage * 3f && randonColor < percentage * 4f){
                 //Log.e(TAG, "4");
                 bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_RED);
                 bricksAlpha[i] = 0.3f;
@@ -184,7 +208,7 @@ public class BrickBackground extends Entity {
                 }
             }
 
-            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], bricksAlpha[i]);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], 1f);
         }
 
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
@@ -267,13 +291,13 @@ public class BrickBackground extends Entity {
                                                 bricksY[i] + brickSize
                                                 );
 
-            Log.e(TAG, "inserindo data "+ i + " -> "+bricksX[i]+ " "+bricksY[i]+ " "+ brickSize);
+            //Log.e(TAG, "inserindo data "+ i + " -> "+bricksX[i]+ " "+bricksY[i]+ " "+ brickSize);
 
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
 
-            Log.e(TAG, "inserindo textureData "+i + " -> "+bricksTextureData[i].x);
+            //Log.e(TAG, "inserindo textureData "+i + " -> "+bricksTextureData[i].x);
 
-            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], bricksAlpha[i]);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, bricksTextureData[i], 1f);
         }
             
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);

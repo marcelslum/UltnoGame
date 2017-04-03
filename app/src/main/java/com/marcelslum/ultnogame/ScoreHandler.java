@@ -52,7 +52,7 @@ public class ScoreHandler {
 
         GooglePlayGames.submitScore(Game.mainActivity.mGoogleApiClient, Game.mainActivity.getResources().getString(R.string.leaderboard_geral), maxScoreTotal);
 
-        if (SaveGame.saveGame.currentLevelNumber >= 1000){
+        if (SaveGame.saveGame.currentLevelNumber > 100){
             return;
         }
 

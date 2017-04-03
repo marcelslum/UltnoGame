@@ -112,8 +112,8 @@ public class LevelGoals {
             GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
                     Game.getContext().getResources().getString(R.string.achievement_segredo_1));
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
-            Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-            Utils.createSimpleAnimation(Game.background, "translateX", "translateX", 1000, 0, Game.background.height * 0.0001f).start();
+            Utils.createSimpleAnimation(Game.brickBackground, "rotate", "rotate", 1000, 0, 360).start();
+            Utils.createSimpleAnimation(Game.brickBackground, "translateX", "translateX", 1000, 0, Game.brickBackground.height * 0.0001f).start();
         } else if (i == 2){
 
             GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
@@ -134,7 +134,7 @@ public class LevelGoals {
         }
 
         Game.messages.showMessage("???");
-        SaveGame.saveGame.setLevelSeen(99 + i);
+        SaveGame.saveGame.setLevelUnblocked(100 + i);
     }
 
     public void ballReachedWithMaximunBarSpped(){

@@ -2183,7 +2183,10 @@ public class LevelLoader2 {
                     .setWindowsVelocity(-0.003f);
         }
 
-        if (levelNumber == 1000) {
+
+        l += 1;
+        // LEVEL 101
+        if (levelNumber == l) {
             levelBuilder
                     .setTargetsMap(
                             new int[][]{
