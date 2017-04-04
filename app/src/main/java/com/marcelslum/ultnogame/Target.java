@@ -11,15 +11,13 @@ public class Target extends Rectangle {
     private int [] states;
     private int currentState;
     int special;
-    int pointsToShow;
+
     float posYVariation;
     public int type;
     public static final int TARGET_BLACK = 0;
     public static final int TARGET_GREEN = 1;
     public static final int TARGET_BLUE = 2;
     public static final int TARGET_RED = 3;
-    private Animation showPointsStateAnim;
-    private Animation showPointsAlphaAnim;
     private Animation ghostAlphaAnim;
     private Animation desapearAnim;
     private boolean isGhost;
@@ -29,7 +27,11 @@ public class Target extends Rectangle {
     public long timeOfLastDecay = 0;
     public float percentageOfDecay = 0f;
     
-    
+    int pointsToShow = -1;
+    float pointAlpha = 1f;
+    float pointY;
+    float pointX;
+    float pointSize;
 
 
     @Override
@@ -63,16 +65,6 @@ public class Target extends Rectangle {
         setDrawInfo();
 
         final Target self = this;
-
-        ArrayList<float[]> valuesAnimationShowPoints = new ArrayList<>();
-        valuesAnimationShowPoints.add(new float[]{0f,1f});
-        valuesAnimationShowPoints.add(new float[]{1f,0f});
-        showPointsStateAnim = new Animation(this, "showPointsState", "showPointsState", POINTS_DURATION, valuesAnimationShowPoints, false, false);
-
-        ArrayList<float[]> valuesAnimationShowPointsAlpha = new ArrayList<>();
-        valuesAnimationShowPointsAlpha.add(new float[]{0f,1f});
-        valuesAnimationShowPointsAlpha.add(new float[]{1f,0f});
-        showPointsAlphaAnim = new Animation(this, "pointsAlpha", "pointsAlpha", POINTS_DURATION, valuesAnimationShowPointsAlpha, false, true);
 
         ArrayList<float[]> valuesAnimationGhostAlpha = new ArrayList<>();
         valuesAnimationGhostAlpha.add(new float[]{0f,1f});
@@ -117,12 +109,6 @@ public class Target extends Rectangle {
         decayState(points);
         verifySpecialBall();
     }
-    
-    public void setColorsData(){
-     
-        
-        
-    }
 
     public void verifySpecialBall(){
         if (Level.levelObject.specialBallPercentage > 0f){
@@ -147,51 +133,32 @@ public class Target extends Rectangle {
             }
         }
     }
-
-    public void renderPoints(float[] matrixView, float[] matrixProjection){
-        if (pointsObject != null) {
-            pointsObject.alpha = pointsAlpha;
-            pointsObject.render(matrixView, matrixProjection);
+    
+    public void animatePoints(){
+        if (pointsToShow > 0){
+                pointX += pointSize * 0.1f;
+                pointY -= pointSize * 0.1f;
+                pointAlpha -= 0.01;
+            if (pointsAlpha <= 0f){
+                pointsToShow = -1;
+            }
         }
     }
 
     public void showPoints(int points){
-
         pointsToShow = points;
-
-        float pointsX;
         if ((x + (width * 1.5f))> Game.gameAreaResolutionX){
-            pointsX = x;
+            pointX = x;
         } else {
-            pointsX = x + (width/2f);
+            pointX = x + (width/2f);
         }
-
-        //Log.e(TAG, "height of point "+height);
-
-        pointsObject = new Point("points", pointsX,y + (height/2f), Game.gameAreaResolutionY * 0.07f);
-
-        addChild(pointsObject);
-        pointsObject.setValue(points);
-
-        this.posYVariation = 0;
-        if (this.showPointsStateAnim != null) {
-            this.showPointsStateAnim.start();
-        }
-
-        //Log.e("target", "3");
-        if (this.showPointsAlphaAnim != null) {
-            this.showPointsAlphaAnim.start();
-            Utils.createSimpleAnimation(pointsObject, "translateX", "translateX", POINTS_DURATION, 0f, Game.gameAreaResolutionX*0.025f).start();
-            Utils.createSimpleAnimation(pointsObject, "translateY", "translateY", POINTS_DURATION, 0f, -Game.gameAreaResolutionX*0.02f).start();
-        }
+        pointY = y + (height/2f);
+        pointSize = Game.gameAreaResolutionY * 0.07f
     }
 
     public void decayState(int points){
-
         timeOfLastDecay = Utils.getTime();
-
         Sound.play(Sound.soundDestroyTarget, 1, 1, 0);
-
         ScoreHandler.scorePanel.setValue(ScoreHandler.scorePanel.value + points,  true, 500, false);
 
         this.currentState -= 1;
@@ -229,8 +196,6 @@ public class Target extends Rectangle {
         }
     }
 
-
-
     public void setType(){
         if (currentState == -1){
             return;
@@ -249,7 +214,7 @@ public class Target extends Rectangle {
         }
 
         setUvInfo(type);
-        
+       
         uvChangeFlag = true;
         
     }
