@@ -176,21 +176,21 @@ public class Text extends Entity implements Poolable<Text>{
                 vbo = new int[3];
                 GLES20.glGenBuffers(3, vbo, 0);
 
-                Log.e(TAG, " text "+ text + "vbo create " + " vbo " + vbo[0] + " " + vbo[1]+ " " + vbo[2]);
+                //Log.e(TAG, " text "+ text + "vbo create " + " vbo " + vbo[0] + " " + vbo[1]+ " " + vbo[2]);
             }
 
 
 
             if (ibo == null || ibo.length == 0) {
-                Log.e(TAG, " text "+ text);
+                //Log.e(TAG, " text "+ text);
                 if (ibo == null){
-                    Log.e(TAG, "ibo null");
+                    //Log.e(TAG, "ibo null");
                 } else {
-                    Log.e(TAG, " ibo.length "+ibo.length);
+                    //Log.e(TAG, " ibo.length "+ibo.length);
                 }
                 ibo = new int[1];
                 GLES20.glGenBuffers(1, ibo, 0);
-                Log.e(TAG, " vbo[0] " + vbo[0]);
+                //Log.e(TAG, " vbo[0] " + vbo[0]);
             }
         }
 

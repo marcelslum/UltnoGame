@@ -18,50 +18,6 @@ import java.util.Calendar;
 public class MySnapshots {
 
     public static String TAG = "MySnapshots";
-    final static String SNAPSHOT_FILE_NAME = "ultno.SavedGame";
 
 
-    /**
-     * Conflict resolution for when Snapshots are opened.
-     * @param result The open snapshot result to resolve on open.
-     * @return The opened Snapshot on success; otherwise, returns null.
-     */
-    public static Snapshot processSnapshotOpenResult(Snapshots.OpenSnapshotResult result, int retryCount){
-        Snapshot mResolvedSnapshot = null;
-        retryCount++;
-        int status = result.getStatus().getStatusCode();
-
-        Log.i(TAG, "Save Result status: " + status);
-
-        if (status == GamesStatusCodes.STATUS_OK) {
-            return result.getSnapshot();
-        } else if (status == GamesStatusCodes.STATUS_SNAPSHOT_CONTENTS_UNAVAILABLE) {
-            return result.getSnapshot();
-        } else if (status == GamesStatusCodes.STATUS_SNAPSHOT_CONFLICT){
-            Snapshot snapshot = result.getSnapshot();
-            Snapshot conflictSnapshot = result.getConflictingSnapshot();
-
-            // Resolve between conflicts by selecting the newest of the conflicting snapshots.
-            mResolvedSnapshot = snapshot;
-
-            if (snapshot.getMetadata().getLastModifiedTimestamp() <
-                    conflictSnapshot.getMetadata().getLastModifiedTimestamp()){
-                mResolvedSnapshot = conflictSnapshot;
-            }
-
-            Snapshots.OpenSnapshotResult resolveResult = Games.Snapshots.resolveConflict(
-                    Game.mainActivity.mGoogleApiClient, result.getConflictId(), mResolvedSnapshot)
-                    .await();
-
-            if (retryCount < 5){
-                return processSnapshotOpenResult(resolveResult, retryCount);
-            }else{
-                String message = "Could not resolve snapshot conflicts";
-                Log.e(TAG, message);
-            }
-
-        }
-        // Fail, return null.
-        return null;
-    }
 }

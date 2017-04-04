@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshots.OpenSnapshotResult> {
 
 
-
+    final static String SNAPSHOT_FILE_NAME = "ultno.SavedGameteste";
     private static final String TAG = "LoadFromSnapshotAsync";
 
     @Override
@@ -35,7 +35,7 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
         }
 
         Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
-                MySnapshots.SNAPSHOT_FILE_NAME, true).await(5000L, TimeUnit.MILLISECONDS);
+                SNAPSHOT_FILE_NAME, true).await(5000L, TimeUnit.MILLISECONDS);
         return result;
     }
 
@@ -55,7 +55,6 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
             return;
         }
 
-
         Snapshot snapshot = result.getSnapshot();
         byte[] data;
         try {
@@ -67,13 +66,12 @@ public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshot
         }
         
         Log.e(TAG, data.toString() + " data " + data + " size "+  data.toString().length());
-        Log.e(TAG, "testando outra fora de conversão" + new String(data) +".");
+        Log.e(TAG, "string carregado " + new String(data) +".");
 
         String stringData = new String(data);
 
         if (stringData.equals("") || stringData.length() < 20){
             SaveGame.onFailLoadFromSnapshot();
-
         } else {
             SaveGame.onLoadFromSnapshot(stringData);
         }

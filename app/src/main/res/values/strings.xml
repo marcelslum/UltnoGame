@@ -346,8 +346,8 @@
     <string name="levelGoal1m3">1 minuto restante</string>
     <string name="secretLevelUnblocked"></string>
     <string name="messageCurrentLevelSecret">Nível secreto</string>
-    <string name="databaseLevelVersion">2</string>
-    <string name="databaseDataVersion">1</string>
+    <string name="databaseLevelVersion">1</string>
+    <string name="databaseSaveDataVersion">2</string>
     <string name="voltar">Voltar</string>
     <string name="continuar">Continuar</string>
     <string name="lerSobre">Sobre</string>

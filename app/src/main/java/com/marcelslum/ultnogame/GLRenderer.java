@@ -195,7 +195,10 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             if (Game.touchEvents != null) {
                 if (Game.touchEvents.size() > 0) {
                     Splash.notifyClick();
+                    Log.e(TAG, "notify splash click");
+                    Game.touchEvents.clear();
                 }
+
             }
 
         } else {

@@ -1,21 +1,15 @@
 package com.marcelslum.ultnogame;
 
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesStatusCodes;
-import com.google.android.gms.games.achievement.Achievement;
-import com.google.android.gms.games.achievement.AchievementBuffer;
-import com.google.android.gms.games.achievement.Achievements;
 import com.google.android.gms.games.snapshot.Snapshot;
 import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
 import com.google.android.gms.games.snapshot.Snapshots;
 
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by marcel on 12/10/2016.
@@ -35,7 +29,7 @@ public class SaveSnapshotAsyncTask extends AsyncTask<String,Integer,Integer> {
             return -1;
         }
             Snapshots.OpenSnapshotResult result = Games.Snapshots.open(Game.mainActivity.mGoogleApiClient,
-                    MySnapshots.SNAPSHOT_FILE_NAME, true).await();
+                    LoadFromSnapshotAsyncTask.SNAPSHOT_FILE_NAME, true).await();
 
             Log.e(TAG, "Salvando na nuvem");
             Log.e(TAG, "save " + save);

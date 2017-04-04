@@ -191,7 +191,7 @@ public class TextureData {
         this.y = y;
         this.w = w;
         this.h = h;
-        Log.e(TAG, id + " - "+ name + " = "+this.x+", "+this.y+", "+this.w+", "+this.h);
+        //Log.e(TAG, id + " - "+ name + " = "+this.x+", "+this.y+", "+this.w+", "+this.h);
     }
 
     public static TextureData getTextureDataByName(String n){

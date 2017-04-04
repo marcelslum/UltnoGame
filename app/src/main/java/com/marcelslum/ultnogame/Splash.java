@@ -90,6 +90,9 @@ public class Splash {
 
     static void setSplashMessage(int id){
         state = id;
+
+        Log.e("setSplashState", " "+id);
+
         if (id == MESSAGE_CARREGANDO) {
             message1 = new Text("messageLoading",
                     0f, Game.resolutionY * 0.8f, Game.resolutionY * 0.08f,
@@ -152,16 +155,18 @@ public class Splash {
             message2 = null;
         } else if (id == MESSAGE_INTERNET_NAO_CONECTADA){
 
-            timeInitConectando = Utils.getTime();
-            googleConnectionAttempts = 0;
+            //timeInitConectando = Utils.getTime();
+            //googleConnectionAttempts = 0;
 
             Log.e("setSplashState", "MESSAGE_INTERNET_NAO_CONECTADA");
             message1.cleanAnimations();
-            message1 = new Text("messageSplash1",
+            message1 = Game.textPool.get();
+            message1.setData("messageSplash1",
                     Game.resolutionX* 0.5f, Game.resolutionY  * 0.75f, Game.resolutionY * 0.04f,
                     Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_nao_foi_possivel_conectar1), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
-            message2 = new Text("messageSplash2",
+            message2 = Game.textPool.get();
+            message2.setData("messageSplash2",
                     Game.resolutionX* 0.5f, Game.resolutionY * 0.85f, Game.resolutionY * 0.035f,
                     Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_clique_aqui), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
@@ -169,16 +174,17 @@ public class Splash {
             message2.display();
         } else if (id == MESSAGE_GOOGLE_NAO_CONECTADO){
 
-            timeInitConectando = Utils.getTime();
-            googleConnectionAttempts = 0;
+            //timeInitConectando = Utils.getTime();
+            //googleConnectionAttempts = 0;
 
             Log.e("setSplashState", "MESSAGE_GOOGLE_NAO_CONECTADO");
-            message1.cleanAnimations();
-            message1 = new Text("messageSplash1",
+            message1 = Game.textPool.get();
+            message1.setData("messageSplash1",
                     Game.resolutionX* 0.5f, Game.resolutionY * 0.75f, Game.resolutionY * 0.04f,
                     Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_nao_foi_possivel_conectar_ao_google), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
-            message2 = new Text("messageSplash2",
+            message2 = Game.textPool.get();
+            message2.setData("messageSplash2",
                     Game.resolutionX* 0.5f, Game.resolutionY * 0.85f, Game.resolutionY * 0.035f,
                     Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_clique_aqui), Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_CENTER);
 
@@ -205,7 +211,25 @@ public class Splash {
     }
 
     static void verifySplashState() {
+
+
+        //Log.e("splash", "verifyState " + state + "    " +(Utils.getTime()-timeInitConectando));
+
+
+        /*
+        private static final int MESSAGE_INTERNET_NAO_CONECTADA = 31;
+        private static final int MESSAGE_CONECTANDO = 32;
+        private static final int MESSAGE_CARREGANDO = 33;
+        static final int AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA = 34;
+        private static final int AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO = 35;
+        private static final int MESSAGE_GOOGLE_NAO_CONECTADO = 36;
+        */
+
+
         if (state == MESSAGE_CARREGANDO){
+
+            Log.e("splash", "state = MESSAGE_CARREGANDO");
+
             if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION
             && loaderConclude) {
                 Log.e("splash", "carregado - ativando conexao");
@@ -214,6 +238,9 @@ public class Splash {
                 setSplashMessage(MESSAGE_CONECTANDO);
             }
         } else if (state == MESSAGE_CONECTANDO){
+
+            Log.e("splash", "state = MESSAGE_CONECTANDO");
+
             if ((Utils.getTime() - timeInitIntro) > INTRO_DURATION
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION
                 && ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_CONNECTED) {
@@ -268,7 +295,7 @@ public class Splash {
                     Log.e("splash", "ainda não conectado ao google");
                     if (googleConnectionAttempts < 6) {
                         Log.e("splash", "fazendo nova tentativa");
-                        timeInitConectando = Utils.getTime();
+                        timeInitConectando = Utils.getTime() - 100;
                         googleConnectionAttempts += 1;
                         Game.mainActivity.mGoogleApiClient.connect();
                     } else {
@@ -280,16 +307,22 @@ public class Splash {
             }
         } else if (state == AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION){
+
+            Log.e("splash", "state = AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA");
+
             setSplashMessage(MESSAGE_INTERNET_NAO_CONECTADA);
         } else if (state == AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION){
+
+            Log.e("splash", "state = MESSAGE_INTERNET_NAO_CONECTADA");
+
             setSplashMessage(MESSAGE_GOOGLE_NAO_CONECTADO);
         }
     }
 
     static void notifyClick() {
         if (state == MESSAGE_INTERNET_NAO_CONECTADA || state == MESSAGE_GOOGLE_NAO_CONECTADO) {
-            timeInitConectando = Utils.getTime();
+            timeInitConectando = Utils.getTime() - 100;
             setSplashMessage(MESSAGE_CONECTANDO);
             ConnectionHandler.connect();
             Game.mainActivity.mGoogleApiClient.connect();

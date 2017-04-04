@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Ball extends Circle{
@@ -195,7 +197,15 @@ public class Ball extends Circle{
             } else if (randon < 0.66f){
                 numberOfParticles = 4;
             }
-            ballParticleGenerator.addParticles(positionX, positionY, radius, numberOfParticles);
+
+            if (    (dvx > 0 && dvy < 0)    ||
+                    (dvx < 0 && dvy > 0)    ){
+                ballParticleGenerator.addParticles(positionX - radius, positionY, radius, numberOfParticles);
+                Log.e(TAG, "1");
+            } else {
+                Log.e(TAG, "2");
+                ballParticleGenerator.addParticles(positionX, positionY, radius, numberOfParticles);
+            }
         }
     }
 
