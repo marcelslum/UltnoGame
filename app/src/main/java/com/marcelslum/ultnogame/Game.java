@@ -1843,12 +1843,11 @@ public class Game {
             }
         }
 
-        for (int i = 0; i < targets.size(); i++) {
-            targets.get(i).checkAnimations();
-        }
-
         if (targetGroup != null && targets.size() > 0) {
             targetGroup.render(matrixView, matrixProjection);
+            if (pointsGroup != null) {
+                pointsGroup.render(matrixView, matrixProjection);
+            }
         }
 
         for (int i = 0; i < bars.size(); i++){
