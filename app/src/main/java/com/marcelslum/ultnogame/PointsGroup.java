@@ -10,117 +10,91 @@ class PointsGroup extends Entity{
 
     public float[] individualUvsData;
     public float[] individualColorsData;
+	
+	public int [] pointsChar;
+	public float [] pointsX;
+	public float [] pointsY;
 
     public final int BYTES_PER_FLOAT = 4;
     public final int BYTES_PER_SHORT = 2;
-
-    TargetGroup(){
-        super("pointsGroup", 0f, 0f, Entity.TYPE_POINT);
-        textureId = Texture.TEXTURES;
-        program = Game.vertex_e_uv_com_alpha_program;
+	
+    PointsGroup(){
+	super("pointsGroup", 0f, 0f, Entity.TYPE_POINT);
+	textureId = Texture.TEXTURES;
+	program = Game.vertex_e_uv_com_alpha_program;
+	setDrawInfo();
+	    
+    	pointsChar = new int [500];
+	pointsX = new float[500];
+	pointsY = new float[500];
+	pointsAlpha = new float[500]
+	    
+	    
     }
     
     public void setDrawInfo(){
-    
         if (vbo == null || vbo.length == 0){
             vbo = new int[2];
             ibo = new int[1];
             GLES20.glGenBuffers(2, vbo, 0);
             GLES20.glGenBuffers(1, ibo, 0);
         }
-
-    
-        GLES20.glGenBuffers(2, vbo, 0);
-        GLES20.glGenBuffers(1, ibo, 0);
-
-        initializeData(12 * Game.targets.size(), 6 * Game.targets.size(), 8 * Game.targets.size(), 16 * Game.targets.size());
-
-        for (int i = 0; i < Game.targets.size(); i++){
-
-            Utils.insertRectangleVerticesData(verticesData, i * 12, Game.targets.get(i).x,
-                    Game.targets.get(i).x + Game.targets.get(i).width, Game.targets.get(i).y, Game.targets.get(i).y + Game.targets.get(i).height, 0f);
-
-            Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-
-
-            if (Game.targets.get(i).type == Target.TARGET_RED){
-                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_RED_ID));
-            } else if (Game.targets.get(i).type == Target.TARGET_BLUE){
-                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_BLUE_ID));
-            } else if (Game.targets.get(i).type == Target.TARGET_GREEN){
-                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_GREEN_ID));
-            } else if (Game.targets.get(i).type == Target.TARGET_BLACK){
-                Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_BLACK_ID));
-            }
-
-            float percentage;
-            if (Utils.getTime() - Game.targets.get(i).timeOfLastDecay < 300){
-                percentage = (float)(Utils.getTime() - Game.targets.get(i).timeOfLastDecay)/300f;
-            } else {
-                percentage = 0;
-            }
-
-            /*
-            float finalPorcentage = ((float)Math.pow(((percentage)-0.5f),2)*-1) + 0.25f;
-
-            if (finalPorcentage != 0) {
-                if (Game.targets.get(i).type == Target.TARGET_BLUE) {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 4f, finalPorcentage / 2f, finalPorcentage / 4f, Game.targets.get(i).alpha);
-                } else if (Game.targets.get(i).type == Target.TARGET_BLACK) {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, finalPorcentage / 2f, finalPorcentage / 2f, finalPorcentage, Game.targets.get(i).alpha);
-                } else {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
-                }
-            } else {
-                if (SaveGame.saveGame.currentLevelNumber >= 1000) {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Utils.getRandonFloat(-0.05f, 0.15f), Game.targets.get(i).alpha);
-                } else {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
-                }
-            }
-            */
-            Utils.insertRectangleColorsData(colorsData, i * 16, 0f, 0f, 0f, Game.targets.get(i).alpha);
-        }
-
-        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
-        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
-        uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
-        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
-
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
-        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
-                        verticesBuffer, GLES20.GL_STATIC_DRAW);
-
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
-        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
-                        uvsBuffer, GLES20.GL_STATIC_DRAW);
-
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
-        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
-                        colorsBuffer, GLES20.GL_STATIC_DRAW);
-
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
-        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
-                        indicesBuffer, GLES20.GL_STATIC_DRAW);
-
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
-
-        verticesBuffer.limit(0);
-        verticesBuffer = null;
-        uvsBuffer.limit(0);
-        uvsBuffer = null;
-        colorsBuffer.limit(0);
-        colorsBuffer = null;
-        indicesBuffer.limit(0);
-        indicesBuffer = null;
     }
 	
 	public void checkBufferChange() {
 
+	int lastPointIndex = 0;
+		int unidade;
+		int dezena;
+		int centena;
+		float initX;
+		float width;
+		
         for (int i = 0; i < Game.targets.size(); i++) {
+		Target t = Game.targets.get(i);
+		if (t.pointsToShow > 0){
+			unidade = floorMod(t.pointsToShow, 10);
+			dezena = floor(floorMod(t.pointsToShow, 100) / 10);
+			centena = floor(t.pointsToShow/100);
+		}
+		
+		 
+		width = t.pointsSize * 0.55294f;
+		
+		initX = t.pointX;
+		
+		// CENTENA
+		if (centena > 0){
+			pointsChar[lastPointIndex] = centena;
+			pointsX[lastPointIndex] = initX;
+			pointsY[lastPointIndex] = t.pointY;
+			if (centena == 1){
+			 	initX += width*0.5f;	
+			} else {
+				initX += width;
+			}
+			lastPointIndex += 1;
+		}
+		
+		// DEZENA
+		pointsChar[lastPointIndex] = dezena;
+		pointsX[lastPointIndex] = initX;
+		pointsY[lastPointIndex] = t.pointY;
+			if (dezena == 1){
+			 	initX += width*0.5f;	
+			} else {
+				initX += width;
+			}
+		lastPointIndex += 1;
+		
+		// UNIDADE
+		pointsChar[lastPointIndex] = unidade;
+		pointsX[lastPointIndex] = initX;
+		pointsY[lastPointIndex] = t.pointY;
+		lastPointIndex += 1;
+		
 
-            Game.targets.get(i).checkAnimations();
+
 
             if (Game.targets.get(i).colorChangeFlag) {
 
@@ -161,7 +135,7 @@ class PointsGroup extends Entity{
     @Override
     public void render(float[] matrixView, float[] matrixProjection) {
 
-	 checkBufferChange();   
+	checkBufferChange();   
 	    
         if (!isVisible){
             return;
