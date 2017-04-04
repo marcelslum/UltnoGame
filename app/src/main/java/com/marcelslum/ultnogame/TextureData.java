@@ -109,6 +109,7 @@ public class TextureData {
     public static final int TEXTURE_WINDOW_ID = 80;
     public static final int TEXTURE_BUTTON_GROUP_LEADERBOARD_ID = 81;
     public static final int TEXTURE_BUTTON_GROUP_LEADERBOARD_PRESS_ID = 82;
+    public static final int TEXTURE_BE1_ID = 83;
     
     
     public static final int TEXTURE_BACK_BLACK = 200;
@@ -249,6 +250,7 @@ public class TextureData {
         map.put(TEXTURE_BAR_RED_ID, "bar_red.png"); 
         map.put(TEXTURE_BAR_TOP_ID, "bar_top.png"); 
         map.put(TEXTURE_BAR_YELLOW_ID, "bar_yellow.png"); 
+        map.put(TEXTURE_BE1_ID, "be1.png"); 
         map.put(TEXTURE_BE2_ID, "be2.png"); 
         map.put(TEXTURE_BE3_ID, "be3.png");
         map.put(TEXTURE_BE4_ID, "be4.png"); 
