@@ -10,14 +10,15 @@ class TargetGroup extends Entity{
     private static final int SIZEOF_SHORT = 2;
 
 
-    public static int [] vbo = new int[3];
-    public static int [] ibo = new int[1];
+    	public static int [] vbo = new int[3];
+    	public static int [] ibo = new int[1];
 
-    public float[] individualUvsData;
-    public float[] individualColorsData;
+    	public float[] individualUvsData;
+    	public float[] individualColorsData;
 
-    public final int BYTES_PER_FLOAT = 4;
-    public final int BYTES_PER_SHORT = 2;
+    	public final int BYTES_PER_FLOAT = 4;
+    	public final int BYTES_PER_SHORT = 2;
+	
 
     TargetGroup(){
         super("targetGroup", 0f, 0f, Entity.TYPE_TARGET_GROUP);
@@ -114,12 +115,10 @@ class TargetGroup extends Entity{
         indicesBuffer = null;
     }
 	
-	public void checkBufferChange() {
+     public void checkBufferChange() {
 
         for (int i = 0; i < Game.targets.size(); i++) {
-
             Game.targets.get(i).checkAnimations();
-
             if (Game.targets.get(i).colorChangeFlag) {
 
                 float alphaMultiply = 0;
