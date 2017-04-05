@@ -38,7 +38,7 @@ public class Game {
 
     static boolean forInitGame;
 
-    static int basePoints = 10;
+    static final int BASE_POINTS = 10;
 
     static final int FAKE_BALL_WEIGHT = 1;
     static final int BALL_WEIGHT = 2;
@@ -50,6 +50,7 @@ public class Game {
     static LevelGoalsPanel levelGoalsPanel;
 
     static TargetGroup targetGroup;
+    static PointsGroup pointsGroup;
     static ArrayList<Target> targets;
     static ArrayList<Ball> balls;
     static ArrayList<Ball> fakeBalls;
@@ -1814,7 +1815,7 @@ public class Game {
     }
 
     static void render(float[] matrixView, float[] matrixProjection){
-        if (background != null) {background.prepareRender(matrixView, matrixProjection);}
+
         if (brickBackground != null) brickBackground.prepareRender(matrixView, matrixProjection);
 
         if (MessagesHandler.messageCurrentLevel != null) MessagesHandler.messageCurrentLevel.prepareRender(matrixView, matrixProjection);
@@ -1833,6 +1834,7 @@ public class Game {
             }
         }
 
+
         for (int i = 0; i < balls.size(); i++){
             balls.get(i).prepareRender(matrixView, matrixProjection);
         }
@@ -1845,9 +1847,10 @@ public class Game {
 
         if (targetGroup != null && targets.size() > 0) {
             targetGroup.render(matrixView, matrixProjection);
-            if (pointsGroup != null) {
-                pointsGroup.render(matrixView, matrixProjection);
-            }
+        }
+
+        if (pointsGroup != null) {
+            pointsGroup.render(matrixView, matrixProjection);
         }
 
         for (int i = 0; i < bars.size(); i++){
@@ -1858,12 +1861,6 @@ public class Game {
             obstacles.get(i).prepareRender(matrixView, matrixProjection);
         }
 
-        for (int i = 0; i < targets.size(); i++){
-            if (targets.get(i).showPointsState == Entity.SHOW_POINTS_ON){
-                targets.get(i).renderPoints(matrixView, matrixProjection);
-            }
-        }
-        
         for (int i = 0; i < ballCollisionStars.size(); i++){
                 //Log.e(TAG, "rendering ball collision star "+i);
                 ballCollisionStars.get(i).prepareRender(matrixView, matrixProjection);

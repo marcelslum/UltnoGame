@@ -207,6 +207,9 @@ public class Level {
         Game.targetGroup = new TargetGroup();
         Game.targetGroup.setDrawInfo();
 
+        Game.pointsGroup = new PointsGroup();
+        Game.pointsGroup.setDrawInfo();
+
         // adiciona os obstáculos
         for (int i = 0; i < this.obstaclesQuantity; i++){
             float obstacleX = Game.gameAreaResolutionX * obstaclesX[i];

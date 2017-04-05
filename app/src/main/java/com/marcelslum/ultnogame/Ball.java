@@ -201,9 +201,9 @@ public class Ball extends Circle{
             if (    (dvx > 0 && dvy < 0)    ||
                     (dvx < 0 && dvy > 0)    ){
                 ballParticleGenerator.addParticles(positionX - radius, positionY, radius, numberOfParticles);
-                Log.e(TAG, "1");
+                //Log.e(TAG, "1");
             } else {
-                Log.e(TAG, "2");
+                //Log.e(TAG, "2");
                 ballParticleGenerator.addParticles(positionX, positionY, radius, numberOfParticles);
             }
         }

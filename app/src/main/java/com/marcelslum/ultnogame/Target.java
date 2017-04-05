@@ -1,12 +1,16 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
  * Created by marcel on 01/08/2016.
  */
 public class Target extends Rectangle {
+
+    static final String TAG = "Target";
 
     private int [] states;
     private int currentState;
@@ -56,6 +60,8 @@ public class Target extends Rectangle {
         isGhost = ghost;
         alpha = 1;
 
+        pointSize = Game.gameAreaResolutionY * 0.07f;
+
         if (isGhost){
             ghostAlpha = 0f;
         } else {
@@ -86,7 +92,7 @@ public class Target extends Rectangle {
     }
 
     public void onBallCollision(){
-        int points = Game.basePoints;
+        int points = Game.BASE_POINTS;
         if (SaveGame.saveGame.currentLevelNumber > 999){
             points *= 2;
         }
@@ -135,25 +141,33 @@ public class Target extends Rectangle {
     }
     
     public void animatePoints(){
+
+        //if (pointsToShow > 0) {
+        //    Log.e(TAG, "pointsToShow " + pointsToShow + " pointsAlpha " + pointsAlpha);
+        //}
+
         if (pointsToShow > 0){
-                pointX += pointSize * 0.1f;
-                pointY -= pointSize * 0.1f;
-                pointAlpha -= 0.01;
+                pointX += pointSize * 0.01f;
+                pointY -= pointSize * 0.01f;
+                pointAlpha -= 0.01f;
             if (pointsAlpha <= 0f){
+                //Log.e(TAG, "zerando pointsToShow");
                 pointsToShow = -1;
             }
         }
     }
 
     public void showPoints(int points){
+
         pointsToShow = points;
+        //Log.e(TAG, "show points -------------------- pointsToShow "+pointsToShow);
         if ((x + (width * 1.5f))> Game.gameAreaResolutionX){
             pointX = x;
         } else {
             pointX = x + (width/2f);
         }
         pointY = y + (height/2f);
-        pointSize = Game.gameAreaResolutionY * 0.07f
+        pointsAlpha = 1f;
     }
 
     public void decayState(int points){

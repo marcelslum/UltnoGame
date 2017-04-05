@@ -145,7 +145,7 @@ public class BrickBackground extends Entity {
         }
 
 
-        Log.e(TAG, " percentage "+percentage);
+        //Log.e(TAG, " percentage "+percentage);
 
 
          for (int i = 0; i < numberOfBricks; i++){
