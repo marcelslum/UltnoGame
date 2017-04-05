@@ -48,10 +48,6 @@ public class MenuHandler {
                         }
                         
                         Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-
-                        
-
-
                     }
                 }, false, false);
 
