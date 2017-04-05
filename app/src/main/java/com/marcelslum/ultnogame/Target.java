@@ -142,15 +142,15 @@ public class Target extends Rectangle {
     
     public void animatePoints(){
 
-        //if (pointsToShow > 0) {
-        //    Log.e(TAG, "pointsToShow " + pointsToShow + " pointsAlpha " + pointsAlpha);
-        //}
+        if (pointsToShow > 0) {
+            //Log.e(TAG, "pointsToShow " + pointsToShow + " pointAlpha " + pointAlpha);
+        }
 
         if (pointsToShow > 0){
                 pointX += pointSize * 0.01f;
                 pointY -= pointSize * 0.01f;
-                pointAlpha -= 0.01f;
-            if (pointsAlpha <= 0f){
+                pointAlpha = pointAlpha - 0.015f;
+            if (pointAlpha < 0f){
                 //Log.e(TAG, "zerando pointsToShow");
                 pointsToShow = -1;
             }
@@ -167,7 +167,7 @@ public class Target extends Rectangle {
             pointX = x + (width/2f);
         }
         pointY = y + (height/2f);
-        pointsAlpha = 1f;
+        pointAlpha = 1f;
     }
 
     public void decayState(int points){

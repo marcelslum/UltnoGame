@@ -20,10 +20,10 @@ class PointsGroup extends Entity{
         textureId = Texture.TEXTURES;
         program = Game.vertex_e_uv_com_alpha_program;
 	    
-    	pointsChar = new int [500];
-        pointsX = new float[500];
-        pointsY = new float[500];
-        pointsAlpha = new float[500];
+    	pointsChar = new int [250];
+        pointsX = new float[250];
+        pointsY = new float[250];
+        pointsAlpha = new float[250];
 
     }
     

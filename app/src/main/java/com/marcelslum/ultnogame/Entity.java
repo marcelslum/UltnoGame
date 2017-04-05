@@ -124,7 +124,6 @@ public class Entity{
     public ArrayList<Animation> animations;
     public InteractionListener listener;
 
-    public float pointsAlpha;
     public float ghostAlpha;
     public int showPointsState = SHOW_POINTS_OFF;
 
@@ -261,16 +260,6 @@ public class Entity{
                 break;
             case "numberForAnimation3":
                 numberForAnimation3 = value;
-                break;
-            case "showPointsState":
-                if (value == 1f){
-                    showPointsState = SHOW_POINTS_ON;
-                } else {
-                    showPointsState = SHOW_POINTS_OFF;
-                }
-                break;
-            case "pointsAlpha":
-                pointsAlpha = value;
                 break;
             case "ghostAlpha":
                 ghostAlpha = value;

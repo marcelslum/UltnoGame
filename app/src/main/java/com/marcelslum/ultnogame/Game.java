@@ -434,7 +434,7 @@ public class Game {
         TimeHandler.timeOfLevelPlayBlocked = true;
 
         if (state == GAME_STATE_INTERSTITIAL){
-            
+            eraseAllGameEntities();
             mainActivity.showInterstitial();
             
         } else if (state == GAME_STATE_SOBRE){
@@ -1215,6 +1215,8 @@ public class Game {
         obstacles.clear();
         ballCollisionStars.clear();
         targetGroup = null;
+        pointsGroup = null;
+
         wind = null;
     }
 
