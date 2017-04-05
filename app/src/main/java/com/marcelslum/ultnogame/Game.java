@@ -1199,9 +1199,9 @@ public class Game {
             e.reduceAlpha(duration, 0.2f);
         }
 
-        if (brickBackground != null){
-            brickBackground.reduceAlpha(duration, 0.5f);
-        }
+        //if (brickBackground != null){
+            //brickBackground.reduceAlpha(duration, 0.5f);
+        //}
 
     }
 
