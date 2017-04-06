@@ -79,7 +79,7 @@ public class MessageStar extends Entity {
 
         //Log.e(TAG, "show Message Stars");
         //Log.e(TAG, "totalStars "+totalStars);
-
+        
         if (!isShowing){
             isShowing = true;
             Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);

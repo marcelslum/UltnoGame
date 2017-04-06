@@ -462,10 +462,10 @@ public class Game {
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             MessagesHandler.messageSubMenu.display();
 
-            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+            if (SaveGame.saveGame.currentLevelNumber < 101) {
                 MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + SaveGame.saveGame.currentLevelNumber);
             } else {
-                MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 999));
+                MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 100));
             }
 
             ButtonHandler.buttonContinue.unblockAndDisplay();
@@ -485,10 +485,10 @@ public class Game {
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             MessagesHandler.messageSubMenu.display();
-            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+            if (SaveGame.saveGame.currentLevelNumber < 101) {
                 MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+ " " + SaveGame.saveGame.currentLevelNumber);
             } else {
-                MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 999));
+                MessagesHandler.messageSubMenu.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + (SaveGame.saveGame.currentLevelNumber - 100));
             }
             ButtonHandler.buttonReturnObjectivesPause.unblockAndDisplay();
             MessagesHandler.messageBack.setY(Game.gameAreaResolutionY * 0.895f);
@@ -628,7 +628,7 @@ public class Game {
             mainActivity.hideAdView();
             if (!sameState) {activateFrame(2500);}
             Level.levelObject.loadEntities();
-            int musicNumber = SaveGame.saveGame.currentLevelNumber - ((int)Math.floor(SaveGame.saveGame.currentLevelNumber / 7)*SaveGame.saveGame.currentLevelNumber);
+            //int musicNumber = SaveGame.saveGame.currentLevelNumber - ((int)Math.floor(SaveGame.saveGame.currentLevelNumber / 7)*SaveGame.saveGame.currentLevelNumber);
             //if (musicNumber == 1){
             Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
             //}
@@ -906,7 +906,7 @@ public class Game {
             });
 
 
-            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+            if (SaveGame.saveGame.currentLevelNumber < 101) {
                 MessagesHandler.messageInGame.setText(getContext().getResources().getString(R.string.nivelConcluido1) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber) + " " + getContext().getResources().getString(R.string.nivelConcluido2));
             } else {
                 MessagesHandler.messageInGame.setText(getContext().getResources().getString(R.string.nivelConcluido1) + " " + getContext().getResources().getString(R.string.nivelConcluido2));
@@ -1200,9 +1200,9 @@ public class Game {
             e.reduceAlpha(duration, 0.2f);
         }
 
-        if (brickBackground != null){
-            brickBackground.reduceAlpha(duration, 0.5f);
-        }
+        //if (brickBackground != null){
+            //brickBackground.reduceAlpha(duration, 0.5f);
+        //}
 
     }
 

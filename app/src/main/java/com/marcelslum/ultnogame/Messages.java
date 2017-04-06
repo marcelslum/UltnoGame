@@ -34,7 +34,7 @@ public class Messages extends Entity {
 
             textObject = Game.textPool.get();
             textObject.setData("text", x, childs.get(childToReplace).y,
-                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.8f, 0.8f, 0.8f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.set(childToReplace, textObject);
 
             textObject2 = Game.textPool.get();
@@ -45,7 +45,7 @@ public class Messages extends Entity {
         } else {
             textObject = Game.textPool.get();
             textObject.setData("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
-                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.8f, 0.8f, 0.8f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.add(textObject);
 
             textObject2 = Game.textPool.get();
