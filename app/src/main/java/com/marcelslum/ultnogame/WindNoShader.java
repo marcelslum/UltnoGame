@@ -6,8 +6,8 @@ public class WindNoShader extends Entity{
 
     public boolean isActive;
     int quantityOfWaves;
-    int density;
-    float frequenciaCentral;
+    //int density;
+    //float frequenciaCentral;
     float height;
     float width;
     boolean toRight;
@@ -20,9 +20,9 @@ public class WindNoShader extends Entity{
     float [] waveY;
     float [] waveVx;
     
-    float randonWaveTexture;
-    float randonWaveY;
-    float randonWaveVx;
+    //float randonWaveTexture;
+    //float randonWaveY;
+    //float randonWaveVx;
 
     public WindNoShader(String name, float x, float y, float height, float width, float waveWidth, boolean toRight) {
         super(name, x, y, Entity.TYPE_WIND);
@@ -50,7 +50,7 @@ public class WindNoShader extends Entity{
             
             float randonWaveTexture = Utils.getRandonFloat(0.0f, 1.0f);
             float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
-            float randonWaveVx = Utils.getRandonFloat(1.0f, 3.0f);
+            float randonWaveVx = Utils.getRandonFloat(8.0f, 12.0f);
             if (!toRight){
                 randonWaveVx *= -1;
             }
@@ -73,9 +73,9 @@ public class WindNoShader extends Entity{
             waveY[i] = randonWaveY * height;
             
             if (toRight){
-                waveX[i] = - (waveWidth + (waveWidth * 2 * randonWaveY));
+                waveX[i] = -(width * randonWaveY);
             } else {
-                waveX[i] = width + (waveWidth * 2 * randonWaveY);
+                waveX[i] = width + (width * randonWaveY);
             }
             
             waveVx[i] = randonWaveVx;
@@ -83,28 +83,37 @@ public class WindNoShader extends Entity{
         
         setDrawInfo();
     }
-    
+
+    @Override
+    public void checkTransformations(boolean updatePrevious) {
+        super.checkTransformations(updatePrevious);
+        changeDrawInfo();
+    }
+
     public void changeDrawInfo(){
         if (isActive){
             for (int i = 0; i < quantityOfWaves; i++){
-                if (toRight){
-                    waveX[i] += waveVx[i];
-                } else {
-                    waveX[i] -= waveVx[i];
-                }
-                if (waveX[i] > width * 1.1f){
+                waveX[i] += waveVx[i];
+                if (waveX[i] > width * 1.1f && toRight){
                     float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
-                    float randonWaveVx = Utils.getRandonFloat(1.0f, 3.0f);
-                    
-                    if (toRight){
-                        waveX[i] = - (waveWidth + (waveWidth * 2 * randonWaveY));
-                    } else {
-                        waveX[i] = width + (waveWidth * 2 * randonWaveY);
-                    }
+
+                    float randonWaveVx = Utils.getRandonFloat(8.0f, 12.0f);
+                    waveX[i] = -(width * randonWaveY);
                     
                     waveY[i] = randonWaveY * height;
                     waveVx[i] = randonWaveVx;
                 }
+
+
+                if (waveX[i] < -width * 1.1f && !toRight){
+
+                    float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
+                    float randonWaveVx = Utils.getRandonFloat(8.0f, 12.0f) * -1f;
+                    waveX[i] = width + (width * randonWaveY);
+                    waveY[i] = randonWaveY * height;
+                    waveVx[i] = randonWaveVx;
+                }
+
                 Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 
                                                     waveX[i],
                                                     waveX[i] + waveWidth,
@@ -142,7 +151,7 @@ public class WindNoShader extends Entity{
                                                 );
             
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, wavesTextureData[i], 0.5f);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, wavesTextureData[i], 0.1f);
         }
         
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);

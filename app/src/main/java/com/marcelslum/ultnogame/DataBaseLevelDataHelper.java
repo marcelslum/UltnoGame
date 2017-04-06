@@ -13,7 +13,7 @@ public class DataBaseLevelDataHelper extends DataBaseHelper {
     //private final String DB_NAME = "ultno_alpha_test.db";
 
     private DataBaseLevelDataHelper(Context context, String dbName) {
-        super(context, dbName, Integer.valueOf(context.getResources().getString(R.string.databaseLevelVersion)));
+        super(context, dbName, Integer.valueOf(context.getResources().getString(R.string.databaseLevelDataVersion)));
         this.DB_NAME = dbName;
     }
 

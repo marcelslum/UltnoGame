@@ -67,7 +67,7 @@ public class Game {
     static ArrayList<Line> lines;
     static Background background;
     static BrickBackground brickBackground;
-    static Wind wind;
+    static WindNoShader wind;
     static ArrayList<SpecialBall> specialBalls;
     static ArrayList<Image> ballCollisionStars;
     static BallDataPanel ballDataPanel;
@@ -1678,13 +1678,7 @@ public class Game {
                 Log.e(TAG, " simulate duration 2 : " + (soma / frameSimulateDurations2.size()));
                 frameSimulateDurations2.clear();
             }
-
-
-
-
-
         }
-
     }
 
     static void verifyBallBehaviourData(){

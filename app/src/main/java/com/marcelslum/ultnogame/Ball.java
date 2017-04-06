@@ -196,9 +196,9 @@ public class Ball extends Circle{
             int numberOfParticles = 2;
             
             if (randon < 0.33f){
-                numberOfParticles = 6;
-            } else if (randon < 0.66f){
                 numberOfParticles = 4;
+            } else if (randon < 0.66f){
+                numberOfParticles = 3;
             }
 
             if (    (dvx > 0 && dvy < 0)    ||

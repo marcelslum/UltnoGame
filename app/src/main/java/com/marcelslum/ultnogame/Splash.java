@@ -158,7 +158,7 @@ public class Splash {
             //timeInitConectando = Utils.getTime();
             //googleConnectionAttempts = 0;
 
-            Log.e("setSplashState", "MESSAGE_INTERNET_NAO_CONECTADA");
+            //Log.e("setSplashState", "MESSAGE_INTERNET_NAO_CONECTADA");
             message1.cleanAnimations();
             message1 = Game.textPool.get();
             message1.setData("messageSplash1",
@@ -177,7 +177,7 @@ public class Splash {
             //timeInitConectando = Utils.getTime();
             //googleConnectionAttempts = 0;
 
-            Log.e("setSplashState", "MESSAGE_GOOGLE_NAO_CONECTADO");
+            //Log.e("setSplashState", "MESSAGE_GOOGLE_NAO_CONECTADO");
             message1 = Game.textPool.get();
             message1.setData("messageSplash1",
                     Game.resolutionX* 0.5f, Game.resolutionY * 0.75f, Game.resolutionY * 0.04f,
@@ -228,7 +228,7 @@ public class Splash {
 
         if (state == MESSAGE_CARREGANDO){
 
-            Log.e("splash", "state = MESSAGE_CARREGANDO");
+            //Log.e("splash", "state = MESSAGE_CARREGANDO");
 
             if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION
             && loaderConclude) {
@@ -239,21 +239,21 @@ public class Splash {
             }
         } else if (state == MESSAGE_CONECTANDO){
 
-            Log.e("splash", "state = MESSAGE_CONECTANDO");
+            //Log.e("splash", "state = MESSAGE_CONECTANDO");
 
             if ((Utils.getTime() - timeInitIntro) > INTRO_DURATION
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION
                 && ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_CONNECTED) {
-                Log.e("splash", "conectado - verificando conexao com o google");
+                //Log.e("splash", "conectado - verificando conexao com o google");
                 if (Game.mainActivity.mGoogleApiClient != null && Game.mainActivity.mGoogleApiClient.isConnected()) {
                     if (Game.currentPlayerId == null) {
-                        Log.e("splash", "conectado ao google");
+                        //Log.e("splash", "conectado ao google");
                         Game.currentPlayerId = Games.Players.getCurrentPlayerId(Game.mainActivity.mGoogleApiClient);
                         Storage.init(Game.mainActivity.getApplicationContext(), Game.currentPlayerId);
                     }
 
                         if (SaveGame.loaded){
-                            Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
+                            //Log.e("splash", "TUDO CARRREGADO - ativando game state menu");
                             loadingSaveGame = false;
                             LevelDataLoader.initLevelsData();
                             MenuHandler.initMenus();
@@ -281,25 +281,25 @@ public class Splash {
                         } else {
                             if (!loadingSaveGame){
                                 loadingSaveGame = true;
-                                Log.e("splash", "iniciando carregamento do SaveGame");
+                                //Log.e("splash", "iniciando carregamento do SaveGame");
                                 SaveGame.load();
 
                                 
 
                             }
 
-                            Log.e("splash", "ainda carregando SaveGame");
+                            //Log.e("splash", "ainda carregando SaveGame");
 
                         }
                 } else {
-                    Log.e("splash", "ainda não conectado ao google");
+                    //Log.e("splash", "ainda não conectado ao google");
                     if (googleConnectionAttempts < 6) {
-                        Log.e("splash", "fazendo nova tentativa");
+                        //Log.e("splash", "fazendo nova tentativa");
                         timeInitConectando = Utils.getTime() - 100;
                         googleConnectionAttempts += 1;
                         Game.mainActivity.mGoogleApiClient.connect();
                     } else {
-                        Log.e("splash", "falhou ao conectar ao google");
+                       // Log.e("splash", "falhou ao conectar ao google");
                         setSplashMessage(AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO);
                         googleConnectionAttempts = 0;
                     }
@@ -308,13 +308,13 @@ public class Splash {
         } else if (state == AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION){
 
-            Log.e("splash", "state = AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA");
+            //Log.e("splash", "state = AGUARDA_MESSAGE_INTERNET_NAO_CONECTADA");
 
             setSplashMessage(MESSAGE_INTERNET_NAO_CONECTADA);
         } else if (state == AGUARDA_MESSAGE_GOOGLE_NAO_CONECTADO
                 && Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION){
 
-            Log.e("splash", "state = MESSAGE_INTERNET_NAO_CONECTADA");
+            //Log.e("splash", "state = MESSAGE_INTERNET_NAO_CONECTADA");
 
             setSplashMessage(MESSAGE_GOOGLE_NAO_CONECTADO);
         }

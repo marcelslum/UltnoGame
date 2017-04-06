@@ -83,10 +83,10 @@ public class Level {
         MessageStarWin.initMessageStarsWin();
 
         MessagesHandler.messageTime.setText("00:00");
-        if (SaveGame.saveGame.currentLevelNumber <= 100) {
+        if (SaveGame.saveGame.currentLevelNumber < 101) {
             MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));
         } else {
-            MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber - 999));
+            MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber - 100));
         }
 
         ScoreHandler.createScorePanel();
@@ -116,9 +116,9 @@ public class Level {
         if (windType == Level.WIND_TYPE_NO){
             Game.wind = null;
         } else if (windType == Level.WIND_TYPE_RIGHT){
-            Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY, true);
+            Game.wind = new WindNoShader("wind", 0f, 0f, Game.gameAreaResolutionY, Game.gameAreaResolutionX, Game.gameAreaResolutionX * 0.2f, true);
         } else if (windType == Level.WIND_TYPE_LEFT){
-            Game.wind = new Wind("wind", 0f, 0f, Game.gameAreaResolutionY, false);
+            Game.wind = new WindNoShader("wind", 0f, 0f, Game.gameAreaResolutionY, Game.gameAreaResolutionX, Game.gameAreaResolutionX * 0.2f, false);
         }
 
         Game.bordaB.y = Game.gameAreaResolutionY-2;

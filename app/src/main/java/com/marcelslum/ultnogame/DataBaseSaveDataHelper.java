@@ -14,7 +14,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
     //private String DB_NAME = "save.db";
 
     private DataBaseSaveDataHelper(Context context, String dbName) {
-        super(context, dbName, Integer.valueOf(context.getResources().getString(R.string.databaseLevelVersion)));
+        super(context, dbName, Integer.valueOf(context.getResources().getString(R.string.databaseSaveDataVersion)));
         this.DB_NAME = dbName;
     }
 

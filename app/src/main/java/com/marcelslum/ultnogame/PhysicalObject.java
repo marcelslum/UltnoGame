@@ -96,12 +96,12 @@ public class PhysicalObject extends Entity implements Weight{
     }
     
     public void verifyWind(){
-        Wind w = Game.wind;
+        WindNoShader w = Game.wind;
         float windForce = 0.18f;
         if (w != null){
             if (w.isActive){
                 if (translateX != 0f) {
-                    if (w.rightDirection) {
+                    if (w.toRight) {
                         //Log.e("physical", "right " + translateX);
                         if (translateX > 0) {
                             translateX *= 1.0f + windForce;
@@ -120,7 +120,7 @@ public class PhysicalObject extends Entity implements Weight{
 
                     //Log.e("PhysicalObject","nome "+name+"   - dvx "+dvx );
 
-                    if (w.rightDirection) {
+                    if (w.toRight) {
                         translateX = Math.abs(dvx) * windForce;
                     } else {
                         translateX = -Math.abs(dvx) * windForce;

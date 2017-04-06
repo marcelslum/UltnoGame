@@ -38,11 +38,14 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
         boolean dbExist = checkDataBase();
         SQLiteDatabase db_Read = null;
         if(dbExist){
-           Log.e(TAG, DB_NAME + " banco de dados já existe");
+           Log.e(TAG, DB_NAME + " -- banco de dados já existe");
            int currentDBVersion = getVersionId();
-           Log.e(TAG, DB_NAME + " currentDBVersion "+currentDBVersion);
-              if (version > currentDBVersion) {
-                  Log.d(TAG, DB_NAME + " Database version is higher than old.");
+           Log.e(TAG, DB_NAME + " -- currentDBVersion "+currentDBVersion);
+           Log.e(TAG, DB_NAME + " -- version "+version);
+            Log.e(TAG, DB_NAME + " -- comparação "+((this.version > currentDBVersion)));
+
+              if (this.version > currentDBVersion) {
+                  Log.e(TAG, DB_NAME + " Database version is higher than old.");
                   deleteDataBase();
                      try {
                          copyDataBase();
@@ -100,7 +103,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
         File file = new File(DB_PATH);
         if(file.exists()) {
               file.delete();
-              Log.d(TAG, "Banco de dados " + DB_NAME + " deletado.");
+              Log.e(TAG, "Banco de dados " + DB_NAME + " deletado.");
         }
     }
      
