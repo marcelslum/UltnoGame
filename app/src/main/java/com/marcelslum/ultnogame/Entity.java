@@ -73,6 +73,10 @@ public class Entity{
     
     public int type;
     public String name;
+    public float centerX = 0f;
+    public float centerY = 0f;
+    public float maxWidth = 0f;
+    public float maxHeight = 0f;
     public float x;
     public float y;
     public float positionX;
@@ -453,12 +457,19 @@ public class Entity{
         } else {
             positionX = x + accumulatedTranslateX;
         }
-        
+
         if (accumulatedScaleY != 1f){
             positionY = y + accumulatedTranslateY - (getTransformedHeight()-getHeight())/2f;
         } else {
             positionY = y + accumulatedTranslateY;
         }
+
+        checkCenter();
+
+    }
+
+    public void checkCenter(){
+
     }
 
     public float getTransformedWidth() {

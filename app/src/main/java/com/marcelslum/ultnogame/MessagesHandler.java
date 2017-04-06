@@ -47,7 +47,6 @@ public class MessagesHandler {
         yOfMessageBackAndContinue = Game.resolutionY*0.898f;
 
         MessageStar.initMessageStars();
-        MessageStarWin.initMessageStarsWin();
 
         messageGameOver = new Text("messageGameOver",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.2f, Game.gameAreaResolutionY*0.17f,

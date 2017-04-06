@@ -35,7 +35,12 @@ public class Quadtree {
     }
 
     public void insert(Entity item){
+
+
         root.insert(item);
+
+
+        //root.children.add(item);
     }
 
     public void clear(){
@@ -48,7 +53,6 @@ public class Quadtree {
         }
         outsInsertIndex = 0;
         root.retrieve(item);
-
     }
 
 }

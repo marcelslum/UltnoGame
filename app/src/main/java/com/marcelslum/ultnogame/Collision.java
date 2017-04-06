@@ -45,7 +45,7 @@ public abstract class Collision {
 
     private static final String TAG = "Collision";
 
-    public static boolean checkCollision(ArrayList<? extends PhysicalObject> aEntities, Quadtree quad, int bWeight, boolean respond, boolean updateData){
+    public static boolean checkCollision(ArrayList<? extends PhysicalObject> aEntities, Quadtree quad, int bWeight, boolean respond, boolean updateData, boolean verifyCenter){
         if (polygon1 == null){
             initData();
         }
@@ -73,7 +73,42 @@ public abstract class Collision {
                 // roda pelas entidades extraidas e verifica a colisão
                 //Log.e(TAG, " Quadtree.outsInsertIndex " + Quadtree.outsInsertIndex);
                 for (int bCount = 0; bCount <= Quadtree.outsInsertIndex; bCount++) {
-                    if (Quadtree.outs[bCount] != null) {
+                    boolean escapeByCenter = false;
+
+                    if (verifyCenter && Quadtree.outs[bCount] != null){
+                        if (a.maxWidth != 0f && Quadtree.outs[bCount].maxWidth != 0f){
+                            if (a.centerX > Quadtree.outs[bCount].centerX){
+                                if (a.centerX - Quadtree.outs[bCount].centerX > a.maxWidth + Quadtree.outs[bCount].maxWidth){
+                                    escapeByCenter = true;
+                                }
+                            } else {
+                                if (Quadtree.outs[bCount].centerX - a.centerX> a.maxWidth + Quadtree.outs[bCount].maxWidth){
+                                    escapeByCenter = true;
+                                }
+                            }
+                            if (!escapeByCenter){
+
+                                if (a.centerY > Quadtree.outs[bCount].centerY){
+                                    if (a.centerY - Quadtree.outs[bCount].centerY > a.maxHeight + Quadtree.outs[bCount].maxHeight){
+                                        escapeByCenter = true;
+                                    }
+                                } else {
+                                    if (Quadtree.outs[bCount].centerY - a.centerY> a.maxHeight + Quadtree.outs[bCount].maxHeight){
+                                        escapeByCenter = true;
+                                    }
+                                }
+
+
+                            }
+                        }
+                    }
+
+
+                    //if (escapeByCenter){
+                        //Log.e(TAG, "escape " + a.name + " - " + Quadtree.outs[bCount].name);
+                    //}
+
+                    if (Quadtree.outs[bCount] != null && !escapeByCenter) {
 
                         //Log.e(TAG, " Quadtree.outs " + bCount);
 
@@ -178,7 +213,7 @@ public abstract class Collision {
 
                             // definir quantas passagens serão realidades, com base na maior velocidade
                             // quanto maior o número divisor, menor o número de passagens
-                            quantityPassagens = Math.round(velocities[maxIndex] / 1.2f);
+                            quantityPassagens = Math.round(velocities[maxIndex] / 1.8f);
                             if (quantityPassagens == 0) {
                                 quantityPassagens = 1;
                             }
@@ -194,7 +229,7 @@ public abstract class Collision {
                             bPreviousX = b.previousPositionX;
                             bPreviousY = b.previousPositionY;
 
-                            //if (a.name == "bar" && b.name == "bar"){
+                            //if (a.name == "ball"){
                             //    Log.e(TAG, " quantityPassagens "+quantityPassagens);
                             //}
 

@@ -155,6 +155,7 @@ public class Game {
     public static int dpiClassification;
     public static boolean returningFromInterstitialFlag = false;
 
+
     private Game() {}
 
     public static void returnFromAd(){
@@ -1305,7 +1306,15 @@ public class Game {
         return memoryInfo;
     }
 
+
+
+    public static long initSimulateTime;
+    public static ArrayList<Long> frameSimulateDurations1;
+    public static ArrayList<Long> frameSimulateDurations2;
+
     static void simulate(long elapsed, float frameDuration){
+
+
 
         if (gameState != GAME_STATE_VITORIA) {
             TimeHandler.updateTimeOfLevelPlay(elapsed);
@@ -1437,7 +1446,11 @@ public class Game {
         // atualiza os dados da entidade, aplicando todas as transformações setadas
         checkTransformations();
 
+
+        //initSimulateTime = Utils.getTime();
+
         if (gameState == GAME_STATE_JOGAR) {
+
             // atualiza posição das windows
             for (int i = 0; i < windows.size(); i++){
                 if (windows.get(i).isActive){
@@ -1483,6 +1496,8 @@ public class Game {
             quad.insert(bordaB);
         }
 
+
+
         // verifica a colisão da bola
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
@@ -1494,7 +1509,7 @@ public class Game {
                         balls.get(i).radius *= 4;
                         ArrayList<PhysicalObject> ball = new ArrayList<>();
                         ball.add(balls.get(i));
-                        boolean collision = Collision.checkCollision(ball, quad, 0, false, false);
+                        boolean collision = Collision.checkCollision(ball, quad, 0, false, false, false);
                         balls.get(i).radius /= 4;
                         if (!collision){
                             balls.get(i).explode();
@@ -1508,25 +1523,29 @@ public class Game {
 
         // verifica as demais colisões
         if (gameState == GAME_STATE_JOGAR) {
-            for (int i = 0; i < 2; i++) {
-                Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true);
-                Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true);
-                Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true);
-                Collision.checkCollision(obstacles, quad, Game.BORDA_WEIGHT, true, true);
-                Collision.checkCollision(obstacles, quad, Game.BAR_WEIGHT, true, true);
-                Collision.checkCollision(obstacles, quad, Game.OBSTACLES_WEIGHT, true, true);
-                Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true);
-                Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true);
-                Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true);
-                Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true);
+            for (int i = 0; i < 1; i++) {
+
+                Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true, false);
+                Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true, false);
+                Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+                Collision.checkCollision(obstacles, quad, Game.BORDA_WEIGHT, true, true, false);
+                Collision.checkCollision(obstacles, quad, Game.BAR_WEIGHT, true, true, false);
+                Collision.checkCollision(obstacles, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+                Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true, true);
+                Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true, false);
+                Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+                Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true, false);
                 
-                Collision.checkCollision(fakeBalls, quad, Game.BORDA_WEIGHT, true, true);
-                Collision.checkCollision(fakeBalls, quad, Game.BAR_WEIGHT, true, true);
-                Collision.checkCollision(fakeBalls, quad, Game.OBSTACLES_WEIGHT, true, true);
+                Collision.checkCollision(fakeBalls, quad, Game.BORDA_WEIGHT, true, true, false);
+                Collision.checkCollision(fakeBalls, quad, Game.BAR_WEIGHT, true, true, false);
+                Collision.checkCollision(fakeBalls, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+
                 
             }
             quad.clear();
         }
+
+
 
         for (int i = 0; i < bars.size(); i++){
             if (bars.get(i).collisionsData.size() == 0){
@@ -1620,6 +1639,52 @@ public class Game {
             // reset the vectorPool, it is considered a temporary pool, all objects will become reusable
             vectorPool.reset();
         }
+
+
+
+        //processSimulateDurationTest(1);
+
+
+
+
+    }
+
+
+    static void processSimulateDurationTest(int number){
+
+        if (number == 1) {
+            if (frameSimulateDurations1 == null) {
+                frameSimulateDurations1 = new ArrayList<>();
+            }
+            frameSimulateDurations1.add(Utils.getTime() - initSimulateTime);
+            if (frameSimulateDurations1.size() == 30) {
+                long soma = 0;
+                for (int i = 0; i < frameSimulateDurations1.size(); i++) {
+                    soma += frameSimulateDurations1.get(i);
+                }
+                Log.e(TAG, " simulate duration 1 : " + (soma / frameSimulateDurations1.size()));
+                frameSimulateDurations1.clear();
+            }
+        } else if (number == 2){
+            if (frameSimulateDurations2 == null) {
+                frameSimulateDurations2 = new ArrayList<>();
+            }
+            frameSimulateDurations2.add(Utils.getTime() - initSimulateTime);
+            if (frameSimulateDurations2.size() == 30) {
+                long soma = 0;
+                for (int i = 0; i < frameSimulateDurations2.size(); i++) {
+                    soma += frameSimulateDurations2.get(i);
+                }
+                Log.e(TAG, " simulate duration 2 : " + (soma / frameSimulateDurations2.size()));
+                frameSimulateDurations2.clear();
+            }
+
+
+
+
+
+        }
+
     }
 
     static void verifyBallBehaviourData(){
@@ -1818,6 +1883,9 @@ public class Game {
 
     static void render(float[] matrixView, float[] matrixProjection){
 
+        initSimulateTime = Utils.getTime();
+
+
         if (brickBackground != null) brickBackground.prepareRender(matrixView, matrixProjection);
 
         if (MessagesHandler.messageCurrentLevel != null) MessagesHandler.messageCurrentLevel.prepareRender(matrixView, matrixProjection);
@@ -1957,6 +2025,8 @@ public class Game {
 
         if (messages != null) messages.prepareRender(matrixView, matrixProjection);
         if (frame != null)frame.prepareRender(matrixView, matrixProjection);
+
+        processSimulateDurationTest(2);
     }
 
     static void verifyTouchBlock() {

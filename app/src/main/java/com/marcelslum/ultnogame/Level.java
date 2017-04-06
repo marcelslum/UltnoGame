@@ -80,6 +80,8 @@ public class Level {
         Game.eraseAllGameEntities();
         Game.quad = new Quadtree(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY,2,8);
 
+        MessageStarWin.initMessageStarsWin();
+
         MessagesHandler.messageTime.setText("00:00");
         if (SaveGame.saveGame.currentLevelNumber <= 100) {
             MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));

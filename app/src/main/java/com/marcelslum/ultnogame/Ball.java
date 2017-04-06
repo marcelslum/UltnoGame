@@ -83,6 +83,9 @@ public class Ball extends Circle{
 
         ballsCollidedProcessed = new ArrayList<>();
         color = new Color(0f, 0f, 0f, 1f);
+
+        maxWidth = radius * 2f;
+        maxHeight = radius * 2f;
         
         // volume of sphere = (4/3) * PI * r^3
         // mass = density * volume
@@ -213,6 +216,12 @@ public class Ball extends Circle{
         if (ballParticleGenerator != null) {
             ballParticleGenerator.isActive = false;
         }
+    }
+
+    @Override
+    public void checkCenter() {
+        centerX = positionX;
+        centerY = positionY;
     }
 
     @Override

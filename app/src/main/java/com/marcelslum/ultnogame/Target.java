@@ -53,6 +53,11 @@ public class Target extends Rectangle {
         this.special = special;
         colorChangeFlag = true;
 
+        centerX = x + (width/2f);
+        centerY = y + (height/2f);
+        maxWidth = width;
+        maxHeight = height;
+
         setType();
         textureId = Texture.TEXTURES;
         program = Game.imageProgram;
