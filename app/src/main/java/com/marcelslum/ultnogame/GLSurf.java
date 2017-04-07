@@ -30,11 +30,10 @@ public class GLSurf extends GLSurfaceView {
             // context, and set an OpenGL ES 3.0-compatible renderer.
             setEGLContextClientVersion (3);
             setRenderer (mRenderer);
-        }
-        else {
+        } else {
 
             // Create an OpenGL ES 2.0 context.
-            setEGLContextClientVersion(2);
+            setEGLContextClientVersion(2);//??????????????
             //setEGLConfigChooser(new MyConfigChooser());
 
             setEGLConfigChooser(8, 8, 8, 8, 0, 0);

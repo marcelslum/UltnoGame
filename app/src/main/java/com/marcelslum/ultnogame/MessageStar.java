@@ -220,6 +220,6 @@ public class MessageStar extends Entity {
 
     public static void initMessageStars() {
         float messageStarsSize = Game.gameAreaResolutionY*0.05f;
-        MessageStar.messageStars = new MessageStar("messageStars", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.05f);
+        MessageStar.messageStars = new MessageStar("messageStars", messageStarsSize, Game.resolutionX - (messageStarsSize * 1.4f), Game.resolutionX * 0.08f);
     }
 }

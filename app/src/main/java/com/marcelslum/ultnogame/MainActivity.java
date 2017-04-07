@@ -305,6 +305,10 @@ public class MainActivity extends FragmentActivity implements
             mAdView.pause();
         }
 
+        if (Game.gameState == Game.GAME_STATE_PREPARAR){
+            Game.initPausedFlag = true;
+        }
+
         mSensorManager.unregisterListener(this);
 
         Sound.pauseAll();

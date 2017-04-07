@@ -122,7 +122,7 @@ public class LevelLoader2 {
                     .setInvertedButtons(true)
                     .setObstaclesQuantity(3)
                     .setObstaclesX(0.45f, 0.2f, 0.7f)
-                    .setObstaclesY(0.175f, 0.65f, 0.65f)
+                    .setObstaclesY(0.22f, 0.65f, 0.65f)
                     .setObstaclesWidth(0.1f, 0.1f, 0.1f)
                     .setObstaclesHeight(0.18f, 0.18f, 0.18f)
                     .setObstaclesPositionVariation(

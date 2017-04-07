@@ -144,6 +144,7 @@ public class Game {
     static Program windProgram;
     static Program specialBallProgram;
     static Program vertex_e_uv_com_alpha_program;
+    static Program instancing;
     static Program vertex_e_color;
     
     static int ballsNotInvencibleAlive;
@@ -339,6 +340,11 @@ public class Game {
         vertex_e_uv_com_alpha_program = new Program(
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_uv_com_alpha),
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_uv_com_alpha)
+        );
+
+        instancing = new Program(
+                Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_uv_com_alpha),
+                Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_uv_com_alpha)
         );
 
         vertex_e_color = new Program(
@@ -689,7 +695,9 @@ public class Game {
                 mainActivity.hideAdView();
                 TimeHandler.resumeTimeOfLevelPlay();
                 if (SaveGame.saveGame.music) {
-                    Sound.music.start();
+                    if (Sound.music != null) {
+                        Sound.music.start();
+                    }
                 }
                 MessageStar.messageStars.reset();
                 for (int i = 0; i < bars.size(); i++) {
