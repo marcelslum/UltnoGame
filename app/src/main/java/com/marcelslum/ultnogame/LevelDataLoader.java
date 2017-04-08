@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -7,6 +9,8 @@ import java.util.ArrayList;
  */
 
 public class LevelDataLoader {
+
+    private static final String TAG = "LevelDataLoader";
 
     public static void initLevelsData(){
 
@@ -140,417 +144,123 @@ public class LevelDataLoader {
                 }
             }
 
-            if (d.number < 1000) {
+            int textureDataId;
+
+            switch (d.number) {
+                case 1: textureDataId = TextureData.TEXTURE_l1; break;
+                case 2: textureDataId = TextureData.TEXTURE_l2; break;
+                case 3: textureDataId = TextureData.TEXTURE_l3; break;
+                case 4: textureDataId = TextureData.TEXTURE_l4; break;
+                case 5: textureDataId = TextureData.TEXTURE_l5; break;
+                case 6: textureDataId = TextureData.TEXTURE_l6; break;
+                case 7: textureDataId = TextureData.TEXTURE_l7; break;
+                case 8: textureDataId = TextureData.TEXTURE_l8; break;
+                case 9: textureDataId = TextureData.TEXTURE_l9; break;
+                case 10: textureDataId = TextureData.TEXTURE_l10; break;
+                case 11: textureDataId = TextureData.TEXTURE_l11; break;
+                case 12: textureDataId = TextureData.TEXTURE_l12; break;
+                case 13: textureDataId = TextureData.TEXTURE_l13; break;
+                case 14: textureDataId = TextureData.TEXTURE_l14; break;
+                case 15: textureDataId = TextureData.TEXTURE_l15; break;
+                case 16: textureDataId = TextureData.TEXTURE_l16; break;
+                case 17: textureDataId = TextureData.TEXTURE_l17; break;
+                case 18: textureDataId = TextureData.TEXTURE_l18; break;
+                case 19: textureDataId = TextureData.TEXTURE_l19; break;
+                case 20: textureDataId = TextureData.TEXTURE_l20; break;
+                case 21: textureDataId = TextureData.TEXTURE_l21; break;
+                case 22: textureDataId = TextureData.TEXTURE_l22; break;
+                case 23: textureDataId = TextureData.TEXTURE_l23; break;
+                case 24: textureDataId = TextureData.TEXTURE_l24; break;
+                case 25: textureDataId = TextureData.TEXTURE_l25; break;
+                case 26: textureDataId = TextureData.TEXTURE_l26; break;
+                case 27: textureDataId = TextureData.TEXTURE_l27; break;
+                case 28: textureDataId = TextureData.TEXTURE_l28; break;
+                case 29: textureDataId = TextureData.TEXTURE_l29; break;
+                case 30: textureDataId = TextureData.TEXTURE_l30; break;
+                case 31: textureDataId = TextureData.TEXTURE_l31; break;
+                case 32: textureDataId = TextureData.TEXTURE_l32; break;
+                case 33: textureDataId = TextureData.TEXTURE_l33; break;
+                case 34: textureDataId = TextureData.TEXTURE_l34; break;
+                case 35: textureDataId = TextureData.TEXTURE_l35; break;
+                case 36: textureDataId = TextureData.TEXTURE_l36; break;
+                case 37: textureDataId = TextureData.TEXTURE_l37; break;
+                case 38: textureDataId = TextureData.TEXTURE_l38; break;
+                case 39: textureDataId = TextureData.TEXTURE_l39; break;
+                case 40: textureDataId = TextureData.TEXTURE_l40; break;
+                case 41: textureDataId = TextureData.TEXTURE_l41; break;
+                case 42: textureDataId = TextureData.TEXTURE_l42; break;
+                case 43: textureDataId = TextureData.TEXTURE_l43; break;
+                case 44: textureDataId = TextureData.TEXTURE_l44; break;
+                case 45: textureDataId = TextureData.TEXTURE_l45; break;
+                case 46: textureDataId = TextureData.TEXTURE_l46; break;
+                case 47: textureDataId = TextureData.TEXTURE_l47; break;
+                case 48: textureDataId = TextureData.TEXTURE_l48; break;
+                case 49: textureDataId = TextureData.TEXTURE_l49; break;
+                case 50: textureDataId = TextureData.TEXTURE_l50; break;
+                case 51: textureDataId = TextureData.TEXTURE_l51; break;
+                case 52: textureDataId = TextureData.TEXTURE_l52; break;
+                case 53: textureDataId = TextureData.TEXTURE_l53; break;
+                case 54: textureDataId = TextureData.TEXTURE_l54; break;
+                case 55: textureDataId = TextureData.TEXTURE_l55; break;
+                case 56: textureDataId = TextureData.TEXTURE_l56; break;
+                case 57: textureDataId = TextureData.TEXTURE_l57; break;
+                case 58: textureDataId = TextureData.TEXTURE_l58; break;
+                case 59: textureDataId = TextureData.TEXTURE_l59; break;
+                case 60: textureDataId = TextureData.TEXTURE_l60; break;
+                case 61: textureDataId = TextureData.TEXTURE_l61; break;
+                case 62: textureDataId = TextureData.TEXTURE_l62; break;
+                case 63: textureDataId = TextureData.TEXTURE_l63; break;
+                case 64: textureDataId = TextureData.TEXTURE_l64; break;
+                case 65: textureDataId = TextureData.TEXTURE_l65; break;
+                case 66: textureDataId = TextureData.TEXTURE_l66; break;
+                case 67: textureDataId = TextureData.TEXTURE_l67; break;
+                case 68: textureDataId = TextureData.TEXTURE_l68; break;
+                case 69: textureDataId = TextureData.TEXTURE_l69; break;
+                case 70: textureDataId = TextureData.TEXTURE_l70; break;
+                case 71: textureDataId = TextureData.TEXTURE_l71; break;
+                case 72: textureDataId = TextureData.TEXTURE_l72; break;
+                case 73: textureDataId = TextureData.TEXTURE_l73; break;
+                case 74: textureDataId = TextureData.TEXTURE_l74; break;
+                case 75: textureDataId = TextureData.TEXTURE_l75; break;
+                case 76: textureDataId = TextureData.TEXTURE_l76; break;
+                case 77: textureDataId = TextureData.TEXTURE_l77; break;
+                case 78: textureDataId = TextureData.TEXTURE_l78; break;
+                case 79: textureDataId = TextureData.TEXTURE_l79; break;
+                case 80: textureDataId = TextureData.TEXTURE_l80; break;
+                case 81: textureDataId = TextureData.TEXTURE_l81; break;
+                case 82: textureDataId = TextureData.TEXTURE_l82; break;
+                case 83: textureDataId = TextureData.TEXTURE_l83; break;
+                case 84: textureDataId = TextureData.TEXTURE_l84; break;
+                case 85: textureDataId = TextureData.TEXTURE_l85; break;
+                case 86: textureDataId = TextureData.TEXTURE_l86; break;
+                case 87: textureDataId = TextureData.TEXTURE_l87; break;
+                case 88: textureDataId = TextureData.TEXTURE_l88; break;
+                case 89: textureDataId = TextureData.TEXTURE_l89; break;
+                case 90: textureDataId = TextureData.TEXTURE_l90; break;
+                case 91: textureDataId = TextureData.TEXTURE_l91; break;
+                case 92: textureDataId = TextureData.TEXTURE_l92; break;
+                case 93: textureDataId = TextureData.TEXTURE_l93; break;
+                case 94: textureDataId = TextureData.TEXTURE_l94; break;
+                case 95: textureDataId = TextureData.TEXTURE_l95; break;
+                case 96: textureDataId = TextureData.TEXTURE_l96; break;
+                case 97: textureDataId = TextureData.TEXTURE_l97; break;
+                case 98: textureDataId = TextureData.TEXTURE_l98; break;
+                case 99: textureDataId = TextureData.TEXTURE_l99; break;
+                case 100: textureDataId = TextureData.TEXTURE_l100; break;
+                default: textureDataId = TextureData.TEXTURE_l1; break;
+            }
+
+            Log.e(TAG, " "+d.number + " "+textureDataId+ " ");
+
+            if (d.number < 101) {
                 g.addLevel(
                         Game.getContext().getResources().getString(R.string.messageCurrentLevel) + String.valueOf(d.number),
                         d.number,
                         Texture.TEXTURE_ICONS,
-                        TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID)
+                        TextureData.getTextureDataById(textureDataId)
                 );
             }
         }
-
-        /*
-        //GRUPO 1
-        int levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group1name), 1,  nl, nl+levelsQuantity-1, starsToUnblock[0], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 1);
-                // ---------- LEVEL1
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-                // ---------- LEVEL2
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-                // ---------- LEVEL3
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 3);
-                // ---------- LEVEL4
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 3);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 2
-        levelsQuantity = 4;  // starst to unlock 7
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group2name), 2, nl, nl+levelsQuantity-1, starsToUnblock[1], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 2);
-                // ---------- LEVEL5
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 4);
-                // ---------- LEVEL6
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 5);
-                // ---------- LEVEL7
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 6);
-                // ---------- LEVEL8
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 6);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 3
-        levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group3name), 3, nl, nl+levelsQuantity-1, starsToUnblock[2], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-                // ---------- LEVEL9
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 7);
-                // ---------- LEVEL10
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 8);
-                // ---------- LEVEL11
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 8);
-                // ---------- LEVEL12
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 8);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 4
-        levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group4name), 4, nl, nl+levelsQuantity-1, starsToUnblock[3], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-                // ---------- LEVEL13
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 9);
-                // ---------- LEVEL14
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 10);
-                // ---------- LEVEL15
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 11);
-                // ---------- LEVEL16
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 11);
-                LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 5
-        levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group5name), 5, nl, nl+levelsQuantity-1, starsToUnblock[4], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-                // ---------- LEVEL17
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 12);
-                // ---------- LEVEL18
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 13);
-                // ---------- LEVEL19
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 14);
-                // ---------- LEVEL20
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 15);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 6
-        levelsQuantity = 3;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group6name), 6, nl, nl+levelsQuantity-1, starsToUnblock[6], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-                // ---------- LEVEL21
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-                // ---------- LEVEL22
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-                // ---------- LEVEL23
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 3);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 7
-        levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group7name), 7, nl, nl+levelsQuantity-1, starsToUnblock[6], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-                // ---------- LEVEL24
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-                // ---------- LEVEL25
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-                // ---------- LEVEL26
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-                // ---------- LEVEL27
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-        
-        //GRUPO 8
-        levelsQuantity = 3;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group8name), 8, nl, nl+levelsQuantity-1, starsToUnblock[7], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-                // ---------- LEVEL28
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-                // ---------- LEVEL29
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-                // ---------- LEVEL30
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 3);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 9
-        levelsQuantity = 3;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group9name), 9, nl, nl+levelsQuantity-1, starsToUnblock[8], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-                // ---------- LEVEL31
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-                // ---------- LEVEL32
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-                // ---------- LEVEL33
-                nl += 1;
-                l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 10
-        levelsQuantity = 3;
-            l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group10name), 10, nl, nl+levelsQuantity-1, starsToUnblock[9], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL34
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL35
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL36
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 11
-        levelsQuantity = 4;
-            l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group11name), 11, nl, nl+levelsQuantity-1, starsToUnblock[10], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL37
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL38
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL39
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL40
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 12
-        levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group12name), 12, nl, nl+levelsQuantity-1, starsToUnblock[11], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL41
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL42
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL43
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL44
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 13
-        levelsQuantity = 5;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group13name), 13, nl, nl+levelsQuantity-1, starsToUnblock[12], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL45
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL46
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL47
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL48
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL49
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 14
-        levelsQuantity = 4;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group14name), 14, nl, nl+levelsQuantity-1, starsToUnblock[13], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL50
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL51
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL52
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL53
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 15
-        levelsQuantity = 5;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group15name), 15, nl, nl+levelsQuantity-1, starsToUnblock[14], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL54
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL55
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL56
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL57
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL58
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-        
-        //GRUPO 16
-        levelsQuantity = 6;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group16name), 16, nl, nl+levelsQuantity-1, starsToUnblock[15], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL59
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL60
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL61
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL62
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL63
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL64
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 17
-        levelsQuantity = 6;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group17name), 17, nl, nl+levelsQuantity-1, starsToUnblock[16], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL65
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL66
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL67
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL68
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL69
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL70
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-
-        //GRUPO 18
-        levelsQuantity = 8;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group18name), 18, nl, nl+levelsQuantity-1, starsToUnblock[17], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL71
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL72
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL73
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL74
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL75
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL76
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL77
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL78
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-        
-        
-        //GRUPO 19
-        levelsQuantity = 12;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group19name), 19, nl, nl+levelsQuantity-1, starsToUnblock[18], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL79
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL80
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL81
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL82
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL83
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL84
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL85
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL86
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL87
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL88
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL89
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL90
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-        
-         //GRUPO 20
-        levelsQuantity = 10;
-        l = new LevelsGroupData(Game.getContext().getResources().getString(R.string.group20name), 20, nl, nl+levelsQuantity-1, starsToUnblock[19], LevelsGroupData.getLevelsConqueredStars(nl, nl+levelsQuantity-1), Texture.TEXTURE_ICONS, 3);
-            // ---------- LEVEL91
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 1);
-            // ---------- LEVEL92
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL93
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL94
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL95
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL96
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL97
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL98
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL99
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-            // ---------- LEVEL100
-            nl += 1;
-            l.addLevel(Game.getContext().getResources().getString(R.string.messageCurrentLevel)+String.valueOf(nl), nl, Texture.TEXTURE_ICONS, 2);
-        LevelsGroupData.levelsGroupData.add(l);
-        */
 
     }
 }

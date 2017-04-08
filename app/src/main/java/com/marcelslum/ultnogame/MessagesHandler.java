@@ -95,7 +95,7 @@ public class MessagesHandler {
                 Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
-                Game.resolutionX*0.9f, Game.resolutionY*0.25f, Game.resolutionY*0.05f,
+                Game.resolutionX*0.895f, Game.resolutionY*0.25f, Game.resolutionY*0.05f,
                 Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(1f, 1f, 0f, 1f));
 
         messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));

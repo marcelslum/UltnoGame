@@ -63,7 +63,7 @@ public class Texture {
         Log.e(TAG, "initTextures");
         Texture.textures.add(new Texture(Texture.TEXTURE_ICONS, "drawable/icons"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS, "drawable/tutorials"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_BACKGROUND, "drawable/finalback1c"));
+
     }
 
     Texture(int id, String resourceIdentifier){

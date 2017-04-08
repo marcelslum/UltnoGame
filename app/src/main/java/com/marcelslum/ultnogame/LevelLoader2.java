@@ -412,9 +412,10 @@ public class LevelLoader2 {
                             })
                     .setObstaclesQuantity(3)
                     .setObstaclesX(0.47f, 0.17f, 0.69f)
-                    .setObstaclesY(0.06f, 0.3740852941f, 0.3740852941f)
-                    .setObstaclesWidth(0.001f,0.1433333333f, 0.1433333333f)
+                    .setObstaclesY(0.001f, 0.3740852941f, 0.3740852941f)
+                    .setObstaclesWidth(0.06f,0.1433333333f, 0.1433333333f)
                     .setObstaclesHeight(1-0.002f, 0.058f, 0.058f)
+
                 
                     .setObstaclesPositionVariation(
                             null,
@@ -600,7 +601,7 @@ public class LevelLoader2 {
                     .setObstaclesX(0.5506666667f, 0.5066666667f)
                     .setObstaclesY(0.0242647059f, 0.5919117647f)
                     .setObstaclesWidth(0.1f, 0.1266666667f)
-                    .setObstaclesHeight(1-0.0610294118f, 0.0610294118f)
+                    .setObstaclesHeight(0.0610294118f, 0.0610294118f)
                     .setObstaclesScaleVariation(
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)

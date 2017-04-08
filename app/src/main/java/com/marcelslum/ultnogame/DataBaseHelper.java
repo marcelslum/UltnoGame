@@ -46,6 +46,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
               if (this.version > currentDBVersion) {
                   Log.e(TAG, DB_NAME + " Database version is higher than old.");
+                  close();
                   deleteDataBase();
                      try {
                          copyDataBase();

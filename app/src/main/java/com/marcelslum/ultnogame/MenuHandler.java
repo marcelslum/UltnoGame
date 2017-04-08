@@ -149,6 +149,11 @@ public class MenuHandler {
 
         for (int i = 0; i < Game.currentLevelsGroupDataSelected.levelsData.size(); i++){
             final LevelsGroupData.LevelData ld = Game.currentLevelsGroupDataSelected.levelsData.get(i);
+
+            Log.e(TAG, "ld.number "+ ld.number);
+            if (ld.textureData == null){
+                Log.e(TAG, "ld.textureData nulo");
+            }
             levelMenu.addOption(i, ld.textureUnit, ld.textureData, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
