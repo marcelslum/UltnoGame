@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'ultno'
-            keyPassword 'marcelslumultno'
-            storeFile file('D:/Ultno/APK/android.jks')
-            storePassword 'marcelslum'
+            keyAlias "ultno"
+            keyPassword "marcelslumultno"
+            storeFile file("D:/Ultno/APK/android.jks")
+            storePassword "marcelslum"
         }
     }
     compileSdkVersion 23
