@@ -255,7 +255,7 @@ public class Tutorial {
             }
 
             tutorialTextBox = frames.get(currentFrame).textBox;
-            tutorialTextBox.alpha = 0;
+            tutorialTextBox.alpha = 1f;
             tutorialTextBox.display();
             tutorialTextBox.cleanAnimations();
             Utils.createSimpleAnimation(tutorialTextBox, "translateX", "translateX", 500, Game.resolutionX*2f, 0f).start();

@@ -177,6 +177,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             myGlSurf.onCloseAd();
         }
 
+        if (Game.settingMessageForScore) {
+            Game.settingMessageForScore = false;
+            myGlSurf.setScoreMessage();
+        }
+
         // Get the current time
         long now = System.currentTimeMillis();
 
@@ -222,8 +227,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
                 for (int i = 0; i < frameDurations.size(); i++){
                     soma += frameDurations.get(i);
                 }
-                Log.e("GLRenderer"," frame duration: "+(soma / frameDurations.size()));
-                Log.e("GLRenderer"," longestFrame: "+longestFrame);
+                //Log.e("GLRenderer"," frame duration: "+(soma / frameDurations.size()));
+                //Log.e("GLRenderer"," longestFrame: "+longestFrame);
                 frameDurations.clear();
                 longestFrame = 0;
             }

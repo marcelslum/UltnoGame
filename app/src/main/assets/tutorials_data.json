@@ -1,8 +1,44 @@
 {"frames": [
 
 {
+	"filename": "icons1.png",
+	"frame": {"x":0,"y":0,"w":186,"h":186},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":186},
+	"sourceSize": {"w":186,"h":186},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "icons2.png",
+	"frame": {"x":186,"y":0,"w":186,"h":186},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":186},
+	"sourceSize": {"w":186,"h":186},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "icons3.png",
+	"frame": {"x":372,"y":0,"w":186,"h":186},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":186},
+	"sourceSize": {"w":186,"h":186},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "icons4.png",
+	"frame": {"x":558,"y":0,"w":186,"h":186},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":186},
+	"sourceSize": {"w":186,"h":186},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
 	"filename": "ti1.png",
-	"frame": {"x":0,"y":0,"w":508,"h":254},
+	"frame": {"x":744,"y":0,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":508,"h":254},
@@ -11,7 +47,7 @@
 },
 {
 	"filename": "ti2.png",
-	"frame": {"x":508,"y":0,"w":508,"h":254},
+	"frame": {"x":1252,"y":0,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":508,"h":254},
@@ -20,24 +56,6 @@
 },
 {
 	"filename": "ti3.png",
-	"frame": {"x":1016,"y":0,"w":508,"h":254},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":508,"h":254},
-	"sourceSize": {"w":508,"h":254},
-	"pivot": {"x":0.5,"y":0.5}
-},
-{
-	"filename": "ti4.png",
-	"frame": {"x":1524,"y":0,"w":508,"h":254},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":508,"h":254},
-	"sourceSize": {"w":508,"h":254},
-	"pivot": {"x":0.5,"y":0.5}
-},
-{
-	"filename": "ti5.png",
 	"frame": {"x":0,"y":254,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -46,7 +64,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti6.png",
+	"filename": "ti4.png",
 	"frame": {"x":508,"y":254,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -55,7 +73,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti7.png",
+	"filename": "ti5.png",
 	"frame": {"x":1016,"y":254,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -64,7 +82,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti8.png",
+	"filename": "ti6.png",
 	"frame": {"x":1524,"y":254,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -73,7 +91,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti9.png",
+	"filename": "ti7.png",
 	"frame": {"x":0,"y":508,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -82,7 +100,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti10.png",
+	"filename": "ti8.png",
 	"frame": {"x":508,"y":508,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -91,7 +109,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti11.png",
+	"filename": "ti9.png",
 	"frame": {"x":1016,"y":508,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -100,7 +118,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti12.png",
+	"filename": "ti10.png",
 	"frame": {"x":1524,"y":508,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -109,7 +127,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti13.png",
+	"filename": "ti11.png",
 	"frame": {"x":0,"y":762,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -118,7 +136,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti14.png",
+	"filename": "ti12.png",
 	"frame": {"x":508,"y":762,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -127,7 +145,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti15.png",
+	"filename": "ti13.png",
 	"frame": {"x":1016,"y":762,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -136,7 +154,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti16.png",
+	"filename": "ti14.png",
 	"frame": {"x":1524,"y":762,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -145,7 +163,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti17.png",
+	"filename": "ti15.png",
 	"frame": {"x":0,"y":1016,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -154,7 +172,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti18.png",
+	"filename": "ti16.png",
 	"frame": {"x":508,"y":1016,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -163,7 +181,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti19.png",
+	"filename": "ti17.png",
 	"frame": {"x":1016,"y":1016,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -172,7 +190,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti20.png",
+	"filename": "ti18.png",
 	"frame": {"x":1524,"y":1016,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -181,7 +199,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti21.png",
+	"filename": "ti19.png",
 	"frame": {"x":0,"y":1270,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -190,7 +208,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti22.png",
+	"filename": "ti20.png",
 	"frame": {"x":508,"y":1270,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -199,7 +217,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti23.png",
+	"filename": "ti21.png",
 	"frame": {"x":1016,"y":1270,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -208,7 +226,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti24.png",
+	"filename": "ti22.png",
 	"frame": {"x":1524,"y":1270,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -217,7 +235,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti25.png",
+	"filename": "ti23.png",
 	"frame": {"x":0,"y":1524,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -226,7 +244,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti26.png",
+	"filename": "ti24.png",
 	"frame": {"x":508,"y":1524,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -235,7 +253,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti27.png",
+	"filename": "ti25.png",
 	"frame": {"x":1016,"y":1524,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -244,7 +262,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti28.png",
+	"filename": "ti26.png",
 	"frame": {"x":1524,"y":1524,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
@@ -253,8 +271,26 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "ti29.png",
+	"filename": "ti27.png",
 	"frame": {"x":0,"y":1778,"w":508,"h":254},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":508,"h":254},
+	"sourceSize": {"w":508,"h":254},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "ti28.png",
+	"frame": {"x":508,"y":1778,"w":508,"h":254},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":508,"h":254},
+	"sourceSize": {"w":508,"h":254},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "ti29.png",
+	"frame": {"x":1016,"y":1778,"w":508,"h":254},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":508,"h":254},
@@ -268,6 +304,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:72989a959f6fead22a010e21fe78284e:ef35304dd53f0e6a2ea6318b1661e2cf:913d8db333d6de302aae6a272c78919e$"
+	"smartupdate": "$TexturePacker:SmartUpdate:ff912e3bbf507f57ba6e613ed200364d:2c01fa40372eaadd9cd41b023e9776ba:913d8db333d6de302aae6a272c78919e$"
 }
 }

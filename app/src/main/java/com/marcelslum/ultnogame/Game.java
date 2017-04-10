@@ -155,6 +155,8 @@ public class Game {
     static boolean initPausedFlag;
     public static int dpiClassification;
     public static boolean returningFromInterstitialFlag = false;
+    public static boolean settingMessageForScore = false;
+    public static String messageForScore = ".";
 
 
     private Game() {}
@@ -885,11 +887,12 @@ public class Game {
                         if (StarsHandler.newStars > 0) {
                             int points = (int) ((float) ScoreHandler.scorePanel.value * (1f + (0.1f * (float) StarsHandler.newStars)));
                             ScoreHandler.scorePanel.setValue(points, true, 1000, true);
-                            if (StarsHandler.newStars == 1) ScoreHandler.scorePanel.showMessage("+ 10%", 2000);
-                            if (StarsHandler.newStars == 2) ScoreHandler.scorePanel.showMessage("+ 20%", 2000);
-                            if (StarsHandler.newStars == 3) ScoreHandler.scorePanel.showMessage("+ 30%", 2000);
-                            if (StarsHandler.newStars == 4) ScoreHandler.scorePanel.showMessage("+ 40%", 2000);
-                            if (StarsHandler.newStars == 5) ScoreHandler.scorePanel.showMessage("+ 50%", 2000);
+                            if (StarsHandler.newStars == 1) messageForScore = "+ 10%";
+                            if (StarsHandler.newStars == 2) messageForScore = "+ 20%";
+                            if (StarsHandler.newStars == 3) messageForScore = "+ 30%";
+                            if (StarsHandler.newStars == 4) messageForScore = "+ 40%";
+                            if (StarsHandler.newStars == 5) messageForScore = "+ 50%";
+                            settingMessageForScore = true;
                         }
                     } else{
                         ButtonHandler.buttonContinue.display();
@@ -1670,7 +1673,7 @@ public class Game {
                 for (int i = 0; i < frameSimulateDurations1.size(); i++) {
                     soma += frameSimulateDurations1.get(i);
                 }
-                Log.e(TAG, " simulate duration 1 : " + (soma / frameSimulateDurations1.size()));
+                //Log.e(TAG, " simulate duration 1 : " + (soma / frameSimulateDurations1.size()));
                 frameSimulateDurations1.clear();
             }
         } else if (number == 2){
@@ -1683,7 +1686,7 @@ public class Game {
                 for (int i = 0; i < frameSimulateDurations2.size(); i++) {
                     soma += frameSimulateDurations2.get(i);
                 }
-                Log.e(TAG, " simulate duration 2 : " + (soma / frameSimulateDurations2.size()));
+                //Log.e(TAG, " simulate duration 2 : " + (soma / frameSimulateDurations2.size()));
                 frameSimulateDurations2.clear();
             }
         }
@@ -1921,9 +1924,7 @@ public class Game {
             targetGroup.render(matrixView, matrixProjection);
         }
 
-        if (pointsGroup != null) {
-            pointsGroup.render(matrixView, matrixProjection);
-        }
+
 
         for (int i = 0; i < bars.size(); i++){
             bars.get(i).prepareRender(matrixView, matrixProjection);
@@ -1943,17 +1944,18 @@ public class Game {
         }
 
         for (int i = 0; i < specialBalls.size(); i++){
-
-
             specialBalls.get(i).prepareRender(matrixView, matrixProjection);
         }
         
 
-
         if (wind != null) {
             wind.prepareRender(matrixView, matrixProjection);
         }
-       
+
+        if (pointsGroup != null) {
+            pointsGroup.render(matrixView, matrixProjection);
+        }
+
         
         
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.prepareRender(matrixView, matrixProjection);
@@ -2055,6 +2057,8 @@ public class Game {
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.verifyListener();
         if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.verifyListener();
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.verifyListener();
+
+        if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.verifyListener();
 
         if (ButtonHandler.buttonReturn != null) ButtonHandler.buttonReturn.verifyListener();
         if (ButtonHandler.buttonReturnObjectivesPause != null)

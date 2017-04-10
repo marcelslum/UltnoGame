@@ -79,6 +79,16 @@ public class GLSurf extends GLSurfaceView {
             }});
     }
 
+
+    public void setScoreMessage(){
+        queueEvent(new Runnable() {
+            // This method will be called on the rendering
+            // thread:
+            public void run() {
+                ScoreHandler.scorePanel.showMessage(Game.messageForScore, 2000);
+            }});
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (Game.touchEvents == null) Game.touchEvents = new ArrayList<>();

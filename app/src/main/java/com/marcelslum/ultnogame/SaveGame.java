@@ -106,7 +106,7 @@ public class SaveGame {
                     .build();
         }
         loaded = true;
-        log(saveGame);
+        //log(saveGame);
         SaveGame.save();
     }
 

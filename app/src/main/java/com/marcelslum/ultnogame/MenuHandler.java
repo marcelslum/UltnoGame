@@ -102,15 +102,30 @@ public class MenuHandler {
                final int numberOfCurrentLevelNumber = firstSecretLevelOnArray + 1 + i;
             
                if (SaveGame.saveGame.levelsUnlocked[firstSecretLevelOnArray + i]){
-                   groupMenu.addOption(lastId+i, Texture.TEXTURE_ICONS, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID), new Animation.AnimationListener() {
+
+
+                   int textureId;
+                   if (i == 0){
+                       textureId = TextureData.TEXTURE_l101;
+                   } else if (i == 1){
+                       textureId = TextureData.TEXTURE_l102;
+                   } else if (i == 2){
+                       textureId = TextureData.TEXTURE_l103;
+                   } else {
+                       textureId = TextureData.TEXTURE_l104;
+                   }
+                   final int ftextureId = textureId;
+
+                   groupMenu.addOption(lastId+i, Texture.TEXTURE_TUTORIALS, TextureData.getTextureDataById(textureId), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         SaveGame.saveGame.currentLevelNumber = numberOfCurrentLevelNumber;
                         float size = Game.resolutionX * 0.21f;
+
                         Game.currentLevelIcon = new Image("Game.currentLevelIcon", (Game.resolutionX * 0.5f) - size * 0.5f,
                                 Game.resolutionY * 0.2f,
                                 size, size,
-                                Texture.TEXTURES, TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID)
+                                Texture.TEXTURE_TUTORIALS, TextureData.getTextureDataById(ftextureId)
                         );
                         Game.currentLevelIcon.clearDisplay();
                         Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);

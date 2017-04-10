@@ -589,10 +589,10 @@ public class TextureData {
         map.put(TEXTURE_l98, "iconl98.png");
         map.put(TEXTURE_l99, "iconl99.png");
         map.put(TEXTURE_l100, "iconl100.png");
-        //map.put(TEXTURE_l101, "iconl100.png");//TODO
-        //map.put(TEXTURE_l102, "iconl100.png");//TODO
-        //map.put(TEXTURE_l103, "iconl100.png");//TODO
-        //map.put(TEXTURE_l104, "iconl100.png");//TODO
+        map.put(TEXTURE_l101, "icons1.png");
+        map.put(TEXTURE_l102, "icons2.png");
+        map.put(TEXTURE_l103, "icons3.png");
+        map.put(TEXTURE_l104, "icons4.png");
 
 
         JSONObject obj;

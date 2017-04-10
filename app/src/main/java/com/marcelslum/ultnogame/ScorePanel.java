@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 /**
  * Created by marcel on 12/08/2016.
  */
@@ -35,8 +37,24 @@ public class ScorePanel extends Entity {
         setDrawInfo();
 
         messageText = Game.textPool.get();
-        messageText.setData("text", x + (getWidth()*0.8f), y - size*0.3f, size*1.5f, "message", Game.font, new Color(1.0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT);
+        messageText.setData("text", x + (getWidth()*0.8f), y - size*0.3f, size*1.5f, ".", Game.font, new Color(1.0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT);
         addChild(messageText);
+
+
+        setListener(new InteractionListener("listener" + name, this.x, y, size * 3, size, 5000, this, new InteractionListener.PressListener() {
+            @Override
+            public void onPress() {
+                if (Game.gameState == Game.GAME_STATE_JOGAR) {
+                    Game.setGameState(Game.GAME_STATE_VITORIA);
+                }
+            }
+
+            @Override
+            public void onUnpress() {
+
+            }
+        }));
+
     }
 
     @Override
@@ -126,6 +144,18 @@ public class ScorePanel extends Entity {
 
     public void showMessage(String message, int duration) {
         displayMessage = true;
+
+        //Log.e(TAG, "showMessage "+ message);
+        //Log.e(TAG, "x + (getWidth()*0.8f) "+ (x + (getWidth()*0.8f)));
+        //Log.e(TAG, "y - size*0.3f "+ (y - size*0.3f));
+        //Log.e(TAG, "size*1.5f "+ (size*1.5f));
+
+
+        //childs.clear();
+        //messageText = Game.textPool.get();
+        //messageText.setData("textScorePanel", x + (getWidth()*0.8f), y - size*0.3f, size*1.5f, message, Game.font, new Color(1.0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT);
+        //addChild(messageText);
+
         messageText.setText(message);
 
         final ScorePanel innerScorePanel = this;
@@ -162,8 +192,14 @@ public class ScorePanel extends Entity {
         }
         super.render(matrixView, matrixProjection);
 
+
+    }
+
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection) {
+        super.prepareRender(matrixView, matrixProjection);
         if (displayMessage && messageText != null){
-            messageText.render(matrixView, matrixProjection);
+            messageText.prepareRender(matrixView, matrixProjection);
         }
     }
 

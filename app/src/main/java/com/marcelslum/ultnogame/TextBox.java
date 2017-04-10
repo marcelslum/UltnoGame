@@ -20,7 +20,7 @@ public class TextBox extends Entity{
     public boolean isHaveMiniArrow = false;
     public boolean isHaveArrowContinue = false;
     public Button arrowContinuar;
-    public Color textColor = new Color(0f, 0f, 0f, 0.9f);
+    public Color textColor = new Color(0.1f, 0.1f, 0.1f, 1f);
     public Line arrow;
     public Image miniArrow;
     public float arrowX;
@@ -81,7 +81,7 @@ public class TextBox extends Entity{
         if (isHaveFrame){
             if (frameType == TextBoxBuilder.FRAME_TYPE_IMAGE) {
                 frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
-                        //new Image("frame", x, y, frameWidth, height, Texture.TEXTURE_TITTLE, 0f, 1f, 0f, 550f / 1024f);
+
             } else if (frameType == TextBoxBuilder.FRAME_TYPE_SOLID) {
                 frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
             }
@@ -238,9 +238,15 @@ public class TextBox extends Entity{
             arrowContinuar.prepareRender(matrixView, matrixProjection);
         }
         
-        for (int i = 0; i < this.texts.size();i++){
-            this.texts.get(i).alpha = alpha;
-            this.texts.get(i).prepareRender(matrixView, matrixProjection);
+        for (int i = 0; i < texts.size();i++){
+            //Log.e(TAG, "render text box " + " " + texts.get(i).text);
+            //Log.e(TAG, texts.get(i).x + " " + texts.get(i).y + " " + texts.get(i).translateX + " "+ texts.get(i).translateY);
+            //Log.e(TAG, "isVisible " + isVisible);
+            if (isVisible){
+                texts.get(i).isVisible = true;
+            }
+            texts.get(i).alpha = alpha;
+            texts.get(i).prepareRender(matrixView, matrixProjection);
         }
     }
 }

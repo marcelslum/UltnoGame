@@ -593,6 +593,10 @@ public class Entity{
             //Log.e(TAG, "render");
         }
 
+        //if (type == TYPE_TEXT){
+        //    Log.e(TAG, "render text "+name);
+        // }
+
         //if (vbo == null){
         //    Log.e(TAG, name + " -> vbo null");
         //} else {
