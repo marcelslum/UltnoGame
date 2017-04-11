@@ -275,8 +275,6 @@ public class Splash {
                             }
 
                             MenuHandler.levelMenu.currentTranslateX = 0;
-                            
-                            
                             Game.setGameState(Game.GAME_STATE_MENU);    
                         } else {
                             if (!loadingSaveGame){
