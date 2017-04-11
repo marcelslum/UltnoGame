@@ -17,6 +17,8 @@ public class LevelGoals {
 
     boolean leftBorderTouch = false;
     boolean rightBorderTouch = false;
+    
+    boolean changeSpeed = false;
 
     int secretLevel4Step = 0;
     int secretLevel5Step = 0;
@@ -701,6 +703,18 @@ public class LevelGoals {
                 }
             }
         }
+        
+        
+        if (!changeSpeed) {
+            changeSpeed = true;
+            for (int i = 0; i < levelGoals.size(); i++){
+                LevelGoal lg = levelGoals.get(i);
+                if (lg.type == LevelGoal.FINISH_LEVEL_WITHOUT_CHANGE_SPEED){
+                        Game.messages.showMessage(lg.messageText);
+                }
+            }
+        }
+        
     }
 
     public void notifyLeftBorderTouch() {
@@ -764,6 +778,8 @@ public class LevelGoals {
 
             leftBorderTouch = false;
             rightBorderTouch = false;
+            
+            changeSpeed = false;
 
             warning60 = false;
             warning30 = false;
