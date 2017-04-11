@@ -25,6 +25,35 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         return mInstance;
     }
     
+    
+    public int getLevelPoints(int l){
+        openDataBase();
+ 
+        String[] projection = {
+                 DataBaseContract.DataLevels.COLUMN_POINTS
+             };
+
+        String selection =
+            DataBaseContract.Bars.COLUMN_NUMBER + " = "+l;
+
+        Cursor cursor = myDataBase.query(
+                 DataBaseContract.DataLevels.TABLE_NAME,        // The table to query
+                 projection,                               // The columns to return
+                 selection,                                // The columns for the WHERE clause
+                 null,                            // The values for the WHERE clause
+                 null,                                     // don't group the rows
+                 null,                                     // don't filter by row groups
+                 null                                      // don't sort
+        );
+       
+        int i = 0;
+        while(cursor.moveToNext()){
+            return cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS))     
+        }
+   }
+    
+    
+    
     public SaveGame getSaveGame(){
         openDataBase();
 
