@@ -585,6 +585,9 @@ public class LevelGoals {
 
     public void notifyBarMoveByWind(long time){
 
+        // TODO não considerar quando o jogo está pausado
+        
+        
         if (barMoveByWindLoose){
             return;
         }
