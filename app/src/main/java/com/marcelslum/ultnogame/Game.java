@@ -157,7 +157,10 @@ public class Game {
     public static boolean returningFromInterstitialFlag = false;
     public static boolean settingMessageForScore = false;
     public static String messageForScore = ".";
-
+    public static boolean forBlueBallExplode = false;
+    public static float blueBallExplodeX = 0;
+    public static float blueBallExplodeY = 0;
+    
 
     private Game() {}
 
