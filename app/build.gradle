@@ -1,14 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
+
+
+    def keystorePropertiesFile = rootProject.file("keystore.properties")
+    // Initialize a new Properties() object called keystoreProperties.
+    def keystoreProperties = new Properties()
+    // Load your keystore.properties file into the keystoreProperties object.
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
     signingConfigs {
         config {
-            keyAlias "ultno"
-            keyPassword "marcelslumultno"
-            storeFile file("D:/Ultno/APK/android.jks")
-            storePassword "marcelslum"
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
         }
     }
+
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
     apply plugin: 'com.android.application'
@@ -16,8 +25,9 @@ android {
         applicationId 'com.marcelslum.ultno'
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.1-alpha"
+        versionCode 4
+        versionName "1.4-alpha"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {

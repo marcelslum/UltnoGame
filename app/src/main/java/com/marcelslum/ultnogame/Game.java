@@ -985,7 +985,7 @@ public class Game {
                                resolutionY * 0.7f,
                                groupsUnblockedSize, groupsUnblockedSize,
                                lgd.textureUnit,
-                               TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID))
+                               lgd.textureData)
                            );
                    }
                 }
