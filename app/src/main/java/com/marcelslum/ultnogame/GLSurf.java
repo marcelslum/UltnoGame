@@ -82,10 +82,22 @@ public class GLSurf extends GLSurfaceView {
 
     public void setScoreMessage(){
         queueEvent(new Runnable() {
-            // This method will be called on the rendering
-            // thread:
             public void run() {
                 ScoreHandler.scorePanel.showMessage(Game.messageForScore, 2000);
+            }});
+    }
+    
+    public void explodeBlueBall(){
+        queueEvent(new Runnable() {
+            public void run() {
+                ParticleGenerator pg = new ParticleGenerator("explode",
+                    Game.blueBallExplodeX, 
+                    Game.blueBallExplodeY,                                          
+                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_1_ID),
+                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_2_ID),
+                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_3_ID));
+                game.particleGenerators.add(pg);
+                pg.activate();
             }});
     }
 
