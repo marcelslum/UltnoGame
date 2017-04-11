@@ -124,12 +124,12 @@ public class LevelGoalsPanel extends Entity{
                             Image star = lines.get(l).stars.get(i);
 
                             final Animation a2 = Utils.createAnimation2v(star, "scaleX2", "scaleX", 250, 0f, 0f, 1f, 1f, false, true);
-                            final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size * 0.5f, 1f, 0f, false, true);
+                            final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size, 1f, 0f, false, true);
 
                             final Line innerLine = lines.get(l);
 
                             Animation a = Utils.createAnimation2v(star, "scaleX", "scaleX", 250, 0f, 1f, 1f, 0f, false, true);
-                            Animation ab = Utils.createAnimation2v(star, "translateX", "translateX", 250, 0f, 0f, 1f, size * 0.5f, false, true);
+                            Animation ab = Utils.createAnimation2v(star, "translateX", "translateX", 250, 0f, 0f, 1f, size, false, true);
                             a.setAnimationListener(new Animation.AnimationListener() {
                                 @Override
                                 public void onAnimationEnd() {
