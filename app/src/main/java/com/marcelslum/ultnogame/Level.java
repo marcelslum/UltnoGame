@@ -78,6 +78,9 @@ public class Level {
 
     public void loadEntities() {
         Game.eraseAllGameEntities();
+        
+        BrickBackground.ballCollidedFx = 0;
+        
         Game.quad = new Quadtree(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY,2,8);
 
         MessageStarWin.initMessageStarsWin();
