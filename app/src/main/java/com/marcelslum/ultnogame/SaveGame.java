@@ -68,7 +68,11 @@ public class SaveGame {
     public static void onFailLoadFromSnapshot() {
         Log.e(TAG, "Não carregou Snapshot");
 
-        if (!DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew()){
+        if (!DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew()
+           || DataBaseSaveDataHelper.getInstance(Game.mainActivity)
+           
+           
+           ){
             Log.e(TAG, "Carregando apenas localmente.");
             saveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
             
