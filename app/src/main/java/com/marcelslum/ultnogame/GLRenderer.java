@@ -181,6 +181,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
             Game.settingMessageForScore = false;
             myGlSurf.setScoreMessage();
         }
+        
+        if (Game.forBlueBallExplode){
+            Game.forBlueBallExplode = false;
+            myGlSurf.explodeBlueBall();      
+        }
 
         // Get the current time
         long now = System.currentTimeMillis();
