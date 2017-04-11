@@ -235,7 +235,12 @@ public class LevelGoal{
             messageText = Game.getContext().getResources().getString(R.string.levelGoal34m);
         } else if (type == FINISH_IN_N_SECONDS) {
             messageText = Game.getContext().getResources().getString(R.string.levelGoal1m);
+        } else if (type == FINISH_LEVEL_WITHOUT_CHANGE_SPEED) {
+            messageText = Game.getContext().getResources().getString(R.string.levelGoal17m);
         }
+        
+        
+        FINISH_LEVEL_WITHOUT_CHANGE_SPEED
     }
 
     public LevelGoal(int numberOfStars, int type, int value) {
