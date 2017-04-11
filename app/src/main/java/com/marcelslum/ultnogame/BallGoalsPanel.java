@@ -135,13 +135,9 @@ public class BallGoalsPanel extends Entity{
 
             setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
             
-            ParticleGenerator pg = new ParticleGenerator("explode",
-                                initialX + animTranslateX + ((lastXBall)*animScaleX), y + animTranslateY + ((size/2f)*animScaleY),
-                                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_1_ID),
-                                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_2_ID),
-                                TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_3_ID));
-                            particleGenerators.add(pg);
-                            pg.activate();
+            Game.forBlueBallExplode = true;
+            
+           
         }
     }
 
