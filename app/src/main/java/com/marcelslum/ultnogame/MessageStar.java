@@ -54,7 +54,7 @@ public class MessageStar extends Entity {
                 ab = Utils.createAnimation4v(star, "translateX", "translateX", 750, 0f, Game.resolutionX * 0.5f, 0.33f + (1 * 0.02f), 0f, 0.66f, 0f, 1f, size * 0.5f, false, true);
 
                 final Animation a2 = Utils.createAnimation2v(star, "scaleX2", "scaleX", 250, 0f, 0f, 1f, 1f, false, true);
-                final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size * 0.5f, 1f, 0f, false, true);
+                final Animation ab2 = Utils.createAnimation2v(star, "translateX2", "translateX", 250, 0f, size, 1f, 0f, false, true);
 
                 Animation a = Utils.createAnimation4v(star, "scaleX", "scaleX", 750, 0f, 1f, 0.33f, 1f, 0.66f, 1f, 1f, 0f, false, true);
                 a.setAnimationListener(new Animation.AnimationListener() {
