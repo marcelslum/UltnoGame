@@ -53,6 +53,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
                       } catch (IOException e) {
                           Log.e(TAG, e.getMessage());
                       }
+                  setNotNew(); 
               }
         }else{
             db_Read = getReadableDatabase();
@@ -63,7 +64,9 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }
+            setNotNew(); 
         }
+        
     }
      
     private boolean checkDataBase(){
@@ -138,6 +141,15 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
         int v =  cursor.getInt(0);
 
         return v == 1 ? true : false;
+    }
+    
+    public void setNotNew() {
+        openDataBase();
+        myDataBase = getWritable();
+        
+         ContentValues data=new ContentValues();
+         data.put("isNew", 0);
+         myDataBase.update("dbVersion", data, "_id =" + 1, null);
     }
      
      @Override
