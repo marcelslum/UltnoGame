@@ -151,7 +151,7 @@ public class WindNoShader extends Entity{
                                                 );
             
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, wavesTextureData[i], 0.1f);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, wavesTextureData[i], 0.05f);
         }
         
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
