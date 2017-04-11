@@ -69,9 +69,10 @@ public class SaveGame {
         Log.e(TAG, "Não carregou Snapshot");
 
         if (!DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew()
-           || DataBaseSaveDataHelper.getInstance(Game.mainActivity)
-           
-           
+            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(1) != 0
+            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(2) != 0
+            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3) != 0
+            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4) != 0
            ){
             Log.e(TAG, "Carregando apenas localmente.");
             saveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
