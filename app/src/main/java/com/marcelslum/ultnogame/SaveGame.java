@@ -67,6 +67,13 @@ public class SaveGame {
 
     public static void onFailLoadFromSnapshot() {
         Log.e(TAG, "Não carregou Snapshot");
+        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew());
+        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(1));
+        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(2));
+        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3));
+        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4));
+
+
 
         if (!DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew()
             || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(1) != 0

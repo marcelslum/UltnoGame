@@ -134,10 +134,11 @@ public class BallGoalsPanel extends Entity{
             Sound.play(Sound.soundBlueBallExplosion2, 1, 1, 0);
 
             setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
-            
+
+            Game.blueBallExplodeX = initialX + animTranslateX + ((lastXBall)*animScaleX);
+            Game.blueBallExplodeY =  y + animTranslateY + ((size/2f)*animScaleY);
             Game.forBlueBallExplode = true;
-            
-           
+
         }
     }
 

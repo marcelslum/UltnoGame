@@ -90,14 +90,18 @@ public class GLSurf extends GLSurfaceView {
     public void explodeBlueBall(){
         queueEvent(new Runnable() {
             public void run() {
-                ParticleGenerator pg = new ParticleGenerator("explode",
-                    Game.blueBallExplodeX, 
-                    Game.blueBallExplodeY,                                          
-                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_1_ID),
-                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_2_ID),
-                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_3_ID));
-                game.particleGenerators.add(pg);
-                pg.activate();
+                if (Game.ballGoalsPanel != null) {
+                    ParticleGenerator pg = new ParticleGenerator("explode",
+                        Game.blueBallExplodeX,
+                        Game.blueBallExplodeY,
+                        TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_1_ID),
+                        TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_2_ID),
+                        TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_3_ID));
+
+                    Game.ballGoalsPanel.particleGenerators.add(pg);
+                    pg.activate();
+                }
+
             }});
     }
 

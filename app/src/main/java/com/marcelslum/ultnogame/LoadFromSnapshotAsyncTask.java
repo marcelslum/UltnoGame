@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class LoadFromSnapshotAsyncTask extends AsyncTask<String,Integer,Snapshots.OpenSnapshotResult> {
 
 
-    final static String SNAPSHOT_FILE_NAME = "ultno.SavedGameteste2";
+    final static String SNAPSHOT_FILE_NAME = "ultno.SavedGameteste4";
     private static final String TAG = "LoadFromSnapshotAsync";
 
     @Override

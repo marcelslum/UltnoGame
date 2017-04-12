@@ -135,11 +135,11 @@ public class LevelGoalsPanel extends Entity{
                                 public void onAnimationEnd() {
                                     innerLine.changeShineStars(true);
                                     a2.start();
-                                    ab2.start();
+                                    //ab2.start();
                                 }
                             });
                             a.start();
-                            ab.start();
+                            //ab.start();
                         }
                     }
                 }

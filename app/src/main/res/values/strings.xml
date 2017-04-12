@@ -59,7 +59,7 @@
     <string name="t1t13">Finalizar o nível será sempre um dos objetivos.</string>
     <string name="t1t14">Os demais objetivos poderão mudar a cada nível.</string>
     <string name="t1t15">Além de desbloquear novos níveis, coletar estrelas concede pontos extras ao finalizar o nível.</string>
-    <string name="t1t16">Um objeto poderá valer de 1 a 5 estrelas. Cada nível terá 5 estrelas disponíveis para coleta.</string>
+    <string name="t1t16">Um objetivo poderá valer de 1 a 5 estrelas. Cada nível terá 5 estrelas disponíveis para coleta.</string>
     <string name="t1t17">As estrelas são efetivamente coletadas somente se o nível for finalizado.</string>
     <string name="t1t18">É possível jogar novamente um nível já finalizado para tentar melhorar a quantidade de estrelas e pontos adquiridos.</string>
     <string name="t1t19">A cada nova tentativa, você começará o nível sem nenhuma estrela, ou seja, sem nenhum objetivo completo.</string>
@@ -88,10 +88,10 @@
     <string name="t3t15">Use esses recursos para controlar a bola e eliminar os alvos mais rapidamente.</string>
 
     <string name="t4t1">Outra forma de controlar o âgulo da bola é através da inclinação da barra.</string>
-    <string name="t4t2">Mova seu dispositivo rapidademente para a esquerda ou para a direita para a barra se inclinar</string>
+    <string name="t4t2">Mova ou incline seu dispositivo rapidademente para a esquerda ou para a direita para a barra se inclinar</string>
     <string name="t4t3">O movimento deve ser feito como você fosse dar um tranco.</string>
-    <string name="t4t4">Se o tranco for dado para a esquerda, a barra se inclinará para a direita.</string>
-    <string name="t4t5">Se o tranco for dado para a direita, a inclinação será para a esquerda.</string>
+    <string name="t4t4">Se o movimento for feito para a esquerda, a barra se inclinará para a direita.</string>
+    <string name="t4t5">Se o movimento for dado para a direita, a inclinação será para a esquerda.</string>
     <string name="t4t6">Executar esse movimento ao atingir a bola com a barra fará com que o ângulo da bola se altere.</string>
     <string name="t4t7">Se a inclinação ocorrer na mesma direção do movimento da bola, o ângulo diminuirá.</string>
     <string name="t4t8">Se a inclinação ocorrer na direção contrária ao movimento da bola, o ângulo aumentará.</string>
@@ -112,10 +112,10 @@
     <string name="t7t4">NÃO é necessário manter todas as quatro bolas vivas.</string>
     <string name="t7t5">Por enquanto, somente uma delas deve ser mantida viva.</string>
     <string name="t7t6">A quantidade de bolas a serem salvas e que podem ser perdidas é representada no painel.</string>
-    <string name="t7t7">Em preto, aparece a quantidade de bolas que devem permanecer vivas.</string>
-    <string name="t7t8">Em azul, a quantidade de bolas que podem ser perdidas.</string>
+    <string name="t7t7">As bolas pretas representam a quantidade de bolas que devem permanecer vivas.</string>
+    <string name="t7t8">As bolas azuis representam a quantidade de bolas podem ser perdidas.</string>
     <string name="t7t9">As cores azul e preta são apenas ilustrativas, ou seja, tanto faz a cor da bola que permanecerá no jogo.</string>
-    <string name="t7t10">Além da vantagem óbvia de poder atingir mais alvos ao mesmo tempo, a manutenção de bolas trás outros benefícios.</string>
+    <string name="t7t10">Além da vantagem óbvia de poder atingir mais alvos ao mesmo tempo, a manutenção de bolas extras trás outros benefícios.</string>
     <string name="t7t11">Para cada bola extra viva, a pontuação ao atingir um alvo é dobrada.</string>
     <string name="t7t12">Além disso, ao completar o nível, bolas extras vivas darão ainda mais pontos extras.</string>
     <string name="t7t13">Portanto, procure manter as bolas extras o máximo de tempo possível.</string>

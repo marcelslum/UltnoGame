@@ -38,7 +38,7 @@ public class WindNoShader extends Entity{
         isActive = false;
         isSolid = false;
         isCollidable = false;
-        quantityOfWaves = 20;
+        quantityOfWaves = 40;
         
         wavesTextureData = new TextureData[quantityOfWaves];
         waveX = new float[quantityOfWaves];
@@ -73,9 +73,9 @@ public class WindNoShader extends Entity{
             waveY[i] = randonWaveY * height;
             
             if (toRight){
-                waveX[i] = -(width * randonWaveY);
+                waveX[i] = -(width * randonWaveY * 2);
             } else {
-                waveX[i] = width + (width * randonWaveY);
+                waveX[i] = width + (width * randonWaveY * 2);
             }
             
             waveVx[i] = randonWaveVx;
@@ -98,7 +98,7 @@ public class WindNoShader extends Entity{
                     float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
 
                     float randonWaveVx = Utils.getRandonFloat(8.0f, 12.0f);
-                    waveX[i] = -(width * randonWaveY);
+                    waveX[i] = -(width * randonWaveY * 2);
                     
                     waveY[i] = randonWaveY * height;
                     waveVx[i] = randonWaveVx;
@@ -109,7 +109,7 @@ public class WindNoShader extends Entity{
 
                     float randonWaveY = Utils.getRandonFloat(0.0f, 1.0f);
                     float randonWaveVx = Utils.getRandonFloat(8.0f, 12.0f) * -1f;
-                    waveX[i] = width + (width * randonWaveY);
+                    waveX[i] = width + (width * randonWaveY * 2);
                     waveY[i] = randonWaveY * height;
                     waveVx[i] = randonWaveVx;
                 }
@@ -151,7 +151,7 @@ public class WindNoShader extends Entity{
                                                 );
             
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, wavesTextureData[i], 0.05f);
+            Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, wavesTextureData[i], 0.06f);
         }
         
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
