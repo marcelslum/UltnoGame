@@ -982,7 +982,7 @@ public class Game {
 
                 for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++){
                    final LevelsGroupData lgd = LevelsGroupData.levelsGroupData.get(i);
-                   if (lgd.starsToUnlock > StarsHandler.conqueredStarsTotal && lgd.starsToUnlock <= newStarsTotal){
+                   if (lgd.starsToUnlock >= StarsHandler.conqueredStarsTotal && lgd.starsToUnlock <= newStarsTotal){
                            groupsUnblocked.add(
                                new Image("groupsUnblocked"+i, 0f,
                                resolutionY * 0.7f,
@@ -1333,7 +1333,6 @@ public class Game {
         if (gameState != GAME_STATE_VITORIA) {
             TimeHandler.updateTimeOfLevelPlay(elapsed);
         }
-
 
         if (ButtonHandler.buttonReturn != null){
             //Log.e(TAG, "buttonReturn ");

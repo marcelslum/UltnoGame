@@ -771,53 +771,53 @@ public class LevelGoals {
     }
 
     public void clearAchievements() {
-        for (int i = 0; i < levelGoals.size(); i++){
+        for (int i = 0; i < levelGoals.size(); i++) {
             levelGoals.get(i).achieved = false;
-
-            barMoveByWind = 0;
-            barMoveByWindLoose = false;
-
-            listeningLivingBalls = false;
-
-            leftBorderTouch = false;
-            rightBorderTouch = false;
-            
-            changeSpeed = false;
-
-            warning60 = false;
-            warning30 = false;
-            warning10 = false;
-
-            timesWhereAngleDecreased = 0;
-            timesWhereAngleIncreased = 0;
-            timesOfAccelerate = 0;
-            timesOfDecelerate = 0;
-            timesOfChangeBallSpeedInARow = 0;
-            timesOfObstacleHit = 0;
-            timesOfCollisionBetweenBalls = 0;
-            timesOfBallReachedWithMaximunBarSpped = 0;
-            timesOfFakeBallsHitted = 0;
-
-            secretLevel4Step = 0;
-            secretLevel5Step = 0;
-
-            timesWhereAngleDecreasedOnlyWithBarMovement = 0;
-            timesWhereAngleIncreasedOnlyWithBarMovement = 0;
-
-            timesWhereAngleDecreasedOnlyWithBarInclination = 0;
-            timesWhereAngleIncreasedOnlyWithBarInclination = 0;
-
-            timesWhereAngleIncreasedWithBarMovementAndInclination = 0;
-            timesWhereAngleDecreasedWithBarMovementAndInclination = 0;
-
-            timesOfAccelerationWithBarIncreasingAngle = 0;
-            timesOfDecelerationWithBarDecreasingAngle = 0;
-
-            timesOfAccelerationWithoutReachingMinAngle = 0;
-            timesOfDecelerationWithoutReachingMaxAngle = 0;
-
         }
+
+        barMoveByWind = 0;
+        barMoveByWindLoose = false;
+
+        listeningLivingBalls = false;
+
+        leftBorderTouch = false;
+        rightBorderTouch = false;
+
+        changeSpeed = false;
+
+        warning60 = false;
+        warning30 = false;
+        warning10 = false;
+
+        timesWhereAngleDecreased = 0;
+        timesWhereAngleIncreased = 0;
+        timesOfAccelerate = 0;
+        timesOfDecelerate = 0;
+        timesOfChangeBallSpeedInARow = 0;
+        timesOfObstacleHit = 0;
+        timesOfCollisionBetweenBalls = 0;
+        timesOfBallReachedWithMaximunBarSpped = 0;
+        timesOfFakeBallsHitted = 0;
+
+        timesOfDecelerationInARow = 0;
+        timesOfAccelerationInARow = 0;
+
+        secretLevel4Step = 0;
+        secretLevel5Step = 0;
+
+        timesWhereAngleDecreasedOnlyWithBarMovement = 0;
+        timesWhereAngleIncreasedOnlyWithBarMovement = 0;
+
+        timesWhereAngleDecreasedOnlyWithBarInclination = 0;
+        timesWhereAngleIncreasedOnlyWithBarInclination = 0;
+
+        timesWhereAngleIncreasedWithBarMovementAndInclination = 0;
+        timesWhereAngleDecreasedWithBarMovementAndInclination = 0;
+
+        timesOfAccelerationWithBarIncreasingAngle = 0;
+        timesOfDecelerationWithBarDecreasingAngle = 0;
+
+        timesOfAccelerationWithoutReachingMinAngle = 0;
+        timesOfDecelerationWithoutReachingMaxAngle = 0;
     }
-
-
 }
