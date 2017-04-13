@@ -19,6 +19,7 @@ public class SpecialBall extends Circle{
         textureId = Texture.TEXTURES;
         textureMap = 0;
         textureSituation = 0;
+        alpha = 1f;
         setDrawInfo();
     }
 
@@ -26,7 +27,7 @@ public class SpecialBall extends Circle{
         verticesData = new float[12];
         indicesData = new short[6];
         uvsData =  new float[8];
-        colorsData = new float[16];
+        //colorsData = new float[16];
 
         Utils.insertRectangleVerticesData(verticesData, 0, 0f - radius, radius, 0f - radius, radius, 0f);
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
@@ -34,8 +35,8 @@ public class SpecialBall extends Circle{
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
 
-        Utils.insertRectangleColorsData(colorsData, 0, 1.0f, 1.0f, 1.0f, 0.0f);
-        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
+        //Utils.insertRectangleColorsData(colorsData, 0, 1f, 1f, 1f, 0f);
+        //colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
 
         updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BE12_ID));
         //setUvData();
@@ -50,7 +51,7 @@ public class SpecialBall extends Circle{
 
             switch (textureMap) {
                 case 0:
-                    updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BE2_ID)); // TODO ALTERAR PARA BE1
+                    updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BE1_ID));
                     break;
                 case 1:
                     updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BE2_ID));
@@ -86,7 +87,7 @@ public class SpecialBall extends Circle{
                     updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BE12_ID));
                     break;
                 default:
-                    updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BE1_ID));
+                    updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BE2_ID));
                     break;
                 }
     }

@@ -2,8 +2,6 @@ precision mediump float;
 varying vec2 vv2_texCoord;
 varying float vf_alpha;
 uniform sampler2D us_texture;
-varying vec4 vv4_Colors;
-uniform vec2 uv2_resolution;
 uniform float uf_time;
 void main() {
    vec4 color = texture2D( us_texture, vv2_texCoord);

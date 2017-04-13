@@ -243,7 +243,7 @@ public class LevelGoalsLoader {
 
         ln += 1; // ---------- LEVEL 34
         if (levelNumber == ln) {
-            lg.add(new LevelGoal(2, LevelGoal.JUST_FINISH, 0));
+            lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(1, LevelGoal.CAUSE_N_COLLISIONS_BETWEEN_BALLS, 6));
             lg.add(new LevelGoal(1, LevelGoal.ACCELERATE_N_TIMES_IN_A_ROW, 6));
             lg.add(new LevelGoal(1, LevelGoal.DECELERATE_MINIMUN, 0));

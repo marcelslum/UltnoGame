@@ -232,12 +232,11 @@ public class GLRenderer implements GLSurfaceView.Renderer {
                 for (int i = 0; i < frameDurations.size(); i++){
                     soma += frameDurations.get(i);
                 }
-                //Log.e("GLRenderer"," frame duration: "+(soma / frameDurations.size()));
-                //Log.e("GLRenderer"," longestFrame: "+longestFrame);
+                Log.e("GLRenderer"," frame duration: "+(soma / frameDurations.size()));
+                Log.e("GLRenderer"," longestFrame: "+longestFrame);
                 frameDurations.clear();
                 longestFrame = 0;
             }
-
 
             if (elapsed > (frameDuration*3) && Game.gameState == Game.GAME_STATE_JOGAR){
                 //Log.e("GLRenderer", "frame muito longo, reduzindo de " + elapsed + " para " + (frameDuration*3));

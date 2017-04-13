@@ -646,7 +646,7 @@ public class Entity{
                     if (this.textureId != -1) {
                         // Get handle to texture coordinates location and load the texture uvs
                         av2_uvHandle = GLES20.glGetAttribLocation(program.get(), "av2_uv");
-                        GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, this.uvsBuffer);
+                        GLES20.glVertexAttribPointer(av2_uvHandle, 2, GLES20.GL_FLOAT, false, 0, uvsBuffer);
                         GLES20.glEnableVertexAttribArray(av2_uvHandle);
                     }
 
@@ -654,7 +654,7 @@ public class Entity{
                     if (this.colorsBuffer != null){
                         //Log.e("tag "+this.name, "tem cor");
                         av4_colorsHandle = GLES20.glGetAttribLocation(program.get(), "av4_colors" );
-                        GLES20.glVertexAttribPointer ( av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, this.colorsBuffer);
+                        GLES20.glVertexAttribPointer ( av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, colorsBuffer);
                         GLES20.glEnableVertexAttribArray ( av4_colorsHandle );
                     }
 
@@ -677,20 +677,11 @@ public class Entity{
                     GLES20.glUniformMatrix4fv(um4_modelHandle, 1, false, this.matrixModel, 0);
                     //Log.e("render", " ");
 
-                    // TODO verificar se a inversão do eixo y considera o offset
 
-                    if (program == Game.windProgram || program == Game.specialBallProgram){
+                    if (program == Game.specialBallProgram){
                         float time = ((Utils.getTime() - Game.initTime)) / 1000f;
-                        if (program == Game.windProgram) {
-                           time = (time - (((float)Math.floor(time/color.b)) * color.b))/color.b;//Log.e("entity", "time " + time);
-                        }
-
-
                         int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
-                        GLES20.glUniform1f(uf_time, (float)time);
-                        int uv2_resolution = GLES20.glGetUniformLocation(this.program.get(), "uv2_resolution");
-                        GLES20.glUniform2f(uv2_resolution, Game.effectiveScreenWidth, Game.effectiveScreenHeight);
-                        // TODO adicionar screen offset ao wind
+                        GLES20.glUniform1f(uf_time, time);
                     }
 
                     if (this.program == Game.imageColorizedFxProgram){
