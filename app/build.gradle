@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-
-
     def keystorePropertiesFile = rootProject.file("keystore.properties")
     // Initialize a new Properties() object called keystoreProperties.
     def keystoreProperties = new Properties()
@@ -19,11 +17,11 @@ android {
     }
 
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '27.0.3'
     apply plugin: 'com.android.application'
     defaultConfig {
         applicationId 'com.marcelslum.ultno'
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 23
         versionCode 4
         versionName "1.4-alpha"
@@ -31,13 +29,13 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //minifyEnabled true
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
         debug {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //minifyEnabled true
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
     }
@@ -46,8 +44,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.google.android.gms:play-services:10.2.0'
-    //compile 'com.google.android.gms:play-services-games:9.6.1'
-    //compile 'com.google.android.gms:play-services-ads:9.6.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.google.android.gms:play-services-games:11.8.0"
+    implementation "com.google.android.gms:play-services-auth:11.8.0"
+    implementation 'com.google.android.gms:play-services-ads:11.8.0'
 }

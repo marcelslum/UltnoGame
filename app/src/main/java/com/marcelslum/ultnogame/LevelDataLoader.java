@@ -126,10 +126,6 @@ public class LevelDataLoader {
             levelsIntroduced += d.levels;
         }
 
-
-
-
-
         // introduz os levels
         for (int i = 0; i < Game.levelsDataBaseData.size(); i++){
 
@@ -249,8 +245,6 @@ public class LevelDataLoader {
                 case 100: textureDataId = TextureData.TEXTURE_l100; break;
                 default: textureDataId = TextureData.TEXTURE_l1; break;
             }
-
-            Log.e(TAG, " "+d.number + " "+textureDataId+ " ");
 
             if (d.number < 101) {
                 g.addLevel(

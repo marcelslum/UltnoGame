@@ -3,6 +3,7 @@ package com.marcelslum.ultnogame;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.text.NumberFormat;
@@ -10,6 +11,12 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Vibrator;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.Player;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -19,17 +26,17 @@ import static android.content.Context.ACTIVITY_SERVICE;
 
 public class Game {
 
+    public static MyGLSurface myGlSurface;
+
     public static Pool<Vector> vectorPool;
     public static Pool<Text> textPool;
     public static Pool<Button> buttonPool;
-    
-
-    public static boolean isOpenGL30 = false;
-    public static Program openGl30TextProgram;
 
     public static ArrayList<Text> textsForTest;
 
     public static final long TIME_OF_BALL_LISTENER = 250;
+
+    public static String playerName = ".";
     static Vibrator vibrator;
 
     static final String TAG = "Game";
@@ -77,6 +84,8 @@ public class Game {
     static Edge bordaD;
     static Edge bordaB;
     static Rectangle frame;
+    static Rectangle topFrame;
+
     static Image tittle;
     static ArrayList<Image> groupsUnblocked;
     static Image currentLevelIcon;
@@ -84,6 +93,7 @@ public class Game {
     static Image imageTutorialTop;
     static Image imageTutorialDown;
     static TextView aboutTextView;
+    static TextView notConnectedTextView;
 
     // quadtree objects
     static Quadtree quad;
@@ -172,12 +182,18 @@ public class Game {
         Game.eraseAllHudEntities();
 
         Log.e(TAG, "onAdClose Game.prepareAfterInterstitialFlag " + Game.prepareAfterInterstitialFlag);
+
+        if (gameState == GAME_STATE_MENU){
+            Game.setGameState(Game.GAME_STATE_MENU);
+            Game.prepareAfterInterstitialFlag = false;
+            return;
+        }
+
         if (Game.prepareAfterInterstitialFlag){
             Game.prepareAfterInterstitialFlag = false;
             LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
             Game.setGameState(Game.GAME_STATE_PREPARAR);
         } else if (SaveGame.saveGame.currentLevelNumber < 101){
-            //Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
             Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
         } else {
             Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
@@ -193,6 +209,12 @@ public class Game {
     
     
     public static void vibrate(int intensity){
+
+        // todo carregar save game no splash para ativar a opção de vibrar no menu
+        if (SaveGame.saveGame == null){
+            return;
+        }
+
         if (!SaveGame.saveGame.vibration){
             return;
         }
@@ -235,20 +257,8 @@ public class Game {
         Game.frame.alpha = 0f;
         TextureData.getTextureData();
 
-
-        textsForTest = new ArrayList<>();
-        /*
-        for (int i = 0; i < 1000; i++){
-            textsForTest.add(new Text("name "+ i, Utils.getRandonFloat(0f, Game.resolutionX),
-                    Utils.getRandonFloat(0f, Game.resolutionY),
-                    Utils.getRandonFloat(0f, Game.resolutionX*0.1f),
-                    "teste "+ i,
-                    font,
-                    new Color(Utils.getRandonFloat(0f, 1f), Utils.getRandonFloat(0f, 1f), Utils.getRandonFloat(0f, 1f), 1f)));
-        }
-        */
-
-
+        Game.topFrame = new Rectangle("frame", 0f, 0f, Entity.TYPE_OTHER, Game.resolutionX, Game.resolutionY * 0.12f, -1, new Color(0.2f, 0.2f, 0.2f, 1f));
+        Game.topFrame.clearDisplay();
 
         setGameState(Game.GAME_STATE_INTRO);
     }
@@ -312,6 +322,7 @@ public class Game {
                 Texture.TEXTURES,
                 TextureData.getTextureDataById(TextureData.TEXTURE_TITTLE_ID),
                 new Color(0.5f, 0.2f, 0.8f, 1f));
+        
 
         Animation animTittle = Utils.createAnimation5v(tittle, "numberForAnimation", "numberForAnimation", 5000, 0f, 1f, 0.15f, 2f, 0.45f, 3f, 0.6f, 4f, 0.85f, 5f, true, false);
         animTittle.setOnChangeNotFluid(new Animation.OnChange() {
@@ -335,13 +346,6 @@ public class Game {
 
     public static void initPrograms(){
 
-        if (isOpenGL30) {
-            openGl30TextProgram = new Program(Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_text),
-                    Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_text));
-            return;
-        }
-        
-        
         vertex_e_uv_com_alpha_program = new Program(
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_uv_com_alpha),
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_uv_com_alpha)
@@ -522,7 +526,7 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
-            MessagesHandler.messageConqueredStarsTotal.setY(resolutionY * 0.15f);
+            MessagesHandler.messageConqueredStarsTotal.setY(resolutionY * 0.2f);
             MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.25f);
             
         } else if (state == GAME_STATE_MENU_TUTORIAL){
@@ -560,23 +564,26 @@ public class Game {
             MessagesHandler.starForMessage.display();
             MessagesHandler.messageConqueredStarsTotal.display();
 
-            MessagesHandler.messageConqueredStarsTotal.setY(resolutionY*0.15f);
+            MessagesHandler.messageConqueredStarsTotal.setY(resolutionY*0.2f);
             MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.25f);
 
         } else if (state == GAME_STATE_INTRO) {
-            
             mainActivity.hideAdView();
-            ConnectionHandler.internetState = ConnectionHandler.INTERNET_STATE_NOT_CONNECTED;
-            Splash.timeInitIntro = Utils.getTime();
             Splash.init();
-            Splash.display();
-            
         } else if (state == GAME_STATE_OPCOES){
             
             SelectorHandler.repositionSelectors(state);
             mainActivity.showAdView();
             tittle.display();
             MenuHandler.menuOptions.appearAndUnblock(50);
+
+            if (mainActivity.isSignedIn()) {
+                MenuHandler.menuOptions.getMenuOptionByName("google").setText(getContext().getResources().getString(R.string.deslogarGoogle));
+            } else {
+                MenuHandler.menuOptions.getMenuOptionByName("google").setText(getContext().getResources().getString(R.string.logarGoogle));
+            }
+
+
 
         } else if (state == GAME_STATE_OPCOES_GAME){
             
@@ -606,19 +613,27 @@ public class Game {
             stopAndReleaseMusic();
             eraseAllGameEntities();
             eraseAllHudEntities();
-            MessagesHandler.messageSplash1.clearDisplay();
-            if (MessagesHandler.messageSplash2 != null) {
-                MessagesHandler.messageSplash2.clearDisplay();
-            }
             MenuHandler.menuMain.unblockAndDisplay();
             tittle.display();
             MessagesHandler.messageMaxScoreTotal.display();
+
+
+
+
+            MessagesHandler.messageGoogleLogged.display();
+
+            Log.e(TAG, "playerName "+playerName);
+
+            if (mainActivity.isSignedIn()){
+                MessagesHandler.messageGoogleLogged.setText(getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerName);
+            } else {
+                MessagesHandler.messageGoogleLogged.setText(getContext().getResources().getString(R.string.googleNaoLogado));
+            }
+
             MessagesHandler.bottomTextBox.display();
             MessagesHandler.setBottomMessage("", 0);
             MessagesHandler.messageMaxScoreTotal.setText(
                     getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
-            ConnectionHandler.verify();
-
         } else if (state == GAME_STATE_PREPARAR){
             
             eraseAllGameEntities();
@@ -692,6 +707,9 @@ public class Game {
             verifyDead();
 
         } else if (state == GAME_STATE_JOGAR){
+
+            Game.notConnectedTextView.clearDisplay();
+            Game.topFrame.clearDisplay();
 
             if (initPausedFlag){
                 initPausedFlag = false;
@@ -968,11 +986,11 @@ public class Game {
             int newStarsTotal = StarsHandler.conqueredStarsTotal + (StarsHandler.newStars - StarsHandler.previousStars);
 
             if (starsDiference > 0) {
-                GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                GoogleAPI.increment(
                         Game.getContext().getResources().getString(R.string.achievement_coleta_mnima), starsDiference);
-                GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                GoogleAPI.increment(
                         Game.getContext().getResources().getString(R.string.achievement_coleta_mdia), starsDiference);
-                GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+                GoogleAPI.increment(
                         Game.getContext().getResources().getString(R.string.achievement_coleta_mxima), starsDiference);
             }
 
@@ -1824,6 +1842,7 @@ public class Game {
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.checkTransformations(true);
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.checkTransformations(true);
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.checkTransformations(true);
+        if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.checkTransformations(true);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.checkTransformations(true);
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.checkTransformations(true);
@@ -1850,11 +1869,13 @@ public class Game {
         }
 
         if (aboutTextView != null) aboutTextView.checkTransformations(true);
+        if (aboutTextView != null) notConnectedTextView.checkTransformations(true);
         
         MessagesHandler.messageGameOver.checkTransformations(true);
         MessagesHandler.messagePreparation.checkTransformations(true);
         MessagesHandler.messageInGame.checkTransformations(true);
         MessagesHandler.messageMaxScoreTotal.checkTransformations(true);
+        MessagesHandler.messageGoogleLogged.checkTransformations(true);
         MessagesHandler.messageConqueredStarsTotal.checkTransformations(true);
         MessagesHandler.starForMessage.checkTransformations(true);
         MessagesHandler.bottomTextBox.checkTransformations(true);
@@ -1870,6 +1891,7 @@ public class Game {
         if (bordaB != null)bordaB.checkTransformations(true);
 
         if (frame != null)frame.checkTransformations(true);
+        if (frame != null)topFrame.checkTransformations(true);
 
         if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.checkTransformations(true);
         if (ballDataPanel != null) ballDataPanel.checkTransformations(true);
@@ -1958,12 +1980,14 @@ public class Game {
             pointsGroup.render(matrixView, matrixProjection);
         }
 
-        
+
+        if (topFrame != null)topFrame.prepareRender(matrixView, matrixProjection);
         
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.prepareRender(matrixView, matrixProjection);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.prepareRender(matrixView, matrixProjection);
@@ -1988,6 +2012,7 @@ public class Game {
         }
 
         if (aboutTextView != null) aboutTextView.prepareRender(matrixView, matrixProjection);
+
         
         MessagesHandler.messageGameOver.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messagePreparation.prepareRender(matrixView, matrixProjection);
@@ -1995,6 +2020,7 @@ public class Game {
         MessagesHandler.messageMenu.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageSubMenu.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
+        MessagesHandler.messageGoogleLogged.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
         MessagesHandler.starForMessage.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageGroupsUnblocked.prepareRender(matrixView, matrixProjection);
@@ -2024,20 +2050,22 @@ public class Game {
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.prepareRender(matrixView, matrixProjection);
         if (ButtonHandler.buttonGroupLeaderboard != null) ButtonHandler.buttonGroupLeaderboard.prepareRender(matrixView, matrixProjection);
 
-
         MessagesHandler.bottomTextBox.prepareRender(matrixView, matrixProjection);
 
         if (imageTutorialTop != null) imageTutorialTop.prepareRender(matrixView, matrixProjection);
 
+        if (notConnectedTextView != null) notConnectedTextView.prepareRender(matrixView, matrixProjection);
+
         if (messages != null) messages.prepareRender(matrixView, matrixProjection);
         if (frame != null)frame.prepareRender(matrixView, matrixProjection);
+
 
         processSimulateDurationTest(2);
     }
 
     static void verifyTouchBlock() {
         if (isBlocked) {
-            if (touchEvents.size() == 0){
+            if (touchEvents != null && touchEvents.size() == 0){
                 isBlocked = false;
             }
        }
@@ -2050,11 +2078,14 @@ public class Game {
                 interactionListeners.get(i).verify();
             }
         }
+
+        if (Splash.menuGoogle != null) Splash.menuGoogle.verifyListener();
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.verifyListener();
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.verifyListener();
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.verifyListener();
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.verifyListener();
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.verifyListener();
+        if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.verifyListener();
 
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.verifyListener();
         if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.verifyListener();
@@ -2069,6 +2100,7 @@ public class Game {
         if (ButtonHandler.buttonGroupLeaderboard != null) ButtonHandler.buttonGroupLeaderboard.verifyListener();
 
         if (aboutTextView != null) aboutTextView.verifyListener();
+        if (notConnectedTextView != null) notConnectedTextView.verifyListener();
         
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.verifyListener();
@@ -2082,9 +2114,13 @@ public class Game {
         if (MessagesHandler.bottomTextBox != null) MessagesHandler.bottomTextBox.verifyListener();
 
         // elimina os touchevents que tiverem o UP ativado, ou seja, que já foram considerados nesta passagem
-        for (int i2 = 0; i2 < Game.touchEvents.size();i2++) {
-            if (Game.touchEvents.get(i2).type == TouchEvent.TOUCH_TYPE_UP) {
-                Game.touchEvents.remove(i2);
+
+        if (touchEvents != null) {
+
+            for (int i2 = 0; i2 < Game.touchEvents.size(); i2++) {
+                if (Game.touchEvents.get(i2).type == TouchEvent.TOUCH_TYPE_UP) {
+                    Game.touchEvents.remove(i2);
+                }
             }
         }
     }
@@ -2094,6 +2130,7 @@ public class Game {
         list.add(MenuHandler.menuMain);
         list.add(MenuHandler.menuOptions);
         list.add(MenuHandler.menuTutorialUnvisited);
+        list.add(MenuHandler.menuConnect);
         list.add(MenuHandler.groupMenu);
         list.add(MenuHandler.levelMenu);
         list.add(MenuHandler.tutorialMenu);
@@ -2112,6 +2149,7 @@ public class Game {
         list.add(MenuHandler.menuGameOver);
         list.add(tittle);
         list.add(aboutTextView);
+        list.add(notConnectedTextView);
         list.add(MessagesHandler.messageGameOver);
         list.add(MessagesHandler.messagePreparation);
         list.add(MessagesHandler.messageInGame);
@@ -2119,6 +2157,7 @@ public class Game {
         list.add(MessagesHandler.messageSubMenu);
         list.add(MessagesHandler.messageGroupsUnblocked);
         list.add(MessagesHandler.messageMaxScoreTotal);
+        list.add(MessagesHandler.messageGoogleLogged);
         list.add(MessagesHandler.messageConqueredStarsTotal);
         list.add(MessagesHandler.starForMessage);
         list.add(MessagesHandler.messageBack);

@@ -1,21 +1,16 @@
 package com.marcelslum.ultnogame;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,55 +22,46 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.Drive;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.Games;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.games.Player;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 import android.os.Vibrator;
 
 import java.io.IOException;
 
 public class MainActivity extends FragmentActivity implements
-        GoogleApiClient.ConnectionCallbacks, OnConnectionFailedListener,
-        SensorEventListener{
+        SensorEventListener
+        {
 
-
-    public static DataBaseLevelDataHelper dataBaseLevelDataHelper;
-    public static DataBaseSaveDataHelper dataBaseSaveDataHelper;
 
     public static SensorManager mSensorManager;
     public static Sensor mAccelerometer;
 
-    public GLSurf glSurfaceView;
+    public MyGLSurface myGlSurface;
     private InterstitialAd interstitialWithVideo;
     private InterstitialAd interstitialNoVideo;
     private int interstitialActualMode = 0;
     public final static int INTERSTITIAL_MODE_WITH_VIDEO = 1;
     public final static int INTERSTITIAL_MODE_NO_VIDEO = 2;
 
-
-    public GoogleApiClient mGoogleApiClient;
-    AdView mAdView;
+            AdView mAdView;
     private final static String TAG = "MainActivity";
     public boolean isPaused = false;
 
-    // Request code to use when launching the resolution activity
-    private static final int REQUEST_RESOLVE_ERROR = 1001;
-    // Unique tag for the error dialog fragment
-    private static final String DIALOG_ERROR = "dialog_error";
-    // Bool to track whether the app is already resolving an error
     private boolean mResolvingError = false;
-
     private static final String STATE_RESOLVING_ERROR = "resolving_error";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e("mainActivity", "create");
         super.onCreate(savedInstanceState);
 
-
+        /*Inicia o banco de Level Data*/
         try {
             DataBaseLevelDataHelper.getInstance(this).prepareDatabase();
             Game.groupsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getGroupsDataBaseData();
@@ -84,38 +70,40 @@ public class MainActivity extends FragmentActivity implements
             throw new Error("Unable to create database");
         }
 
-
+        /*Inicia o banco de Save Data*/
         try {
             DataBaseSaveDataHelper.getInstance(this).prepareDatabase();
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
 
-
-
+        /*Inicia o hardware*/
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Game.vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-	    
         Log.e(TAG, "maxMemory "+maxMemory);
-	    
-	    Game.vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         mResolvingError = savedInstanceState != null
                 && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
 
         Game.mainActivity = this;
         Game.forInitGame = true;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
-                .build();
+        // Create the client used to sign in to Google services.
+
+        GoogleSignInOptions signInOption =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                        // Add the APPFOLDER scope for Snapshot support.
+                        //.requestScopes(Drive.SCOPE_APPFOLDER)
+                        .build();
+
+        GoogleAPI.mGoogleSignInClient = GoogleSignIn.getClient(this,
+                new GoogleSignInOptions.Builder(signInOption).build());
 
         // Fullscreen mode
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -134,125 +122,149 @@ public class MainActivity extends FragmentActivity implements
             }
         });
 
-        // Create and load the AdView.
+        // SURFACE VIEW
+        myGlSurface = new MyGLSurface(this);
+        myGlSurface.setPreserveEGLContextOnPause(true);
+        setContentView(R.layout.activity_main);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.gamelayout);
+        RelativeLayout.LayoutParams glParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        layout.addView(myGlSurface, glParams);
+
+        // INICIA A PROPAGANDA
         mAdView = new AdView(this);
         mAdView.setAdUnitId("ca-app-pub-2413920269734587/4375714557");
         mAdView.setAdSize(AdSize.SMART_BANNER);
 
-        glSurfaceView = new GLSurf(this);
-        glSurfaceView.setPreserveEGLContextOnPause(true);
-        setContentView(R.layout.activity_main);
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.gamelayout);
-        RelativeLayout.LayoutParams glParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        layout.addView(glSurfaceView, glParams);
-
-
-        // Add adView to the bottom of the screen.
+        // ADICIONA NO LAYOUT A PROPAGANDA
         RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         layout.addView(mAdView, adParams);
 
+        // INICIA A PROPAGANDA
         initAds();
-    }
-		
-		
 
-
-    public void hideAdView(){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAdView.pause();
-                mAdView.setVisibility(View.GONE);
-            }
-        });
     }
 
-    public void showAdView(){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAdView.resume();
-                mAdView.setVisibility(View.VISIBLE);
-            }
-        });
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(STATE_RESOLVING_ERROR, mResolvingError);
     }
 
-
-	private void initAds(){
-        AdRequest adRequestBanner = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
-                .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
-                .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
-                .build();
-        mAdView.loadAd(adRequestBanner);
-
-		interstitialWithVideo = new InterstitialAd(MainActivity.this);
-        interstitialWithVideo.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
-
-        interstitialNoVideo = new InterstitialAd(MainActivity.this);
-        interstitialNoVideo.setAdUnitId("ca-app-pub-2413920269734587/7806070555");
-	
-		final AdRequest adRequest = new AdRequest.Builder()
-		    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-		    .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
-            .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
-            .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
-            .build();
-
-        AdListener adListener = new AdListener() {
-            @Override
-            public void onAdLoaded() {
-            }
-
-            @Override
-            public void onAdClosed() {
-                        Game.returningFromInterstitialFlag = true;
-                        loadInterstitialAd();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Log.e("findStateMenu", "2" + "loader conclude "+Splash.loaderConclude);
-
-                if (ConnectionHandler.internetState != ConnectionHandler.INTERNET_STATE_NOT_CONNECTED){
-                    loadInterstitialAd();
-                }
-            }
-            @Override
-            public void onAdLeftApplication() {
-            }
-
-            @Override
-            public void onAdOpened() {
-            }
-        };
-
-        interstitialWithVideo.setAdListener(adListener);
-        interstitialNoVideo.setAdListener(adListener);
-
-        loadInterstitialAd();
-	}
-
-	public void loadInterstitialAd(){
-
-        final AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
-                .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
-                .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
-                .build();
-        if (ConnectionHandler.isConnectedWifi()) {
-            Log.e(TAG, "Conectado ao Wiji - carregando interstitialWithVideo");
-            interstitialWithVideo.loadAd(adRequest);
-            interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
+    public boolean isSignedIn() {
+        if (GoogleSignIn.getLastSignedInAccount(this) != null && DataBaseSaveDataHelper.getInstance(Game.mainActivity).getGooglePlayOption() == 1){
+            return true;
         } else {
-            Log.e(TAG, "Conectado ao Wiji - carregando interstitialNoVideo");
-            interstitialActualMode = INTERSTITIAL_MODE_NO_VIDEO;
-            interstitialNoVideo.loadAd(adRequest);
+            return false;
         }
+    }
+
+    public void signInSilently() {
+        Log.e(TAG, "signInSilently()");
+
+        GoogleAPI.mGoogleSignInClient.silentSignIn().addOnCompleteListener(this,
+                new OnCompleteListener<GoogleSignInAccount>() {
+                    @Override
+                    public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+                        if (task.isSuccessful()) {
+                            Log.e(TAG, "signInSilently(): success");
+                            onConnected(task.getResult());
+                        } else {
+                            Log.e(TAG, "signInSilently(): failure", task.getException());
+                            onDisconnected();
+                        }
+                    }
+                });
+    }
+
+    public void startSignInIntent() {
+        startActivityForResult(GoogleAPI.mGoogleSignInClient.getSignInIntent(), GoogleAPI.RC_SIGN_IN);
+    }
+
+    public void signOut() {
+        Log.d(TAG, "signOut()");
+
+        if (MenuHandler.menuOptions != null){
+            MenuHandler.menuOptions.getMenuOptionByName("google").setText(getResources().getString(R.string.logarGoogle));
+        }
+
+        if (!isSignedIn()) {
+            Log.w(TAG, "signOut() called, but was not signed in!");
+            return;
+        }
+
+        GoogleAPI.mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        boolean successful = task.isSuccessful();
+                        Log.d(TAG, "signOut(): " + (successful ? "success" : "failed"));
+                        onDisconnected();
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == GoogleAPI.RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task =
+                    GoogleSignIn.getSignedInAccountFromIntent(intent);
+
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                onConnected(account);
+            } catch (ApiException apiException) {
+                String message = apiException.getMessage();
+                if (message == null || message.isEmpty()) {
+                    message = getString(R.string.signin_other_error);
+                }
+
+                onDisconnected();
+
+                // TODO erro ao logar no google - exibir mensagem
+
+            }
+        }
+    }
+
+    private void onConnected(GoogleSignInAccount googleSignInAccount) {
+
+        Log.e(TAG, "onConnected");
+
+        GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
+        GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
+        GoogleAPI.mEventsClient = Games.getEventsClient(this, googleSignInAccount);
+        GoogleAPI.mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
+
+        GoogleAPI.mPlayersClient.getCurrentPlayer()
+                .addOnCompleteListener(new OnCompleteListener<Player>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Player> task) {
+                        if (task.isSuccessful()) {
+                            Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
+                            Game.playerName = task.getResult().getDisplayName();
+                        } else {
+                            Game.playerName = ".";
+                        }
+
+                        if (MessagesHandler.messageGoogleLogged != null) {
+                            MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + Game.playerName);
+                        }
+
+                    }
+                });
+    }
+
+    private void onDisconnected() {
+
+        Log.d(TAG, "onDisconnected()");
+
+        GoogleAPI.mAchievementsClient = null;
+        GoogleAPI.mLeaderboardsClient = null;
+        GoogleAPI.mPlayersClient = null;
+
     }
 
     @Override
@@ -274,12 +286,6 @@ public class MainActivity extends FragmentActivity implements
         runOnUiThread(new Runnable() {
             public void run() {
             int uiOptions = fa.getWindow().getDecorView().getSystemUiVisibility();
-            if (Build.VERSION.SDK_INT >= 14) {
-                uiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-            }
-            if (Build.VERSION.SDK_INT >= 16) {
-                uiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
-            }
             if (Build.VERSION.SDK_INT >= 18) {
                 uiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
             }
@@ -291,7 +297,6 @@ public class MainActivity extends FragmentActivity implements
     @Override
     protected void onPause() {
 
-
         DataBaseLevelDataHelper.getInstance(this).close();
         DataBaseSaveDataHelper.getInstance(this).close();
 
@@ -300,7 +305,11 @@ public class MainActivity extends FragmentActivity implements
         if (Game.gameState != Game.GAME_STATE_INTERSTITIAL) {
             SaveGame.save();
         }
-        glSurfaceView.onPause();
+
+        if (myGlSurface != null){
+            myGlSurface.onPause();
+        }
+
         if (mAdView != null) {
             mAdView.pause();
         }
@@ -365,59 +374,30 @@ public class MainActivity extends FragmentActivity implements
 	    }
     }
 
-    public void showInterstitial() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-
-            InterstitialAd interstitialAd;
-
-
-            if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {
-                Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
-                interstitialAd = interstitialWithVideo;
-            } else if (interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO){
-                Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
-                interstitialAd = interstitialNoVideo;
-            } else {
-                interstitialAd = interstitialNoVideo;
-            }
-            if (interstitialAd != null) {
-                if (interstitialAd.isLoaded()) {
-                    interstitialAd.show();
-                } else {
-                    Log.e("MainActivity", "Interstitial ad is not loaded yet");
-                    if (Game.gameState != Game.GAME_STATE_INTRO) {
-                        Log.e("findStateMenu", "4");
-                        if (SaveGame.saveGame.currentLevelNumber < 1000) {
-                            Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-                        } else {
-                            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-                        }
-                    }
-                }
-            }
-            }
-        });
-    }
-
     @Override
     protected void onResume() {
+
         Log.e("MainActivity", "onResume()");
+
         super.onResume();
+
         isPaused = false;
+
         setFullScreen();
-        glSurfaceView.onResume();
+
+        if (DataBaseSaveDataHelper.getInstance(Game.mainActivity).getGooglePlayOption() == 1) {
+            signInSilently();
+        }
+
+        if (myGlSurface != null){
+            myGlSurface.onResume();
+        }
 
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 
         if (mAdView != null) {
             mAdView.resume();
         }
-        if (!mGoogleApiClient.isConnecting() || !mGoogleApiClient.isConnected()){
-            mGoogleApiClient.connect();
-        }
-
-
     }
 
     @Override
@@ -428,75 +408,7 @@ public class MainActivity extends FragmentActivity implements
         super.onDestroy();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_RESOLVE_ERROR) {
-            mResolvingError = false;
-            if (resultCode == RESULT_OK) {
-                // Make sure the app is not already connected or attempting to connect
-                if (!mGoogleApiClient.isConnecting() &&
-                        !mGoogleApiClient.isConnected()) {
-                    ConnectionHandler.connect();
-                }
-            }
-        }
-    }
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(STATE_RESOLVING_ERROR, mResolvingError);
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult result) {
-        if (mResolvingError) {
-            // Already attempting to resolve an error.
-            return;
-        } else if (result.hasResolution()) {
-            try {
-                mResolvingError = true;
-                result.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
-            } catch (IntentSender.SendIntentException e) {
-                // There was an error with the resolution intent. Try again.
-                mGoogleApiClient.connect();
-            }
-        } else {
-            // Show dialog using GoogleApiAvailability.getErrorDialog()
-            showErrorDialog(result.getErrorCode());
-            mResolvingError = true;
-
-            if (Game.gameState != Game.GAME_STATE_INTRO){
-                Game.setGameState(Game.GAME_STATE_INTRO);
-            }
-        }
-    }
-
-    /* Creates a dialog for an error message */
-    private void showErrorDialog(int errorCode) {
-        // Create a fragment for the error dialog
-        ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
-        // Pass the error that should be displayed
-        Bundle args = new Bundle();
-        args.putInt(DIALOG_ERROR, errorCode);
-        dialogFragment.setArguments(args);
-        dialogFragment.show(getSupportFragmentManager(), "errordialog");
-    }
-
-    /* Called from ErrorDialogFragment when the dialog is dismissed. */
-    public void onDialogDismissed() {
-        mResolvingError = false;
-    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -504,25 +416,147 @@ public class MainActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
+    public void hideAdView(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdView.pause();
+                mAdView.setVisibility(View.GONE);
+            }
+        });
     }
 
-    /* A fragment to display an error dialog */
-    public static class ErrorDialogFragment extends DialogFragment {
-        public ErrorDialogFragment() { }
+    public void showAdView(){
+        ConnectionHandler.connect();
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Get the error code and retrieve the appropriate dialog
-            int errorCode = this.getArguments().getInt(DIALOG_ERROR);
-            return GoogleApiAvailability.getInstance().getErrorDialog(
-                    this.getActivity(), errorCode, REQUEST_RESOLVE_ERROR);
+        if (Game.notConnectedTextView != null) {
+            if (ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_NOT_CONNECTED) {
+                Game.notConnectedTextView.display();
+                Game.topFrame.display();
+            } else {
+                Game.notConnectedTextView.clearDisplay();
+                Game.topFrame.clearDisplay();
+            }
         }
 
-        @Override
-        public void onDismiss(DialogInterface dialog) {
-            ((MainActivity) getActivity()).onDialogDismissed();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdView.resume();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void initAds(){
+        AdRequest adRequestBanner = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
+                .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
+                .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
+                .build();
+        mAdView.loadAd(adRequestBanner);
+
+        interstitialWithVideo = new InterstitialAd(MainActivity.this);
+        interstitialWithVideo.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
+
+        interstitialNoVideo = new InterstitialAd(MainActivity.this);
+        interstitialNoVideo.setAdUnitId("ca-app-pub-2413920269734587/7806070555");
+
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                Game.returningFromInterstitialFlag = true;
+                loadInterstitialAd();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                if (ConnectionHandler.internetState != ConnectionHandler.INTERNET_STATE_NOT_CONNECTED){
+                    loadInterstitialAd();
+                }
+            }
+            @Override
+            public void onAdLeftApplication() {
+            }
+
+            @Override
+            public void onAdOpened() {
+            }
+        };
+
+        interstitialWithVideo.setAdListener(adListener);
+        interstitialNoVideo.setAdListener(adListener);
+
+        loadInterstitialAd();
+    }
+
+    public void loadInterstitialAd(){
+
+        final AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
+                .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
+                .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
+                .build();
+        if (ConnectionHandler.isConnectionWifi()) {
+            Log.e(TAG, "Conectado ao Wiji - carregando interstitialWithVideo");
+            interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
+            interstitialWithVideo.loadAd(adRequest);
+
+        } else {
+            Log.e(TAG, "Conectado ao Wiji - carregando interstitialNoVideo");
+            interstitialActualMode = INTERSTITIAL_MODE_NO_VIDEO;
+            interstitialNoVideo.loadAd(adRequest);
         }
+    }
+
+    public void showInterstitial() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+
+                InterstitialAd interstitialAd;
+
+                if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {
+                    Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
+                    interstitialAd = interstitialWithVideo;
+                } else if (interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO){
+                    Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
+                    interstitialAd = interstitialNoVideo;
+                } else {
+                    interstitialAd = interstitialNoVideo;
+                }
+
+    /*Verifica se a propaganda existe e foi carregada e direciona ao ponto correto em cada caso*/
+                if (interstitialAd != null) {
+                    if (interstitialAd.isLoaded()) {
+                        interstitialAd.show();
+                    } else {
+                        Log.e(getLocalClassName(), "Propaganda não carregada");
+                        if (Game.gameState != Game.GAME_STATE_INTRO) {
+                            if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                            } else {
+                                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                            }
+                        }
+                    }
+                } else {
+                    if (Game.gameState != Game.GAME_STATE_INTRO) {
+                        if (SaveGame.saveGame.currentLevelNumber < 1000) {
+                            Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                        } else {
+                            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                        }
+                    }
+                }
+            }
+        });
     }
 }

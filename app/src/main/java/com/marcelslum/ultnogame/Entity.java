@@ -589,50 +589,9 @@ public class Entity{
             return;
         }
 
-        if (name == "brickBackground"){
-            //Log.e(TAG, "render");
-        }
-
-        //if (type == TYPE_TEXT){
-        //    Log.e(TAG, "render text "+name);
-        // }
-
-        //if (vbo == null){
-        //    Log.e(TAG, name + " -> vbo null");
-        //} else {
-        //    Log.e(TAG, name + " -> " + vbo.length);
-        //}
-        
         setMatrixModel();
         
-        if (Game.isOpenGL30){
-
-            /*
-            GLES30.glUseProgram(Game.openGl30TextProgram.get());
-
-
-
-
-            GLES30.glBindBuffer ( GLES30.GL_ARRAY_BUFFER, mVBOIds[0] );
-            GLES30.glBufferData ( GLES30.GL_ARRAY_BUFFER, verticesData.length * 4,
-                    verticesBuffer, GLES30.GL_STATIC_DRAW );
-
-            GLES30.glBindBuffer ( GLES30.GL_ELEMENT_ARRAY_BUFFER, mVBOIds[1] );
-            GLES30.glBufferData ( GLES30.GL_ELEMENT_ARRAY_BUFFER, 2 * indicesData.length,
-                    indicesBuffer, GLES30.GL_STATIC_DRAW );
-
-            GLES30.glBindBuffer ( GLES30.GL_ARRAY_BUFFER, mVBOIds[2] );
-            GLES30.glBufferData ( GLES30.GL_ARRAY_BUFFER, 4 * colorsData.length,
-                    colorsBuffer, GLES30.GL_STATIC_DRAW );
-
-
-            GLES30.glBindVertexArray(vao[0]);
-            GLES30.glDrawElements(GLES30.GL_TRIANGLES, indicesData.length, GLES30.GL_UNSIGNED_SHORT, indicesBuffer);
-
-            return;
-            */
-
-        } else if (vbo == null || vbo.length == 0){
+       if (vbo == null || vbo.length == 0){
             
                     GLES20.glUseProgram(program.get());
 

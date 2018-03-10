@@ -3,12 +3,22 @@
     <string name="menuTutorialExibirTutorial">Exibir o tutorial</string>
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
     <string name="menuPrincipalIniciar">Jogar</string>
+    <string name="menuGoogleSim">Sim</string>
+    <string name="menuGoogleNao">Não</string>
+    <string name="menuGoogleMaisTarde">Lembrar-me na próxima vez</string>
+    <string name="menuGoogleOk">Ok</string>
     <string name="menuPrincipalAlterarNivel">Alterar nível</string>
     <string name="messageMaxScoreLevel">Maior pontução neste nível:</string>
     <string name="nivel">Nível: </string>
     <string name="messageMaxScoreTotal">Pontuação total: </string>
+    <string name="googleLogado">Bem vindo </string>
+    <string name="googleNaoLogado">Não conectado ao Google Play Games.</string>
     <string name="messageCurrentLevel">Nível</string>
     <string name="messageGameOver">GAME OVER</string>
+    <string name="messageNaoConectado1">Este jogo é totalmente gratuito. Apoie o desenvolvedor conectando-se à internet para exibir propagandas.</string>
+    <string name="messageGoogle1">Este jogo utiliza serviços do Google Play Games para exibir rankings e conquistas.</string>
+    <string name="messageGoogle1b">Deseja utilizar esse serviço?</string>
+    <string name="messageGoogle2">Você poderá alterar essa opção mais tarde no menu Opções do jogo.</string>
     <string name="score">score</string>
     <string name="pause">PAUSE</string>
     <string name="continuarJogar">Continuar</string>
@@ -183,7 +193,6 @@
     <string name="rankingObtidoAposVitoria">Ranking atingido:</string>
     <string name="splash_conectando">Conectando</string>
     <string name="splash_carregando">Carregando</string>
-    <string name="splash_nao_foi_possivel_conectar">Internet não conectada. Clique aqui para tentar novamente</string>
     <string name="signin_failure">Não foi possível conectar.</string>
     <string name="signin_other_error">Erro na conexão.</string>
     <string name="app_misconfigured">app_misconfigured</string>
@@ -191,10 +200,8 @@
     <string name="license_failed">license_failed</string>
 
     <string name="conquistas">Conquistas</string>
-    <string name="splash_nao_foi_possivel_conectar1">Não foi possível estabelecer conexão com a internet</string>
-    <string name="splash_nao_foi_possivel_conectar_ao_google">Não foi possível realizar conexão com o Google Play Games</string>
-    <string name="splash_clique_aqui">Clique aqui para tentar novamente</string>
     <string name="ligado">Ligado</string>
+    <string name="precisa_google">É necessário estar logado no Google Play Games para acessar esse recurso.</string>
     <string name="desligado">Deslig.</string>
     <string name="pontuacaoMenor1">Infelizmente você não superou a sua pontuação anterior para este nível, que era de</string>
     <string name="pontuacaoMenor2">pontos.</string>
@@ -212,6 +219,8 @@
     <string name="retornarAoMenuPrincipal">Voltar</string>
     <string name="messageMenuTutorial">Tutoriais disponíveis:</string>
     <string name="message_sem_estrelas">Grupo bloqueado. Sem estrelas suficientes</string>
+    <string name="message_google_desconectado">Você foi desconectado do Google Play Games neste jogo. Alguns recursos não estarão disponíveis.</string>
+    <string name="message_google_conectado">Conexão realizada com sucesso ao Google Play Games.</string>
     <string name="tenha">Tenha</string>
     <string name="estrelas">estrelas</string>
     <string name="levelGoal0">Finalize o nível</string>
@@ -303,6 +312,7 @@
     <string name="messageGroupsUnblocked">Grupos desbloqueados</string>
     <string name="vibracao">Vibração</string>
     <string name="menuTutoriais">Existem tutoriais não vistos (clique aqui).</string>
+    <string name="menuConectar">Tentar se conectar novamente</string>
     <string name="levelGoal21a">Reduza o ângulo da bola utilizando somente o movimento da barra por</string>
     <string name="levelGoal21b">vezes</string>
     <string name="levelGoal21m">Ângulo reduzido mov.:</string>
@@ -348,10 +358,12 @@
     <string name="secretLevelUnblocked"></string>
     <string name="messageCurrentLevelSecret">Nível secreto</string>
     <string name="databaseLevelDataVersion">2</string>
-    <string name="databaseSaveDataVersion">11</string>
+    <string name="databaseSaveDataVersion">1</string>
     <string name="voltar">Voltar</string>
     <string name="continuar">Continuar</string>
     <string name="lerSobre">Sobre</string>
+    <string name="logarGoogle">Conectar-se ao Google</string>
+    <string name="deslogarGoogle">Desconectar-se do Google</string>
     <string name="messageMenuAbout">Sobre:</string>
 
 

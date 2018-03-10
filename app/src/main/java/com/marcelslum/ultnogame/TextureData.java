@@ -323,7 +323,7 @@ public class TextureData {
         for (int i = 0; i < texturesData.size(); i++){
 
             if (id == TEXTURE_l100){
-               Log.e(TAG, "comparando "+ texturesData.get(i).id + " com "+id);
+               //Log.e(TAG, "comparando "+ texturesData.get(i).id + " com "+id);
             }
 
             if (texturesData.get(i).id == id){

@@ -48,6 +48,11 @@ public class Storage {
     
     public static void init(Context context, String playerId) {
         Log.e(TAG, "playerId "+playerId);
+
+        if (!playerId.equals("temp") && context.getSharedPreferences(STORAGE_FILE_NAME+"temp", 0) != null){
+            // todo lidar com a transição do storage temporario
+        }
+
         storage = context.getSharedPreferences(STORAGE_FILE_NAME+playerId, 0);
     }
 

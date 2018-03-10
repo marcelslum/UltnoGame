@@ -7,11 +7,14 @@ import java.util.ArrayList;
 public class MenuHandler {
 
     static Menu menuMain;
+
     static Menu menuOptions;
     static Menu menuInGame;
     static Menu menuInGameOptions;
     static Menu menuGameOver;
     static Menu menuTutorialUnvisited;
+    static Menu menuConnect;
+
     static MenuIcon groupMenu;
     static MenuIcon levelMenu;
     static MenuIcon tutorialMenu;
@@ -345,7 +348,7 @@ public class MenuHandler {
         //menuObjectives.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.iniciar_jogo), new MenuOption.OnChoice() {@Override public void onChoice() {}});
 
         // -------------------------------------------MENU OPTIONS
-        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.56f, fontSize, Game.font);
+        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
 
         // SELETOR MUSICA
         SelectorHandler.selectorMusic = new Selector("Game.selectorMusic", 0f,0f, fontSize, "",
@@ -435,6 +438,21 @@ public class MenuHandler {
             }
         });
 
+        menuOptions.addMenuOption("google", Game.getContext().getResources().getString(R.string.logarGoogle), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                if (Game.mainActivity.isSignedIn()){
+                    DataBaseSaveDataHelper.getInstance(Game.mainActivity).setGooglePlayOption(0);
+                    Game.mainActivity.signOut();
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
+                } else {
+                    Splash.forSignin = true;
+                    DataBaseSaveDataHelper.getInstance(Game.mainActivity).setGooglePlayOption(1);
+                    Game.setGameState(Game.GAME_STATE_INTRO);
+                }
+            }
+        });
+
         menuOptions.addMenuOption("retornar", Game.getContext().getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -443,6 +461,18 @@ public class MenuHandler {
             }
         });
 
+        // -------------------------------------------MENU CONECTAR
+        menuConnect = new Menu(",menuConnect", Game.gameAreaResolutionX/2, Game.resolutionY*0.085f, fontSize*0.8f, Game.font);
+
+        // adiciona a opção de visualizar tutoriais
+        menuConnect.addMenuOption("conectar", Game.getContext().getResources().getString(R.string.menuConectar), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.setGameState(Game.GAME_STATE_INTRO);
+            }
+        });
+
+        menuConnect.getMenuOptionByName("conectar").textObject.setColor(new Color(1f, 1f, 1f, 1f));
 
         // -------------------------------------------MENU Tutorial.TUTORIAL
         menuTutorialUnvisited = new Menu("menuTutorialUnvisited", Game.gameAreaResolutionX/2, Game.resolutionY*0.9f, fontSize*0.6f, Game.font);
@@ -478,8 +508,10 @@ public class MenuHandler {
         });
         animOption.start();
 
+
+
         // -------------------------------------------MENU MAIN
-        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.53f, fontSize, Game.font);
+        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -504,15 +536,23 @@ public class MenuHandler {
         menuMain.addMenuOption("conquistas", Game.getContext().getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                GooglePlayGames.showAchievements(Game.mainActivity.mGoogleApiClient, Game.mainActivity);
+                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mAchievementsClient == null){
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
+                } else {
+                    GoogleAPI.showAchievements();
+                }
+
             }
         });
 
         menuMain.addMenuOption("ranking", Game.getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                GooglePlayGames.showLeaderboards(Game.mainActivity.mGoogleApiClient, Game.mainActivity,
-                        Game.mainActivity.getResources().getString(R.string.leaderboard_geral));
+                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
+                } else {
+                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_geral));
+                }
             }
         });
 
@@ -520,7 +560,13 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
+            }
+        });
 
+        menuMain.addMenuOption("insterstitial", "Mostrar propaganda", new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.mainActivity.showInterstitial();
             }
         });
 

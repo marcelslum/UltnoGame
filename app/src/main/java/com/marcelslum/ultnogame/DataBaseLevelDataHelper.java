@@ -48,13 +48,13 @@ public class DataBaseLevelDataHelper extends DataBaseHelper {
 
              //String[] selectionArgs = {String.valueOf(levelNumber)};
              Cursor cursor = myDataBase.query(
-                     DataBaseContract.Balls.TABLE_NAME,        // The table to query
-                     projection,                               // The columns to return
-                     selection,                                // The columns for the WHERE clause
-                     null,                            // The values for the WHERE clause
-                     null,                                     // don't group the rows
-                     null,                                     // don't filter by row groups
-                     null                                      // don't sort
+                     DataBaseContract.Balls.TABLE_NAME,
+                     projection,
+                     selection,
+                     null,
+                     null,
+                     null,
+                     null
              );
 
           ArrayList<BallDataBaseData> list = new ArrayList<>();

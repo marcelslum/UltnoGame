@@ -16,17 +16,22 @@ public class TextView extends Entity{
     float lastMovement;
 	private boolean cancelNextPress;
 
+	private final String TAG = "TextView";
+
 	float translateY = 0;
+	int alignment;
   
-	public TextView(String name, float x, float y, float width, float height, float size, Font font){
+	public TextView(String name, float x, float y, float width, float height, float size, Font font, Color color, int alignment){
 		
 		super(name, x, y, Entity.TYPE_TEXT_VIEW);
 		this.width = width;
 		this.height = height;
 		this.size = size;
 		this.font = font;
+		this.color = color;
+		this.alignment = alignment;
 		texts = new ArrayList<>();
-		color = new Color(0f, 0f, 0f, 1f);
+
 		
 		final TextView innerTextView = this;
 		setListener(new InteractionListener(this.name, x, y, width, height, 5000, this));
@@ -64,10 +69,11 @@ public class TextView extends Entity{
 	}
 	
 	public void addText(String text){
-		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth("novo text", text, font, color, size, width);
-		texts.addAll(newTexts);
+		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth("novo text", text, font, color, size, width, alignment);
+
+        texts.addAll(newTexts);
 		Text.doLinesWithStringCollection(texts, y, size, size * padding, false);
-		
+
 		for (int i = 0; i < texts.size(); i++){
 			texts.get(i).setX(x);
 		}
@@ -108,7 +114,6 @@ public class TextView extends Entity{
 
 	public void move(float iconTranslateY, boolean updateCurrentTranslateY) {
 
-		Log.e(TAG, "movendo antes "+ iconTranslateY);
 		float padd = size * 0.5f;
 
 		Text lastText = texts.get(texts.size()-1);
@@ -126,8 +131,6 @@ public class TextView extends Entity{
 			desacelerationActivated = false;
 		    }
 		}
-
-		Log.e(TAG, "movendo depois "+ iconTranslateY);
 
 		for (int i = 0; i < texts.size(); i++){
 		    texts.get(i).translate(0f, iconTranslateY);

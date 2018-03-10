@@ -18,7 +18,7 @@ import java.io.OutputStream;
 public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     private final static String TAG = "DataBaseLevelDataHelper";
-    protected String DB_PATH;// = "/data/data/com.marcelslum.ultno/databases/";
+    protected String DB_PATH;
     protected String DB_NAME;
     protected SQLiteDatabase myDataBase;
     protected Context myContext;
@@ -34,16 +34,20 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     public void prepareDatabase() throws IOException {
 
-        //deleteDataBase();
+        //myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
 
         boolean dbExist = checkDataBase();
-        SQLiteDatabase db_Read = null;
+
+        Log.e(TAG, "dbExist" + dbExist);
+
+        SQLiteDatabase db_Read;
         if(dbExist){
+            int currentDBVersion = getVersionId();
+
            Log.e(TAG, DB_NAME + " -- banco de dados já existe");
-           int currentDBVersion = getVersionId();
            Log.e(TAG, DB_NAME + " -- currentDBVersion "+currentDBVersion);
            Log.e(TAG, DB_NAME + " -- version "+version);
-            Log.e(TAG, DB_NAME + " -- comparação "+((this.version > currentDBVersion)));
+           Log.e(TAG, DB_NAME + " -- comparação "+((this.version > currentDBVersion)));
 
               if (this.version > currentDBVersion) {
                   Log.e(TAG, DB_NAME + " Database version is higher than old.");
@@ -67,7 +71,6 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
             }
             setNotNew(); 
         }
-        
     }
      
     private boolean checkDataBase(){
@@ -124,11 +127,29 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
          myDataBase = getWritableDatabase();
          return myDataBase;
      }
+
+    public int getGooglePlayOption() {
+        openDataBase();
+        String query = "SELECT googlePlayOption FROM dbVersion";
+        Cursor cursor = getWritable().rawQuery(query, null);
+        cursor.moveToFirst();
+        int v =  cursor.getInt(0);
+        return v;
+    }
+
+    public void setGooglePlayOption(int i) {
+        openDataBase();
+        myDataBase = getWritable();
+        ContentValues data=new ContentValues();
+        data.put("googlePlayOption", i);
+        myDataBase.update("dbVersion", data, "_id =" + 1, null);
+    }
+
      
      protected int getVersionId() {
         openDataBase();
         String query = "SELECT version_id FROM dbVersion";
-        Cursor cursor = myDataBase.rawQuery(query, null);
+        Cursor cursor = getWritable().rawQuery(query, null);
         cursor.moveToFirst();
         int v =  cursor.getInt(0);
         return v;
@@ -137,7 +158,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
     public boolean isNew() {
         openDataBase();
         String query = "SELECT isNew FROM dbVersion";
-        Cursor cursor = myDataBase.rawQuery(query, null);
+        Cursor cursor = getWritable().rawQuery(query, null);
         cursor.moveToFirst();
         int v =  cursor.getInt(0);
 

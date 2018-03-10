@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -111,26 +109,22 @@ public class LevelGoals {
     public void notifySecretLevelUnblocked(int i){
 
         if (i == 1){
-            GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
-                    Game.getContext().getResources().getString(R.string.achievement_segredo_1));
+            GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_segredo_1));
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.brickBackground, "rotate", "rotate", 1000, 0, 360).start();
             Utils.createSimpleAnimation(Game.brickBackground, "translateX", "translateX", 1000, 0, Game.brickBackground.height * 0.0001f).start();
         } else if (i == 2){
 
-            GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
-                    Game.getContext().getResources().getString(R.string.achievement_segredo_2));
+            GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_segredo_2));
 
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
         } else if (i == 3){
-            GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
-                    Game.getContext().getResources().getString(R.string.achievement_segredo_3));
+            GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_segredo_3));
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
         } else if (i == 4){ // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
-            GooglePlayGames.unlockAchievement(Game.mainActivity.mGoogleApiClient,
-                    Game.getContext().getResources().getString(R.string.achievement_segredo_4));
+            GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_segredo_4));
             Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
             Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
         }
@@ -300,7 +294,7 @@ public class LevelGoals {
 
     public void notifyMaxAngleReached(){
 
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_mxima), 1);
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxAngleReached");
@@ -320,7 +314,7 @@ public class LevelGoals {
 
     public void notifyMinAngleReached(){
 
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_mnima), 1);
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMinAngleReached");
@@ -340,7 +334,7 @@ public class LevelGoals {
 
     public void increaseAngle(){
 
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_positiva), 1);
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"increaseAngle");
@@ -360,7 +354,7 @@ public class LevelGoals {
 
     public void decreaseAngle(){
 
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_negativa), 1);
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"decreaseAngle");
@@ -547,7 +541,7 @@ public class LevelGoals {
 
     public void notifyMaxVelocityReached(){
 
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_velocidade_mxima), 1);
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxVelocityReached");
@@ -562,7 +556,7 @@ public class LevelGoals {
 
     public void notifyMinVelocityReached(){
 
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_velocidade_mnima), 1);
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMinVelocityReached");
@@ -611,7 +605,7 @@ public class LevelGoals {
     public void accelerate(){
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerate");
 
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_acelerar),
                 1);
 
@@ -653,7 +647,7 @@ public class LevelGoals {
 
     public void decelerate(){
 
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_desacelerar), 1);
 
 

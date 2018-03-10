@@ -1,10 +1,31 @@
 package com.marcelslum.ultnogame;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.SnapshotsClient;
+import com.google.android.gms.games.snapshot.Snapshot;
+import com.google.android.gms.games.snapshot.SnapshotMetadata;
+import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.common.api.Result;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by marcel on 12/10/2016.
@@ -62,40 +83,25 @@ public class SaveGame {
 
     public static void load() {
         loaded = false;
-        new LoadFromSnapshotAsyncTask().execute();
-    }
-
-    public static void onFailLoadFromSnapshot() {
-        Log.e(TAG, "Não carregou Snapshot");
-        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew());
-        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(1));
-        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(2));
-        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3));
-        Log.e(TAG, "Não carregou Snapshot"+DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4));
-
-
 
         if (!DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew()
-            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(1) != 0
-            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(2) != 0
-            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3) != 0
-            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4) != 0
-           ){
-            Log.e(TAG, "Carregando apenas localmente.");
+                || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(1) != 0
+                || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(2) != 0
+                || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3) != 0
+                || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4) != 0
+                ){
+            Log.e(TAG, "Carregando Save Game");
             saveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
-            
-            log(saveGame);
-
-            //saveGame = getSaveGameFromJson(getStringFromLocal());
+            //log(saveGame);
         } else {
-            Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
+            Log.e(TAG, "Não existe ainda nenhum Save Game, criando novo");
             int[] _levelsPoints = new int[Level.NUMBER_OF_LEVELS];
             int[] _levelsStars = new int[Level.NUMBER_OF_LEVELS];
             boolean[] _levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
             boolean[] _levelsSeen = new boolean[Level.NUMBER_OF_LEVELS];
             boolean[] _tutorialsSeen = new boolean[Tutorial.NUMBER_OF_TUTORIALS];
             boolean[] _groupsSeen = new boolean[Level.NUMBER_OF_GROUPS];
-                _groupsSeen[0] = true;
+            _groupsSeen[0] = true;
 
             saveGame = new SaveGameBuilder()
                     .setLevelsPoints(_levelsPoints)
@@ -118,50 +124,27 @@ public class SaveGame {
                     .build();
         }
         loaded = true;
-        //log(saveGame);
-        SaveGame.save();
-    }
 
-    public static void onLoadFromSnapshot(String data) {
-
-        Log.e(TAG, "onLoadFromSnapshot");
-        
-        Log.e(TAG, "local");
-        SaveGame localSaveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
-        log(localSaveGame);
-        
-        Log.e(TAG, "cloud");
-        SaveGame cloudSaveGame = getSaveGameFromJson(data);
-        log(cloudSaveGame);
-        
-        Log.e(TAG, "merged");
-        saveGame = mergeSaveGames(localSaveGame, cloudSaveGame);
-        log(saveGame);
-        
-        loaded = true;
     }
 
     public static void save(){
         Log.e(TAG, "save()");
-        
+
         if (SaveGame.saveGame == null){
-            Log.e(TAG, "erro ao salvar - objeto saveGame nulo");
+            Log.e(TAG, "Erro ao salvar o jogo. Objeto SaveGame nulo.");
             return;
         }
         if (Utils.getTime() - lastSave < MIN_TIME_BEFORE_RESAVE) {
+            Log.e(TAG, "Jogo não foi salvo porque foi salvo recentemente.");
             return;
         }
         lastSave = Utils.getTime();
 
-        String saveString = getStringFromSaveGame(saveGame);          
-        log(saveGame); //RETIRAR DEPOIS
-        Log.e(TAG, " " + saveString);
-                  
-        Storage.setString(SHARED_PREFERENCES_KEY_NAME, saveString);
-        AsyncTasks.saveSnapshot = new SaveSnapshotAsyncTask().execute(saveString);
         DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
     }
-                  
+
+
+
     public static void log(SaveGame s){
         Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         Log.e(TAG, "pontos --------------- ");
@@ -219,8 +202,6 @@ public class SaveGame {
         Log.e(TAG, "lastStars -> " + s.lastStars);
         Log.e(TAG, "levelsPlayed -> " + s.levelsPlayed);   
     }
-                  
-                  
 
     public static SaveGame mergeSaveGames(SaveGame saveGame1, SaveGame saveGame2) {
         int[] flevelsPoints;
@@ -409,10 +390,6 @@ public class SaveGame {
                 saveGameBuilder.setVibration(true);
             }
 
-
-
-
-
             try {
                 saveGameBuilder.setCurrentGroupMenuTranslateX((float)obj.getDouble("currentGroupMenuTranslateX"));
             } catch(JSONException e) {
@@ -512,11 +489,11 @@ public class SaveGame {
 
     public static void addLevelPlayed() {
         saveGame.levelsPlayed += 1;
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_iniciante), 1);
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_aprendiz), 1);
-        GooglePlayGames.increment(Game.mainActivity.mGoogleApiClient,
+        GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_mestre), 1);
     }
     
@@ -553,6 +530,160 @@ public class SaveGame {
     public static int getLevelStars(int number){
         return saveGame.levelsStars[number - 1];
     }
+
+
+    /*
+
+    public static void onFailLoadFromSnapshot() {
+
+        if (!DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew()
+            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(1) != 0
+            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(2) != 0
+            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3) != 0
+            || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4) != 0
+           ){
+            Log.e(TAG, "Carregando apenas localmente.");
+            saveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
+
+            log(saveGame);
+
+            //saveGame = getSaveGameFromJson(getStringFromLocal());
+        } else {
+            Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
+            int[] _levelsPoints = new int[Level.NUMBER_OF_LEVELS];
+            int[] _levelsStars = new int[Level.NUMBER_OF_LEVELS];
+            boolean[] _levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
+            boolean[] _levelsSeen = new boolean[Level.NUMBER_OF_LEVELS];
+            boolean[] _tutorialsSeen = new boolean[Tutorial.NUMBER_OF_TUTORIALS];
+            boolean[] _groupsSeen = new boolean[Level.NUMBER_OF_GROUPS];
+                _groupsSeen[0] = true;
+
+            saveGame = new SaveGameBuilder()
+                    .setLevelsPoints(_levelsPoints)
+                    .setLevelsStars(_levelsStars)
+                    .setLevelsUnlocked(_levelsUnlocked)
+                    .setLevelsSeen(_levelsSeen)
+                    .setTutorialsSeen(_tutorialsSeen)
+                    .setGroupsSeen(_groupsSeen)
+                    .setDate()
+                    .setMusic(true)
+                    .setSound(true)
+                    .setVibration(true)
+                    .setCurrentLevelNumber(1)
+                    .setCurrentGroupNumber(1)
+                    .setCurrentGroupMenuTranslateX(0)
+                    .setCurrentLevelMenuTranslateX(0)
+                    .setCurrentTutorialMenuTranslateX(0)
+                    .setLastStars(0)
+                    .setLevelsPlayed(0)
+                    .build();
+        }
+        loaded = true;
+        //log(saveGame);
+        SaveGame.save();
+    }
+
+    public static void onLoadFromSnapshot(String data) {
+
+        Log.e(TAG, "onLoadFromSnapshot");
+
+        Log.e(TAG, "local");
+        SaveGame localSaveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
+        log(localSaveGame);
+
+        Log.e(TAG, "cloud");
+        SaveGame cloudSaveGame = getSaveGameFromJson(data);
+        log(cloudSaveGame);
+
+        Log.e(TAG, "merged");
+        saveGame = mergeSaveGames(localSaveGame, cloudSaveGame);
+        log(saveGame);
+
+        loaded = true;
+    }
+
+
+
+    static Task<byte[]> loadSnapshot() {
+
+        // Get the SnapshotsClient from the signed in account.
+        SnapshotsClient snapshotsClient =
+                Games.getSnapshotsClient(Game.mainActivity, GoogleSignIn.getLastSignedInAccount(Game.mainActivity));
+
+        // In the case of a conflict, the most recently modified version of this snapshot will be used.
+        int conflictResolutionPolicy = SnapshotsClient.RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED;
+
+        // Open the saved game using its name.
+        return snapshotsClient.open(SNAPSHOT_FILE_NAME, true, conflictResolutionPolicy)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Error while opening Snapshot.", e);
+                        snapshotLoaded = null;
+                    }
+                }).continueWith(new Continuation<SnapshotsClient.DataOrConflict<Snapshot>, byte[]>() {
+                    @Override
+                    public byte[] then(@NonNull Task<SnapshotsClient.DataOrConflict<Snapshot>> task) throws Exception {
+                        Snapshot snapshot = task.getResult().getData();
+
+                        // Opening the snapshot was a success and any conflicts have been resolved.
+                        try {
+                            // Extract the raw data from the snapshot.
+                            snapshotLoaded = snapshot.getSnapshotContents().readFully();
+                            return snapshotLoaded;
+                        } catch (IOException e) {
+                            Log.e(TAG, "Error while reading Snapshot.", e);
+                        }
+                        snapshotLoaded = null;
+                        return null;
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<byte[]>() {
+                    @Override
+                    public void onComplete(@NonNull Task<byte[]> task) {
+                        // Dismiss progress dialog and reflect the changes in the UI when complete.
+                        // ...
+                    }
+                });
+    }
+
+
+    private Task<SnapshotsClient.DataOrConflict<Snapshot>> waitForClosedAndOpen(final SnapshotMetadata snapshotMetadata) {
+
+        final boolean useMetadata = snapshotMetadata != null && snapshotMetadata.getUniqueName() != null;
+        if (useMetadata) {
+            Log.i(TAG, "Opening snapshot using metadata: " + snapshotMetadata);
+        } else {
+            Log.i(TAG, "Opening snapshot using currentSaveName: " + SHARED_PREFERENCES_KEY_NAME);
+        }
+
+        final String filename = useMetadata ? snapshotMetadata.getUniqueName() : SHARED_PREFERENCES_KEY_NAME;
+
+        return SnapshotCoordinator.getInstance()
+                .waitForClosed(filename)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "There was a problem waiting for the file to close!");
+                    }
+                })
+                .continueWithTask(new Continuation<Result, Task<SnapshotsClient.DataOrConflict<Snapshot>>>() {
+                    @Override
+                    public Task<SnapshotsClient.DataOrConflict<Snapshot>> then(@NonNull Task<Result> task) throws Exception {
+                        Task<SnapshotsClient.DataOrConflict<Snapshot>> openTask = useMetadata
+                                ? SnapshotCoordinator.getInstance().open(Games.getSnapshotsClient(Game.mainActivity, GoogleSignIn.getLastSignedInAccount(Game.mainActivity)), snapshotMetadata)
+                                : SnapshotCoordinator.getInstance().open(Games.getSnapshotsClient(Game.mainActivity, GoogleSignIn.getLastSignedInAccount(Game.mainActivity)), filename, true);
+                        return openTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "Houve um erro ao carregar o Snapshot");
+                            }
+                        });
+                    }
+                });
+    }
+
+    */
+
 }
   
 

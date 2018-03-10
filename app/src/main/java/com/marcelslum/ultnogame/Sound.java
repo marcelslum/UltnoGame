@@ -77,7 +77,10 @@ public abstract class Sound {
     }
 
     public static int play(int id, float left, float right, int loop){
-        if (SaveGame.saveGame.sound) {
+
+        // todo carregar save game no splash para ativar a opção de vibrar no menu
+
+        if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
             if (soundPool != null) {
                 return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
             } else {

@@ -518,7 +518,7 @@ public class Text extends Entity implements Poolable<Text>{
         }
 
         for (int i = 0; i < texts.size(); i++){
-            texts.get(i).y = textY;
+            texts.get(i).setY(textY);
             textY += (size + padd);
         }
 
@@ -526,11 +526,11 @@ public class Text extends Entity implements Poolable<Text>{
 
 
 
-    public static ArrayList<Text> splitStringAtMaxWidth(String name, String text, Font font, Color color, float size, float maxWidth){
+    public static ArrayList<Text> splitStringAtMaxWidth(String name, String text, Font font, Color color, float size, float maxWidth, int align){
 
         ArrayList<Text> returnText = new ArrayList<>();
 
-        Text textForMeasure = new Text(name, 0f, 0f, size, text, font, color);
+        Text textForMeasure = new Text(name, 0f, 0f, size, text, font, color, align);
         float widthOfText = textForMeasure.calculateWidth();
 
         if (widthOfText > maxWidth) {
@@ -565,7 +565,7 @@ public class Text extends Entity implements Poolable<Text>{
                 } while (widthOfText < (maxWidth*0.9f) && (splitedString.length+1) > elementToAdd && contador < limite);
                 //Log.e("textBox", "adicionando texto: "+lastText.text);
                 returnText.add(new Text(lastText.name, lastText.x, lastText.y, lastText.size, lastText.text,
-                        lastText.font, lastText.color));
+                        lastText.font, lastText.color, align));
                 //Log.e("textBox", "elementToAdd "+elementToAdd);
 
             } while ((splitedString.length+1) > elementToAdd && contador < limite);

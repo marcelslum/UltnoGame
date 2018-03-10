@@ -14,12 +14,11 @@ public class MessagesHandler {
     static Text messageGameOver;
     static Text messagePreparation;
     static Text messageMaxScoreTotal;
+    static Text messageGoogleLogged;
     static Text messageContinue;
     static Text messageBack;
     static Text messageConqueredStarsTotal;
     static Image starForMessage;
-    static Text messageSplash1;
-    static Text messageSplash2;
     static Text messageTime;
     static Text messageCurrentLevel;
     static Text messageGroupsUnblocked;
@@ -35,14 +34,19 @@ public class MessagesHandler {
                                           Game.resolutionX * 0.8f,
                                           Game.resolutionY * 0.8f,
                                           Game.gameAreaResolutionY*0.05f,
-                                          Game.font);
+                                          Game.font, new Color(0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT);
         
         
-        Game.aboutTextView.addText("Criação e desenvolvimento: Marcel Sluminsky");
-        Game.aboutTextView.addText("Música: Fernando Nicknich");
-        Game.aboutTextView.addText("Copyright @ 2017");
-        Game.aboutTextView.addText("Este jogo usa vários sons de ...");
-        
+        Game.aboutTextView.addText("Criação e desenvolvimento: Marcel Sluminsky. Este é um teste para ver se a mensagem pula de linha");
+
+        Game.notConnectedTextView = new TextView("about", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.02f,
+                Game.resolutionX * 0.94f,
+                Game.resolutionY,
+                Game.gameAreaResolutionY*0.035f,
+                Game.font, new Color(0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_CENTER);
+
+        Game.notConnectedTextView.addText(Game.getContext().getResources().getString(R.string.messageNaoConectado1));
 
         yOfMessageBackAndContinue = Game.resolutionY*0.898f;
 
@@ -53,10 +57,10 @@ public class MessagesHandler {
                 Game.getContext().getResources().getString(R.string.messageGameOver), Game.font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
         messageMenu = new Text("messageMenu",
-                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.145f, Game.gameAreaResolutionY*0.08f, ".", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f));
+                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.18f, Game.gameAreaResolutionY*0.08f, ".", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f));
 
         messageSubMenu = new Text("messageSubMenu",
-                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.25f, Game.gameAreaResolutionY*0.05f, ".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f));
+                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.28f, Game.gameAreaResolutionY*0.05f, ".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f));
         
         messageGroupsUnblocked = new Text("messageGroupsUnblocked",
                 Game.gameAreaResolutionX*0.5f, Game.resolutionY*0.6f, Game.gameAreaResolutionY*0.08f,
@@ -91,11 +95,15 @@ public class MessagesHandler {
                 Game.getContext().getResources().getString(R.string.pause), Game.font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
-                Game.resolutionX*0.05f, Game.resolutionY*0.84f, Game.resolutionY*0.036f,
-                Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
+                Game.resolutionX*0.02f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
+                Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
+
+        messageGoogleLogged = new Text("messageGoogleLogged",
+                Game.resolutionX*0.98f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
+                ".", Game.font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_RIGHT);
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
-                Game.resolutionX*0.895f, Game.resolutionY*0.25f, Game.resolutionY*0.05f,
+                Game.resolutionX*0.895f, Game.resolutionY*0.3f, Game.resolutionY*0.05f,
                 Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(1f, 1f, 0f, 1f));
 
         messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));
@@ -142,6 +150,12 @@ public class MessagesHandler {
     }
 
     public static void setBottomMessage(String text, int duration){
+
+        if (bottomTextBox == null){
+            return;
+        }
+
+
         float previousPosition = bottomTextBox.y;
         String previousText = bottomTextBox.text;
 
@@ -159,7 +173,8 @@ public class MessagesHandler {
             bottomTextBox.display();
             bottomTextBox.setPositionY(Game.resolutionY - bottomTextBox.height);
             bottomTextBox.isBlocked = false;
-            messageMaxScoreTotal.y = Game.resolutionY - bottomTextBox.height - (Game.resolutionY * 0.08f);
+            messageMaxScoreTotal.y = Game.resolutionY - bottomTextBox.height - (Game.resolutionY * 0.06f);
+            messageGoogleLogged.y =  Game.resolutionY - bottomTextBox.height - (Game.resolutionY * 0.06f);
         } else {
             if (!previousText.equals("...")){
                 appearOrDesapear = true;
@@ -167,7 +182,8 @@ public class MessagesHandler {
             bottomTextBox.setText("...");
             bottomTextBox.isBlocked = true;
             bottomTextBox.setPositionY(Game.resolutionY*2);
-            messageMaxScoreTotal.y = Game.resolutionY - (Game.resolutionY * 0.08f);
+            messageMaxScoreTotal.y = Game.resolutionY - (Game.resolutionY * 0.06f);
+            messageGoogleLogged.y =  Game.resolutionY - (Game.resolutionY * 0.06f);
         }
 
         float difference = previousPosition - bottomTextBox.y;

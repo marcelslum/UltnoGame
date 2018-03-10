@@ -24,8 +24,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         }
         return mInstance;
     }
-    
-    
+
     public int getLevelPoints(int l) {
         openDataBase();
 
@@ -50,9 +49,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
        return cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS));
    }
-    
-    
-    
+
     public SaveGame getSaveGame(){
         openDataBase();
 
@@ -213,8 +210,8 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         }
         return saveGameBuilder.build();
     }
-    
-    
+
+
     public void setLevelPoints(int number, int v){
         myDataBase = getWritable();        
         ContentValues values = new ContentValues();

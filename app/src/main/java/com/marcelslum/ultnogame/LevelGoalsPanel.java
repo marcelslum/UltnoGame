@@ -171,7 +171,7 @@ public class LevelGoalsPanel extends Entity{
             this.quantityOfStars = quantityOfStars;
             this.y = y;
             this.shineStars = shineStars;
-            texts = Text.splitStringAtMaxWidth("line"+String.valueOf(numberForName), text, Game.font, textColor, size, maxWidth);
+            texts = Text.splitStringAtMaxWidth("line"+String.valueOf(numberForName), text, Game.font, textColor, size, maxWidth, Text.TEXT_ALIGN_LEFT);
             Text.doLinesWithStringCollection(texts, y, size, size * 0.2f, false);
 
             for (int i = 0; i < texts.size(); i++) {
