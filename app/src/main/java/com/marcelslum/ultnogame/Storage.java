@@ -6,8 +6,9 @@ import android.util.Log;
 
 public class Storage {
     public static SharedPreferences storage;
-    final static String STORAGE_FILE_NAME = "com.marcelslum.ultnogame.storage.";
+    final static String STORAGE_FILE_NAME = "com.marcelslum.ultnogame.storage";
     final static String TAG = "STORAGE";
+    final static String STORAGE_SAVE_NAME = "storage_save_name";
 
     private Storage() {
     }
@@ -46,14 +47,11 @@ public class Storage {
         return storage.contains(key);
     }
     
-    public static void init(Context context, String playerId) {
-        Log.e(TAG, "playerId "+playerId);
+    public static void init(Context context) {
+        storage = context.getSharedPreferences(STORAGE_FILE_NAME, 0);
 
-        if (!playerId.equals("temp") && context.getSharedPreferences(STORAGE_FILE_NAME+"temp", 0) != null){
-            // todo lidar com a transição do storage temporario
-        }
+        setString(STORAGE_SAVE_NAME, "");
 
-        storage = context.getSharedPreferences(STORAGE_FILE_NAME+playerId, 0);
     }
 
         /*

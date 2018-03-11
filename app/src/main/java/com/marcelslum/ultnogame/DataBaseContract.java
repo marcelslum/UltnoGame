@@ -71,6 +71,8 @@ public final class DataBaseContract {
         public static final String COLUMN_LAST_STARS = "last_stars";
         public static final String COLUMN_NEW_GROUPS_SEEN = "new_groups_seen";
         public static final String COLUMN_LEVELS_PLAYED = "levels_played";
+        public static final String COLUMN_GOOGLE_OPTION = "googleOption";
+        public static final String COLUMN_BALL_VELOCITY = "ballVelocity";
     }
 
     public static class DataLevels implements BaseColumns {

@@ -147,6 +147,11 @@ public class BrickBackground extends Entity {
 
         //Log.e(TAG, " percentage "+percentage);
 
+        float percentageGray = 0.9997f;
+        if (Game.gameState == Game.GAME_STATE_VITORIA || Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
+            percentageGray = 0.995f;
+        }
+
 
          for (int i = 0; i < numberOfBricks; i++){
 
@@ -191,7 +196,7 @@ public class BrickBackground extends Entity {
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GRAY5);
                 }
 
-            } else if (Utils.getRandonFloat(0f, 1f) > 0.9997f) {
+            } else if (Utils.getRandonFloat(0f, 1f) > percentageGray) {
                 //Log.e(TAG, "6");
                 bricksAlpha[i] = 0.5f;
                 
@@ -216,20 +221,22 @@ public class BrickBackground extends Entity {
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, uvsBuffer.capacity() * SIZEOF_FLOAT,
                 uvsBuffer, GLES20.GL_STATIC_DRAW);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
-        
-        
-        if (ballCollidedBlue > 0){
+
+        if (ballCollidedBlue > 0) {
             ballCollidedBlue -= 1;
         }
-        if (ballCollidedBlack > 0){
-            ballCollidedBlack -= 1;
-        }
-        if (ballCollidedRed > 0){
+
+        if (ballCollidedRed > 0) {
             ballCollidedRed -= 1;
         }
-        if (ballCollidedGreen > 0){
+        if (ballCollidedGreen > 0) {
             ballCollidedGreen -= 1;
         }
+
+        if (ballCollidedBlack > 0) {
+            ballCollidedBlack -= 1;
+        }
+
     }
 
     public void animate(){

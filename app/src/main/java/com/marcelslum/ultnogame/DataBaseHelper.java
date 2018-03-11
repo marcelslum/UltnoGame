@@ -34,7 +34,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     public void prepareDatabase() throws IOException {
 
-        //myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
+        myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
 
         boolean dbExist = checkDataBase();
 
@@ -128,24 +128,6 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
          return myDataBase;
      }
 
-    public int getGooglePlayOption() {
-        openDataBase();
-        String query = "SELECT googlePlayOption FROM dbVersion";
-        Cursor cursor = getWritable().rawQuery(query, null);
-        cursor.moveToFirst();
-        int v =  cursor.getInt(0);
-        return v;
-    }
-
-    public void setGooglePlayOption(int i) {
-        openDataBase();
-        myDataBase = getWritable();
-        ContentValues data=new ContentValues();
-        data.put("googlePlayOption", i);
-        myDataBase.update("dbVersion", data, "_id =" + 1, null);
-    }
-
-     
      protected int getVersionId() {
         openDataBase();
         String query = "SELECT version_id FROM dbVersion";

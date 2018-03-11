@@ -201,7 +201,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
             if (Game.gameState != Game.GAME_STATE_JOGAR){
                 if (Utils.getTime() - lastInternetCheck > 5000) {
-                    Log.e(TAG, "Verificando conexão");
+                    //Log.e(TAG, "Verificando conexão");
                     ConnectionHandler.connect();
                     lastInternetCheck = Utils.getTime();
                 }

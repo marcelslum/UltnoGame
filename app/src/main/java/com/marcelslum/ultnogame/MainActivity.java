@@ -77,6 +77,9 @@ public class MainActivity extends FragmentActivity implements
             throw new Error("Unable to create database");
         }
 
+        Storage.init(this);
+        SaveGame.load();
+
         /*Inicia o hardware*/
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -153,7 +156,7 @@ public class MainActivity extends FragmentActivity implements
     }
 
     public boolean isSignedIn() {
-        if (GoogleSignIn.getLastSignedInAccount(this) != null && DataBaseSaveDataHelper.getInstance(Game.mainActivity).getGooglePlayOption() == 1){
+        if (GoogleSignIn.getLastSignedInAccount(this) != null && SaveGame.saveGame.googleOption == 1){
             return true;
         } else {
             return false;
@@ -385,7 +388,7 @@ public class MainActivity extends FragmentActivity implements
 
         setFullScreen();
 
-        if (DataBaseSaveDataHelper.getInstance(Game.mainActivity).getGooglePlayOption() == 1) {
+        if (SaveGame.saveGame != null && SaveGame.saveGame.googleOption == 1) {
             signInSilently();
         }
 

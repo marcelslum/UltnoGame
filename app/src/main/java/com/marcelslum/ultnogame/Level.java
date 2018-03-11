@@ -114,7 +114,7 @@ public class Level {
 
         //Game.background = new Background("background", 0, 0, Game.gameAreaResolutionX,Game.resolutionY, back);
         
-        Game.brickBackground = new BrickBackground("brickBackground", 0f, 0f, Game.gameAreaResolutionX,Game.gameAreaResolutionY);
+        Game.brickBackground = new BrickBackground("brickBackground", 0f, 0f, Game.gameAreaResolutionX,Game.resolutionY);
 
         if (windType == Level.WIND_TYPE_NO){
             Game.wind = null;
@@ -260,7 +260,7 @@ public class Level {
 
             float radius = Game.gameAreaResolutionY * ballDataBaseData.get(i).radius;
             float ballVelocityX = Game.gameAreaResolutionX * ballDataBaseData.get(i).vx;
-            float ballVelocityY = Game.gameAreaResolutionY * ballDataBaseData.get(i).vy; //* Game.difficultyVelocityBallMultiplicator;
+            float ballVelocityY = Game.gameAreaResolutionY * ballDataBaseData.get(i).vy;
 
             Ball ball = new Ball("ball", ballX, ballY, radius, ballDataBaseData.get(i).textureMap);
             ball.angleToRotate = ballDataBaseData.get(i).angleToRotate;
@@ -269,12 +269,14 @@ public class Level {
             ball.velocityMin_BI = ballDataBaseData.get(i).minVelocity;
             ball.maxAngle = ballDataBaseData.get(i).maxAngle;
             ball.minAngle = ballDataBaseData.get(i).minAngle;
-            ball.initialDVX = ballVelocityX;
-            ball.initialDVY = ballVelocityY;
+            ball.initialNormalDVX = ballVelocityX;
+            ball.initialNormalDVY = ballVelocityY;
+            ball.initialDVX = ballVelocityX * ((float) SaveGame.saveGame.ballVelocity / 100f);
+            ball.initialDVY = ballVelocityY * ((float) SaveGame.saveGame.ballVelocity / 100f);
             ball.initialX = ballX;
             ball.initialY = ballY;
-            ball.dvx = ballVelocityX;
-            ball.dvy = ballVelocityY;
+            ball.dvx = ballVelocityX * ((float) SaveGame.saveGame.ballVelocity / 100f);
+            ball.dvy = ballVelocityY * ((float) SaveGame.saveGame.ballVelocity / 100f);
 
             if (ball.targetsAppend == null){
                 ball.targetsAppend = new ArrayList<>();

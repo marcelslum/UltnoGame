@@ -317,12 +317,12 @@ public class Game {
     public static void initTittle(){
 
         tittle = new Image("tittle",
-                gameAreaResolutionX * 0.25f, gameAreaResolutionY * 0.2f,
-                gameAreaResolutionX * 0.5f, gameAreaResolutionX * 0.47f * 0.3671875f,
+                gameAreaResolutionX * 0.33f, gameAreaResolutionY * 0.15f,
+                gameAreaResolutionX * 0.32f, gameAreaResolutionX * 0.32f * 0.3671875f,
                 Texture.TEXTURES,
                 TextureData.getTextureDataById(TextureData.TEXTURE_TITTLE_ID),
                 new Color(0.5f, 0.2f, 0.8f, 1f));
-        
+
 
         Animation animTittle = Utils.createAnimation5v(tittle, "numberForAnimation", "numberForAnimation", 5000, 0f, 1f, 0.15f, 2f, 0.45f, 3f, 0.6f, 4f, 0.85f, 5f, true, false);
         animTittle.setOnChangeNotFluid(new Animation.OnChange() {
@@ -575,6 +575,7 @@ public class Game {
             SelectorHandler.repositionSelectors(state);
             mainActivity.showAdView();
             tittle.display();
+            ButtonHandler.buttonReturn.unblockAndDisplay();
             MenuHandler.menuOptions.appearAndUnblock(50);
 
             if (mainActivity.isSignedIn()) {
@@ -591,7 +592,7 @@ public class Game {
             mainActivity.showAdView();
             MenuHandler.menuInGame.blockAndClearDisplay();
             MenuHandler.menuInGameOptions.appearAndUnblock(100);
-            MessagesHandler.messageInGame.y = gameAreaResolutionY*0.25f;
+            MessagesHandler.messageInGame.y = gameAreaResolutionY*0.15f;
             MessagesHandler.messageInGame.display();
 
         } else if (state == GAME_STATE_MENU){
@@ -768,7 +769,9 @@ public class Game {
             }
             
         } else if (state == GAME_STATE_PAUSE){
-            
+
+
+
             mainActivity.showAdView();
             ButtonHandler.buttonReturnObjectivesPause.block();
             ButtonHandler.buttonReturnObjectivesPause.clearDisplay();
@@ -784,7 +787,7 @@ public class Game {
                     valuesAnimPause.add(new float[]{0f, 1f});
                     valuesAnimPause.add(new float[]{0.25f, 2f});
                     valuesAnimPause.add(new float[]{0.7f, 3f});
-                MessagesHandler.messageInGame.y = gameAreaResolutionY*0.25f;
+                MessagesHandler.messageInGame.y = gameAreaResolutionY*0.15f;
                 Animation anim = new Animation(MessagesHandler.messageInGame, "messageInGameColor", "numberForAnimation", 4000, valuesAnimPause, true, false);
                 anim.setOnChangeNotFluid(new Animation.OnChange() {
                     @Override
@@ -801,7 +804,7 @@ public class Game {
                 anim.start();
                 MessagesHandler.messageInGame.setText(getContext().getResources().getString(R.string.pause));
                 MessagesHandler.messageInGame.increaseAlpha(100, 1f);
-                MessagesHandler.messageInGame.y = gameAreaResolutionY * 0.25f;
+                MessagesHandler.messageInGame.y = gameAreaResolutionY * 0.15f;
 
             }
             MessagesHandler.messageInGame.display();
@@ -1000,7 +1003,7 @@ public class Game {
 
                 for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++){
                    final LevelsGroupData lgd = LevelsGroupData.levelsGroupData.get(i);
-                   if (lgd.starsToUnlock >= StarsHandler.conqueredStarsTotal && lgd.starsToUnlock <= newStarsTotal){
+                   if (lgd.starsToUnlock >= StarsHandler.conqueredStarsTotal && lgd.starsToUnlock <= newStarsTotal && i != 0){
                            groupsUnblocked.add(
                                new Image("groupsUnblocked"+i, 0f,
                                resolutionY * 0.7f,
@@ -1641,7 +1644,11 @@ public class Game {
 
             }
         } else if(gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO){
-            brickBackground.animate();
+            if (brickBackground != null){
+                brickBackground.changeDrawInfo();
+                brickBackground.move();
+            }
+            //brickBackground.animate();
             //if (background != null){
             //    background.move(3);
             //}
@@ -1851,6 +1858,7 @@ public class Game {
         if (levelGoalsPanel != null) levelGoalsPanel.checkTransformations(true);
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.checkTransformations(true);
         if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.checkTransformations(true);
+        if (SelectorHandler.selectorDifficulty != null) SelectorHandler.selectorDifficulty.checkTransformations(true);
         if (SelectorHandler.selectorSound != null) SelectorHandler.selectorSound.checkTransformations(true);
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.checkTransformations(true);
 
@@ -1996,6 +2004,7 @@ public class Game {
         if (levelGoalsPanel != null) levelGoalsPanel.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.prepareRender(matrixView, matrixProjection);
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.prepareRender(matrixView, matrixProjection);
+        if (SelectorHandler.selectorDifficulty != null) SelectorHandler.selectorDifficulty.prepareRender(matrixView, matrixProjection);
         if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.prepareRender(matrixView, matrixProjection);
         if (SelectorHandler.selectorSound != null) SelectorHandler.selectorSound.prepareRender(matrixView, matrixProjection);
         if (tittle != null) {tittle.prepareRender(matrixView, matrixProjection);}
@@ -2104,6 +2113,7 @@ public class Game {
         
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.verifyListener();
+        if (SelectorHandler.selectorDifficulty != null) SelectorHandler.selectorDifficulty.verifyListener();
         if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.verifyListener();
         if (SelectorHandler.selectorSound != null) SelectorHandler.selectorSound.verifyListener();
 

@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -53,8 +55,9 @@ public class Selector extends Entity{
         }
 
         for (int i = 0; i < values.length; i++){
-            //Log.e("selector", " "+values[i]);
+            //Log.e(TAG, " "+values[i]);
             textsObjects[i] = new Text("selector"+values[i]+"Text", 0f, y, size, values[i], this.font);
+            //Log.e(TAG, name + ": "+textsObjects[i].text);
             float width = textsObjects[i].calculateWidth();
             textsObjects[i].setX(mainTextWidth + x - (width/2));
             if (width > maxWidth) maxWidth = width;
@@ -168,6 +171,7 @@ public class Selector extends Entity{
     }
 
     public void verifyOnChangeComplete(){
+
         if (this.onChange != null){
             onChange.onChange();
         }
@@ -190,6 +194,13 @@ public class Selector extends Entity{
             mainTextObject.alpha = alpha;
             mainTextObject.render(matrixView, matrixProjection);
         }
+
+        //Log.e(TAG, "selectedValue "+selectedValue);
+        //Log.e(TAG, "textsObjects.length "+textsObjects.length);
+
+        //for (int i = 0; i < textsObjects.length; i++) {
+        //    Log.e(TAG, "texto "+i + ": "+textsObjects[i].text);
+        //}
 
         textsObjects[selectedValue].alpha = alpha;
         textsObjects[selectedValue].render(matrixView, matrixProjection);

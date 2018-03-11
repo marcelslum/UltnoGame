@@ -177,7 +177,9 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             DataBaseContract.Data.COLUMN_TUTORIAL_MENU_TRANSLATE_X,
             DataBaseContract.Data.COLUMN_LAST_STARS,
             DataBaseContract.Data.COLUMN_NEW_GROUPS_SEEN,
-            DataBaseContract.Data.COLUMN_LEVELS_PLAYED
+            DataBaseContract.Data.COLUMN_LEVELS_PLAYED,
+            DataBaseContract.Data.COLUMN_GOOGLE_OPTION,
+            DataBaseContract.Data.COLUMN_BALL_VELOCITY
         };
         
         String selection =
@@ -205,7 +207,9 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                 .setCurrentLevelMenuTranslateX(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_LEVEL_MENU_TRANSLATE_X)))
                 .setCurrentTutorialMenuTranslateX(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_TUTORIAL_MENU_TRANSLATE_X)))
                 .setLastStars(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_LAST_STARS)))
-                .setLevelsPlayed(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_LEVELS_PLAYED)));
+                .setLevelsPlayed(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_LEVELS_PLAYED)))
+                .setGoogleOption(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_GOOGLE_OPTION)))
+                .setBallVelocity(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_BALL_VELOCITY)));
                 break;
         }
         return saveGameBuilder.build();

@@ -19,6 +19,9 @@ public class Ball extends Circle{
     public ParticleGenerator particleGenerator;
     public BallParticleGenerator ballParticleGenerator;
 
+    public float initialNormalDVX;
+    public float initialNormalDVY;
+
     long startTimeFakeBallAnim = 0;
     long fakeBallAnimDuration = 3000;
     boolean fakeBallAnimActive = false;
@@ -98,7 +101,55 @@ public class Ball extends Circle{
     }
 
 
+    public void updateBaseVelocity(int newVelocity){
 
+        Log.e(TAG, "---------------------------- ");
+
+        Log.e(TAG, "newVelocity " + newVelocity);
+
+        Log.e(TAG, "ANTES ");
+
+        Log.e(TAG, "initialDVX " + initialDVX);
+        Log.e(TAG, "initialDVY " + initialDVY);
+
+        Log.e(TAG, "dvx " + dvx);
+        Log.e(TAG, "dvy " + dvy);
+
+        float dvxMultiplier = 1.0f;
+        if (dvx < 0){
+            dvxMultiplier = -1.0f;
+        }
+
+        float dvyMultiplier = 1.0f;
+        if (dvy < 0){
+            dvyMultiplier = -1.0f;
+        }
+
+
+        float currentXPercentage = Math.abs(dvx) / initialDVX;
+        float currentYPercentage = Math.abs(dvy) / initialDVY;
+
+        Log.e(TAG, "currentXPercentage " + currentXPercentage);
+        Log.e(TAG, "currentYPercentage " + currentYPercentage);
+
+        Log.e(TAG, "initialNormalDVX " + initialNormalDVX);
+        Log.e(TAG, "initialNormalDVX " + initialNormalDVX);
+
+        initialDVX = initialNormalDVX * ((float)newVelocity / 100);
+        initialDVY = initialNormalDVY * ((float)newVelocity / 100);
+
+        dvx = initialDVX * currentXPercentage * dvxMultiplier;
+        dvy = initialDVY * currentYPercentage * dvyMultiplier;
+
+        Log.e(TAG, "DEPOIS ");
+
+        Log.e(TAG, "initialDVX " + initialDVX);
+        Log.e(TAG, "initialDVY " + initialDVY);
+
+        Log.e(TAG, "dvx " + dvx);
+        Log.e(TAG, "dvy " + dvy);
+
+    }
 
     
     public void markAsFakeBall(){

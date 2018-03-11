@@ -25,6 +25,8 @@ public class SaveGameBuilder {
     public float currentTutorialMenuTranslateX;
     public int lastStars;
     public int levelsPlayed;
+    public int googleOption;
+    public int ballVelocity;
 
 
     public SaveGameBuilder(){
@@ -124,6 +126,16 @@ public class SaveGameBuilder {
 
     public SaveGameBuilder setVibration(boolean v) {
         vibration = v;
+        return this;
+    }
+
+    public SaveGameBuilder setGoogleOption(int v) {
+        googleOption = v;
+        return this;
+    }
+
+    public SaveGameBuilder setBallVelocity(int v) {
+        ballVelocity = v;
         return this;
     }
 

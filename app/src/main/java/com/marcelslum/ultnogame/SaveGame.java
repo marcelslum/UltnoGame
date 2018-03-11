@@ -53,6 +53,8 @@ public class SaveGame {
     public boolean music;
     public boolean sound;
     public boolean vibration;
+    public int googleOption;
+    public int ballVelocity;
     public float currentGroupMenuTranslateX;
     public float currentLevelMenuTranslateX;
     public float currentTutorialMenuTranslateX;
@@ -74,6 +76,8 @@ public class SaveGame {
         music = builder.music;
         sound = builder.sound;
         vibration = builder.vibration;
+        googleOption = builder.googleOption;
+        ballVelocity = builder.ballVelocity;
         currentGroupMenuTranslateX = builder.currentGroupMenuTranslateX;
         currentLevelMenuTranslateX = builder.currentLevelMenuTranslateX;
         currentTutorialMenuTranslateX = builder.currentTutorialMenuTranslateX;
@@ -91,7 +95,19 @@ public class SaveGame {
                 || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4) != 0
                 ){
             Log.e(TAG, "Carregando Save Game");
-            saveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
+
+            SaveGame saveGame1 = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
+            SaveGame saveGame2 = getSaveGameFromJson(Storage.getString(Storage.STORAGE_SAVE_NAME));
+
+            if (saveGame1 == null){
+                saveGame = saveGame2;
+            } else if (saveGame2 == null){
+                saveGame = saveGame1;
+            } else {
+                saveGame = mergeSaveGames(saveGame1, saveGame2);
+            }
+
+
             //log(saveGame);
         } else {
             Log.e(TAG, "Não existe ainda nenhum Save Game, criando novo");
@@ -114,6 +130,8 @@ public class SaveGame {
                     .setMusic(true)
                     .setSound(true)
                     .setVibration(true)
+                    .setGoogleOption(-1)
+                    .setBallVelocity(100)
                     .setCurrentLevelNumber(1)
                     .setCurrentGroupNumber(1)
                     .setCurrentGroupMenuTranslateX(0)
@@ -141,6 +159,8 @@ public class SaveGame {
         lastSave = Utils.getTime();
 
         DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
+
+        Storage.setString(Storage.STORAGE_SAVE_NAME, getStringFromSaveGame(saveGame));
     }
 
 
@@ -196,6 +216,8 @@ public class SaveGame {
         Log.e(TAG, "music  -> " + s.music );
         Log.e(TAG, "sound  -> " + s.sound );
         Log.e(TAG, "vibration  -> " + s.vibration );
+        Log.e(TAG, "googleOption  -> " + s.googleOption );
+        Log.e(TAG, "ballVelocity  -> " + s.ballVelocity );
         Log.e(TAG, "currentGroupMenuTranslateX -> " + s.currentGroupMenuTranslateX);
         Log.e(TAG, "currentLevelMenuTranslateX -> " + s.currentLevelMenuTranslateX);
         Log.e(TAG, "currentTutorialMenuTranslateX -> " + s.currentTutorialMenuTranslateX);
@@ -216,6 +238,8 @@ public class SaveGame {
         boolean fmusic;
         boolean fsound;
         boolean fvibration;
+        int fgoogleOption;
+        int fBallVelocity;
         float fcurrentGroupMenuTranslateX;
         float fcurrentLevelMenuTranslateX;
         float fcurrentTutorialMenuTranslateX;
@@ -235,6 +259,8 @@ public class SaveGame {
         fmusic = Utils.getHigher(saveGame1.music, saveGame2.music);
         fsound = Utils.getHigher(saveGame1.sound, saveGame2.sound);
         fvibration = Utils.getHigher(saveGame1.vibration, saveGame2.vibration);
+        fgoogleOption = Utils.getHigher(saveGame1.googleOption, saveGame2.googleOption);
+        fBallVelocity = Utils.getHigher(saveGame1.ballVelocity, saveGame2.ballVelocity);
         fcurrentGroupMenuTranslateX = Utils.getHigher(saveGame1.currentGroupMenuTranslateX, saveGame2.currentGroupMenuTranslateX);
         fcurrentLevelMenuTranslateX = Utils.getHigher(saveGame1.currentLevelMenuTranslateX, saveGame2.currentLevelMenuTranslateX);
         fcurrentTutorialMenuTranslateX = Utils.getHigher(saveGame1.currentTutorialMenuTranslateX, saveGame2.currentTutorialMenuTranslateX);
@@ -253,6 +279,8 @@ public class SaveGame {
                 .setMusic(fmusic)
                 .setSound(fsound)
                 .setVibration(fvibration)
+                .setBallVelocity(fBallVelocity)
+                .setGoogleOption(fgoogleOption)
                 .setCurrentLevelNumber(fcurrentLevelNumber)
                 .setCurrentGroupNumber(fcurrentGroupNumber)
                 .setCurrentGroupMenuTranslateX(fcurrentGroupMenuTranslateX)
@@ -391,6 +419,18 @@ public class SaveGame {
             }
 
             try {
+                saveGameBuilder.setVibration(obj.getBoolean("ballVelocity"));
+            } catch(JSONException e) {
+                saveGameBuilder.setBallVelocity(100);
+            }
+
+            try {
+                saveGameBuilder.setVibration(obj.getBoolean("googleOption"));
+            } catch(JSONException e) {
+                saveGameBuilder.setGoogleOption(-1);
+            }
+
+            try {
                 saveGameBuilder.setCurrentGroupMenuTranslateX((float)obj.getDouble("currentGroupMenuTranslateX"));
             } catch(JSONException e) {
                 saveGameBuilder.setCurrentGroupMenuTranslateX(0);
@@ -464,6 +504,8 @@ public class SaveGame {
             obj.put("music", saveGame.music);
             obj.put("sound", saveGame.sound);
             obj.put("vibration", saveGame.vibration);
+            obj.put("ballVelocity", saveGame.ballVelocity);
+            obj.put("googleOption", saveGame.googleOption);
             obj.put("levelsPlayed", saveGame.levelsPlayed);
             obj.put("currentLevelNumber", saveGame.currentLevelNumber);
             obj.put("currentGroupNumber", saveGame.currentGroupNumber);

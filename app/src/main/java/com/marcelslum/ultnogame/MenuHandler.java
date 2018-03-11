@@ -350,6 +350,91 @@ public class MenuHandler {
         // -------------------------------------------MENU OPTIONS
         menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
 
+        menuOptions.addMenuOption("sobre", Game.getContext().getResources().getString(R.string.lerSobre), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.setGameState(Game.GAME_STATE_SOBRE);
+            }
+        });
+
+
+        // SELETOR DIFICULDADE
+        SelectorHandler.selectorDifficulty = new Selector("Game.selectorDifficulty", 0f,0f, fontSize, "",
+                new String[]{   Game.getContext().getResources().getString(R.string.v0),
+                                Game.getContext().getResources().getString(R.string.v1),
+                                Game.getContext().getResources().getString(R.string.v2),
+                                Game.getContext().getResources().getString(R.string.v3),
+                                Game.getContext().getResources().getString(R.string.v4),
+                                Game.getContext().getResources().getString(R.string.v5),
+                                Game.getContext().getResources().getString(R.string.v6),
+                                Game.getContext().getResources().getString(R.string.v7),
+                                Game.getContext().getResources().getString(R.string.v8)
+                            },
+                Game.font);
+
+        menuOptions.addMenuOption("difficulty", Game.getContext().getResources().getString(R.string.velocidade), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                SelectorHandler.selectorDifficulty.fromMenu(menuOptions);
+            }
+        });
+
+        if (SaveGame.saveGame.ballVelocity == 70) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(0);
+        } else if (SaveGame.saveGame.ballVelocity == 80) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(1);
+        } else if (SaveGame.saveGame.ballVelocity == 90) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(2);
+        } else if (SaveGame.saveGame.ballVelocity == 100) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(3);
+        } else if (SaveGame.saveGame.ballVelocity == 110) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(4);
+        } else if (SaveGame.saveGame.ballVelocity == 120) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(5);
+        } else if (SaveGame.saveGame.ballVelocity == 130) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(6);
+        } else if (SaveGame.saveGame.ballVelocity == 140) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(7);
+        }  else if (SaveGame.saveGame.ballVelocity == 150) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(8);
+        }
+
+        SelectorHandler.selectorDifficulty.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                if (SelectorHandler.selectorDifficulty.selectedValue == 0) {
+                    SaveGame.saveGame.ballVelocity = 70;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
+                    SaveGame.saveGame.ballVelocity = 80;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 2) {
+                    SaveGame.saveGame.ballVelocity = 90;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 3) {
+                    SaveGame.saveGame.ballVelocity = 100;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 4) {
+                    SaveGame.saveGame.ballVelocity = 110;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 5) {
+                    SaveGame.saveGame.ballVelocity = 120;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 6) {
+                    SaveGame.saveGame.ballVelocity = 130;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 7) {
+                    SaveGame.saveGame.ballVelocity = 140;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 8) {
+                    SaveGame.saveGame.ballVelocity = 150;
+                }
+
+                Log.e(TAG, "SaveGame.saveGame.ballVelocity "+SaveGame.saveGame.ballVelocity);
+
+                if (Game.balls != null){
+                    for (int i = 0; i < Game.balls.size(); i++) {
+                        Game.balls.get(i).updateBaseVelocity(SaveGame.saveGame.ballVelocity);
+                    }
+                }
+
+            }
+        });
+
+
+
         // SELETOR MUSICA
         SelectorHandler.selectorMusic = new Selector("Game.selectorMusic", 0f,0f, fontSize, "",
                 new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, Game.font);
@@ -430,36 +515,23 @@ public class MenuHandler {
                 }
             }
         });
-        
-       menuOptions.addMenuOption("sobre", Game.getContext().getResources().getString(R.string.lerSobre), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Game.setGameState(Game.GAME_STATE_SOBRE);
-            }
-        });
 
         menuOptions.addMenuOption("google", Game.getContext().getResources().getString(R.string.logarGoogle), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 if (Game.mainActivity.isSignedIn()){
-                    DataBaseSaveDataHelper.getInstance(Game.mainActivity).setGooglePlayOption(0);
+                    SaveGame.saveGame.googleOption = 0;
                     Game.mainActivity.signOut();
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
                 } else {
                     Splash.forSignin = true;
-                    DataBaseSaveDataHelper.getInstance(Game.mainActivity).setGooglePlayOption(1);
+                    SaveGame.saveGame.googleOption = 1;
                     Game.setGameState(Game.GAME_STATE_INTRO);
                 }
             }
         });
 
-        menuOptions.addMenuOption("retornar", Game.getContext().getResources().getString(R.string.retornarAoMenuPrincipal), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                //Log.e("findStateMenu", "11");
-                Game.setGameState(Game.GAME_STATE_MENU);
-            }
-        });
+
 
         // -------------------------------------------MENU CONECTAR
         menuConnect = new Menu(",menuConnect", Game.gameAreaResolutionX/2, Game.resolutionY*0.085f, fontSize*0.8f, Game.font);
@@ -511,7 +583,7 @@ public class MenuHandler {
 
 
         // -------------------------------------------MENU MAIN
-        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
+        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -563,12 +635,14 @@ public class MenuHandler {
             }
         });
 
+        /*
         menuMain.addMenuOption("insterstitial", "Mostrar propaganda", new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 Game.mainActivity.showInterstitial();
             }
         });
+        */
 
         // ----------------------------------------------------MENU GAME OVER
         menuGameOver = new Menu("menuGameOver",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
@@ -609,7 +683,7 @@ public class MenuHandler {
 
 
         // ----------------------------------------------------MENU IN GAME
-        menuInGame = new Menu("menuInGame",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+        menuInGame = new Menu("menuInGame",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
 
         // adiciona a opção continuar
         menuInGame.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
@@ -662,7 +736,14 @@ public class MenuHandler {
         });
 
         // ----------------------------------------------------MENU IN GAME OPTIONS
-        menuInGameOptions = new Menu("menuInGameOptions",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+        menuInGameOptions = new Menu("menuInGameOptions",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.37f, fontSize, Game.font);
+
+        menuInGameOptions.addMenuOption("difficulty", Game.getContext().getResources().getString(R.string.velocidade), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                SelectorHandler.selectorDifficulty.fromMenu(menuInGameOptions);
+            }
+        });
 
         menuInGameOptions.addMenuOption("music", Game.getContext().getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override
