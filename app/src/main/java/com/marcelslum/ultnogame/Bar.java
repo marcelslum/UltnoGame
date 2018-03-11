@@ -217,16 +217,6 @@ public class Bar extends Rectangle{
 
         if (!leftPress){
             leftPress = true;
-            if (secretLevel1Steps == 0 || secretLevel1Steps == 3 || secretLevel1Steps == 6 || secretLevel1Steps == 7){
-                secretLevel1Steps += 1;
-                Level.levelGoalsObject.notifySecretStepsToConquer(10 - secretLevel1Steps);
-
-
-                //Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
-            } else {
-                secretLevel1Steps = 0;
-            }//0 L 1 R 2 R 3 L 4 R 5 R 6 L 7 L 8 R 9 R bar
-
         }
 
         //Log.e(TAG, "moveLeft");
@@ -257,21 +247,6 @@ public class Bar extends Rectangle{
         if (!rightPress){
             rightPress = true;
 
-            if (secretLevel1Steps == 1 || secretLevel1Steps == 2 || secretLevel1Steps == 4 || secretLevel1Steps == 5 || secretLevel1Steps == 8 || secretLevel1Steps == 9){
-                Level.levelGoalsObject.notifySecretStepsToConquer(10 - secretLevel1Steps);
-
-                secretLevel1Steps += 1;
-
-                if (secretLevel1Steps == 10){
-                    Level.levelGoalsObject.notifySecretLevelUnblocked(1);
-                    secretLevel1Steps += 0;
-                }
-
-
-               // Log.e(TAG, "secretLevel1Steps "+secretLevel1Steps);
-            } else {
-                secretLevel1Steps = 0;
-            }//0 L 1 R 2 R 3 L 4 R 5 R 6 L 7 L 8 R 9 R bar
         }
         //Log.e(TAG, "moveRight");
         if (!accelStarted || (accelStarted && (accelFinalVelocityX < 0f))) {
@@ -355,47 +330,10 @@ public class Bar extends Rectangle{
             if (collisionsData.get(i).object.type == Entity.TYPE_LEFT_BORDER) {
                 Level.levelObject.levelGoalsObject.notifyLeftBorderTouch();
 
-                //Log.e(TAG, " - notify secretLevel2Steps on left "+secretLevel2Steps);
-
-                if (secretLevel2Steps == 0 || secretLevel2Steps == 2 || secretLevel2Steps == 3 || secretLevel2Steps == 4 || secretLevel2Steps == 7 || secretLevel2Steps == 9){
-                    //Log.e(TAG, " - notify secretLevel2LockStep "+secretLevel2LockStep);
-                    if (!secretLevel2LockStep) {
-                        secretLevel2Steps += 1;
-                        secretLevel2LockStep = true;
-                        Level.levelGoalsObject.notifySecretStepsToConquer(10 - secretLevel2Steps);
-                        if (secretLevel2Steps == 10){
-                            Level.levelGoalsObject.notifySecretLevelUnblocked(2);
-                        }
-                    }
-                } else {
-                    if (!secretLevel2LockStep) {
-                        //Log.e(TAG, " - notify secretLevel2Steps = 0");
-                        secretLevel2Steps = 0;
-                    }
-
-                }//0 L 1 R 2 L 3 L 4 L 5 R 6 R 7 L 8 R 9 L bar touch border
-
-
             }
 
             if (collisionsData.get(i).object.type == Entity.TYPE_RIGHT_BORDER){
                 Level.levelObject.levelGoalsObject.notifyRightBorderTouch();
-
-                //Log.e(TAG, " - notify secretLevel2Steps on right"+secretLevel2Steps);
-
-                if (secretLevel2Steps == 1 || secretLevel2Steps == 5 || secretLevel2Steps == 6 || secretLevel2Steps == 8){
-                    //Log.e(TAG, " - notify secretLevel2LockStep "+secretLevel2LockStep);
-                    if (!secretLevel2LockStep) {
-                        secretLevel2Steps += 1;
-                        secretLevel2LockStep = true;
-                        Level.levelGoalsObject.notifySecretStepsToConquer(10 - secretLevel2Steps);
-                    }
-                } else {
-                    //Log.e(TAG, " - notify secretLevel2Steps = 0");
-                    if (!secretLevel2LockStep) {
-                        secretLevel2Steps = 0;
-                    }
-                }//0 L 1 R 2 L 3 L 4 L 5 R 6 R 7 L 8 R 9 L bar touch border
             }
         }
     }

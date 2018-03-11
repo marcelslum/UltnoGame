@@ -13,15 +13,17 @@ public class LevelGoalsLoader {
 
         int ln = 1;  // ---------- LEVEL 1
         if (levelNumber == ln) {
-            lg.add(new LevelGoal(3, LevelGoal.JUST_FINISH, 0));
-            lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_N_TIMES, 4));
+            lg.add(new LevelGoal(5, LevelGoal.JUST_FINISH, 0));
+            //lg.add(new LevelGoal(3, LevelGoal.JUST_FINISH, 0));
+            //lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_N_TIMES, 4));
 
         }
 
         ln += 1; // ---------- LEVEL 2
         if (levelNumber == ln) {
-            lg.add(new LevelGoal(2, LevelGoal.JUST_FINISH, 0));
-            lg.add(new LevelGoal(3, LevelGoal.DECELERATE_N_TIMES, 4));
+            lg.add(new LevelGoal(5, LevelGoal.JUST_FINISH, 0));
+            //lg.add(new LevelGoal(2, LevelGoal.JUST_FINISH, 0));
+            //lg.add(new LevelGoal(3, LevelGoal.DECELERATE_N_TIMES, 4));
 
         }
 

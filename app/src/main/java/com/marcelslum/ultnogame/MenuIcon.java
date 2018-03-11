@@ -141,7 +141,6 @@ public class MenuIcon extends Entity{
 
     @Override
     public void display() {
-        Log.e(TAG, "display do menuIcon de nome "+name);
         super.display();
         for (int i = 0; i < icons.size();i++){
             icons.get(i).display();
@@ -174,7 +173,6 @@ public class MenuIcon extends Entity{
                 delayIcon = i;
                 hasDelayShowVerify = true;
                 break;
-
             }
         }
 
@@ -226,7 +224,7 @@ public class MenuIcon extends Entity{
             } else {
                 Animation anim = Utils.createAnimation3v(icons.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true);
                 if (!delayShowUnblockMarked) {
-                    Sound.play(Sound.soundSecretMenuUnblocked, 0.5f, 0.5f, 0);
+                    //Sound.play(Sound.soundSecretMenuUnblocked, 0.5f, 0.5f, 0);
                     anim.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
@@ -279,7 +277,7 @@ public class MenuIcon extends Entity{
 
     @Override
     public void clearDisplay() {
-        Log.e(TAG, "clear display do menuIcon de nome "+name);
+        //Log.e(TAG, "clear display do menuIcon de nome "+name);
         super.clearDisplay();
         for (int i = 0; i < icons.size();i++){
             icons.get(i).clearDisplay();

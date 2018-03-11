@@ -13,6 +13,8 @@ public class StarsHandler {
     static int previousStars;
 
     public static int updateConqueredStars(){
+
+
         int numberOfStars = 0;
         for (int i = 0; i < Level.NUMBER_OF_LEVELS; i++){
             numberOfStars += SaveGame.saveGame.levelsStars[i];

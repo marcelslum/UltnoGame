@@ -34,7 +34,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     public void prepareDatabase() throws IOException {
 
-        myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
+        //myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
 
         boolean dbExist = checkDataBase();
 

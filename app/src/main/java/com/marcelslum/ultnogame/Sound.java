@@ -25,7 +25,7 @@ public abstract class Sound {
     public static int soundGameOver;
     public static int soundMenuSelectBig;
     public static int soundMenuSelectSmall;
-    public static int soundWin;
+
     public static int soundTextBoxAppear;
     public static int soundBarSize;
     public static int soundWind;
@@ -33,11 +33,12 @@ public abstract class Sound {
     public static int soundSuccess2;
     public static int soundMenuIconDrop;
     public static int soundStarsUp;
-    public static int soundSecretUnblocked;
-    public static int soundSecretMenuUnblocked;
-    public static int soundSecretPart;
     public static int soundDuplicateBall;
-    public static MediaPlayer music;
+    //public static MediaPlayer music;
+    public static int soundWin1;
+    public static int soundWin2;
+
+    public static LoopMediaPlayer loop;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -48,7 +49,6 @@ public abstract class Sound {
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
         soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(16).build();
-
         soundBallHit = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit, 1);
         soundCounter = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.counter, 1);
         soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroytarget, 1);
@@ -62,17 +62,15 @@ public abstract class Sound {
         soundMenuSelectBig = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectbig, 1);
         soundMenuSelectSmall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectsmall, 1);
         soundScore = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.score, 1);
-        soundWin = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.win, 1);
+        soundWin1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.win0_powerup17, 1);
+        soundWin2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.win1_powerup16, 1);
         soundTextBoxAppear = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.textboxappear, 1);
         soundBarSize = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bar, 1);
         soundWind = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.wind, 1);
         soundSuccess1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success1, 1);
         soundSuccess2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success2, 1);
-        soundMenuIconDrop = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuicondrop, 1);
+        //soundMenuIconDrop = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuicondrop, 1);
         soundStarsUp = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.starsup, 1);
-        soundSecretUnblocked = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.secretunblocked5, 1);
-        soundSecretMenuUnblocked = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.secretmenuunblocked2, 1);
-        soundSecretPart = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.secretpart, 1);
         soundDuplicateBall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.duplicateball, 1);
     }
 
@@ -95,8 +93,9 @@ public abstract class Sound {
         if (soundPool != null) {
             soundPool.autoPause();
         }
-        if (music != null && music.isPlaying()){
-            Sound.music.pause();
+
+        if (loop != null){
+            loop.pause();
         }
     }
 

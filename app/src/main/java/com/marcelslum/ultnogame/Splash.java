@@ -134,6 +134,12 @@ public class Splash {
     }
 
     static void init(){
+
+        if (forSignin) {
+            loaderConclude = false;
+        } else {
+            loaderConclude = true;
+        }
         Splash.timeInitIntro = Utils.getTime();
         configSplash();
         setSplashState(SPLASH_CARREGANDO);
@@ -208,7 +214,12 @@ public class Splash {
 
         state = id;
         if (id == SPLASH_CARREGANDO) {
-            AsyncTasks.initLoader = new InitLoaderAsyncTask().execute();
+
+            if (!forSignin) {
+                AsyncTasks.initLoader = new InitLoaderAsyncTask().execute();
+            } else {
+                loaderConclude = true;
+            }
             timeInitCarregando = Utils.getTime();
             setMessageCarregando();
             tittle.display();
@@ -226,7 +237,7 @@ public class Splash {
         } else  if (id == SPLASH_CONECTANDO_INTERNET) {
             ConnectionHandler.connect();
             timeInitConectando = Utils.getTime();
-            setMessageConectando();
+            //setMessageConectando();
             tittle.display();
             messageSplash1.display();
         } else if (id == SPLASH_MENU_GOOGLE){
@@ -240,7 +251,6 @@ public class Splash {
             timeInitConectando = Utils.getTime();
         } else if (id == SPLASH_CARREGANDO_SAVE_GAME) {
             timeInitConectando = Utils.getTime();
-            //SaveGame.load();
         }
     }
 
@@ -287,7 +297,6 @@ public class Splash {
 
         if (state == SPLASH_CARREGANDO) {
             if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
-                ConnectionHandler.connect();
                 setSplashState(SPLASH_CONECTANDO_INTERNET);
             }
         } else if (state == SPLASH_CONECTANDO_INTERNET) {

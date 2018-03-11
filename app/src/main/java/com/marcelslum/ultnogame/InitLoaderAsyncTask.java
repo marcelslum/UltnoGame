@@ -25,7 +25,6 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                // TODO
                 Sound.init();
             }
 
@@ -53,7 +52,7 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
     }
     
     protected void onPostExecute(Integer i) {
-        Log.e(TAG, "onPostExecute");
+        Log.e(TAG, "onPostExecute - LOADER CONCLUDE");
         Splash.loaderConclude = true;
      }
  }

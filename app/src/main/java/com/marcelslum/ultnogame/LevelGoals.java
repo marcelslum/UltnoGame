@@ -87,51 +87,6 @@ public class LevelGoals {
             }
         }
     }
-    
-
-    public void notifySecretStepsToConquer(int i){
-        //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifySecretStepsToConquer "+i);
-        if (i == 1){
-            Sound.play(Sound.soundSecretPart, 1f, 1f, 0);
-        } else if (i == 2){
-            Sound.play(Sound.soundSecretPart, 0.8f, 0.8f, 0);
-        } else if (i == 3){
-            Sound.play(Sound.soundSecretPart, 0.6f, 0.6f, 0);
-        } else if (i == 4){
-            Sound.play(Sound.soundSecretPart, 0.4f, 0.4f, 0);
-        } else if (i == 5){
-            Sound.play(Sound.soundSecretPart, 0.2f, 0.2f, 0);
-        }
-    }
-
-
-
-    public void notifySecretLevelUnblocked(int i){
-
-        if (i == 1){
-            GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_segredo_1));
-            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
-            Utils.createSimpleAnimation(Game.brickBackground, "rotate", "rotate", 1000, 0, 360).start();
-            Utils.createSimpleAnimation(Game.brickBackground, "translateX", "translateX", 1000, 0, Game.brickBackground.height * 0.0001f).start();
-        } else if (i == 2){
-
-            GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_segredo_2));
-
-            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
-            Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-        } else if (i == 3){
-            GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_segredo_3));
-            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
-            Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-        } else if (i == 4){ // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
-            GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_segredo_4));
-            Sound.play(Sound.soundSecretUnblocked, 1, 1, 0);
-            Utils.createSimpleAnimation(Game.background, "rotate", "rotate", 1000, 0, 360).start();
-        }
-
-        Game.messages.showMessage("???");
-        SaveGame.saveGame.setLevelUnblocked(100 + i);
-    }
 
     public void ballReachedWithMaximunBarSpped(){
         
@@ -603,23 +558,10 @@ public class LevelGoals {
     }
 
     public void accelerate(){
-        //Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerate");
 
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_acelerar),
                 1);
-
-        // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
-        if(secretLevel4Step == 0 || secretLevel4Step == 1 || secretLevel4Step == 4 || secretLevel4Step == 6 || secretLevel4Step == 9){
-            secretLevel4Step += 1;
-            notifySecretStepsToConquer(10 - secretLevel4Step);
-            if (secretLevel4Step == 10){
-                notifySecretLevelUnblocked(4);
-            }
-        } else {
-            secretLevel4Step = 0;
-
-        }
 
         timesOfAccelerate += 1;
         timesOfAccelerationInARow += 1;
@@ -649,18 +591,6 @@ public class LevelGoals {
 
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_desacelerar), 1);
-
-
-        //Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerate");
-
-        // 0 + 1 + 2 - 3 - 4 + 5 - 6 + 7 - 8 - 9 + 10
-        if(secretLevel4Step == 2 || secretLevel4Step == 3 || secretLevel4Step == 5 || secretLevel4Step == 7 || secretLevel4Step == 8){
-            secretLevel4Step += 1;
-            notifySecretStepsToConquer(10 - secretLevel4Step);
-        } else {
-            secretLevel4Step = 0;
-
-        }
 
         timesOfDecelerate += 1;
         timesOfDecelerationInARow += 1;

@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class Acelerometer {
 
-    static int secretLevel3Steps = 0;  //R R R L L L R R R L bar inclination
-
     public static final String TAG = "Accelerometer";
 
     static float y;
@@ -109,31 +107,6 @@ public class Acelerometer {
         if (Game.bars == null) return;
         for (int i = 0; i < Game.bars.size(); i++){
             Utils.createAnimation3v(Game.bars.get(i), "rotate"+i, "rotate", 500, 0f, 0f, 0.3f, angle, 1.0f, 0f, false, true).start();
-        }
-
-        if (Game.gameState == Game.GAME_STATE_JOGAR){
-            if (angle > 0){
-                if (secretLevel3Steps == 0 || secretLevel3Steps == 1 || secretLevel3Steps == 2 || secretLevel3Steps == 6 || secretLevel3Steps == 7 || secretLevel3Steps == 8){
-                    secretLevel3Steps += 1;
-                    Level.levelGoalsObject.notifySecretStepsToConquer(10 - secretLevel3Steps);
-                } else {
-                    secretLevel3Steps = 0;
-                }
-            } else {
-                if (secretLevel3Steps == 3 || secretLevel3Steps == 4 || secretLevel3Steps == 5 || secretLevel3Steps == 9){
-                    secretLevel3Steps += 1;
-                    Level.levelGoalsObject.notifySecretStepsToConquer(10 - secretLevel3Steps);
-                    if (secretLevel3Steps == 10){
-                        Level.levelGoalsObject.notifySecretLevelUnblocked(3);
-                    }
-                } else {
-                    secretLevel3Steps = 0;
-                }
-
-            }
-
-            //0 R 1 R 2 R 3 L 4 L 5 L 6 R 7 R 8 R 9 L bar inclination
-
         }
     }
 

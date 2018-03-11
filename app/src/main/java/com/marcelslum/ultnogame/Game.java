@@ -641,7 +641,6 @@ public class Game {
             eraseAllHudEntities();
             LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
             mainActivity.hideAdView();
-            Acelerometer.secretLevel3Steps = 0;
             MessagesHandler.messageTime.cleanAnimations();
             MessagesHandler.messageTime.display();
             MessagesHandler.messageCurrentLevel.display();
@@ -655,12 +654,10 @@ public class Game {
             mainActivity.hideAdView();
             if (!sameState) {activateFrame(2500);}
             Level.levelObject.loadEntities();
-            //int musicNumber = SaveGame.saveGame.currentLevelNumber - ((int)Math.floor(SaveGame.saveGame.currentLevelNumber / 7)*SaveGame.saveGame.currentLevelNumber);
-            //if (musicNumber == 1){
-            Sound.music = MediaPlayer.create(getContext(), R.raw.music1);
-            //}
-            Sound.music.setVolume(0.5f, 0.5f);
-            Sound.music.setLooping(true);
+
+            Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m2_hypnotic_puzzle3);
+            Sound.loop.addSecondRes(R.raw.m3_hypnotic_puzzle4);
+
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
                 values.add(new float[]{0f,5f});
@@ -719,11 +716,12 @@ public class Game {
                 mainActivity.hideAdView();
                 TimeHandler.resumeTimeOfLevelPlay();
                 if (SaveGame.saveGame.music) {
-                    if (Sound.music != null) {
-                        Sound.music.start();
+                    if (Sound.loop != null) {
+                        Sound.loop.play();
                     }
                 }
                 MessageStar.messageStars.reset();
+
                 for (int i = 0; i < bars.size(); i++) {
                     if (bars.get(i).scaleVariationData != null) {
                         bars.get(i).initScaleVariation();
@@ -778,7 +776,7 @@ public class Game {
             TimeHandler.stopTimeOfLevelPlay();
             Log.e("game", "ativando game_state_pause");
             if (previousState != GAME_STATE_OPCOES_GAME) {
-                Sound.music.pause();
+                Sound.loop.pause();
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 stopAllGameEntities();
                 reduceAllGameEntitiesAlpha(300);
@@ -831,7 +829,7 @@ public class Game {
 
             // TODO o que fazer com a animação quando for pausado
             stopAndReleaseMusic();
-            Sound.play(Sound.soundWin, 1, 1, 0);
+            Sound.play(Sound.soundWin1, 1, 1, 0);
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
 
@@ -966,6 +964,8 @@ public class Game {
 
             clearAllGameEntities();
 
+            Sound.play(Sound.soundWin2, 1, 1, 0);
+
             ButtonHandler.buttonContinue.clearDisplay();
             ButtonHandler.buttonContinue.block();
 
@@ -987,6 +987,13 @@ public class Game {
             final int starsDiference = StarsHandler.newStars - StarsHandler.previousStars;
 
             int newStarsTotal = StarsHandler.conqueredStarsTotal + (StarsHandler.newStars - StarsHandler.previousStars);
+
+            Log.e(TAG, "StarsHandler.newStars "+StarsHandler.newStars );
+            Log.e(TAG, "StarsHandler.previousStars "+StarsHandler.previousStars );
+            Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
+            Log.e(TAG, "starsDiference "+starsDiference );
+            Log.e(TAG, "newStarsTotal "+newStarsTotal );
+
 
             if (starsDiference > 0) {
                 GoogleAPI.increment(
@@ -1073,6 +1080,13 @@ public class Game {
             valuesAnim.add(new float[]{0.78f,5f});
             valuesAnim.add(new float[]{1f,6f});
 
+
+            Log.e(TAG, "StarsHandler.newStars "+StarsHandler.newStars );
+            Log.e(TAG, "StarsHandler.previousStars "+StarsHandler.previousStars );
+            Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
+            Log.e(TAG, "starsDiference "+starsDiference );
+            Log.e(TAG, "newStarsTotal "+newStarsTotal );
+
             Animation animMessageConqueredStarsTotal = new Animation(MessagesHandler.messageConqueredStarsTotal, "numberForAnimation", "numberForAnimation", 2500, valuesAnim, false, false);
             animMessageConqueredStarsTotal.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
@@ -1118,6 +1132,7 @@ public class Game {
                     ButtonHandler.buttonContinue.unblock();
                     MessagesHandler.messageContinue.display();
                     MessagesHandler.messageContinue.setColor(new Color(0f, 0f, 0f, 1f));
+                    StarsHandler.updateConqueredStars();
                 }
             });
             animMessageConqueredStarsTotal.start();
@@ -1139,11 +1154,8 @@ public class Game {
     }
 
     public static void stopAndReleaseMusic(){
-        if (Sound.music != null) {
-            Sound.music.stop();
-            Sound.music.release();
-            Sound.music = null;
-        }
+        if (Sound.loop != null)
+            Sound.loop.stopAndRelease();
     }
 
     private static void freeAllGameEntities() {
@@ -1354,6 +1366,11 @@ public class Game {
         if (gameState != GAME_STATE_VITORIA) {
             TimeHandler.updateTimeOfLevelPlay(elapsed);
         }
+
+
+        //Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
+
+
 
         if (ButtonHandler.buttonReturn != null){
             //Log.e(TAG, "buttonReturn ");
