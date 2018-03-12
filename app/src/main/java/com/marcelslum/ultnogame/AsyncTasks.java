@@ -8,6 +8,7 @@ public class AsyncTasks {
     public static final String TAG = "AsyncTasks";
     public static AsyncTask initLoader;
     public static AsyncTask saveSnapshot;
+    public static AsyncTask save;
     public static void cancelAll(){
         if (initLoader != null){
             if (initLoader.getStatus() == AsyncTask.Status.RUNNING){
@@ -15,10 +16,10 @@ public class AsyncTasks {
                 initLoader.cancel(true);
             }
         }
-        if (saveSnapshot != null){
-            if (saveSnapshot.getStatus() == AsyncTask.Status.RUNNING){
+        if (save != null){
+            if (save.getStatus() == AsyncTask.Status.RUNNING){
                 Log.e(TAG, "cancelando saveSnapshot");
-                saveSnapshot.cancel(false);
+                save.cancel(false);
             }
         }
     }

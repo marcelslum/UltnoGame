@@ -34,23 +34,23 @@ public class Messages extends Entity {
 
             textObject = Game.textPool.get();
             textObject.setData("text", x, childs.get(childToReplace).y,
-                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.8f, 0.8f, 0.8f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (1f, 1f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.set(childToReplace, textObject);
 
             textObject2 = Game.textPool.get();
             textObject2.setData("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), childs.get(childToReplace).y + (Game.gameAreaResolutionY * 0.045f * 0.07f),
-                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.2f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.6f, 0.6f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs2.set(childToReplace, textObject2);
 
         } else {
             textObject = Game.textPool.get();
             textObject.setData("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
-                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.8f, 0.8f, 0.8f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (1f, 1f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.add(textObject);
 
             textObject2 = Game.textPool.get();
             textObject2.setData("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f) + (Game.gameAreaResolutionY * 0.045f * 0.07f),
-                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.2f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.6f, 0.6f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs2.add(textObject2);
         }
 

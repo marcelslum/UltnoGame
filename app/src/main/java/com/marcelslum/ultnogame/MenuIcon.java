@@ -161,7 +161,6 @@ public class MenuIcon extends Entity{
 
     public void appear(){
 
-        Sound.play(Sound.soundMenuIconDrop, 0.5f, 0.5f, 0);
         blockAllIcons();
         display();
         final MenuIcon innerMenuIcon = this;

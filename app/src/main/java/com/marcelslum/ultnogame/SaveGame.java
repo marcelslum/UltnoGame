@@ -2,6 +2,7 @@ package com.marcelslum.ultnogame;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -147,22 +148,40 @@ public class SaveGame {
 
     }
 
-    public static void save(){
-        Log.e(TAG, "save()");
+    public void save(){
 
-        if (SaveGame.saveGame == null){
-            Log.e(TAG, "Erro ao salvar o jogo. Objeto SaveGame nulo.");
-            return;
-        }
         if (Utils.getTime() - lastSave < MIN_TIME_BEFORE_RESAVE) {
             Log.e(TAG, "Jogo não foi salvo porque foi salvo recentemente.");
             return;
         }
-        lastSave = Utils.getTime();
+        Log.e(TAG, "save()");
+        AsyncTasks.save = new SaveAsyncTask().execute();
+    }
 
-        DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
+    private class SaveAsyncTask extends AsyncTask<Integer, Integer, Integer> {
+        protected Integer doInBackground(Integer... i) {
 
-        Storage.setString(Storage.STORAGE_SAVE_NAME, getStringFromSaveGame(saveGame));
+            if (SaveGame.saveGame == null){
+                Log.e(TAG, "Erro ao salvar o jogo. Objeto SaveGame nulo.");
+                return -1;
+            }
+
+            lastSave = Utils.getTime();
+
+            DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
+
+            Storage.setString(Storage.STORAGE_SAVE_NAME, getStringFromSaveGame(saveGame));
+
+            return 1;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+
+        }
+
+        protected void onPostExecute(Integer result) {
+            Log.e(TAG, "Jogo salvo");
+        }
     }
 
 

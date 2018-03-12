@@ -305,9 +305,9 @@ public class MainActivity extends FragmentActivity implements
 
         isPaused = true;
         Log.e("MainActivity", "onPause()");
-        if (Game.gameState != Game.GAME_STATE_INTERSTITIAL) {
-            SaveGame.save();
-        }
+        //if (Game.gameState != Game.GAME_STATE_INTERSTITIAL) {
+        //    SaveGame.saveGame.save();
+        //}
 
         if (myGlSurface != null){
             myGlSurface.onPause();

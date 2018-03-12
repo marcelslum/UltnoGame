@@ -517,6 +517,8 @@ public class Game {
                 MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
             }
 
+            Sound.play(Sound.soundMenuIconDrop2, 0.2f, 0.2f, 0);
+
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
 
@@ -543,6 +545,8 @@ public class Game {
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
 
             mainActivity.showAdView();
+
+            Sound.play(Sound.soundMenuIconDrop2, 0.1f, 0.1f, 0);
 
             MenuHandler.groupMenu.clearDisplay();
             MenuHandler.groupMenu.block();
@@ -602,7 +606,9 @@ public class Game {
 
         } else if (state == GAME_STATE_MENU){
 
-            SaveGame.save();
+            SaveGame.saveGame.save();
+
+
 
             ConnectionHandler.menuConnectionAttempts = 0;
             if (!sameState) {
@@ -660,8 +666,24 @@ public class Game {
             if (!sameState) {activateFrame(2500);}
             Level.levelObject.loadEntities();
 
-            Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m2_hypnotic_puzzle3);
-            Sound.loop.addSecondRes(R.raw.m3_hypnotic_puzzle4);
+
+
+            int loopChoose = (SaveGame.saveGame.currentLevelNumber-1) % 3;
+            Log.e(TAG, "loopChoose "+ loopChoose);
+            switch (loopChoose){
+                case 0:
+                    Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
+                    break;
+                case 1:
+                    Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m2_hypnotic_puzzle3, R.raw.m4_hypnotic_puzzle, 0.8f);
+                    break;
+                case 2:
+                    Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m10_mellow_puzzler, 0.8f);
+                    break;
+                default:
+                    Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
+                    break;
+            }
 
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
@@ -773,7 +795,7 @@ public class Game {
                 int points = ScoreHandler.scorePanel.value / 2;
                 ScoreHandler.scorePanel.setValue(points, true, 1000, true);
                 SaveGame.saveGame.setLevelPoints(SaveGame.saveGame.currentLevelNumber, points);
-                SaveGame.save();
+                SaveGame.saveGame.save();
                 ScoreHandler.setMaxScoreTotal();
                 ScoreHandler.submitScores();
             }
@@ -901,7 +923,7 @@ public class Game {
             
             SaveGame.setLevelPoints(SaveGame.saveGame.currentLevelNumber, pointsTotal);
             SaveGame.setLevelStars(SaveGame.saveGame.currentLevelNumber, StarsHandler.newStars);
-            SaveGame.save();
+            SaveGame.saveGame.save();
             ScoreHandler.setMaxScoreTotal();
             ScoreHandler.submitScores();
 
@@ -1263,9 +1285,9 @@ public class Game {
 
         Log.e(TAG, "reduceAllGameEntitiesAlpha");
 
-        //for (Entity e : collectAllGameEntities()){
-        //    e.reduceAlpha(duration, 0.2f);
-        //}
+        for (Entity e : collectAllGameEntities()){
+            e.reduceAlpha(duration, 0.2f);
+        }
 
     }
 

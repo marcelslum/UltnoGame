@@ -41,18 +41,19 @@ public class MessagesHandler {
 
         Resources resources = Game.getContext().getResources();
 
-        Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
         Game.aboutTextView.addText(resources.getString(R.string.sobre1), Color.azul);
         Game.aboutTextView.addText(resources.getString(R.string.sobre1b), Color.transparente);
         Game.aboutTextView.addText(resources.getString(R.string.sobre2), Color.azul);
         Game.aboutTextView.addText(resources.getString(R.string.sobre3), Color.cinza1);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre3b), Color.cinza2);
         Game.aboutTextView.addText(resources.getString(R.string.sobre4), Color.transparente);
         Game.aboutTextView.addText(resources.getString(R.string.sobre5), Color.azul);
         Game.aboutTextView.addText(resources.getString(R.string.sobre6), Color.cinza1);
         Game.aboutTextView.addText(resources.getString(R.string.sobre7), Color.transparente);
         Game.aboutTextView.addText(resources.getString(R.string.sobre8), Color.azul);
         Game.aboutTextView.addText(resources.getString(R.string.sobre9b), Color.cinza1);
-        Game.aboutTextView.addText(resources.getString(R.string.sobre10), Color.transparente);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre10), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre10a), Color.cinza2);
         Game.aboutTextView.addText(resources.getString(R.string.sobre11), Color.cinza1);
         Game.aboutTextView.addText(resources.getString(R.string.sobre11b),Color.cinza2);
         Game.aboutTextView.addText(resources.getString(R.string.sobre12), Color.cinza2);

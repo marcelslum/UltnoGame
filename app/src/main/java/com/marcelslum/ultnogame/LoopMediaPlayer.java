@@ -18,28 +18,44 @@ public class LoopMediaPlayer {
     private int mCounter = 1;
     boolean alternate = false;
     int currentResource;
+    float volume;
 
     private MediaPlayer mCurrentPlayer = null;
     private MediaPlayer mNextPlayer = null;
 
-    public static LoopMediaPlayer create(Context context, int resId) {
-        return new LoopMediaPlayer(context, resId);
+    public static LoopMediaPlayer create(Context context, int resId, float volume) {
+        return new LoopMediaPlayer(context, resId, volume);
     }
 
-    private LoopMediaPlayer(Context context, int resId) {
+    public static LoopMediaPlayer create(Context context, int resId, int resId2, float volume) {
+        return new LoopMediaPlayer(context, resId, resId2, volume);
+    }
+
+    private LoopMediaPlayer(Context context, int resId, float volume) {
         mContext = context;
         mResId = resId;
+        this.volume = volume;
+        currentResource = 1;
+        alternate = false;
 
         mCurrentPlayer = MediaPlayer.create(mContext, mResId);
-        mCurrentPlayer.setVolume(0.8f, 0.8f);
+        mCurrentPlayer.setVolume(volume, volume);
 
         createNextMediaPlayer();
     }
 
-    public void addSecondRes(int resId){
+    private LoopMediaPlayer(Context context, int resId1, int resId2, float volume) {
+        mContext = context;
+        mResId = resId1;
+        mResId2 = resId2;
+        this.volume = volume;
         currentResource = 1;
         alternate = true;
-        mResId2 = resId;
+
+        mCurrentPlayer = MediaPlayer.create(mContext, mResId);
+        mCurrentPlayer.setVolume(volume, volume);
+
+        createNextMediaPlayer();
     }
 
     private void createNextMediaPlayer() {
@@ -57,12 +73,12 @@ public class LoopMediaPlayer {
             mNextPlayer = MediaPlayer.create(mContext, mResId);
         }
 
-        mNextPlayer.setVolume(0.8f, 0.8f);
+        mNextPlayer.setVolume(volume, volume);
 
         mCurrentPlayer.setNextMediaPlayer(mNextPlayer);
         mCurrentPlayer.setOnCompletionListener(onCompletionListener);
 
-        mCurrentPlayer.setVolume(0.8f, 0.8f);
+        mCurrentPlayer.setVolume(volume, volume);
     }
 
     public void stopAndRelease(){
@@ -93,7 +109,13 @@ public class LoopMediaPlayer {
     public void play(){
         //Log.e(TAG, "play");
         if (mCurrentPlayer != null) {
-            mCurrentPlayer.start();
+
+            try {
+                mCurrentPlayer.start();
+            } catch (Exception e) {
+            }
+
+
         }
     }
 

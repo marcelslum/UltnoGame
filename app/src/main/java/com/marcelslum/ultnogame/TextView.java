@@ -83,7 +83,6 @@ public class TextView extends Entity{
 	public void addText(String text, Color newTextColor){
 
 
-
 		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth("novo text", text, font, newTextColor, size, width, alignment);
 
         texts.addAll(newTexts);
@@ -129,19 +128,33 @@ public class TextView extends Entity{
 
 	public void move(float iconTranslateY, boolean updateCurrentTranslateY) {
 
-		float padd = size * 0.5f;
+
 
 		Text lastText = texts.get(texts.size()-1);
-		if (lastText.positionY + size + iconTranslateY > Game.resolutionY - padd){
-		    iconTranslateY = (Game.resolutionY - padd) - (lastText.positionY + size);
+
+		Log.e(TAG, "lastText.positionY "+lastText.positionY);
+		Log.e(TAG, "size "+size);
+		Log.e(TAG, "iconTranslateY "+iconTranslateY);
+		Log.e(TAG, "y "+y);
+		Log.e(TAG, "height "+height);
+
+		if (lastText.positionY + size + iconTranslateY < y + height){
+			Log.e(TAG, "lastText.positionY + size + iconTranslateY > y + height");
+		    iconTranslateY = (y + height) - (lastText.positionY + size);
 		    if (desacelerationActivated){
 			desacelerationActivated = false;
 		    }
 		}
 
 		Text firstText = texts.get(0);
-		if (firstText.positionY - iconTranslateY < y){
-		    iconTranslateY = padd - firstText.positionY;
+
+
+		Log.e(TAG, "firstText.positionY "+firstText.positionY);
+		Log.e(TAG, "y "+y);
+
+		if (firstText.positionY + iconTranslateY > y){
+			Log.e(TAG, "firstText.positionY - iconTranslateY > y");
+		    iconTranslateY = y - firstText.positionY;
 		    if (desacelerationActivated){
 			desacelerationActivated = false;
 		    }

@@ -31,13 +31,15 @@ public abstract class Sound {
     public static int soundWind;
     public static int soundSuccess1;
     public static int soundSuccess2;
-    public static int soundMenuIconDrop;
+    //public static int soundMenuIconDrop1;
+    public static int soundMenuIconDrop2;
     public static int soundStarsUp;
     public static int soundDuplicateBall;
     //public static MediaPlayer music;
     public static int soundWin1;
     public static int soundWin2;
 
+    public static LoopMediaPlayer loopMenu;
     public static LoopMediaPlayer loop;
 
 
@@ -69,7 +71,8 @@ public abstract class Sound {
         soundWind = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.wind, 1);
         soundSuccess1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success1, 1);
         soundSuccess2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success2, 1);
-        //soundMenuIconDrop = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuicondrop, 1);
+        //soundMenuIconDrop1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bells1, 1);
+        soundMenuIconDrop2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bells9, 1);
         soundStarsUp = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.starsup, 1);
         soundDuplicateBall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.duplicateball, 1);
     }

@@ -79,7 +79,7 @@ public class Splash {
             @Override
             public void onChoice() {
                 SaveGame.saveGame.googleOption = 1;
-                SaveGame.save();
+                SaveGame.saveGame.save();
                 forSignin = true;
                 init();
 
@@ -91,7 +91,7 @@ public class Splash {
             public void onChoice() {
                 SaveGame.saveGame.googleOption = 0;
                 forSignin = false;
-                SaveGame.save();
+                SaveGame.saveGame.save();
                 init();
             }
         });
@@ -101,7 +101,7 @@ public class Splash {
             public void onChoice() {
                 SaveGame.saveGame.googleOption = -1;
                 forSignin = false;
-                SaveGame.save();
+                SaveGame.saveGame.save();
                 forJumpGoogle = true;
                 init();
             }
