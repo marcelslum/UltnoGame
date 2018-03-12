@@ -78,8 +78,9 @@
     <string name="t2t1">Vamos dar uma olhada nos comandos e instruções básicas do jogo.</string>
     <string name="t2t2">Mova a barra para a esquerda e para a direita apertando um dos botões localizados nas extremidades inferiores da tela.</string>
     <string name="t2t3">Não deixe a bola cair.</string>
-    <string name="t2t4">Atinja os alvos com a bola para eliminá-los. Cada alvo valerá 10 pontos.</string>
-    <string name="t2t5">Elimine todos os alvos para completar o nível, mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
+    <string name="t2t4">Se o jogo estiver muito difícil ou fácil, é possível alterar a velocidade da bola no menu de opções.</string>
+    <string name="t2t5">Atinja os alvos com a bola para eliminá-los. Cada alvo valerá 10 pontos.</string>
+    <string name="t2t6">Elimine todos os alvos para completar o nível, mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
 
     <string name="t3t1">Através do controle do movimento da barra, é possível alterar a direção e a velocidade da bola.</string>
     <string name="t3t2">Ao atingir a bola com a barra se movimentando na direção contrária, a velocidade da bola aumentará</string>
