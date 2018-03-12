@@ -132,7 +132,7 @@ public class TextView extends Entity{
 		float padd = size * 0.5f;
 
 		Text lastText = texts.get(texts.size()-1);
-		if (lastText.positionY + size + iconTranslateY < Game.resolutionY - padd){
+		if (lastText.positionY + size + iconTranslateY > Game.resolutionY - padd){
 		    iconTranslateY = (Game.resolutionY - padd) - (lastText.positionY + size);
 		    if (desacelerationActivated){
 			desacelerationActivated = false;
@@ -140,7 +140,7 @@ public class TextView extends Entity{
 		}
 
 		Text firstText = texts.get(0);
-		if (firstText.positionY - iconTranslateY > y){
+		if (firstText.positionY - iconTranslateY < y){
 		    iconTranslateY = padd - firstText.positionY;
 		    if (desacelerationActivated){
 			desacelerationActivated = false;
