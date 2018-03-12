@@ -220,7 +220,7 @@ class TargetGroup extends Entity{
         }
 
         int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
-        GLES20.glUniform1f(uf_alphaHandle, alpha);
+        GLES20.glUniform1f(uf_alphaHandle, 1f);
 
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);

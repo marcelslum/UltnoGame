@@ -80,10 +80,15 @@ public class InteractionListener {
 
             //Log.e(TAG, "Touch Event dentro de verify do objeto " + objectAppend.name + " type " + touch.type);
 
-            pressedOnVerify = Utils.isPointInsideBounds(
-                touch.x,
-                touch.y,
-                x, y, width, height);
+
+            if (touch != null) {
+                pressedOnVerify = Utils.isPointInsideBounds(
+                        touch.x,
+                        touch.y,
+                        x, y, width, height);
+            } else {
+                pressedOnVerify = false;
+            }
 
             if (pressedOnVerify) {
                 if (myMoveListener == null){

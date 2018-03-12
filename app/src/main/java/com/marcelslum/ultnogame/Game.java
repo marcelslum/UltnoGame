@@ -1339,7 +1339,7 @@ public class Game {
         list.addAll(balls);
         list.addAll(fakeBalls);
         list.addAll(bars);
-        list.add(targetGroup);
+        list.addAll(targets);
         list.addAll(obstacles);
         list.addAll(windows);
         list.addAll(specialBalls);
@@ -1804,6 +1804,7 @@ public class Game {
 
     static void verifyWin() {
         boolean win = true;
+
         for (int i = 0; i < targets.size(); i++) {
             if (targets.get(i).alive){
                 win = false;
@@ -1818,6 +1819,27 @@ public class Game {
                 }
             }
         }
+
+
+        // for debug
+        int numberOfTargets = 0;
+        int numberOfTargetsAlives = 0;
+
+        for (int i = 0; i < targets.size(); i++) {
+            numberOfTargets += 1;
+            if (targets.get(i).alive){
+                numberOfTargetsAlives += 1;
+            }
+        }
+
+        if (numberOfTargetsAlives < numberOfTargets/2){
+            win = true;
+        }
+        // for debug
+
+
+
+
         if (win) setGameState(GAME_STATE_VITORIA);
     }
 

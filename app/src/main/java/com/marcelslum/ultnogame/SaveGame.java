@@ -168,7 +168,14 @@ public class SaveGame {
 
             lastSave = Utils.getTime();
 
-            DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
+
+            try {
+                DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
+            } catch (Exception e) {
+                Log.e(TAG, "Erro ao salvar no banco.");
+            }
+
+
 
             Storage.setString(Storage.STORAGE_SAVE_NAME, getStringFromSaveGame(saveGame));
 
