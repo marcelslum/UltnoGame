@@ -44,7 +44,7 @@ public class LoopMediaPlayer {
 
     private void createNextMediaPlayer() {
         if (alternate) {
-            Log.e(TAG, "alternate == true");
+            //Log.e(TAG, "alternate == true");
             if (currentResource == 1) {
                 mNextPlayer = MediaPlayer.create(mContext, mResId2);
                 currentResource = 2;
@@ -53,7 +53,7 @@ public class LoopMediaPlayer {
                 currentResource = 1;
             }
         } else {
-            Log.e(TAG, "alternate == false");
+            //Log.e(TAG, "alternate == false");
             mNextPlayer = MediaPlayer.create(mContext, mResId);
         }
 
@@ -66,7 +66,7 @@ public class LoopMediaPlayer {
     }
 
     public void stopAndRelease(){
-        Log.e(TAG, "stopAndRelease");
+        //Log.e(TAG, "stopAndRelease");
         if (mCurrentPlayer != null) {
             try {
                 mCurrentPlayer.stop();
@@ -79,7 +79,7 @@ public class LoopMediaPlayer {
     }
 
     public void pause(){
-        Log.e(TAG, "pause");
+        //Log.e(TAG, "pause");
         if (mCurrentPlayer != null) {
             try {
                 if (mCurrentPlayer.isPlaying()) {
@@ -91,7 +91,7 @@ public class LoopMediaPlayer {
     }
 
     public void play(){
-        Log.e(TAG, "play");
+        //Log.e(TAG, "play");
         if (mCurrentPlayer != null) {
             mCurrentPlayer.start();
         }
@@ -105,7 +105,7 @@ public class LoopMediaPlayer {
 
             createNextMediaPlayer();
 
-            Log.d(TAG, String.format("Loop #%d", ++mCounter));
+            //Log.d(TAG, String.format("Loop #%d", ++mCounter));
         }
     };
 }

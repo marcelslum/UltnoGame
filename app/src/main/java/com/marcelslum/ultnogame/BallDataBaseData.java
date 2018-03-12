@@ -36,7 +36,7 @@ public class BallDataBaseData{
         this.maxVelocity = maxVelocity;
         this.minVelocity = minVelocity;
         this.free = free;
-        logData();
+        //logData();
     }
 
     public void logData(){

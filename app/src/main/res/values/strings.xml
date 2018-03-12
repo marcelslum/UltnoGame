@@ -377,4 +377,47 @@
     <string name="messageMenuAbout">Sobre:</string>
 
 
+
+    <string name="sobre1">SOBRE:</string>
+    <string name="sobre1b">.</string>
+    <string name="sobre1c">.</string>
+    <string name="sobre2">Criação e desenvolvimento:</string>
+    <string name="sobre2b">.</string>
+    <string name="sobre3">Marcel Sluminsky</string>
+    <string name="sobre4">.</string>
+    <string name="sobre4b">.</string>
+    <string name="sobre5">Música:</string>
+    <string name="sobre5b">.</string>
+    <string name="sobre6">Eric Matyas - www.soundimage.org</string>
+    <string name="sobre7">.</string>
+    <string name="sobre7b">.</string>
+    <string name="sobre8">Efeitos sonoros:</string>
+    <string name="sobre9">.</string>
+    <string name="sobre9b">Do site soundimage.org/sfx-pwrupdn/:</string>
+    <string name="sobre10">.</string>
+    <string name="sobre11">Do site www.freesound.org:</string>
+    <string name="sobre11b">juskiddink - som 108615</string>
+    <string name="sobre12">rhodesmas - som 322898</string>
+    <string name="sobre13">MastersDisaster - som 218114</string>
+    <string name="sobre14">Vicces1212 - som 123758</string>
+    <string name="sobre15">Soughtaftersounds - som 145446 - "Copyright © 2011 Varazuvi™ www.varazuvi.com"</string>
+    <string name="sobre16">Chocobaggy - som 248211</string>
+    <string name="sobre17">n_audioman - som 273587</string>
+    <string name="sobre18">jalastram - som 317645</string>
+    <string name="sobre19">broumbroum - som 50559</string>
+    <string name="sobre20">rhodesmas - som 342756</string>
+    <string name="sobre21">xtrgamr - som 253546</string>
+    <string name="sobre22">soneproject - som 346425</string>
+    <string name="sobre23">coby12388 - som 222575</string>
+    <string name="sobre24">orginaljun - som 149802</string>
+    <string name="sobre25">warwickallison - som 115759</string>
+    <string name="sobre26">NenadSimic - som 171756 - http://market.envato.com</string>
+    <string name="sobre27">nsstudios - som 321103</string>
+    <string name="sobre28">gmegas - som 337733</string>
+    <string name="sobre29">fins - som 171671</string>
+    <string name="sobre30">fins - som 171670</string>
+    <string name="sobre31">.</string>
+
+
+
 </resources>

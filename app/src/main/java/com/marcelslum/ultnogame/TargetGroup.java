@@ -2,6 +2,7 @@ package com.marcelslum.ultnogame;
 
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 class TargetGroup extends Entity{
 
@@ -41,7 +42,6 @@ class TargetGroup extends Entity{
 
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
 
-
             if (Game.targets.get(i).type == Target.TARGET_RED){
                 Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_RED_ID));
             } else if (Game.targets.get(i).type == Target.TARGET_BLUE){
@@ -52,6 +52,7 @@ class TargetGroup extends Entity{
                 Utils.insertRectangleUvData(uvsData, i * 8, TextureData.getTextureDataById(TextureData.TEXTURE_TARGET_BLACK_ID));
             }
 
+            /*
             float percentage;
             if (Utils.getTime() - Game.targets.get(i).timeOfLastDecay < 300){
                 percentage = (float)(Utils.getTime() - Game.targets.get(i).timeOfLastDecay)/300f;
@@ -59,7 +60,7 @@ class TargetGroup extends Entity{
                 percentage = 0;
             }
 
-            /*
+
             float finalPorcentage = ((float)Math.pow(((percentage)-0.5f),2)*-1) + 0.25f;
 
             if (finalPorcentage != 0) {
@@ -117,28 +118,55 @@ class TargetGroup extends Entity{
 	
      public void checkBufferChange() {
 
+        //int colorChangeCount = 0;
+
         for (int i = 0; i < Game.targets.size(); i++) {
-            Game.targets.get(i).checkAnimations();
+            int numberOfAnimations = Game.targets.get(i).checkAnimations();
+            //if (numberOfAnimations > 0){
+            //    Log.e(TAG, "target x/y " +Game.targets.get(i).x+"/"+Game.targets.get(i).y+ " numberOfAnimations " + numberOfAnimations);
+            //}
+
             if (Game.targets.get(i).colorChangeFlag) {
+
+                //colorChangeCount += 1;
 
                 float alphaMultiply = 0;
                 if (Game.targets.get(i).isVisible){
                     alphaMultiply = 1f;
                 }
 
-                Utils.insertRectangleColorsData(Game.targets.get(i).colorsData, 0, 0f, 0f, 0f, Game.targets.get(i).alpha * Game.targets.get(i).ghostAlpha * alphaMultiply);
+                //Log.e(TAG, "target x/y " +Game.targets.get(i).x+"/"+Game.targets.get(i).y+" alpha " +  Game.targets.get(i).alpha + " : " +Game.targets.get(i).ghostAlpha + " : " + alphaMultiply);
 
+                //for (int j = 0; j < Game.targets.get(i).animations.size(); j++) {
+                //    if (Game.targets.get(i).animations.get(j).started){
+                //        Log.e(TAG, "animation started "+Game.targets.get(i).animations.get(j).name);
+                //    }
+                //}
+
+
+                Utils.insertRectangleColorsData(Game.targets.get(i).colorsData, 0, 0f, 0f, 0f, Game.targets.get(i).alpha * Game.targets.get(i).ghostAlpha * alphaMultiply);
+                colorsBuffer = Utils.generateOrUpdateFloatBuffer(Game.targets.get(i).colorsData, colorsBuffer);
+
+                /*
                 if (colorsBuffer == null || colorsBuffer.capacity() != Game.targets.get(i).colorsData.length) {
+
+                    Log.e(TAG, "Utils.generateOrUpdateFloatBuffer");
+
                     colorsBuffer = Utils.generateOrUpdateFloatBuffer(Game.targets.get(i).colorsData, colorsBuffer);
                 } else {
+
+                    Log.e(TAG, "Utils.updateFloatBuffer");
                     Utils.updateFloatBuffer(Game.targets.get(i).colorsData, colorsBuffer);
                 }
+                */
 
                 GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
                 GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER,
                         i * (colorsBuffer.capacity() * SIZEOF_FLOAT),
                         colorsBuffer.capacity() * SIZEOF_FLOAT,
                         colorsBuffer);
+
+                Game.targets.get(i).colorChangeFlag = false;
             }
 
 
@@ -149,9 +177,15 @@ class TargetGroup extends Entity{
                         i * (uvsBuffer.capacity() * SIZEOF_FLOAT),
                         uvsBuffer.capacity() * SIZEOF_FLOAT,
                         uvsBuffer);
+
+                Game.targets.get(i).uvChangeFlag = false;
             }
 
         }
+
+        //if (colorChangeCount > 0) {
+        //    Log.e(TAG, "colorChangeFlag count " + colorChangeCount);
+        //}
 
     }
 
@@ -184,7 +218,10 @@ class TargetGroup extends Entity{
          if (textureId != -1) {
             GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
         }
-            
+
+        int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
+        GLES20.glUniform1f(uf_alphaHandle, 1f);
+
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
         GLES20.glEnableVertexAttribArray(av4_verticesHandle);

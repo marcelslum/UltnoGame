@@ -61,7 +61,7 @@ public class Ball extends Circle{
     boolean collisionBar = false;
     boolean collisionOtherBall = false;
     int collisionBarNumber = -1;
-    private int alarmId;
+    public int alarmId;
     
     public float lastResponseBallX = 0f;
     public float lastResponseBallY = 0f;
@@ -85,7 +85,7 @@ public class Ball extends Circle{
         program = Game.imageColorizedProgram;
 
         ballsCollidedProcessed = new ArrayList<>();
-        color = new Color(0f, 0f, 0f, 1f);
+        color = Color.preto;
 
         maxWidth = radius * 2f;
         maxHeight = radius * 2f;
@@ -321,7 +321,6 @@ public class Ball extends Circle{
             Utils.insertRectangleColorsData(colorsData, 0, color);
             colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
         }
-
 
         super.prepareRender(matrixView, matrixProjection);
     }
@@ -1592,6 +1591,11 @@ public class Ball extends Circle{
         //Log.e("ball", "len " + Utils.getVectorMagnitude(dvx, dvy));
 
     }
+
+    public void replayAlarm(){
+        alarmId = Sound.play(Sound.soundAlarm, 1, 1, 100);
+    }
+
 
     private void waitForExplosion() {
         listenForExplosion = true;

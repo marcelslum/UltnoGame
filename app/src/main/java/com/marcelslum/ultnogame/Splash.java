@@ -74,14 +74,12 @@ public class Splash {
         // -------------------------------------------MENU CONECTAR GOOGLE
         float fontSize = Game.gameAreaResolutionY*0.08f;
 
-        final Menu innerMenu = menuGoogle;
-        final Image innerTittle = tittle;
-
         menuGoogle = new Menu("menuGoogle", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
         menuGoogle.addMenuOption("Sim", Game.getContext().getResources().getString(R.string.menuGoogleSim), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 SaveGame.saveGame.googleOption = 1;
+                SaveGame.save();
                 forSignin = true;
                 init();
 
@@ -93,6 +91,7 @@ public class Splash {
             public void onChoice() {
                 SaveGame.saveGame.googleOption = 0;
                 forSignin = false;
+                SaveGame.save();
                 init();
             }
         });
@@ -102,6 +101,7 @@ public class Splash {
             public void onChoice() {
                 SaveGame.saveGame.googleOption = -1;
                 forSignin = false;
+                SaveGame.save();
                 forJumpGoogle = true;
                 init();
             }
@@ -114,10 +114,10 @@ public class Splash {
                 Game.resolutionX * 1f,
                 Game.resolutionY,
                 fontSize * 0.8f,
-                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER);
+                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1));
-        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b));
+        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1), new Color(0f, 0f, 0f, 1f));
+        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b), new Color(0f, 0f, 0f, 1f));
 
         messageGoogle1.clearDisplay();
 
@@ -126,9 +126,9 @@ public class Splash {
                 Game.resolutionX * 1f,
                 Game.resolutionY,
                 fontSize * 0.55f,
-                Game.font, new Color(0.6f, 0.6f, 0.7f, 1f), Text.TEXT_ALIGN_CENTER);
+                Game.font, new Color(0.6f, 0.6f, 0.7f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageGoogle2.addText(Game.getContext().getResources().getString(R.string.messageGoogle2));
+        messageGoogle2.addText(Game.getContext().getResources().getString(R.string.messageGoogle2), new Color(0f, 0f, 0f, 1f));
 
         messageGoogle2.clearDisplay();
     }
@@ -306,6 +306,7 @@ public class Splash {
                 Game.mainActivity.startSignInIntent();
             } else if (Utils.getTime() - timeInitConectando > (INTRO_PARTIAL_DURATION / 2f)) {
 
+                Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
                 int googlePlayOption = SaveGame.saveGame.googleOption;
                 Log.e(TAG, "googlePlayOption "+ googlePlayOption);
                 if (googlePlayOption == -1){

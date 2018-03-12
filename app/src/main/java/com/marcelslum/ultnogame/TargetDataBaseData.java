@@ -10,7 +10,7 @@ public class TargetDataBaseData{
         this.height = height;
         this.distance = distance;
         this.padd = padd;
-        logData();
+        //logData();
     }
 
     public float height;
@@ -20,8 +20,8 @@ public class TargetDataBaseData{
     
     public void logData(){
         Log.e(TAG, "width "+width);
-        Log.e(TAG, "height "+height);   
-        Log.e(TAG, "distance "+distance);   
-        Log.e(TAG, "padd "+padd);    
+        Log.e(TAG, "height "+height);
+        Log.e(TAG, "distance "+distance);
+        Log.e(TAG, "padd "+padd);
     }
 }

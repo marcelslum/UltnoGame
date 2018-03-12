@@ -141,6 +141,8 @@ public class SaveGame {
                     .setLevelsPlayed(0)
                     .build();
         }
+
+        Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
         loaded = true;
 
     }
@@ -260,6 +262,11 @@ public class SaveGame {
         fsound = Utils.getHigher(saveGame1.sound, saveGame2.sound);
         fvibration = Utils.getHigher(saveGame1.vibration, saveGame2.vibration);
         fgoogleOption = Utils.getHigher(saveGame1.googleOption, saveGame2.googleOption);
+
+        Log.e(TAG, "merge google option saveGame1.googleOption "+ saveGame1.googleOption);
+        Log.e(TAG, "merge google option saveGame2.googleOption "+ saveGame2.googleOption);
+        Log.e(TAG, "merge google option fgoogleOption "+ fgoogleOption);
+
         fBallVelocity = Utils.getHigher(saveGame1.ballVelocity, saveGame2.ballVelocity);
         fcurrentGroupMenuTranslateX = Utils.getHigher(saveGame1.currentGroupMenuTranslateX, saveGame2.currentGroupMenuTranslateX);
         fcurrentLevelMenuTranslateX = Utils.getHigher(saveGame1.currentLevelMenuTranslateX, saveGame2.currentLevelMenuTranslateX);
@@ -419,13 +426,13 @@ public class SaveGame {
             }
 
             try {
-                saveGameBuilder.setVibration(obj.getBoolean("ballVelocity"));
+                saveGameBuilder.setBallVelocity(obj.getInt("ballVelocity"));
             } catch(JSONException e) {
                 saveGameBuilder.setBallVelocity(100);
             }
 
             try {
-                saveGameBuilder.setVibration(obj.getBoolean("googleOption"));
+                saveGameBuilder.setGoogleOption(obj.getInt("googleOption"));
             } catch(JSONException e) {
                 saveGameBuilder.setGoogleOption(-1);
             }

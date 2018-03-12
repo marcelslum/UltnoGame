@@ -290,7 +290,7 @@ public class Bar extends Rectangle{
     }
     
     @Override
-    public void checkAnimations(){
+    public int checkAnimations(){
         super.checkAnimations();
 
 
@@ -320,6 +320,8 @@ public class Bar extends Rectangle{
         shine.alpha += shine.numberForAnimation2 * 0.5f;
 
         //Log.e(TAG, "shine alpha "+ shine.alpha);
+
+        return 0;
 
     }
 

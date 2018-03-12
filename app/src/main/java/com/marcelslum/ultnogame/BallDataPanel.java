@@ -99,13 +99,15 @@ public class BallDataPanel extends Entity{
     }
 
     @Override
-    public void checkAnimations() {
+    public int checkAnimations() {
         super.checkAnimations();
 
         velocityRectangle.animTranslateX = -(width - (width * velocityRectangle.animScaleX))/2f;
         velocityNewRectangle.animTranslateX = -(width - (width * velocityNewRectangle.animScaleX))/2f;
         angleRectangle.animTranslateX = -(width - (width * angleRectangle.animScaleX))/2f;
         angleNewRectangle.animTranslateX = -(width - (width * angleNewRectangle.animScaleX))/2f;
+
+        return 0;
     }
 
     public void setData(float velocityPercentage, float anglePercentage, boolean animationOn) {

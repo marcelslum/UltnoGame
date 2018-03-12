@@ -13,7 +13,7 @@ public class BarDataBaseData{
         this.x = x;
         this.y = y;
         this.vx = vx;
-        logData();
+        //logData();
     }
 
     public float y;

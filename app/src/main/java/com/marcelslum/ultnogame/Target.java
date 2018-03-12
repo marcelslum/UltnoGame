@@ -80,14 +80,14 @@ public class Target extends Rectangle {
         ArrayList<float[]> valuesAnimationGhostAlpha = new ArrayList<>();
         valuesAnimationGhostAlpha.add(new float[]{0f,1f});
         valuesAnimationGhostAlpha.add(new float[]{1f,0f});
-        ghostAlphaAnim = new Animation(this, "ghostAlpha", "ghostAlpha", 1000, valuesAnimationGhostAlpha, false, true);
+        ghostAlphaAnim = new Animation(this, "ghostAlpha "+x + " " + y, "ghostAlpha", 1000, valuesAnimationGhostAlpha, false, true);
 
         ArrayList<float[]> valuesAnimation = new ArrayList<>();
         valuesAnimation.add(new float[]{0f,1f});
         valuesAnimation.add(new float[]{0.3f,0.10f});
         valuesAnimation.add(new float[]{0.4f,0f});
         valuesAnimation.add(new float[]{1f,0f});
-        desapearAnim = new Animation(this, "desapear", "alpha", 1000, valuesAnimation, false, true);
+        desapearAnim = new Animation(this, "desapear "+x+ " " +y, "alpha", 1000, valuesAnimation, false, true);
         desapearAnim .setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
@@ -210,7 +210,7 @@ public class Target extends Rectangle {
                 isCollidable = false;
                 isMovable = false;
                 isSolid = false;
-                desapearAnim.start();
+                this.desapearAnim.start();
             }
         }
     }

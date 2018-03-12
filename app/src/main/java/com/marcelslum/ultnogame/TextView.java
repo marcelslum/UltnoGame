@@ -21,7 +21,7 @@ public class TextView extends Entity{
 	float translateY = 0;
 	int alignment;
   
-	public TextView(String name, float x, float y, float width, float height, float size, Font font, Color color, int alignment){
+	public TextView(String name, float x, float y, float width, float height, float size, Font font, Color color, int alignment, float padding){
 		
 		super(name, x, y, Entity.TYPE_TEXT_VIEW);
 		this.width = width;
@@ -30,6 +30,7 @@ public class TextView extends Entity{
 		this.font = font;
 		this.color = color;
 		this.alignment = alignment;
+		this.padding = padding;
 		texts = new ArrayList<>();
 
 		
@@ -39,14 +40,17 @@ public class TextView extends Entity{
 		
 		listener.setPressListener(new InteractionListener.PressListener() {
 			@Override
-			public void onPress() {}
+			public void onPress() {Log.e(TAG, "press");}
 			@Override
-			public void onUnpress() {}
+			public void onUnpress() {Log.e(TAG, "unpress");}
 		});
 		
 		listener.setMoveListener(new InteractionListener.MoveListener() {
 			@Override
 			public void onMoveDown() {
+
+				Log.e(TAG, "moveDown");
+
 			    if (innerTextView.desacelerationActivated){
 				innerTextView.desacelerationActivated = false;
 				innerTextView.cancelNextPress = true;
@@ -55,6 +59,8 @@ public class TextView extends Entity{
 
 			@Override
 			public void onMove(TouchEvent touch, long startTime) {
+
+				Log.e(TAG, "move");
 			    if (!isBlocked){
 				innerTextView.move(touch.y - touch.previousY, true);
 				innerTextView.lastMovement = touch.y - touch.previousY;
@@ -63,13 +69,22 @@ public class TextView extends Entity{
 
 			@Override
 			public void onMoveUp(TouchEvent touch, long startTime) {
+				Log.e(TAG, "moveUp");
 			    innerTextView.desacelerationActivated = true;
 			}
 		});
 	}
+
+	public void checkTransformations(boolean updatePrevious){
+		super.checkTransformations(updatePrevious);
+		desacelerate();
+	}
 	
-	public void addText(String text){
-		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth("novo text", text, font, color, size, width, alignment);
+	public void addText(String text, Color newTextColor){
+
+
+
+		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth("novo text", text, font, newTextColor, size, width, alignment);
 
         texts.addAll(newTexts);
 		Text.doLinesWithStringCollection(texts, y, size, size * padding, false);
@@ -125,7 +140,7 @@ public class TextView extends Entity{
 		}
 
 		Text firstText = texts.get(0);
-		if (firstText.positionY + iconTranslateY > padd){
+		if (firstText.positionY - iconTranslateY > y){
 		    iconTranslateY = padd - firstText.positionY;
 		    if (desacelerationActivated){
 			desacelerationActivated = false;

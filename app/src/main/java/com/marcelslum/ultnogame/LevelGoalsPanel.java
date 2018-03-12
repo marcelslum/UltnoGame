@@ -12,7 +12,7 @@ public class LevelGoalsPanel extends Entity{
 
     public float size;
     ArrayList<Line> lines;
-    Color textColor = new Color(0f, 0f, 0f, 1f);
+    Color textColor = Color.preto;
     float maxTextWidth;
     boolean gray;
 
@@ -26,7 +26,7 @@ public class LevelGoalsPanel extends Entity{
 
     public void addLine(int quantityOfStars, boolean shineStars, String text){
 
-        Log.e("LevelGoalsPanel", "adicionando nova linha "+ text);
+        //Log.e("LevelGoalsPanel", "adicionando nova linha "+ text);
 
         float textY = y;
         if (lines.size()> 0) {

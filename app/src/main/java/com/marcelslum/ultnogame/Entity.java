@@ -223,6 +223,7 @@ public class Entity{
                 childs.get(i).applyAnimation(parameter, value, applyOnChilds);
             }
         }
+
         switch (parameter) {
             case "rotate":
                 animRotateAngle = value;
@@ -370,11 +371,11 @@ public class Entity{
     }
 
     void reduceAlpha(int duration, float finalValue){
-        Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue).start();
+        Utils.createSimpleAnimation(this, "reduceAlpha1", "alpha", duration, alpha, finalValue).start();
     }
 
     void reduceAlpha(int duration, float finalValue, Animation.AnimationListener animationListener){
-        Utils.createSimpleAnimation(this, "reduceAlpha", "alpha", duration, alpha, finalValue, animationListener).start();
+        Utils.createSimpleAnimation(this, "reduceAlpha2", "alpha", duration, alpha, finalValue, animationListener).start();
     }
 
     void increaseAlpha(int duration, float finalValue){
@@ -385,14 +386,16 @@ public class Entity{
         Utils.createSimpleAnimation(this, "increaseAlpha", "alpha", duration, alpha, finalValue, animationListener).start();
     }
 
-    public void checkAnimations() {
+    public int checkAnimations() {
+
+        int count = 0;
+
         if (parent != null) {
-            return;
+            return - 1;
         }
         if (childs != null) {
             for (int i = 0; i < childs.size(); i++) {
                 for (int a = 0; a < childs.get(i).animations.size(); a++) {
-                    //console.log(child.animations[a].name, " ", child.animations[a].started);
                     if (childs.get(i).animations.get(a).started) {
                         childs.get(i).animations.get(a).doAnimation();
                     }
@@ -401,12 +404,13 @@ public class Entity{
         }
 
         for (int i = 0; i < animations.size(); i++) {
-            //Log.e("entity", "animation started " + this.animations.get(i).started + " na entidade "+this.name);
             if (animations.get(i).started) {
-                //Log.e("entity", "animation started na entidade "+this.name);
+                count += 1;
                 animations.get(i).doAnimation();
             }
         }
+
+        return count;
     }
 
     public void translate(float translateX, float translateY) {
@@ -909,8 +913,8 @@ public class Entity{
             return;
         }
         if (this.getListener() != null) {
-            //if (name == "bottomTextBox") {
-                //Log.e("listener", "verificando listener " + name);
+            //if (name == "aboutTextView") {
+            //    Log.e("listener", "verificando listener " + name);
             //}
             this.getListener().verify();
         }

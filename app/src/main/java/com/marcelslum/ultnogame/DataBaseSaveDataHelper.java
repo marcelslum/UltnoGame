@@ -3,6 +3,7 @@ package com.marcelslum.ultnogame;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -212,6 +213,10 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                 .setBallVelocity(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_BALL_VELOCITY)));
                 break;
         }
+
+        Log.e(TAG, "GOGLE OPTION ON LOAD " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_GOOGLE_OPTION)));
+
+
         return saveGameBuilder.build();
     }
 
@@ -296,6 +301,9 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
     
     public void saveDataFromSaveGame(SaveGame saveGame){
         myDataBase = getWritable();
+
+        Log.e(TAG, "saveDataFromSaveGame googleOption"+ saveGame.googleOption);
+
         ContentValues values = new ContentValues();
             values.put(DataBaseContract.Data.COLUMN_DATE, saveGame.date);
             values.put(DataBaseContract.Data.COLUMN_CURRENT_LEVEL, saveGame.currentLevelNumber);
@@ -303,6 +311,8 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             values.put(DataBaseContract.Data.COLUMN_MUSIC, saveGame.music ? 1 : 0);
             values.put(DataBaseContract.Data.COLUMN_SOUND, saveGame.sound ? 1 : 0);
             values.put(DataBaseContract.Data.COLUMN_VIBRATION, saveGame.vibration ? 1 : 0);
+            values.put(DataBaseContract.Data.COLUMN_GOOGLE_OPTION, saveGame.googleOption);
+            values.put(DataBaseContract.Data.COLUMN_BALL_VELOCITY, saveGame.ballVelocity);
             values.put(DataBaseContract.Data.COLUMN_GROUP_MENU_TRANSLATE_X, saveGame.currentGroupMenuTranslateX);
             values.put(DataBaseContract.Data.COLUMN_LEVEL_MENU_TRANSLATE_X, saveGame.currentLevelMenuTranslateX);
             values.put(DataBaseContract.Data.COLUMN_TUTORIAL_MENU_TRANSLATE_X, saveGame.currentTutorialMenuTranslateX);
@@ -354,7 +364,11 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                     null);
         }
 
+        String query = "SELECT googleOption FROM data";
+        Cursor cursor = getWritable().rawQuery(query, null);
+        cursor.moveToFirst();
 
+        Log.e(TAG, "saveDataFromSaveGame googleOption da base"+ cursor.getInt(0));
     }
    
 }

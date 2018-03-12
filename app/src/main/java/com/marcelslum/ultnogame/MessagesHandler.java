@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.content.res.Resources;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -29,24 +31,61 @@ public class MessagesHandler {
 
     public static void initMessages(){
         
-        Game.aboutTextView = new TextView("about", Game.resolutionX * 0.1f,
+        Game.aboutTextView = new TextView("aboutTextView", Game.resolutionX * 0.1f,
                                           Game.resolutionY * 0.2f,
                                           Game.resolutionX * 0.8f,
                                           Game.resolutionY * 0.8f,
                                           Game.gameAreaResolutionY*0.05f,
-                                          Game.font, new Color(0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT);
+                                          Game.font, new Color(0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT, 0.4f);
+
+
+        Resources resources = Game.getContext().getResources();
         
-        
-        Game.aboutTextView.addText("Criação e desenvolvimento: Marcel Sluminsky. Este é um teste para ver se a mensagem pula de linha");
+        Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre1), Color.azul);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre1b), Color.transparente);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre2), Color.azul);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre3), Color.cinza1);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre4), Color.transparente);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre5), Color.azul);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre6), Color.cinza1);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre7), Color.transparente);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre8), Color.azul);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre9b), Color.cinza1);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre10), Color.transparente);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre11), Color.cinza1);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre11b),Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre12), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre13), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre14), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre15), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre16), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre17), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre18), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre19), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre20), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre21), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre22), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre23), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre24), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre25), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre26), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre27), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre28), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre29), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre30), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
 
         Game.notConnectedTextView = new TextView("about", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.02f,
                 Game.resolutionX * 0.94f,
                 Game.resolutionY,
                 Game.gameAreaResolutionY*0.035f,
-                Game.font, new Color(0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_CENTER);
+                Game.font, new Color(0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_CENTER, 0.25f);
 
-        Game.notConnectedTextView.addText(Game.getContext().getResources().getString(R.string.messageNaoConectado1));
+        Game.notConnectedTextView.addText(resources.getString(R.string.messageNaoConectado1), new Color(0f, 0f, 0f, 1f));
 
         yOfMessageBackAndContinue = Game.resolutionY*0.898f;
 
@@ -54,17 +93,17 @@ public class MessagesHandler {
 
         messageGameOver = new Text("messageGameOver",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.2f, Game.gameAreaResolutionY*0.17f,
-                Game.getContext().getResources().getString(R.string.messageGameOver), Game.font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
+                resources.getString(R.string.messageGameOver), Game.font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
         messageMenu = new Text("messageMenu",
                 Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.18f, Game.gameAreaResolutionY*0.08f, ".", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f));
 
         messageSubMenu = new Text("messageSubMenu",
                 Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.28f, Game.gameAreaResolutionY*0.05f, ".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f));
-        
+
         messageGroupsUnblocked = new Text("messageGroupsUnblocked",
                 Game.gameAreaResolutionX*0.5f, Game.resolutionY*0.6f, Game.gameAreaResolutionY*0.08f,
-                Game.getContext().getResources().getString(R.string.messageGroupsUnblocked), 
+                resources.getString(R.string.messageGroupsUnblocked),
                 Game.font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
         ArrayList<float[]> valuesAnimationGameOver = new ArrayList<>();
@@ -92,11 +131,11 @@ public class MessagesHandler {
 
         messageInGame = new Text("messageInGame",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.25f, Game.gameAreaResolutionY*0.14f,
-                Game.getContext().getResources().getString(R.string.pause), Game.font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
+                resources.getString(R.string.pause), Game.font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
 
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 Game.resolutionX*0.02f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
-                Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
+                resources.getString(R.string.messageMaxScoreTotal) +"\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
 
         messageGoogleLogged = new Text("messageGoogleLogged",
                 Game.resolutionX*0.98f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
@@ -104,7 +143,7 @@ public class MessagesHandler {
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
                 Game.resolutionX*0.895f, Game.resolutionY*0.3f, Game.resolutionY*0.05f,
-                Game.getContext().getResources().getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(1f, 1f, 0f, 1f));
+                resources.getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(1f, 1f, 0f, 1f));
 
         messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));
 
@@ -134,12 +173,12 @@ public class MessagesHandler {
 
         MessagesHandler.messageBack = new Text("messageBack",
                 Game.resolutionX*0.095f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,
-                Game.getContext().getResources().getString(R.string.voltar), Game.font, new Color(0.5f, 0.5f, 0.5f, 1f), Text.TEXT_ALIGN_LEFT);
+                resources.getString(R.string.voltar), Game.font, new Color(0.5f, 0.5f, 0.5f, 1f), Text.TEXT_ALIGN_LEFT);
 
 
         MessagesHandler.messageContinue = new Text("messageContinue",
                 Game.resolutionX*0.91f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,
-                Game.getContext().getResources().getString(R.string.continuar), Game.font, new Color(0.5f, 0.5f, 0.5f, 1f), Text.TEXT_ALIGN_RIGHT);
+                resources.getString(R.string.continuar), Game.font, new Color(0.5f, 0.5f, 0.5f, 1f), Text.TEXT_ALIGN_RIGHT);
 
     }
 

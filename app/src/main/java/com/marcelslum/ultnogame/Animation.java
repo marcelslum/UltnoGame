@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Animation{
-    private Entity targetObject;
+    public Entity targetAnimationObject;
     String name;
-    private String parameterToAnimate;
+    public String parameterToAnimate;
     private int duration;
     ArrayList<float[]> values;
     private float offSet;
@@ -32,10 +32,10 @@ public class Animation{
     private ArrayList<Entity> attachedEntities;
     boolean applyOnChild = true;
 
-    public Animation(Entity target, String name, String parameter, int duration, ArrayList<float[]> values, boolean isInfinite, boolean isFluid){
+    public Animation(Entity targetAnimationObject, String name, String parameter, int duration, ArrayList<float[]> values, boolean isInfinite, boolean isFluid){
         this.name = name;
-        targetObject = target;
-        parameterToAnimate = parameter;
+        this.targetAnimationObject = targetAnimationObject;
+        this.parameterToAnimate = parameter;
         this.duration = duration;
         this.values = values;
         this.isInfinite = isInfinite;
@@ -47,7 +47,7 @@ public class Animation{
         percentage = 0;
         offSet = 0;
         applyOnChild = true;
-        targetObject.addAnimation(this);
+        this.targetAnimationObject.addAnimation(this);
     }
 
     public void excludeChild(){
@@ -86,7 +86,7 @@ public class Animation{
 
     void stopAndConclude(){
         stop();
-        targetObject.applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1], applyOnChild);
+        targetAnimationObject.applyAnimation(parameterToAnimate, values.get(values.size() - 1)[1], applyOnChild);
 
         if (attachedEntities != null){
             for (int i = 0; i < attachedEntities.size(); i++){
@@ -140,8 +140,8 @@ public class Animation{
                         }
                     }
 
-                    //Log.e("Animation", "aplicando animação na entidade "+this.targetObject.name+ " para o valor "+ (value + addValue));
-                    this.targetObject.applyAnimation(parameterToAnimate, value + addValue, applyOnChild);
+                    //Log.e("Animation", "aplicando animação na entidade "+this.targetAnimationObject.name+ " para o valor "+ (value + addValue));
+                    targetAnimationObject.applyAnimation(parameterToAnimate, value + addValue, applyOnChild);
 
                     if (attachedEntities != null){
                         for (int i = 0; i < attachedEntities.size(); i++){
@@ -161,7 +161,7 @@ public class Animation{
                             if (v > this.positionNotFluid) {
                                 this.positionNotFluid = v;
                             }
-                            this.targetObject.applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet, applyOnChild);
+                            this.targetAnimationObject.applyAnimation(parameterToAnimate, this.values.get(v)[1] + this.offSet, applyOnChild);
 
                             if (attachedEntities != null) {
                                 for (int i = 0; i < attachedEntities.size(); i++) {
@@ -178,7 +178,7 @@ public class Animation{
             }
         } else {
             if (!this.isInfinite){
-                this.targetObject.applyAnimation(parameterToAnimate, this.values.get(this.values.size()-1)[1] + this.offSet, applyOnChild);
+                this.targetAnimationObject.applyAnimation(parameterToAnimate, this.values.get(this.values.size()-1)[1] + this.offSet, applyOnChild);
                 this.started = false;
                 this.fireAnimationEnd();
             } else {

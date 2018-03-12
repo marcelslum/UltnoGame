@@ -457,7 +457,7 @@ public class Game {
             
             mainActivity.showAdView();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuAbout));
-            aboutTextView.display();
+            aboutTextView.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
             
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
@@ -495,6 +495,7 @@ public class Game {
         } else if (state == GAME_STATE_OBJETIVO_PAUSE){
 
             mainActivity.showAdView();
+
 
             levelGoalsPanel.appearGrayAndShine();
             MessagesHandler.messageMenu.display();
@@ -571,7 +572,11 @@ public class Game {
             mainActivity.hideAdView();
             Splash.init();
         } else if (state == GAME_STATE_OPCOES){
-            
+
+            if (previousState == GAME_STATE_SOBRE){
+                Game.aboutTextView.blockAndClearDisplay();
+            }
+
             SelectorHandler.repositionSelectors(state);
             mainActivity.showAdView();
             tittle.display();
@@ -597,6 +602,8 @@ public class Game {
 
         } else if (state == GAME_STATE_MENU){
 
+            SaveGame.save();
+
             ConnectionHandler.menuConnectionAttempts = 0;
             if (!sameState) {
                 if (previousState != GAME_STATE_OPCOES) {
@@ -618,12 +625,9 @@ public class Game {
             tittle.display();
             MessagesHandler.messageMaxScoreTotal.display();
 
-
-
-
             MessagesHandler.messageGoogleLogged.display();
 
-            Log.e(TAG, "playerName "+playerName);
+            //Log.e(TAG, "playerName "+playerName);
 
             if (mainActivity.isSignedIn()){
                 MessagesHandler.messageGoogleLogged.setText(getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerName);
@@ -635,6 +639,7 @@ public class Game {
             MessagesHandler.setBottomMessage("", 0);
             MessagesHandler.messageMaxScoreTotal.setText(
                     getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
+
         } else if (state == GAME_STATE_PREPARAR){
             
             eraseAllGameEntities();
@@ -706,6 +711,13 @@ public class Game {
 
         } else if (state == GAME_STATE_JOGAR){
 
+            for (int i = 0; i < Game.balls.size(); i++) {
+                if (Game.balls.get(i).listenForExplosion){
+                    Game.balls.get(i).replayAlarm();
+                }
+            }
+
+
             Game.notConnectedTextView.clearDisplay();
             Game.topFrame.clearDisplay();
 
@@ -768,12 +780,17 @@ public class Game {
             
         } else if (state == GAME_STATE_PAUSE){
 
-
-
             mainActivity.showAdView();
             ButtonHandler.buttonReturnObjectivesPause.block();
             ButtonHandler.buttonReturnObjectivesPause.clearDisplay();
             TimeHandler.stopTimeOfLevelPlay();
+
+            for (int i = 0; i < Game.balls.size(); i++) {
+                if (Game.balls.get(i).listenForExplosion){
+                    Sound.soundPool.pause(Game.balls.get(i).alarmId);
+                }
+            }
+
             Log.e("game", "ativando game_state_pause");
             if (previousState != GAME_STATE_OPCOES_GAME) {
                 Sound.loop.pause();
@@ -1243,12 +1260,11 @@ public class Game {
     }
 
     private static void reduceAllGameEntitiesAlpha(int duration){
-        for (Entity e : collectAllGameEntities()){
-            e.reduceAlpha(duration, 0.2f);
-        }
 
-        //if (brickBackground != null){
-            //brickBackground.reduceAlpha(duration, 0.5f);
+        Log.e(TAG, "reduceAllGameEntitiesAlpha");
+
+        //for (Entity e : collectAllGameEntities()){
+        //    e.reduceAlpha(duration, 0.2f);
         //}
 
     }
@@ -1301,7 +1317,7 @@ public class Game {
         list.addAll(balls);
         list.addAll(fakeBalls);
         list.addAll(bars);
-        list.addAll(targets);
+        list.add(targetGroup);
         list.addAll(obstacles);
         list.addAll(windows);
         list.addAll(specialBalls);
@@ -1972,6 +1988,11 @@ public class Game {
         if (targetGroup != null && targets.size() > 0) {
             targetGroup.render(matrixView, matrixProjection);
         }
+
+
+        //for (int i = 0; i < targets.size(); i++){
+        //    targets.get(i).prepareRender(matrixView, matrixProjection);
+        //}
 
 
 
