@@ -666,24 +666,7 @@ public class Game {
             if (!sameState) {activateFrame(2500);}
             Level.levelObject.loadEntities();
 
-
-
-            int loopChoose = (SaveGame.saveGame.currentLevelNumber-1) % 3;
-            Log.e(TAG, "loopChoose "+ loopChoose);
-            switch (loopChoose){
-                case 0:
-                    Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
-                    break;
-                case 1:
-                    Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m2_hypnotic_puzzle3, R.raw.m4_hypnotic_puzzle, 0.8f);
-                    break;
-                case 2:
-                    Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m10_mellow_puzzler, 0.8f);
-                    break;
-                default:
-                    Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
-                    break;
-            }
+            Sound.loadLoop();
 
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
