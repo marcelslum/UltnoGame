@@ -40,7 +40,7 @@ public class MessagesHandler {
 
 
         Resources resources = Game.getContext().getResources();
-        
+
         Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
         Game.aboutTextView.addText(resources.getString(R.string.sobre1), Color.azul);
         Game.aboutTextView.addText(resources.getString(R.string.sobre1b), Color.transparente);
