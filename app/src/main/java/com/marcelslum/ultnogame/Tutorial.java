@@ -41,24 +41,22 @@ public class Tutorial {
 
     public static boolean isTutorialUnblocked(int tutorialNumber){
         int starsToUnlock = 9999;
+        
         if (tutorialNumber == TUTORIAL_INSTRUCOES_INICIAIS){
-           
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
             
-        } else if ((tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.tutorialsSeen[TUTORIAL_INSTRUCOES_INICIAIS])||
-                (tutorialNumber == TUTORIAL_INICIO && SaveGame.saveGame.levelsPoints[0] > 0)){
+            starsToUnlock = 0;
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_INICIO){
             
-        } else if (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && SaveGame.saveGame.tutorialsSeen[TUTORIAL_INICIO] ||
-                (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA && SaveGame.saveGame.levelsPoints[0] > 0)){
+            starsToUnlock = 0;
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_MOVIMENTO_BARRA){
             
-        } else if (tutorialNumber == TUTORIAL_INCLINACAO_BARRA && SaveGame.saveGame.tutorialsSeen[TUTORIAL_MOVIMENTO_BARRA]||
-                (tutorialNumber == TUTORIAL_INCLINACAO_BARRA && SaveGame.saveGame.levelsPoints[0] > 0)){
+            starsToUnlock = 0;
             
-            starsToUnlock = LevelsGroupData.levelsGroupData.get(0).starsToUnlock;
+        } else if (tutorialNumber == TUTORIAL_INCLINACAO_BARRA){
+            
+            starsToUnlock = 0;
             
         } else if (tutorialNumber == TUTORIAL_OBSTACULO){
             
