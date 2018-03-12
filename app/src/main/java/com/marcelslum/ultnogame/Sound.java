@@ -101,9 +101,51 @@ public abstract class Sound {
             loop.pause();
         }
     }
-
-
-
-
+    
+    public static checkLoopPlaying(){
+        if (Game.gameState == Game.GAME_STATE_JOGAR){
+            if (loop == null){
+                Log.e(TAG, "loop nulo, criando novo");
+                loadPool();
+                return;
+            }
+            
+            try {
+                loop.play();
+            } catch (Exception e) {
+                Log.e(TAG, "loop play falhou, criando novo");
+                loop = null;
+                loadPool();
+                return;
+            }
+            
+            try {
+                loop.isPLaying();
+            } catch (Exception e) {
+                Log.e(TAG, "loop isPlaying falhou, criando novo");
+                loop = null;
+                loadPool();
+            }
+        }
+    }
+    
+    public static loadPool(){
+        int loopChoose = (SaveGame.saveGame.currentLevelNumber-1) % 3;
+        Log.e(TAG, "loopChoose "+ loopChoose);
+        switch (loopChoose){
+            case 0:
+                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
+                break;
+            case 1:
+                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m2_hypnotic_puzzle3, R.raw.m4_hypnotic_puzzle, 0.8f);
+                break;
+            case 2:
+                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m10_mellow_puzzler, 0.8f);
+                break;
+            default:
+                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
+                break;
+        }
+    }
 
 }
