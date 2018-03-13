@@ -54,6 +54,15 @@
     <string name="group18name">Grade</string>
     <string name="group19name">Rapidez</string>
     <string name="group20name">Mistura</string>
+    
+    <string name="tip">Dica</string>
+    <string name="tipLevel1">Se o jogo estiver muito fácil ou difícil, experimente alterar a velocidade da bola no menu opções. O menu opções pode ser acessado na tela principal do jogo ou pressionando a tela durante o jogo.</string>
+    <string name="tipLevel2">Atinjir a bola com a barra se movimentando fará com que a velocidade e a direção da bola se alterem. Use esse recurso para cumprir os objetos, direcionar melhor a bola ou alterar sua velocidade conforme necessário.</string>
+    <string name="tipLevel3">Não é possível diminuir a velocidade da se ela chegar ao valor mínimo. Da mesma forma, quando ela chegar no seu valor máximo, não poderá ser aumentada.</string>
+    <string name="tipLevel4">Assim como a velocidade, o ângulo da bola também tem um valor mínimo e máximo em relação à barra. Ou seja, a bola nunca andará de forma pararela ou perpendicular à barra.</string>
+    <string name="tipLevel9">Alterar a velocidade significa aumentar ou diminuir, em qualquer ordem. Nesse nível, a mudança da velocidade deve ocorrer sempre que a bola atingir a barra, ou seja, seguidamente.</string>
+    <string name="tipLevel10">Talvez seja preciso diminuir a velocidade da bola antes de acelerá-la 3 vezes seguidas.</string>
+    
 
     <string name="t1t1">Bem vindo ao Ultno! Clique na flecha à direita para continuar a ver o tutorial.</string>
     <string name="t1t2">Este jogo é dividido em níveis, que são organizados em grupos.</string>
@@ -421,10 +430,7 @@
     <string name="sobre30">- por fins - som 171670</string>
     <string name="sobre31">.</string>
     <string name="sobre32">Testadores/Apoiadores:</string>
-    <string name="sobre33">- Giovana Pisa Nicolau dos Santos</string>
-    <string name="sobre34">- Elias Silvatti Junior</string>
-    <string name="sobre35">- Fernando Nicknich</string>
-    <string name="sobre36">- Dirceu...</string>
+
 
 
 
