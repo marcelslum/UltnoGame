@@ -8,18 +8,18 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
     
     public static final String TAG = "InitLoaderAsyncTask";
     protected Integer doInBackground(Integer... i){
-        Log.e(TAG, "doInBackground");
+        //Log.e(TAG, "doInBackground");
         try {
             Game.initData();
             if (isCancelled()){
-                Log.e(TAG, "cancelado 1");
+                //Log.e(TAG, "cancelado 1");
                 Game.forInitGame = true;
                 return 0;   
             }
             
             Game.initTime = Utils.getTime();
             if (isCancelled()){
-                Log.e(TAG, "cancelado 2");
+                //Log.e(TAG, "cancelado 2");
                 Game.forInitGame = true;
                 return 0;   
             }
@@ -29,13 +29,13 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
             }
 
             if (isCancelled()){
-                Log.e(TAG, "cancelado 3");
+                //Log.e(TAG, "cancelado 3");
                 Game.forInitGame = true;
                 return 0;   
             }
         } catch (Exception e) {
-            Log.e(TAG, "catch");
-            Log.e(TAG, "error", e);
+            //Log.e(TAG, "catch");
+            //Log.e(TAG, "error", e);
             return 0;
         }
         return 0;
@@ -46,13 +46,13 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
     
     @Override
     protected void onCancelled(Integer i) {
-        Log.e(TAG, "onCancelled");
+        //Log.e(TAG, "onCancelled");
         Game.forInitGame = true;
         Splash.loaderConclude = false;
     }
     
     protected void onPostExecute(Integer i) {
-        Log.e(TAG, "onPostExecute - LOADER CONCLUDE");
+        //Log.e(TAG, "onPostExecute - LOADER CONCLUDE");
         Splash.loaderConclude = true;
         Game.forInitGame = false;
      }

@@ -687,7 +687,7 @@ public class TextureData {
 
         } catch (JSONException ex) {
             ex.printStackTrace();
-            Log.e(TAG, "Save data has a syntax error: ", ex);
+            //Log.e(TAG, "Save data has a syntax error: ", ex);
             // Initializing with empty stars if the game file is corrupt.
             // NOTE: In your game, you want to try recovering from the snapshot payload.
             // TODO RECUPERAR DADOS DE SAHRED PREFERENCES

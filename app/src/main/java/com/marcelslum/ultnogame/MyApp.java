@@ -151,7 +151,7 @@ public final class MyApp extends Application {
     }
 
     private void logFontError(Throwable e) {
-        Log.e("font_override", "Error overriding font", e);
+        //Log.e("font_override", "Error overriding font", e);
     }
 
 

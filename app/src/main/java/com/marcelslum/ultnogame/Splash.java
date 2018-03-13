@@ -23,7 +23,7 @@ public class Splash {
     static long timeInitIntro;
     private static long timeInitConectando;
     private static long timeInitCarregando;
-        
+
     private final static long INTRO_PARTIAL_DURATION = 2000;
 
     private static final int SPLASH_CARREGANDO = 33;
@@ -66,6 +66,15 @@ public class Splash {
             }
         });
         animationTittleSplash.start();
+
+        if (Game.versaoBeta) {
+            MessagesHandler.messageBeta = new Text("messageBeta",
+                    Game.resolutionX * 0.99f, Game.resolutionY * 0.25f, Game.resolutionY * 0.035f, "Versão beta.", Game.font, new Color(1f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
+            MessagesHandler.messageBeta.setAlpha(0.7f);
+            Utils.createAnimation3v(MessagesHandler.messageBeta, "alphaBeta","alpha", 3000, 0f, 0.3f, .5f, 0.6f, 1f, 0.3f, true, true).start();
+            MessagesHandler.messageBeta.display();
+
+        }
 
         tittle.display();
 
@@ -136,12 +145,12 @@ public class Splash {
 
     static void init(){
 
-        Log.e(TAG, "init Splash");
+        //Log.e(TAG, "init Splash");
         if (forSignin) {
-            Log.e(TAG, "forSignin");
+            //Log.e(TAG, "forSignin");
             loaderConclude = false;
         } else {
-            Log.e(TAG, "not forSignin");
+            //Log.e(TAG, "not forSignin");
             if (Sound.soundPool != null){
                 loaderConclude = true;
             } else {
@@ -218,7 +227,7 @@ public class Splash {
 
     static void setSplashState(int id){
 
-        Log.e(TAG, "set State Splash"+id);
+        //Log.e(TAG, "set State Splash"+id);
 
         state = id;
         if (id == SPLASH_CARREGANDO) {
@@ -272,6 +281,10 @@ public class Splash {
         if (messageGoogle1 != null) messageGoogle1.checkTransformations(true);
         if (messageGoogle2 != null) messageGoogle2.checkTransformations(true);
 
+        if (Game.versaoBeta && MessagesHandler.messageBeta != null){
+            MessagesHandler.messageBeta.prepareRender(matrixView, matrixProjection);
+        }
+
         tittle.prepareRender(matrixView, matrixProjection);
         messageSplash1.prepareRender(matrixView, matrixProjection);
         menuGoogle.prepareRender(matrixView, matrixProjection);
@@ -286,7 +299,7 @@ public class Splash {
         if (SaveGame.saveGame.googleOption == 1) {
             if (!Game.mainActivity.checkGoogleConnection()) {
                 timesGoogle += 1;
-                Log.e(TAG, "timesGoogle "+timesGoogle);
+                //Log.e(TAG, "timesGoogle "+timesGoogle);
                 if (timesGoogle < 3) {
                     forSignin = true;
                     init();
@@ -331,16 +344,16 @@ public class Splash {
         } else if (state == SPLASH_CONECTANDO_INTERNET) {
 
             if (forSignin){
-                Log.e(TAG, "forSignin startintent ");
+                //Log.e(TAG, "forSignin startintent ");
                 forSignin = false;
                 Game.mainActivity.startSignInIntent();
             } else if (Utils.getTime() - timeInitConectando > (INTRO_PARTIAL_DURATION / 2f)) {
-                Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
+                //Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
                 int googlePlayOption = SaveGame.saveGame.googleOption;
 
                 //googlePlayOption = 1;
 
-                Log.e(TAG, "googlePlayOption "+ googlePlayOption);
+                //Log.e(TAG, "googlePlayOption "+ googlePlayOption);
                 if (googlePlayOption == -1){
                     if (!forJumpGoogle) {
                         setSplashState(SPLASH_MENU_GOOGLE);
@@ -362,7 +375,7 @@ public class Splash {
                 setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
             } else if (Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION && (!Game.mainActivity.isSignedIn()) || (!Game.mainActivity.isGooglePlayAvailable())){
                     timesGoogle += 1;
-                    Log.e(TAG, "timesGoogle "+timesGoogle);
+                    //Log.e(TAG, "timesGoogle "+timesGoogle);
                     if (timesGoogle < 3) {
                         forSignin = true;
                         init();

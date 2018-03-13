@@ -37,7 +37,7 @@ public class Button extends Entity implements Poolable<Button>{
 
     @Override
     public void clean() {
-        Log.e(TAG, "cleaning button "+ name);
+        //Log.e(TAG, "cleaning button "+ name);
         super.clean();
         height = 0f;
         width = 0f;
@@ -249,9 +249,9 @@ public class Button extends Entity implements Poolable<Button>{
             GLES20.glGenBuffers(2, vbo, 0);
             GLES20.glGenBuffers(1, ibo, 0);
 
-            Log.e(TAG, "creating vbo button "+name);
-            Log.e(TAG, "vbo[0] "+vbo[0]);
-            Log.e(TAG, "vbo[1] "+vbo[1]);
+            //Log.e(TAG, "creating vbo button "+name);
+            //Log.e(TAG, "vbo[0] "+vbo[0]);
+            //Log.e(TAG, "vbo[1] "+vbo[1]);
         }
         initializeData(8, 6, 12, 0);
         
@@ -287,9 +287,9 @@ public class Button extends Entity implements Poolable<Button>{
             GLES20.glGenBuffers(2, vbo, 0);
             GLES20.glGenBuffers(1, ibo, 0);
 
-            Log.e(TAG, "creating vbo button "+name);
-            Log.e(TAG, "vbo[0] "+vbo[0]);
-            Log.e(TAG, "vbo[1] "+vbo[1]);
+            //Log.e(TAG, "creating vbo button "+name);
+            //Log.e(TAG, "vbo[0] "+vbo[0]);
+            //Log.e(TAG, "vbo[1] "+vbo[1]);
 
             initializeData(8, 6, 12, 0);
 

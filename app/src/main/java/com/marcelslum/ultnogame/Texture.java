@@ -60,7 +60,7 @@ public class Texture {
     }
 
     public static void init() {
-        Log.e(TAG, "initTextures");
+        //Log.e(TAG, "initTextures");
         Texture.textures.add(new Texture(Texture.TEXTURE_ICONS, "drawable/icons"));
         Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS, "drawable/tutorials"));
 
@@ -74,7 +74,7 @@ public class Texture {
             bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
         }
         catch (Exception e) {
-            Log.e(TAG, "Erro ao criar a textura", e);
+            //Log.e(TAG, "Erro ao criar a textura", e);
         }
         bind();
     }
@@ -121,7 +121,7 @@ public class Texture {
             lastTextureUsed = 0;
         }
 
-        Log.e("texture", "lastTextureUsed "+lastTextureUsed);
+        //Log.e("texture", "lastTextureUsed "+lastTextureUsed);
 
         getTextureByTextureUnit(lastTextureUsed).bounded = false;
         getTextureByTextureUnit(lastTextureUsed).textureUnit = -1;
@@ -138,26 +138,26 @@ public class Texture {
         switch(Game.dpiClassification) {
            case DisplayMetrics.DENSITY_LOW:
                sampleSize = 4;
-               Log.e(TAG, "low density");
+               //Log.e(TAG, "low density");
                break;    
            case DisplayMetrics.DENSITY_MEDIUM:
-               Log.e(TAG, "medium density");
+               //Log.e(TAG, "medium density");
                sampleSize = 4;
                break;                
            case DisplayMetrics.DENSITY_HIGH:
-               Log.e(TAG, "high density");
+               //Log.e(TAG, "high density");
                sampleSize = 2;
                break;    
            case DisplayMetrics.DENSITY_XHIGH:
-               Log.e(TAG, "xhigh density");
+               //Log.e(TAG, "xhigh density");
                sampleSize = 2;
                break;                  
            case DisplayMetrics.DENSITY_XXHIGH:
-               Log.e(TAG, "xxhigh density");
+               //Log.e(TAG, "xxhigh density");
                sampleSize = 1;
                break;                  
            case DisplayMetrics.DENSITY_XXXHIGH:
-               Log.e(TAG, "xxxhigh density");
+               //Log.e(TAG, "xxxhigh density");
                sampleSize = 1;
                break;      
         }
@@ -186,7 +186,7 @@ public class Texture {
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_MIRRORED_REPEAT);
 
         // Load the bitmap into the bound texture.
-        Log.e("texture", "troca textura "+id+ " texture unit "+textureUnit);
+        //Log.e("texture", "troca textura "+id+ " texture unit "+textureUnit);
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
 
         bitmap.recycle();
@@ -201,8 +201,8 @@ public class Texture {
             int[] maxTextureSize = new int[1];
             GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_SIZE, maxTextureSize, 0);
 
-            Log.e("texture", "max texture units "+maxTextureUnits[0]);
-            Log.e("texture", "max texture size "+maxTextureSize[0]);
+            //Log.e("texture", "max texture units "+maxTextureUnits[0]);
+            //Log.e("texture", "max texture size "+maxTextureSize[0]);
 
             MAX_TEXTURES = maxTextureUnits[0];
             if (MAX_TEXTURES > 8){
@@ -226,12 +226,12 @@ public class Texture {
                 bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
             }
             catch (Exception e) {
-                Log.e(TAG, "Erro ao criar a textura", e);
+                //Log.e(TAG, "Erro ao criar a textura", e);
             }
         }
 
         textureUnit = getFreeTextureUnit();
-        Log.e("texture", "texture id "+id +" novo textureId "+textureUnit);
+        //Log.e("texture", "texture id "+id +" novo textureId "+textureUnit);
 
         bounded = true;
 
@@ -252,7 +252,7 @@ public class Texture {
 
         // Load the bitmap into the bound texture.
 
-        Log.e("texture", "nova textura "+id);
+        //Log.e("texture", "nova textura "+id);
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
 
         bitmap.recycle();

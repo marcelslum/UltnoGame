@@ -50,7 +50,7 @@ public abstract class Sound {
 
     public static void init(){
 
-        Log.e(TAG, "init loading sounds");
+        //Log.e(TAG, "init loading sounds");
 
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -89,16 +89,16 @@ public abstract class Sound {
 
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
             if (soundPool != null) {
-                Log.e(TAG, "Tocando o som " + id + "volume " + left + " ; "+ right);
+                //Log.e(TAG, "Tocando o som " + id + "volume " + left + " ; "+ right);
                 return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
             } else {
 
-                Log.e(TAG, "Não tocando o som. SoundPool nulo.");
+                //Log.e(TAG, "Não tocando o som. SoundPool nulo.");
 
                 return -1;
             }
         } else {
-            Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
+            //Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
             return -1;
         }
     }
@@ -116,9 +116,9 @@ public abstract class Sound {
     
     public static void checkLoopPlaying(){
         if (Game.gameState == Game.GAME_STATE_JOGAR){
-            Log.e(TAG, "check loop playing");
+            //Log.e(TAG, "check loop playing");
             if (loop == null){
-                Log.e(TAG, "loop nulo, criando novo");
+                //Log.e(TAG, "loop nulo, criando novo");
                 loadLoop();
                 return;
             }
@@ -126,7 +126,7 @@ public abstract class Sound {
             try {
                 loop.play();
             } catch (Exception e) {
-                Log.e(TAG, "loop play falhou, criando novo");
+                //Log.e(TAG, "loop play falhou, criando novo");
                 loop = null;
                 loadLoop();
                 return;
@@ -135,7 +135,7 @@ public abstract class Sound {
             try {
                 loop.isPlaying();
             } catch (Exception e) {
-                Log.e(TAG, "loop isPlaying falhou, criando novo");
+                //Log.e(TAG, "loop isPlaying falhou, criando novo");
                 loop = null;
                 loadLoop();
             }
@@ -144,7 +144,7 @@ public abstract class Sound {
     
     public static void loadLoop(){
         int loopChoose = (SaveGame.saveGame.currentLevelNumber-1) % 3;
-        Log.e(TAG, "loopChoose "+ loopChoose);
+        //Log.e(TAG, "loopChoose "+ loopChoose);
         switch (loopChoose){
             case 0:
                 Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);

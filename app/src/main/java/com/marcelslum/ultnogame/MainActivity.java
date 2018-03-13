@@ -89,7 +89,7 @@ public class MainActivity extends FragmentActivity implements
         if (!Game.forDebugDeleteDatabaseAndStorage){
             SaveGame.load();
         } else {
-            Log.e(TAG, "DELETADAS TODAS AS BASES, CONFIGURAÇÕES E SAVEGAMES");
+            //Log.e(TAG, "DELETADAS TODAS AS BASES, CONFIGURAÇÕES E SAVEGAMES");
             return;
         }
 
@@ -100,7 +100,7 @@ public class MainActivity extends FragmentActivity implements
         Game.vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        Log.e(TAG, "maxMemory "+maxMemory);
+        //Log.e(TAG, "maxMemory "+maxMemory);
 
         mResolvingError = savedInstanceState != null
                 && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
@@ -183,24 +183,24 @@ public class MainActivity extends FragmentActivity implements
         googlePlayStoreInstalled = val == ConnectionResult.SUCCESS;
 
 
-        Log.e(TAG, "googlePlayStoreInstalled val "+ val);
-        Log.e(TAG, "googlePlayStoreInstalled "+ googlePlayStoreInstalled);
+        //Log.e(TAG, "googlePlayStoreInstalled val "+ val);
+        //Log.e(TAG, "googlePlayStoreInstalled "+ googlePlayStoreInstalled);
 
         return googlePlayStoreInstalled;
     }
 
     public void signInSilently() {
-        Log.e(TAG, "signInSilently()");
+        //Log.e(TAG, "signInSilently()");
 
         GoogleAPI.mGoogleSignInClient.silentSignIn().addOnCompleteListener(this,
                 new OnCompleteListener<GoogleSignInAccount>() {
                     @Override
                     public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
                         if (task.isSuccessful()) {
-                            Log.e(TAG, "signInSilently(): success");
+                            //Log.e(TAG, "signInSilently(): success");
                             onConnected(task.getResult());
                         } else {
-                            Log.e(TAG, "signInSilently(): failure", task.getException());
+                            //Log.e(TAG, "signInSilently(): failure", task.getException());
                             onDisconnected();
                         }
                     }
@@ -260,7 +260,7 @@ public class MainActivity extends FragmentActivity implements
 
     private void onConnected(final GoogleSignInAccount googleSignInAccount) {
 
-        Log.e(TAG, "onConnected");
+        //Log.e(TAG, "onConnected");
 
         GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
         GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
@@ -272,13 +272,13 @@ public class MainActivity extends FragmentActivity implements
                     @Override
                     public void onComplete(@NonNull Task<Player> task) {
                         if (task.isSuccessful()) {
-                            Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
+                            //Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
                             Game.playerName = task.getResult().getDisplayName();
                             if (MessagesHandler.messageGoogleLogged != null) {
                                 MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + Game.playerName);
                             }
                         } else {
-                            Log.e(TAG, "Não foi possível carregar o nome do jogador");
+                            //Log.e(TAG, "Não foi possível carregar o nome do jogador");
                             Game.playerName = ".";
                             signOut();
                             if (MessagesHandler.messageGoogleLogged != null) {
@@ -291,11 +291,11 @@ public class MainActivity extends FragmentActivity implements
     }
 
     public boolean checkGoogleConnection(){
-        Log.e(TAG, "checkGoogleConnection");
+        //Log.e(TAG, "checkGoogleConnection");
         if (isGooglePlayAvailable() && isSignedIn()){
-            Log.e(TAG, "checking");
+            //Log.e(TAG, "checking");
             if (Game.playerName.equals(".") || Game.playerName.equals("-")){
-                Log.e(TAG, "possible not connected - erro");
+                //Log.e(TAG, "possible not connected - erro");
                 signOut();
                 if (MessagesHandler.messageGoogleLogged != null) {
                     MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
@@ -350,7 +350,7 @@ public class MainActivity extends FragmentActivity implements
         DataBaseSaveDataHelper.getInstance(this).close();
 
         isPaused = true;
-        Log.e("MainActivity", "onPause()");
+        //Log.e("MainActivity", "onPause()");
         //if (Game.gameState != Game.GAME_STATE_INTERSTITIAL) {
         //    SaveGame.saveGame.save();
         //}
@@ -426,7 +426,7 @@ public class MainActivity extends FragmentActivity implements
     @Override
     protected void onResume() {
 
-        Log.e("MainActivity", "onResume()");
+        //Log.e("MainActivity", "onResume()");
 
         super.onResume();
 
@@ -555,12 +555,12 @@ public class MainActivity extends FragmentActivity implements
                 .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
                 .build();
         if (ConnectionHandler.isConnectionWifi()) {
-            Log.e(TAG, "Conectado ao Wiji - carregando interstitialWithVideo");
+            //Log.e(TAG, "Conectado ao Wiji - carregando interstitialWithVideo");
             interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
             interstitialWithVideo.loadAd(adRequest);
 
         } else {
-            Log.e(TAG, "Conectado ao Wiji - carregando interstitialNoVideo");
+            //Log.e(TAG, "Conectado ao Wiji - carregando interstitialNoVideo");
             interstitialActualMode = INTERSTITIAL_MODE_NO_VIDEO;
             interstitialNoVideo.loadAd(adRequest);
         }
@@ -573,10 +573,10 @@ public class MainActivity extends FragmentActivity implements
                 InterstitialAd interstitialAd;
 
                 if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {
-                    Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
+                    //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
                     interstitialAd = interstitialWithVideo;
                 } else if (interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO){
-                    Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
+                    //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
                     interstitialAd = interstitialNoVideo;
                 } else {
                     interstitialAd = interstitialNoVideo;
@@ -587,7 +587,7 @@ public class MainActivity extends FragmentActivity implements
                     if (interstitialAd.isLoaded()) {
                         interstitialAd.show();
                     } else {
-                        Log.e(getLocalClassName(), "Propaganda não carregada");
+                        //Log.e(getLocalClassName(), "Propaganda não carregada");
                         if (Game.gameState != Game.GAME_STATE_INTRO) {
                             if (SaveGame.saveGame.currentLevelNumber < 1000) {
                                 Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);

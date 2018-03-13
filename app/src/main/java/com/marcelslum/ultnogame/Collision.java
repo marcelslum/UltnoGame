@@ -204,10 +204,10 @@ public abstract class Collision {
                             }
 
                             //if (a.name == "bar" && b.name == "bar"){
-                            //    Log.e(TAG, " maxIndex "+maxIndex);
-                            //    Log.e(TAG, " max "+max);
-                            //    Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
-                            //    Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
+                            //    //Log.e(TAG, " maxIndex "+maxIndex);
+                            //    //Log.e(TAG, " max "+max);
+                            //    //Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
+                            //    //Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
                             //}
 
 
@@ -230,7 +230,7 @@ public abstract class Collision {
                             bPreviousY = b.previousPositionY;
 
                             //if (a.name == "ball"){
-                            //    Log.e(TAG, " quantityPassagens "+quantityPassagens);
+                            //    //Log.e(TAG, " quantityPassagens "+quantityPassagens);
                             //}
 
                             //Log.e("Game", " a.previousPositionX 2"+aPreviousX);
@@ -238,7 +238,7 @@ public abstract class Collision {
                             //Log.e("Game", " b.previousPositionX 2"+bPreviousX);
                             //Log.e("Game", " b.previousPositionY 2"+bPreviousY);
 
-                            // Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
+                            // //Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
                             // calcula a diferença entre as posições
 
@@ -253,7 +253,7 @@ public abstract class Collision {
                             porcentagem = (100f / quantityPassagens) / 100f;
 
                             //if (a.name == "bar" && b.name == "bar"){
-                            //    Log.e(TAG, " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
+                            //    //Log.e(TAG, " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
                             //}
 
 
@@ -266,7 +266,7 @@ public abstract class Collision {
 
 
                             //if (b.name == "obstacle"){
-                            //    Log.e("game", " x"+ this.polygon2.pos.x);
+                            //    //Log.e("game", " x"+ this.polygon2.pos.x);
                             //}
 
                             //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
@@ -334,7 +334,7 @@ public abstract class Collision {
                             }
 
                             //if (b.name == "obstacle"){
-                            //    Log.e("game", " x"+ this.polygon2.pos.x);
+                            //    //Log.e("game", " x"+ this.polygon2.pos.x);
                             //}
 
                             if (collided && !(response.overlapV.x == 0 && response.overlapV.y == 0)) {
@@ -399,7 +399,7 @@ public abstract class Collision {
 
     public static void respond(PhysicalObject a, PhysicalObject b, float responseX, float responseY, float ax, float ay, float bx, float by) {
         /*
-        Log.e("physicalObject",
+        //Log.e("physicalObject",
                 " ax "+ax+
                 " ay "+ay+
                 " posX "+a.positionX+
@@ -413,13 +413,13 @@ public abstract class Collision {
         );
        if (name == "ball"){
             if (other.name == "obstacle"){
-                Log.e("physicalObject", "objetos colididos com a bola que colide com o obstaculo");
-                Log.e("physicalObject", "responseX "+responseX);
-                Log.e("physicalObject", "responseY "+responseY);
+                //Log.e("physicalObject", "objetos colididos com a bola que colide com o obstaculo");
+                //Log.e("physicalObject", "responseX "+responseX);
+                //Log.e("physicalObject", "responseY "+responseY);
                 for (int i = 0; i < other.lastCollisionObjects.size(); i++){
-                    Log.e("physicalObject", other.lastCollisionObjects.get(i).name);
-                    Log.e("physicalObject", "response objeto x"+other.lastCollisionResponse.get(i).x);
-                    Log.e("physicalObject", "response objeto y"+other.lastCollisionResponse.get(i).y);
+                    //Log.e("physicalObject", other.lastCollisionObjects.get(i).name);
+                    //Log.e("physicalObject", "response objeto x"+other.lastCollisionResponse.get(i).x);
+                    //Log.e("physicalObject", "response objeto y"+other.lastCollisionResponse.get(i).y);
                 }
             }
         }

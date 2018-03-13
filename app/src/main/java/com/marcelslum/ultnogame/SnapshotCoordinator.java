@@ -232,7 +232,7 @@ public class SnapshotCoordinator {
                 // if open failed, set the file to closed, otherwise, keep it open.
                 if (!task.isSuccessful()) {
                     Exception e = task.getException();
-                    Log.e(TAG, "Open was not a success for filename " + filename, e);
+                    //Log.e(TAG, "Open was not a success for filename " + filename, e);
                     setClosed(filename);
                 } else {
                     SnapshotsClient.DataOrConflict<Snapshot> result

@@ -27,8 +27,9 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class Game {
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
-    public static boolean ganharComMetadeDasBolas = true;
-    public static boolean sempreGanharTodasEstrelas = true;
+    public static boolean ganharComMetadeDasBolas = false;
+    public static boolean sempreGanharTodasEstrelas = false;
+    public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
 
@@ -185,7 +186,7 @@ public class Game {
         Game.eraseAllGameEntities();
         Game.eraseAllHudEntities();
 
-        Log.e(TAG, "onAdClose Game.prepareAfterInterstitialFlag " + Game.prepareAfterInterstitialFlag);
+        //Log.e(TAG, "onAdClose Game.prepareAfterInterstitialFlag " + Game.prepareAfterInterstitialFlag);
 
         if (gameState == GAME_STATE_MENU){
             Game.setGameState(Game.GAME_STATE_MENU);
@@ -430,7 +431,7 @@ public class Game {
     public static void blockAndWaitTouchRelease(){isBlocked = true;}
 
     public static void setGameState(int state){
-        Log.e("game", "set game state "+state);
+        //Log.e("game", "set game state "+state);
         boolean sameState = false;
         int previousState = gameState;
         if (state == gameState){
@@ -609,6 +610,11 @@ public class Game {
             MessagesHandler.messageInGame.display();
 
         } else if (state == GAME_STATE_MENU){
+
+
+            if (Game.versaoBeta) {
+                MessagesHandler.messageBeta.display();
+            }
 
             SaveGame.saveGame.save();
 
@@ -799,7 +805,7 @@ public class Game {
                 }
             }
 
-            Log.e("game", "ativando game_state_pause");
+            //Log.e("game", "ativando game_state_pause");
             if (previousState != GAME_STATE_OPCOES_GAME) {
                 Sound.loop.pause();
                 Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
@@ -1013,11 +1019,11 @@ public class Game {
 
             int newStarsTotal = StarsHandler.conqueredStarsTotal + (StarsHandler.newStars - StarsHandler.previousStars);
 
-            Log.e(TAG, "StarsHandler.newStars "+StarsHandler.newStars );
-            Log.e(TAG, "StarsHandler.previousStars "+StarsHandler.previousStars );
-            Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
-            Log.e(TAG, "starsDiference "+starsDiference );
-            Log.e(TAG, "newStarsTotal "+newStarsTotal );
+            //Log.e(TAG, "StarsHandler.newStars "+StarsHandler.newStars );
+            //Log.e(TAG, "StarsHandler.previousStars "+StarsHandler.previousStars );
+            //Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
+            //Log.e(TAG, "starsDiference "+starsDiference );
+            //Log.e(TAG, "newStarsTotal "+newStarsTotal );
 
 
             if (starsDiference > 0) {
@@ -1106,11 +1112,11 @@ public class Game {
             valuesAnim.add(new float[]{1f,6f});
 
 
-            Log.e(TAG, "StarsHandler.newStars "+StarsHandler.newStars );
-            Log.e(TAG, "StarsHandler.previousStars "+StarsHandler.previousStars );
-            Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
-            Log.e(TAG, "starsDiference "+starsDiference );
-            Log.e(TAG, "newStarsTotal "+newStarsTotal );
+            //Log.e(TAG, "StarsHandler.newStars "+StarsHandler.newStars );
+            //Log.e(TAG, "StarsHandler.previousStars "+StarsHandler.previousStars );
+            //Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
+            //Log.e(TAG, "starsDiference "+starsDiference );
+            //Log.e(TAG, "newStarsTotal "+newStarsTotal );
 
             Animation animMessageConqueredStarsTotal = new Animation(MessagesHandler.messageConqueredStarsTotal, "numberForAnimation", "numberForAnimation", 2500, valuesAnim, false, false);
             animMessageConqueredStarsTotal.setOnChangeNotFluid(new Animation.OnChange() {
@@ -1269,7 +1275,7 @@ public class Game {
 
     private static void reduceAllGameEntitiesAlpha(int duration){
 
-        Log.e(TAG, "reduceAllGameEntitiesAlpha");
+        //Log.e(TAG, "reduceAllGameEntitiesAlpha");
 
         for (Entity e : collectAllGameEntities()){
             e.reduceAlpha(duration, 0.2f);
@@ -1415,7 +1421,7 @@ public class Game {
         //ActivityManager.MemoryInfo memoryInfo = getAvailableMemory();
 
         //if (memoryInfo.lowMemory) {
-        //    Log.e(TAG, "lowMemory");
+        //    //Log.e(TAG, "lowMemory");
         //}
 
 
@@ -1806,22 +1812,23 @@ public class Game {
             }
         }
 
-
         // for debug
-        int numberOfTargets = 0;
-        int numberOfTargetsAlives = 0;
+        if (Game.ganharComMetadeDasBolas) {
 
-        for (int i = 0; i < targets.size(); i++) {
-            numberOfTargets += 1;
-            if (targets.get(i).alive){
-                numberOfTargetsAlives += 1;
+            int numberOfTargets = 0;
+            int numberOfTargetsAlives = 0;
+
+            for (int i = 0; i < targets.size(); i++) {
+                numberOfTargets += 1;
+                if (targets.get(i).alive) {
+                    numberOfTargetsAlives += 1;
+                }
+            }
+
+            if (numberOfTargetsAlives < numberOfTargets / 2) {
+                win = true;
             }
         }
-
-        if (numberOfTargetsAlives < numberOfTargets/2){
-            win = true;
-        }
-        // for debug
 
 
 
@@ -1989,6 +1996,11 @@ public class Game {
         if (brickBackground != null) brickBackground.prepareRender(matrixView, matrixProjection);
 
         if (MessagesHandler.messageCurrentLevel != null) MessagesHandler.messageCurrentLevel.prepareRender(matrixView, matrixProjection);
+
+        if (Game.versaoBeta) {
+            if (MessagesHandler.messageBeta != null)
+                MessagesHandler.messageBeta.prepareRender(matrixView, matrixProjection);
+        }
 
         if (imageTutorialDown != null) imageTutorialDown.prepareRender(matrixView, matrixProjection);
 

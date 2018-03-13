@@ -47,13 +47,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 
     public MyGLRenderer(Context c) {
-        Log.e(TAG, "create");
+        //Log.e(TAG, "create");
         mContext = c;
         mLastTime = System.currentTimeMillis() + 100;
     }
 
     public void onPause() {
-        Log.e(TAG, "onPause");
+        //Log.e(TAG, "onPause");
         if (Game.gameState == Game.GAME_STATE_JOGAR) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
         } else if (Game.gameState == Game.GAME_STATE_PREPARAR || Game.gameState == Game.GAME_STATE_TUTORIAL) {
@@ -63,26 +63,26 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     public void onResume()
     {
-        Log.e(TAG, "onResume");
+        //Log.e(TAG, "onResume");
         mLastTime = System.currentTimeMillis();
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        Log.e(TAG, "onSurfaceCreated");
+        //Log.e(TAG, "onSurfaceCreated");
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
 
-        Log.e(TAG, "onSurfaceChanged");
+        //Log.e(TAG, "onSurfaceChanged");
 
         if (!Game.forInitGame && Game.bordaE != null){
-            Log.e("MyGLRenderer", "onSurfaceChanged - apenas resumindo jogo");
+            //Log.e("MyGLRenderer", "onSurfaceChanged - apenas resumindo jogo");
             return;
         }
 
-        Log.e("MyGLRenderer", "(re)criando o jogo do zero");
+        //Log.e("MyGLRenderer", "(re)criando o jogo do zero");
 
         Game.forInitGame = false;
         Splash.loaderConclude = false;
@@ -99,7 +99,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         
         Game.dpiClassification = metrics.densityDpi;
 
-        Log.e(TAG, "dpiClassification "+Game.dpiClassification);
+        //Log.e(TAG, "dpiClassification "+Game.dpiClassification);
 
         // We need to know the current width and height.
         mScreenWidth = metrics.widthPixels;
@@ -122,11 +122,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             screenOffSetY = (mScreenHeight - effectiveScreenHeight)/2;
         }
 
-        Log.e("screenOffSetX ", " "+screenOffSetX);
-        Log.e("screenOffSetY ", " "+screenOffSetY);
+        //Log.e("screenOffSetX ", " "+screenOffSetX);
+        //Log.e("screenOffSetY ", " "+screenOffSetY);
 
-        Log.e("effectiveScreenHeight ", " "+effectiveScreenHeight);
-        Log.e("effectiveScreenWidth ", " "+effectiveScreenWidth);
+        //Log.e("effectiveScreenHeight ", " "+effectiveScreenHeight);
+        //Log.e("effectiveScreenWidth ", " "+effectiveScreenWidth);
 
         Game.screenOffSetX = screenOffSetX;
         Game.screenOffSetY = screenOffSetY;

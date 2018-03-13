@@ -122,16 +122,16 @@ public class Tutorial {
             
         }
 
-        Log.e(TAG, "StarsHandler.conqueredStarsTotal " + StarsHandler.conqueredStarsTotal);
-        Log.e(TAG, "starsToUnlock " + starsToUnlock);
+        //Log.e(TAG, "StarsHandler.conqueredStarsTotal " + StarsHandler.conqueredStarsTotal);
+        //Log.e(TAG, "starsToUnlock " + starsToUnlock);
 
         if (StarsHandler.conqueredStarsTotal >= starsToUnlock) {
-            Log.e(TAG, "Tutorial " + tutorialNumber + " unblocked");
+            //Log.e(TAG, "Tutorial " + tutorialNumber + " unblocked");
             return true;
         }
 
 
-        Log.e(TAG, "Tutorial " + tutorialNumber + " blocked");
+        //Log.e(TAG, "Tutorial " + tutorialNumber + " blocked");
         return false;
     }
 

@@ -23,6 +23,7 @@ public class MessagesHandler {
     static Image starForMessage;
     static Text messageTime;
     static Text messageCurrentLevel;
+    static Text messageBeta;
     static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
 
@@ -171,6 +172,8 @@ public class MessagesHandler {
         MessagesHandler.messageCurrentLevel = new Text("messageCurrentLevel",
                 Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.885f, Game.resolutionY*0.051f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
         MessagesHandler.messageCurrentLevel.setAlpha(0.7f);
+
+
 
         MessagesHandler.messageBack = new Text("messageBack",
                 Game.resolutionX*0.095f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,

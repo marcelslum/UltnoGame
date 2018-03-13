@@ -23,8 +23,8 @@ android {
         applicationId 'com.marcelslum.ultno'
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 4
-        versionName "1.4-alpha"
+        versionCode 5
+        versionName "0.1-beta"
         signingConfig signingConfigs.config
     }
     buildTypes {

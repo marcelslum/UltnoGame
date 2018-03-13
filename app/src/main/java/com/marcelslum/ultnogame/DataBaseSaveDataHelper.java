@@ -214,7 +214,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                 break;
         }
 
-        Log.e(TAG, "GOGLE OPTION ON LOAD " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_GOOGLE_OPTION)));
+        //Log.e(TAG, "GOGLE OPTION ON LOAD " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_GOOGLE_OPTION)));
 
 
         return saveGameBuilder.build();
@@ -302,7 +302,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
     public void saveDataFromSaveGame(SaveGame saveGame){
         myDataBase = getWritable();
 
-        Log.e(TAG, "saveDataFromSaveGame googleOption"+ saveGame.googleOption);
+        //Log.e(TAG, "saveDataFromSaveGame googleOption"+ saveGame.googleOption);
 
         ContentValues values = new ContentValues();
             values.put(DataBaseContract.Data.COLUMN_DATE, saveGame.date);
@@ -368,7 +368,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         Cursor cursor = getWritable().rawQuery(query, null);
         cursor.moveToFirst();
 
-        Log.e(TAG, "saveDataFromSaveGame googleOption da base"+ cursor.getInt(0));
+        //Log.e(TAG, "saveDataFromSaveGame googleOption da base"+ cursor.getInt(0));
     }
    
 }

@@ -39,7 +39,7 @@ public class MenuHandler {
                         Game.currentLevelsGroupDataSelected = lgd;
 
                         if (SaveGame.saveGame.currentGroupNumber != lgd.number){
-                            Log.e(TAG, "alterando currentGroupNumber de " + SaveGame.saveGame.currentGroupNumber + " para " + lgd.number);
+                            //Log.e(TAG, "alterando currentGroupNumber de " + SaveGame.saveGame.currentGroupNumber + " para " + lgd.number);
                             SaveGame.saveGame.currentLevelMenuTranslateX = 0;
                             SaveGame.saveGame.currentGroupNumber = lgd.number;
                         } else {
@@ -168,9 +168,9 @@ public class MenuHandler {
         for (int i = 0; i < Game.currentLevelsGroupDataSelected.levelsData.size(); i++){
             final LevelsGroupData.LevelData ld = Game.currentLevelsGroupDataSelected.levelsData.get(i);
 
-            Log.e(TAG, "ld.number "+ ld.number);
+            //Log.e(TAG, "ld.number "+ ld.number);
             if (ld.textureData == null){
-                Log.e(TAG, "ld.textureData nulo");
+                //Log.e(TAG, "ld.textureData nulo");
             }
             levelMenu.addOption(i, ld.textureUnit, ld.textureData, new Animation.AnimationListener() {
                 @Override
@@ -422,7 +422,7 @@ public class MenuHandler {
                     SaveGame.saveGame.ballVelocity = 150;
                 }
 
-                Log.e(TAG, "SaveGame.saveGame.ballVelocity "+SaveGame.saveGame.ballVelocity);
+                //Log.e(TAG, "SaveGame.saveGame.ballVelocity "+SaveGame.saveGame.ballVelocity);
 
                 if (Game.balls != null){
                     for (int i = 0; i < Game.balls.size(); i++) {

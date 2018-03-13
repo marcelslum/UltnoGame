@@ -341,7 +341,7 @@ public class Entity{
         program = null;
         textureId = -1;
 
-        Log.e(TAG, "cleaning "+ name);
+        //Log.e(TAG, "cleaning "+ name);
         cleanAnimations();
         
         if (color != null) {
@@ -497,30 +497,30 @@ public class Entity{
 
         /*
         if (name == "bar"){
-            Log.e(TAG, "BAR-----------------------");
-            Log.e(TAG, "accumulatedScaleX " + accumulatedScaleX);
-            Log.e(TAG, "accumulatedScaleY " + accumulatedScaleY);
-            Log.e(TAG, "positionX " + positionX);
-            Log.e(TAG, "animTranslateX " + animTranslateX);
-            Log.e(TAG, "getTransformedWidth() " + getTransformedWidth());
-            Log.e(TAG, "getWidth() " + getWidth());
-            Log.e(TAG, "positionY " + positionY);
-            Log.e(TAG, "animTranslateY " + animTranslateY);
-            Log.e(TAG, "getTransformedHeight() " + getTransformedHeight());
-            Log.e(TAG, "getHeight() " + getHeight());
+            //Log.e(TAG, "BAR-----------------------");
+            //Log.e(TAG, "accumulatedScaleX " + accumulatedScaleX);
+            //Log.e(TAG, "accumulatedScaleY " + accumulatedScaleY);
+            //Log.e(TAG, "positionX " + positionX);
+            //Log.e(TAG, "animTranslateX " + animTranslateX);
+            //Log.e(TAG, "getTransformedWidth() " + getTransformedWidth());
+            //Log.e(TAG, "getWidth() " + getWidth());
+            //Log.e(TAG, "positionY " + positionY);
+            //Log.e(TAG, "animTranslateY " + animTranslateY);
+            //Log.e(TAG, "getTransformedHeight() " + getTransformedHeight());
+            //Log.e(TAG, "getHeight() " + getHeight());
         }
         if (name == "shine"){
-            Log.e(TAG, "SHINE-----------------------");
-            Log.e(TAG, "accumulatedScaleX " + accumulatedScaleX);
-            Log.e(TAG, "accumulatedScaleY " + accumulatedScaleY);
-            Log.e(TAG, "positionX " + positionX);
-            Log.e(TAG, "animTranslateX " + animTranslateX);
-            Log.e(TAG, "getTransformedWidth() " + getTransformedWidth());
-            Log.e(TAG, "getWidth() " + getWidth());
-            Log.e(TAG, "positionY " + positionY);
-            Log.e(TAG, "animTranslateY " + animTranslateY);
-            Log.e(TAG, "getTransformedHeight() " + getTransformedHeight());
-            Log.e(TAG, "getHeight() " + getHeight());
+            //Log.e(TAG, "SHINE-----------------------");
+            //Log.e(TAG, "accumulatedScaleX " + accumulatedScaleX);
+            //Log.e(TAG, "accumulatedScaleY " + accumulatedScaleY);
+            //Log.e(TAG, "positionX " + positionX);
+            //Log.e(TAG, "animTranslateX " + animTranslateX);
+            //Log.e(TAG, "getTransformedWidth() " + getTransformedWidth());
+            //Log.e(TAG, "getWidth() " + getWidth());
+            //Log.e(TAG, "positionY " + positionY);
+            //Log.e(TAG, "animTranslateY " + animTranslateY);
+            //Log.e(TAG, "getTransformedHeight() " + getTransformedHeight());
+            //Log.e(TAG, "getHeight() " + getHeight());
         }
         */
 
@@ -897,7 +897,7 @@ public class Entity{
         //Log.e(TAG, ": glError ");
 
         while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-            Log.e(TAG, ": glError " + error);
+            //Log.e(TAG, ": glError " + error);
         }
     }
 
@@ -914,7 +914,7 @@ public class Entity{
         }
         if (this.getListener() != null) {
             //if (name == "aboutTextView") {
-            //    Log.e("listener", "verificando listener " + name);
+            //    //Log.e("listener", "verificando listener " + name);
             //}
             this.getListener().verify();
         }

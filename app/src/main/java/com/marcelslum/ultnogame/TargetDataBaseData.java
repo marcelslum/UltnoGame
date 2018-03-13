@@ -19,9 +19,9 @@ public class TargetDataBaseData{
     public final static String TAG = "TargetDataBaseData";
     
     public void logData(){
-        Log.e(TAG, "width "+width);
-        Log.e(TAG, "height "+height);
-        Log.e(TAG, "distance "+distance);
-        Log.e(TAG, "padd "+padd);
+        //Log.e(TAG, "width "+width);
+        //Log.e(TAG, "height "+height);
+        //Log.e(TAG, "distance "+distance);
+        //Log.e(TAG, "padd "+padd);
     }
 }

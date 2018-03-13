@@ -103,17 +103,17 @@ public class Ball extends Circle{
 
     public void updateBaseVelocity(int newVelocity){
 
-        Log.e(TAG, "---------------------------- ");
+        //Log.e(TAG, "---------------------------- ");
 
-        Log.e(TAG, "newVelocity " + newVelocity);
+        //Log.e(TAG, "newVelocity " + newVelocity);
 
-        Log.e(TAG, "ANTES ");
+        //Log.e(TAG, "ANTES ");
 
-        Log.e(TAG, "initialDVX " + initialDVX);
-        Log.e(TAG, "initialDVY " + initialDVY);
+        //Log.e(TAG, "initialDVX " + initialDVX);
+        //Log.e(TAG, "initialDVY " + initialDVY);
 
-        Log.e(TAG, "dvx " + dvx);
-        Log.e(TAG, "dvy " + dvy);
+        //Log.e(TAG, "dvx " + dvx);
+        //Log.e(TAG, "dvy " + dvy);
 
         float dvxMultiplier = 1.0f;
         if (dvx < 0){
@@ -129,11 +129,11 @@ public class Ball extends Circle{
         float currentXPercentage = Math.abs(dvx) / initialDVX;
         float currentYPercentage = Math.abs(dvy) / initialDVY;
 
-        Log.e(TAG, "currentXPercentage " + currentXPercentage);
-        Log.e(TAG, "currentYPercentage " + currentYPercentage);
+        //Log.e(TAG, "currentXPercentage " + currentXPercentage);
+        //Log.e(TAG, "currentYPercentage " + currentYPercentage);
 
-        Log.e(TAG, "initialNormalDVX " + initialNormalDVX);
-        Log.e(TAG, "initialNormalDVX " + initialNormalDVX);
+        //Log.e(TAG, "initialNormalDVX " + initialNormalDVX);
+        //Log.e(TAG, "initialNormalDVX " + initialNormalDVX);
 
         initialDVX = initialNormalDVX * ((float)newVelocity / 100);
         initialDVY = initialNormalDVY * ((float)newVelocity / 100);
@@ -141,13 +141,13 @@ public class Ball extends Circle{
         dvx = initialDVX * currentXPercentage * dvxMultiplier;
         dvy = initialDVY * currentYPercentage * dvyMultiplier;
 
-        Log.e(TAG, "DEPOIS ");
+        //Log.e(TAG, "DEPOIS ");
 
-        Log.e(TAG, "initialDVX " + initialDVX);
-        Log.e(TAG, "initialDVY " + initialDVY);
+        //Log.e(TAG, "initialDVX " + initialDVX);
+        //Log.e(TAG, "initialDVY " + initialDVY);
 
-        Log.e(TAG, "dvx " + dvx);
-        Log.e(TAG, "dvy " + dvy);
+        //Log.e(TAG, "dvx " + dvx);
+        //Log.e(TAG, "dvy " + dvy);
 
     }
 
@@ -674,48 +674,48 @@ public class Ball extends Circle{
                     /*
                     // calcula o angulo em que as bolas estão colidindo
                     double collisionAngle = Math.atan2(positionY - otherBall.positionY, positionX - otherBall.positionX);
-                    Log.e("ball", "collisionAngle " + Math.toDegrees(collisionAngle));
+                    //Log.e("ball", "collisionAngle " + Math.toDegrees(collisionAngle));
 
                     // calcula o angulo em que as bolas estão se movendo
 
-                    Log.e("ball", "dv inicial " + dvx + " dvy " + dvy);
+                    //Log.e("ball", "dv inicial " + dvx + " dvy " + dvy);
 
                     double thisDirection = Math.atan2(dvy, dvx);
-                    Log.e("ball", "thisDirection " + Math.toDegrees(thisDirection));
+                    //Log.e("ball", "thisDirection " + Math.toDegrees(thisDirection));
                     double otherDirection = Math.atan2(otherBall.dvy, otherBall.dvx);
-                    Log.e("ball", "otherDirection " + Math.toDegrees(otherDirection));
+                    //Log.e("ball", "otherDirection " + Math.toDegrees(otherDirection));
 
                     // calcula a magnitude das velocidades
                     double thisVelocityLen = Utils.getVectorMagnitude(dvx, dvy);
-                    Log.e("ball", "thisVelocityLen " + thisVelocityLen);
+                    //Log.e("ball", "thisVelocityLen " + thisVelocityLen);
                     double otherVelocityLen = Utils.getVectorMagnitude(otherBall.dvx, otherBall.dvy);
-                    Log.e("ball", "otherVelocityLen " + otherVelocityLen);
+                    //Log.e("ball", "otherVelocityLen " + otherVelocityLen);
 
                     // rotaciona as velocidades, de modo que o ponto de colisão seja perpendicular ao eixo y
                     double v1x = thisVelocityLen * Math.cos(thisDirection - collisionAngle);
-                    Log.e("ball", "v1x " + v1x);
+                    //Log.e("ball", "v1x " + v1x);
                     double v1y = thisVelocityLen * Math.sin(thisDirection - collisionAngle);
-                    Log.e("ball", "v1y " + v1y);
-                    Log.e("ball", "thisVelocityLen " + Utils.getVectorMagnitude(v1x, v1y));
+                    //Log.e("ball", "v1y " + v1y);
+                    //Log.e("ball", "thisVelocityLen " + Utils.getVectorMagnitude(v1x, v1y));
 
                     double v2x = otherVelocityLen * Math.cos(otherDirection - collisionAngle);
-                    Log.e("ball", "v2x " + v2x);
+                    //Log.e("ball", "v2x " + v2x);
                     double v2y = otherVelocityLen * Math.sin(otherDirection - collisionAngle);
-                    Log.e("ball", "v2y " + v2y);
-                    Log.e("ball", "otherVelocityLen " + Utils.getVectorMagnitude(v2x, v2y));
+                    //Log.e("ball", "v2y " + v2y);
+                    //Log.e("ball", "otherVelocityLen " + Utils.getVectorMagnitude(v2x, v2y));
 
 
                     // calcula as velocidades resultantes da colisão, convervando a energia cinética
                     double f1x = ((v1x * (mass - otherBall.mass)) + (2 * otherBall.mass * v2x)) / (mass + otherBall.mass);
-                    Log.e("ball", "f1x " + f1x);
+                    //Log.e("ball", "f1x " + f1x);
                     double f2x = ((v2x * (otherBall.mass - mass)) + (2 * mass * v1x)) / (mass + otherBall.mass);
-                    Log.e("ball", "f2x " + f2x);
+                    //Log.e("ball", "f2x " + f2x);
     
                     dvx = (float)(Math.cos(collisionAngle)*f1x+Math.cos(collisionAngle+Math.PI/2)*v1y);
                     dvy = (float)(Math.sin(collisionAngle)*f1x+Math.sin(collisionAngle+Math.PI/2)*v1y);
 
-                    Log.e("ball", "dv antes da colisão " + dvx + " " + dvy);
-                    Log.e("ball", "dv initial len -----" + Utils.getVectorMagnitude(dvx, dvy));
+                    //Log.e("ball", "dv antes da colisão " + dvx + " " + dvy);
+                    //Log.e("ball", "dv initial len -----" + Utils.getVectorMagnitude(dvx, dvy));
 
                     otherBall.dvx = (float)(Math.cos(collisionAngle)*f2x+Math.cos(collisionAngle+Math.PI/2)*v2y);
                     otherBall.dvy = (float)(Math.sin(collisionAngle)*f2x+Math.sin(collisionAngle+Math.PI/2)*v2y);
@@ -779,30 +779,30 @@ public class Ball extends Circle{
                     //Log.e(TAG, ">>>               radiusOfTwoBalls "+radiusOfTwoBalls);
 
                     if (projectedDistanceBetweenBall <= radiusOfTwoBalls) {
-                        Log.e(TAG, ">>>           bolas irão colidir no proximo frame ");
+                        //Log.e(TAG, ">>>           bolas irão colidir no proximo frame ");
 
                             if (dvx > 0 & otherBall.dvx < 0) {
                                 if (positionX < otherBall.positionX) {
-                                    Log.e(TAG, ">>>positionX < otherBall.positionX");
+                                    //Log.e(TAG, ">>>positionX < otherBall.positionX");
                                     dvx *= -1;
                                 } else {
-                                    Log.e(TAG, ">>>>positionX > otherBall.positionX");
+                                    //Log.e(TAG, ">>>>positionX > otherBall.positionX");
                                     otherBall.dvx *= -1;
                                 }
                             } else if (dvy > 0 & otherBall.dvy < 0) {
                                 if (positionY < otherBall.positionY) {
-                                    Log.e(TAG, ">>>positionY < otherBall.positionY");
+                                    //Log.e(TAG, ">>>positionY < otherBall.positionY");
                                     dvy *= -1;
                                 } else {
-                                    Log.e(TAG, ">>>>positionY > otherBall.positionY");
+                                    //Log.e(TAG, ">>>>positionY > otherBall.positionY");
                                     otherBall.dvy *= -1;
                                 }
                             }
 
                         projectedDistanceBetweenBall = Vector.distanceBetweenTwoPoints(positionX + dvx, positionY + dvy, otherBall.positionX + dvx, otherBall.positionY + dvy);
 
-                        Log.e(TAG, ">>>               NOVA projectedDistanceBetweenBall "+projectedDistanceBetweenBall);
-                        Log.e(TAG, ">>>               radiusOfTwoBalls "+radiusOfTwoBalls);
+                        //Log.e(TAG, ">>>               NOVA projectedDistanceBetweenBall "+projectedDistanceBetweenBall);
+                        //Log.e(TAG, ">>>               radiusOfTwoBalls "+radiusOfTwoBalls);
                     }
                     */
 
@@ -1045,10 +1045,10 @@ public class Ball extends Circle{
                 }
                 //else if (dvx == 0f) {
                 //if (Acelerometer.moveStatus == Acelerometer.MOVE_LEFT) {
-                //    Log.e(TAG, "move left 3");
+                //    //Log.e(TAG, "move left 3");
                 //    angleToAdd = angleToRotate;
                 //} else if (Acelerometer.moveStatus == Acelerometer.MOVE_RIGHT) {
-                //    Log.e(TAG, "move right 3");
+                //    //Log.e(TAG, "move right 3");
                 //    angleToAdd = -angleToRotate;
                 //}
                 lastBarCollisionTime -= 600;

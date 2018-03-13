@@ -95,7 +95,7 @@ public class SaveGame {
                 || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3) != 0
                 || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4) != 0
                 ){
-            Log.e(TAG, "Carregando Save Game");
+            //Log.e(TAG, "Carregando Save Game");
 
             SaveGame saveGame1 = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
             SaveGame saveGame2 = getSaveGameFromJson(Storage.getString(Storage.STORAGE_SAVE_NAME));
@@ -111,7 +111,7 @@ public class SaveGame {
 
             //log(saveGame);
         } else {
-            Log.e(TAG, "Não existe ainda nenhum Save Game, criando novo");
+            //Log.e(TAG, "Não existe ainda nenhum Save Game, criando novo");
             int[] _levelsPoints = new int[Level.NUMBER_OF_LEVELS];
             int[] _levelsStars = new int[Level.NUMBER_OF_LEVELS];
             boolean[] _levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
@@ -143,17 +143,17 @@ public class SaveGame {
                     .build();
         }
 
-        Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
+        //Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
         loaded = true;
     }
 
     public void save(){
 
         if (Utils.getTime() - lastSave < MIN_TIME_BEFORE_RESAVE) {
-            Log.e(TAG, "Jogo não foi salvo porque foi salvo recentemente.");
+            //Log.e(TAG, "Jogo não foi salvo porque foi salvo recentemente.");
             return;
         }
-        Log.e(TAG, "save()");
+        //Log.e(TAG, "save()");
         AsyncTasks.save = new SaveAsyncTask().execute();
     }
 
@@ -161,7 +161,7 @@ public class SaveGame {
         protected Integer doInBackground(Integer... i) {
 
             if (SaveGame.saveGame == null){
-                Log.e(TAG, "Erro ao salvar o jogo. Objeto SaveGame nulo.");
+                //Log.e(TAG, "Erro ao salvar o jogo. Objeto SaveGame nulo.");
                 return -1;
             }
 
@@ -171,7 +171,7 @@ public class SaveGame {
             try {
                 DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
             } catch (Exception e) {
-                Log.e(TAG, "Erro ao salvar no banco.");
+                //Log.e(TAG, "Erro ao salvar no banco.");
             }
 
 
@@ -186,70 +186,70 @@ public class SaveGame {
         }
 
         protected void onPostExecute(Integer result) {
-            Log.e(TAG, "Jogo salvo");
+            //Log.e(TAG, "Jogo salvo");
         }
     }
 
 
 
     public static void log(SaveGame s){
-        Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        Log.e(TAG, "pontos --------------- ");
+        //Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //Log.e(TAG, "pontos --------------- ");
 
         String log= " ";
         for (int i = 0; i < s.levelsPoints.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsPoints[i];
         }
-        Log.e(TAG, "level "+ log);
+        //Log.e(TAG, "level "+ log);
 
         log= " ";
-        Log.e(TAG, "estrelas --------------- ");
+        //Log.e(TAG, "estrelas --------------- ");
         for (int i = 0; i < s.levelsStars.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsStars[i];
         }
-        Log.e(TAG, "level "+ log);
+        //Log.e(TAG, "level "+ log);
 
         log= " ";
-        Log.e(TAG, "desbloqueados --------------- ");
+        //Log.e(TAG, "desbloqueados --------------- ");
         for (int i = 0; i < s.levelsUnlocked.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsUnlocked[i];
         }
-        Log.e(TAG, "level "+ log);
+        //Log.e(TAG, "level "+ log);
 
         log= " ";
-        Log.e(TAG, "vistos --------------- ");
+        //Log.e(TAG, "vistos --------------- ");
         for (int i = 0; i < s.levelsSeen.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsSeen[i];
         }
-        Log.e(TAG, "level "+ log);
+        //Log.e(TAG, "level "+ log);
 
         log= " ";
-        Log.e(TAG, "tutoriais vistos --------------- ");
+        //Log.e(TAG, "tutoriais vistos --------------- ");
         for (int i = 0; i < s.tutorialsSeen.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.tutorialsSeen[i];
         }
-        Log.e(TAG, "level "+ log);
+        //Log.e(TAG, "level "+ log);
 
         log= " ";
-        Log.e(TAG, "grupos vistos --------------- ");
+        //Log.e(TAG, "grupos vistos --------------- ");
         for (int i = 0; i < s.groupsSeen.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.groupsSeen[i];
         }
-        Log.e(TAG, "level "+ log);
+        //Log.e(TAG, "level "+ log);
               
-        Log.e(TAG, "date -> " + s.date)   ;
-        Log.e(TAG, "currentLevelNumber -> " + s.currentLevelNumber);
-        Log.e(TAG, "currentGroupNumber -> " + s.currentGroupNumber);
-        Log.e(TAG, "music  -> " + s.music );
-        Log.e(TAG, "sound  -> " + s.sound );
-        Log.e(TAG, "vibration  -> " + s.vibration );
-        Log.e(TAG, "googleOption  -> " + s.googleOption );
-        Log.e(TAG, "ballVelocity  -> " + s.ballVelocity );
-        Log.e(TAG, "currentGroupMenuTranslateX -> " + s.currentGroupMenuTranslateX);
-        Log.e(TAG, "currentLevelMenuTranslateX -> " + s.currentLevelMenuTranslateX);
-        Log.e(TAG, "currentTutorialMenuTranslateX -> " + s.currentTutorialMenuTranslateX);
-        Log.e(TAG, "lastStars -> " + s.lastStars);
-        Log.e(TAG, "levelsPlayed -> " + s.levelsPlayed);   
+        //Log.e(TAG, "date -> " + s.date)   ;
+        //Log.e(TAG, "currentLevelNumber -> " + s.currentLevelNumber);
+        //Log.e(TAG, "currentGroupNumber -> " + s.currentGroupNumber);
+        //Log.e(TAG, "music  -> " + s.music );
+        //Log.e(TAG, "sound  -> " + s.sound );
+        //Log.e(TAG, "vibration  -> " + s.vibration );
+        //Log.e(TAG, "googleOption  -> " + s.googleOption );
+        //Log.e(TAG, "ballVelocity  -> " + s.ballVelocity );
+        //Log.e(TAG, "currentGroupMenuTranslateX -> " + s.currentGroupMenuTranslateX);
+        //Log.e(TAG, "currentLevelMenuTranslateX -> " + s.currentLevelMenuTranslateX);
+        //Log.e(TAG, "currentTutorialMenuTranslateX -> " + s.currentTutorialMenuTranslateX);
+        //Log.e(TAG, "lastStars -> " + s.lastStars);
+        //Log.e(TAG, "levelsPlayed -> " + s.levelsPlayed);
     }
 
     public static SaveGame mergeSaveGames(SaveGame saveGame1, SaveGame saveGame2) {
@@ -288,9 +288,9 @@ public class SaveGame {
         fvibration = Utils.getHigher(saveGame1.vibration, saveGame2.vibration);
         fgoogleOption = Utils.getHigher(saveGame1.googleOption, saveGame2.googleOption);
 
-        Log.e(TAG, "merge google option saveGame1.googleOption "+ saveGame1.googleOption);
-        Log.e(TAG, "merge google option saveGame2.googleOption "+ saveGame2.googleOption);
-        Log.e(TAG, "merge google option fgoogleOption "+ fgoogleOption);
+        //Log.e(TAG, "merge google option saveGame1.googleOption "+ saveGame1.googleOption);
+        //Log.e(TAG, "merge google option saveGame2.googleOption "+ saveGame2.googleOption);
+        //Log.e(TAG, "merge google option fgoogleOption "+ fgoogleOption);
 
         fBallVelocity = Utils.getHigher(saveGame1.ballVelocity, saveGame2.ballVelocity);
         fcurrentGroupMenuTranslateX = Utils.getHigher(saveGame1.currentGroupMenuTranslateX, saveGame2.currentGroupMenuTranslateX);
@@ -496,7 +496,7 @@ public class SaveGame {
 
         } catch (JSONException ex) {
             ex.printStackTrace();
-            Log.e(TAG, "Save data has a syntax error: " + json, ex);
+            //Log.e(TAG, "Save data has a syntax error: " + json, ex);
             // NOTE: In your game, you want to try recovering from the snapshot payload.
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
@@ -616,14 +616,14 @@ public class SaveGame {
             || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3) != 0
             || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4) != 0
            ){
-            Log.e(TAG, "Carregando apenas localmente.");
+            //Log.e(TAG, "Carregando apenas localmente.");
             saveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
 
             log(saveGame);
 
             //saveGame = getSaveGameFromJson(getStringFromLocal());
         } else {
-            Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
+            //Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
             int[] _levelsPoints = new int[Level.NUMBER_OF_LEVELS];
             int[] _levelsStars = new int[Level.NUMBER_OF_LEVELS];
             boolean[] _levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
@@ -659,17 +659,17 @@ public class SaveGame {
 
     public static void onLoadFromSnapshot(String data) {
 
-        Log.e(TAG, "onLoadFromSnapshot");
+        //Log.e(TAG, "onLoadFromSnapshot");
 
-        Log.e(TAG, "local");
+        //Log.e(TAG, "local");
         SaveGame localSaveGame = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
         log(localSaveGame);
 
-        Log.e(TAG, "cloud");
+        //Log.e(TAG, "cloud");
         SaveGame cloudSaveGame = getSaveGameFromJson(data);
         log(cloudSaveGame);
 
-        Log.e(TAG, "merged");
+        //Log.e(TAG, "merged");
         saveGame = mergeSaveGames(localSaveGame, cloudSaveGame);
         log(saveGame);
 
@@ -692,7 +692,7 @@ public class SaveGame {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "Error while opening Snapshot.", e);
+                        //Log.e(TAG, "Error while opening Snapshot.", e);
                         snapshotLoaded = null;
                     }
                 }).continueWith(new Continuation<SnapshotsClient.DataOrConflict<Snapshot>, byte[]>() {
@@ -706,7 +706,7 @@ public class SaveGame {
                             snapshotLoaded = snapshot.getSnapshotContents().readFully();
                             return snapshotLoaded;
                         } catch (IOException e) {
-                            Log.e(TAG, "Error while reading Snapshot.", e);
+                            //Log.e(TAG, "Error while reading Snapshot.", e);
                         }
                         snapshotLoaded = null;
                         return null;
@@ -737,7 +737,7 @@ public class SaveGame {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "There was a problem waiting for the file to close!");
+                        //Log.e(TAG, "There was a problem waiting for the file to close!");
                     }
                 })
                 .continueWithTask(new Continuation<Result, Task<SnapshotsClient.DataOrConflict<Snapshot>>>() {
@@ -749,7 +749,7 @@ public class SaveGame {
                         return openTask.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.e(TAG, "Houve um erro ao carregar o Snapshot");
+                                //Log.e(TAG, "Houve um erro ao carregar o Snapshot");
                             }
                         });
                     }

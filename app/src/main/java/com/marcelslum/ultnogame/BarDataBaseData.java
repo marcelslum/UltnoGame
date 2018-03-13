@@ -21,10 +21,10 @@ public class BarDataBaseData{
     public final static String TAG = "BarDataBaseData";
     
     public void logData(){
-        Log.e(TAG, "width "+width);
-        Log.e(TAG, "height "+height);   
-        Log.e(TAG, "x "+x);   
-        Log.e(TAG, "y "+y);   
-        Log.e(TAG, "vx "+vx);   
+        //Log.e(TAG, "width "+width);
+        //Log.e(TAG, "height "+height);
+        //Log.e(TAG, "x "+x);
+        //Log.e(TAG, "y "+y);
+        //Log.e(TAG, "vx "+vx);
     }
 }

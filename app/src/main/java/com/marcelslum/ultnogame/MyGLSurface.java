@@ -14,7 +14,7 @@ public class MyGLSurface extends GLSurfaceView {
 
     public MyGLSurface(Context context) {
         super(context);
-        Log.e(TAG, "createGlSurf");
+        //Log.e(TAG, "createGlSurf");
 
         Game.myGlSurface = this;
 
@@ -29,14 +29,14 @@ public class MyGLSurface extends GLSurfaceView {
 
     @Override
     public void onPause() {
-        Log.e("GLSURF", "onPause");
+        //Log.e("GLSURF", "onPause");
         super.onPause();
         mRenderer.onPause();
     }
 
     @Override
     public void onResume() {
-        Log.e("GLSURF", "onResume");
+        //Log.e("GLSURF", "onResume");
         super.onResume();
         mRenderer.onResume();
     }

@@ -123,7 +123,7 @@ class TargetGroup extends Entity{
         for (int i = 0; i < Game.targets.size(); i++) {
             int numberOfAnimations = Game.targets.get(i).checkAnimations();
             //if (numberOfAnimations > 0){
-            //    Log.e(TAG, "target x/y " +Game.targets.get(i).x+"/"+Game.targets.get(i).y+ " numberOfAnimations " + numberOfAnimations);
+            //    //Log.e(TAG, "target x/y " +Game.targets.get(i).x+"/"+Game.targets.get(i).y+ " numberOfAnimations " + numberOfAnimations);
             //}
 
             if (Game.targets.get(i).colorChangeFlag) {
@@ -139,7 +139,7 @@ class TargetGroup extends Entity{
 
                 //for (int j = 0; j < Game.targets.get(i).animations.size(); j++) {
                 //    if (Game.targets.get(i).animations.get(j).started){
-                //        Log.e(TAG, "animation started "+Game.targets.get(i).animations.get(j).name);
+                //        //Log.e(TAG, "animation started "+Game.targets.get(i).animations.get(j).name);
                 //    }
                 //}
 
@@ -150,12 +150,12 @@ class TargetGroup extends Entity{
                 /*
                 if (colorsBuffer == null || colorsBuffer.capacity() != Game.targets.get(i).colorsData.length) {
 
-                    Log.e(TAG, "Utils.generateOrUpdateFloatBuffer");
+                    //Log.e(TAG, "Utils.generateOrUpdateFloatBuffer");
 
                     colorsBuffer = Utils.generateOrUpdateFloatBuffer(Game.targets.get(i).colorsData, colorsBuffer);
                 } else {
 
-                    Log.e(TAG, "Utils.updateFloatBuffer");
+                    //Log.e(TAG, "Utils.updateFloatBuffer");
                     Utils.updateFloatBuffer(Game.targets.get(i).colorsData, colorsBuffer);
                 }
                 */
@@ -184,7 +184,7 @@ class TargetGroup extends Entity{
         }
 
         //if (colorChangeCount > 0) {
-        //    Log.e(TAG, "colorChangeFlag count " + colorChangeCount);
+        //    //Log.e(TAG, "colorChangeFlag count " + colorChangeCount);
         //}
 
     }

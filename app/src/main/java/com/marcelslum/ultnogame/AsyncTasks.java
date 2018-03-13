@@ -12,13 +12,13 @@ public class AsyncTasks {
     public static void cancelAll(){
         if (initLoader != null){
             if (initLoader.getStatus() == AsyncTask.Status.RUNNING){
-                Log.e(TAG, "cancelando init loader");
+                //Log.e(TAG, "cancelando init loader");
                 initLoader.cancel(true);
             }
         }
         if (save != null){
             if (save.getStatus() == AsyncTask.Status.RUNNING){
-                Log.e(TAG, "cancelando saveSnapshot");
+                //Log.e(TAG, "cancelando saveSnapshot");
                 save.cancel(false);
             }
         }

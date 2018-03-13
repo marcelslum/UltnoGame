@@ -60,11 +60,11 @@ public class Storage {
         for (int i = 0; i < NUMBER_OF_LEVELS; i++){
             int levelToTest = i + 1;
             if (!Storage.contains("tutorial"+ levelToTest +"visto")) {
-                Log.e("Storage", "not contains tutorial visto level " + levelToTest);
+                //Log.e("Storage", "not contains tutorial visto level " + levelToTest);
                 Storage.setBoolean("tutorial" + levelToTest + "visto", false);
             }
             if (!Storage.contains("score"+levelToTest)) {
-                Log.e("Storage", "score level " + levelToTest);
+                //Log.e("Storage", "score level " + levelToTest);
                 Storage.setInt("score" + levelToTest, 0);
             }
         }
@@ -137,7 +137,7 @@ public class Storage {
     }
     
     public static boolean getLevelTutorialSaw(int levelNumber){
-        Log.e("Storage", "tutorial saw level "+levelNumber+ ": " +(getBoolean("tutorial"+ levelNumber +"visto")));
+        //Log.e("Storage", "tutorial saw level "+levelNumber+ ": " +(getBoolean("tutorial"+ levelNumber +"visto")));
         return  getBoolean("tutorial"+ levelNumber +"visto");
     }
     

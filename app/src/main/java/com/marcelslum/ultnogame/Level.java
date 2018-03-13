@@ -138,7 +138,7 @@ public class Level {
             @Override
             public void onPress() {
                 if (Game.gameState == Game.GAME_STATE_JOGAR){
-                    Log.e("level", "listener pause ativado");
+                    //Log.e("level", "listener pause ativado");
                     Game.blockAndWaitTouchRelease();
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 }
@@ -177,7 +177,7 @@ public class Level {
         float targetX;
         float targetY;
 
-        Log.e("level", "targetsMap.length "+targetsMap.length);
+        //Log.e("level", "targetsMap.length "+targetsMap.length);
         int contador = 0;
         for (int iY = 0; iY < targetsMap.length;iY++){
             for (int iX = 0; iX < targetsMap[iY].length; iX++) {
@@ -201,7 +201,7 @@ public class Level {
                             .states(targetsStates)
                             .build();
 
-                    Log.e("Game", "target "+contador +": "+t.x + " " + t.y);
+                    //Log.e("Game", "target "+contador +": "+t.x + " " + t.y);
 
                     Game.addTarget(t);
                     contador += 1;
@@ -256,7 +256,7 @@ public class Level {
             float ballX = Game.gameAreaResolutionX * ballDataBaseData.get(i).x;
             float ballY = Game.gameAreaResolutionY * ballDataBaseData.get(i).y;
 
-            Log.e("Level", "adicionando ball " + ballX + " " + ballY);
+            //Log.e("Level", "adicionando ball " + ballX + " " + ballY);
 
             float radius = Game.gameAreaResolutionY * ballDataBaseData.get(i).radius;
             float ballVelocityX = Game.gameAreaResolutionX * ballDataBaseData.get(i).vx;

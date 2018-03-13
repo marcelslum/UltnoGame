@@ -199,7 +199,7 @@ public class Selector extends Entity{
         //Log.e(TAG, "textsObjects.length "+textsObjects.length);
 
         //for (int i = 0; i < textsObjects.length; i++) {
-        //    Log.e(TAG, "texto "+i + ": "+textsObjects[i].text);
+        //    //Log.e(TAG, "texto "+i + ": "+textsObjects[i].text);
         //}
 
         textsObjects[selectedValue].alpha = alpha;

@@ -11,7 +11,7 @@ public class LevelLoader2 {
 
     public static void loadLevel(int levelNumber, Level.LevelBuilder levelBuilder) {
 
-        Log.e("LevelLoader", "levelNumber "+levelNumber);
+        //Log.e("LevelLoader", "levelNumber "+levelNumber);
 
         int l = 50;
         // ESPELHO

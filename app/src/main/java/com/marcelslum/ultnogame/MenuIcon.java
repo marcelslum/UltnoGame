@@ -394,7 +394,7 @@ public class MenuIcon extends Entity{
 
                 @Override
                 public void onMove(TouchEvent touch, long startTime) {
-                    Log.e(TAG, "onMove isBlocked "+isBlocked);
+                    //Log.e(TAG, "onMove isBlocked "+isBlocked);
                     if (!isBlocked){
                         innerMenuIcon.move(touch.x - touch.previousX, true);
                         lastMovement = touch.x - touch.previousX;

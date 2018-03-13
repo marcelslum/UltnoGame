@@ -105,7 +105,7 @@ public class TextBox extends Entity{
                         new InteractionListener.PressListener() {
                             @Override
                             public void onPress() {
-                                Log.e("textbox", "onPress textBox");
+                                //Log.e("textbox", "onPress textBox");
                                 if (onPress != null) {
                                     onPress.onPress();
                                 }

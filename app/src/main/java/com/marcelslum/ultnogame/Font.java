@@ -211,7 +211,7 @@ public class Font {
                 charData[5] = fontData[(i*8)+6];
                 charData[6] = fontData[(i*8)+7];
                 //if (c_val == 118){
-                //    Log.e("font", charData[0] + " " +charData[1] + " " +charData[2] + " " +charData[3] + " " +charData[4] + " " +charData[5] + " " +charData[6]);
+                //    //Log.e("font", charData[0] + " " +charData[1] + " " +charData[2] + " " +charData[3] + " " +charData[4] + " " +charData[5] + " " +charData[6]);
                 //}
                 return fontData[(i*8)];
             }
