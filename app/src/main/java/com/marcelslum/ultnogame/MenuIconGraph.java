@@ -26,6 +26,8 @@ public class MenuIconGraph extends Entity{
     Rectangle frontRectangle;
     Rectangle backRectangle;
 
+    static final String TAG = "MenuIconGraph";
+
     MenuIconGraph(String name, float x, float y, float width, float height, int type) {
         super(name, x, y, Entity.TYPE_MENU);
         if (type == TYPE_BAR) {
@@ -51,10 +53,10 @@ public class MenuIconGraph extends Entity{
 
     public void setPercentage(float percentage){
         if (type == TYPE_BAR){
-            Log.e(TAG, "setPercentage "+percentage);
+            //Log.e(TAG, "setPercentage "+percentage);
             frontRectangle.animScaleX = percentage;
             frontRectangle.animTranslateX = -(width - (width * frontRectangle.animScaleX))/2f;
-            Log.e(TAG, "frontRectangle.animTranslateX "+frontRectangle.animTranslateX);
+            //Log.e(TAG, "frontRectangle.animTranslateX "+frontRectangle.animTranslateX);
         } else if (type == TYPE_STARS){
             if (percentage == 1f) {
                 stars.get(0).updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));

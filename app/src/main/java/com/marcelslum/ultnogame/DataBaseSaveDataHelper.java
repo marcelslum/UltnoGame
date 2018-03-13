@@ -21,7 +21,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
      public static DataBaseSaveDataHelper getInstance(Context ctx){
         if (mInstance == null){
-            mInstance = new DataBaseSaveDataHelper(ctx, "save.db");
+            mInstance = new DataBaseSaveDataHelper(ctx, "save_db.db");
         }
         return mInstance;
     }

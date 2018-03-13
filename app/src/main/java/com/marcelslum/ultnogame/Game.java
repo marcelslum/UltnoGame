@@ -26,6 +26,10 @@ import static android.content.Context.ACTIVITY_SERVICE;
 
 public class Game {
 
+    public static boolean forDebugDeleteDatabaseAndStorage = false;
+    public static boolean ganharComMetadeDasBolas = true;
+    public static boolean sempreGanharTodasEstrelas = true;
+
     public static MyGLSurface myGlSurface;
 
     public static Pool<Vector> vectorPool;
@@ -36,7 +40,7 @@ public class Game {
 
     public static final long TIME_OF_BALL_LISTENER = 250;
 
-    public static String playerName = ".";
+    public static String playerName = "-";
     static Vibrator vibrator;
 
     static final String TAG = "Game";
@@ -517,7 +521,7 @@ public class Game {
                 MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
             }
 
-            Sound.play(Sound.soundMenuIconDrop2, 0.2f, 0.2f, 0);
+            Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
@@ -546,7 +550,7 @@ public class Game {
 
             mainActivity.showAdView();
 
-            Sound.play(Sound.soundMenuIconDrop2, 0.1f, 0.1f, 0);
+            Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             MenuHandler.groupMenu.clearDisplay();
             MenuHandler.groupMenu.block();
@@ -608,9 +612,8 @@ public class Game {
 
             SaveGame.saveGame.save();
 
+            StarsHandler.updateConqueredStars();
 
-
-            ConnectionHandler.menuConnectionAttempts = 0;
             if (!sameState) {
                 if (previousState != GAME_STATE_OPCOES) {
                     activateFrame(500);

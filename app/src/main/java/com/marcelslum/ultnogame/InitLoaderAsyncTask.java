@@ -54,5 +54,6 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
     protected void onPostExecute(Integer i) {
         Log.e(TAG, "onPostExecute - LOADER CONCLUDE");
         Splash.loaderConclude = true;
+        Game.forInitGame = false;
      }
  }

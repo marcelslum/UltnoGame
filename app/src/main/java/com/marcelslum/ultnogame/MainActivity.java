@@ -25,6 +25,9 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
@@ -61,11 +64,15 @@ public class MainActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Splash.timesGoogle = 0;
+
         /*Inicia o banco de Level Data*/
         try {
             DataBaseLevelDataHelper.getInstance(this).prepareDatabase();
-            Game.groupsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getGroupsDataBaseData();
-            Game.levelsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getLevelsDataBaseData();
+            if (!Game.forDebugDeleteDatabaseAndStorage) {
+                Game.groupsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getGroupsDataBaseData();
+                Game.levelsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getLevelsDataBaseData();
+            }
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
@@ -78,7 +85,14 @@ public class MainActivity extends FragmentActivity implements
         }
 
         Storage.init(this);
-        SaveGame.load();
+
+        if (!Game.forDebugDeleteDatabaseAndStorage){
+            SaveGame.load();
+        } else {
+            Log.e(TAG, "DELETADAS TODAS AS BASES, CONFIGURAÇÕES E SAVEGAMES");
+            return;
+        }
+
 
         /*Inicia o hardware*/
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -163,6 +177,18 @@ public class MainActivity extends FragmentActivity implements
         }
     }
 
+    public boolean isGooglePlayAvailable() {
+        boolean googlePlayStoreInstalled;
+        int val = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getApplicationContext());
+        googlePlayStoreInstalled = val == ConnectionResult.SUCCESS;
+
+
+        Log.e(TAG, "googlePlayStoreInstalled val "+ val);
+        Log.e(TAG, "googlePlayStoreInstalled "+ googlePlayStoreInstalled);
+
+        return googlePlayStoreInstalled;
+    }
+
     public void signInSilently() {
         Log.e(TAG, "signInSilently()");
 
@@ -232,7 +258,7 @@ public class MainActivity extends FragmentActivity implements
         }
     }
 
-    private void onConnected(GoogleSignInAccount googleSignInAccount) {
+    private void onConnected(final GoogleSignInAccount googleSignInAccount) {
 
         Log.e(TAG, "onConnected");
 
@@ -248,16 +274,36 @@ public class MainActivity extends FragmentActivity implements
                         if (task.isSuccessful()) {
                             Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
                             Game.playerName = task.getResult().getDisplayName();
+                            if (MessagesHandler.messageGoogleLogged != null) {
+                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + Game.playerName);
+                            }
                         } else {
+                            Log.e(TAG, "Não foi possível carregar o nome do jogador");
                             Game.playerName = ".";
-                        }
+                            signOut();
+                            if (MessagesHandler.messageGoogleLogged != null) {
+                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
+                            }
 
-                        if (MessagesHandler.messageGoogleLogged != null) {
-                            MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + Game.playerName);
                         }
-
                     }
                 });
+    }
+
+    public boolean checkGoogleConnection(){
+        Log.e(TAG, "checkGoogleConnection");
+        if (isGooglePlayAvailable() && isSignedIn()){
+            Log.e(TAG, "checking");
+            if (Game.playerName.equals(".") || Game.playerName.equals("-")){
+                Log.e(TAG, "possible not connected - erro");
+                signOut();
+                if (MessagesHandler.messageGoogleLogged != null) {
+                    MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
+                }
+                return false;
+            }
+        }
+        return true;
     }
 
     private void onDisconnected() {

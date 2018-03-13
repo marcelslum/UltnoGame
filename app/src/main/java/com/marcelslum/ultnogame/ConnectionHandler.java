@@ -15,7 +15,7 @@ public class ConnectionHandler {
     public final static int INTERNET_STATE_CONNECTED = 1;
     public final static int INTERNET_STATE_NOT_CONNECTED = 2;
     public static int internetState = INTERNET_STATE_NOT_CONNECTED;
-    public static int menuConnectionAttempts = 0;
+
 
 
     public static void connect() {

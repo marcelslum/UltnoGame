@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -120,11 +122,20 @@ public class Tutorial {
             
         }
 
+        Log.e(TAG, "StarsHandler.conqueredStarsTotal " + StarsHandler.conqueredStarsTotal);
+        Log.e(TAG, "starsToUnlock " + starsToUnlock);
+
         if (StarsHandler.conqueredStarsTotal >= starsToUnlock) {
+            Log.e(TAG, "Tutorial " + tutorialNumber + " unblocked");
             return true;
         }
+
+
+        Log.e(TAG, "Tutorial " + tutorialNumber + " blocked");
         return false;
     }
+
+    static final String TAG = "Tutorial";
 
     public static boolean hasUnvisitedTutorial(){
 
@@ -405,7 +416,7 @@ public class Tutorial {
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t2t1), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t2t2), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i3, Game.getContext().getResources().getString(R.string.t2t3), textBoxY, textBoxSize);
-            currentTutorialObject.addFrame(i3, Game.getContext().getResources().getString(R.string.t2t4), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t4), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t5), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t6), textBoxY, textBoxSize);
 
@@ -508,7 +519,7 @@ public class Tutorial {
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t5), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t6), textBoxY, textBoxSize, Game.resolutionX * 0.17f, Game.resolutionY * 0.58f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t7), textBoxY, textBoxSize, Game.resolutionX * 0.8f, Game.resolutionY * 0.6f);
-            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t8), textBoxY, textBoxSize, Game.resolutionX * 0.86f, Game.resolutionY * 0.6f);
+            currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t8), textBoxY, textBoxSize, Game.resolutionX * 0.84f, Game.resolutionY * 0.6f);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t9), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t10), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i1, Game.getContext().getResources().getString(R.string.t7t11), textBoxY, textBoxSize);

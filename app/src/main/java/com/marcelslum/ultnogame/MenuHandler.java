@@ -66,10 +66,10 @@ public class MenuHandler {
                 groupMenu.addText(2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
                         Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, new Color(0.35f, 0.35f, 0.35f, 1f), false);
 
-                Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
+                //Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
 
 
-                Log.e(TAG, "group i = "+ i + " seen "+SaveGame.saveGame.groupsSeen[i]);
+                //Log.e(TAG, "group i = "+ i + " seen "+SaveGame.saveGame.groupsSeen[i]);
                 if (!SaveGame.saveGame.groupsSeen[i]){
 
                     groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
@@ -224,90 +224,90 @@ public class MenuHandler {
         for (int i = 0; i < Tutorial.NUMBER_OF_TUTORIALS; i++){
             switch (i){
                 case Tutorial.TUTORIAL_INSTRUCOES_INICIAIS:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l101);
                     text = Game.getContext().getResources().getString(R.string.tutorial1Tittle);
                     break;
                 case Tutorial.TUTORIAL_INICIO:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l102);
                     text = Game.getContext().getResources().getString(R.string.tutorial2Tittle);
                     break;
                 case Tutorial.TUTORIAL_MOVIMENTO_BARRA:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l103);
                     text = Game.getContext().getResources().getString(R.string.tutorial3Tittle);
                     break;
                 case Tutorial.TUTORIAL_INCLINACAO_BARRA:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l104);
                     text = Game.getContext().getResources().getString(R.string.tutorial4Tittle);
                     break;
                 case Tutorial.TUTORIAL_OBSTACULO:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l103);
                     text = Game.getContext().getResources().getString(R.string.tutorial5Tittle);
                     break;
                 case Tutorial.TUTORIAL_CORES:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l102);
                     text = Game.getContext().getResources().getString(R.string.tutorial6Tittle);
                     break;
                 case Tutorial.TUTORIAL_EXPLOSAO:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l101);
                     text = Game.getContext().getResources().getString(R.string.tutorial7Tittle);
                     break;
                 case Tutorial.TUTORIAL_ALVO_FANTASMA:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l102);
                     text = Game.getContext().getResources().getString(R.string.tutorial8Tittle);
                     break;
                 case Tutorial.TUTORIAL_OBSTACULOS_DINAMICOS:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l103);
                     text = Game.getContext().getResources().getString(R.string.tutorial9Tittle);
                     break;
                 case Tutorial.TUTORIAL_BOLAS_INVENCIVEIS:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l104);
                     text = Game.getContext().getResources().getString(R.string.tutorial10Tittle);
                     break;
                 case Tutorial.TUTORIAL_BOLAS_PRESAS:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l102);
                     text = Game.getContext().getResources().getString(R.string.tutorial11Tittle);
                     break;
                 case Tutorial.TUTORIAL_VENTO:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l103);
                     text = Game.getContext().getResources().getString(R.string.tutorial12Tittle);
                     break;
                 case Tutorial.TUTORIAL_BARRA_DINAMICA:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l101);
                     text = Game.getContext().getResources().getString(R.string.tutorial13Tittle);
                     break;
                 case Tutorial.TUTORIAL_COMIDA:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l104);
                     text = Game.getContext().getResources().getString(R.string.tutorial14Tittle);
                     break;
                 case Tutorial.TUTORIAL_BOLA_FALSA:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l102);
                     text = Game.getContext().getResources().getString(R.string.tutorial15Tittle);
                     break;
                 case Tutorial.TUTORIAL_BOTAO_INVERTIDO:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l103);
                     text = Game.getContext().getResources().getString(R.string.tutorial16Tittle);
                     break;
                 case Tutorial.TUTORIAL_DUAS_BARRAS:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l101);
                     text = Game.getContext().getResources().getString(R.string.tutorial17Tittle);
                     break;
                 case Tutorial.TUTORIAL_DUAS_BOLAS:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l104);
                     text = Game.getContext().getResources().getString(R.string.tutorial18Tittle);
                     break;
                 case Tutorial.TUTORIAL_GRADE:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l103);
                     text = Game.getContext().getResources().getString(R.string.tutorial19Tittle);
                     break;
                 default:
-                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_G1_ID);
+                    textureData = TextureData.getTextureDataById(TextureData.TEXTURE_l102);
                     text = Game.getContext().getResources().getString(R.string.tutorial19Tittle);
                     break;
             }
 
             final int tutorialNumber = i;
             if (Tutorial.isTutorialUnblocked(i)){
-                tutorialMenu.addOption(i, Texture.TEXTURE_ICONS, textureData, new Animation.AnimationListener() {
+                tutorialMenu.addOption(i, Texture.TEXTURE_TUTORIALS, textureData, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = tutorialNumber;

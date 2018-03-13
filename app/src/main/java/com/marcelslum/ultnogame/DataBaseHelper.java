@@ -34,7 +34,10 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
     public void prepareDatabase() throws IOException {
 
-        //myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
+        if (Game.forDebugDeleteDatabaseAndStorage) {
+            myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
+            return;
+        }
 
         boolean dbExist = checkDataBase();
 
@@ -171,6 +174,12 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
      
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 }

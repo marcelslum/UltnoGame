@@ -23,10 +23,8 @@ public class Splash {
     static long timeInitIntro;
     private static long timeInitConectando;
     private static long timeInitCarregando;
-    private static int googleConnectionAttempts = 0;
-
-    private final static long INTRO_DURATION = 3000;
-    private final static long INTRO_PARTIAL_DURATION = 3000;
+        
+    private final static long INTRO_PARTIAL_DURATION = 2000;
 
     private static final int SPLASH_CARREGANDO = 33;
     private static final int SPLASH_CONECTANDO_INTERNET = 32;
@@ -78,6 +76,7 @@ public class Splash {
         menuGoogle.addMenuOption("Sim", Game.getContext().getResources().getString(R.string.menuGoogleSim), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                timesGoogle = 0;
                 SaveGame.saveGame.googleOption = 1;
                 SaveGame.saveGame.save();
                 forSignin = true;
@@ -89,6 +88,7 @@ public class Splash {
         menuGoogle.addMenuOption("Nao", Game.getContext().getResources().getString(R.string.menuGoogleNao), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                timesGoogle = 0;
                 SaveGame.saveGame.googleOption = 0;
                 forSignin = false;
                 SaveGame.saveGame.save();
@@ -99,6 +99,7 @@ public class Splash {
         menuGoogle.addMenuOption("MaisTarde", Game.getContext().getResources().getString(R.string.menuGoogleMaisTarde), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                timesGoogle = 0;
                 SaveGame.saveGame.googleOption = -1;
                 forSignin = false;
                 SaveGame.saveGame.save();
@@ -135,10 +136,17 @@ public class Splash {
 
     static void init(){
 
+        Log.e(TAG, "init Splash");
         if (forSignin) {
+            Log.e(TAG, "forSignin");
             loaderConclude = false;
         } else {
-            loaderConclude = true;
+            Log.e(TAG, "not forSignin");
+            if (Sound.soundPool != null){
+                loaderConclude = true;
+            } else {
+                loaderConclude = false;
+            }
         }
         Splash.timeInitIntro = Utils.getTime();
         configSplash();
@@ -215,8 +223,9 @@ public class Splash {
         state = id;
         if (id == SPLASH_CARREGANDO) {
 
-            if (!forSignin) {
+            if (!forSignin && loaderConclude == false) {
                 AsyncTasks.initLoader = new InitLoaderAsyncTask().execute();
+                loaderConclude = true;
             } else {
                 loaderConclude = true;
             }
@@ -270,7 +279,27 @@ public class Splash {
         if (messageGoogle2 != null) messageGoogle2.prepareRender(matrixView, matrixProjection);
     }
 
+    static int timesGoogle = 0;
+
     static void finishSplashLoad() {
+
+        if (SaveGame.saveGame.googleOption == 1) {
+            if (!Game.mainActivity.checkGoogleConnection()) {
+                timesGoogle += 1;
+                Log.e(TAG, "timesGoogle "+timesGoogle);
+                if (timesGoogle < 3) {
+                    forSignin = true;
+                    init();
+                } else {
+                    forSignin = false;
+                    SaveGame.saveGame.googleOption = -1;
+                    SaveGame.saveGame.save();
+                    init();
+                }
+                setSplashState(SPLASH_CARREGANDO);
+            }
+        }
+
         state = SPLASH_FINISHED;
         LevelDataLoader.initLevelsData();
         MenuHandler.initMenus();
@@ -302,12 +331,15 @@ public class Splash {
         } else if (state == SPLASH_CONECTANDO_INTERNET) {
 
             if (forSignin){
+                Log.e(TAG, "forSignin startintent ");
                 forSignin = false;
                 Game.mainActivity.startSignInIntent();
             } else if (Utils.getTime() - timeInitConectando > (INTRO_PARTIAL_DURATION / 2f)) {
-
                 Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
                 int googlePlayOption = SaveGame.saveGame.googleOption;
+
+                //googlePlayOption = 1;
+
                 Log.e(TAG, "googlePlayOption "+ googlePlayOption);
                 if (googlePlayOption == -1){
                     if (!forJumpGoogle) {
@@ -316,15 +348,31 @@ public class Splash {
                         setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
                     }
                 } else if (googlePlayOption == 1){
-                    Game.mainActivity.signInSilently();
+
+                    if (!Game.mainActivity.isGooglePlayAvailable()){
+                        Game.mainActivity.startSignInIntent();
+                    }
                     setSplashState(SPLASH_CONECTANDO_GOOGLE);
                 } else if (googlePlayOption == 0){
                     setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
                 }
             }
         } else if (state == SPLASH_CONECTANDO_GOOGLE) {
-            if ((Game.mainActivity.isSignedIn()) || Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION) {
+            if (Game.mainActivity.isGooglePlayAvailable() && ((Game.mainActivity.isSignedIn()))) {
                 setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
+            } else if (Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION && (!Game.mainActivity.isSignedIn()) || (!Game.mainActivity.isGooglePlayAvailable())){
+                    timesGoogle += 1;
+                    Log.e(TAG, "timesGoogle "+timesGoogle);
+                    if (timesGoogle < 3) {
+                        forSignin = true;
+                        init();
+                    } else {
+                        forSignin = false;
+                        SaveGame.saveGame.googleOption = -1;
+                        SaveGame.saveGame.save();
+                        init();
+                        setSplashState(SPLASH_CONECTANDO_INTERNET);
+                    }
             }
         } else if (state == SPLASH_CARREGANDO_SAVE_GAME){
             if (Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION / 3f) {

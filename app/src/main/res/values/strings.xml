@@ -13,6 +13,7 @@
     <string name="messageMaxScoreTotal">Pontuação total: </string>
     <string name="googleLogado">Bem vindo </string>
     <string name="googleNaoLogado">Não conectado ao Google Play Games.</string>
+    <string name="googleErroLogar">Houve um erro ao conectar com o Google Play Games.</string>
     <string name="messageCurrentLevel">Nível</string>
     <string name="messageGameOver">GAME OVER</string>
     <string name="messageNaoConectado1">Este jogo é totalmente gratuito. Apoie o desenvolvedor conectando-se à internet para exibir propagandas.</string>
@@ -78,9 +79,9 @@
     <string name="t2t1">Vamos dar uma olhada nos comandos e instruções básicas do jogo.</string>
     <string name="t2t2">Mova a barra para a esquerda e para a direita apertando um dos botões localizados nas extremidades inferiores da tela.</string>
     <string name="t2t3">Não deixe a bola cair.</string>
-    <string name="t2t4">Se o jogo estiver muito difícil ou fácil, é possível alterar a velocidade da bola no menu de opções.</string>
-    <string name="t2t5">Atinja os alvos com a bola para eliminá-los. Cada alvo valerá 10 pontos.</string>
-    <string name="t2t6">Elimine todos os alvos para completar o nível, mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
+    <string name="t2t4">Atinja os alvos com a bola para eliminá-los. Cada alvo valerá 10 pontos.</string>
+    <string name="t2t5">Elimine todos os alvos para completar o nível, mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
+    <string name="t2t6">Se o jogo estiver muito difícil ou fácil, é possível alterar a velocidade da bola no menu de opções.</string>
 
     <string name="t3t1">Através do controle do movimento da barra, é possível alterar a direção e a velocidade da bola.</string>
     <string name="t3t2">Ao atingir a bola com a barra se movimentando na direção contrária, a velocidade da bola aumentará</string>
@@ -142,7 +143,7 @@
     <string name="t10t2">As bolas invencíveis são coloridas.</string>
     <string name="t10t3">Como o nome já revela, esse tipo de bola não pode morrer.</string>
     <string name="t10t4">A quantidade de bolas invencíveis aparece também no painel.</string>
-    <string name="t10t5">As bolas invencíveis não concedem pontos extras durante ou no final do nível.</string>
+    <string name="t10t5">As bolas invencíveis não concedem pontos extras durante ou ao final do nível.</string>
     
     <string name="t11t1">As bolas invencíveis poderão começar o nível presas.</string>
     <string name="t11t2">Enquanto estiverem presas, elas não se mexerão.</string>
@@ -158,7 +159,7 @@
     
     <string name="t14t1">Em alguns níveis, o tamanho da barra irá sempre diminuir.</string>
     <string name="t14t2">Nesse caso, você deverá coletar bolas azuis brilhantes para que a barra não fique muito pequena.</string>
-    <string name="t14t3">As bolas azuis brilhantes cairão quando alguns alvos, escolhidos aleatoriamente, forem destruídos.</string>
+    <string name="t14t3">As bolas azuis brilhantes cairão aleatoriamente quando alguns alvos forem destruídos.</string>
     
     <string name="t15t1">A bola, ao colidir com algum alvo, poderá se dividir em duas.</string>
     <string name="t15t2">Uma das bolas é a verdadeira.</string>
@@ -169,7 +170,7 @@
     <string name="t15t7">Assim que identificada, é recomendável que você deixe a bola falsa morrer, para não mais atrapalhá-lo.</string>
     
     <string name="t16t1">Observe a direção das flechas dos botões.</string>
-    <string name="t16t2">Em alguns casos, os botões poderão estar invertidos.</string>
+    <string name="t16t2">Em alguns casos, os botões poderão estar invertidos. Inverta também seu cérebro!</string>
     
     <string name="t17t1">O desafio agora é controlar duas barras ao mesmo tempo.</string>
     <string name="t17t2">Os botões da direita controlam a barra da direita.</string>
@@ -197,9 +198,6 @@
     <string name="splash_carregando">Carregando</string>
     <string name="signin_failure">Não foi possível conectar.</string>
     <string name="signin_other_error">Erro na conexão.</string>
-    <string name="app_misconfigured">app_misconfigured</string>
-    <string name="sign_in_failed">sign_in_failed</string>
-    <string name="license_failed">license_failed</string>
 
     <string name="conquistas">Conquistas</string>
     <string name="ligado">Ligado</string>

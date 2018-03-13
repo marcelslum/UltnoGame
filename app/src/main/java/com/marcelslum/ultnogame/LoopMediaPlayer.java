@@ -119,6 +119,13 @@ public class LoopMediaPlayer {
         }
     }
 
+    public void isPlaying(){
+        //Log.e(TAG, "play");
+        if (mCurrentPlayer != null) {
+            mCurrentPlayer.isPlaying();
+        }
+    }
+
     private MediaPlayer.OnCompletionListener onCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {

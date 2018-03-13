@@ -145,7 +145,6 @@ public class SaveGame {
 
         Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
         loaded = true;
-
     }
 
     public void save(){

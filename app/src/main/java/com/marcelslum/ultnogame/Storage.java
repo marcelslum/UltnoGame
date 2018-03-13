@@ -50,7 +50,9 @@ public class Storage {
     public static void init(Context context) {
         storage = context.getSharedPreferences(STORAGE_FILE_NAME, 0);
 
-        //setString(STORAGE_SAVE_NAME, "");
+        if (Game.forDebugDeleteDatabaseAndStorage) {
+            setString(STORAGE_SAVE_NAME, "");
+        }
 
     }
 

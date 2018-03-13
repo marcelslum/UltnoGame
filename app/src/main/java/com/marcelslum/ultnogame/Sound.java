@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 /**
  * Created by marcel on 17/09/2016.
@@ -42,15 +43,23 @@ public abstract class Sound {
     public static LoopMediaPlayer loopMenu;
     public static LoopMediaPlayer loop;
 
+    public static String TAG = "Sound";
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    //TODO
+
     public static void init(){
+
+        Log.e(TAG, "init loading sounds");
+
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
         soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(16).build();
+        soundMenuSelectBig = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectbig, 1);
+        soundMenuSelectSmall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectsmall, 1);
+        soundMenuIconDrop2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bells9, 1);
         soundBallHit = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit, 1);
         soundCounter = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.counter, 1);
         soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroytarget, 1);
@@ -61,8 +70,6 @@ public abstract class Sound {
         soundExplosion1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.explosion1, 1);
         soundExplosion2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.explosion21, 1);
         soundGameOver = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.gameover2, 1);
-        soundMenuSelectBig = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectbig, 1);
-        soundMenuSelectSmall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectsmall, 1);
         soundScore = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.score, 1);
         soundWin1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.win0_powerup17, 1);
         soundWin2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.win1_powerup16, 1);
@@ -72,7 +79,6 @@ public abstract class Sound {
         soundSuccess1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success1, 1);
         soundSuccess2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success2, 1);
         //soundMenuIconDrop1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bells1, 1);
-        soundMenuIconDrop2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bells9, 1);
         soundStarsUp = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.starsup, 1);
         soundDuplicateBall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.duplicateball, 1);
     }
@@ -83,11 +89,16 @@ public abstract class Sound {
 
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
             if (soundPool != null) {
+                Log.e(TAG, "Tocando o som " + id + "volume " + left + " ; "+ right);
                 return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
             } else {
+
+                Log.e(TAG, "Não tocando o som. SoundPool nulo.");
+
                 return -1;
             }
         } else {
+            Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
             return -1;
         }
     }
@@ -101,12 +112,14 @@ public abstract class Sound {
             loop.pause();
         }
     }
+
     
-    public static checkLoopPlaying(){
+    public static void checkLoopPlaying(){
         if (Game.gameState == Game.GAME_STATE_JOGAR){
+            Log.e(TAG, "check loop playing");
             if (loop == null){
                 Log.e(TAG, "loop nulo, criando novo");
-                loadPool();
+                loadLoop();
                 return;
             }
             
@@ -115,21 +128,21 @@ public abstract class Sound {
             } catch (Exception e) {
                 Log.e(TAG, "loop play falhou, criando novo");
                 loop = null;
-                loadPool();
+                loadLoop();
                 return;
             }
             
             try {
-                loop.isPLaying();
+                loop.isPlaying();
             } catch (Exception e) {
                 Log.e(TAG, "loop isPlaying falhou, criando novo");
                 loop = null;
-                loadPool();
+                loadLoop();
             }
         }
     }
     
-    public static loadPool(){
+    public static void loadLoop(){
         int loopChoose = (SaveGame.saveGame.currentLevelNumber-1) % 3;
         Log.e(TAG, "loopChoose "+ loopChoose);
         switch (loopChoose){
