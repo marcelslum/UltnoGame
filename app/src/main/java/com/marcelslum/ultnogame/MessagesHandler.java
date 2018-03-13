@@ -138,6 +138,8 @@ public class MessagesHandler {
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 Game.resolutionX*0.02f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
                 resources.getString(R.string.messageMaxScoreTotal) +"\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
+        
+       
 
         messageGoogleLogged = new Text("messageGoogleLogged",
                 Game.resolutionX*0.98f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
