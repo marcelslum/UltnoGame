@@ -99,6 +99,7 @@ public class Game {
     static Image imageTutorialDown;
     static TextView aboutTextView;
     static TextView notConnectedTextView;
+    static TextView tipTextView;
 
     // quadtree objects
     static Quadtree quad;
@@ -471,6 +472,29 @@ public class Game {
             
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
+            
+            String tip = LevelGoalsLoader.getLevelTip(SaveGame.saveGame.currentLevelNumber);
+            
+            
+            if(!tip.equals("")){
+                tipTextView = new TextView("tipTextView", Game.resolutionX * 0.98f,
+                    Game.resolutionY * 0.7f,
+                    Game.resolutionX * 0.94f,
+                    Game.resolutionY * 0.2f,
+                    Game.gameAreaResolutionY*0.035f,
+                    Game.font, Color.azul, Text.TEXT_ALIGN_RIGHT, 0.25f);
+                tipTextView.addText(tip, Color.azul);
+                tipTextView.display();
+            } else {
+                if (tipTextView != null){
+                    tipTextView.clearDisplay();
+                }
+                tipTextView = null;
+                
+            }
+            
+            
+            
             levelGoalsPanel = new LevelGoalsPanel("levelGoalsPanel", resolutionX * 0.2f, resolutionY * 0.2f, resolutionX * 0.025f, resolutionX * 0.79f);
 
             for (int i = 0; i < Level.levelGoalsObject.levelGoals.size(); i++){
@@ -550,6 +574,10 @@ public class Game {
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
 
             mainActivity.showAdView();
+            
+            if (tipTextView != null){
+                tipTextView.clearDisplay();
+            }
 
             Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
@@ -656,6 +684,12 @@ public class Game {
                     getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
 
         } else if (state == GAME_STATE_PREPARAR){
+            
+            
+            if (tipTextView != null){
+                tipTextView.clearDisplay();
+            }
+            
             
             eraseAllGameEntities();
             eraseAllHudEntities();
@@ -1947,7 +1981,8 @@ public class Game {
         }
 
         if (aboutTextView != null) aboutTextView.checkTransformations(true);
-        if (aboutTextView != null) notConnectedTextView.checkTransformations(true);
+        if (notConnectedTextView != null) notConnectedTextView.checkTransformations(true);
+        if (tipTextView != null) tipTextView.checkTransformations(true);
         
         MessagesHandler.messageGameOver.checkTransformations(true);
         MessagesHandler.messagePreparation.checkTransformations(true);
@@ -2144,6 +2179,7 @@ public class Game {
         if (imageTutorialTop != null) imageTutorialTop.prepareRender(matrixView, matrixProjection);
 
         if (notConnectedTextView != null) notConnectedTextView.prepareRender(matrixView, matrixProjection);
+        if (tipTextView != null) tipTextView.prepareRender(matrixView, matrixProjection);
 
         if (messages != null) messages.prepareRender(matrixView, matrixProjection);
         if (frame != null)frame.prepareRender(matrixView, matrixProjection);
@@ -2190,6 +2226,7 @@ public class Game {
 
         if (aboutTextView != null) aboutTextView.verifyListener();
         if (notConnectedTextView != null) notConnectedTextView.verifyListener();
+        if (tipTextView != null) tipTextView.verifyListener();
         
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.verifyListener();
@@ -2240,6 +2277,7 @@ public class Game {
         list.add(tittle);
         list.add(aboutTextView);
         list.add(notConnectedTextView);
+        list.add(tipTextView);
         list.add(MessagesHandler.messageGameOver);
         list.add(MessagesHandler.messagePreparation);
         list.add(MessagesHandler.messageInGame);
