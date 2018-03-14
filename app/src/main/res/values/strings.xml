@@ -55,16 +55,27 @@
     <string name="group19name">Rapidez</string>
     <string name="group20name">Mistura</string>
     
-    <string name="tip">Dica</string>
     <string name="tipLevel1">Para pausar, aperte em qualquer lugar da tela de jogo.</string>
     <string name="tipLevel2">No menu de opções, você pode desligar e ligar a música, os sons de efeitos e a vibração.</string>
     <string name="tipLevel3">Se o jogo estiver muito fácil ou difícil, experimente alterar a velocidade da bola no menu opções.</string>
     <string name="tipLevel4">O menu opções pode ser acessado na tela principal do jogo ou no menu de pausa.</string>
+    
+    <!-- especifico level 1 e 4-->
     <string name="tipLevel5">Para acelerar a bola, atinja-a com a barra se movimentando na direção contrária.</string>
+    
+    <!-- especifico level 2 e 3-->
     <string name="tipLevel6">Para desacelerar a bola, atinja-a com a barra se movimentando na direção contrária.</string>
-    <string name="tipLevel7">Atinjir a bola com a barra se movimentando também afetará o ângulo dela.</string>
-    <string name="tipLevel8">Não é possível diminuir a velocidade da se ela chegar ao valor mínimo.</string>
-    <string name="tipLevel9">Da mesma forma, quando ela chegar no seu valor máximo, não poderá ser aumentada.</string>
+    
+    <!-- especifico level 1, 2, 3 e 4 -->
+    <string name="tipLevel7">Atinjir a bola com a barra se movimentando afetará o ângulo e a velocidade dela.</string>
+    
+    <!-- especifico level 1 e 4-->
+    <string name="tipLevel8">Não é possível acelerar a bola quando ela chegar na velocidade máxima.</string>
+    
+    <!-- especifico level 2 e 3 -->
+    <string name="tipLevel9">Não é possível desacelerar a bola quando ela chegar na velocidade mínima.</string>
+    
+    
     <string name="tipLevel10">Assim como a velocidade, o ângulo da bola também tem um valor mínimo e máximo em relação à barra.</string>
     <string name="tipLevel11">Ou seja, a bola nunca andará de forma pararela ou perpendicular à barra.</string>
     <string name="tipLevel12">Talvez seja preciso diminuir a velocidade da bola antes de acelerá-la 3 vezes seguidas.</string>
