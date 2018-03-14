@@ -27,11 +27,19 @@ public class LevelGoalsLoader {
 
         switch (levelNumber){
             case 1:
-                possibleTips = new int[]{1, 2, 3, 3, 3, 3, 3, 3, 4, 5, 7};
+                possibleTips = new int[]{5, 5, 5, 7, 8, 8, 8, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4};
                 break;
 
             case 2:
-                possibleTips = new int[]{1, 2, 3, 3, 3, 3, 4, 6, 7};
+                possibleTips = new int[]{6, 6, 6, 7, 9, 9, 9, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4};
+                break;
+                
+            case 3:
+                possibleTips = new int[]{6, 6, 6, 7, 9, 9, 9, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4};
+                break;
+                
+            case 4:
+                possibleTips = new int[]{5, 5, 5, 7, 8, 8, 8, 1, 2, 3, 3, 3, 3, 3, 3, 3, 4};
                 break;
 
             default:
