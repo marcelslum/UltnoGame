@@ -2,21 +2,12 @@ package com.marcelslum.ultnogame;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.media.MediaPlayer;
-import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Vibrator;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.games.Games;
-import com.google.android.gms.games.Player;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -99,7 +90,7 @@ public class Game {
     static Image imageTutorialDown;
     static TextView aboutTextView;
     static TextView notConnectedTextView;
-    static TextView tipTextView;
+    static TextBox tipTextBox;
 
     // quadtree objects
     static Quadtree quad;
@@ -431,6 +422,73 @@ public class Game {
 
     public static void blockAndWaitTouchRelease(){isBlocked = true;}
 
+
+    public static void showTip(){
+
+        if (gameState != GAME_STATE_OBJETIVO_LEVEL) return;
+
+        String tip = LevelGoalsLoader.getLevelTip(SaveGame.saveGame.currentLevelNumber);
+
+        if(!tip.equals("")){
+            tipTextBox = new TextBoxBuilder("tipTextBox")
+                    .position(Game.resolutionX * 0.2f, Game.resolutionY * 0.75f)
+                    .width(Game.resolutionX * 0.55f)
+                    .size(Game.gameAreaResolutionY*0.045f)
+                    .text(tip)
+                    .isHaveFrame(true, new Color(0.7f, 0.7f, 1f, 0.2f))
+                    .isHaveArrowContinue(false)
+                    .setTextColor(Color.azul)
+                    //.addShadow(Color.cinza)
+                    .build();
+
+            if (gameState == GAME_STATE_OBJETIVO_LEVEL) {
+                Sound.play(Sound.soundTextBoxAppear, 0.06f, 0.06f, 0);
+            }
+
+            Animation anim1 = Utils.createAnimation4v(tipTextBox, "translateX", "translateX", 5000,
+                    0f, Game.resolutionX * 2, 0.1f, 0f, 0.85f, 0f, 1f, 0, false, true);
+            anim1.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    Animation a2 = Utils.createAnimation2v(tipTextBox, "translateX2", "translateX", 225,
+                            0f, 0, 1,  -Game.resolutionX*2, false, true);
+                    a2.addAttachedEntities(tipTextBox);
+                    a2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            Animation a3 = Utils.createAnimation2v(tipTextBox, "translateX2", "translateX", 2000,
+                                    0f, -Game.resolutionX*2, 1,  -Game.resolutionX*2, false, true);
+                            a3.addAttachedEntities(tipTextBox);
+                            a3.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationEnd() {
+                                    if (gameState == GAME_STATE_OBJETIVO_LEVEL) {
+                                        Game.showTip();
+                                    }
+
+                                }
+                            });
+                            a3.start();
+                        }
+                    });
+                    a2.start();
+                    if (gameState == GAME_STATE_OBJETIVO_LEVEL) {
+                        Sound.play(Sound.soundTextBoxAppear, 0.03f, 0.03f, 0);
+                    }
+                }
+            });
+            anim1.start();
+        } else {
+            if (tipTextBox != null){
+                tipTextBox.clearDisplay();
+            }
+            tipTextBox = null;
+        }
+
+
+    }
+
+
     public static void setGameState(int state){
         //Log.e("game", "set game state "+state);
         boolean sameState = false;
@@ -472,28 +530,9 @@ public class Game {
             
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
-            
-            String tip = LevelGoalsLoader.getLevelTip(SaveGame.saveGame.currentLevelNumber);
-            
-            
-            if(!tip.equals("")){
-                tipTextView = new TextView("tipTextView", Game.resolutionX * 0.98f,
-                    Game.resolutionY * 0.7f,
-                    Game.resolutionX * 0.94f,
-                    Game.resolutionY * 0.2f,
-                    Game.gameAreaResolutionY*0.035f,
-                    Game.font, Color.azul, Text.TEXT_ALIGN_RIGHT, 0.25f);
-                tipTextView.addText(tip, Color.azul);
-                tipTextView.display();
-            } else {
-                if (tipTextView != null){
-                    tipTextView.clearDisplay();
-                }
-                tipTextView = null;
-                
-            }
-            
-            
+
+
+            showTip();
             
             levelGoalsPanel = new LevelGoalsPanel("levelGoalsPanel", resolutionX * 0.2f, resolutionY * 0.2f, resolutionX * 0.025f, resolutionX * 0.79f);
 
@@ -575,8 +614,8 @@ public class Game {
 
             mainActivity.showAdView();
             
-            if (tipTextView != null){
-                tipTextView.clearDisplay();
+            if (tipTextBox != null){
+                tipTextBox.clearDisplay();
             }
 
             Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
@@ -686,8 +725,8 @@ public class Game {
         } else if (state == GAME_STATE_PREPARAR){
             
             
-            if (tipTextView != null){
-                tipTextView.clearDisplay();
+            if (tipTextBox != null){
+                tipTextBox.clearDisplay();
             }
             
             
@@ -1982,7 +2021,7 @@ public class Game {
 
         if (aboutTextView != null) aboutTextView.checkTransformations(true);
         if (notConnectedTextView != null) notConnectedTextView.checkTransformations(true);
-        if (tipTextView != null) tipTextView.checkTransformations(true);
+        if (tipTextBox != null) tipTextBox.checkTransformations(true);
         
         MessagesHandler.messageGameOver.checkTransformations(true);
         MessagesHandler.messagePreparation.checkTransformations(true);
@@ -2154,6 +2193,7 @@ public class Game {
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.prepareRender(matrixView, matrixProjection);
 
         if (MessagesHandler.messageTime != null) MessagesHandler.messageTime.prepareRender(matrixView, matrixProjection);
+        if (tipTextBox != null) tipTextBox.prepareRender(matrixView, matrixProjection);
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
         if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
         if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
@@ -2179,7 +2219,7 @@ public class Game {
         if (imageTutorialTop != null) imageTutorialTop.prepareRender(matrixView, matrixProjection);
 
         if (notConnectedTextView != null) notConnectedTextView.prepareRender(matrixView, matrixProjection);
-        if (tipTextView != null) tipTextView.prepareRender(matrixView, matrixProjection);
+
 
         if (messages != null) messages.prepareRender(matrixView, matrixProjection);
         if (frame != null)frame.prepareRender(matrixView, matrixProjection);
@@ -2226,7 +2266,7 @@ public class Game {
 
         if (aboutTextView != null) aboutTextView.verifyListener();
         if (notConnectedTextView != null) notConnectedTextView.verifyListener();
-        if (tipTextView != null) tipTextView.verifyListener();
+        if (tipTextBox != null) tipTextBox.verifyListener();
         
         if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.verifyListener();
@@ -2277,7 +2317,7 @@ public class Game {
         list.add(tittle);
         list.add(aboutTextView);
         list.add(notConnectedTextView);
-        list.add(tipTextView);
+        list.add(tipTextBox);
         list.add(MessagesHandler.messageGameOver);
         list.add(MessagesHandler.messagePreparation);
         list.add(MessagesHandler.messageInGame);

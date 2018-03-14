@@ -18,6 +18,10 @@ public class TextBoxBuilder {
     public float arrowX;
     public float arrowY;
     public int frameType;
+    public boolean textShadow;
+    public Color shadowColor;
+    public Color frameColor;
+    public Color textColor;
     public static final int FRAME_TYPE_IMAGE = 0;
     public static final int FRAME_TYPE_SOLID = 1;
 
@@ -26,6 +30,9 @@ public class TextBoxBuilder {
         width = 0f;
         size = 0f;
         text = "";
+        textColor = Color.cinza1;
+        textShadow = false;
+        frameColor = new Color(0.7f, 0.7f, 0.7f, 1.0f);
         x = 0f;
         y = 0f;
         isHaveArrow = false;
@@ -41,6 +48,18 @@ public class TextBoxBuilder {
         this.y = y;
         return this;
     }
+
+    public TextBoxBuilder setTextColor(Color color){
+        this.textColor = color;
+        return this;
+    }
+
+    public TextBoxBuilder addShadow(Color color){
+        this.shadowColor = color;
+        this.textShadow = true;
+        return this;
+    }
+
 
     public TextBoxBuilder size(float size){
         this.size = size;
@@ -76,10 +95,18 @@ public class TextBoxBuilder {
         return this;
     }
 
-    public TextBoxBuilder isHaveFrame(boolean isHaveFrame){
+    public TextBoxBuilder isHaveFrame(boolean isHaveFrame, Color frameColor){
         this.isHaveFrame = isHaveFrame;
+        this.frameColor = frameColor;
         return this;
     }
+
+    public TextBoxBuilder isHaveFrame(boolean isHaveFrame){
+        this.isHaveFrame = isHaveFrame;;
+        return this;
+    }
+
+
 
     public TextBoxBuilder frameType(int frameType){
         this.frameType = frameType;

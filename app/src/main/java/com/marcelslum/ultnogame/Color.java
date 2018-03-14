@@ -7,6 +7,7 @@ public class Color {
 
     static Color transparente = new Color(1f, 1f, 1f, 0f);
     static Color azul = new Color(0f, 0f, 0.7f, 1f);
+    static Color azulClaro = new Color(0.5f, 0.5f, 1f, 1f);
     static Color preto = new Color(0f, 0f, 0f, 1f);
     static Color cinza1 = new Color(0.2f, 0.2f, 0.2f, 1f);
     static Color cinza2 = new Color(0.4f, 0.4f, 0.4f, 1f);

@@ -20,7 +20,6 @@ public class TextBox extends Entity{
     public boolean isHaveMiniArrow = false;
     public boolean isHaveArrowContinue = false;
     public Button arrowContinuar;
-    public Color textColor = new Color(0.1f, 0.1f, 0.1f, 1f);
     public Line arrow;
     public Image miniArrow;
     public float arrowX;
@@ -29,6 +28,7 @@ public class TextBox extends Entity{
     public float frameWidth;
     public int frameType;
     private OnPress onPress;
+    Color frameColor;
 
     public TextBox(TextBoxBuilder builder) {
         super(builder.name, builder.x, builder.y, Entity.TYPE_TEXT_BOX);
@@ -42,10 +42,11 @@ public class TextBox extends Entity{
         arrowY = builder.arrowY;
         texts = new ArrayList<>();
         frameType = builder.frameType;
-        setText(builder.text);
+        frameColor = builder.frameColor;
+        setText(builder.text, builder.textColor, builder.textShadow, builder.shadowColor);
     }
     
-    public void setText(String text){
+    public void setText(String text, Color color, boolean haveShadow, Color shadowColor){
         if (texts != null){
             texts = new ArrayList<>();
         }
@@ -57,7 +58,7 @@ public class TextBox extends Entity{
         float widthToSplit = width * 0.9f;
         if (!isHaveArrowContinue) {widthToSplit = width;}
 
-        texts = Text.splitStringAtMaxWidth(name, text, Game.font, textColor, size, widthToSplit,Text.TEXT_ALIGN_LEFT);
+        texts = Text.splitStringAtMaxWidth(name, text, Game.font, color, size, widthToSplit,Text.TEXT_ALIGN_LEFT);
 
         float textPadding = size * padding;
 
@@ -66,6 +67,11 @@ public class TextBox extends Entity{
         float textX = x + (textPadding * 4);
         for (int i = 0; i < texts.size(); i++){
             texts.get(i).x = textX;
+
+            if (haveShadow){
+                texts.get(i).addShadow(shadowColor);
+            }
+
             addChild(texts.get(i));
         }
 
@@ -80,10 +86,10 @@ public class TextBox extends Entity{
 
         if (isHaveFrame){
             if (frameType == TextBoxBuilder.FRAME_TYPE_IMAGE) {
-                frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
+                frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height * 1.1f, -1, frameColor);
 
             } else if (frameType == TextBoxBuilder.FRAME_TYPE_SOLID) {
-                frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height, -1, new Color(0.7f, 0.7f, 0.7f, 1.0f));
+                frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height * 1.1f, -1, frameColor);
             }
             addChild(frame);
         }
@@ -216,7 +222,7 @@ public class TextBox extends Entity{
             }
         }
         //Log.e("textbox appendArrow", " initialX " + initialX + " initialY " + initialY);
-        arrow = new Line("line", initialX, initialY, arrowX, arrowY, textColor);
+        arrow = new Line("line", initialX, initialY, arrowX, arrowY, Color.cinza1);
         addChild(arrow);
     }
 

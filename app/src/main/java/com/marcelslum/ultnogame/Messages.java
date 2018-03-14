@@ -70,7 +70,7 @@ public class Messages extends Entity {
                 a2.addAttachedEntities(textObject2);
                 a2.start();
 
-                Sound.play(Sound.soundTextBoxAppear, 0.1f, 0.1f, 0);
+                Sound.play(Sound.soundTextBoxAppear, 0.05f, 0.05f, 0);
             }
         });
         anim1.start();

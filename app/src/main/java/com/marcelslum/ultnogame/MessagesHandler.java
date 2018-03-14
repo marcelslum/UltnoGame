@@ -214,7 +214,7 @@ public class MessagesHandler {
                 appearOrDesapear = true;
             }
 
-            bottomTextBox.setText(text);
+            bottomTextBox.setText(text, Color.cinza1, false, null);
             bottomTextBox.display();
             bottomTextBox.setPositionY(Game.resolutionY - bottomTextBox.height);
             bottomTextBox.isBlocked = false;
@@ -224,7 +224,7 @@ public class MessagesHandler {
             if (!previousText.equals("...")){
                 appearOrDesapear = true;
             }
-            bottomTextBox.setText("...");
+            bottomTextBox.setText("...",Color.cinza1, false, null);
             bottomTextBox.isBlocked = true;
             bottomTextBox.setPositionY(Game.resolutionY*2);
             messageMaxScoreTotal.y = Game.resolutionY - (Game.resolutionY * 0.06f);

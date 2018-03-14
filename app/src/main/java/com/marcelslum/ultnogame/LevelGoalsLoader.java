@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -8,40 +10,148 @@ import java.util.ArrayList;
 
 public class LevelGoalsLoader {
 
+
+    private static ArrayList<Integer> tipsViewed;
+    final static String TAG = "LevelGoalsLoader";
     
     public static String getLevelTip(int levelNumber){
+
+
+        if (tipsViewed == null){
+            tipsViewed = new ArrayList<>();
+        }
+
         String tip = "";
-        
-        if (tip == 1){
-            tip = Game.getContext().getResources().getString(R.string.tip) +":\u0020"+ 
-                Game.getContext().getResources().getString(R.string.tipLevel1);
+
+        int[] possibleTips;
+
+        switch (levelNumber){
+            case 1:
+                possibleTips = new int[]{1, 2, 3, 3, 3, 3, 3, 3, 4, 5, 7};
+                break;
+
+            case 2:
+                possibleTips = new int[]{1, 2, 3, 3, 3, 3, 4, 6, 7};
+                break;
+
+            default:
+                possibleTips = new int[]{1, 2, 3, 3, 3, 3, 4, 5, 6, 7};
+                break;
+
         }
-        
-        if (tip == 2){
-            tip = Game.getContext().getResources().getString(R.string.tip) +":\u0020"+ 
-                Game.getContext().getResources().getString(R.string.tipLevel2);
+
+        double random = (double)Utils.getRandonFloat(0f, ((float)possibleTips.length)-0.0001f);
+        int tipNumber = (int) Math.floor(random);
+        //Log.e(TAG, "random "+ random);
+        //Log.e(TAG, "tipNumber "+ tipNumber);
+
+        boolean newTip = false;
+        int count = 0;
+
+        boolean allTipsViwed = true;
+
+        for (int i = 0; i < possibleTips.length; i++) {
+            boolean viwed = false;
+            for (int j = 0; j < tipsViewed.size(); j++) {
+                if (tipsViewed.get(j) == possibleTips[i]){
+                    viwed = true;
+                    break;
+                }
+            }
+
+            if (viwed == false){
+                allTipsViwed = false;
+            }
         }
-        
-        if (tip == 3){
-            tip = Game.getContext().getResources().getString(R.string.tip) +":\u0020"+ 
-                Game.getContext().getResources().getString(R.string.tipLevel3);
+
+        //Log.e(TAG, "allTipsViwed "+ allTipsViwed);
+
+        if (allTipsViwed){
+            for (int i = tipsViewed.size() - 1; i >= 0; i--) {
+                for (int j = 0; j < possibleTips.length; j++) {
+                    if (possibleTips[j] == tipsViewed.get(i)){
+                        tipsViewed.remove(i);
+                        break;
+                    }
+                }
+            }
         }
-        
-        if (tip == 4){
-            tip = Game.getContext().getResources().getString(R.string.tip) +":\u0020"+ 
-                Game.getContext().getResources().getString(R.string.tipLevel4);
+
+        //Log.e(TAG, "tipsViewed.size "+ tipsViewed.size());
+
+        do{
+            if (count > possibleTips.length){
+                tipsViewed.clear();
+            }
+
+            boolean tipViewed = false;
+
+            for (int i = 0; i < tipsViewed.size(); i++) {
+                if(tipsViewed.get(i) == possibleTips[tipNumber]){
+                    random = (double)Utils.getRandonFloat(0f, ((float)possibleTips.length)-0.0001f);
+                    tipNumber = (int) Math.floor(random);
+                    //Log.e(TAG, "fazendo nova tentativa ");
+                    //Log.e(TAG, "random "+ random);
+                    //Log.e(TAG, "tipNumber "+ tipNumber);
+                    tipViewed = true;
+                    break;
+                }
+            }
+
+            if (!tipViewed){
+                newTip = true;
+            }
+
+            count += 1;
+            if (count > 100){
+                newTip = true;
+            }
+        } while (!newTip);
+
+        //Log.e(TAG, "tipChoose "+ possibleTips[tipNumber]);
+
+        tipsViewed.add(possibleTips[tipNumber]);
+
+
+        String text = "tipsViwed: ";
+        for (int i = 0; i < tipsViewed.size(); i++) {
+            text += tipsViewed.get(i).toString() + ", ";
         }
-        
-        if (tip == 9){
-            tip = Game.getContext().getResources().getString(R.string.tip) +":\u0020"+ 
-                Game.getContext().getResources().getString(R.string.tipLevel9);
+
+        Log.e(TAG, text);
+
+
+
+        switch (possibleTips[tipNumber]){
+            case 1:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel1);
+                break;
+            case 2:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel2);
+                break;
+            case 3:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel3);
+                break;
+            case 4:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel4);
+                break;
+            case 5:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel5);
+                break;
+            case 6:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel6);
+                break;
+            case 7:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel7);
+                break;
+            case 8:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel8);
+                break;
+            case 9:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel9);
+                break;
         }
-        
-        if (tip == 10){
-            tip = Game.getContext().getResources().getString(R.string.tip) +":\u0020"+ 
-                Game.getContext().getResources().getString(R.string.tipLevel10);
-        }
-        
+        return tip;
     }
     
     
@@ -59,7 +169,7 @@ public class LevelGoalsLoader {
             //lg.add(new LevelGoal(5, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(3, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_N_TIMES, 4));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 2
@@ -67,7 +177,7 @@ public class LevelGoalsLoader {
             //lg.add(new LevelGoal(5, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(3, LevelGoal.DECELERATE_N_TIMES, 4));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 3
@@ -75,7 +185,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.DECELERATE_N_TIMES, 5));
             lg.add(new LevelGoal(2, LevelGoal.DECELERATE_MINIMUN, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 4
@@ -83,21 +193,21 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_N_TIMES, 5));
             lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_MAXIMUN, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 5
         if (levelNumber == ln) {
             lg.add(new LevelGoal(2, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(3, LevelGoal.DECREASE_ANGLE_N_TIMES, 4));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 6
         if (levelNumber == ln) {
             lg.add(new LevelGoal(2, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(3, LevelGoal.INCREASE_ANGLE_N_TIMES, 4));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 7
@@ -105,7 +215,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(1, LevelGoal.INCREASE_ANGLE_N_TIMES, 5));
             lg.add(new LevelGoal(3, LevelGoal.REACH_MAXIMUN_ANGLE, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 8
@@ -113,35 +223,35 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(1, LevelGoal.DECREASE_ANGLE_N_TIMES, 5));
             lg.add(new LevelGoal(3, LevelGoal.REACH_MINIMUN_ANGLE, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 9
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(4, LevelGoal.CHANGE_BALL_SPEED_N_TIMES_IN_A_ROW, 6));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 10
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(4, LevelGoal.CHANGE_BALL_SPEED_N_TIMES_IN_A_ROW, 10));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 11
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(4, LevelGoal.ACCELERATE_N_TIMES_IN_A_ROW, 3));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 12
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(4, LevelGoal.DECELERATE_N_TIMES_IN_A_ROW, 3));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 13
@@ -149,7 +259,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.CHANGE_BALL_SPEED_N_TIMES_IN_A_ROW, 8));
             lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_MAXIMUN, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 14
@@ -157,7 +267,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.CHANGE_BALL_SPEED_N_TIMES_IN_A_ROW, 12));
             lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_MAXIMUN, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 15
@@ -165,7 +275,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.INCREASE_ANGLE_N_TIMES, 6));
             lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_MAXIMUN, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 16
@@ -173,7 +283,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.DECREASE_ANGLE_N_TIMES, 6));
             lg.add(new LevelGoal(2, LevelGoal.DECELERATE_MINIMUN, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 17
@@ -181,7 +291,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.HIT_OBSTACLE_N_TIMES, 12));
             lg.add(new LevelGoal(2, LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES, 6));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 18
@@ -189,7 +299,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.HIT_OBSTACLE_N_TIMES, 20));
             lg.add(new LevelGoal(2, LevelGoal.DECREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES, 6));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 19
@@ -197,7 +307,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.HIT_OBSTACLE_N_TIMES, 12));
             lg.add(new LevelGoal(2, LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES, 8));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 20
@@ -205,7 +315,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.HIT_OBSTACLE_N_TIMES, 25));
             lg.add(new LevelGoal(2, LevelGoal.DECREASE_ANGLE_ONLY_WITH_BAR_MOVEMENT_N_TIMES, 8));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 21
@@ -213,7 +323,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(1, LevelGoal.HIT_OBSTACLE_N_TIMES, 20));
             lg.add(new LevelGoal(3, LevelGoal.FINISH_LEVEL_WITHOUT_CHANGE_SPEED, 0));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 22
@@ -221,7 +331,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(1, LevelGoal.DECELERATE_MINIMUN, 0));
             lg.add(new LevelGoal(3, LevelGoal.DECREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES, 10));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 23
@@ -229,7 +339,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(1, LevelGoal.ACCELERATE_MAXIMUN, 0));
             lg.add(new LevelGoal(3, LevelGoal.INCREASE_ANGLE_WITH_BAR_MOVEMENT_AND_INCLINATION_N_TIMES, 10));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 24
@@ -237,7 +347,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.DECELERATE_MINIMUN, 0));
             lg.add(new LevelGoal(2, LevelGoal.PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS, 6));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 25
@@ -245,7 +355,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_MAXIMUN, 0));
             lg.add(new LevelGoal(2, LevelGoal.PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS, 4));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 26
@@ -253,7 +363,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.PREVENT_LEFT_BORDER_TOUCH, 0));
             lg.add(new LevelGoal(2, LevelGoal.PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS, 4));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 27
@@ -261,7 +371,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.PREVENT_LEFT_BORDER_TOUCH, 0));
             lg.add(new LevelGoal(2, LevelGoal.PREVENT_BAR_MOVE_BY_WIND_FOR_MORE_THAN_N_SECONDS, 3));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 28
@@ -270,7 +380,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.DECELERATE_MINIMUN, 0));
             lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 120));
             lg.add(new LevelGoal(1, LevelGoal.DECREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES, 5));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 29
@@ -279,7 +389,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.DECELERATE_MINIMUN, 0));
             lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 120));
             lg.add(new LevelGoal(1, LevelGoal.INCREASE_ANGLE_ONLY_WITH_BAR_INCLINATION_N_TIMES, 5));
-            return;
+            return lg;
         }
 
         ln += 1; // ---------- LEVEL 30
@@ -287,7 +397,7 @@ public class LevelGoalsLoader {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
             lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 200));
             lg.add(new LevelGoal(2, LevelGoal.PREVENT_LEFT_BORDER_TOUCH, 0));
-            return;
+            return lg;
             
         }
 
