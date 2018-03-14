@@ -23,10 +23,12 @@ public class LevelGoalsLoader {
 
         String tip = "";
 
+        ArrayList<Integer> possibleTipsList = new ArrayList(){};
         int[] possibleTips;
 
         switch (levelNumber){
             case 1:
+                possible
                 possibleTips = new int[]{5,5,5,7,8,8,8,1,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,28};
                 break;
 
@@ -43,26 +45,63 @@ public class LevelGoalsLoader {
                 break;
                            
             case 5:
-                possibleTips = new int[]{1,2,3,4,10,11,12,13,14,15,16,17,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,22,23,24,25,26,27,28};
+                possibleTips = new int[]{1,2,3,4,10,11,12,13,14,15,16,17,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,18,19,22,23,24,25,26,27,28,29};
                 break;
                 
             case 6:
-                possibleTips = new int[]{1,2,3,4,10,11,12,13,14,15,16,17,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,22,23,24,25,26,27,28};
+                possibleTips = new int[]{1,2,3,4,10,11,12,13,14,15,16,17,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,20,21,22,23,24,25,26,27,28,29};
                 break;
                 
             case 7:
-                possibleTips = new int[]{1,2,3,4,10,11,12,13,14,15,16,17,20,21,20,21,22,23,24,25,26,27,28};
+                possibleTips = new int[]{1,2,3,4,10,11,12,13,14,15,16,17,20,21,20,21,22,23,24,25,26,27,28,29};
                 break;
                 
             case 8:
-                possibleTips = new int[]{1,2,3,4,10,11,12,13,14,15,16,17,18,19,18,19,22,23,24,25,26,27,28};
+                possibleTips = new int[]{1,2,3,4,10,11,12,13,14,15,16,17,18,19,18,19,22,23,24,25,26,27,28,29};
                 break;
-
+                
             default:
-                possibleTips = new int[]{1,2,3,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
+                possibleTips = new int[]{1,2,3,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29};
                 break;
-
         }
+        
+        for (int i = 0; i < possibleTips.length; i++){
+               possibleTips.add(possibleTips[i]);
+        }
+        
+        
+        if (levelNumber >= 9){
+            possibleTips.add(30);
+            possibleTips.add(31);
+            possibleTips.add(32);
+        }
+        
+        if (levelNumber >= 9){// TODO bolas invencíveis
+            possibleTips.add(33);
+        }
+        
+        if (levelNumber >= 9){// TODO comida
+            possibleTips.add(34);
+        }
+        
+        if (levelNumber >= 9){// TODO falsidade
+            possibleTips.add(35);
+            possibleTips.add(36);
+        }
+        
+        if (levelNumber >= 9){// TODO espelho
+            possibleTips.add(37);
+        }
+        
+        if (levelNumber >= 9){// TODO divisão
+            possibleTips.add(38);
+        }
+        
+        if (levelNumber >= 9){// TODO liberdade
+            possibleTips.add(39);
+        }
+        
+        
 
         double random = (double)Utils.getRandonFloat(0f, ((float)possibleTips.length)-0.0001f);
         int tipNumber = (int) Math.floor(random);
