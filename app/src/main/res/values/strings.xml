@@ -55,26 +55,50 @@
     <string name="group19name">Rapidez</string>
     <string name="group20name">Mistura</string>
     
+    <!-- geral -->
     <string name="tipLevel1">Para pausar, aperte em qualquer lugar da tela de jogo.</string>
     <string name="tipLevel2">No menu de opções, você pode desligar e ligar a música, os sons de efeitos e a vibração.</string>
     <string name="tipLevel3">Se o jogo estiver muito fácil ou difícil, experimente alterar a velocidade da bola no menu opções.</string>
     <string name="tipLevel4">O menu opções pode ser acessado na tela principal do jogo ou no menu de pausa.</string>
     
+    
     <!-- especifico level 1 e 4-->
-    <string name="tipLevel5">Para acelerar a bola, atinja-a com a barra se movimentando na direção contrária.</string>
-    
+    <string name="tipLevel5">Para acelerar a bola, atinja-a com a barra se movimentando no sentido contrário.</string>
     <!-- especifico level 2 e 3-->
-    <string name="tipLevel6">Para desacelerar a bola, atinja-a com a barra se movimentando na direção contrária.</string>
-    
+    <string name="tipLevel6">Para desacelerar a bola, atinja-a com a barra se movimentando no sentido contrário.</string>
     <!-- especifico level 1, 2, 3 e 4 -->
-    <string name="tipLevel7">Atinjir a bola com a barra se movimentando afetará o ângulo e a velocidade dela.</string>
-    
+    <string name="tipLevel7">Atingir a bola com a barra se movimentando afetará o ângulo e a velocidade dela.</string>
     <!-- especifico level 1 e 4-->
     <string name="tipLevel8">Não é possível acelerar a bola quando ela chegar na velocidade máxima.</string>
-    
     <!-- especifico level 2 e 3 -->
     <string name="tipLevel9">Não é possível desacelerar a bola quando ela chegar na velocidade mínima.</string>
     
+    <!-- geral -->
+    <string name="tipLevel10">As estrelas são contabilizadas somente ao concluir um nível.</string>
+    <string name="tipLevel11">Ao finalizar o nível, a pontuação sofre um acréscimento dependendo dos objetivos cumpridos.</string>
+    <string name="tipLevel12">Os pontos serão acumulados mesmo quando o nível não for finalizado, porém com uma penalização de 50%.</string>
+    <string name="tipLevel13">Cumpra os objetos para coletar estrelas e desbloquear novos níveis.</string>
+    <string name="tipLevel14">Se você não cumprir todos os objetivos, tente jogar novamente o nível para melhorar sua marca.</string>
+    <string name="tipLevel15">As estrelas e pontos já conquistados não serão perdidos ao jogar novamente um nível.</string>
+    <string name="tipLevel16">Durante o jogo, a pontuação vai caindo com o passar do tempo. Tente não demorar para finalizar o nível.</string>
+    <string name="tipLevel17">O painel localizado na parte inferior central mostra a situação da velocidade e do ângulo da bola.</string>
+    
+    
+    <!-- especifico level 5 e 8 -->
+    <string name="tipLevel18">É possível diminuir o ângulo da bola atingindo-a com a barra se movimentando no sentido contrário.</string>    
+    <string name="tipLevel19">Não é possível diminuir o ângulo da bola se ele chegar no seu valor mínimo.</string>
+    
+    <!-- especifico level 6 e 7 -->
+    <string name="tipLevel20">Para aumentar o ângulo da bola, atinja-a com a barra se movimentando no mesmo sentido contrária.</string>
+    <string name="tipLevel21">Não é possível aumentar o ângulo da bola se ele chegar no seu valor máximo.</string>
+    
+    <!-- especifico level 5 a 8 -->
+    <string name="tipLevel22">É possível inclinar a barra dando um leve tranco no celular para a esquerda ou direita.</string>
+    <string name="tipLevel23">Dê um tranco no celular para a esquerda para a barra se inclinar para a direita.</string>
+    <string name="tipLevel24">Dê um trancono celular para a direita para a barra se inclinar para a esquerda.</string>
+    <string name="tipLevel25">Atingir a bola com a barra inclinada alterará o ângulo/direção da bola.</string>
+    <string name="tipLevel26">Se a barra se inclinar a favor da bola, o ângulo dela aumentará.</string>
+    <string name="tipLevel27">Se a barra se inclinar na direção contrária à bola, o ângulo dela diminuirá.</string>
     
     <string name="tipLevel10">Assim como a velocidade, o ângulo da bola também tem um valor mínimo e máximo em relação à barra.</string>
     <string name="tipLevel11">Ou seja, a bola nunca andará de forma pararela ou perpendicular à barra.</string>
@@ -110,14 +134,14 @@
     <string name="t2t6">Se o jogo estiver muito difícil ou fácil, é possível alterar a velocidade da bola no menu de opções.</string>
 
     <string name="t3t1">Através do controle do movimento da barra, é possível alterar a direção e a velocidade da bola.</string>
-    <string name="t3t2">Ao atingir a bola com a barra se movimentando na direção contrária, a velocidade da bola aumentará</string>
+    <string name="t3t2">Ao atingir a bola com a barra se movimentando no sentido contrário, a velocidade da bola aumentará</string>
     <string name="t3t3">Já o ângulo da bola em relação à barra será reduzido.</string>
     <string name="t3t4">O que ocorre com a velocidade e o ângulo da bola pode ser acompanhado por este painel </string>
     <string name="t3t5">A barra verde representa a velocidade da bola, que, nesse caso, esta aumentando.</string>
     <string name="t3t6">A barra azul, por sua vez, representa o ângulo, que, nesse caso, está diminuindo.</string>
     <string name="t3t7">A velocidade e o ângulo possuem valores máximos e mínimos.</string>
     <string name="t3t8">Vejamos agora o que ocorre na situação contrária.</string>
-    <string name="t3t9">Desta vez, a bola e a barra estão se movimentando na mesma direção.</string>
+    <string name="t3t9">Desta vez, a bola e a barra estão se movimentando no mesmo sentido.</string>
     <string name="t3t10">Isso faz com que a velocidade da bola diminua.</string>
     <string name="t3t11">E o ângulo em relação à barra aumente.</string>
     <string name="t3t12">Observe também que o movimento da barra não é linear, pois ela acelera quando se movimenta por mais tempo.</string>
@@ -131,8 +155,8 @@
     <string name="t4t4">Se o movimento for feito para a esquerda, a barra se inclinará para a direita.</string>
     <string name="t4t5">Se o movimento for dado para a direita, a inclinação será para a esquerda.</string>
     <string name="t4t6">Executar esse movimento ao atingir a bola com a barra fará com que o ângulo da bola se altere.</string>
-    <string name="t4t7">Se a inclinação ocorrer na mesma direção do movimento da bola, o ângulo diminuirá.</string>
-    <string name="t4t8">Se a inclinação ocorrer na direção contrária ao movimento da bola, o ângulo aumentará.</string>
+    <string name="t4t7">Se a inclinação ocorrer no mesmo sentido do movimento da bola, o ângulo diminuirá.</string>
+    <string name="t4t8">Se a inclinação ocorrer no sentido contrário ao movimento da bola, o ângulo aumentará.</string>
     <string name="t4t9">É possível combinar a inclinação com o movimento da barra.</string>
     <string name="t4t10">Por exemplo, na situação acima, o ângulo da bola está diminuindo em razão de a barra estar se movimentando na direção contrária.</string>
     <string name="t4t11">Mas o ângulo também sofre influência da inclinação da barra, o que faz que com ele seja ainda mais diminuido.</string>
@@ -146,7 +170,7 @@
     
     <string name="t7t1">A partir de agora o jogo ficará mais complexo.</string>
     <string name="t7t2">Haverá, nos próximos níveis, alvos de cor vermelha.</string>
-    <string name="t7t3">A bola que atinjir este alvo explodirá, dando origem a quatro novas bolas.</string>
+    <string name="t7t3">A bola que atingir este alvo explodirá, dando origem a quatro novas bolas.</string>
     <string name="t7t4">NÃO é necessário manter todas as quatro bolas vivas.</string>
     <string name="t7t5">Por enquanto, somente uma delas deve ser mantida viva.</string>
     <string name="t7t6">A quantidade de bolas a serem salvas e que podem ser perdidas é representada no painel.</string>
@@ -195,7 +219,7 @@
     <string name="t15t6">A bola falsa não é contabilizada no painel.</string>
     <string name="t15t7">Assim que identificada, é recomendável que você deixe a bola falsa morrer, para não mais atrapalhá-lo.</string>
     
-    <string name="t16t1">Observe a direção das flechas dos botões.</string>
+    <string name="t16t1">Observe o sentido das flechas dos botões.</string>
     <string name="t16t2">Em alguns casos, os botões poderão estar invertidos. Inverta também seu cérebro!</string>
     
     <string name="t17t1">O desafio agora é controlar duas barras ao mesmo tempo.</string>
@@ -299,7 +323,7 @@
     
     <string name="levelGoal34a">Não atinja bolas falsas com a barra por mais de</string>
     <string name="levelGoal34b">vezes</string>
-    <string name="levelGoal34m">Bolas falsas atinjidas :/</string>
+    <string name="levelGoal34m">Bolas falsas atingidas :/</string>
     <string name="levelGoal34m2">Faltam</string>
     <string name="levelGoal34m3">bolas falsas</string>
 
