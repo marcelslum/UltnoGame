@@ -149,6 +149,15 @@ public class Level {
             }
         });
         Game.addInteracionListener(gameAreaInteractionListener);
+        
+        float percentageOfVelocity = (float) SaveGame.saveGame.ballVelocity / 100f;
+        if (percentageOfVelocity != 1f){
+            if (percentageOfVelocity < 1f){
+                percentageOfVelocity = 1f - ((1f - percentageOfVelocity)/2f);   
+            } else if (percentageOfVelocity > 1f){
+                percentageOfVelocity = 1f + ((percentageOfVelocity - 1f)/2f);   
+            }
+        }
 
         for (int i = 0; i < barDataBaseData.size(); i++){
 
@@ -165,7 +174,9 @@ public class Level {
 
             bar.initialX = barX;
             bar.initialY = barY;
-            bar.initialDVX = barVelocityX;
+            bar.initialNormalDVX = barVelocityX;
+            bar.initialDVX = initialNormalDVX * percentageOfVelocity;
+            
             bar.dvx = barVelocityX;
             if (barsScaleVariationData != null) {
                 bar.setScaleVariation(barsScaleVariationData[i]);
