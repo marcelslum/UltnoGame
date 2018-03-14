@@ -100,14 +100,43 @@
     <string name="tipLevel26">Se a barra se inclinar a favor da bola, o ângulo dela aumentará.</string>
     <string name="tipLevel27">Se a barra se inclinar na direção contrária à bola, o ângulo dela diminuirá.</string>
     
-    
     <!-- geral -->
     
     <string name="tipLevel28">Alterar a velocidade da bola no menu de opções também alterará um pouco a velocidade da barra.</string>
+    <string name="tipLevel29">Por conta dos limites mínimos e máximos do ângulo, a bola nunca chegará ficar pararela ou perpendicular à barra.</string>
     
-    <string name="tipLevel10">Assim como a velocidade, o ângulo da bola também tem um valor mínimo e máximo em relação à barra.</string>
-    <string name="tipLevel11">Ou seja, a bola nunca andará de forma pararela ou perpendicular à barra.</string>
-    <string name="tipLevel12">Talvez seja preciso diminuir a velocidade da bola antes de acelerá-la 3 vezes seguidas.</string>
+    <!-- level 9 em diante -->
+    <string name="tipLevel30">A quantidade de bolas que precisam ficar vivas aparece no painel inferior, acima da pontuação (bolas pretas).</string>
+    <string name="tipLevel31">A quantidade de bolas extras aparece no painel inferior, acima da pontuação (bolas azuis).</string>
+    <string name="tipLevel32">Tente manter vivas as bolas extraspara aumentar sua pontuação e destruir os alvos mais rapidamente.</string>
+    
+    <!-- bolas invencíveis em diante -->
+    <string name="tipLevel33">As bolas invencíveis podem ajudar, mas também podem atrapalhar.</string>
+    
+    <!-- comida -->
+    <string name="tipLevel34">Nos níveis em que a barra diminui aos poucos, tente coletar o maior número de bolas especiais.</string>
+    
+    <!-- falsidade -->
+    <string name="tipLevel35">As bolas falsas não destroem alvos, nem podem ser utilizadas para cumprir objetivos.</string>
+    <string name="tipLevel36">Tente, o mais rápido possível, identificar e perder de propósito as bolas falsas.</string>
+    
+    <!-- espelho -->
+    <string name="tipLevel37">Os botões invertidos certamente darão um nó em seu cérebro.</string>
+    
+    <!-- divisão -->
+    <string name="tipLevel38">Controlar duas barras ao mesmo tempo exige um nível maior de habilidade.</string>
+    
+    <!-- liberdade -->
+    <string name="tipLevel39">Salvar duas bolas ao mesmo tempo é uma das tarefas mais difíceis do jogo.</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
     <string name="t1t1">Bem vindo ao Ultno! Clique na flecha à direita para continuar a ver o tutorial.</string>
