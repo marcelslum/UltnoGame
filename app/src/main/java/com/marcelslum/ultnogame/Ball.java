@@ -1252,23 +1252,44 @@ public class Ball extends Circle{
             float volumeE = 0.5f;
 
 
-            if (soundX < 0.5f) {
-                volumeE = (0.5f + (0.5f - soundX));
-                volumeD = (0.5f - (0.5f - soundX));
-            }
-            if (soundX > 0.5f) {
-                volumeD = (0.5f + (soundX - 0.5f));
-                volumeE = (0.5f - (soundX - 0.5f));
-            }
-
+            if (soundX < 0.1f){
+                volumeE = 1f;
+                volumeD = 0.55f;
+            } else if (soundX >= 0.1f && soundX < 0.2f){
+                volumeE = 0.95f;
+                volumeD = 0.6f;
+            } else if (soundX >= 0.2f && soundX < 0.3f){
+                volumeE = 0.9f;
+                volumeD = 0.65f;
+            } else if (soundX >= 0.3f && soundX < 0.4f){
+                volumeE = 0.85f;
+                volumeD = 0.7f;
+            } else if (soundX >= 0.4f && soundX < 0.5f){
+                volumeE = 0.8f;
+                volumeD = 0.75f;
+            } else if (soundX >= 0.5f && soundX < 0.6f){
+                volumeE = 0.75f;
+                volumeD = 0.8f;
+            } else if (soundX >= 0.6f && soundX < 0.7f){
+                volumeE = 0.7f;
+                volumeD = 0.85f;
+            } else if (soundX >= 0.7f && soundX < 0.8f){
+                volumeE = 0.65f;
+                volumeD = 0.9f;
+            } else if (soundX >= 0.8f && soundX < 0.9f){
+                volumeE = 0.6f;
+                volumeD = 0.95f;
+            } else if (soundX >= 0.9f && soundX <= 1f){
+                volumeE = 0.55f;
+                volumeD = 0.1f;
+            } 
+            
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
             Sound.play(Sound.soundBallHit, volumeE, volumeD, 0);
 
             if (targetHitted){
                 Game.vibrate(Game.VIBRATE_TARGET);
-            }
-
-            if (collisionBar){
+            } else if (collisionBar){
                 Game.vibrate(Game.VIBRATE_BAR);
             } else {
                 Game.vibrate(Game.VIBRATE_SMALL);
