@@ -100,6 +100,11 @@
     <string name="tipLevel26">Se a barra se inclinar a favor da bola, o ângulo dela aumentará.</string>
     <string name="tipLevel27">Se a barra se inclinar na direção contrária à bola, o ângulo dela diminuirá.</string>
     
+    
+    <!-- geral -->
+    
+    <string name="tipLevel28">Alterar a velocidade da bola no menu de opções também alterará um pouco a velocidade da barra.</string>
+    
     <string name="tipLevel10">Assim como a velocidade, o ângulo da bola também tem um valor mínimo e máximo em relação à barra.</string>
     <string name="tipLevel11">Ou seja, a bola nunca andará de forma pararela ou perpendicular à barra.</string>
     <string name="tipLevel12">Talvez seja preciso diminuir a velocidade da bola antes de acelerá-la 3 vezes seguidas.</string>
@@ -154,12 +159,12 @@
     <string name="t4t3">O movimento deve ser feito como você fosse dar um tranco.</string>
     <string name="t4t4">Se o movimento for feito para a esquerda, a barra se inclinará para a direita.</string>
     <string name="t4t5">Se o movimento for dado para a direita, a inclinação será para a esquerda.</string>
-    <string name="t4t6">Executar esse movimento ao atingir a bola com a barra fará com que o ângulo da bola se altere.</string>
-    <string name="t4t7">Se a inclinação ocorrer no mesmo sentido do movimento da bola, o ângulo diminuirá.</string>
-    <string name="t4t8">Se a inclinação ocorrer no sentido contrário ao movimento da bola, o ângulo aumentará.</string>
+    <string name="t4t6">Executar esse movimento ao atingir a bola fará com que o ângulo da bola se altere levemente.</string>
+    <string name="t4t7">Se a inclinação ocorrer no mesmo sentido do movimento da bola, o ângulo diminuirá levemente.</string>
+    <string name="t4t8">Se a inclinação ocorrer no sentido contrário ao movimento da bola, o ângulo aumentará levemente.</string>
     <string name="t4t9">É possível combinar a inclinação com o movimento da barra.</string>
     <string name="t4t10">Por exemplo, na situação acima, o ângulo da bola está diminuindo em razão de a barra estar se movimentando na direção contrária.</string>
-    <string name="t4t11">Mas o ângulo também sofre influência da inclinação da barra, o que faz que com ele seja ainda mais diminuido.</string>
+    <string name="t4t11">Mas o ângulo também sofre influência da inclinação da barra, o que faz que com a diminuição seja um pouco mais acentuada.</string>
 
     
     <string name="t5t1">A partir de agora, os níveis poderão ter obstáculos indestrutíveis.</string>
