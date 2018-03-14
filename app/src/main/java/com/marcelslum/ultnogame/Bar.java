@@ -16,6 +16,9 @@ public class Bar extends Rectangle{
 
     boolean leftPress = false;
     boolean rightPress = false;
+    
+    public float initialNormalDVX;
+    public float initialNormalDVY;
 
     public int textureColorId = COLOR_BLACK;
 
@@ -36,6 +39,21 @@ public class Bar extends Rectangle{
     Image shine;
     Animation shineDecreaseAfterAccelerate;
     Animation shineAfterBallCollision;
+    
+    
+     public void updateBaseVelocity(int newVelocity){ 
+        float percentageOfVelocity = (float) SaveGame.saveGame.ballVelocity / 100f;
+        if (percentageOfVelocity != 1f){
+            if (percentageOfVelocity < 1f){
+                percentageOfVelocity = 1f - ((1f - percentageOfVelocity)/2f);   
+            } else if (percentageOfVelocity > 1f){
+                percentageOfVelocity = 1f + ((percentageOfVelocity - 1f)/2f);   
+            }
+        }
+        initialDVX = initialNormalDVX * percentageOfVelocity;
+    }
+    
+
 
     public void setBarColor(int textureColorId){
         this.textureColorId = textureColorId;
