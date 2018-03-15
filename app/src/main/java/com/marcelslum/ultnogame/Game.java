@@ -1661,8 +1661,7 @@ public class Game {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
                     //Log.e(TAG, "verificando explosão da bola "+i);
-                    if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode
-                            && balls.get(i).y < gameAreaResolutionY * 0.8f) {
+                    if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode) {
 
                         balls.get(i).radius *= 4;
                         ArrayList<PhysicalObject> ball = new ArrayList<>();
