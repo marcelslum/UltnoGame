@@ -7,6 +7,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import android.media.AudioManager;
 import android.os.Vibrator;
 
 import static android.content.Context.ACTIVITY_SERVICE;
@@ -18,8 +20,8 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class Game {
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
-    public static boolean ganharComMetadeDasBolas = false;
-    public static boolean sempreGanharTodasEstrelas = false;
+    public static boolean ganharComMetadeDasBolas = true;
+    public static boolean sempreGanharTodasEstrelas = true;
     public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
@@ -245,6 +247,8 @@ public class Game {
             Texture.textures.clear();
         }
 
+        //getContext().getSystemService(Context.AUDIO_SERVICE).getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE)
+
         Texture.clear();
         Texture.textures.add(new Texture(Texture.TEXTURES, "drawable/textures1"));
         Texture.init();
@@ -456,7 +460,7 @@ public class Game {
                     a2.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
-                            Animation a3 = Utils.createAnimation2v(tipTextBox, "translateX2", "translateX", 2000,
+                            Animation a3 = Utils.createAnimation2v(tipTextBox, "translateX2", "translateX", 1200,
                                     0f, -Game.resolutionX*2, 1,  -Game.resolutionX*2, false, true);
                             a3.addAttachedEntities(tipTextBox);
                             a3.setAnimationListener(new Animation.AnimationListener() {

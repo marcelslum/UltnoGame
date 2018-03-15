@@ -175,7 +175,7 @@ public class Level {
             bar.initialX = barX;
             bar.initialY = barY;
             bar.initialNormalDVX = barVelocityX;
-            bar.initialDVX = initialNormalDVX * percentageOfVelocity;
+            bar.initialDVX = bar.initialNormalDVX * percentageOfVelocity;
             
             bar.dvx = barVelocityX;
             if (barsScaleVariationData != null) {

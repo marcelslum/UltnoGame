@@ -83,6 +83,12 @@ public abstract class Sound {
         soundDuplicateBall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.duplicateball, 1);
     }
 
+
+
+    static int ballHitStreamId;
+
+
+
     public static int play(int id, float left, float right, int loop){
 
         // todo carregar save game no splash para ativar a opção de vibrar no menu
@@ -90,15 +96,20 @@ public abstract class Sound {
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
             if (soundPool != null) {
                 //Log.e(TAG, "Tocando o som " + id + "volume " + left + " ; "+ right);
-                return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
+
+                if (id == soundBallHit){
+                    //soundPool.stop(ballHitStreamId);
+                    ballHitStreamId = soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
+                    return ballHitStreamId;
+                } else {
+                    return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
+                }
             } else {
-
-                //Log.e(TAG, "Não tocando o som. SoundPool nulo.");
-
+                Log.e(TAG, "Não tocando o som. SoundPool nulo.");
                 return -1;
             }
         } else {
-            //Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
+            Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
             return -1;
         }
     }

@@ -23,12 +23,11 @@ public class LevelGoalsLoader {
 
         String tip = "";
 
-        ArrayList<Integer> possibleTipsList = new ArrayList(){};
+        ArrayList<Integer> possibleTipsList = new ArrayList<>();
         int[] possibleTips;
 
         switch (levelNumber){
             case 1:
-                possible
                 possibleTips = new int[]{5,5,5,7,8,8,8,1,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,28};
                 break;
 
@@ -66,57 +65,51 @@ public class LevelGoalsLoader {
         }
         
         for (int i = 0; i < possibleTips.length; i++){
-               possibleTips.add(possibleTips[i]);
+            possibleTipsList.add(possibleTips[i]);
         }
         
         
         if (levelNumber >= 9){
-            possibleTips.add(30);
-            possibleTips.add(31);
-            possibleTips.add(32);
+            possibleTipsList.add(30);
+            possibleTipsList.add(31);
+            possibleTipsList.add(32);
         }
         
         if (levelNumber >= 9){// TODO bolas invencíveis
-            possibleTips.add(33);
+            possibleTipsList.add(33);
         }
         
         if (levelNumber >= 9){// TODO comida
-            possibleTips.add(34);
+            possibleTipsList.add(34);
         }
         
         if (levelNumber >= 9){// TODO falsidade
-            possibleTips.add(35);
-            possibleTips.add(36);
+            possibleTipsList.add(35);
+            possibleTipsList.add(36);
         }
         
         if (levelNumber >= 9){// TODO espelho
-            possibleTips.add(37);
+            possibleTipsList.add(37);
         }
         
         if (levelNumber >= 9){// TODO divisão
-            possibleTips.add(38);
+            possibleTipsList.add(38);
         }
         
         if (levelNumber >= 9){// TODO liberdade
-            possibleTips.add(39);
+            possibleTipsList.add(39);
         }
         
-        
-
-        double random = (double)Utils.getRandonFloat(0f, ((float)possibleTips.length)-0.0001f);
-        int tipNumber = (int) Math.floor(random);
-        //Log.e(TAG, "random "+ random);
-        //Log.e(TAG, "tipNumber "+ tipNumber);
 
         boolean newTip = false;
         int count = 0;
 
         boolean allTipsViwed = true;
 
-        for (int i = 0; i < possibleTips.length; i++) {
+        for (int i = 0; i < possibleTipsList.size(); i++) {
             boolean viwed = false;
             for (int j = 0; j < tipsViewed.size(); j++) {
-                if (tipsViewed.get(j) == possibleTips[i]){
+                if (tipsViewed.get(j) == possibleTipsList.get(i)){
                     viwed = true;
                     break;
                 }
@@ -131,8 +124,8 @@ public class LevelGoalsLoader {
 
         if (allTipsViwed){
             for (int i = tipsViewed.size() - 1; i >= 0; i--) {
-                for (int j = 0; j < possibleTips.length; j++) {
-                    if (possibleTips[j] == tipsViewed.get(i)){
+                for (int j = 0; j < possibleTipsList.size(); j++) {
+                    if (possibleTipsList.get(j) == tipsViewed.get(i)){
                         tipsViewed.remove(i);
                         break;
                     }
@@ -142,20 +135,27 @@ public class LevelGoalsLoader {
 
         //Log.e(TAG, "tipsViewed.size "+ tipsViewed.size());
 
+        double random = (double)Utils.getRandonFloat(0f, ((float)possibleTipsList.size())-0.0001f);
+        int tipNumber = (int) Math.floor(random);
+        //Log.e(TAG, "random "+ random);
+        Log.e(TAG, "tipNumber "+ tipNumber);
+
+
+
         do{
-            if (count > possibleTips.length){
+            if (count > possibleTipsList.size()){
                 tipsViewed.clear();
             }
 
             boolean tipViewed = false;
 
             for (int i = 0; i < tipsViewed.size(); i++) {
-                if(tipsViewed.get(i) == possibleTips[tipNumber]){
-                    random = (double)Utils.getRandonFloat(0f, ((float)possibleTips.length)-0.0001f);
+                if(tipsViewed.get(i) == possibleTipsList.get(tipNumber)){
+                    random = (double)Utils.getRandonFloat(0f, ((float)possibleTipsList.size())-0.0001f);
                     tipNumber = (int) Math.floor(random);
-                    //Log.e(TAG, "fazendo nova tentativa ");
+                    Log.e(TAG, "fazendo nova tentativa ");
                     //Log.e(TAG, "random "+ random);
-                    //Log.e(TAG, "tipNumber "+ tipNumber);
+                    Log.e(TAG, "tipNumber "+ tipNumber);
                     tipViewed = true;
                     break;
                 }
@@ -173,7 +173,7 @@ public class LevelGoalsLoader {
 
         //Log.e(TAG, "tipChoose "+ possibleTips[tipNumber]);
 
-        tipsViewed.add(possibleTips[tipNumber]);
+        tipsViewed.add(possibleTipsList.get(tipNumber));
 
 
         String text = "tipsViwed: ";
@@ -185,7 +185,7 @@ public class LevelGoalsLoader {
 
 
 
-        switch (possibleTips[tipNumber]){
+        switch (possibleTipsList.get(tipNumber)){
             case 1:
                 tip = Game.getContext().getResources().getString(R.string.tipLevel1);
                 break;
@@ -212,6 +212,99 @@ public class LevelGoalsLoader {
                 break;
             case 9:
                 tip = Game.getContext().getResources().getString(R.string.tipLevel9);
+                break;
+            case 10:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel10);
+                break;
+            case 11:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel1);
+                break;
+            case 12:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel12);
+                break;
+            case 13:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel13);
+                break;
+            case 14:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel14);
+                break;
+            case 15:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel15);
+                break;
+            case 16:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel16);
+                break;
+            case 17:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel17);
+                break;
+            case 18:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel18);
+                break;
+            case 19:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel19);
+                break;
+            case 20:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel20);
+                break;
+            case 21:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel21);
+                break;
+            case 22:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel22);
+                break;
+            case 23:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel23);
+                break;
+            case 24:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel24);
+                break;
+            case 25:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel25);
+                break;
+            case 26:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel26);
+                break;
+            case 27:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel27);
+                break;
+            case 28:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel28);
+                break;
+            case 29:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel29);
+                break;
+            case 30:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel30);
+                break;
+            case 31:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel31);
+                break;
+            case 32:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel32);
+                break;
+            case 33:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel33);
+                break;
+            case 34:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel34);
+                break;
+            case 35:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel35);
+                break;
+            case 36:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel36);
+                break;
+            case 37:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel37);
+                break;
+            case 38:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel38);
+                break;
+            case 39:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel39);
+                break;
+            default:
+                tip = Game.getContext().getResources().getString(R.string.tipLevel3);
                 break;
         }
         return tip;
