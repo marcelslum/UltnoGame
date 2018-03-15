@@ -75,28 +75,28 @@ public class LevelGoalsLoader {
             possibleTipsList.add(32);
         }
         
-        if (levelNumber >= 9){// TODO bolas invencíveis
+        if (levelNumber >= 31){// TODO bolas invencíveis
             possibleTipsList.add(33);
         }
         
-        if (levelNumber >= 9){// TODO comida
+        if (levelNumber >= 41){// TODO comida
             possibleTipsList.add(34);
         }
         
-        if (levelNumber >= 9){// TODO falsidade
+        if (levelNumber >= 45){// TODO falsidade
             possibleTipsList.add(35);
             possibleTipsList.add(36);
         }
         
-        if (levelNumber >= 9){// TODO espelho
+        if (levelNumber >= 50){// TODO espelho
             possibleTipsList.add(37);
         }
         
-        if (levelNumber >= 9){// TODO divisão
+        if (levelNumber >= 54){// TODO divisão
             possibleTipsList.add(38);
         }
         
-        if (levelNumber >= 9){// TODO liberdade
+        if (levelNumber >= 59){// TODO liberdade
             possibleTipsList.add(39);
         }
         
