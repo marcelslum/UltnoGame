@@ -34,6 +34,7 @@ public class Game {
 
     public static final long TIME_OF_BALL_LISTENER = 250;
 
+    
     public static String playerName = "-";
     static Vibrator vibrator;
 
