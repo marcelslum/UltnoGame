@@ -46,7 +46,7 @@ public class Ball extends Circle{
     float maxAngle;
     float minAngle;
 
-    final int timeForExplode = 750;
+    final int timeForExplode = 500;
     long initialTimeWaitingExplosion = 0;
 
     public float rotationAngle = 0;
@@ -1620,7 +1620,6 @@ public class Ball extends Circle{
 
     private void waitForExplosion() {
         listenForExplosion = true;
-
         alarmId = Sound.play(Sound.soundAlarm, 1, 1, 100);
         initialTimeWaitingExplosion = Utils.getTime();
 
@@ -1637,8 +1636,10 @@ public class Ball extends Circle{
     
     public void explode(){
 
-
-        //Log.e(TAG, "explode");
+        Log.e(TAG, "explode");
+        
+        listenForExplosion = false;
+        Sound.soundPool.stop(alarmId);
 
         Game.vibrate(Game.VIBRATE_HARD);
         
@@ -1650,12 +1651,8 @@ public class Ball extends Circle{
         particleGenerator = pg;
         pg.activate();
 
-        Sound.soundPool.stop(alarmId);
-
         Sound.play(Sound.soundExplosion1, 1, 1, 0);
         Sound.play(Sound.soundExplosion2, 1, 1, 0);
-
-        listenForExplosion = false;
 
         int quantityOfClones = 3;
         float distance = radius * 3;
