@@ -69,7 +69,7 @@ public abstract class Sound {
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
-        
+
 
 
         soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(16).build();
