@@ -317,6 +317,8 @@
     <string name="tenha">Tenha</string>
     <string name="estrelas">estrelas</string>
     <string name="levelGoal0">Finalize o nível</string>
+    <string name="levelGoal35">Só finalize o nível. Afinal, já está suficientemente dificil, não é?</string>
+    <string name="levelGoal36">Finalize o nível. Não há mais grupos para desbloquear.</string>
     <string name="levelGoal1a">Termine o nível em menos de</string>
     <string name="levelGoal1b">minuto(s) e</string>
     <string name="levelGoal1b2">minuto(s)</string>
@@ -360,6 +362,8 @@
     <string name="levelGoal34m">Bolas falsas atingidas :/</string>
     <string name="levelGoal34m2">Faltam</string>
     <string name="levelGoal34m3">bolas falsas</string>
+    
+
 
     <string name="levelGoal3m">Bola acelerada:</string>
     <string name="levelGoal5m">Bola desacelerada:</string>
