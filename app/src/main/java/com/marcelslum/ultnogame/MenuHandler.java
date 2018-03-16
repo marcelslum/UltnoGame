@@ -360,15 +360,15 @@ public class MenuHandler {
 
         // SELETOR DIFICULDADE
         SelectorHandler.selectorDifficulty = new Selector("Game.selectorDifficulty", 0f,0f, fontSize, "",
-                new String[]{   Game.getContext().getResources().getString(R.string.v0),
+                new String[]{   //Game.getContext().getResources().getString(R.string.v0),
+                                //Game.getContext().getResources().getString(R.string.v1),
+                                Game.getContext().getResources().getString(R.string.v0),
                                 Game.getContext().getResources().getString(R.string.v1),
                                 Game.getContext().getResources().getString(R.string.v2),
                                 Game.getContext().getResources().getString(R.string.v3),
                                 Game.getContext().getResources().getString(R.string.v4),
                                 Game.getContext().getResources().getString(R.string.v5),
-                                Game.getContext().getResources().getString(R.string.v6),
-                                Game.getContext().getResources().getString(R.string.v7),
-                                Game.getContext().getResources().getString(R.string.v8)
+                                Game.getContext().getResources().getString(R.string.v6)
                             },
                 Game.font);
 
@@ -379,46 +379,49 @@ public class MenuHandler {
             }
         });
 
-        if (SaveGame.saveGame.ballVelocity == 70) {
+        //if (SaveGame.saveGame.ballVelocity == 70) {
+        //    SelectorHandler.selectorDifficulty.setSelectedValue(0);
+        //} else if (SaveGame.saveGame.ballVelocity == 80) {
+        //    SelectorHandler.selectorDifficulty.setSelectedValue(1);
+        //} else
+        
+        if (SaveGame.saveGame.ballVelocity == 90) {
             SelectorHandler.selectorDifficulty.setSelectedValue(0);
-        } else if (SaveGame.saveGame.ballVelocity == 80) {
-            SelectorHandler.selectorDifficulty.setSelectedValue(1);
-        } else if (SaveGame.saveGame.ballVelocity == 90) {
-            SelectorHandler.selectorDifficulty.setSelectedValue(2);
         } else if (SaveGame.saveGame.ballVelocity == 100) {
-            SelectorHandler.selectorDifficulty.setSelectedValue(3);
+            SelectorHandler.selectorDifficulty.setSelectedValue(1);
         } else if (SaveGame.saveGame.ballVelocity == 110) {
-            SelectorHandler.selectorDifficulty.setSelectedValue(4);
+            SelectorHandler.selectorDifficulty.setSelectedValue(2);
         } else if (SaveGame.saveGame.ballVelocity == 120) {
-            SelectorHandler.selectorDifficulty.setSelectedValue(5);
+            SelectorHandler.selectorDifficulty.setSelectedValue(3);
         } else if (SaveGame.saveGame.ballVelocity == 130) {
-            SelectorHandler.selectorDifficulty.setSelectedValue(6);
+            SelectorHandler.selectorDifficulty.setSelectedValue(4);
         } else if (SaveGame.saveGame.ballVelocity == 140) {
-            SelectorHandler.selectorDifficulty.setSelectedValue(7);
+            SelectorHandler.selectorDifficulty.setSelectedValue(5);
         }  else if (SaveGame.saveGame.ballVelocity == 150) {
-            SelectorHandler.selectorDifficulty.setSelectedValue(8);
+            SelectorHandler.selectorDifficulty.setSelectedValue(6);
         }
 
         SelectorHandler.selectorDifficulty.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
+                //if (SelectorHandler.selectorDifficulty.selectedValue == 0) {
+                //    SaveGame.saveGame.ballVelocity = 70;
+                //} else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
+                //    SaveGame.saveGame.ballVelocity = 80;
+                //} else 
                 if (SelectorHandler.selectorDifficulty.selectedValue == 0) {
-                    SaveGame.saveGame.ballVelocity = 70;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
-                    SaveGame.saveGame.ballVelocity = 80;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 2) {
                     SaveGame.saveGame.ballVelocity = 90;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 3) {
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
                     SaveGame.saveGame.ballVelocity = 100;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 4) {
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 2) {
                     SaveGame.saveGame.ballVelocity = 110;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 5) {
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 3) {
                     SaveGame.saveGame.ballVelocity = 120;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 6) {
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 4) {
                     SaveGame.saveGame.ballVelocity = 130;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 7) {
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 5) {
                     SaveGame.saveGame.ballVelocity = 140;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 8) {
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 6) {
                     SaveGame.saveGame.ballVelocity = 150;
                 }
 
