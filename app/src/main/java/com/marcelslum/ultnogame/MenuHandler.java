@@ -570,11 +570,11 @@ public class MenuHandler {
             public void onChange() {
                 if (optionTutorialUnvisite.numberForAnimation == 1f){
                     if (Game.gameState != Game.GAME_STATE_JOGAR) {
-                        optionTutorialUnvisite.setColor(new Color(0.3f, 0.3f, 0.3f, 1f));
+                        optionTutorialUnvisite.setColor(Color.cinza2);
                     }
                 } else if (optionTutorialUnvisite.numberForAnimation == 2f) {
                     if (Game.gameState != Game.GAME_STATE_JOGAR) {
-                        optionTutorialUnvisite.setColor(new Color(1f, 0f, 0f, 1f));
+                        optionTutorialUnvisite.setColor(Color.vermelhoCheio);
                     }
                 }
             }

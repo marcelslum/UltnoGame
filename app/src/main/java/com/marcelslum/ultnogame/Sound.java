@@ -13,16 +13,24 @@ import android.util.Log;
 public abstract class Sound {
 
     public static SoundPool soundPool;
-    public static int soundBallHit;
+
+    public static SoundPool soundPoolBallHit1;
+    public static SoundPool soundPoolBallHit2;
+    public static SoundPool soundPoolBallHit3;
+    public static SoundPool soundPoolBallHit4;
+
+    public static int soundBallHit1;
+    public static int soundBallHit2;
+    public static int soundBallHit3;
+    public static int soundBallHit4;
+
     public static int soundCounter;
     public static int soundDestroyTarget;
     public static int soundScore;
     public static int soundAlarm;
     public static int soundBallFall;
-    public static int soundBlueBallExplosion1;
-    public static int soundBlueBallExplosion2;
-    public static int soundExplosion1;
-    public static int soundExplosion2;
+    public static int soundBlueBallExplosion;
+    public static int soundExplosion;
     public static int soundGameOver;
     public static int soundMenuSelectBig;
     public static int soundMenuSelectSmall;
@@ -32,11 +40,9 @@ public abstract class Sound {
     public static int soundWind;
     public static int soundSuccess1;
     public static int soundSuccess2;
-    //public static int soundMenuIconDrop1;
     public static int soundMenuIconDrop2;
     public static int soundStarsUp;
     public static int soundDuplicateBall;
-    //public static MediaPlayer music;
     public static int soundWin1;
     public static int soundWin2;
 
@@ -46,29 +52,43 @@ public abstract class Sound {
     public static String TAG = "Sound";
 
 
+    public static SoundPool soundPoolBallHit;
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     public static void init(){
 
         //Log.e(TAG, "init loading sounds");
 
+
+
+
+
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
+        
+
+
         soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(16).build();
+        soundPoolBallHit1 = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(8).build();
+
+
+
+        soundBallHit1 = soundPoolBallHit1.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit1, 1);
+
+
+        soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroytarget, 1);
         soundMenuSelectBig = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectbig, 1);
         soundMenuSelectSmall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectsmall, 1);
         soundMenuIconDrop2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bells9, 1);
-        soundBallHit = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit, 1);
         soundCounter = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.counter, 1);
-        soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroytarget, 1);
         soundAlarm = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.alarm, 1);
         soundBallFall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballfall, 1);
-        soundBlueBallExplosion1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.blueballexplosion1, 1);
-        soundBlueBallExplosion2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.blueballexplosion2, 1);
-        soundExplosion1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.explosion1, 1);
-        soundExplosion2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.explosion21, 1);
+        soundBlueBallExplosion = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.blueballexplosion, 1);
+        soundExplosion = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.explosion, 1);
         soundGameOver = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.gameover2, 1);
         soundScore = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.score, 1);
         soundWin1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.win0_powerup17, 1);
@@ -78,32 +98,17 @@ public abstract class Sound {
         soundWind = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.wind, 1);
         soundSuccess1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success1, 1);
         soundSuccess2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.success2, 1);
-        //soundMenuIconDrop1 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bells1, 1);
         soundStarsUp = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.starsup, 1);
         soundDuplicateBall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.duplicateball, 1);
     }
 
+    public static int playBallHit(int id, float left, float right, int loop){
 
-
-    static int ballHitStreamId;
-
-
-
-    public static int play(int id, float left, float right, int loop){
-
-        // todo carregar save game no splash para ativar a opção de vibrar no menu
+        loop = 0;
 
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
-            if (soundPool != null) {
-                //Log.e(TAG, "Tocando o som " + id + "volume " + left + " ; "+ right);
-
-                if (id == soundBallHit){
-                    //soundPool.stop(ballHitStreamId);
-                    ballHitStreamId = soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
-                    return ballHitStreamId;
-                } else {
-                    return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
-                }
+            if (soundPoolBallHit1 != null) {
+                return soundPoolBallHit1.play(soundBallHit1, left * 1f, right * 1f, 0, loop, 1);
             } else {
                 Log.e(TAG, "Não tocando o som. SoundPool nulo.");
                 return -1;
@@ -114,10 +119,31 @@ public abstract class Sound {
         }
     }
 
+    public static int play(int id, float left, float right, int loop){
+
+        if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
+                if (soundPool != null) {
+                    //Log.e(TAG, "Tocando o som " + id + "volume " + left + " ; "+ right);
+                        return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
+                } else {
+                    Log.e(TAG, "Não tocando o som. SoundPool nulo.");
+                    return -1;
+                }
+        } else {
+            Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
+            return -1;
+        }
+
+    }
+
     public static void pauseAll(){
         if (soundPool != null) {
             soundPool.autoPause();
         }
+
+        //if (soundPoolBallHit != null){
+        //    soundPoolBallHit.autoPause();
+        //}
 
         if (loop != null){
             loop.pause();

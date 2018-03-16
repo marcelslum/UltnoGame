@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -12,7 +10,7 @@ public class LevelGoalsPanel extends Entity{
 
     public float size;
     ArrayList<Line> lines;
-    Color textColor = Color.preto;
+    Color textColor = Color.pretoCheio;
     float maxTextWidth;
     boolean gray;
 

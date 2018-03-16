@@ -130,13 +130,12 @@ public class BallGoalsPanel extends Entity{
     
     public void explodeBlueBall(){
         if (blueBalls > 0){
-            Sound.play(Sound.soundBlueBallExplosion1, 1, 1, 0);
-            Sound.play(Sound.soundBlueBallExplosion2, 1, 1, 0);
+            Sound.play(Sound.soundBlueBallExplosion, 1, 1, 0);
 
             setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
 
             // TODO verificar se está certo, ou seja, se a bola azul explode no lugar certo
-            Game.blueBallExplodeX = initialX + animTranslateX + ((lastXBall - initialX)*animScaleX);
+            Game.blueBallExplodeX = initialX + animTranslateX + ((lastXBall)*animScaleX);
             Game.blueBallExplodeY =  y + animTranslateY + ((size/2f)*animScaleY);
             Game.forBlueBallExplode = true;
 

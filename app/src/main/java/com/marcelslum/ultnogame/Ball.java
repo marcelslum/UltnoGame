@@ -1,11 +1,12 @@
 package com.marcelslum.ultnogame;
 
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import java.util.ArrayList;
 
 public class Ball extends Circle{
-    
+
     static final String TAG = "Ball";
     
     static final int COLOR_BALL_BLACK = 26;
@@ -85,7 +86,7 @@ public class Ball extends Circle{
         program = Game.imageColorizedProgram;
 
         ballsCollidedProcessed = new ArrayList<>();
-        color = Color.preto;
+        color = Color.pretoCheio;
 
         maxWidth = radius * 2f;
         maxHeight = radius * 2f;
@@ -1229,6 +1230,7 @@ public class Ball extends Circle{
                 if (collisionsData.get(i).object.type == Entity.TYPE_TARGET && !collisionsData.get(i).isRepeated){
                     BrickBackground.ballCollidedFx = 40;
                     Target target = (Target)collisionsData.get(i).object;
+
                     target.onBallCollision();
 
                     targetHitted = true;
@@ -1281,11 +1283,12 @@ public class Ball extends Circle{
                 volumeD = 0.95f;
             } else if (soundX >= 0.9f && soundX <= 1f){
                 volumeE = 0.55f;
-                volumeD = 0.1f;
-            } 
+                volumeD = 1f;
+            }
             
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
-            Sound.play(Sound.soundBallHit, volumeE, volumeD, 0);
+
+                Sound.playBallHit(Sound.soundBallHit1, volumeE, volumeD, 0);
 
             if (targetHitted){
                 Game.vibrate(Game.VIBRATE_TARGET);
@@ -1651,8 +1654,7 @@ public class Ball extends Circle{
         particleGenerator = pg;
         pg.activate();
 
-        Sound.play(Sound.soundExplosion1, 1, 1, 0);
-        Sound.play(Sound.soundExplosion2, 1, 1, 0);
+        Sound.play(Sound.soundExplosion, 1, 1, 0);
 
         int quantityOfClones = 3;
         float distance = radius * 3;

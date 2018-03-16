@@ -20,8 +20,8 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class Game {
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
-    public static boolean ganharComMetadeDasBolas = true;
-    public static boolean sempreGanharTodasEstrelas = true;
+    public static boolean ganharComMetadeDasBolas = false;
+    public static boolean sempreGanharTodasEstrelas = false;
     public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
@@ -331,14 +331,14 @@ public class Game {
             @Override
             public void onChange() {
                 if (tittle.numberForAnimation == 1f){
-                    tittle.setColor(new Color(0f, 0f, 0f, 1f));
+                    tittle.setColor(Color.pretoCheio);
                 } else if (tittle.numberForAnimation == 2f) {
                 } else if (tittle.numberForAnimation == 3f) {
-                    tittle.setColor(new Color(0f, 0f, 1f, 1f));
+                    tittle.setColor(Color.azulCheio);
                 } else if (tittle.numberForAnimation == 4f) {
-                    tittle.setColor(new Color(0f, 1f, 0f, 1f));
+                    tittle.setColor(Color.verdeCheio);
                 } else if (tittle.numberForAnimation == 5f) {
-                    tittle.setColor(new Color(1f, 1f, 0f, 1f));
+                    tittle.setColor(Color.amareloCheio);
                 }
             }
         });
@@ -440,10 +440,10 @@ public class Game {
                     .width(Game.resolutionX * 0.55f)
                     .size(Game.gameAreaResolutionY*0.045f)
                     .text(tip)
-                    .isHaveFrame(true, new Color(0.7f, 0.7f, 1f, 0.2f))
+                    .isHaveFrame(true, new Color(0f, 0f, 0.2f, 1f))
                     .isHaveArrowContinue(false)
-                    .setTextColor(Color.azul)
-                    //.addShadow(Color.cinza)
+                    .setTextColor(Color.branco)
+                    .addShadow(Color.cinza1)
                     .build();
 
             if (gameState == GAME_STATE_OBJETIVO_LEVEL) {

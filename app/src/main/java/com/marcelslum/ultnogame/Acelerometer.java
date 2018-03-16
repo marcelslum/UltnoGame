@@ -20,6 +20,9 @@ public class Acelerometer {
     static final int MOVE_RIGHT = 2;
     static final int MOVE_NO = 0;
 
+    static float soma;
+    static float media1;
+    static float media2;
 
     public static void updateValue(float value) {
 
@@ -34,7 +37,7 @@ public class Acelerometer {
         lastY.remove(0);
 
 
-        float soma = 0;
+        soma = 0;
         for (int i = 0; i < 10; i++){
             soma += lastY.get(i);
         }

@@ -117,11 +117,11 @@ public class MessagesHandler {
             @Override
             public void onChange() {
                 if (messageGameOver.numberForAnimation == 1f){
-                    messageGameOver.setColor(new Color(0f, 0f, 0f, 1f));
+                    messageGameOver.setColor(Color.pretoCheio);
                 } else if (messageGameOver.numberForAnimation == 2f) {
-                    messageGameOver.setColor(new Color(1f, 0f, 0f, 1f));
+                    messageGameOver.setColor(Color.verdeCheio);
                 } else if (messageGameOver.numberForAnimation == 3f) {
-                    messageGameOver.setColor(new Color(0f, 0f, 1f, 1f));
+                    messageGameOver.setColor(Color.azulCheio);
                 }
             }
         });
