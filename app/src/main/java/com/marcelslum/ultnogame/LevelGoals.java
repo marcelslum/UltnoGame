@@ -211,7 +211,7 @@ public class LevelGoals {
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"setFinish");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.JUST_FINISH && !lg.achieved){
+            if ((lg.type == LevelGoal.JUST_FINISH || lg.type == LevelGoal.JUST_FINISH_DIFFICULTY || lg.type == LevelGoal.JUST_FINISH_LAST_GROUP) && !lg.achieved){
                 lg.setAchieved();
             }
 
