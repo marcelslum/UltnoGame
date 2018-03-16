@@ -143,6 +143,10 @@ public class SaveGame {
                     .build();
         }
 
+        //for (int i = 0; i < 99; i++) {
+        //    setLevelStars(i + 1, 5);
+        //}
+
         //Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
         loaded = true;
     }

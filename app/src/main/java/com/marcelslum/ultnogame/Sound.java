@@ -61,24 +61,15 @@ public abstract class Sound {
 
         //Log.e(TAG, "init loading sounds");
 
-
-
-
-
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
 
-
-
         soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(16).build();
         soundPoolBallHit1 = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(8).build();
 
-
-
         soundBallHit1 = soundPoolBallHit1.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit1, 1);
-
 
         soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroytarget, 1);
         soundMenuSelectBig = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectbig, 1);
@@ -102,9 +93,19 @@ public abstract class Sound {
         soundDuplicateBall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.duplicateball, 1);
     }
 
+
+    static long lastBallHit = -500;
+    static long actualTime;
+
     public static int playBallHit(int id, float left, float right, int loop){
 
-        loop = 0;
+        actualTime = Utils.getTime();
+        if (actualTime - lastBallHit < 150){
+            Log.e(TAG, "Não tocando o som. Muito próximo da ultima vez.");
+            return -1;
+        }
+
+        lastBallHit = actualTime;
 
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
             if (soundPoolBallHit1 != null) {
