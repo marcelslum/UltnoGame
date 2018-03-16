@@ -55,6 +55,12 @@ public class LevelGoal{
     public static final int PREVENT_BORDER_TOUCH = 33;
     
     public static final int HIT_FAKE_BALL_WITH_BAR_UNTIL = 34;
+    
+    public static final int JUST_FINISH_DIFFICULTY = 35;
+    
+    public static final int JUST_FINISH_LAST_GROUP = 36;
+    
+    
 
 
     public void setText() {
@@ -161,6 +167,10 @@ public class LevelGoal{
         } else if (type == HIT_FAKE_BALL_WITH_BAR_UNTIL) {
             text = Game.getContext().getResources().getString(R.string.levelGoal34a) + " " + String.valueOf(value) + " " +
                     Game.getContext().getResources().getString(R.string.levelGoal34b);
+        } else if (type == JUST_FINISH_DIFFICULTY) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal35);
+        } else if (type == JUST_FINISH_LAST_GROUP) {
+            text = Game.getContext().getResources().getString(R.string.levelGoal36);
         } else {
             text = "sem texto definido";
         }
