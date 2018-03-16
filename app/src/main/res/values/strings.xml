@@ -31,9 +31,7 @@
     <string name="jogarONivel">Jogar o nível </string>
     <string name="proximaInstrucao">Próxima instrução</string>
     <string name="Jogar">Play</string>
-    
-    
-    
+
     <string name="group1name">Início</string>
     <string name="group2name">Obstáculo</string>
     <string name="group3name">Cor</string>
@@ -128,16 +126,6 @@
     
     <!-- liberdade 59 -->
     <string name="tipLevel39">Salvar duas bolas ao mesmo tempo é uma das tarefas mais difíceis do jogo.</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     <string name="t1t1">Bem vindo ao Ultno! Clique na flecha à direita para continuar a ver o tutorial.</string>
     <string name="t1t2">Este jogo é dividido em níveis, que são organizados em grupos.</string>
