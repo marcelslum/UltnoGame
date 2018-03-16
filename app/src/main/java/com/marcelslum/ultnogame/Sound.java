@@ -53,6 +53,8 @@ public abstract class Sound {
 
 
     public static SoundPool soundPoolBallHit;
+    
+    
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -67,10 +69,7 @@ public abstract class Sound {
                 .build();
 
         soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(16).build();
-        soundPoolBallHit1 = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(8).build();
-
-        soundBallHit1 = soundPoolBallHit1.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit1, 1);
-
+        soundBallHit = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit1, 1);
         soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroytarget, 1);
         soundMenuSelectBig = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectbig, 1);
         soundMenuSelectSmall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectsmall, 1);
@@ -96,20 +95,29 @@ public abstract class Sound {
 
     static long lastBallHit = -500;
     static long actualTime;
+    static int lastBallHitId;
 
     public static int playBallHit(int id, float left, float right, int loop){
 
         actualTime = Utils.getTime();
-        if (actualTime - lastBallHit < 150){
+        if (actualTime - lastBallHit < 50){
             Log.e(TAG, "Não tocando o som. Muito próximo da ultima vez.");
             return -1;
         }
-
+        
+        if (actualTime - lastBallHit > 300){
+            soundPool.stop(lastBallHitId);
+        }
+        
         lastBallHit = actualTime;
+        
+        
+        
 
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
             if (soundPoolBallHit1 != null) {
-                return soundPoolBallHit1.play(soundBallHit1, left * 1f, right * 1f, 0, loop, 1);
+                lastBallHitId = soundPoolBallHit1.play(soundBallHit1, left * 1f, right * 1f, 0, loop, 1);
+                return lastBallHitId;
             } else {
                 Log.e(TAG, "Não tocando o som. SoundPool nulo.");
                 return -1;
