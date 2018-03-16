@@ -122,10 +122,10 @@ class Menu extends Entity{
         final int innerId = optionsIds;
 
         newMenuOption.textObject.setListener(new InteractionListener(name,
-                newMenuOption.x - (newMenuOption.width/2),
-                optionY,
-                newMenuOption.width,
-                newMenuOption.size,
+                newMenuOption.x - (newMenuOption.width/2) - newMenuOption.width * 0.1f,
+                optionY - newMenuOption.size * 0.15f,
+                newMenuOption.width * 1.1f,
+                newMenuOption.size * 1.3f,
                 500, this,
                     new InteractionListener.PressListener() {
                         @Override
