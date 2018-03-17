@@ -135,7 +135,8 @@ class Menu extends Entity{
 
                                 Game.vibrate(Game.VIBRATE_SMALL);
                                 Game.blockAndWaitTouchRelease();
-                                Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                                Sound.PlayShortAudioFileViaAudioTrack();
+                                //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
 
                                 ArrayList<float[]> valuesAnimation = new ArrayList<>();
                                 valuesAnimation.add(new float[]{0f,1f});

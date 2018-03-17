@@ -27,6 +27,7 @@ android {
         versionName "0.1.1-beta"
         signingConfig signingConfigs.config
     }
+
     buildTypes {
         release {
             //minifyEnabled true
@@ -38,9 +39,11 @@ android {
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
+
     }
     productFlavors {
     }
+
 }
 
 dependencies {

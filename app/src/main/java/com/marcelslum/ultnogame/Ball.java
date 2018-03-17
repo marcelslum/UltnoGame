@@ -1287,8 +1287,9 @@ public class Ball extends Circle{
             }
             
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
-
-                Sound.playBallHit(Sound.soundBallHit1, volumeE, volumeD, 0);
+            if (!targetHitted) {
+                Sound.playBallHit(Sound.soundBallHit, volumeE, volumeD, 0);
+            }
 
             if (targetHitted){
                 Game.vibrate(Game.VIBRATE_TARGET);

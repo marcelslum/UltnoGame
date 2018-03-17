@@ -1,5 +1,6 @@
 package com.marcelslum.ultnogame;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,8 +36,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import android.os.Vibrator;
+import android.widget.Switch;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends FragmentActivity implements
         SensorEventListener
@@ -53,16 +57,23 @@ public class MainActivity extends FragmentActivity implements
     public final static int INTERSTITIAL_MODE_WITH_VIDEO = 1;
     public final static int INTERSTITIAL_MODE_NO_VIDEO = 2;
 
-            AdView mAdView;
+    AdView mAdView;
     private final static String TAG = "MainActivity";
     public boolean isPaused = false;
 
     private boolean mResolvingError = false;
     private static final String STATE_RESOLVING_ERROR = "resolving_error";
 
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         Splash.timesGoogle = 0;
 
