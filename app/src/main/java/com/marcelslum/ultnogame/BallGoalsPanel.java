@@ -130,7 +130,8 @@ public class BallGoalsPanel extends Entity{
     
     public void explodeBlueBall(){
         if (blueBalls > 0){
-            Sound.play(Sound.soundBlueBallExplosion, 1, 1, 0);
+            Sound.playBlueBallExplosion();
+            //Sound.play(Sound.soundBlueBallExplosion, 1, 1, 0);
 
             setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
 

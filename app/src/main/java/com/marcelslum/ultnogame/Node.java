@@ -260,7 +260,6 @@ class Node implements Poolable<Node>{
         //bottom right
         nodes[BOTTOM_RIGHT] = Quadtree.nodePool.get();
         nodes[BOTTOM_RIGHT].setData(bx_b_w_h, by_b_h_h, b_w_h, b_h_h, depth, maxDepth, maxChildren);
-
     }
 
 

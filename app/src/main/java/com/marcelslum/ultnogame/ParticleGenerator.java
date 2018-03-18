@@ -1,21 +1,92 @@
 package com.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
-
-import java.util.ArrayList;
+import android.util.Log;
 public class ParticleGenerator extends Entity {
     
-    int numberOfParticles = 500;
-    ArrayList<Particle> particlesArray;
+    static int numberOfParticles = 500;
+    Particle[] particlesArray = new Particle[numberOfParticles];
     boolean isActive;
     TextureData [] texturesData;
+
+
+    public static final String TAG = "Particle Generator";
+    static ParticleGenerator[] pgArray;
+    static int lastParticleGenerator = -1;
+
+
+    public static ParticleGenerator getNew(float x, float y){
+        lastParticleGenerator += 1;
+        if (lastParticleGenerator == 10){
+            lastParticleGenerator = 0;
+        }
+
+        ParticleGenerator pg = pgArray[lastParticleGenerator];
+
+        pg.reset();
+
+
+        pg.x = x;
+        pg.y = y;
+        return pg;
+    }
+
+
+    public static void loadParticleGenerators(){
+
+        lastParticleGenerator = -1;
+        pgArray  = new ParticleGenerator[10];
+        for (int i = 0; i < pgArray.length; i++) {
+            pgArray[i] = new ParticleGenerator("explode", 0, 0,
+                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_1_ID),
+                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_2_ID),
+                    TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_3_ID));
+
+            for (int j = 0; j < numberOfParticles;j++) {
+                float vx = Utils.getRandonFloat(-2.1f, 2.1f);
+                float vy = Utils.getRandonFloat(-2.1f, 2.1f);
+                float velocity_variation_x = Utils.getRandonFloat(-0.1f, 0.1f);
+                float velocity_variation_y = Utils.getRandonFloat(-0.1f, 0.1f);
+                float alpha_decay = Utils.getRandonFloat(0.01f, 0.005f);
+                float size = Utils.getRandonFloat(0.5f, 5f);
+
+                float textureMapFilter = Utils.getRandonFloat(0f, 1f);
+
+                TextureData td;
+                if (textureMapFilter < 0.33f) {
+                    td = pgArray[i].texturesData[0];
+                } else if (textureMapFilter < 0.66f) {
+                    td = pgArray[i].texturesData[1];
+                } else {
+                    td = pgArray[i].texturesData[2];
+                }
+
+                pgArray[i].particlesArray[j] = new Particle(0, 0, vx, vy, velocity_variation_x, velocity_variation_y, alpha_decay, size, td);
+            }
+        }
+    }
+
 
     ParticleGenerator(String name, float x, float y, TextureData td1, TextureData td2, TextureData td3) {
         super(name, x, y, Entity.TYPE_PARTICLE);
         program = Game.vertex_e_uv_com_alpha_program;
         textureId = Texture.TEXTURES;
         texturesData = new TextureData []{td1, td2, td3};
-        generate();
+        //generate();
+    }
+
+    public void setTexturesData(TextureData td1, TextureData td2, TextureData td3){
+        texturesData = new TextureData []{td1, td2, td3};
+        for (int j = 0; j < numberOfParticles;j++) {
+            float textureMapFilter = Utils.getRandonFloat(0f, 1f);
+            if (textureMapFilter < 0.33f) {
+                particlesArray[j].textureData = texturesData[0];
+            } else if (textureMapFilter < 0.66f) {
+                particlesArray[j].textureData = texturesData[1];
+            } else {
+                particlesArray[j].textureData = texturesData[2];
+            }
+        }
     }
 
     public void activate(){
@@ -28,7 +99,23 @@ public class ParticleGenerator extends Entity {
         this.isActive = false;
     }
 
+
+    public void reset() {
+        for (int i = 0; i < numberOfParticles; i++) {
+            particlesArray[i].initX = 0;
+            particlesArray[i].initY = 0;
+            particlesArray[i].vx = Utils.getRandonFloat(-2.1f, 2.1f);
+            particlesArray[i].vy = Utils.getRandonFloat(-2.1f, 2.1f);
+            particlesArray[i].alpha = 1f;
+        }
+    }
+
+
     public void generate(){
+
+        /*
+        Log.e(TAG, "generate");
+
         particlesArray= new ArrayList<>();
         for (int i = 0; i < numberOfParticles;i++) {
             float vx = Utils.getRandonFloat(-2.1f, 2.1f);
@@ -53,7 +140,11 @@ public class ParticleGenerator extends Entity {
                 velocity_variation_y, alpha_decay, size, td);
             
             particlesArray.add(particle);
+
+            Log.e(TAG, "addParticle");
+
         }
+        */
     }
 
     public void prepareRender(float[] matrixView, float[] matrixProjection){
@@ -65,8 +156,9 @@ public class ParticleGenerator extends Entity {
 
     private void updateDrawInfo() {
         boolean ended = true;
-        for (int i = 0; i < numberOfParticles;i++) {
-            Particle p = particlesArray.get(i);
+        for (int i = 0; i < particlesArray.length;i++) {
+
+            Particle p = particlesArray[i];
             p.x += p.vx;
             p.y += p.vy;
             p.vx += p.velocity_variation_x;
@@ -119,15 +211,21 @@ public class ParticleGenerator extends Entity {
         }
         
         initializeData(8 * numberOfParticles, 6 * numberOfParticles, 12 * numberOfParticles, 0);
-        
-        for (int i = 0; i < numberOfParticles;i++) {
-            Particle p = particlesArray.get(i);
+
+
+
+        for (int i = 0; i < particlesArray.length;i++) {
+            Particle p = particlesArray[i];
+            if (p == null) {
+                return;
+            }
             Utils.insertRectangleVerticesDataXY(verticesData, i * 8, 0, p.size, 0f, p.size);
             Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
             Utils.insertRectangleUvAndAlphaData(uvsData, i * 12, p.textureData, p.alpha);
         }
-        
-        
+
+
+
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
@@ -150,7 +248,7 @@ public class ParticleGenerator extends Entity {
         
     }
 
-    private class Particle{
+    private static class Particle{
         float initX;
         float initY;
         float x;

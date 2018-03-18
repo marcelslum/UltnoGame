@@ -50,7 +50,8 @@ class Menu extends Entity{
 
 
     public void toSelector(Selector selector, String selectedValue){
-        Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+        Sound.playPlayMenuBig();
+        //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
         this.block();
         this.display();
         selector.menuRelated = this;
@@ -96,7 +97,8 @@ class Menu extends Entity{
                                            });
         animationMenu.start();
 
-        Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+        Sound.playPlayMenuBig();
+        //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
     }
 
     public MenuOption getMenuOptionByName(String name){
@@ -135,7 +137,8 @@ class Menu extends Entity{
 
                                 Game.vibrate(Game.VIBRATE_SMALL);
                                 Game.blockAndWaitTouchRelease();
-                                Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                                Sound.playPlayMenuBig();
+                                //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
 
                                 ArrayList<float[]> valuesAnimation = new ArrayList<>();
                                 valuesAnimation.add(new float[]{0f,1f});

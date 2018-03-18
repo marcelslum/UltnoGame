@@ -129,11 +129,11 @@ public class MessagesHandler {
 
         messagePreparation = new Text("messagePreparation",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.3f, Game.gameAreaResolutionY*0.4f,
-                " ", Game.font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
+                " ", Game.font, Color.vermelhoCheio, Text.TEXT_ALIGN_CENTER);
 
         messageInGame = new Text("messageInGame",
                 Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.25f, Game.gameAreaResolutionY*0.14f,
-                resources.getString(R.string.pause), Game.font, new Color(0f, 0f, 0f, 1f),Text.TEXT_ALIGN_CENTER);
+                resources.getString(R.string.pause), Game.font, Color.pretoCheio,Text.TEXT_ALIGN_CENTER);
 
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 Game.resolutionX*0.02f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,

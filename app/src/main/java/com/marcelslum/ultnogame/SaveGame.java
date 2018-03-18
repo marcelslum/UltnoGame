@@ -111,7 +111,7 @@ public class SaveGame {
 
             //log(saveGame);
         } else {
-            //Log.e(TAG, "Não existe ainda nenhum Save Game, criando novo");
+            Log.e(TAG, "Não existe ainda nenhum Save Game, criando novo");
             int[] _levelsPoints = new int[Level.NUMBER_OF_LEVELS];
             int[] _levelsStars = new int[Level.NUMBER_OF_LEVELS];
             boolean[] _levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
@@ -143,9 +143,9 @@ public class SaveGame {
                     .build();
         }
 
-        //for (int i = 0; i < 99; i++) {
-        //    setLevelStars(i + 1, 5);
-        //}
+        for (int i = 0; i < 99; i++) {
+            setLevelStars(i + 1, 0);
+        }
 
         //Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
         loaded = true;

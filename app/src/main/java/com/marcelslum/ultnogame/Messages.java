@@ -57,7 +57,9 @@ public class Messages extends Entity {
         textObject.isVisible = true;
         textObject2.isVisible = true;
 
-        Sound.play(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
+        Sound.playTextBoxAppear();
+
+        //Sound.play(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
 
         Animation anim1 = Utils.createAnimation3v(textObject, "translateX", "translateX", 2225,
                 0f, Game.resolutionX, 0.1f, 0f, 0.9f, -Game.resolutionX * 0.05f, false, true);

@@ -432,7 +432,8 @@ public class MenuIcon extends Entity{
                         innerMenuIcon.blockAllIcons();
                     }
 
-                    Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                    Sound.playPlayMenuBig();
+                    //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                     //Log.e(TAG, "press botão do menu");
 
                     ArrayList<float[]> valuesAnimation = new ArrayList<>();

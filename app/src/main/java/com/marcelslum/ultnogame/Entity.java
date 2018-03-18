@@ -557,8 +557,9 @@ public class Entity{
     }
 
     public void prepareRender(float[] matrixView, float[] matrixProjection){
-        checkAnimations();
+
         if (isVisible){
+            checkAnimations();
             render(matrixView, matrixProjection);
         }
     }

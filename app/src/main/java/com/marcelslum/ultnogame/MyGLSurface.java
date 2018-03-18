@@ -122,9 +122,12 @@ public class MyGLSurface extends GLSurfaceView {
         queueEvent(new Runnable() {
             public void run() {
                 if (Game.ballGoalsPanel != null) {
-                    ParticleGenerator pg = new ParticleGenerator("explode",
+
+                    ParticleGenerator pg = ParticleGenerator.getNew(
                         Game.blueBallExplodeX,
-                        Game.blueBallExplodeY,
+                        Game.blueBallExplodeY);
+
+                    pg.setTexturesData(
                         TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_1_ID),
                         TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_2_ID),
                         TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_3_ID));

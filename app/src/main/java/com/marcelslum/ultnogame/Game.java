@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.media.AudioManager;
 import android.os.Vibrator;
 
 import static android.content.Context.ACTIVITY_SERVICE;
@@ -20,7 +19,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class Game {
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
-    public static boolean ganharComMetadeDasBolas = false;
+    public static boolean ganharComMetadeDasBolas = true;
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean versaoBeta = true;
 
@@ -523,16 +522,14 @@ public class Game {
             mainActivity.showInterstitial();
             
         } else if (state == GAME_STATE_SOBRE){
-            
+            Sound.loadMenuAudioTracks();
             mainActivity.showAdView();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuAbout));
             aboutTextView.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
-            
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
-
+            Sound.loadMenuAudioTracks();
             mainActivity.showAdView();
-            
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
 
@@ -567,8 +564,9 @@ public class Game {
 
         } else if (state == GAME_STATE_OBJETIVO_PAUSE){
 
-            mainActivity.showAdView();
+            Sound.loadMenuAudioTracks();
 
+            mainActivity.showAdView();
 
             levelGoalsPanel.appearGrayAndShine();
             MessagesHandler.messageMenu.display();
@@ -585,6 +583,10 @@ public class Game {
             MessagesHandler.messageBack.display();
 
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
+
+            Sound.loadMenuAudioTracks();
+
+            Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/icons");
 
             if (Tutorial.hasUnvisitedTutorial()){
                 MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
@@ -607,6 +609,10 @@ public class Game {
             
         } else if (state == GAME_STATE_MENU_TUTORIAL){
 
+            Sound.loadMenuAudioTracks();
+
+            Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/tutorials");
+
             mainActivity.showAdView();
 
             MessagesHandler.messageMenu.display();
@@ -617,7 +623,11 @@ public class Game {
 
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
 
+            Sound.loadMenuAudioTracks();
+
             mainActivity.showAdView();
+
+            Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/icons");
             
             if (tipTextBox != null){
                 tipTextBox.clearDisplay();
@@ -650,10 +660,11 @@ public class Game {
             MessagesHandler.starForMessage.y = MessagesHandler.messageConqueredStarsTotal.y + (MessagesHandler.starForMessage.height * 0.25f);
 
         } else if (state == GAME_STATE_INTRO) {
+
             mainActivity.hideAdView();
             Splash.init();
         } else if (state == GAME_STATE_OPCOES){
-
+            Sound.loadMenuAudioTracks();
             if (previousState == GAME_STATE_SOBRE){
                 Game.aboutTextView.blockAndClearDisplay();
             }
@@ -673,7 +684,7 @@ public class Game {
 
 
         } else if (state == GAME_STATE_OPCOES_GAME){
-            
+            Sound.loadMenuAudioTracks();
             SelectorHandler.repositionSelectors(state);
             mainActivity.showAdView();
             MenuHandler.menuInGame.blockAndClearDisplay();
@@ -683,6 +694,7 @@ public class Game {
 
         } else if (state == GAME_STATE_MENU){
 
+            Sound.loadMenuAudioTracks();
 
             if (Game.versaoBeta) {
                 MessagesHandler.messageBeta.display();
@@ -728,12 +740,14 @@ public class Game {
                     getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
 
         } else if (state == GAME_STATE_PREPARAR){
-            
+
+            Sound.loadMenuAudioTracks();
             
             if (tipTextBox != null){
                 tipTextBox.clearDisplay();
             }
-            
+
+            ParticleGenerator.loadParticleGenerators();
             
             eraseAllGameEntities();
             eraseAllHudEntities();
@@ -765,8 +779,10 @@ public class Game {
                 values.add(new float[]{0.8333f,0f});
             final Text innerMessagePreparation = MessagesHandler.messagePreparation;
             MessagesHandler.messagePreparation.setText("5");
+            MessagesHandler.messagePreparation.setColor(Color.transparente);
             MessagesHandler.messagePreparation.display();
-            Sound.play(Sound.soundCounter, 1, 1, 0);
+            //Sound.playCounter();
+            //Sound.play(Sound.soundCounter, 1, 1, 0);
             //Sound.playCounter();
 
             Animation anim = new Animation(MessagesHandler.messagePreparation, "messagePreparation", "numberForAnimation", 6000, values, false, false);
@@ -774,19 +790,26 @@ public class Game {
                 @Override
                 public void onChange() {
                     if (innerMessagePreparation.numberForAnimation == 4f){
-                        Sound.play(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
-                        innerMessagePreparation.setText("4");
+                        //Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playCounter();
+                        MessagesHandler.messagePreparation.setColor(Color.transparente);
+                        //innerMessagePreparation.setText("4");
                     } else if (innerMessagePreparation.numberForAnimation == 3f){
-                        Sound.play(Sound.soundCounter, 1, 1, 0);
+                        Sound.playCounter();
+                        //Sound.play(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
+                        MessagesHandler.messagePreparation.display();
+                        MessagesHandler.messagePreparation.setColor(Color.vermelhoCheio);
                         innerMessagePreparation.setText("3");
                     } else if (innerMessagePreparation.numberForAnimation == 2f){
-                        Sound.play(Sound.soundCounter, 1, 1, 0);
+                        Sound.playCounter();
+                        //Sound.play(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         innerMessagePreparation.setText("2");
                     } else if (innerMessagePreparation.numberForAnimation == 1f) {
-                        Sound.play(Sound.soundCounter, 1, 1, 0);
+                        Sound.playCounter();
+                        //Sound.play(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
@@ -807,6 +830,8 @@ public class Game {
             verifyDead();
 
         } else if (state == GAME_STATE_JOGAR){
+
+            Sound.loadGameAudioTracks();
 
             for (int i = 0; i < Game.balls.size(); i++) {
                 if (Game.balls.get(i).listenForExplosion){
@@ -850,9 +875,12 @@ public class Game {
 
         } else if (state == GAME_STATE_DERROTA){
 
+            Sound.loadMenuAudioTracks();
+
             mainActivity.showAdView();
             stopAndReleaseMusic();
-            Sound.play(Sound.soundGameOver, 1, 1, 0);
+            Sound.playGameOver();
+            //Sound.play(Sound.soundGameOver, 1, 1, 0);
             SaveGame.addLevelPlayed();
             int totalStars = 0;
             for (int i = 0; i < Level.levelObject.levelGoalsObject.levelGoals.size(); i++){
@@ -877,6 +905,8 @@ public class Game {
             
         } else if (state == GAME_STATE_PAUSE){
 
+            Sound.loadMenuAudioTracks();
+
             mainActivity.showAdView();
             ButtonHandler.buttonReturnObjectivesPause.block();
             ButtonHandler.buttonReturnObjectivesPause.clearDisplay();
@@ -891,7 +921,8 @@ public class Game {
             //Log.e("game", "ativando game_state_pause");
             if (previousState != GAME_STATE_OPCOES_GAME) {
                 Sound.loop.pause();
-                Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                //Sound.playPlayMenuBig();
+                Sound.play(Sound.soundCounter, 1, 1, 0);
                 stopAllGameEntities();
                 reduceAllGameEntitiesAlpha(300);
                 MenuHandler.menuInGame.getMenuOptionByName("Continuar").textObject.setText(getContext().getResources().getString(R.string.continuarJogar));
@@ -924,6 +955,8 @@ public class Game {
 
         } else if (state == GAME_STATE_VITORIA){
 
+            Sound.loadAfterGameAudioTracks();
+
             Level.levelObject.levelGoalsObject.setFinish(TimeHandler.stopTimeOfLevelPlay());
             SaveGame.addLevelPlayed();
 
@@ -943,7 +976,8 @@ public class Game {
 
             // TODO o que fazer com a animação quando for pausado
             stopAndReleaseMusic();
-            Sound.play(Sound.soundWin1, 1, 1, 0);
+            //Sound.play(Sound.soundWin1, 1, 1, 0);
+            Sound.playWin1();
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
 
@@ -1078,7 +1112,8 @@ public class Game {
 
             clearAllGameEntities();
 
-            Sound.play(Sound.soundWin2, 1, 1, 0);
+            Sound.playWin2();
+            //Sound.play(Sound.soundWin2, 1, 1, 0);
 
             ButtonHandler.buttonContinue.clearDisplay();
             ButtonHandler.buttonContinue.block();
@@ -1252,7 +1287,8 @@ public class Game {
             animMessageConqueredStarsTotal.start();
 
         } else if (state == GAME_STATE_TUTORIAL) {
-            
+            Sound.loadMenuAudioTracks();
+            Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/tutorials");
             MessagesHandler.messageMenu.clearDisplay();
             MessagesHandler.messageSubMenu.clearDisplay();
             MenuHandler.tutorialMenu.clearDisplay();

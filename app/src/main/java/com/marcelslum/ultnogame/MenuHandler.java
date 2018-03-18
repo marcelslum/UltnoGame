@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class MenuHandler {
@@ -119,7 +117,7 @@ public class MenuHandler {
                    }
                    final int ftextureId = textureId;
 
-                   groupMenu.addOption(lastId+i, Texture.TEXTURE_TUTORIALS, TextureData.getTextureDataById(textureId), new Animation.AnimationListener() {
+                   groupMenu.addOption(lastId+i, Texture.TEXTURE_ICONS_CHANGE_TUTORIALS, TextureData.getTextureDataById(textureId), new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         SaveGame.saveGame.currentLevelNumber = numberOfCurrentLevelNumber;
@@ -128,7 +126,7 @@ public class MenuHandler {
                         Game.currentLevelIcon = new Image("Game.currentLevelIcon", (Game.resolutionX * 0.5f) - size * 0.5f,
                                 Game.resolutionY * 0.2f,
                                 size, size,
-                                Texture.TEXTURE_TUTORIALS, TextureData.getTextureDataById(ftextureId)
+                                Texture.TEXTURE_ICONS_CHANGE_TUTORIALS, TextureData.getTextureDataById(ftextureId)
                         );
                         Game.currentLevelIcon.clearDisplay();
                         Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
@@ -307,7 +305,7 @@ public class MenuHandler {
 
             final int tutorialNumber = i;
             if (Tutorial.isTutorialUnblocked(i)){
-                tutorialMenu.addOption(i, Texture.TEXTURE_TUTORIALS, textureData, new Animation.AnimationListener() {
+                tutorialMenu.addOption(i, Texture.TEXTURE_ICONS_CHANGE_TUTORIALS, textureData, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = tutorialNumber;

@@ -112,6 +112,7 @@ public class LevelGoalsPanel extends Entity{
     public void shineLines(boolean playSound) {
         if (gray) {
             if (playSound) {
+                //Sound.playSucess2();
                 Sound.play(Sound.soundSuccess2, 0.5f, 0.5f, 0);
             }
             gray = false;

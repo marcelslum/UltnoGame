@@ -74,6 +74,10 @@ public class MainActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
 
 
+         /*Inicia o hardware*/
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Game.vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         Splash.timesGoogle = 0;
 
@@ -97,18 +101,7 @@ public class MainActivity extends FragmentActivity implements
 
         Storage.init(this);
 
-        if (!Game.forDebugDeleteDatabaseAndStorage){
-            SaveGame.load();
-        } else {
-            //Log.e(TAG, "DELETADAS TODAS AS BASES, CONFIGURAÇÕES E SAVEGAMES");
-            return;
-        }
-
-
-        /*Inicia o hardware*/
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        Game.vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        SaveGame.load();
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         //Log.e(TAG, "maxMemory "+maxMemory);

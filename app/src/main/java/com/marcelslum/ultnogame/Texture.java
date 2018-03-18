@@ -5,8 +5,6 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -33,8 +31,8 @@ public class Texture {
     //public final static int TEXTURE_GROUP_ICONS = 12;
 
     public final static int TEXTURES = 100;
-    public final static int TEXTURE_ICONS = 101;
-    public final static int TEXTURE_TUTORIALS = 102;
+    public final static int TEXTURE_ICONS_CHANGE_TUTORIALS = 101;
+    //public final static int TEXTURE_TUTORIALS = 102;
 
     public static int MAX_TEXTURES = 8;
 
@@ -61,8 +59,8 @@ public class Texture {
 
     public static void init() {
         //Log.e(TAG, "initTextures");
-        Texture.textures.add(new Texture(Texture.TEXTURE_ICONS, "drawable/icons"));
-        Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS, "drawable/tutorials"));
+        Texture.textures.add(new Texture(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS, "drawable/icons"));
+        //Texture.textures.add(new Texture(Texture.TEXTURE_TUTORIALS, "drawable/tutorials"));
 
     }
 
@@ -129,6 +127,11 @@ public class Texture {
     }
 
     public void changeBitmap(String resoureIdentifier){
+
+        if (this.resoureIdentifier == resoureIdentifier){
+            return;
+        }
+
         this.resoureIdentifier = resoureIdentifier;
         
         // First decode with inJustDecodeBounds=true to check dimensions

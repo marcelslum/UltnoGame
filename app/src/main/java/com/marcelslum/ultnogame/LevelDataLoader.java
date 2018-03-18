@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -119,7 +117,7 @@ public class LevelDataLoader {
                             levelsIntroduced + d.levels,
                             d.stars_to_unlock,
                             LevelsGroupData.getLevelsConqueredStars(levelsIntroduced + 1, levelsIntroduced + d.levels),
-                            Texture.TEXTURE_ICONS,
+                            Texture.TEXTURE_ICONS_CHANGE_TUTORIALS,
                             td
                             )
             );
@@ -250,7 +248,7 @@ public class LevelDataLoader {
                 g.addLevel(
                         Game.getContext().getResources().getString(R.string.messageCurrentLevel) + String.valueOf(d.number),
                         d.number,
-                        Texture.TEXTURE_ICONS,
+                        Texture.TEXTURE_ICONS_CHANGE_TUTORIALS,
                         TextureData.getTextureDataById(textureDataId)
                 );
             }

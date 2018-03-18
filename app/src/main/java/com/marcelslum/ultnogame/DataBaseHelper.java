@@ -39,6 +39,8 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
             return;
         }
 
+        myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
+
         boolean dbExist = checkDataBase();
 
         //Log.e(TAG, "dbExist" + dbExist);

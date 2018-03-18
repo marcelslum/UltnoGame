@@ -99,6 +99,7 @@ public class Ball extends Circle{
         isMovable = true;
         setDrawInfo();
         ballParticleGenerator = new BallParticleGenerator(name+"pg", 0f, 0f);
+
     }
 
 
@@ -1643,17 +1644,24 @@ public class Ball extends Circle{
         Log.e(TAG, "explode");
         
         listenForExplosion = false;
-        Sound.soundPool.stop(alarmId);
+        if (Sound.soundPool != null) {
+            Sound.soundPool.stop(alarmId);
+        }
 
         Game.vibrate(Game.VIBRATE_HARD);
         
         cleanAnimations();
+/*
         ParticleGenerator pg = new ParticleGenerator("explode", x + accumulatedTranslateX, y + accumulatedTranslateY,
                 TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_1_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_2_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_3_ID));
         particleGenerator = pg;
-        pg.activate();
+
+        */
+
+        particleGenerator = ParticleGenerator.getNew(x + accumulatedTranslateX, y + accumulatedTranslateY);
+        particleGenerator.activate();
 
         Sound.play(Sound.soundExplosion, 1, 1, 0);
 
