@@ -3,24 +3,16 @@ package com.marcelslum.ultnogame;
 import android.media.AudioAttributes;
 import android.media.AudioFormat;
 import android.media.AudioManager;
+import android.media.AudioRouting;
 import android.media.AudioTrack;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 /**
  * Created by marcel on 17/09/2016.
@@ -29,27 +21,18 @@ public abstract class Sound {
 
     public static SoundPool soundPool;
 
-    public static SoundPool soundPoolBallHit1;
-    public static SoundPool soundPoolBallHit2;
-    public static SoundPool soundPoolBallHit3;
-    public static SoundPool soundPoolBallHit4;
-
-    public static int soundBallHit;
-    public static int soundBallHit2;
-    public static int soundBallHit3;
-    public static int soundBallHit4;
+    //public static int soundBallHit;
+    //public static int soundDestroyTarget;
+    //public static int soundBallFall;
 
     public static int soundCounter;
-    public static int soundDestroyTarget;
     public static int soundScore;
     public static int soundAlarm;
-    public static int soundBallFall;
     public static int soundBlueBallExplosion;
     public static int soundExplosion;
     public static int soundGameOver;
     public static int soundMenuSelectBig;
     public static int soundMenuSelectSmall;
-
     public static int soundTextBoxAppear;
     public static int soundBarSize;
     public static int soundWind;
@@ -61,17 +44,14 @@ public abstract class Sound {
     public static int soundWin1;
     public static int soundWin2;
 
-    public static LoopMediaPlayer loopMenu;
     public static LoopMediaPlayer loop;
 
     public static String TAG = "Sound";
 
-    public static AudioTrack mAudioTrack;
 
-
-    public static SoundPool soundPoolBallHit;
-    
-    
+    public static AudioTrack mAudioTrackBallHit;
+    public static AudioTrack mAudioTrackBallFall;
+    public static AudioTrack mAudioTrackDestroyTarget;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -85,15 +65,17 @@ public abstract class Sound {
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
 
-        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(8).build();
-        soundBallHit = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit1, 1);
-        soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroy_target, 1);
+
+        //soundBallHit = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit, 1);
+        //soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroy_target, 1);
+        //soundBallFall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballfall, 1);
+
+        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(6).build();
         soundMenuSelectBig = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectbig, 1);
         soundMenuSelectSmall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.menuselectsmall, 1);
         soundMenuIconDrop2 = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bells9, 1);
         soundCounter = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.counter, 1);
         soundAlarm = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.alarm, 1);
-        soundBallFall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballfall, 1);
         soundBlueBallExplosion = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.blueballexplosion, 1);
         soundExplosion = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.explosion, 1);
         soundGameOver = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.gameover2, 1);
@@ -112,78 +94,84 @@ public abstract class Sound {
         byte[] music;
         try {
 
-            InputStream input = Game.mainActivity.getResources().getAssets().open("destroy_target.wav");
+            InputStream input = Game.mainActivity.getResources().getAssets().open("ballhit1stereo.wav");
             WavToPCM.WavInfo info = WavToPCM.readHeader(input);
             pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
             music = pcm.array();
 
-            mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
-                    AudioFormat.CHANNEL_OUT_MONO,
+            mAudioTrackBallHit = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                    AudioFormat.CHANNEL_OUT_STEREO,
                     AudioFormat.ENCODING_PCM_16BIT, music.length,
                     AudioTrack.MODE_STATIC);
 
-            mAudioTrack.write(music, 0, music.length);
+            mAudioTrackBallHit.write(music, 0, music.length);
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            InputStream input = Game.mainActivity.getResources().getAssets().open("destroy_target.wav");
+            WavToPCM.WavInfo info = WavToPCM.readHeader(input);
+            pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
+            music = pcm.array();
+
+            mAudioTrackDestroyTarget = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                    AudioFormat.CHANNEL_OUT_STEREO,
+                    AudioFormat.ENCODING_PCM_16BIT, music.length,
+                    AudioTrack.MODE_STATIC);
+
+            mAudioTrackDestroyTarget.write(music, 0, music.length);
+
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            InputStream input = Game.mainActivity.getResources().getAssets().open("ballfall.wav");
+            WavToPCM.WavInfo info = WavToPCM.readHeader(input);
+            pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
+            music = pcm.array();
+
+            mAudioTrackBallFall = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                    AudioFormat.CHANNEL_OUT_STEREO,
+                    AudioFormat.ENCODING_PCM_16BIT, music.length,
+                    AudioTrack.MODE_STATIC);
+
+            mAudioTrackBallFall.write(music, 0, music.length);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
+    public static void playBallFall(){
+        mAudioTrackBallFall.stop();
+        mAudioTrackBallFall.play();
 
-    static long lastBallHit = -500;
-    static long actualTime;
-    static int lastBallHitId;
-
-
-    public static void PlayShortAudioFileViaAudioTrack()
-    {
-        mAudioTrack.stop();
-        mAudioTrack.play();
     }
 
-
-    public static int playBallHit(int id, float left, float right, int loop){
-
-
-        PlayShortAudioFileViaAudioTrack();
-
+    public static int playDestroyTarget(){
+        mAudioTrackDestroyTarget.stop();
+        mAudioTrackDestroyTarget.play();
         return 1;
+    }
 
-                /*
 
-        loop = 0;
-
-        actualTime = Utils.getTime();
-        if (actualTime - lastBallHit < 100){
-            Log.e(TAG, "Não tocando o som. Muito próximo da ultima vez.");
-            return -1;
-        } else {
-            soundPool.stop(lastBallHitId);
-        }
-        lastBallHit = actualTime;
-        
-        
-        
-
-        if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
-            if (soundPool != null) {
-                lastBallHitId = soundPool.play(soundBallHit, left * 1f, right * 1f, 0, loop, 1);
-                return lastBallHitId;
-            } else {
-                Log.e(TAG, "Não tocando o som. SoundPool nulo.");
-                return -1;
-            }
-        } else {
-            Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
-            return -1;
-        }
-        */
+    public static int playBallHit(){
+        mAudioTrackBallHit.stop();
+        mAudioTrackBallHit.play();
+        return 1;
     }
 
     public static int play(int id, float left, float right, int loop){
-
-        loop = 0;
 
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
                 if (soundPool != null) {
@@ -204,10 +192,6 @@ public abstract class Sound {
         if (soundPool != null) {
             soundPool.autoPause();
         }
-
-        //if (soundPoolBallHit != null){
-        //    soundPoolBallHit.autoPause();
-        //}
 
         if (loop != null){
             loop.pause();

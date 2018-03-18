@@ -177,7 +177,8 @@ public class Target extends Rectangle {
 
     public void decayState(int points){
         timeOfLastDecay = Utils.getTime();
-        Sound.play(Sound.soundDestroyTarget, 1, 1, 0);
+        Sound.playDestroyTarget();
+        //Sound.play(Sound.soundDestroyTarget, 1, 1, 0);
         ScoreHandler.scorePanel.setValue(ScoreHandler.scorePanel.value + points,  true, 500, false);
 
         this.currentState -= 1;

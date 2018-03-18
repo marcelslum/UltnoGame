@@ -767,6 +767,7 @@ public class Game {
             MessagesHandler.messagePreparation.setText("5");
             MessagesHandler.messagePreparation.display();
             Sound.play(Sound.soundCounter, 1, 1, 0);
+            //Sound.playCounter();
 
             Animation anim = new Animation(MessagesHandler.messagePreparation, "messagePreparation", "numberForAnimation", 6000, values, false, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
@@ -774,15 +775,19 @@ public class Game {
                 public void onChange() {
                     if (innerMessagePreparation.numberForAnimation == 4f){
                         Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playCounter();
                         innerMessagePreparation.setText("4");
                     } else if (innerMessagePreparation.numberForAnimation == 3f){
                         Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playCounter();
                         innerMessagePreparation.setText("3");
                     } else if (innerMessagePreparation.numberForAnimation == 2f){
                         Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playCounter();
                         innerMessagePreparation.setText("2");
                     } else if (innerMessagePreparation.numberForAnimation == 1f) {
                         Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playCounter();
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
                         innerMessagePreparation.setText(getContext().getResources().getString(R.string.mensagem_jogar));

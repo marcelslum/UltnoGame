@@ -1288,7 +1288,7 @@ public class Ball extends Circle{
             
             //Log.e("ball", "volume E "+ volumeE + " volumeD "+ volumeD);
             if (!targetHitted) {
-                Sound.playBallHit(Sound.soundBallHit, volumeE, volumeD, 0);
+                Sound.playBallHit();
             }
 
             if (targetHitted){
@@ -1792,7 +1792,8 @@ public class Ball extends Circle{
                 self.isVisible = false;
             }
         });
-        Sound.play(Sound.soundBallFall, 1, 1, 0);
+        Sound.playBallFall();
+        //Sound.play(Sound.soundBallFall, 1, 1, 0);
 
         if (listenForExplosion){
             Sound.soundPool.stop(alarmId);
