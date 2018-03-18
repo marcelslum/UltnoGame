@@ -19,7 +19,7 @@ public class DataBaseLevelDataHelper extends DataBaseHelper {
 
     public static DataBaseLevelDataHelper getInstance(Context ctx){
         if (mInstance == null){
-            mInstance = new DataBaseLevelDataHelper(ctx, "level.db");
+            mInstance = new DataBaseLevelDataHelper(ctx, "level_db.db");
         }
         return mInstance;
     }
