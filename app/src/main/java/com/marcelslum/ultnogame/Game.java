@@ -922,7 +922,6 @@ public class Game {
             if (previousState != GAME_STATE_OPCOES_GAME) {
                 Sound.loop.pause();
                 //Sound.playPlayMenuBig();
-                Sound.play(Sound.soundCounter, 1, 1, 0);
                 stopAllGameEntities();
                 reduceAllGameEntitiesAlpha(300);
                 MenuHandler.menuInGame.getMenuOptionByName("Continuar").textObject.setText(getContext().getResources().getString(R.string.continuarJogar));

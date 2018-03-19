@@ -369,7 +369,7 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks game não carregados. playBallFall State != AUDIO_TRACK_STATE_GAME");
             return;
         }
-        playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion);
+        playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion, 0.8f);
     }
 
     public static void playWin1(){
@@ -377,7 +377,7 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks game não carregados. playWin1 State != AUDIO_TRACK_STATE_WIN");
             return;
         }
-        playAudioTrack(mAudioTrack_BallHit_Counter_win1);
+        playAudioTrack(mAudioTrack_BallHit_Counter_win1, 0.5f);
     }
 
     public static void playWin2(){
@@ -385,7 +385,7 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks game não carregados. playWin2 State != AUDIO_TRACK_STATE_WIN");
             return;
         }
-        playAudioTrack(mAudioTrack_DestroyTarget_menuselectbig_win2);
+        playAudioTrack(mAudioTrack_DestroyTarget_menuselectbig_win2, 0.5f);
     }
 
     public static void playBlueBallExplosion(){
@@ -393,15 +393,16 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks game não carregados. playBlueBallExplosion State != AUDIO_TRACK_STATE_WIN");
             return;
         }
-        playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion);
+        playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion, 0.8f);
     }
 
-    public static void playAudioTrack(AudioTrack at){
+    public static void playAudioTrack(AudioTrack at, float volume){
 
         int state = at.getState();
         Log.e(TAG, "state "+state);
 
         final AudioTrack innerAudioTrack = at;
+        final float innerVolume = volume;
 
         if (at.getState() == AudioTrack.STATE_UNINITIALIZED || at.getState() == AudioTrack.STATE_NO_STATIC_DATA){
             Log.e(TAG, "Audio não inicializado. Criando Runnable.");
@@ -418,6 +419,7 @@ public abstract class Sound {
                         Log.e(TAG, "Erro ao tocar audio. Não inicializado dentro do Runnable.");
                     } else {
                         innerAudioTrack.stop();
+                        innerAudioTrack.setVolume(innerVolume);
                         innerAudioTrack.play();
                     }
                 }
@@ -425,6 +427,7 @@ public abstract class Sound {
             handler.postDelayed(r, 25);
         } else {
             at.stop();
+            at.setVolume(volume);
             at.play();
         }
 
@@ -435,7 +438,7 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks game não carregados. playDestroyTarget State != AUDIO_TRACK_STATE_GAME");
             return;
         }
-        playAudioTrack(mAudioTrack_DestroyTarget_menuselectbig_win2);
+        playAudioTrack(mAudioTrack_DestroyTarget_menuselectbig_win2, 0.8f);
     }
 
 
@@ -444,7 +447,7 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks game não carregados. playBallHit State != AUDIO_TRACK_STATE_GAME");
             return;
         }
-        playAudioTrack(mAudioTrack_BallHit_Counter_win1);
+        playAudioTrack(mAudioTrack_BallHit_Counter_win1, 0.8f);
     }
 
     public static void playMenuSmall(){
@@ -452,7 +455,7 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks menu não carregados. playMenuSmall State != AUDIO_TRACK_STATE_MENU");
             return;
         }
-        playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion);
+        playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion, 0.8f);
     }
 
     public static void playPlayMenuBig(){
@@ -460,7 +463,7 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks menu não carregados. playPlayMenuBig State != AUDIO_TRACK_STATE_MENU");
             return;
         }
-        playAudioTrack(mAudioTrack_DestroyTarget_menuselectbig_win2);
+        playAudioTrack(mAudioTrack_DestroyTarget_menuselectbig_win2, 0.8f);
     }
 
 
@@ -469,7 +472,7 @@ public abstract class Sound {
             Log.e(TAG, "Audio tracks menu não carregados. State != AUDIO_TRACK_STATE_MENU");
             return;
         }
-        playAudioTrack(mAudioTrack_BallHit_Counter_win1);
+        playAudioTrack(mAudioTrack_BallHit_Counter_win1, 0.8f);
     }
 
     public static int play(int id, float left, float right, int loop){
