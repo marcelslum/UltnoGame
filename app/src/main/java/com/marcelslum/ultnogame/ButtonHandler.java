@@ -28,7 +28,7 @@ public class ButtonHandler {
             @Override
             public void onPress() {
                 Game.vibrate(Game.VIBRATE_SMALL);
-                Sound.playPlayMenuBig();
+                Game.sound.playPlayMenuBig();
                 //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
@@ -63,7 +63,7 @@ public class ButtonHandler {
             public void onPress() {
 
                 Game.vibrate(Game.VIBRATE_SMALL);
-                Sound.playPlayMenuBig();
+                Game.sound.playPlayMenuBig();
                 //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
@@ -87,7 +87,7 @@ public class ButtonHandler {
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
                 } else {
                     Game.vibrate(Game.VIBRATE_SMALL);
-                    Sound.playPlayMenuBig();
+                    Game.sound.playPlayMenuBig();
                     //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                     if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
 
@@ -176,7 +176,7 @@ public class ButtonHandler {
             public void onPress() {
 
                 Game.vibrate(Game.VIBRATE_SMALL);
-                Sound.playPlayMenuBig();
+                Game.sound.playPlayMenuBig();
                 //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_VITORIA) {
                     Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);

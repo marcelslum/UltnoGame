@@ -1,16 +1,22 @@
 package com.marcelslum.ultnogame;
 
+import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Process;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -18,7 +24,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by marcel on 17/09/2016.
  */
-public abstract class Sound {
+public class Sound {
 
     public static SoundPool soundPool;
 
@@ -61,6 +67,12 @@ public abstract class Sound {
     public static MediaPlayer mediaPlayerPrincipal;
 
 
+    public Sound(){
+
+    }
+
+    public static AudioData menuBigAudioData;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     public static void init(){
@@ -72,6 +84,8 @@ public abstract class Sound {
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .build();
 
+
+        menuBigAudioData = new AudioData("menuselectbig.wav", 1f);
 
         //soundBallHit = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.ballhit, 1);
         //soundDestroyTarget = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.destroy_target, 1);
@@ -109,6 +123,27 @@ public abstract class Sound {
     public static final int AUDIO_TRACK_STATE_WIN = 2;
 
     public static void loadMenuAudioTracks(){
+
+        if (mAudioTrack_BallHit_Counter_win1 != null) {
+            mAudioTrack_BallHit_Counter_win1.release();
+            mAudioTrack_BallHit_Counter_win1 = null;
+        }
+        if (mAudioTrack_DestroyTarget_menuselectbig_win2 != null) {
+            mAudioTrack_DestroyTarget_menuselectbig_win2.release();
+            mAudioTrack_DestroyTarget_menuselectbig_win2 = null;
+        }
+        if (mAudioTrackBallFall_menuselectsmall_blueBallExplosion != null) {
+            mAudioTrackBallFall_menuselectsmall_blueBallExplosion.release();
+            mAudioTrackBallFall_menuselectsmall_blueBallExplosion = null;
+        }
+
+        if (mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2 != null) {
+            mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2.release();
+            mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2 = null;
+        }
+
+        /*
+
 
         if (audioTrackState != AUDIO_TRACK_STATE_MENU || mAudioTrack_BallHit_Counter_win1 == null || mAudioTrack_DestroyTarget_menuselectbig_win2 == null || mAudioTrackBallFall_menuselectsmall_blueBallExplosion == null) {
             audioTrackState = AUDIO_TRACK_STATE_MENU;
@@ -198,6 +233,7 @@ public abstract class Sound {
             }
 
         }
+        */
 
     }
 
@@ -206,6 +242,25 @@ public abstract class Sound {
             mediaPlayerPrincipal.release();
         }
 
+        if (mAudioTrack_BallHit_Counter_win1 != null) {
+            mAudioTrack_BallHit_Counter_win1.release();
+            mAudioTrack_BallHit_Counter_win1 = null;
+        }
+        if (mAudioTrack_DestroyTarget_menuselectbig_win2 != null) {
+            mAudioTrack_DestroyTarget_menuselectbig_win2.release();
+            mAudioTrack_DestroyTarget_menuselectbig_win2 = null;
+        }
+        if (mAudioTrackBallFall_menuselectsmall_blueBallExplosion != null) {
+            mAudioTrackBallFall_menuselectsmall_blueBallExplosion.release();
+            mAudioTrackBallFall_menuselectsmall_blueBallExplosion = null;
+        }
+
+        if (mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2 != null) {
+            mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2.release();
+            mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2 = null;
+        }
+
+        /*
         if (audioTrackState != AUDIO_TRACK_STATE_WIN || mAudioTrack_BallHit_Counter_win1 == null || mAudioTrack_DestroyTarget_menuselectbig_win2 == null || mAudioTrackBallFall_menuselectsmall_blueBallExplosion == null) {
             audioTrackState = AUDIO_TRACK_STATE_WIN;
 
@@ -291,6 +346,8 @@ public abstract class Sound {
                 e.printStackTrace();
             }
         }
+
+        */
     }
 
     public static void loadGameAudioTracks(){
@@ -308,16 +365,20 @@ public abstract class Sound {
 
             if (mAudioTrack_BallHit_Counter_win1 != null) {
                 mAudioTrack_BallHit_Counter_win1.release();
+                mAudioTrack_BallHit_Counter_win1 = null;
             }
             if (mAudioTrack_DestroyTarget_menuselectbig_win2 != null) {
                 mAudioTrack_DestroyTarget_menuselectbig_win2.release();
+                mAudioTrack_DestroyTarget_menuselectbig_win2 = null;
             }
             if (mAudioTrackBallFall_menuselectsmall_blueBallExplosion != null) {
                 mAudioTrackBallFall_menuselectsmall_blueBallExplosion.release();
+                mAudioTrackBallFall_menuselectsmall_blueBallExplosion = null;
             }
 
             if (mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2 != null) {
                 mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2.release();
+                mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2 = null;
             }
 
             ByteBuffer pcm;
@@ -390,8 +451,13 @@ public abstract class Sound {
         }
     }
 
+    public void playSucces1(){
 
-    public static void playSucces1(){
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("success1.wav", 1f));
+        //new AudioTrackThread(Game.mainActivity, "success1.wav", 1f).run();
+
+        /*
+
         Log.e(TAG, "playSucces1");
         ByteBuffer pcm;
         byte[] music;
@@ -416,9 +482,15 @@ public abstract class Sound {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 
-    public static void playGameOver(){
+    public void playGameOver(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("gameover2.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "gameover2.wav", 1f).run();
+        /*
         Log.e(TAG, "playGameOver");
         ByteBuffer pcm;
         byte[] music;
@@ -442,11 +514,17 @@ public abstract class Sound {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        */
     }
 
-    public static void playStarsUp(){
+    public void playStarsUp(){
 
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("starsup.wav", 1f));
 
+        //new AudioTrackThread(Game.mainActivity, "starsup.wav", 1f).run();
+
+        /*
 
         Log.e(TAG, "playSucces1");
         ByteBuffer pcm;
@@ -464,6 +542,8 @@ public abstract class Sound {
             pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
             music = pcm.array();
 
+
+
             mAudioTrack_5 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
                     AudioFormat.CHANNEL_OUT_STEREO,
                     AudioFormat.ENCODING_PCM_16BIT, music.length,
@@ -473,6 +553,8 @@ public abstract class Sound {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        */
     }
 
     public static void playTextBoxAppear(){
@@ -513,43 +595,77 @@ public abstract class Sound {
     }
 
 
-    public static void playBallFall(){
+    public void playBallFall(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("ballfall.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "ballfall.wav", 1f).run();
+
+        /*
+
         if (audioTrackState != AUDIO_TRACK_STATE_GAME){
             Log.e(TAG, "Audio tracks game não carregados. playBallFall State != AUDIO_TRACK_STATE_GAME");
             return;
         }
         playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion, 0.8f);
+        */
     }
 
-    public static void playWin1(){
+    public void playWin1(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("win0_powerup17.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "win0_powerup17.wav", 1f).run();
+
+
+        /*
         if (audioTrackState != AUDIO_TRACK_STATE_WIN){
             Log.e(TAG, "Audio tracks game não carregados. playWin1 State != AUDIO_TRACK_STATE_WIN");
             return;
         }
         playAudioTrack(mAudioTrack_BallHit_Counter_win1, 0.5f);
+        */
     }
 
-    public static void playWin2(){
+    public void playWin2(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("win1_powerup16.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "win1_powerup16.wav", 1f).run();
+
+        /*
         if (audioTrackState != AUDIO_TRACK_STATE_WIN){
             Log.e(TAG, "Audio tracks game não carregados. playWin2 State != AUDIO_TRACK_STATE_WIN");
             return;
         }
         playAudioTrack(mAudioTrack_DestroyTarget_menuselectbig_win2, 0.5f);
+        */
     }
 
-    public static void playBlueBallExplosion(){
+    public void playBlueBallExplosion(){
+
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("blueballexplosion.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "blueballexplosion.wav", 1f).run();
+
+        /*
         if (audioTrackState != AUDIO_TRACK_STATE_WIN){
             Log.e(TAG, "Audio tracks game não carregados. playBlueBallExplosion State != AUDIO_TRACK_STATE_WIN");
             return;
         }
         playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion, 0.8f);
+
+        */
     }
 
     public static void playAudioTrack(AudioTrack at, float volume){
+
         if (at.getState() == AudioTrack.STATE_UNINITIALIZED || at.getState() == AudioTrack.STATE_NO_STATIC_DATA){
             Log.e(TAG, "Audio não inicializado.");
         } else {
             at.stop();
+            at.flush();
             at.setVolume(volume);
             at.play();
         }
@@ -563,20 +679,37 @@ public abstract class Sound {
         playAudioTrack(mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2, 0.8f);
     }
 
-    public static void playMenuIconDrop(){
+    public void playMenuIconDrop(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("bells9.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "bells9.wav", 1f).run();
+
+        /*
+
         if (audioTrackState != AUDIO_TRACK_STATE_MENU){
             Log.e(TAG, "Audio tracks game não carregados. playMenuIconDrop State != AUDIO_TRACK_STATE_MENU");
             return;
         }
         playAudioTrack(mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2, 0.3f);
+
+        */
     }
 
-    public static void playExplosion(){
+    public void playExplosion(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("explosion.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "explosion.wav", 1f).run();
+
+        /*
         if (audioTrackState != AUDIO_TRACK_STATE_GAME){
             Log.e(TAG, "Audio tracks game não carregados. playExplosion State != AUDIO_TRACK_STATE_GAME");
             return;
         }
         playAudioTrack(mAudioTrack_soundMenuIconDrop2_explosion_soundSuccess2, 0.8f);
+
+        */
     }
 
     public static void playDestroyTarget(){
@@ -596,15 +729,33 @@ public abstract class Sound {
         playAudioTrack(mAudioTrack_BallHit_Counter_win1, 0.8f);
     }
 
-    public static void playMenuSmall(){
+    public void playMenuSmall(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("menuselectsmall.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "menuselectsmall.wav", 1f).run();
+
+        /*
+
         if (audioTrackState != AUDIO_TRACK_STATE_MENU){
             Log.e(TAG, "Audio tracks menu não carregados. playMenuSmall State != AUDIO_TRACK_STATE_MENU");
             return;
         }
         playAudioTrack(mAudioTrackBallFall_menuselectsmall_blueBallExplosion, 0.8f);
+
+        */
     }
 
-    public static void playPlayMenuBig(){
+
+
+    public void playPlayMenuBig(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,  new AudioData("menuselectbig.wav", 1f));
+
+        //new Thread(new AudioTrackThread(Game.mainActivity, "menuselectbig.wav", 1f)).start();
+
+        /*
+
         if (audioTrackState != AUDIO_TRACK_STATE_MENU){
             Log.e(TAG, "Audio tracks menu não carregados. playPlayMenuBig State != AUDIO_TRACK_STATE_MENU");
             return;
@@ -613,15 +764,26 @@ public abstract class Sound {
 
 
         playAudioTrack(mAudioTrack_DestroyTarget_menuselectbig_win2, 0.8f);
+
+        */
     }
 
 
-    public static void playCounter(){
+    public  void playCounter(){
+
+        new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new AudioData("counter.wav", 1f));
+
+        //new AudioTrackThread(Game.mainActivity, "menuselectbig.wav", 1f).run();
+
+        /*
+
         if (audioTrackState != AUDIO_TRACK_STATE_MENU){
             Log.e(TAG, "Audio tracks menu não carregados. State != AUDIO_TRACK_STATE_MENU");
             return;
         }
         playAudioTrack(mAudioTrack_BallHit_Counter_win1, 0.8f);
+
+        */
     }
 
     public static int play(int id, float left, float right, int loop){
@@ -703,5 +865,188 @@ public abstract class Sound {
                 break;
         }
     }
+
+    private static class AudioData{
+        public String fileName;
+        public float volume;
+
+        public AudioData(String fileName, float volume) {
+
+
+            this.fileName = fileName;
+            this.volume = volume;
+        }
+
+    }
+
+
+
+    private class PlayAudio extends AsyncTask<AudioData, Integer, Integer> {
+        private String fileName;
+        private Context context;
+        private float volume;
+
+        private byte[] music;
+        byte[] musicPart = new byte[512];
+        AudioTrack track;
+
+        protected Integer doInBackground(AudioData... data) {
+            this.fileName = data[0].fileName;
+            this.volume = data[0].volume;
+            this.context = Game.getContext();
+            try {
+
+                int minSize = AudioTrack.getMinBufferSize(44100,
+                        AudioFormat.CHANNEL_OUT_STEREO,
+                        AudioFormat.ENCODING_PCM_16BIT);
+
+
+                track = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                        AudioFormat.CHANNEL_OUT_STEREO,
+                        AudioFormat.ENCODING_PCM_16BIT, minSize,
+                        AudioTrack.MODE_STREAM);
+
+
+                ByteBuffer pcm;
+                InputStream input = context.getAssets().open(fileName);
+                WavToPCM.WavInfo info = WavToPCM.readHeader(input);
+                pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
+                music = pcm.array();
+
+
+
+
+                track.play();
+
+                boolean continuePlaying = true;
+                int musicPartNumber = 0;
+                while(continuePlaying)
+                {
+                    int i;
+                    for( i = 0; i < musicPart.length; i++ )
+                    {
+                        if (i + (musicPart.length * musicPartNumber) < music.length) {
+                            musicPart[i] = music[i + (musicPart.length * musicPartNumber)];
+                        } else {
+                            continuePlaying = false;
+                        }
+                    }
+                    musicPartNumber += 1;
+                    track.write(musicPart, 0, i);
+                }
+
+
+                track.release();
+                track = null;
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+
+            return 0;
+
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(Integer result) {
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            Log.e(TAG, "onCancelled thread "+ fileName);
+            if (track != null){
+                if (track.getState() == AudioTrack.STATE_INITIALIZED) {
+                    track.stop();
+                }
+                track.release();
+                track = null;
+            }
+
+
+        }
+    }
+
+
+
+    class AudioTrackThread implements Runnable {
+        private String fileName;
+        private Context context;
+        private float volume;
+        private byte[] music;
+        byte[] musicPart = new byte[512];
+        AudioTrack track;
+
+        AudioTrackThread(Context context, String fileName, float volume) {
+            this.context = context;
+            this.fileName = fileName;
+            this.volume = volume;
+
+        }
+
+
+        @Override
+        public void run() {
+            //android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_AUDIO);
+            try {
+                playWaveFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void playWaveFile() throws IOException {
+            ByteBuffer pcm;
+            InputStream input = context.getAssets().open(fileName);
+            WavToPCM.WavInfo info = WavToPCM.readHeader(input);
+            pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
+            music = pcm.array();
+
+            int minSize = AudioTrack.getMinBufferSize(44100,
+                    AudioFormat.CHANNEL_OUT_STEREO,
+                    AudioFormat.ENCODING_PCM_16BIT);
+
+
+            track = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                    AudioFormat.CHANNEL_OUT_STEREO,
+                    AudioFormat.ENCODING_PCM_16BIT, minSize,
+                    AudioTrack.MODE_STREAM);
+
+            track.play();
+            handleSound();
+        }
+
+        private void handleSound()
+        {
+            boolean continuePlaying = true;
+            int musicPartNumber = 0;
+            while(continuePlaying)
+            {
+                int i;
+                for( i = 0; i < musicPart.length; i++ )
+                {
+                    if (i + (musicPart.length * musicPartNumber) < music.length) {
+                        musicPart[i] = music[i + (musicPart.length * musicPartNumber)];
+                    } else {
+                        continuePlaying = false;
+                    }
+                }
+                musicPartNumber += 1;
+                track.write(musicPart, 0, i);
+            }
+
+
+            track.release();
+            track = null;
+
+
+        }
+    }
+
 
 }

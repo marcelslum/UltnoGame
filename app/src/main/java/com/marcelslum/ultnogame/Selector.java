@@ -155,7 +155,7 @@ public class Selector extends Entity{
 
     public void levelDown() {
         if (this.selectedValue != 0){
-            Sound.playMenuSmall();
+            Game.sound.playMenuSmall();
 
             //Sound.play(Sound.soundMenuSelectSmall, 1, 1, 0);
             this.selectedValue -=1;
@@ -167,7 +167,7 @@ public class Selector extends Entity{
     public void levelUp(){
         if (this.selectedValue < (this.values.length-1)){
             //Sound.play(Sound.soundMenuSelectSmall, 1, 1, 0);
-            Sound.playMenuSmall();
+            Game.sound.playMenuSmall();
             this.selectedValue +=1;
             this.verifyOnChangeComplete();
         }
@@ -250,7 +250,7 @@ public class Selector extends Entity{
     }
 
     public void backToMenu(){
-        Sound.playPlayMenuBig();
+        Game.sound.playPlayMenuBig();
         //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
         isBlocked = true;
 

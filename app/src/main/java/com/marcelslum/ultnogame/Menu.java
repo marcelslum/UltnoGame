@@ -50,7 +50,7 @@ class Menu extends Entity{
 
 
     public void toSelector(Selector selector, String selectedValue){
-        Sound.playPlayMenuBig();
+        Game.sound.playPlayMenuBig();
         //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
         this.block();
         this.display();
@@ -97,7 +97,7 @@ class Menu extends Entity{
                                            });
         animationMenu.start();
 
-        Sound.playPlayMenuBig();
+        Game.sound.playPlayMenuBig();
         //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
     }
 
@@ -137,7 +137,7 @@ class Menu extends Entity{
 
                                 Game.vibrate(Game.VIBRATE_SMALL);
                                 Game.blockAndWaitTouchRelease();
-                                Sound.playPlayMenuBig();
+                                Game.sound.playPlayMenuBig();
                                 //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
 
                                 ArrayList<float[]> valuesAnimation = new ArrayList<>();

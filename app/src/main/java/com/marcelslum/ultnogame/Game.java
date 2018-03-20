@@ -18,6 +18,8 @@ import static android.content.Context.ACTIVITY_SERVICE;
 
 public class Game {
 
+    public static Sound sound = new Sound();
+
     public static boolean forDebugDeleteDatabaseAndStorage = false;
     public static boolean ganharComMetadeDasBolas = true;
     public static boolean sempreGanharTodasEstrelas = false;
@@ -597,7 +599,7 @@ public class Game {
                 MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
             }
 
-            Sound.playMenuIconDrop();
+            Game.sound.playMenuIconDrop();
             //Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             mainActivity.showAdView();
@@ -639,7 +641,7 @@ public class Game {
                 tipTextBox.clearDisplay();
             }
 
-            Sound.playMenuIconDrop();
+            Game.sound.playMenuIconDrop();
             //Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             MenuHandler.groupMenu.clearDisplay();
@@ -702,6 +704,8 @@ public class Game {
         } else if (state == GAME_STATE_MENU){
 
             Sound.loadMenuAudioTracks();
+
+            sound.playSucces1();
 
             if (Game.versaoBeta) {
                 MessagesHandler.messageBeta.display();
@@ -803,19 +807,19 @@ public class Game {
                         MessagesHandler.messagePreparation.setColor(Color.transparente);
                         //innerMessagePreparation.setText("4");
                     } else if (innerMessagePreparation.numberForAnimation == 3f){
-                        Sound.playCounter();
+                        Game.sound.playCounter();
                         //Sound.play(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         MessagesHandler.messagePreparation.display();
                         MessagesHandler.messagePreparation.setColor(Color.vermelhoCheio);
                         innerMessagePreparation.setText("3");
                     } else if (innerMessagePreparation.numberForAnimation == 2f){
-                        Sound.playCounter();
+                        Game.sound.playCounter();
                         //Sound.play(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         innerMessagePreparation.setText("2");
                     } else if (innerMessagePreparation.numberForAnimation == 1f) {
-                        Sound.playCounter();
+                        Game.sound.playCounter();
                         //Sound.play(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         innerMessagePreparation.setText("1");
@@ -888,7 +892,7 @@ public class Game {
 
             mainActivity.showAdView();
             stopAndReleaseMusic();
-            Sound.playGameOver();
+            Game.sound.playGameOver();
             //Sound.play(Sound.soundGameOver, 1, 1, 0);
             SaveGame.addLevelPlayed();
             int totalStars = 0;
@@ -987,7 +991,7 @@ public class Game {
             // TODO o que fazer com a animação quando for pausado
             stopAndReleaseMusic();
             //Sound.play(Sound.soundWin1, 1, 1, 0);
-            Sound.playWin1();
+            Game.sound.playWin1();
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
 
@@ -1121,7 +1125,7 @@ public class Game {
 
             clearAllGameEntities();
 
-            Sound.playWin2();
+            Game.sound.playWin2();
             //Sound.play(Sound.soundWin2, 1, 1, 0);
 
             ButtonHandler.buttonContinue.clearDisplay();
@@ -1253,7 +1257,7 @@ public class Game {
                         if (starsDiference > 0){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 1));
-                            Sound.playStarsUp();
+                            Game.sound.playStarsUp();
 
                             //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
@@ -1261,28 +1265,28 @@ public class Game {
                         if (starsDiference > 1){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 2));
-                            Sound.playStarsUp();
+                            Game.sound.playStarsUp();
                             //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 3f) {
                         if (starsDiference > 2){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 3));
-                            Sound.playStarsUp();
+                            Game.sound.playStarsUp();
                             //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 4f) {
                         if (starsDiference > 3){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 4));
-                            Sound.playStarsUp();
+                            Game.sound.playStarsUp();
                             //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 5f) {
                         if (starsDiference > 4){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 5));
-                            Sound.playStarsUp();
+                            Game.sound.playStarsUp();
                             //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     }

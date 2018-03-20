@@ -1663,7 +1663,7 @@ public class Ball extends Circle{
         particleGenerator = ParticleGenerator.getNew(x + accumulatedTranslateX, y + accumulatedTranslateY);
         particleGenerator.activate();
 
-        Sound.playExplosion();
+        Game.sound.playExplosion();
 
         //Sound.play(Sound.soundExplosion, 1, 1, 0);
 
@@ -1802,7 +1802,7 @@ public class Ball extends Circle{
                 self.isVisible = false;
             }
         });
-        Sound.playBallFall();
+        Game.sound.playBallFall();
         //Sound.play(Sound.soundBallFall, 1, 1, 0);
 
         if (listenForExplosion){
