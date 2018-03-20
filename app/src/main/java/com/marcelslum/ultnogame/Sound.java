@@ -913,9 +913,6 @@ public class Sound {
                 pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
                 music = pcm.array();
 
-
-
-
                 track.play();
 
                 boolean continuePlaying = true;
