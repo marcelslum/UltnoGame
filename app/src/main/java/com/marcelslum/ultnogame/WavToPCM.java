@@ -42,10 +42,10 @@ public class WavToPCM {
             this.isStereo = isStereo;
             this.dataSize = dataSize;
 
-            Log.e("WavToPCM", "WavInfo samplesRate: "+rate);
-            Log.e("WavToPCM", "WavInfo bits: "+bits);
-            Log.e("WavToPCM", "WavInfo isStereo: "+isStereo);
-            Log.e("WavToPCM", "WavInfo dataSize: "+dataSize);
+            //Log.e("WavToPCM", "WavInfo samplesRate: "+rate);
+            //Log.e("WavToPCM", "WavInfo bits: "+bits);
+            //Log.e("WavToPCM", "WavInfo isStereo: "+isStereo);
+            //Log.e("WavToPCM", "WavInfo dataSize: "+dataSize);
 
 
         }

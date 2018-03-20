@@ -87,15 +87,24 @@ public class LoopMediaPlayer {
         if (mCurrentPlayer != null) {
             try {
                 mCurrentPlayer.stop();
+            } catch (Exception e) {
+            }
+
+            try {
                 mCurrentPlayer.release();
             } catch (Exception e) {
             }
+
 
         }
 
         if (mNextPlayer != null) {
             try {
                 mNextPlayer.stop();
+            } catch (Exception e) {
+            }
+
+            try {
                 mNextPlayer.release();
             } catch (Exception e) {
             }

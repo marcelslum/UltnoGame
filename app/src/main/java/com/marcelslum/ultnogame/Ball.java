@@ -1663,7 +1663,9 @@ public class Ball extends Circle{
         particleGenerator = ParticleGenerator.getNew(x + accumulatedTranslateX, y + accumulatedTranslateY);
         particleGenerator.activate();
 
-        Sound.play(Sound.soundExplosion, 1, 1, 0);
+        Sound.playExplosion();
+
+        //Sound.play(Sound.soundExplosion, 1, 1, 0);
 
         int quantityOfClones = 3;
         float distance = radius * 3;

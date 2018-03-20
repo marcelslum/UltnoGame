@@ -169,6 +169,7 @@ public class Game {
     public static boolean forBlueBallExplode = false;
     public static float blueBallExplodeX = 0;
     public static float blueBallExplodeY = 0;
+    public static String messageScorePanel;
     
 
     private Game() {}
@@ -193,7 +194,11 @@ public class Game {
             LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
             Game.setGameState(Game.GAME_STATE_PREPARAR);
         } else if (SaveGame.saveGame.currentLevelNumber < 101){
-            Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+            Game.mainActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                }
+            });
         } else {
             Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
         }
@@ -592,7 +597,8 @@ public class Game {
                 MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
             }
 
-            Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
+            Sound.playMenuIconDrop();
+            //Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
@@ -633,7 +639,8 @@ public class Game {
                 tipTextBox.clearDisplay();
             }
 
-            Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
+            Sound.playMenuIconDrop();
+            //Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             MenuHandler.groupMenu.clearDisplay();
             MenuHandler.groupMenu.block();
@@ -877,6 +884,8 @@ public class Game {
 
             Sound.loadMenuAudioTracks();
 
+            Sound.loop.stopAndRelease();
+
             mainActivity.showAdView();
             stopAndReleaseMusic();
             Sound.playGameOver();
@@ -955,6 +964,8 @@ public class Game {
         } else if (state == GAME_STATE_VITORIA){
 
             Sound.loadAfterGameAudioTracks();
+
+            Sound.loop.stopAndRelease();
 
             Level.levelObject.levelGoalsObject.setFinish(TimeHandler.stopTimeOfLevelPlay());
             SaveGame.addLevelPlayed();
@@ -1042,10 +1053,9 @@ public class Game {
                 @Override
                 public void run() {
                     if (ballGoalsPanel.blueBalls > 0){
-                        int points = (int)((float) ScoreHandler.scorePanel.value * 1.5f);
-                        ScoreHandler.scorePanel.setValue(points, true, 1000, true);
-                        ScoreHandler.scorePanel.showMessage("+ 50%", 800);
-                        ballGoalsPanel.explodeBlueBall();
+                                int points = (int)((float) ScoreHandler.scorePanel.value * 1.5f);
+                                ScoreHandler.scorePanel.setValue(points, true, 1000, true);
+                                ballGoalsPanel.explodeBlueBall();
                     } else if (!levelGoalsPanel.isVisible){
                         Utils.createSimpleAnimation(ballGoalsPanel, "translateX", "translateX", 2000, 0f, gameAreaResolutionX*2f).start();
                         ballGoalsPanel.clearExplosions();
@@ -1243,31 +1253,37 @@ public class Game {
                         if (starsDiference > 0){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 1));
-                            Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            Sound.playStarsUp();
+
+                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 2f) {
                         if (starsDiference > 1){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 2));
-                            Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            Sound.playStarsUp();
+                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 3f) {
                         if (starsDiference > 2){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 3));
-                            Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            Sound.playStarsUp();
+                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 4f) {
                         if (starsDiference > 3){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 4));
-                            Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            Sound.playStarsUp();
+                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 5f) {
                         if (starsDiference > 4){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 5));
-                            Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            Sound.playStarsUp();
+                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     }
                 }
@@ -1280,6 +1296,7 @@ public class Game {
                     ButtonHandler.buttonContinue.unblock();
                     MessagesHandler.messageContinue.display();
                     MessagesHandler.messageContinue.setColor(new Color(0f, 0f, 0f, 1f));
+                    Sound.loadMenuAudioTracks();
                     StarsHandler.updateConqueredStars();
                 }
             });

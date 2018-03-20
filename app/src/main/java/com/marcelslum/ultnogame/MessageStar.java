@@ -82,8 +82,8 @@ public class MessageStar extends Entity {
         
         if (!isShowing){
             isShowing = true;
-            //Sound.playSucess1();
-            Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
+            Sound.playSucces1();
+            //Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
         } else {
 
             //Log.e(TAG, "showing");

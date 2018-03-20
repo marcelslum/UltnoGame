@@ -8,6 +8,10 @@ import android.util.Log;
  */
 public class ScorePanel extends Entity {
 
+
+    static final String TAG = "ScorePanel";
+
+
     public float size;
     public int value;
     public int animDuration;
@@ -142,14 +146,18 @@ public class ScorePanel extends Entity {
         uvsBuffer = Utils.generateOrUpdateFloatBuffer(uvsData, uvsBuffer);
     }
 
+
+
     public void showMessage(String message, int duration) {
         displayMessage = true;
 
-        //Log.e(TAG, "showMessage "+ message);
+        Log.e(TAG, "showMessage "+ message);
         //Log.e(TAG, "x + (getWidth()*0.8f) "+ (x + (getWidth()*0.8f)));
         //Log.e(TAG, "y - size*0.3f "+ (y - size*0.3f));
         //Log.e(TAG, "size*1.5f "+ (size*1.5f));
 
+
+        messageText.setAlpha(1.0f);
 
         //childs.clear();
         //messageText = Game.textPool.get();
@@ -214,10 +222,9 @@ public class ScorePanel extends Entity {
                 String subString = valueString.substring(i - (7 - valueLength), i + 1- (7 - valueLength));
                 subInteger = Integer.parseInt(subString);
             }
-            if (subInteger == 0){
-                subInteger = 10;
-            }
-
+            //if (subInteger == 0){
+            //    subInteger = 10;
+            //}
 
             switch (subInteger) {
                 case 1:
