@@ -107,7 +107,27 @@ public class MyGLSurface extends GLSurfaceView {
             // This method will be called on the rendering
             // thread:
             public void run() {
-                Game.returnFromAd();
+                Game.bordaB.y = Game.resolutionY;
+                Game.eraseAllGameEntities();
+                Game.eraseAllHudEntities();
+
+                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+
+                if (Game.gameState == Game.GAME_STATE_MENU){
+                    Game.setGameState(Game.GAME_STATE_MENU);
+                    Game.prepareAfterInterstitialFlag = false;
+                    return;
+                }
+
+                if (Game.prepareAfterInterstitialFlag){
+                    Game.prepareAfterInterstitialFlag = false;
+                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+                    Game.setGameState(Game.GAME_STATE_PREPARAR);
+                } else if (SaveGame.saveGame.currentLevelNumber < 101){
+                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                } else {
+                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                }
             }});
     }
 
@@ -117,6 +137,7 @@ public class MyGLSurface extends GLSurfaceView {
                 ScoreHandler.scorePanel.showMessage(Game.messageForScore, 2000);
             }});
     }
+
     
     public void explodeBlueBall(){
         queueEvent(new Runnable() {

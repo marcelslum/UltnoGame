@@ -178,33 +178,6 @@ public class Game {
 
     public static void returnFromAd(){
 
-        Game.bordaB.y = Game.resolutionY;
-        Game.stopAndReleaseMusic();
-        Game.eraseAllGameEntities();
-        Game.eraseAllHudEntities();
-
-        //Log.e(TAG, "onAdClose Game.prepareAfterInterstitialFlag " + Game.prepareAfterInterstitialFlag);
-
-        if (gameState == GAME_STATE_MENU){
-            Game.setGameState(Game.GAME_STATE_MENU);
-            Game.prepareAfterInterstitialFlag = false;
-            return;
-        }
-
-        if (Game.prepareAfterInterstitialFlag){
-            Game.prepareAfterInterstitialFlag = false;
-            LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-            Game.setGameState(Game.GAME_STATE_PREPARAR);
-        } else if (SaveGame.saveGame.currentLevelNumber < 101){
-            Game.mainActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-                }
-            });
-        } else {
-            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-        }
-
     }
     
     
@@ -708,6 +681,9 @@ public class Game {
                     activateFrame(500);
                 }
             }
+
+            if (Sound.loop != null) Sound.loop.stopAndRelease();
+
             SelectorHandler.repositionSelectors(state);
             initTittle();
             mainActivity.showAdView();
@@ -716,7 +692,7 @@ public class Game {
             MenuHandler.menuInGame.block();
             MenuHandler.groupMenu.block();
             MenuHandler.levelMenu.block();
-            stopAndReleaseMusic();
+
             eraseAllGameEntities();
             eraseAllHudEntities();
             MenuHandler.menuMain.unblockAndDisplay();
@@ -764,7 +740,7 @@ public class Game {
             if (!sameState) {activateFrame(2500);}
             Level.levelObject.loadEntities();
 
-            //Sound.loadLoop();
+            Sound.loadLoop();
 
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
@@ -872,12 +848,14 @@ public class Game {
 
         } else if (state == GAME_STATE_DERROTA){
 
-            //Sound.loop.stopAndRelease();
+            if (Sound.loop != null) {
+                Sound.loop.stopAndRelease();
+            }
+
+            Sound.soundPool.autoPause();
 
             mainActivity.showAdView();
-            stopAndReleaseMusic();
             Game.sound.playGameOver();
-            //Sound.playSoundPool(Sound.soundGameOver, 1, 1, 0);
             SaveGame.addLevelPlayed();
             int totalStars = 0;
             for (int i = 0; i < Level.levelObject.levelGoalsObject.levelGoals.size(); i++){
@@ -902,20 +880,21 @@ public class Game {
             
         } else if (state == GAME_STATE_PAUSE){
 
+            Sound.soundPool.autoPause();
+
             mainActivity.showAdView();
             ButtonHandler.buttonReturnObjectivesPause.block();
             ButtonHandler.buttonReturnObjectivesPause.clearDisplay();
             TimeHandler.stopTimeOfLevelPlay();
 
-            for (int i = 0; i < Game.balls.size(); i++) {
-                if (Game.balls.get(i).listenForExplosion){
-                    Sound.soundPool.pause(Game.balls.get(i).alarmId);
-                }
-            }
+            Sound.soundPool.autoPause();
 
             //Log.e("game", "ativando game_state_pause");
             if (previousState != GAME_STATE_OPCOES_GAME) {
-                //Sound.loop.pause();
+                if (Sound.loop != null) {
+                    Sound.loop.pause();
+                }
+
                 //Sound.playPlayMenuBig();
                 stopAllGameEntities();
                 reduceAllGameEntitiesAlpha(300);
@@ -949,7 +928,13 @@ public class Game {
 
         } else if (state == GAME_STATE_VITORIA){
 
-            //Sound.loop.stopAndRelease();
+            if (Sound.loop != null) {
+                Sound.loop.stopAndRelease();
+            }
+
+            Sound.soundPool.autoPause();
+
+
             Level.levelObject.levelGoalsObject.setFinish(TimeHandler.stopTimeOfLevelPlay());
             SaveGame.addLevelPlayed();
 
@@ -968,8 +953,7 @@ public class Game {
             MessagesHandler.messageCurrentLevel.reduceAlphaAndClearDisplay(500);
 
             // TODO o que fazer com a animação quando for pausado
-            stopAndReleaseMusic();
-            //Sound.playSoundPool(Sound.soundWin1, 1, 1, 0);
+
             Game.sound.playWin1();
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
@@ -1105,7 +1089,6 @@ public class Game {
             clearAllGameEntities();
 
             Game.sound.playWin2();
-            //Sound.playSoundPool(Sound.soundWin2, 1, 1, 0);
 
             ButtonHandler.buttonContinue.clearDisplay();
             ButtonHandler.buttonContinue.block();
@@ -1299,11 +1282,6 @@ public class Game {
             Tutorial.currentTutorialObject.showFirst();
             
         }
-    }
-
-    public static void stopAndReleaseMusic(){
-        if (Sound.loop != null)
-            Sound.loop.stopAndRelease();
     }
 
     private static void freeAllGameEntities() {

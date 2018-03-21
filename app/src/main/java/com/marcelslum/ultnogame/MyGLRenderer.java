@@ -179,6 +179,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             Game.myGlSurface.explodeBlueBall();
         }
 
+
         // Get the current time
         long now = System.currentTimeMillis();
 

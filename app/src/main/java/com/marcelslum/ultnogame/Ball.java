@@ -1640,8 +1640,6 @@ public class Ball extends Circle{
     
     public void explode(){
 
-        Log.e(TAG, "explode");
-        
         listenForExplosion = false;
         if (Sound.soundPool != null) {
             Sound.soundPool.stop(alarmId);
