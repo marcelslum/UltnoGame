@@ -57,7 +57,7 @@ public class Messages extends Entity {
         textObject.isVisible = true;
         textObject2.isVisible = true;
 
-        Sound.playTextBoxAppear();
+        Game.sound.playTextBoxAppear();
 
         //Sound.play(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
 

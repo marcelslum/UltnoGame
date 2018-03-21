@@ -140,7 +140,8 @@ public class Level {
                 if (Game.gameState == Game.GAME_STATE_JOGAR){
                     //Log.e("level", "listener pause ativado");
                     Game.blockAndWaitTouchRelease();
-                    Sound.play(Sound.soundCounter, 0.5f, 0.5f, 0);
+                    Game.sound.playCounter();
+                    //Sound.play(Sound.soundCounter, 0.5f, 0.5f, 0);
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 }
             }

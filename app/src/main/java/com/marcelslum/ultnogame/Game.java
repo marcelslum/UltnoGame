@@ -529,13 +529,13 @@ public class Game {
             mainActivity.showInterstitial();
             
         } else if (state == GAME_STATE_SOBRE){
-            Sound.loadMenuAudioTracks();
+
             mainActivity.showAdView();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuAbout));
             aboutTextView.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
-            Sound.loadMenuAudioTracks();
+
             mainActivity.showAdView();
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
@@ -571,8 +571,6 @@ public class Game {
 
         } else if (state == GAME_STATE_OBJETIVO_PAUSE){
 
-            Sound.loadMenuAudioTracks();
-
             mainActivity.showAdView();
 
             levelGoalsPanel.appearGrayAndShine();
@@ -590,8 +588,6 @@ public class Game {
             MessagesHandler.messageBack.display();
 
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
-
-            Sound.loadMenuAudioTracks();
 
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/icons");
 
@@ -617,8 +613,6 @@ public class Game {
             
         } else if (state == GAME_STATE_MENU_TUTORIAL){
 
-            Sound.loadMenuAudioTracks();
-
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/tutorials");
 
             mainActivity.showAdView();
@@ -630,8 +624,6 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
 
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
-
-            Sound.loadMenuAudioTracks();
 
             mainActivity.showAdView();
 
@@ -673,7 +665,6 @@ public class Game {
             mainActivity.hideAdView();
             Splash.init();
         } else if (state == GAME_STATE_OPCOES){
-            Sound.loadMenuAudioTracks();
             if (previousState == GAME_STATE_SOBRE){
                 Game.aboutTextView.blockAndClearDisplay();
             }
@@ -693,7 +684,6 @@ public class Game {
 
 
         } else if (state == GAME_STATE_OPCOES_GAME){
-            Sound.loadMenuAudioTracks();
             SelectorHandler.repositionSelectors(state);
             mainActivity.showAdView();
             MenuHandler.menuInGame.blockAndClearDisplay();
@@ -702,10 +692,6 @@ public class Game {
             MessagesHandler.messageInGame.display();
 
         } else if (state == GAME_STATE_MENU){
-
-            Sound.loadMenuAudioTracks();
-
-            sound.playSucces1();
 
             if (Game.versaoBeta) {
                 MessagesHandler.messageBeta.display();
@@ -751,8 +737,6 @@ public class Game {
                     getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
 
         } else if (state == GAME_STATE_PREPARAR){
-
-            Sound.loadMenuAudioTracks();
             
             if (tipTextBox != null){
                 tipTextBox.clearDisplay();
@@ -778,7 +762,7 @@ public class Game {
             if (!sameState) {activateFrame(2500);}
             Level.levelObject.loadEntities();
 
-            Sound.loadLoop();
+            //Sound.loadLoop();
 
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
@@ -886,9 +870,7 @@ public class Game {
 
         } else if (state == GAME_STATE_DERROTA){
 
-            Sound.loadMenuAudioTracks();
-
-            Sound.loop.stopAndRelease();
+            //Sound.loop.stopAndRelease();
 
             mainActivity.showAdView();
             stopAndReleaseMusic();
@@ -917,8 +899,6 @@ public class Game {
             }
             
         } else if (state == GAME_STATE_PAUSE){
-
-            Sound.loadMenuAudioTracks();
 
             mainActivity.showAdView();
             ButtonHandler.buttonReturnObjectivesPause.block();
@@ -967,10 +947,7 @@ public class Game {
 
         } else if (state == GAME_STATE_VITORIA){
 
-            Sound.loadAfterGameAudioTracks();
-
-            Sound.loop.stopAndRelease();
-
+            //Sound.loop.stopAndRelease();
             Level.levelObject.levelGoalsObject.setFinish(TimeHandler.stopTimeOfLevelPlay());
             SaveGame.addLevelPlayed();
 
@@ -1300,14 +1277,13 @@ public class Game {
                     ButtonHandler.buttonContinue.unblock();
                     MessagesHandler.messageContinue.display();
                     MessagesHandler.messageContinue.setColor(new Color(0f, 0f, 0f, 1f));
-                    Sound.loadMenuAudioTracks();
                     StarsHandler.updateConqueredStars();
                 }
             });
             animMessageConqueredStarsTotal.start();
 
         } else if (state == GAME_STATE_TUTORIAL) {
-            Sound.loadMenuAudioTracks();
+
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/tutorials");
             MessagesHandler.messageMenu.clearDisplay();
             MessagesHandler.messageSubMenu.clearDisplay();
