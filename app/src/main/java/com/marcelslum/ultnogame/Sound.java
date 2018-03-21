@@ -287,7 +287,6 @@ public class Sound {
         playStaticAudioTrack(mAudioTrack3, 0.8f);
     }
 
-
     public static int playSoundPool(int id, float left, float right, int loop){
 
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
@@ -648,4 +647,3 @@ public class Sound {
         }
     }
 }
-
