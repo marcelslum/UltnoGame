@@ -21,22 +21,6 @@ public class Sound {
     public static String TAG = "Sound";
 
     public static SoundPool soundPool;
-    //public static int soundBallHit;
-    //public static int soundDestroyTarget;
-    //public static int soundBallFall;
-    //public static int soundMenuSelectBig;
-    //public static int soundMenuSelectSmall;
-    //public static int soundBlueBallExplosion;
-    //public static int soundSuccess;
-    //public static int soundSuccess1;
-    //public static int soundSuccess2;
-    //public static int soundExplosion;
-    //public static int soundGameOver;
-    //public static int soundMenuIconDrop2;
-    //public static int soundStarsUp;
-    //public static int soundWin1;
-    //public static int soundWin2;
-    //public static int soundCounter;
     public static int soundScore;
     public static int soundBarSize;
     public static int soundWind;
@@ -56,30 +40,16 @@ public class Sound {
     static AudioData adMenuBig;
     static AudioData adCounter;
     static AudioData adExplosion;
-    static AudioData adBallHit;
-    static AudioData adBallFall;
-    static AudioData adDestroyTarget;
-
-    static AudioData adMusic1;
-    static AudioData adMusic2;
 
     public static LoopMediaPlayer loop;
 
     public static AudioTrack mAudioTrack1;
     public static AudioTrack mAudioTrack2;
     public static AudioTrack mAudioTrack3;
-
     public static AudioTrack mAudioTrack10;
     public static AudioTrack mAudioTrack11;
     public static AudioTrack mAudioTrack12;
     public static AudioTrack mAudioTrack13;
-    public static AudioTrack mAudioTrack14;
-    public static AudioTrack mAudioTrack15;
-    public static AudioTrack mAudioTrack16;
-    public static AudioTrack mAudioTrack17;
-    public static AudioTrack mAudioTrack18;
-    public static AudioTrack mAudioTrack19;
-    public static AudioTrack mAudioTrack20;
 
     public Sound(){
     }
@@ -646,4 +616,5 @@ public class Sound {
             }
         }
     }
+
 }
