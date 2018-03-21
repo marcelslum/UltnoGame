@@ -29,7 +29,7 @@ public class ButtonHandler {
             public void onPress() {
                 Game.vibrate(Game.VIBRATE_SMALL);
                 Game.sound.playPlayMenuBig();
-                //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                 } else if (Game.gameState == Game.GAME_STATE_SELECAO_GRUPO){
@@ -64,7 +64,7 @@ public class ButtonHandler {
 
                 Game.vibrate(Game.VIBRATE_SMALL);
                 Game.sound.playPlayMenuBig();
-                //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                     MessagesHandler.messageBack.clearDisplay();
@@ -88,7 +88,7 @@ public class ButtonHandler {
                 } else {
                     Game.vibrate(Game.VIBRATE_SMALL);
                     Game.sound.playPlayMenuBig();
-                    //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                    //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
                     if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
 
                         String id;
@@ -177,7 +177,7 @@ public class ButtonHandler {
 
                 Game.vibrate(Game.VIBRATE_SMALL);
                 Game.sound.playPlayMenuBig();
-                //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_VITORIA) {
                     Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
                 } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {

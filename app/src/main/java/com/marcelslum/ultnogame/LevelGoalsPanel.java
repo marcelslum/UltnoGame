@@ -56,10 +56,10 @@ public class LevelGoalsPanel extends Entity{
 
     public void appear() {
         display();
-        Sound.play(Sound.soundTextBoxAppear, 0.5f, 0.5f, 0);
+        Game.sound.playTextBoxAppear();
 
 
-        //Sound.play(Sound.soundMenuIconDrop, 1, 1, 0);
+        //Sound.playSoundPool(Sound.soundMenuIconDrop, 1, 1, 0);
         float firstY = lines.get(0).texts.get(0).y;
         if (firstY < y + size*0.66f) {
             float lastY = lines.get(lines.size() - 1).texts.get(lines.get(lines.size() - 1).texts.size() - 1).y;
@@ -113,7 +113,7 @@ public class LevelGoalsPanel extends Entity{
         if (gray) {
             if (playSound) {
                 Game.sound.playSucces1();
-                //Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
+                //Sound.playSoundPool(Sound.soundSuccess1, 0.5f, 0.5f, 0);
             }
             gray = false;
             for (int l = 0; l < lines.size(); l++) {

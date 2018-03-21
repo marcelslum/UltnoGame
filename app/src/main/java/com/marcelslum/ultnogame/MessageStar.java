@@ -83,7 +83,7 @@ public class MessageStar extends Entity {
         if (!isShowing){
             isShowing = true;
             Game.sound.playSucces1();
-            //Sound.play(Sound.soundSuccess1, 0.5f, 0.5f, 0);
+            //Sound.playSoundPool(Sound.soundSuccess1, 0.5f, 0.5f, 0);
         } else {
 
             //Log.e(TAG, "showing");
@@ -168,7 +168,7 @@ public class MessageStar extends Entity {
 
         if (stay){
 
-            Sound.play(Sound.soundTextBoxAppear, 0.5f, 0.5f, 0);
+            Game.sound.playTextBoxAppear();
 
             Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000, 0f, Game.resolutionX, 0.2f, 0f, 0.8f, 0f, 0f, 0f, false, true).start();
 

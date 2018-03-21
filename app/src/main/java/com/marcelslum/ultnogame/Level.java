@@ -141,7 +141,7 @@ public class Level {
                     //Log.e("level", "listener pause ativado");
                     Game.blockAndWaitTouchRelease();
                     Game.sound.playCounter();
-                    //Sound.play(Sound.soundCounter, 0.5f, 0.5f, 0);
+                    //Sound.playSoundPool(Sound.soundCounter, 0.5f, 0.5f, 0);
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 }
             }

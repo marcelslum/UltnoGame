@@ -116,6 +116,8 @@ public class LoopMediaPlayer {
 
     public void pause(){
         //Log.e(TAG, "pause");
+
+
         if (mCurrentPlayer != null) {
             try {
                 if (mCurrentPlayer.isPlaying()) {
@@ -127,7 +129,7 @@ public class LoopMediaPlayer {
     }
 
     public void play(){
-        //Log.e(TAG, "play");
+        //Log.e(TAG, "playSoundPool");
         if (mCurrentPlayer != null) {
 
             try {
@@ -138,7 +140,7 @@ public class LoopMediaPlayer {
     }
 
     public void isPlaying(){
-        //Log.e(TAG, "play");
+        //Log.e(TAG, "playSoundPool");
         if (mCurrentPlayer != null) {
             mCurrentPlayer.isPlaying();
         }

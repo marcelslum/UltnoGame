@@ -1,6 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.media.MediaPlayer;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -1433,7 +1432,7 @@ public class Ball extends Circle{
 
                 Game.addFakeBall(ball);
 
-                Sound.play(Sound.soundDuplicateBall, 0.7f, 0.7f, 0);
+                Sound.playSoundPool(Sound.soundDuplicateBall, 0.7f, 0.7f, 0);
                 initFakeAnimation();
                 ball.initFakeAnimation();
 
@@ -1619,13 +1618,13 @@ public class Ball extends Circle{
     }
 
     public void replayAlarm(){
-        alarmId = Sound.play(Sound.soundAlarm, 1, 1, 100);
+        alarmId = Sound.playSoundPool(Sound.soundAlarm, 1, 1, 100);
     }
 
 
     private void waitForExplosion() {
         listenForExplosion = true;
-        alarmId = Sound.play(Sound.soundAlarm, 1, 1, 100);
+        alarmId = Sound.playSoundPool(Sound.soundAlarm, 1, 1, 100);
         initialTimeWaitingExplosion = Utils.getTime();
 
         setBallColor(COLOR_BALL_RED);
@@ -1665,7 +1664,7 @@ public class Ball extends Circle{
 
         Game.sound.playExplosion();
 
-        //Sound.play(Sound.soundExplosion, 1, 1, 0);
+        //Sound.playSoundPool(Sound.soundExplosion, 1, 1, 0);
 
         int quantityOfClones = 3;
         float distance = radius * 3;
@@ -1803,7 +1802,7 @@ public class Ball extends Circle{
             }
         });
         Game.sound.playBallFall();
-        //Sound.play(Sound.soundBallFall, 1, 1, 0);
+        //Sound.playSoundPool(Sound.soundBallFall, 1, 1, 0);
 
         if (listenForExplosion){
             Sound.soundPool.stop(alarmId);

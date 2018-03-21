@@ -123,7 +123,7 @@ public class SpecialBall extends Circle{
                     isDead = true;
 
                     bar.specialBarScale();
-                    Sound.play(Sound.soundBarSize, 0.12f, 0.12f, 0);
+                    Sound.playSoundPool(Sound.soundBarSize, 0.12f, 0.12f, 0);
                 }
             }
         }

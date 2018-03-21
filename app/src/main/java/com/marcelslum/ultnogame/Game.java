@@ -453,7 +453,8 @@ public class Game {
                     .build();
 
             if (gameState == GAME_STATE_OBJETIVO_LEVEL) {
-                Sound.play(Sound.soundTextBoxAppear, 0.06f, 0.06f, 0);
+                Game.sound.playTextBoxAppear();
+                //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.06f, 0.06f, 0);
             }
 
             Animation anim1 = Utils.createAnimation4v(tipTextBox, "translateX", "translateX", 5000,
@@ -484,7 +485,8 @@ public class Game {
                     });
                     a2.start();
                     if (gameState == GAME_STATE_OBJETIVO_LEVEL) {
-                        Sound.play(Sound.soundTextBoxAppear, 0.03f, 0.03f, 0);
+                        Game.sound.playTextBoxAppear();
+                        //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.03f, 0.03f, 0);
                     }
                 }
             });
@@ -596,7 +598,7 @@ public class Game {
             }
 
             Game.sound.playMenuIconDrop();
-            //Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
+            //Sound.playSoundPool(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
@@ -634,7 +636,7 @@ public class Game {
             }
 
             Game.sound.playMenuIconDrop();
-            //Sound.play(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
+            //Sound.playSoundPool(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             MenuHandler.groupMenu.clearDisplay();
             MenuHandler.groupMenu.block();
@@ -777,7 +779,7 @@ public class Game {
             MessagesHandler.messagePreparation.setColor(Color.transparente);
             MessagesHandler.messagePreparation.display();
             //Sound.playCounter();
-            //Sound.play(Sound.soundCounter, 1, 1, 0);
+            //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
             //Sound.playCounter();
 
             Animation anim = new Animation(MessagesHandler.messagePreparation, "messagePreparation", "numberForAnimation", 6000, values, false, false);
@@ -786,25 +788,25 @@ public class Game {
                 public void onChange() {
                     if (innerMessagePreparation.numberForAnimation == 4f){
                         //Sound.playCounter();
-                        //Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         MessagesHandler.messagePreparation.setColor(Color.transparente);
                         //innerMessagePreparation.setText("4");
                     } else if (innerMessagePreparation.numberForAnimation == 3f){
                         Game.sound.playCounter();
-                        //Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         MessagesHandler.messagePreparation.display();
                         MessagesHandler.messagePreparation.setColor(Color.vermelhoCheio);
                         innerMessagePreparation.setText("3");
                     } else if (innerMessagePreparation.numberForAnimation == 2f){
                         Game.sound.playCounter();
-                        //Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         innerMessagePreparation.setText("2");
                     } else if (innerMessagePreparation.numberForAnimation == 1f) {
                         Game.sound.playCounter();
-                        //Sound.play(Sound.soundCounter, 1, 1, 0);
+                        //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
@@ -826,7 +828,7 @@ public class Game {
 
         } else if (state == GAME_STATE_JOGAR){
 
-            Sound.loadGameAudioTracks();
+            Sound.loadStaticGameAudioTracks();
 
             for (int i = 0; i < Game.balls.size(); i++) {
                 if (Game.balls.get(i).listenForExplosion){
@@ -875,7 +877,7 @@ public class Game {
             mainActivity.showAdView();
             stopAndReleaseMusic();
             Game.sound.playGameOver();
-            //Sound.play(Sound.soundGameOver, 1, 1, 0);
+            //Sound.playSoundPool(Sound.soundGameOver, 1, 1, 0);
             SaveGame.addLevelPlayed();
             int totalStars = 0;
             for (int i = 0; i < Level.levelObject.levelGoalsObject.levelGoals.size(); i++){
@@ -913,7 +915,7 @@ public class Game {
 
             //Log.e("game", "ativando game_state_pause");
             if (previousState != GAME_STATE_OPCOES_GAME) {
-                Sound.loop.pause();
+                //Sound.loop.pause();
                 //Sound.playPlayMenuBig();
                 stopAllGameEntities();
                 reduceAllGameEntitiesAlpha(300);
@@ -967,7 +969,7 @@ public class Game {
 
             // TODO o que fazer com a animação quando for pausado
             stopAndReleaseMusic();
-            //Sound.play(Sound.soundWin1, 1, 1, 0);
+            //Sound.playSoundPool(Sound.soundWin1, 1, 1, 0);
             Game.sound.playWin1();
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
@@ -1073,7 +1075,7 @@ public class Game {
 
             MessagesHandler.messageInGame.increaseAlpha(1600, 1f, new Animation.AnimationListener() {
                 @Override
-                public void onAnimationEnd() {Sound.play(Sound.soundTextBoxAppear, 1, 1, 0);}
+                public void onAnimationEnd() {Game.sound.playTextBoxAppear();}
             });
 
 
@@ -1103,7 +1105,7 @@ public class Game {
             clearAllGameEntities();
 
             Game.sound.playWin2();
-            //Sound.play(Sound.soundWin2, 1, 1, 0);
+            //Sound.playSoundPool(Sound.soundWin2, 1, 1, 0);
 
             ButtonHandler.buttonContinue.clearDisplay();
             ButtonHandler.buttonContinue.block();
@@ -1165,7 +1167,7 @@ public class Game {
                     
                     MessagesHandler.messageGroupsUnblocked.display();
                     Utils.createSimpleAnimation(MessagesHandler.messageGroupsUnblocked, "translateX", "translateX", 500, -gameAreaResolutionX*1.5f, 0f).start();
-                    Sound.play(Sound.soundTextBoxAppear, 1, 1, 0);
+                    Game.sound.playTextBoxAppear();
 
 
                     float initX = (resolutionX * 0.5f) - (((numberOfGroupsUnblocked * groupsUnblockedSize) + ((numberOfGroupsUnblocked-1)*groupsUnblockedPadd))/2f);
@@ -1236,35 +1238,35 @@ public class Game {
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 1));
                             Game.sound.playStarsUp();
 
-                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            //Sound.playSoundPool(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 2f) {
                         if (starsDiference > 1){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 2));
                             Game.sound.playStarsUp();
-                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            //Sound.playSoundPool(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 3f) {
                         if (starsDiference > 2){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 3));
                             Game.sound.playStarsUp();
-                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            //Sound.playSoundPool(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 4f) {
                         if (starsDiference > 3){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 4));
                             Game.sound.playStarsUp();
-                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            //Sound.playSoundPool(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     } else if (MessagesHandler.messageConqueredStarsTotal.numberForAnimation == 5f) {
                         if (starsDiference > 4){
                             MessagesHandler.messageConqueredStarsTotal.setText(getContext().getResources().getString(R.string.messageConqueredStarsTotal) +
                                     "\u0020" + NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal + 5));
                             Game.sound.playStarsUp();
-                            //Sound.play(Sound.soundStarsUp, 0.5f, 0.5f, 0);
+                            //Sound.playSoundPool(Sound.soundStarsUp, 0.5f, 0.5f, 0);
                         }
                     }
                 }

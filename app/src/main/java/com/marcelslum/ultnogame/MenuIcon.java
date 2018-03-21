@@ -223,7 +223,7 @@ public class MenuIcon extends Entity{
             } else {
                 Animation anim = Utils.createAnimation3v(icons.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true);
                 if (!delayShowUnblockMarked) {
-                    //Sound.play(Sound.soundSecretMenuUnblocked, 0.5f, 0.5f, 0);
+                    //Sound.playSoundPool(Sound.soundSecretMenuUnblocked, 0.5f, 0.5f, 0);
                     anim.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
@@ -433,7 +433,7 @@ public class MenuIcon extends Entity{
                     }
 
                     Game.sound.playPlayMenuBig();
-                    //Sound.play(Sound.soundMenuSelectBig, 1, 1, 0);
+                    //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
                     //Log.e(TAG, "press botão do menu");
 
                     ArrayList<float[]> valuesAnimation = new ArrayList<>();

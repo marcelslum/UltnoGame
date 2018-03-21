@@ -59,7 +59,7 @@ public class Messages extends Entity {
 
         Game.sound.playTextBoxAppear();
 
-        //Sound.play(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
+        //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
 
         Animation anim1 = Utils.createAnimation3v(textObject, "translateX", "translateX", 2225,
                 0f, Game.resolutionX, 0.1f, 0f, 0.9f, -Game.resolutionX * 0.05f, false, true);
@@ -72,7 +72,7 @@ public class Messages extends Entity {
                 a2.addAttachedEntities(textObject2);
                 a2.start();
 
-                //Sound.play(Sound.soundTextBoxAppear, 0.05f, 0.05f, 0);
+                //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.05f, 0.05f, 0);
             }
         });
         anim1.start();

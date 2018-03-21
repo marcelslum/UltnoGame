@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -276,7 +274,7 @@ public class Tutorial {
             ButtonHandler.buttonReturn.display();
             ButtonHandler.buttonReturn.unblock();
 
-            Sound.play(Sound.soundTextBoxAppear, 0.5f, 0.5f, 0);
+            Game.sound.playTextBoxAppear();
 
         } else {
 
