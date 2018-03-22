@@ -1049,7 +1049,7 @@ public class Game {
                     }
                 }
             };
-            timer.scheduleAtFixedRate(timerTask, 2000, 2000);
+            timer.scheduleAtFixedRate(timerTask, 3000, 3000);
 
             ArrayList<float[]> valuesAnimVitoriaTranslate = new ArrayList<>();
             valuesAnimVitoriaTranslate.add(new float[]{0f,-gameAreaResolutionY*3});
@@ -1211,7 +1211,7 @@ public class Game {
             //Log.e(TAG, "starsDiference "+starsDiference );
             //Log.e(TAG, "newStarsTotal "+newStarsTotal );
 
-            Animation animMessageConqueredStarsTotal = new Animation(MessagesHandler.messageConqueredStarsTotal, "numberForAnimation", "numberForAnimation", 2500, valuesAnim, false, false);
+            Animation animMessageConqueredStarsTotal = new Animation(MessagesHandler.messageConqueredStarsTotal, "numberForAnimation", "numberForAnimation", 3000, valuesAnim, false, false);
             animMessageConqueredStarsTotal.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {

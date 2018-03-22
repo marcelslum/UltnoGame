@@ -49,6 +49,7 @@ public class ButtonHandler {
                 } else if (Game.gameState == Game.GAME_STATE_SOBRE){
                     Game.setGameState(Game.GAME_STATE_OPCOES);
                 } else if (Game.gameState == Game.GAME_STATE_OPCOES){
+                    SelectorHandler.backAllSelectors();
                     Game.setGameState(Game.GAME_STATE_MENU);
                 }
             }

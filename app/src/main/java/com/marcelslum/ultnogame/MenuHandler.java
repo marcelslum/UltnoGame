@@ -771,6 +771,7 @@ public class MenuHandler {
         menuInGameOptions.addMenuOption("retornar", Game.getContext().getResources().getString(R.string.retornar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                SelectorHandler.backAllSelectors();
                 Game.setGameState(Game.GAME_STATE_PAUSE);
             }
         });

@@ -34,44 +34,47 @@ public class Sound {
     static AudioData adWin1;
     static AudioData adWin2;
     static AudioData adBlueBallExplosion;
-    static AudioData adSuccess2;
     static AudioData adMenuIconDrop;
     static AudioData adMenuSmall;
     static AudioData adMenuBig;
     static AudioData adCounter;
     static AudioData adExplosion;
+    //static AudioData adSuccess2;
 
     public static LoopMediaPlayer loop;
 
     public static AudioTrack mAudioTrack1;
     public static AudioTrack mAudioTrack2;
     public static AudioTrack mAudioTrack3;
-    public static AudioTrack mAudioTrack10;
     public static AudioTrack mAudioTrack11;
     public static AudioTrack mAudioTrack12;
     public static AudioTrack mAudioTrack13;
+    public static AudioTrack mAudioTrack14;
+    public static AudioTrack mAudioTrack15;
 
     public Sound(){
     }
 
     public static void init(){
 
-        adCounter = new AudioData("counter.wav", 0.5f,1);
-        adExplosion = new AudioData("explosion.wav", 0.5f,1);
-        adBlueBallExplosion = new AudioData("blueballexplosion.wav", 0.5f,1);
-        adTextBoxAppear = new AudioData("textboxappear.wav", 0.5f,1);
+        adCounter = new AudioData("counter_22050.wav", 0.8f,1);
+        adExplosion = new AudioData("explosion_22050.wav", 0.4f,1);
+        adBlueBallExplosion = new AudioData("blueballexplosion_22050.wav", 0.5f,1);
 
-        adSuccess1 = new AudioData("success1.wav", 0.5f, 2);
-        adGameOver = new AudioData("gameover2.wav", 0.5f,2);
-        adStarsUp = new AudioData("starsup.wav", 0.5f,2);
-        adMenuIconDrop = new AudioData("bells9.wav", 0.5f,2);
 
-        adMenuSmall = new AudioData("menuselectsmall.wav", 0.5f,3);
-        adMenuBig = new AudioData("menuselectbig.wav", 0.5f,3);
+        adSuccess1 = new AudioData("success1_22050.wav", 0.5f, 2);
+        adGameOver = new AudioData("gameover2_22050.wav", 0.8f,2);
+        adStarsUp = new AudioData("starsup_22050.wav", 0.6f,2);
+        adMenuIconDrop = new AudioData("bells9_22050.wav", 0.3f,2);
 
-        adWin1 = new AudioData("win0_powerup17.wav", 0.5f,-1);
-        adWin2 = new AudioData("win1_powerup16.wav", 0.5f,-1);
-        adSuccess2 = new AudioData("success2.wav", 0.5f,-1);
+        adMenuSmall = new AudioData("menuselectsmall.wav", 0.7f,3);
+        adMenuBig = new AudioData("menuselectbig.wav", 0.7f,3);
+
+        adWin1 = new AudioData("win0_powerup17_22050.wav", 0.45f,4);
+        adWin2 = new AudioData("win1_powerup16_22050.wav", 0.45f,4);
+        //adSuccess2 = new AudioData("success2.wav", 0.5f,-1);
+
+        adTextBoxAppear = new AudioData("textboxappear_22050.wav", 0.4f,5);
 
 
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
@@ -87,7 +90,7 @@ public class Sound {
         soundDuplicateBall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.duplicateball, 1);
     }
 
-    public void playSucces1(){
+    public void playSuccess1(){
         adSuccess1.musicPartNumber = 0;
         if (AsyncTasks.asyncPlaySucces1 == null || AsyncTasks.asyncPlaySucces1.getStatus() == AsyncTask.Status.FINISHED){
             AsyncTasks.asyncPlaySucces1 = new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, adSuccess1);
@@ -138,10 +141,12 @@ public class Sound {
 
     // TODO não devia tocar em algum lugar?
     public void playSuccess2(){
+        /*
         adSuccess2.musicPartNumber = 0;
         if (AsyncTasks.asyncPlaySucces2 == null || AsyncTasks.asyncPlaySucces2.getStatus() == AsyncTask.Status.FINISHED) {
             AsyncTasks.asyncPlaySucces2 = new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, adSuccess2);
         }
+        */
     }
 
     public void playMenuIconDrop(){
@@ -153,7 +158,7 @@ public class Sound {
 
     public void playMenuSmall(){
         adMenuSmall.musicPartNumber = 0;
-        if (AsyncTasks.asyncPlayMenuIconDrop == null || AsyncTasks.asyncPlayMenuSmall.getStatus() == AsyncTask.Status.FINISHED) {
+        if (AsyncTasks.asyncPlayMenuSmall == null || AsyncTasks.asyncPlayMenuSmall.getStatus() == AsyncTask.Status.FINISHED) {
             AsyncTasks.asyncPlayMenuSmall = new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, adMenuSmall);
         }
     }
@@ -370,11 +375,14 @@ public class Sound {
 
         int minSize = AudioTrack.getMinBufferSize(44100,
                 AudioFormat.CHANNEL_OUT_STEREO,
+                AudioFormat.ENCODING_PCM_16BIT) * 2;
+
+        int minSize_22050 = AudioTrack.getMinBufferSize(22050,
+                AudioFormat.CHANNEL_OUT_STEREO,
                 AudioFormat.ENCODING_PCM_16BIT);
 
-        protected Integer doInBackground(AudioData... data) {
 
-            //Log.e(TAG, "minSize "+minSize);
+        protected Integer doInBackground(AudioData... data) {
 
             try {
 
@@ -386,34 +394,11 @@ public class Sound {
                             AudioTrack.MODE_STREAM);
                 } else {
                     if (data[0].audioTrackNumber == 1) {
-                        //Log.e(TAG, "Reutilizando audio track "+data[0].fileName);
-                        if (mAudioTrack10 == null){
-
-                            mAudioTrack10 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
-                                    AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT, minSize,
-                                    AudioTrack.MODE_STREAM);
-                        } else {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                mAudioTrack10.pause();
-                                mAudioTrack10.flush();
-                            } else {
-                                mAudioTrack10.stop();
-                            }
-                        }
-                    }
-
-                    if (data[0].audioTrackNumber == 2) {
-                        //Log.e(TAG, "Reutilizando audio track "+data[0].fileName);
                         if (mAudioTrack11 == null){
 
-                            int minSize = AudioTrack.getMinBufferSize(44100,
+                            mAudioTrack11 = new AudioTrack(AudioManager.STREAM_MUSIC, 22050,
                                     AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT);
-
-                            mAudioTrack11 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
-                                    AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT, minSize,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
                                     AudioTrack.MODE_STREAM);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -423,19 +408,13 @@ public class Sound {
                                 mAudioTrack11.stop();
                             }
                         }
-                    }
-
-                    if (data[0].audioTrackNumber == 3) {
+                    } else if (data[0].audioTrackNumber == 2) {
                         //Log.e(TAG, "Reutilizando audio track "+data[0].fileName);
                         if (mAudioTrack12 == null){
 
-                            int minSize = AudioTrack.getMinBufferSize(44100,
+                            mAudioTrack12 = new AudioTrack(AudioManager.STREAM_MUSIC, 22050,
                                     AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT);
-
-                            mAudioTrack12 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
-                                    AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT, minSize,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
                                     AudioTrack.MODE_STREAM);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -445,25 +424,83 @@ public class Sound {
                                 mAudioTrack12.stop();
                             }
                         }
+                    } else if (data[0].audioTrackNumber == 3) {
+                        if (mAudioTrack13 == null){
+
+                            mAudioTrack13 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                                    AudioFormat.CHANNEL_OUT_STEREO,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
+                                    AudioTrack.MODE_STREAM);
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                mAudioTrack13.pause();
+                                mAudioTrack13.flush();
+                            } else {
+                                mAudioTrack13.stop();
+                            }
+                        }
+                    } else if (data[0].audioTrackNumber == 4) {
+                        if (mAudioTrack14 == null){
+
+                            mAudioTrack14 = new AudioTrack(AudioManager.STREAM_MUSIC, 22050,
+                                    AudioFormat.CHANNEL_OUT_STEREO,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
+                                    AudioTrack.MODE_STREAM);
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                mAudioTrack14.pause();
+                                mAudioTrack14.flush();
+                            } else {
+                                mAudioTrack14.stop();
+                            }
+                        }
+                    } else if (data[0].audioTrackNumber == 5) {
+                        if (mAudioTrack15 == null){
+
+                            mAudioTrack15 = new AudioTrack(AudioManager.STREAM_MUSIC, 22050,
+                                    AudioFormat.CHANNEL_OUT_STEREO,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
+                                    AudioTrack.MODE_STREAM);
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                mAudioTrack15.pause();
+                                mAudioTrack15.flush();
+                            } else {
+                                mAudioTrack15.stop();
+                            }
+                        }
                     }
 
                 }
 
                 if (data[0].audioTrackNumber == -1) {
+                    track.setVolume(data[0].volume);
                     track.play();
                 } else {
                     if (data[0].audioTrackNumber == 1) {
-                        mAudioTrack10.play();
-                    }
-                    if (data[0].audioTrackNumber == 2) {
+                        mAudioTrack11.setVolume(data[0].volume);
                         mAudioTrack11.play();
-                    }
-                    if (data[0].audioTrackNumber == 3) {
+                    } else
+                    if (data[0].audioTrackNumber == 2) {
+                        mAudioTrack12.setVolume(data[0].volume);
                         mAudioTrack12.play();
+                    } else
+                    if (data[0].audioTrackNumber == 3) {
+                        mAudioTrack13.setVolume(data[0].volume);
+                        mAudioTrack13.play();
+                    } else
+                    if (data[0].audioTrackNumber == 4) {
+                        mAudioTrack14.setVolume(data[0].volume);
+                        mAudioTrack14.play();
+                    } else
+                    if (data[0].audioTrackNumber == 5) {
+                        mAudioTrack15.setVolume(data[0].volume);
+                        mAudioTrack15.play();
                     }
                 }
 
                 boolean continuePlaying = true;
+                boolean lastPlaying = false;
                 while(continuePlaying)
                 {
                     if (lastMusicPart >= 0 && data[0].musicPartNumber < lastMusicPart){
@@ -476,20 +513,10 @@ public class Sound {
                             else {
                                 track.stop();
                             }
+                            track.setVolume(data[0].volume);
                             track.play();
                         } else {
                             if (data[0].audioTrackNumber == 1) {
-                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    mAudioTrack10.pause();
-                                    mAudioTrack10.flush();
-                                }
-                                else {
-                                    mAudioTrack10.stop();
-                                }
-                                mAudioTrack10.play();
-                            }
-
-                            if (data[0].audioTrackNumber == 2) {
                                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     mAudioTrack11.pause();
                                     mAudioTrack11.flush();
@@ -497,10 +524,10 @@ public class Sound {
                                 else {
                                     mAudioTrack11.stop();
                                 }
+                                mAudioTrack11.setVolume(data[0].volume);
                                 mAudioTrack11.play();
-                            }
-
-                            if (data[0].audioTrackNumber == 3) {
+                            } else
+                            if (data[0].audioTrackNumber == 2) {
                                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     mAudioTrack12.pause();
                                     mAudioTrack12.flush();
@@ -508,10 +535,52 @@ public class Sound {
                                 else {
                                     mAudioTrack12.stop();
                                 }
+                                mAudioTrack12.setVolume(data[0].volume);
                                 mAudioTrack12.play();
+                            } else
+                            if (data[0].audioTrackNumber == 3) {
+                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    mAudioTrack13.pause();
+                                    mAudioTrack13.flush();
+                                }
+                                else {
+                                    mAudioTrack13.stop();
+                                }
+                                mAudioTrack13.setVolume(data[0].volume);
+                                mAudioTrack13.play();
+                            } else
+                            if (data[0].audioTrackNumber == 4) {
+                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    mAudioTrack14.pause();
+                                    mAudioTrack14.flush();
+                                }
+                                else {
+                                    mAudioTrack14.stop();
+                                }
+                                mAudioTrack14.setVolume(data[0].volume);
+                                mAudioTrack14.play();
+                            } else
+                            if (data[0].audioTrackNumber == 5) {
+                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    mAudioTrack15.pause();
+                                    mAudioTrack15.flush();
+                                }
+                                else {
+                                    mAudioTrack15.stop();
+                                }
+                                mAudioTrack15.setVolume(data[0].volume);
+                                mAudioTrack15.play();
                             }
                         }
                     }
+
+
+                    if (lastPlaying){
+                        lastPlaying = false;
+                        continuePlaying = false;
+                    }
+
+                    Log.e(TAG, "musicPartNumber " + data[0].musicPartNumber);
 
                     int i;
                     for( i = 0; i < musicPart.length; i++ )
@@ -519,9 +588,11 @@ public class Sound {
                         if (i + (musicPart.length * data[0].musicPartNumber) < data[0].music.length) {
                             musicPart[i] = data[0].music[i + (musicPart.length * data[0].musicPartNumber)];
                         } else {
-                            continuePlaying = false;
+                            musicPart[i] = 0;
+                            lastPlaying = true;
                         }
                     }
+
                     data[0].musicPartNumber += 1;
                     lastMusicPart = data[0].musicPartNumber;
 
@@ -530,15 +601,19 @@ public class Sound {
                             track.write(musicPart, 0, i);
                         } else {
                             if (data[0].audioTrackNumber == 1) {
-                                mAudioTrack10.write(musicPart, 0, i);
-                            }
-
-                            if (data[0].audioTrackNumber == 2) {
                                 mAudioTrack11.write(musicPart, 0, i);
-                            }
-
-                            if (data[0].audioTrackNumber == 3) {
+                            } else
+                            if (data[0].audioTrackNumber == 2) {
                                 mAudioTrack12.write(musicPart, 0, i);
+                            } else
+                            if (data[0].audioTrackNumber == 3) {
+                                mAudioTrack13.write(musicPart, 0, i);
+                            } else
+                            if (data[0].audioTrackNumber == 4) {
+                                mAudioTrack14.write(musicPart, 0, i);
+                            } else
+                            if (data[0].audioTrackNumber == 5) {
+                                mAudioTrack15.write(musicPart, 0, i);
                             }
                         }
 
@@ -557,31 +632,47 @@ public class Sound {
                 } else {
                     if (data[0].audioTrackNumber == 1) {
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            mAudioTrack10.pause();
-                            mAudioTrack10.flush();
-                        }
-                        else {
-                            mAudioTrack10.stop();
-                        }
-                    }
-
-                    if (data[0].audioTrackNumber == 2) {
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             mAudioTrack11.pause();
                             mAudioTrack11.flush();
                         }
                         else {
                             mAudioTrack11.stop();
                         }
-                    }
-
-                    if (data[0].audioTrackNumber == 3) {
+                    } else
+                    if (data[0].audioTrackNumber == 2) {
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             mAudioTrack12.pause();
                             mAudioTrack12.flush();
                         }
                         else {
                             mAudioTrack12.stop();
+                        }
+                    } else
+                    if (data[0].audioTrackNumber == 3) {
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            mAudioTrack13.pause();
+                            mAudioTrack13.flush();
+                        }
+                        else {
+                            mAudioTrack13.stop();
+                        }
+                    } else
+                    if (data[0].audioTrackNumber == 4) {
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            mAudioTrack14.pause();
+                            mAudioTrack14.flush();
+                        }
+                        else {
+                            mAudioTrack14.stop();
+                        }
+                    } else
+                    if (data[0].audioTrackNumber == 5) {
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            mAudioTrack15.pause();
+                            mAudioTrack15.flush();
+                        }
+                        else {
+                            mAudioTrack15.stop();
                         }
                     }
                 }

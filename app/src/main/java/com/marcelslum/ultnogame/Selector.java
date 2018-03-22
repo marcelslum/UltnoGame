@@ -55,9 +55,7 @@ public class Selector extends Entity{
         }
 
         for (int i = 0; i < values.length; i++){
-            //Log.e(TAG, " "+values[i]);
             textsObjects[i] = new Text("selector"+values[i]+"Text", 0f, y, size, values[i], this.font);
-            //Log.e(TAG, name + ": "+textsObjects[i].text);
             float width = textsObjects[i].calculateWidth();
             textsObjects[i].setX(mainTextWidth + x - (width/2));
             if (width > maxWidth) maxWidth = width;
@@ -193,6 +191,9 @@ public class Selector extends Entity{
     @Override
     public void render(float[] matrixView, float[] matrixProjection){
 
+        if (!isVisible)
+            return;
+
         if (mainTextObject != null){
             mainTextObject.alpha = alpha;
             mainTextObject.render(matrixView, matrixProjection);
@@ -249,10 +250,16 @@ public class Selector extends Entity{
         increaseAlphaAnim.start();
     }
 
+    public void setNotVisible(){
+        isVisible = false;
+        isBlocked = true;
+    }
+
     public void backToMenu(){
-        Game.sound.playPlayMenuBig();
+
         //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
         isBlocked = true;
+        Game.sound.playPlayMenuBig();
 
         ArrayList<float[]> valuesAnimation = new ArrayList<>();
         valuesAnimation.add(new float[]{0f,0.3f});

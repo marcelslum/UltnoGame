@@ -154,7 +154,7 @@ public class MyGLSurface extends GLSurfaceView {
                         TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_BLUE_3_ID));
 
 
-                    Log.e(TAG, "explodeBlueBall() queueEvent(new Runnable() ");
+                    //Log.e(TAG, "explodeBlueBall() queueEvent(new Runnable() ");
                     ScoreHandler.scorePanel.showMessage("+ 50%", 500);
 
                     Game.ballGoalsPanel.particleGenerators.add(pg);

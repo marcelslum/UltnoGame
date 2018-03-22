@@ -151,7 +151,7 @@ public class ScorePanel extends Entity {
     public void showMessage(String message, int duration) {
         displayMessage = true;
 
-        Log.e(TAG, "showMessage "+ message);
+        //Log.e(TAG, "showMessage "+ message);
         //Log.e(TAG, "x + (getWidth()*0.8f) "+ (x + (getWidth()*0.8f)));
         //Log.e(TAG, "y - size*0.3f "+ (y - size*0.3f));
         //Log.e(TAG, "size*1.5f "+ (size*1.5f));

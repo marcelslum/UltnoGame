@@ -34,4 +34,19 @@ public class SelectorHandler {
             selectorDifficulty.setPosition(menuOptionBallVelocity.x + (menuOptionBallVelocity.width*0.9f), menuOptionBallVelocity.y);
         }
     }
+
+    public static void backAllSelectors(){
+        if (selectorMusic != null){
+            selectorMusic.setNotVisible();
+        }
+        if (selectorSound != null){
+            selectorSound.setNotVisible();
+        }
+        if (selectorVibration != null){
+            selectorVibration.setNotVisible();
+        }
+        if (selectorDifficulty != null){
+            selectorDifficulty.setNotVisible();
+        }
+    }
 }

@@ -82,7 +82,7 @@ public class MessageStar extends Entity {
         
         if (!isShowing){
             isShowing = true;
-            Game.sound.playSucces1();
+            Game.sound.playSuccess1();
             //Sound.playSoundPool(Sound.soundSuccess1, 0.5f, 0.5f, 0);
         } else {
 
