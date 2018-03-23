@@ -12,6 +12,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by marcel on 17/09/2016.
@@ -57,24 +58,24 @@ public class Sound {
 
     public static void init(){
 
-        adCounter = new AudioData("counter_22050.wav", 0.8f,1);
-        adExplosion = new AudioData("explosion_22050.wav", 0.4f,1);
-        adBlueBallExplosion = new AudioData("blueballexplosion_22050.wav", 0.5f,1);
+        adCounter = new AudioData("counter_mono.wav", 0.8f,1);
+        adExplosion = new AudioData("explosion_mono.wav", 0.4f,1);
+        adBlueBallExplosion = new AudioData("blueballexplosion_mono.wav", 0.5f,1);
 
 
-        adSuccess1 = new AudioData("success1_22050.wav", 0.5f, 2);
-        adGameOver = new AudioData("gameover2_22050.wav", 0.8f,2);
-        adStarsUp = new AudioData("starsup_22050.wav", 0.6f,2);
-        adMenuIconDrop = new AudioData("bells9_22050.wav", 0.3f,2);
+        adSuccess1 = new AudioData("success1_mono.wav", 0.5f, 2);
+        adGameOver = new AudioData("gameover2_mono.wav", 0.8f,2);
+        adStarsUp = new AudioData("starsup_mono.wav", 0.6f,2);
+        adMenuIconDrop = new AudioData("bells9_mono.wav", 0.3f,2);
 
         adMenuSmall = new AudioData("menuselectsmall.wav", 0.7f,3);
         adMenuBig = new AudioData("menuselectbig.wav", 0.7f,3);
 
-        adWin1 = new AudioData("win0_powerup17_22050.wav", 0.45f,4);
-        adWin2 = new AudioData("win1_powerup16_22050.wav", 0.45f,4);
+        adWin1 = new AudioData("win0_powerup17_mono.wav", 0.45f,4);
+        adWin2 = new AudioData("win1_powerup16_mono.wav", 0.45f,4);
         //adSuccess2 = new AudioData("success2.wav", 0.5f,-1);
 
-        adTextBoxAppear = new AudioData("textboxappear_22050.wav", 0.4f,5);
+        adTextBoxAppear = new AudioData("textboxappear_mono.wav", 0.4f,5);
 
 
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
@@ -369,15 +370,15 @@ public class Sound {
     }
 
     private class PlayAudio extends AsyncTask<AudioData, Integer, Integer> {
-        byte[] musicPart = new byte[512];
+        byte[] musicPart = new byte[1024];
         public AudioTrack track;
         int lastMusicPart = -1;
 
         int minSize = AudioTrack.getMinBufferSize(44100,
                 AudioFormat.CHANNEL_OUT_STEREO,
-                AudioFormat.ENCODING_PCM_16BIT) * 2;
+                AudioFormat.ENCODING_PCM_16BIT);
 
-        int minSize_22050 = AudioTrack.getMinBufferSize(22050,
+        int minSize_22050_or_mono = AudioTrack.getMinBufferSize(22050,
                 AudioFormat.CHANNEL_OUT_STEREO,
                 AudioFormat.ENCODING_PCM_16BIT);
 
@@ -396,9 +397,9 @@ public class Sound {
                     if (data[0].audioTrackNumber == 1) {
                         if (mAudioTrack11 == null){
 
-                            mAudioTrack11 = new AudioTrack(AudioManager.STREAM_MUSIC, 22050,
-                                    AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
+                            mAudioTrack11 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                                    AudioFormat.CHANNEL_OUT_MONO,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050_or_mono,
                                     AudioTrack.MODE_STREAM);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -412,9 +413,9 @@ public class Sound {
                         //Log.e(TAG, "Reutilizando audio track "+data[0].fileName);
                         if (mAudioTrack12 == null){
 
-                            mAudioTrack12 = new AudioTrack(AudioManager.STREAM_MUSIC, 22050,
-                                    AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
+                            mAudioTrack12 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                                    AudioFormat.CHANNEL_OUT_MONO,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050_or_mono,
                                     AudioTrack.MODE_STREAM);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -429,7 +430,7 @@ public class Sound {
 
                             mAudioTrack13 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
                                     AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050_or_mono,
                                     AudioTrack.MODE_STREAM);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -442,9 +443,9 @@ public class Sound {
                     } else if (data[0].audioTrackNumber == 4) {
                         if (mAudioTrack14 == null){
 
-                            mAudioTrack14 = new AudioTrack(AudioManager.STREAM_MUSIC, 22050,
-                                    AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
+                            mAudioTrack14 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                                    AudioFormat.CHANNEL_OUT_MONO,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050_or_mono,
                                     AudioTrack.MODE_STREAM);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -457,9 +458,9 @@ public class Sound {
                     } else if (data[0].audioTrackNumber == 5) {
                         if (mAudioTrack15 == null){
 
-                            mAudioTrack15 = new AudioTrack(AudioManager.STREAM_MUSIC, 22050,
-                                    AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050,
+                            mAudioTrack15 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+                                    AudioFormat.CHANNEL_OUT_MONO,
+                                    AudioFormat.ENCODING_PCM_16BIT, minSize_22050_or_mono,
                                     AudioTrack.MODE_STREAM);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -500,7 +501,7 @@ public class Sound {
                 }
 
                 boolean continuePlaying = true;
-                boolean lastPlaying = false;
+                byte[] musicPartRemain = new byte[1];
                 while(continuePlaying)
                 {
                     if (lastMusicPart >= 0 && data[0].musicPartNumber < lastMusicPart){
@@ -574,13 +575,9 @@ public class Sound {
                         }
                     }
 
+                    //Log.e(TAG, "musicPartNumber " + data[0].musicPartNumber);
 
-                    if (lastPlaying){
-                        lastPlaying = false;
-                        continuePlaying = false;
-                    }
-
-                    Log.e(TAG, "musicPartNumber " + data[0].musicPartNumber);
+                    //Log.e(TAG, "musicPàrt " + new String(musicPart, StandardCharsets.UTF_8));
 
                     int i;
                     for( i = 0; i < musicPart.length; i++ )
@@ -588,32 +585,60 @@ public class Sound {
                         if (i + (musicPart.length * data[0].musicPartNumber) < data[0].music.length) {
                             musicPart[i] = data[0].music[i + (musicPart.length * data[0].musicPartNumber)];
                         } else {
-                            musicPart[i] = 0;
-                            lastPlaying = true;
+                            //Log.e(TAG, "ultimo lote: tamanho: " + (i - 1));
+                            musicPartRemain = new byte[i - 1];
+                            for (int j = 0; j < i - 1; j++) {
+                                musicPartRemain[j] = musicPart[j];
+                            }
+                            continuePlaying = false;
+                            break;
                         }
                     }
 
                     data[0].musicPartNumber += 1;
                     lastMusicPart = data[0].musicPartNumber;
 
-
                         if (data[0].audioTrackNumber == -1) {
-                            track.write(musicPart, 0, i);
+                            if (musicPartRemain.length == 1) {
+                                track.write(musicPart, 0, i);
+                            } else {
+                                track.write(musicPartRemain, 0, i);
+                            }
                         } else {
                             if (data[0].audioTrackNumber == 1) {
-                                mAudioTrack11.write(musicPart, 0, i);
+                                if (musicPartRemain.length == 1) {
+                                    mAudioTrack11.write(musicPart, 0, i);
+                                } else {
+                                    mAudioTrack11.write(musicPartRemain, 0, i);
+                                }
                             } else
                             if (data[0].audioTrackNumber == 2) {
-                                mAudioTrack12.write(musicPart, 0, i);
+                                if (musicPartRemain.length == 1) {
+                                    mAudioTrack12.write(musicPart, 0, i);
+                                } else {
+                                    mAudioTrack12.write(musicPartRemain, 0, i);
+                                }
                             } else
                             if (data[0].audioTrackNumber == 3) {
-                                mAudioTrack13.write(musicPart, 0, i);
+                                if (musicPartRemain.length == 1) {
+                                    mAudioTrack13.write(musicPart, 0, i);
+                                } else {
+                                    mAudioTrack13.write(musicPartRemain, 0, i);
+                                }
                             } else
                             if (data[0].audioTrackNumber == 4) {
-                                mAudioTrack14.write(musicPart, 0, i);
+                                if (musicPartRemain.length == 1) {
+                                    mAudioTrack14.write(musicPart, 0, i);
+                                } else {
+                                    mAudioTrack14.write(musicPartRemain, 0, i);
+                                }
                             } else
                             if (data[0].audioTrackNumber == 5) {
-                                mAudioTrack15.write(musicPart, 0, i);
+                                if (musicPartRemain.length == 1) {
+                                    mAudioTrack15.write(musicPart, 0, i);
+                                } else {
+                                    mAudioTrack15.write(musicPartRemain, 0, i);
+                                }
                             }
                         }
 

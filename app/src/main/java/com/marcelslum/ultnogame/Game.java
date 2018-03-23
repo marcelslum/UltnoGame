@@ -588,6 +588,8 @@ public class Game {
             
         } else if (state == GAME_STATE_MENU_TUTORIAL){
 
+            Game.sound.playMenuIconDrop();
+
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/tutorials");
 
             mainActivity.showAdView();
