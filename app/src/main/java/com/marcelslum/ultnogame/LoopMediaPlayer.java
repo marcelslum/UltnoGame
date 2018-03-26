@@ -2,7 +2,6 @@ package com.marcelslum.ultnogame;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.util.Log;
 
 /**
  * Created by marcel on 11/03/2018.
@@ -18,10 +17,11 @@ public class LoopMediaPlayer {
     private int mCounter = 1;
     boolean alternate = false;
     int currentResource;
-    float volume;
+    static float volume;
+    static int currentPlayer;
 
-    private MediaPlayer mCurrentPlayer = null;
-    private MediaPlayer mNextPlayer = null;
+    private static MediaPlayer mPlayer1 = null;
+    private static MediaPlayer mPlayer2 = null;
 
     public static LoopMediaPlayer create(Context context, int resId, float volume) {
         return new LoopMediaPlayer(context, resId, volume);
@@ -31,97 +31,142 @@ public class LoopMediaPlayer {
         return new LoopMediaPlayer(context, resId, resId2, volume);
     }
 
-    private LoopMediaPlayer(Context context, int resId, float volume) {
+    private LoopMediaPlayer(Context context, int resId, float _volume) {
         mContext = context;
         mResId = resId;
-        this.volume = volume;
+        volume = _volume;
         currentResource = 1;
         alternate = false;
 
-        mCurrentPlayer = MediaPlayer.create(mContext, mResId);
-        mCurrentPlayer.setVolume(volume, volume);
+        currentPlayer = 1;
+        mPlayer1 = MediaPlayer.create(mContext, mResId);
+        mPlayer1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mPlayer1.setVolume(volume, volume);
+            }
+        });
 
         createNextMediaPlayer();
     }
 
-    private LoopMediaPlayer(Context context, int resId1, int resId2, float volume) {
+    private LoopMediaPlayer(Context context, int resId1, int resId2, float _volume) {
         mContext = context;
         mResId = resId1;
         mResId2 = resId2;
-        this.volume = volume;
+        volume = _volume;
         currentResource = 1;
         alternate = true;
-        mCurrentPlayer = MediaPlayer.create(mContext, mResId);
+        currentPlayer = 1;
+        mPlayer1 = MediaPlayer.create(mContext, mResId);
+        mPlayer1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mPlayer1.setVolume(volume, volume);
+            }
+        });
         createNextMediaPlayer();
     }
 
     private void createNextMediaPlayer() {
+
         if (alternate) {
-            //Log.e(TAG, "alternate == true");
+
             if (currentResource == 1) {
-                mNextPlayer = MediaPlayer.create(mContext, mResId2);
+
+                if (currentPlayer == 1) {
+                    mPlayer2 = MediaPlayer.create(mContext, mResId2);
+                } else if (currentPlayer == 2) {
+                    mPlayer1 = MediaPlayer.create(mContext, mResId2);
+                }
+
                 currentResource = 2;
+
             } else if (currentResource == 2) {
-                mNextPlayer = MediaPlayer.create(mContext, mResId);
+
+                if (currentPlayer == 1) {
+                    mPlayer2 = MediaPlayer.create(mContext, mResId);
+                } else if (currentPlayer == 2) {
+                    mPlayer1 = MediaPlayer.create(mContext, mResId);
+                }
+
                 currentResource = 1;
             }
         } else {
-            //Log.e(TAG, "alternate == false");
 
-            if (mNextPlayer != null){
-                mNextPlayer.release();
-                mNextPlayer = null;
+            if (currentPlayer == 1) {
+                mPlayer2 = MediaPlayer.create(mContext, mResId);
+            } else if (currentPlayer == 2) {
+                mPlayer1 = MediaPlayer.create(mContext, mResId);
             }
 
-            mNextPlayer = MediaPlayer.create(mContext, mResId);
         }
 
-        mNextPlayer.setVolume(volume, volume);
-        mCurrentPlayer.setNextMediaPlayer(mNextPlayer);
-        mCurrentPlayer.setOnCompletionListener(onCompletionListener);
-        mCurrentPlayer.setVolume(volume, volume);
+        if (currentPlayer == 1) {
+            mPlayer2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.setVolume(volume, volume);
+                    mPlayer1.setNextMediaPlayer(mPlayer2);
+                }
+            });
+        } else if (currentPlayer == 2) {
+            mPlayer1 = MediaPlayer.create(mContext, mResId);
+        }
+
+
+
+        mPlayer2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setVolume(volume, volume);
+                mPlayer1.setNextMediaPlayer(mPlayer2);
+            }
+        });
+
+        mPlayer1.setOnCompletionListener(onCompletionListener);
     }
 
     public void stopAndRelease(){
         //Log.e(TAG, "stopAndRelease");
-        if (mCurrentPlayer != null) {
+        if (mPlayer1 != null) {
             try {
-                mCurrentPlayer.stop();
+                mPlayer1.stop();
             } catch (Exception e) {
             }
 
             try {
-                mCurrentPlayer.release();
+                mPlayer1.release();
             } catch (Exception e) {
             }
 
 
         }
 
-        if (mNextPlayer != null) {
+        if (mPlayer2 != null) {
             try {
-                mNextPlayer.stop();
+                mPlayer2.stop();
             } catch (Exception e) {
             }
 
             try {
-                mNextPlayer.release();
+                mPlayer2.release();
             } catch (Exception e) {
             }
         }
 
-        mCurrentPlayer = null;
-        mNextPlayer = null;
+        mPlayer1 = null;
+        mPlayer2 = null;
     }
 
     public void pause(){
         //Log.e(TAG, "pause");
 
 
-        if (mCurrentPlayer != null) {
+        if (mPlayer1 != null) {
             try {
-                if (mCurrentPlayer.isPlaying()) {
-                    mCurrentPlayer.pause();
+                if (mPlayer1.isPlaying()) {
+                    mPlayer1.pause();
                 }
             } catch (Exception e) {
             }
@@ -130,10 +175,10 @@ public class LoopMediaPlayer {
 
     public void play(){
         //Log.e(TAG, "playSoundPool");
-        if (mCurrentPlayer != null) {
+        if (mPlayer1 != null) {
 
             try {
-                mCurrentPlayer.start();
+                mPlayer1.start();
             } catch (Exception e) {
             }
         }
@@ -141,8 +186,8 @@ public class LoopMediaPlayer {
 
     public void isPlaying(){
         //Log.e(TAG, "playSoundPool");
-        if (mCurrentPlayer != null) {
-            mCurrentPlayer.isPlaying();
+        if (mPlayer1 != null) {
+            mPlayer1.isPlaying();
         }
     }
 
@@ -150,7 +195,7 @@ public class LoopMediaPlayer {
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {
             mediaPlayer.release();
-            mCurrentPlayer = mNextPlayer;
+            mPlayer1 = mPlayer2;
             createNextMediaPlayer();
         }
     };

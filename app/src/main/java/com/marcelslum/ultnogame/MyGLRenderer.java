@@ -207,14 +207,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                     lastInternetCheck = Utils.getTime();
                 }
             }
-            /*
             else {
                    if (Utils.getTime() - lastInternetCheck > 5000) {
                         Sound.checkLoopPlaying();   
                         lastInternetCheck = Utils.getTime();
                 }
             }
-            */
 
             Game.verifyTouchBlock();
             Game.verifyListeners();

@@ -511,6 +511,8 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
 
+            Sound.stopAndReleaseMusic();
+
             mainActivity.showAdView();
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
@@ -564,6 +566,8 @@ public class Game {
 
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
 
+            Sound.stopAndReleaseMusic();
+
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/icons");
 
             if (Tutorial.hasUnvisitedTutorial()){
@@ -604,6 +608,8 @@ public class Game {
 
             mainActivity.showAdView();
 
+            Sound.stopAndReleaseMusic();
+
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/icons");
             
             if (tipTextBox != null){
@@ -642,6 +648,7 @@ public class Game {
             mainActivity.hideAdView();
             Splash.init();
         } else if (state == GAME_STATE_OPCOES){
+
             if (previousState == GAME_STATE_SOBRE){
                 Game.aboutTextView.blockAndClearDisplay();
             }
@@ -717,7 +724,10 @@ public class Game {
                     getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
 
         } else if (state == GAME_STATE_PREPARAR){
-            
+
+
+            Sound.loadMusic();
+
             if (tipTextBox != null){
                 tipTextBox.clearDisplay();
             }
@@ -741,8 +751,6 @@ public class Game {
             mainActivity.hideAdView();
             if (!sameState) {activateFrame(2500);}
             Level.levelObject.loadEntities();
-
-            Sound.loadLoop();
 
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
@@ -808,6 +816,8 @@ public class Game {
 
             Sound.loadStaticGameAudioTracks();
 
+            Sound.playMusic();
+
             for (int i = 0; i < Game.balls.size(); i++) {
                 if (Game.balls.get(i).listenForExplosion){
                     Game.balls.get(i).replayAlarm();
@@ -850,9 +860,7 @@ public class Game {
 
         } else if (state == GAME_STATE_DERROTA){
 
-            if (Sound.loop != null) {
-                Sound.loop.stopAndRelease();
-            }
+            Sound.stopAndReleaseMusic();
 
             Sound.soundPool.autoPause();
 
@@ -884,12 +892,12 @@ public class Game {
 
             Sound.soundPool.autoPause();
 
+            Sound.pauseMusic();
+
             mainActivity.showAdView();
             ButtonHandler.buttonReturnObjectivesPause.block();
             ButtonHandler.buttonReturnObjectivesPause.clearDisplay();
             TimeHandler.stopTimeOfLevelPlay();
-
-            Sound.soundPool.autoPause();
 
             //Log.e("game", "ativando game_state_pause");
             if (previousState != GAME_STATE_OPCOES_GAME) {
@@ -930,9 +938,7 @@ public class Game {
 
         } else if (state == GAME_STATE_VITORIA){
 
-            if (Sound.loop != null) {
-                Sound.loop.stopAndRelease();
-            }
+            Sound.stopAndReleaseMusic();
 
             Sound.soundPool.autoPause();
 
@@ -1051,7 +1057,7 @@ public class Game {
                     }
                 }
             };
-            timer.scheduleAtFixedRate(timerTask, 3000, 3000);
+            timer.scheduleAtFixedRate(timerTask, 2250, 2250);
 
             ArrayList<float[]> valuesAnimVitoriaTranslate = new ArrayList<>();
             valuesAnimVitoriaTranslate.add(new float[]{0f,-gameAreaResolutionY*3});

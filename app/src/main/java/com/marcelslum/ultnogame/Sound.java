@@ -4,6 +4,7 @@ import android.media.AudioAttributes;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -43,6 +44,8 @@ public class Sound {
     //static AudioData adSuccess2;
 
     public static LoopMediaPlayer loop;
+
+    public static MediaPlayer [] mediaPlayer = new MediaPlayer[3];
 
     public static AudioTrack mAudioTrack1;
     public static AudioTrack mAudioTrack2;
@@ -243,6 +246,7 @@ public class Sound {
 
         if (at.getState() == AudioTrack.STATE_UNINITIALIZED || at.getState() == AudioTrack.STATE_NO_STATIC_DATA){
             Log.e(TAG, "Audio não inicializado.");
+            loadStaticGameAudioTracks();
         } else {
             at.stop();
             at.reloadStaticData();
@@ -281,17 +285,68 @@ public class Sound {
     }
 
     public static void pauseAll(){
-        // todo pausar asyncs tasks
         if (soundPool != null) {
             soundPool.autoPause();
         }
+        pauseMusic();
 
-        if (loop != null){
-            loop.pause();
+    }
+
+    public static void stopAndReleaseTrack(AudioTrack at){
+        if (at != null){
+            at.stop();
+            at.release();
         }
     }
 
+    public static void releaseAll(){
+        if (soundPool != null) {
+            soundPool.release();
+        }
+
+        stopAndReleaseMusic();
+
+        stopAndReleaseTrack(mAudioTrack1);
+        stopAndReleaseTrack(mAudioTrack2);
+        stopAndReleaseTrack(mAudioTrack3);
+        stopAndReleaseTrack(mAudioTrack11);
+        stopAndReleaseTrack(mAudioTrack12);
+        stopAndReleaseTrack(mAudioTrack13);
+        stopAndReleaseTrack(mAudioTrack14);
+        stopAndReleaseTrack(mAudioTrack15);
+    }
+
     public static void checkLoopPlaying(){
+
+        if (Game.gameState == Game.GAME_STATE_JOGAR){
+
+            boolean anyMediaPlaying = false;
+
+            if (mediaPlayer[0] != null && mediaPlayer[0].isPlaying()){
+                anyMediaPlaying = true;
+            }
+
+            if (mediaPlayer[1] != null && mediaPlayer[1].isPlaying()){
+                anyMediaPlaying = true;
+            }
+
+            if (mediaPlayer[2] != null && mediaPlayer[2].isPlaying()){
+                anyMediaPlaying = true;
+            }
+
+            if (!anyMediaPlaying){
+                Log.e(TAG, "check loop playing: media not playing");
+                stopAndReleaseMusic();
+                mediaPlayer[currentMediaNumber] = null;
+                playMusic();
+            } else {
+                Log.e(TAG, "check loop playing: media playing");
+            }
+        }
+
+
+
+        /*
         if (Game.gameState == Game.GAME_STATE_JOGAR){
             //Log.e(TAG, "check loop playing");
             if (loop == null){
@@ -317,9 +372,135 @@ public class Sound {
                 loadLoop();
             }
         }
+        */
     }
-    
-    public static void loadLoop(){
+
+
+    public static int currentMediaNumber = 0;
+    public static int currentMusic = 0;
+
+    public static void playMusic(){
+        if (mediaPlayer[currentMediaNumber] != null) {
+            mediaPlayer[currentMediaNumber].start();
+        } else {
+            currentMediaNumber = 0;
+            mediaPlayer[currentMediaNumber] = MediaPlayer.create(Game.mainActivity, getNextMusicId());
+            mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    Log.e(TAG, "onPrepared ");
+                    mp.start();
+                    createNextMediaPlayer();
+                }
+            });
+
+        }
+    }
+
+    public static int getNextMediaPlayer(){
+        return currentMediaNumber != 2 ? currentMediaNumber + 1 : 0;
+    }
+
+    public static int getLastMediaPlayer(){
+        return currentMediaNumber != 0 ? currentMediaNumber - 1 : 2;
+    }
+
+    public static void pauseMusic(){
+        if (mediaPlayer[currentMediaNumber] != null) {
+            mediaPlayer[currentMediaNumber].pause();
+        }
+    }
+
+    public static void stopAndReleaseMusic(){
+
+        try {
+            if (mediaPlayer[0] != null){
+                mediaPlayer[0].stop();
+                mediaPlayer[0].release();
+                mediaPlayer[0] = null;
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (mediaPlayer[1] != null){
+                mediaPlayer[1].stop();
+                mediaPlayer[1].release();
+                mediaPlayer[1] = null;
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (mediaPlayer[2] != null){
+                mediaPlayer[2].stop();
+                mediaPlayer[2].release();
+                mediaPlayer[2] = null;
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public static void createNextMediaPlayer(){
+
+        Log.e(TAG, "criando proximo media player: " + getNextMediaPlayer());
+
+        if (mediaPlayer[getLastMediaPlayer()] != null){
+            Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayer());
+            mediaPlayer[getLastMediaPlayer()].release();
+            mediaPlayer[getLastMediaPlayer()] = null;
+        }
+
+        mediaPlayer[getNextMediaPlayer()] = MediaPlayer.create(Game.mainActivity, getNextMusicId());
+
+        mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
+                mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+            }
+        });
+
+        mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Log.e(TAG, "media completado ");
+                currentMediaNumber = getNextMediaPlayer();
+                createNextMediaPlayer();
+
+            }
+        });
+    }
+
+    public static int getNextMusicId(){
+
+        int nextMusicId = R.raw.m1_hypnotic_puzzle2;
+
+        if (currentMusic == 0){
+            currentMusic = 1;
+            nextMusicId = R.raw.m1_hypnotic_puzzle2;
+        } else if (currentMusic == 1){
+            currentMusic = 0;
+            nextMusicId = R.raw.m2_hypnotic_puzzle3;
+        }
+
+        Log.e(TAG, "getNextMusicId " + nextMusicId);
+
+        return nextMusicId;
+    }
+
+    public static void loadMusic(){
+        currentMediaNumber = 0;
+        mediaPlayer[currentMediaNumber] = MediaPlayer.create(Game.mainActivity, getNextMusicId());
+        mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                Log.e(TAG, "onPrepared ");
+                createNextMediaPlayer();
+            }
+        });
+
+        /*
 
         if (loop != null){
             loop.stopAndRelease();
@@ -340,6 +521,8 @@ public class Sound {
                 Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
                 break;
         }
+
+        */
     }
 
     private static class AudioData{

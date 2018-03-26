@@ -458,6 +458,8 @@ public class MainActivity extends FragmentActivity implements
         if (mAdView != null) {
             mAdView.destroy();
         }
+
+        Sound.releaseAll();
         super.onDestroy();
     }
 
