@@ -34,6 +34,7 @@ import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.squareup.leakcanary.LeakCanary;
 
 import android.os.Vibrator;
 import android.widget.Switch;
@@ -72,6 +73,8 @@ public class MainActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
 
          /*Inicia o hardware*/

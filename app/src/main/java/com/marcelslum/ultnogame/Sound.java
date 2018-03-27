@@ -1,5 +1,6 @@
 package com.marcelslum.ultnogame;
 
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioAttributes;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -41,6 +42,10 @@ public class Sound {
     static AudioData adMenuBig;
     static AudioData adCounter;
     static AudioData adExplosion;
+
+    static AudioData adBallHit;
+    static AudioData adBallFall;
+    static AudioData adDestroyTarget;
     //static AudioData adSuccess2;
 
     public static LoopMediaPlayer loop;
@@ -79,6 +84,12 @@ public class Sound {
         //adSuccess2 = new AudioData("success2.wav", 0.5f,-1);
 
         adTextBoxAppear = new AudioData("textboxappear_mono.wav", 0.4f,5);
+
+
+        adBallHit =  new AudioData("ballhit1stereo.wav", 0.4f,0);
+        adBallFall =  new AudioData("ballfall.wav", 0.4f,0);
+        adDestroyTarget =  new AudioData("destroy_target.wav", 0.4f,0);
+
 
 
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
@@ -190,55 +201,42 @@ public class Sound {
 
     public static void loadStaticGameAudioTracks(){
 
-        ByteBuffer pcm;
-        byte[] music;
-        try {
-            InputStream input = Game.mainActivity.getResources().getAssets().open("ballhit1stereo.wav");
-            WavToPCM.WavInfo info = WavToPCM.readHeader(input);
-            pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
-            music = pcm.array();
-
+        if (mAudioTrack1 == null) {
             mAudioTrack1 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
                     AudioFormat.CHANNEL_OUT_STEREO,
-                    AudioFormat.ENCODING_PCM_16BIT, music.length,
+                    AudioFormat.ENCODING_PCM_16BIT, adBallHit.music.length,
                     AudioTrack.MODE_STATIC);
 
-            mAudioTrack1.write(music, 0, music.length);
-        } catch (IOException e) {
-            e.printStackTrace();
+            mAudioTrack1.write(adBallHit.music, 0, adBallHit.music.length);
+        } else {
+            mAudioTrack1.stop();
+            mAudioTrack1.reloadStaticData();
         }
 
-        try {
-            InputStream input = Game.mainActivity.getResources().getAssets().open("destroy_target.wav");
-            WavToPCM.WavInfo info = WavToPCM.readHeader(input);
-            pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
-            music = pcm.array();
 
+
+        if (mAudioTrack2 == null) {
             mAudioTrack2 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
                     AudioFormat.CHANNEL_OUT_STEREO,
-                    AudioFormat.ENCODING_PCM_16BIT, music.length,
+                    AudioFormat.ENCODING_PCM_16BIT, adDestroyTarget.music.length,
                     AudioTrack.MODE_STATIC);
 
-            mAudioTrack2.write(music, 0, music.length);
-        } catch (IOException e) {
-            e.printStackTrace();
+            mAudioTrack2.write(adDestroyTarget.music, 0, adDestroyTarget.music.length);
+        } else {
+            mAudioTrack2.stop();
+            mAudioTrack2.reloadStaticData();
         }
 
-        try {
-            InputStream input = Game.mainActivity.getResources().getAssets().open("ballfall.wav");
-            WavToPCM.WavInfo info = WavToPCM.readHeader(input);
-            pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
-            music = pcm.array();
-
+        if (mAudioTrack3 == null) {
             mAudioTrack3 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
                     AudioFormat.CHANNEL_OUT_STEREO,
-                    AudioFormat.ENCODING_PCM_16BIT, music.length,
+                    AudioFormat.ENCODING_PCM_16BIT, adBallFall.music.length,
                     AudioTrack.MODE_STATIC);
 
-            mAudioTrack3.write(music, 0, music.length);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            mAudioTrack3.write(adBallFall.music, 0, adBallFall.music.length);
+        } else {
+            mAudioTrack3.stop();
+            mAudioTrack3.reloadStaticData();
         }
     }
 
@@ -246,7 +244,7 @@ public class Sound {
 
         if (at.getState() == AudioTrack.STATE_UNINITIALIZED || at.getState() == AudioTrack.STATE_NO_STATIC_DATA){
             Log.e(TAG, "Audio não inicializado.");
-            loadStaticGameAudioTracks();
+
         } else {
             at.stop();
             at.reloadStaticData();
@@ -384,7 +382,16 @@ public class Sound {
             mediaPlayer[currentMediaNumber].start();
         } else {
             currentMediaNumber = 0;
-            mediaPlayer[currentMediaNumber] = MediaPlayer.create(Game.mainActivity, getNextMusicId());
+            mediaPlayer[currentMediaNumber] = new MediaPlayer();
+            AssetFileDescriptor afd;
+            try {
+                afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                mediaPlayer[currentMediaNumber].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                mediaPlayer[currentMediaNumber].prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
@@ -416,6 +423,7 @@ public class Sound {
         try {
             if (mediaPlayer[0] != null){
                 mediaPlayer[0].stop();
+                mediaPlayer[0].reset();
                 mediaPlayer[0].release();
                 mediaPlayer[0] = null;
             }
@@ -425,6 +433,7 @@ public class Sound {
         try {
             if (mediaPlayer[1] != null){
                 mediaPlayer[1].stop();
+                mediaPlayer[1].reset();
                 mediaPlayer[1].release();
                 mediaPlayer[1] = null;
             }
@@ -434,6 +443,7 @@ public class Sound {
         try {
             if (mediaPlayer[2] != null){
                 mediaPlayer[2].stop();
+                mediaPlayer[2].reset();
                 mediaPlayer[2].release();
                 mediaPlayer[2] = null;
             }
@@ -447,11 +457,20 @@ public class Sound {
 
         if (mediaPlayer[getLastMediaPlayer()] != null){
             Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayer());
+            mediaPlayer[getLastMediaPlayer()].reset();
             mediaPlayer[getLastMediaPlayer()].release();
             mediaPlayer[getLastMediaPlayer()] = null;
         }
 
-        mediaPlayer[getNextMediaPlayer()] = MediaPlayer.create(Game.mainActivity, getNextMusicId());
+        mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
+        AssetFileDescriptor afd;
+        try {
+            afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+            mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+            mediaPlayer[getNextMediaPlayer()].prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -472,26 +491,34 @@ public class Sound {
         });
     }
 
-    public static int getNextMusicId(){
+    public static String getNextMusicFileName(){
 
-        int nextMusicId = R.raw.m1_hypnotic_puzzle2;
+        String nextMusicFileName = "m1_hypnotic_puzzle2.ogg";
 
         if (currentMusic == 0){
             currentMusic = 1;
-            nextMusicId = R.raw.m1_hypnotic_puzzle2;
+            nextMusicFileName = "m1_hypnotic_puzzle2.ogg";
         } else if (currentMusic == 1){
             currentMusic = 0;
-            nextMusicId = R.raw.m2_hypnotic_puzzle3;
+            nextMusicFileName = "m2_hypnotic_puzzle3.ogg";
         }
 
-        Log.e(TAG, "getNextMusicId " + nextMusicId);
+        Log.e(TAG, "nextMusicFileName " + nextMusicFileName);
 
-        return nextMusicId;
+        return nextMusicFileName;
     }
 
     public static void loadMusic(){
         currentMediaNumber = 0;
-        mediaPlayer[currentMediaNumber] = MediaPlayer.create(Game.mainActivity, getNextMusicId());
+        mediaPlayer[currentMediaNumber] = new MediaPlayer();
+        AssetFileDescriptor afd;
+        try {
+            afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+            mediaPlayer[currentMediaNumber].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+            mediaPlayer[currentMediaNumber].prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
