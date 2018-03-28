@@ -656,7 +656,7 @@ public class LevelGoals {
 
         if (!leftBorderTouch) {
             leftBorderTouchTime += elapsed;
-            Log.e(TAG, "leftBorderTouchTime " + leftBorderTouchTime);
+            //Log.e(TAG, "leftBorderTouchTime " + leftBorderTouchTime);
             if (leftBorderTouchTime > 1000) {
                 leftBorderTouch = true;
                 //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
@@ -679,7 +679,7 @@ public class LevelGoals {
 
         if (!rightBorderTouch) {
             rightBorderTouchTime += elapsed;
-            Log.e(TAG, "rightBorderTouchTime " + rightBorderTouchTime);
+            //Log.e(TAG, "rightBorderTouchTime " + rightBorderTouchTime);
             if (rightBorderTouchTime > 1000) {
                 rightBorderTouch = true;
                 //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");

@@ -235,7 +235,8 @@ public class Ball extends Circle{
         } else if (textureColorId == COLOR_BALL_RED){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_RED_ID));
         } else if (textureColorId == COLOR_BALL_YELLOW){
-            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_YELLOW_ID));
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_BLACK_ID));
+            // TODO Deixar mesmo desabilitada a bola amarela?
         }
     }
     
