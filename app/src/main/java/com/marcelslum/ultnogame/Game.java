@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Vibrator;
+import android.util.Log;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -1494,7 +1495,7 @@ public class Game {
 
     static void simulate(long elapsed, float frameDuration){
 
-
+        //Log.e(TAG, "elapsed " + elapsed);
 
         if (gameState != GAME_STATE_VITORIA) {
             TimeHandler.updateTimeOfLevelPlay(elapsed);
@@ -1589,7 +1590,7 @@ public class Game {
                         bars.get(0).moveRight(timePercentage);
                         //bars.get(0).vx = (bars.get(0).dvx * (float) elapsed) / frameDuration;
                     } else {
-                        bars.get(0).stop();
+                        bars.get(0).stop(elapsed);
                     }
                 }
                 if (bars.size() == 2) {
@@ -1598,7 +1599,7 @@ public class Game {
                     } else if (ButtonHandler.button1Right.isPressed && !ButtonHandler.button1Left.isPressed) {
                         bars.get(0).moveRight(timePercentage);
                     } else {
-                        bars.get(0).stop();
+                        bars.get(0).stop(elapsed);
                     }
 
                     if (ButtonHandler.button2Left.isPressed) {
@@ -1606,7 +1607,7 @@ public class Game {
                     } else if (ButtonHandler.button2Right.isPressed) {
                         bars.get(1).moveRight(timePercentage);
                     } else {
-                        bars.get(1).stop();
+                        bars.get(1).stop(elapsed);
                     }
                 }
             }
@@ -1621,8 +1622,6 @@ public class Game {
                     specialBalls.remove(i);
                 }
             }
-
-
         }
 
 
@@ -1764,7 +1763,9 @@ public class Game {
             // tomas as medidas no caso de colisão das barras
             for (int i = 0; i < bars.size(); i++) {
                 if (bars.get(i).isCollided) {
-                    bars.get(i).onCollision();
+                    bars.get(i).onCollision(elapsed);
+                } else {
+                    bars.get(i).onNotCollision();
                 }
             }
         }

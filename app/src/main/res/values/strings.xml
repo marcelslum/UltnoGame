@@ -54,9 +54,9 @@
     <string name="group20name">Mistura</string>
     
     <!-- geral -->
-    <string name="tipLevel1">Para pausar, aperte em qualquer lugar na parte centra ou superior.</string>
+    <string name="tipLevel1">Para pausar, aperte em qualquer lugar na parte superior da tela.</string>
     <string name="tipLevel2">Você pode ativar/desativar a música, os sons de efeitos e a vibração no menu de opções do jogo.</string>
-    <string name="tipLevel3">Se os níveis iniciais estiver muito fáceis, tente aumentar a velocidade da bola no menu opções.</string>
+    <string name="tipLevel3">Se os níveis iniciais estiver muito fáceis, tente aumentar a velocidade global da bola no menu opções.</string>
     <string name="tipLevel4">O menu de opções pode ser acessado na tela principal ou no menu de pausa de jogo.</string>
     
     
@@ -100,7 +100,7 @@
     
     <!-- geral -->
     
-    <string name="tipLevel28">Alterar a velocidade da bola no menu de opções altera um pouco a velocidade da barra.</string>
+    <string name="tipLevel28">Alterar a velocidade global da bola no menu de opções altera também a velocidade da barra.</string>
     <string name="tipLevel29">Por conta dos limites mínimos e máximos do ângulo, a bola nunca correrá pararela ou perpendicular à barra.</string>
     
     <!-- level 9 em diante -->
@@ -429,11 +429,11 @@
     <string name="levelGoal12m2">- iniciando contagem</string>
     <string name="levelGoal12m3"> segundos faltantes</string>
     <string name="levelGoal16m">Vento por tempo demais</string>
-    <string name="levelGoal31">Evite que a barra encoste na borda da esquerda</string>
+    <string name="levelGoal31">Evite que a barra encoste na borda da esquerda por mais de 1 segundo</string>
     <string name="levelGoal31m">Borda esquerda encostada :/</string>
-    <string name="levelGoal32">Evite que a barra encoste na borda da direita</string>
+    <string name="levelGoal32">Evite que a barra encoste na borda da direita por mais de 1 segundo</string>
     <string name="levelGoal32m">Borda direita encostada :/</string>
-    <string name="levelGoal33">Evite que a barra encoste em qualquer uma das bordas</string>
+    <string name="levelGoal33">Evite que a barra encoste em qualquer uma das bordas por mais de 1 segundo</string>
     <string name="levelGoal33m">Borda encostada :/</string>
     <string name="levelGoal1m">Level não concluído a tempo :/</string>
     <string name="levelGoal1m2">segundos restantes</string>

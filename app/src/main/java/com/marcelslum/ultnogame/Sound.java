@@ -73,11 +73,11 @@ public class Sound {
 
         adSuccess1 = new AudioData("success1_mono.wav", 0.5f, 2);
         adGameOver = new AudioData("gameover2_mono.wav", 0.8f,2);
-        adStarsUp = new AudioData("starsup_mono.wav", 0.6f,2);
         adMenuIconDrop = new AudioData("bells9_mono.wav", 0.3f,2);
 
         adMenuSmall = new AudioData("menuselectsmall.wav", 0.7f,3);
         adMenuBig = new AudioData("menuselectbig.wav", 0.7f,3);
+        adStarsUp = new AudioData("starsup.wav", 0.6f,3);
 
         adWin1 = new AudioData("win0_powerup17_mono.wav", 0.45f,4);
         adWin2 = new AudioData("win1_powerup16_mono.wav", 0.45f,4);

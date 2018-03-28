@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -534,14 +536,11 @@ public class LevelGoals {
 
     public void notifyBarMoveByWind(long time){
 
-        // TODO não considerar quando o jogo está pausado
-        
-        
         if (barMoveByWindLoose){
             return;
         }
 
-        //Log.e(TAG, " NOTIFICANDO ->->->-> "+"barMoveByWindo "+time);
+        //Log.e(TAG, " NOTIFICANDO ->->->-> "+"barMoveByWind "+time);
 
         barMoveByWind  = time;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -644,36 +643,57 @@ public class LevelGoals {
         
     }
 
-    public void notifyLeftBorderTouch() {
+    long leftBorderTouchTime = 0;
+    long rightBorderTouchTime = 0;
+
+    public void notifyNotBorderTouch() {
+        leftBorderTouchTime = 0;
+        rightBorderTouchTime = 0;
+    }
+
+
+    public void notifyLeftBorderTouch(long elapsed) {
+
         if (!leftBorderTouch) {
-            leftBorderTouch = true;
-            //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
-            for (int i = 0; i < levelGoals.size(); i++){
-                LevelGoal lg = levelGoals.get(i);
-                if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH){
+            leftBorderTouchTime += elapsed;
+            Log.e(TAG, "leftBorderTouchTime " + leftBorderTouchTime);
+            if (leftBorderTouchTime > 1000) {
+                leftBorderTouch = true;
+                //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
+                for (int i = 0; i < levelGoals.size(); i++) {
+                    LevelGoal lg = levelGoals.get(i);
+                    if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH) {
                         Game.messages.showMessage(lg.messageText);
-                }
-                if (lg.type == LevelGoal.PREVENT_LEFT_BORDER_TOUCH){
-                    Game.messages.showMessage(lg.messageText);
+                    }
+                    if (lg.type == LevelGoal.PREVENT_LEFT_BORDER_TOUCH) {
+                        Game.messages.showMessage(lg.messageText);
+                    }
                 }
             }
+
         }
     }
 
 
-    public void notifyRightBorderTouch() {
+    public void notifyRightBorderTouch(long elapsed) {
+
         if (!rightBorderTouch) {
-            rightBorderTouch = true;
-            //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyRightBorderTouch ");
-            for (int i = 0; i < levelGoals.size(); i++){
-                LevelGoal lg = levelGoals.get(i);
-                if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH){
-                    Game.messages.showMessage(lg.messageText);
-                }
-                if (lg.type == LevelGoal.PREVENT_RIGHT_BORDER_TOUCH){
-                    Game.messages.showMessage(lg.messageText);
+            rightBorderTouchTime += elapsed;
+            Log.e(TAG, "rightBorderTouchTime " + rightBorderTouchTime);
+            if (rightBorderTouchTime > 1000) {
+                rightBorderTouch = true;
+                //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
+                for (int i = 0; i < levelGoals.size(); i++) {
+                    LevelGoal lg = levelGoals.get(i);
+                    if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH) {
+                        Game.messages.showMessage(lg.messageText);
+                    }
+                    if (lg.type == LevelGoal.PREVENT_RIGHT_BORDER_TOUCH) {
+                        Game.messages.showMessage(lg.messageText);
+                    }
                 }
             }
+
         }
     }
 

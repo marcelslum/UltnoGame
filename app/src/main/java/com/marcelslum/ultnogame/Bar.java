@@ -6,7 +6,7 @@ package com.marcelslum.ultnogame;
  */
 public class Bar extends Rectangle{
 
-    long timeOfWindMove = 0;
+    long elapsedMoveByWind = 0;
 
     public static final String TAG = "Bar";
 
@@ -250,7 +250,7 @@ public class Bar extends Rectangle{
         vx = dvx * timePercentage;
         translate(vx, 0f);
         verifyWind();
-        timeOfWindMove = 0;
+        elapsedMoveByWind = 0;
 
 
     }
@@ -277,12 +277,14 @@ public class Bar extends Rectangle{
         //Log.e(TAG, "dvx "+dvx);
         vx = dvx * timePercentage;
         translate(vx, 0f);
-        timeOfWindMove = 0;
+        elapsedMoveByWind = 0;
         verifyWind();
 
     }
 
-    public void stop(){
+
+
+    public void stop(long elapsed){
         rightPress = false;
         leftPress = false;
 
@@ -297,11 +299,9 @@ public class Bar extends Rectangle{
         }
         vx = 0f;
 
-        if (Game.wind != null){
-            if (timeOfWindMove == 0) {
-                timeOfWindMove = Utils.getTime();
-            }
-            Level.levelObject.levelGoalsObject.notifyBarMoveByWind(Utils.getTime() - timeOfWindMove);
+        if (Game.wind != null && Game.gameState == Game.GAME_STATE_JOGAR){
+            elapsedMoveByWind += elapsed;
+            Level.levelObject.levelGoalsObject.notifyBarMoveByWind(elapsedMoveByWind);
         }
 
         verifyWind();
@@ -343,18 +343,31 @@ public class Bar extends Rectangle{
 
     }
 
-    public void onCollision() {
+    boolean borderCollision = false;
+
+    public void onCollision(long elapsed) {
 
         for (int i = 0; i < collisionsData.size(); i++){
-
             if (collisionsData.get(i).object.type == Entity.TYPE_LEFT_BORDER) {
-                Level.levelObject.levelGoalsObject.notifyLeftBorderTouch();
-
+                borderCollision = true;
+                Level.levelObject.levelGoalsObject.notifyLeftBorderTouch(elapsed);
             }
 
             if (collisionsData.get(i).object.type == Entity.TYPE_RIGHT_BORDER){
-                Level.levelObject.levelGoalsObject.notifyRightBorderTouch();
+                borderCollision = true;
+                Level.levelObject.levelGoalsObject.notifyRightBorderTouch(elapsed);
             }
         }
     }
+
+    public void onNotCollision() {
+        if (borderCollision){
+            borderCollision = false;
+        } else {
+            Level.levelObject.levelGoalsObject.notifyNotBorderTouch();
+        }
+    }
+
+
+
 }
