@@ -8,7 +8,7 @@ public class Obstacle extends Rectangle{
     public float sizeOfSquares;
 
     Obstacle(String name, float x, float y, float width, float height) {
-        super(name, x, y, Entity.TYPE_OBSTACLE, width, height, Game.OBSTACLES_WEIGHT, new Color(0.7f, 0.7f, 0.7f, 1.0f));
+        super(name, x, y, Entity.TYPE_OBSTACLE, width, height, Game.OBSTACLES_WEIGHT, new Color(0.52f, 0.6f, 0.6f, 1.0f));
         this.program = Game.solidProgram;
         setDrawInfo();
     }

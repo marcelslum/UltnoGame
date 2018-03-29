@@ -406,7 +406,7 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL 12
         if (levelNumber == ln) {
             lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
-            lg.add(new LevelGoal(4, LevelGoal.DECELERATE_N_TIMES_IN_A_ROW, 3));
+            lg.add(new LevelGoal(4, LevelGoal.DECELERATE_N_TIMES_IN_A_ROW, 5));
             return lg;
         }
 
