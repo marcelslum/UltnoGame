@@ -429,11 +429,11 @@
     <string name="levelGoal12m2">- iniciando contagem</string>
     <string name="levelGoal12m3"> segundos faltantes</string>
     <string name="levelGoal16m">Vento por tempo demais</string>
-    <string name="levelGoal31">Evite que a barra encoste na borda da esquerda por mais de 1 segundo</string>
+    <string name="levelGoal31">Evite que a barra encoste na borda da esquerda por mais de meio segundo</string>
     <string name="levelGoal31m">Borda esquerda encostada :/</string>
-    <string name="levelGoal32">Evite que a barra encoste na borda da direita por mais de 1 segundo</string>
+    <string name="levelGoal32">Evite que a barra encoste na borda da direita por mais de meio segundo</string>
     <string name="levelGoal32m">Borda direita encostada :/</string>
-    <string name="levelGoal33">Evite que a barra encoste em qualquer uma das bordas por mais de 1 segundo</string>
+    <string name="levelGoal33">Evite que a barra encoste em qualquer uma das bordas por mais de meio segundo</string>
     <string name="levelGoal33m">Borda encostada :/</string>
     <string name="levelGoal1m">Level não concluído a tempo :/</string>
     <string name="levelGoal1m2">segundos restantes</string>

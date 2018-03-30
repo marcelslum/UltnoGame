@@ -1013,7 +1013,7 @@ public class LevelLoader {
                     .setBallsTargetsAppend(targetsAppend)
                     .setTargetsMap(
                             new int[][]{
-                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3},
+                                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0},
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3},
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3},
                                     {1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1},
@@ -1058,8 +1058,8 @@ public class LevelLoader {
                                     .setIncreaseHeight(false)
                                     .setWidthVelocity(0.005f)
                                     .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.7f)
-                                    .setMaxWidth_BI(1.5f)
+                                    .setMinWidth_BI(0.6f)
+                                    .setMaxWidth_BI(1.4f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f)
                     );
@@ -1093,8 +1093,8 @@ public class LevelLoader {
                                     .setIncreaseHeight(false)
                                     .setWidthVelocity(0.0051f)
                                     .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.7f)
-                                    .setMaxWidth_BI(1.5f)
+                                    .setMinWidth_BI(0.6f)
+                                    .setMaxWidth_BI(1.4f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f)
                     )
@@ -1134,8 +1134,8 @@ public class LevelLoader {
                                     .setIncreaseHeight(false)
                                     .setWidthVelocity(0.0052f)
                                     .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.65f)
-                                    .setMaxWidth_BI(1.5f)
+                                    .setMinWidth_BI(0.55f)
+                                    .setMaxWidth_BI(1.4f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f)
                     )
@@ -1195,8 +1195,8 @@ public class LevelLoader {
                                     .setIncreaseHeight(false)
                                     .setWidthVelocity(0.0053f)
                                     .setHeightVelocity(0f)
-                                    .setMinWidth_BI(0.625f)
-                                    .setMaxWidth_BI(1.5f)
+                                    .setMinWidth_BI(0.55f)
+                                    .setMaxWidth_BI(1.4f)
                                     .setMinHeight_BI(1f)
                                     .setMaxHeight_BI(1f)
                     )
@@ -1267,7 +1267,7 @@ public class LevelLoader {
                             new int[][]{
                                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                     {1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                                    {1, 0, 3, 4, 0, 0, 0, 0, 0, 0, 4},
+                                    {1, 0, 3, 1, 0, 0, 0, 0, 0, 0, 4},
                                     {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
                                     {1, 0, 0, 1, 3, 0, 0, 0, 0, 0, 1},
                                     {1, 0, 0, 0, 1, 3, 0, 0, 0, 0, 1},
@@ -1286,7 +1286,7 @@ public class LevelLoader {
                     .setObstaclesWidth(0.1f, 0.1f, 0.2f)
                     .setObstaclesHeight(0.0605f, 0.0605f, 0.0605f)
                     .setWindType(Level.WIND_TYPE_LEFT)
-                    .setSpecialBallPercentage(0.395f)
+                    .setSpecialBallPercentage(0.375f)
                     .setObstaclesScaleVariation(
                             new ScaleVariationDataBuilder()
                                     .setIsActive(true)
@@ -1367,7 +1367,7 @@ public class LevelLoader {
                                     .setMinWidth_BI(0.05f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true))
-                    .setSpecialBallPercentage(0.39f);
+                    .setSpecialBallPercentage(0.35f);
 
         }
 
@@ -1395,7 +1395,7 @@ public class LevelLoader {
                                     .setMinWidth_BI(0.05f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true))
-                    .setSpecialBallPercentage(0.385f);
+                    .setSpecialBallPercentage(0.35f);
         }
 
         // BOLA FALSA

@@ -646,10 +646,15 @@ public class LevelGoals {
     long leftBorderTouchTime = 0;
     long rightBorderTouchTime = 0;
 
-    public void notifyNotBorderTouch() {
+    public void notifyNotLeftBorderTouch() {
         leftBorderTouchTime = 0;
+    }
+
+    public void notifyNotRightBorderTouch() {
         rightBorderTouchTime = 0;
     }
+
+
 
 
     public void notifyLeftBorderTouch(long elapsed) {
@@ -657,7 +662,7 @@ public class LevelGoals {
         if (!leftBorderTouch) {
             leftBorderTouchTime += elapsed;
             //Log.e(TAG, "leftBorderTouchTime " + leftBorderTouchTime);
-            if (leftBorderTouchTime > 1000) {
+            if (leftBorderTouchTime > 600) {
                 leftBorderTouch = true;
                 //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
                 for (int i = 0; i < levelGoals.size(); i++) {
@@ -679,10 +684,10 @@ public class LevelGoals {
 
         if (!rightBorderTouch) {
             rightBorderTouchTime += elapsed;
-            //Log.e(TAG, "rightBorderTouchTime " + rightBorderTouchTime);
-            if (rightBorderTouchTime > 1000) {
+            Log.e(TAG, "rightBorderTouchTime " + rightBorderTouchTime);
+            if (rightBorderTouchTime > 600) {
                 rightBorderTouch = true;
-                //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
+                Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
                 for (int i = 0; i < levelGoals.size(); i++) {
                     LevelGoal lg = levelGoals.get(i);
                     if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH) {

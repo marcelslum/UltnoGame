@@ -459,7 +459,7 @@ public class Game {
                     });
                     a2.start();
                     if (gameState == GAME_STATE_OBJETIVO_LEVEL) {
-                        Game.sound.playTextBoxAppear();
+                        //Game.sound.playTextBoxAppear();
                         //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.03f, 0.03f, 0);
                     }
                 }
@@ -1493,6 +1493,9 @@ public class Game {
     public static ArrayList<Long> frameSimulateDurations1;
     public static ArrayList<Long> frameSimulateDurations2;
 
+    static boolean leftTouch = false;
+    static boolean rightTouch = false;
+
     static void simulate(long elapsed, float frameDuration){
 
         //Log.e(TAG, "elapsed " + elapsed);
@@ -1761,13 +1764,39 @@ public class Game {
             }
 
             // tomas as medidas no caso de colisão das barras
+
+
+
+
+            leftTouch = false;
+            rightTouch = false;
             for (int i = 0; i < bars.size(); i++) {
-                if (bars.get(i).isCollided) {
-                    bars.get(i).onCollision(elapsed);
-                } else {
-                    bars.get(i).onNotCollision();
+                if (bars.get(i).positionX - (Game.bordaE.positionX + Game.bordaE.width) < 0.1f){
+                    Log.e(TAG, "left touch");
+                    leftTouch = true;
+
                 }
             }
+
+            for (int i = 0; i < bars.size(); i++) {
+                if (Game.bordaD.positionX - (bars.get(i).positionX + bars.get(i).width) < 0.1f){
+                    Log.e(TAG, "right touch");
+                    rightTouch = true;
+                }
+            }
+
+            if (leftTouch){
+                Level.levelObject.levelGoalsObject.notifyLeftBorderTouch(elapsed);
+            } else {
+                Level.levelObject.levelGoalsObject.notifyNotLeftBorderTouch();
+            }
+
+            if (rightTouch){
+                Level.levelObject.levelGoalsObject.notifyRightBorderTouch(elapsed);
+            } else {
+                Level.levelObject.levelGoalsObject.notifyNotRightBorderTouch();
+            }
+
         }
 
         // toma as medidas finais

@@ -333,12 +333,12 @@ public class Sound {
             }
 
             if (!anyMediaPlaying){
-                Log.e(TAG, "check loop playing: media not playing");
+                Log.e(TAG, "check loop playing: media not playing - criando novo");
                 stopAndReleaseMusic();
                 mediaPlayer[currentMediaNumber] = null;
                 playMusic();
             } else {
-                Log.e(TAG, "check loop playing: media playing");
+                //Log.e(TAG, "check loop playing: media playing");
             }
         }
 

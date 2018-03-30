@@ -126,10 +126,12 @@ public class Target extends Rectangle {
             float percentage = Level.levelObject.specialBallPercentage;
             int difference = TimeHandler.secondsOfLevelPlay - SpecialBall.timeOfLastSpecialBall;
             
-            if (difference > 7 && difference < 12){
+            if (difference > 5 && difference < 8){
                 percentage *= 1.2;
-            } else if (difference >= 12){
+            } else if (difference >= 8 && difference <= 12){
                 percentage *= 1.5;
+            } else if (difference > 12){
+                percentage *= 2.5;
             }
             
             if (Utils.getRandonFloat(0.0f, 1.0f) < percentage){

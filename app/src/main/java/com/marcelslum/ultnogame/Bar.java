@@ -342,32 +342,4 @@ public class Bar extends Rectangle{
         return 0;
 
     }
-
-    boolean borderCollision = false;
-
-    public void onCollision(long elapsed) {
-
-        for (int i = 0; i < collisionsData.size(); i++){
-            if (collisionsData.get(i).object.type == Entity.TYPE_LEFT_BORDER) {
-                borderCollision = true;
-                Level.levelObject.levelGoalsObject.notifyLeftBorderTouch(elapsed);
-            }
-
-            if (collisionsData.get(i).object.type == Entity.TYPE_RIGHT_BORDER){
-                borderCollision = true;
-                Level.levelObject.levelGoalsObject.notifyRightBorderTouch(elapsed);
-            }
-        }
-    }
-
-    public void onNotCollision() {
-        if (borderCollision){
-            borderCollision = false;
-        } else {
-            Level.levelObject.levelGoalsObject.notifyNotBorderTouch();
-        }
-    }
-
-
-
 }
