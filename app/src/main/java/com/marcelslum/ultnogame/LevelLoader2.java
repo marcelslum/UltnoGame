@@ -43,17 +43,17 @@ public class LevelLoader2 {
                     new int[][]{
                             {1, 0, 1, 1, 1, 3, 1, 1, 1, 0, 1},
                             {0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0},
-                            {0, 0, 1, 0, 0, 3, 0, 0, 1, 0, 0},
+                            {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
                             {0, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0},
-                            {0, 0, 0, 1, 1, 3, 1, 0, 0, 0, 0},
+                            {0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0},
                             {0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0},
                             {0, 0, 0, 1, 1, 3, 1, 0, 0, 0, 0},
-                            {0, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0},
+                            {0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
                             {0, 0, 1, 0, 0, 3, 0, 0, 1, 0, 0},
-                            {0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0},
+                            {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
                             {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1},
                     })
-                    .setSpecialBallPercentage(0.42f)
+                    .setSpecialBallPercentage(0.6f)
                     .setInvertedButtons(true)
                     .setBarsScaleVariation(
                             new ScaleVariationDataBuilder()
@@ -73,7 +73,7 @@ public class LevelLoader2 {
                     .setTargetsMap(
                             new int[][]{
                                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+                                    {0, 5, 5, 5, 0, 5, 5, 0, 5, 5, 0},
                                     {3, 2, 3, 2, 3, 1, 3, 2, 3, 2, 3},
                                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                                     {4, 1, 1, 1, 1, 4, 1, 1, 1, 1, 4},
@@ -117,14 +117,14 @@ public class LevelLoader2 {
                                     {1, 0, 2, 0, 0, 0, 0, 0, 2, 0, 1},
                                     {0, 1, 2, 0, 0, 0, 0, 0, 2, 1, 1},
                                     {1, 1, 2, 1, 0, 0, 0, 1, 1, 1, 1},
-                                    {3, 3, 3, 3, 1, 0, 1, 3, 3, 3, 3},
+                                    {3, 3, 2, 3, 0, 0, 0, 3, 3, 2, 3},
                             })
                     .setInvertedButtons(true)
                     .setObstaclesQuantity(3)
                     .setObstaclesX(0.45f, 0.2f, 0.7f)
                     .setObstaclesY(0.22f, 0.65f, 0.65f)
                     .setObstaclesWidth(0.1f, 0.1f, 0.1f)
-                    .setObstaclesHeight(0.18f, 0.18f, 0.18f)
+                    .setObstaclesHeight(0.18f, 0.1f, 0.1f)
                     .setObstaclesPositionVariation(
                             new PositionVariationDataBuilder()
                                     .setIsActive(true)
@@ -140,7 +140,7 @@ public class LevelLoader2 {
                                     .setMinX(0.01f)
                                     .setMaxY(0.9f)
                                     .setMinY(0.01f)
-                                    .setxVelocity(0.0015f)
+                                    .setxVelocity(0.0012f)
                                     .setyVelocity(0f),
                             new PositionVariationDataBuilder()
                                     .setIsActive(true)
@@ -148,7 +148,7 @@ public class LevelLoader2 {
                                     .setMinX(0.01f)
                                     .setMaxY(0.9f)
                                     .setMinY(0.01f)
-                                    .setxVelocity(0.0015f)
+                                    .setxVelocity(0.0012f)
                                     .setyVelocity(0f)
                     );
         }
@@ -1406,7 +1406,7 @@ public class LevelLoader2 {
                                     {1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1},
                                     {1, 1, 2, 0, 0, 0, 0, 0, 2, 1, 1}
                             })
-                    .setFakeBallPercentage(0.6f)
+                    .setFakeBallPercentage(0.5f)
                     .setWindType(Level.WIND_TYPE_LEFT);
         }
 

@@ -1432,7 +1432,7 @@ public class Ball extends Circle{
 
                 Game.addFakeBall(ball);
 
-                Sound.playSoundPool(Sound.soundDuplicateBall, 0.7f, 0.7f, 0);
+                Sound.playDuplicateBall(0.7f);
                 initFakeAnimation();
                 ball.initFakeAnimation();
 

@@ -70,7 +70,7 @@ public class LevelGoals {
     public void notifyFakeBallHited(){
         timesOfFakeBallsHitted += 1;
 
-        //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyFakeBallHited vezes "+timesOfFakeBallsHitted);
+        Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyFakeBallHited vezes "+timesOfFakeBallsHitted);
         
         for (int i = 0; i < levelGoals.size(); i++) {
             LevelGoal lg = levelGoals.get(i);
@@ -684,10 +684,10 @@ public class LevelGoals {
 
         if (!rightBorderTouch) {
             rightBorderTouchTime += elapsed;
-            Log.e(TAG, "rightBorderTouchTime " + rightBorderTouchTime);
+            //Log.e(TAG, "rightBorderTouchTime " + rightBorderTouchTime);
             if (rightBorderTouchTime > 600) {
                 rightBorderTouch = true;
-                Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
+                //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyLeftBorderTouch ");
                 for (int i = 0; i < levelGoals.size(); i++) {
                     LevelGoal lg = levelGoals.get(i);
                     if (lg.type == LevelGoal.PREVENT_BORDER_TOUCH) {

@@ -265,6 +265,30 @@ public class Sound {
         playStaticAudioTrack(mAudioTrack3, 0.8f);
     }
 
+
+    static int duplicateBallId = -1;
+    public static void playDuplicateBall(float volume){
+
+        if (duplicateBallId == -1){
+            duplicateBallId = playSoundPool(Sound.soundDuplicateBall, volume, volume, 0);
+        } else {
+            soundPool.stop(duplicateBallId);
+            duplicateBallId = playSoundPool(Sound.soundDuplicateBall, volume, volume, 0);
+        }
+    }
+
+    static int barSizeId = -1;
+    public static void playBarSize(float volume){
+
+        if (barSizeId == -1){
+            barSizeId = playSoundPool(Sound.soundBarSize, volume, volume, 0);
+        } else {
+            soundPool.stop(barSizeId);
+            barSizeId = playSoundPool(Sound.soundBarSize, volume, volume, 0);
+        }
+    }
+
+
     public static int playSoundPool(int id, float left, float right, int loop){
 
         if (SaveGame.saveGame == null || SaveGame.saveGame.sound) {
@@ -453,10 +477,10 @@ public class Sound {
 
     public static void createNextMediaPlayer(){
 
-        Log.e(TAG, "criando proximo media player: " + getNextMediaPlayer());
+        //Log.e(TAG, "criando proximo media player: " + getNextMediaPlayer());
 
         if (mediaPlayer[getLastMediaPlayer()] != null){
-            Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayer());
+            //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayer());
             mediaPlayer[getLastMediaPlayer()].reset();
             mediaPlayer[getLastMediaPlayer()].release();
             mediaPlayer[getLastMediaPlayer()] = null;
@@ -475,7 +499,7 @@ public class Sound {
         mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
+                //Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
                 mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
             }
         });
@@ -483,7 +507,7 @@ public class Sound {
         mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Log.e(TAG, "media completado ");
+                //Log.e(TAG, "media completado ");
                 currentMediaNumber = getNextMediaPlayer();
                 createNextMediaPlayer();
 

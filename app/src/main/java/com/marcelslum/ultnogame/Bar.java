@@ -224,6 +224,8 @@ public class Bar extends Rectangle{
         scale(0.1f * (1 / accumulatedScaleX), 0.0f);
         startTimeSpecialBallAnim = Utils.getTime();
         specialBallAnimActive = true;
+        SpecialBall.timeOfLastSpecialBall = TimeHandler.secondsOfLevelPlay;
+
     }
 
     public void moveLeft(float timePercentage) {

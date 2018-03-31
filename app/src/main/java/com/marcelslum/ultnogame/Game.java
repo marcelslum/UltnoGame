@@ -1772,7 +1772,7 @@ public class Game {
             rightTouch = false;
             for (int i = 0; i < bars.size(); i++) {
                 if (bars.get(i).positionX - (Game.bordaE.positionX + Game.bordaE.width) < 0.1f){
-                    Log.e(TAG, "left touch");
+                    //Log.e(TAG, "left touch");
                     leftTouch = true;
 
                 }
@@ -1780,7 +1780,7 @@ public class Game {
 
             for (int i = 0; i < bars.size(); i++) {
                 if (Game.bordaD.positionX - (bars.get(i).positionX + bars.get(i).width) < 0.1f){
-                    Log.e(TAG, "right touch");
+                    //Log.e(TAG, "right touch");
                     rightTouch = true;
                 }
             }
