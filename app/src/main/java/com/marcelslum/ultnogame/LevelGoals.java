@@ -134,7 +134,7 @@ public class LevelGoals {
     public void notifyBallsAlive(int number, int time){
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
-            if (lg.type == LevelGoal.KEEP_N_LIVING_BALLS && lg.value == number && !lg.achieved){
+            if (lg.type == LevelGoal.KEEP_N_LIVING_BALLS && number >= lg.value && !lg.achieved){
                 lg.setAchieved();
                 Game.messages.showMessage(lg.messageText + " " + lg.value);
             }
