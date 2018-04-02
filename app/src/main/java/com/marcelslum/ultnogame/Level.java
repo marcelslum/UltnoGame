@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class Level {
 
+    public static String TAG = "Level";
     public static Game game;
     public static final int WIND_TYPE_NO = 0;
     public static final int WIND_TYPE_RIGHT = 1;
@@ -163,6 +164,16 @@ public class Level {
             }
         }
 
+        float maxBalVelocityVx = 0f;
+        for (int i = 0; i < ballDataBaseData.size(); i++){
+            float ballVelocityX = Math.abs(ballDataBaseData.get(i).vx);
+            if (ballVelocityX > maxBalVelocityVx){
+                maxBalVelocityVx = ballVelocityX;
+            }
+        }
+
+        //Log.e(TAG, "maxBalVelocityVx " + maxBalVelocityVx);
+
         for (int i = 0; i < barDataBaseData.size(); i++){
 
             float barX = Game.gameAreaResolutionX * barDataBaseData.get(i).x;
@@ -171,7 +182,10 @@ public class Level {
             float barWidth = Game.gameAreaResolutionX * barDataBaseData.get(i).width;
             float barHeight = Game.gameAreaResolutionY * barDataBaseData.get(i).height;
 
-            float barVelocityX = Game.gameAreaResolutionX * barDataBaseData.get(i).vx;
+            //Log.e(TAG, "maxBalVelocityVx * barDataBaseData.get(i).vx " + (maxBalVelocityVx * barDataBaseData.get(i).vx));
+
+            // A velocidade da barra designada no banco é relativa à velocidade da bola mais rápida do level
+            float barVelocityX = Game.gameAreaResolutionX * maxBalVelocityVx * barDataBaseData.get(i).vx;
 
             Bar bar = new Bar("bar", barX, barY, barWidth, barHeight);
             Game.addBar(bar);
@@ -179,6 +193,9 @@ public class Level {
             bar.initialX = barX;
             bar.initialY = barY;
             bar.initialNormalDVX = barVelocityX;
+
+
+
             bar.initialDVX = bar.initialNormalDVX * percentageOfVelocity;
             
             bar.dvx = barVelocityX;
@@ -275,7 +292,9 @@ public class Level {
 
             float radius = Game.gameAreaResolutionY * ballDataBaseData.get(i).radius;
             float ballVelocityX = Game.gameAreaResolutionX * ballDataBaseData.get(i).vx;
-            float ballVelocityY = Game.gameAreaResolutionY * ballDataBaseData.get(i).vy;
+            // A velocidadeY é sempre convertendo a vx para um movimento em 45º. A velocidade designada no banco serve apenas para marcar o sentido.
+            float ballVelocityY = Game.gameAreaResolutionY * Math.abs(ballDataBaseData.get(i).vx) * ballDataBaseData.get(i).vy * 1.764571428571429f;
+
 
             Ball ball = new Ball("ball", ballX, ballY, radius, ballDataBaseData.get(i).textureMap);
             ball.angleToRotate = ballDataBaseData.get(i).angleToRotate;

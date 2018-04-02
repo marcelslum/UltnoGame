@@ -428,9 +428,17 @@ public class MenuHandler {
                 if (Game.balls != null){
                     for (int i = 0; i < Game.balls.size(); i++) {
                         Game.balls.get(i).updateBaseVelocity(SaveGame.saveGame.ballVelocity);
+                    }
+                }
+
+                if (Game.bars != null){
+                    for (int i = 0; i < Game.bars.size(); i++) {
                         Game.bars.get(i).updateBaseVelocity(SaveGame.saveGame.ballVelocity);
                     }
                 }
+
+
+
 
             }
         });
