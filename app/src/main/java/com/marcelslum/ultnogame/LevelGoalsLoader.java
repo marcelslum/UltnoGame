@@ -138,7 +138,7 @@ public class LevelGoalsLoader {
         double random = (double)Utils.getRandonFloat(0f, ((float)possibleTipsList.size())-0.0001f);
         int tipNumber = (int) Math.floor(random);
         //Log.e(TAG, "random "+ random);
-        Log.e(TAG, "tipNumber "+ tipNumber);
+        //Log.e(TAG, "tipNumber "+ tipNumber);
 
 
 
@@ -153,9 +153,9 @@ public class LevelGoalsLoader {
                 if(tipsViewed.get(i) == possibleTipsList.get(tipNumber)){
                     random = (double)Utils.getRandonFloat(0f, ((float)possibleTipsList.size())-0.0001f);
                     tipNumber = (int) Math.floor(random);
-                    Log.e(TAG, "fazendo nova tentativa ");
+                    //Log.e(TAG, "fazendo nova tentativa ");
                     //Log.e(TAG, "random "+ random);
-                    Log.e(TAG, "tipNumber "+ tipNumber);
+                    //Log.e(TAG, "tipNumber "+ tipNumber);
                     tipViewed = true;
                     break;
                 }
