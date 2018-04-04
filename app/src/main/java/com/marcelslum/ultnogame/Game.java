@@ -728,7 +728,7 @@ public class Game {
 
             abdicateAngle = false;
 
-            Sound.loadMusic();
+            //Sound.loadMusic();
 
             if (tipTextBox != null){
                 tipTextBox.clearDisplay();

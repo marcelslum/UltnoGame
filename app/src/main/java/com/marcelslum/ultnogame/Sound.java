@@ -233,7 +233,7 @@ public class Sound {
             AsyncTasks.asyncPlayAngleChange = new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, adAngleChange);
         }
     }
-    
+
     public void playPlayMenuBig(){
         if (!SaveGame.saveGame.sound){
             return;
@@ -678,6 +678,8 @@ public class Sound {
     }
 
     public static void loadMusic(){
+
+
         currentMediaNumber = 0;
         mediaPlayer[currentMediaNumber] = new MediaPlayer();
         AssetFileDescriptor afd;
