@@ -134,8 +134,8 @@ public class Level {
 
         ButtonHandler.createGameButtons(barDataBaseData.size(), invertedButtons);
 
-        InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea111", 0f, 0f,
-                Game.gameAreaResolutionX, Game.gameAreaResolutionY * 0.8f, 0, Game.brickBackground);
+        InteractionListener gameAreaInteractionListener = new InteractionListener("gameArea111", Game.gameAreaResolutionX * 0.25f, 0f,
+                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 0.8f, 0, Game.brickBackground);
 
         gameAreaInteractionListener.setPressListener(new InteractionListener.PressListener() {
             @Override
@@ -240,6 +240,10 @@ public class Level {
                 }
             }
         }
+
+        Game.updateNumberOfTargetsAlive();
+
+        Game.numberOfTargets = contador;
 
         Game.targetGroup = new TargetGroup();
         Game.targetGroup.setDrawInfo();

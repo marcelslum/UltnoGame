@@ -54,7 +54,7 @@
     <string name="group20name">Mistura</string>
     
     <!-- geral -->
-    <string name="tipLevel1">Para pausar, aperte em qualquer lugar na parte superior da tela.</string>
+    <string name="tipLevel1">Para pausar, aperte em qualquer lugar na parte superior central da tela.</string>
     <string name="tipLevel2">Você pode ativar/desativar a música, os sons de efeitos e a vibração no menu de opções do jogo.</string>
     <string name="tipLevel3">Se os níveis iniciais estiver muito fáceis, tente aumentar a velocidade global da bola no menu opções.</string>
     <string name="tipLevel4">O menu de opções pode ser acessado na tela principal ou no menu de pausa de jogo.</string>
@@ -80,6 +80,9 @@
     <string name="tipLevel15">As estrelas e pontos já conquistados não serão perdidos ao jogar novamente um nível.</string>
     <string name="tipLevel16">Durante o jogo, a pontuação vai caindo aos poucos com o passar do tempo.</string>
     <string name="tipLevel17">No painel, abaixo da pontução, aparece indicada a situação da velocidade e do ângulo da bola.</string>
+    <string name="tipLevel40">No painel, abaixo da pontução, aparece indicada a situação da velocidade e do ângulo da bola.</string>
+    <string name="tipLevel41">Quando faltar um alvo, será possível alterar o ângulo da bola manualmente.</string>
+    <string name="tipLevel42">Ao alterar o ângulo manualmente, os objetivos relacionados ao ângulo serão desabilitados.</string>
     
     
     <!-- especifico level 5 e 8 -->
@@ -153,7 +156,9 @@
     <string name="t2t3">Não deixe a bola cair.</string>
     <string name="t2t4">Atinja os alvos com a bola para eliminá-los. Cada alvo valerá 10 pontos.</string>
     <string name="t2t5">Elimine todos os alvos para completar o nível, mas não demore muito, pois a pontuação vai caindo com o passar do tempo.</string>
-    <string name="t2t6">Se o jogo estiver muito difícil ou fácil, é possível alterar a velocidade da bola no menu de opções.</string>
+    <string name="t2t6">Para facilitar, quando restar somente um alvo, aparecerão dois botões que permitirão alterar manualmente o ângulo da bola.</string>
+    <string name="t2t7">Se o jogo estiver muito difícil ou fácil, é possível alterar a velocidade da bola no menu de opções.</string>
+
 
     <string name="t3t1">Através do controle do movimento da barra, é possível alterar a direção e a velocidade da bola.</string>
     <string name="t3t2">Ao atingir a bola com a barra se movimentando no sentido contrário, a velocidade da bola aumentará</string>
@@ -367,6 +372,11 @@
     <string name="levelGoal7m">Ângulo mínimo</string>
     <string name="levelGoal14m">Barra na velocidade máxima</string>
     <string name="levelGoal17m">Velocidade alterada :/</string>
+
+    <string name="levelMessageAbdicate">Objetivos de ângulo desabilitados</string>
+    <string name="levelMessageLastTarget1">Último alvo! Altere o ângulo manualmente, se precisar.</string>
+
+
     <string name="novo">Novo</string>
     <string name="objetivos">Objetivos</string>
     <string name="tutoriais">Tutoriais</string>
@@ -475,6 +485,8 @@
     <string name="sobre11">Do site www.freesound.org:</string>
     <string name="sobre11b">- por juskiddink - som 108615</string>
     <string name="sobre12">- por rhodesmas - som 322898</string>
+    <string name="sobre12a">- por rhodesmas - som 380292</string>
+    <string name="sobre12b">- por rhodesmas - som 380291</string>
     <string name="sobre13">- por MastersDisaster - som 218114</string>
     <string name="sobre14">- por Vicces1212 - som 123758</string>
     <string name="sobre15">- por Soughtaftersounds - som 145446 - "Copyright © 2011 Varazuvi™ www.varazuvi.com"</string>

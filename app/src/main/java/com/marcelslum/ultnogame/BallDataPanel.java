@@ -110,6 +110,13 @@ public class BallDataPanel extends Entity{
         return 0;
     }
 
+    public void initAbdicateAngleAnim(){
+        angleRectangle.animScaleX = 0.008f;
+        angleNewRectangle.animScaleX = 0.008f;
+
+        Utils.createAnimation3v(angleRectangle, "initAbdicateAngleAnim", "scaleX", 2000, 0f, 0.008f, 0.5f, 0.99f, 1f, 0.008f,true, true).start();
+    }
+
     public void setData(float velocityPercentage, float anglePercentage, boolean animationOn) {
 
         if (velocityPercentage < 0){
@@ -159,19 +166,21 @@ public class BallDataPanel extends Entity{
             velocityRectangle.animScaleX = velocityPercent;
         }
 
-        if (animationOn) {
-            if (anglePercent > previousAnglePercent) {
-                angleNewRectangle.animScaleX = anglePercent;
-                angleRectangle.animScaleX = previousAnglePercent;
-                Utils.createSimpleAnimation(angleRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
+        if (!Game.abdicateAngle) {
+            if (animationOn) {
+                if (anglePercent > previousAnglePercent) {
+                    angleNewRectangle.animScaleX = anglePercent;
+                    angleRectangle.animScaleX = previousAnglePercent;
+                    Utils.createSimpleAnimation(angleRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
+                } else {
+                    angleRectangle.animScaleX = anglePercent;
+                    angleNewRectangle.animScaleX = previousAnglePercent;
+                    Utils.createSimpleAnimation(angleNewRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
+                }
             } else {
+                angleNewRectangle.animScaleX = anglePercent;
                 angleRectangle.animScaleX = anglePercent;
-                angleNewRectangle.animScaleX = previousAnglePercent;
-                Utils.createSimpleAnimation(angleNewRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
             }
-        } else {
-            angleNewRectangle.animScaleX = anglePercent;
-            angleRectangle.animScaleX = anglePercent;
         }
     }
 }

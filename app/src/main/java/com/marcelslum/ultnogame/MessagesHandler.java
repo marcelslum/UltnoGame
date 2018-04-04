@@ -58,6 +58,8 @@ public class MessagesHandler {
         Game.aboutTextView.addText(resources.getString(R.string.sobre11), Color.cinza1);
         Game.aboutTextView.addText(resources.getString(R.string.sobre11b),Color.cinza2);
         Game.aboutTextView.addText(resources.getString(R.string.sobre12), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre12a), Color.cinza2);
+        Game.aboutTextView.addText(resources.getString(R.string.sobre12b), Color.cinza2);
         Game.aboutTextView.addText(resources.getString(R.string.sobre13), Color.cinza2);
         Game.aboutTextView.addText(resources.getString(R.string.sobre14), Color.cinza2);
         Game.aboutTextView.addText(resources.getString(R.string.sobre15), Color.cinza2);

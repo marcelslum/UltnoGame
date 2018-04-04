@@ -1,7 +1,6 @@
 package com.marcelslum.ultnogame;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class AsyncTasks {
 
@@ -23,6 +22,7 @@ public class AsyncTasks {
     public static AsyncTask asyncPlayMenuBig;
     public static AsyncTask asyncPlayCounter;
     public static AsyncTask asyncPlayExplosion;
+    public static AsyncTask asyncPlayAngleChange;
 
     public static void cancelAll(){
         if (initLoader != null){
@@ -47,6 +47,7 @@ public class AsyncTasks {
         cancelAsyncTask(asyncPlayMenuBig);
         cancelAsyncTask(asyncPlayCounter);
         cancelAsyncTask(asyncPlayExplosion);
+        cancelAsyncTask(asyncPlayAngleChange);
     }
 
     public static void cancelAsyncTask(AsyncTask t){

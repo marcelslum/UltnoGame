@@ -251,6 +251,10 @@ public class LevelGoals {
 
     public void notifyMaxAngleReached(){
 
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_mxima), 1);
 
@@ -270,6 +274,10 @@ public class LevelGoals {
     }
 
     public void notifyMinAngleReached(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
 
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_mnima), 1);
@@ -291,6 +299,11 @@ public class LevelGoals {
 
     public void increaseAngle(){
 
+        if (Game.abdicateAngle) {
+            return;
+        }
+
+
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_positiva), 1);
 
@@ -311,6 +324,10 @@ public class LevelGoals {
 
     public void decreaseAngle(){
 
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_negativa), 1);
 
@@ -330,6 +347,11 @@ public class LevelGoals {
     }
 
     public void notifyAngleIncreasedOnlyWithBarMovement(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleIncreasedOnlyWithBarMovement");
         increaseAngle();
         timesWhereAngleIncreasedOnlyWithBarMovement += 1;
@@ -347,6 +369,11 @@ public class LevelGoals {
     }
 
     public void notifyAngleDecreasedOnlyWithBarMovement(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleDecreasedOnlyWithBarMovement");
         decreaseAngle();
         timesWhereAngleDecreasedOnlyWithBarMovement += 1;
@@ -364,6 +391,11 @@ public class LevelGoals {
     }
 
     public void notifyAngleIncreasedOnlyWithBarInclination(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleIncreasedOnlyWithBarInclination");
         increaseAngle();
         timesWhereAngleIncreasedOnlyWithBarInclination += 1;
@@ -381,6 +413,11 @@ public class LevelGoals {
     }
 
     public void notifyAngleDecreasedOnlyWithBarInclination(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleDecreasedOnlyWithBarInclination");
         decreaseAngle();
         timesWhereAngleDecreasedOnlyWithBarInclination += 1;
@@ -398,6 +435,11 @@ public class LevelGoals {
     }
 
     public void notifyAngleIncreasedWithBarMovementAndInclination(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleIncreasedWithBarMovementAndInclination");
         increaseAngle();
         timesWhereAngleIncreasedWithBarMovementAndInclination += 1;
@@ -415,6 +457,11 @@ public class LevelGoals {
     }
 
     public void notifyAngleDecreasedWithBarMovementAndInclination(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyAngleDecreasedWithBarMovementAndInclination");
         increaseAngle();
         timesWhereAngleDecreasedWithBarMovementAndInclination += 1;
@@ -433,6 +480,11 @@ public class LevelGoals {
 
 
     public void accelerateWithBarIncreasingAngle(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerateWithBarIncreasingAngle");
         timesOfAccelerationWithBarIncreasingAngle += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -449,6 +501,11 @@ public class LevelGoals {
     }
 
     public void decelerateWithBarDecreasingAngle(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerateWithBarDecreasingAngle");
         timesOfDecelerationWithBarDecreasingAngle += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -465,6 +522,11 @@ public class LevelGoals {
     }
 
     public void decelerateWithoutReachMaxAngle(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"decelerateWithoutReachMaxAngle");
         timesOfDecelerationWithoutReachingMaxAngle += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -481,6 +543,11 @@ public class LevelGoals {
     }
 
     public void accelerateWithoutReachMinAngle(){
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"accelerateWithoutReachMinAngle");
         timesOfAccelerationWithoutReachingMinAngle += 1;
         for (int i = 0; i < levelGoals.size(); i++){

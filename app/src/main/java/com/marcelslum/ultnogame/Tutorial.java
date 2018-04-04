@@ -417,6 +417,7 @@ public class Tutorial {
             currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t4), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t5), textBoxY, textBoxSize);
             currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t6), textBoxY, textBoxSize);
+            currentTutorialObject.addFrame(i2, Game.getContext().getResources().getString(R.string.t2t7), textBoxY, textBoxSize);
 
 
         } else if (currentTutorial == Tutorial.TUTORIAL_MOVIMENTO_BARRA) {

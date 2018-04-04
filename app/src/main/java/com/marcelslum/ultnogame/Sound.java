@@ -14,7 +14,6 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Created by marcel on 17/09/2016.
@@ -42,6 +41,7 @@ public class Sound {
     static AudioData adMenuBig2;
     static AudioData adCounter;
     static AudioData adExplosion;
+    static AudioData adAngleChange;
 
     static AudioData adBallHit;
     static AudioData adBallFall;
@@ -60,6 +60,14 @@ public class Sound {
     public static AudioTrack mAudioTrack13;
     public static AudioTrack mAudioTrack14;
     public static AudioTrack mAudioTrack15;
+
+    static int musicState;
+    static final int MUSICA_INICIO = 0;
+    static final int MUSICA_MEIO = 1;
+    static final int MUSICA_FIM = 2;
+
+    static int duplicateBallId = -1;
+    static int barSizeId = -1;
 
     public Sound(){
     }
@@ -80,6 +88,8 @@ public class Sound {
         adMenuSmall = new AudioData("menuselectsmall.wav", 0.4f,3);
         adMenuBig2 = new AudioData("menuselectbig1.wav", 0.3f,3);
         adStarsUp = new AudioData("starsup.wav", 0.4f,3);
+        adAngleChange = new AudioData("anglePlus.wav", 0.2f,3);
+
 
         adWin1 = new AudioData("win0_powerup17_mono.wav", 0.45f,4);
         adWin2 = new AudioData("win1_powerup16_mono.wav", 0.45f,4);
@@ -212,6 +222,18 @@ public class Sound {
         }
     }
 
+    public void playAngleChange(){
+        if (!SaveGame.saveGame.sound){
+            return;
+        }
+
+        //Log.e(TAG, "playAngleChange");
+        adAngleChange.musicPartNumber = 0;
+        if (AsyncTasks.asyncPlayAngleChange == null || AsyncTasks.asyncPlayAngleChange.getStatus() == AsyncTask.Status.FINISHED) {
+            AsyncTasks.asyncPlayAngleChange = new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, adAngleChange);
+        }
+    }
+    
     public void playPlayMenuBig(){
         if (!SaveGame.saveGame.sound){
             return;
@@ -324,7 +346,6 @@ public class Sound {
         playStaticAudioTrack(mAudioTrack3, 0.8f);
     }
 
-    static int duplicateBallId = -1;
     public static void playDuplicateBall(float volume){
         if (!SaveGame.saveGame.sound){
             return;
@@ -337,7 +358,6 @@ public class Sound {
         }
     }
 
-    static int barSizeId = -1;
     public static void playBarSize(float volume){
         if (!SaveGame.saveGame.sound){
             return;
@@ -586,14 +606,70 @@ public class Sound {
 
     public static String getNextMusicFileName(){
 
-        String nextMusicFileName = "gameplay01_100bpm.ogg";
 
-        if (currentMusic == 0){
-            currentMusic = 1;
-            nextMusicFileName = "gameplay01_120bpm.ogg";
-        } else if (currentMusic == 1){
-            currentMusic = 0;
-            nextMusicFileName = "gameplay01_100bpm.ogg";
+        //inicio
+        //musica5
+        //musica6
+
+        // meio
+        //musica2
+        //musica3
+        //musica4
+        //musica7
+
+
+        // fim
+        //musica1
+        //musica7
+        //musica9
+
+
+        float percentageOfTargets = 1f;
+
+        if (Game.numberOfTargets > 0) {
+            percentageOfTargets = (float) Game.numberOfTargetsAlives / (float) Game.numberOfTargets;
+        }
+
+
+        Log.e(TAG, "percentageOfTargets " + percentageOfTargets);
+
+        if (percentageOfTargets > 0.9f){
+            musicState = MUSICA_INICIO;
+        } else if (percentageOfTargets > 0.45f){
+            musicState = MUSICA_MEIO;
+        } else {
+            musicState = MUSICA_FIM;
+        }
+
+        String nextMusicFileName = "musica1.ogg";
+        float random = Utils.getRandonFloat(0f, 1f);
+
+        Log.e(TAG, "random " + random);
+
+        if (musicState == MUSICA_INICIO){
+            if (random > 0.5f){
+                nextMusicFileName = "musica6.ogg";
+            } else {
+                nextMusicFileName = "musica5.ogg";
+            }
+        } else if (musicState == MUSICA_MEIO){
+            if (random > 0.75f){
+                nextMusicFileName = "musica2.ogg";
+            } else if (random > 0.5f){
+                nextMusicFileName = "musica3.ogg";
+            } else if (random > 0.25f){
+                nextMusicFileName = "musica4.ogg";
+            } else{
+                nextMusicFileName = "musica7.ogg";
+            }
+        } else if (musicState == MUSICA_FIM){
+            if (random > 0.66f){
+                nextMusicFileName = "musica1.ogg";
+            } else if (random > 0.33f){
+                nextMusicFileName = "musica7.ogg";
+            } else{
+                nextMusicFileName = "musica9.ogg";
+            }
         }
 
         Log.e(TAG, "nextMusicFileName " + nextMusicFileName);
@@ -612,13 +688,42 @@ public class Sound {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                Log.e(TAG, "onPrepared ");
-                createNextMediaPlayer();
+                //Log.e(TAG + "loadMusic", "onPrepared ");
+                mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
+                AssetFileDescriptor afd;
+                try {
+                    afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                    mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                    mediaPlayer[getNextMediaPlayer()].prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        //Log.e(TAG + "loadMusic", "setOnCompletionListener ");
+                        currentMediaNumber = getNextMediaPlayer();
+                        createNextMediaPlayer();
+
+                    }
+                });
+
+                mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        //Log.e(TAG + "loadMusic", "getNextMediaPlayer onPrepared");
+                        mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+                    }
+                });
             }
         });
+
+
 
         /*
 

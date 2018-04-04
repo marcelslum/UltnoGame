@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class Ball extends Circle{
@@ -1449,33 +1447,43 @@ public class Ball extends Circle{
 
         float testAngle = (float) Math.toDegrees(Math.atan2(Math.abs(possibleVelocityRotateY), Math.abs(possibleVelocityRotateX)));
         //Log.e("ball", "possible angle " + testAngle);
-        
 
-        if (testAngle < maxAngle && testAngle > minAngle) {
+
+        float maxAngleToApply = maxAngle;
+        float minAngleToApply = minAngle;
+
+        if (Game.abdicateAngle){
+            maxAngleToApply += 10f;
+            minAngleToApply -= 10f;
+        }
+
+        if (testAngle < maxAngleToApply && testAngle > minAngleToApply) {
             final_vx = possibleVelocityRotateX;
             final_vy = possibleVelocityRotateY;
             if (notifyBehaviour) {
-                ballBehaviourData.notifyNotMinOrMaxAngleReached();
-                ballBehaviourData.setFinalAngle(testAngle);
+                if (ballBehaviourData != null) {
+                    ballBehaviourData.notifyNotMinOrMaxAngleReached();
+                    ballBehaviourData.setFinalAngle(testAngle);
+                }
             }
         } else {
-            if (testAngle >= maxAngle) {
+            if (testAngle >= maxAngleToApply) {
                 //Log.e("ball", "testAngle > maxAngle");
                 if (mAngleToRotate < 0f) {
                     //Log.e("ball", "angleToRotate < 0f");
-                    mAngleToRotate += testAngle - maxAngle;
+                    mAngleToRotate += testAngle - maxAngleToApply;
                 } else {
                     //Log.e("ball", "angleToRotate > 0f");
-                    mAngleToRotate -= testAngle - maxAngle;
+                    mAngleToRotate -= testAngle - maxAngleToApply;
                 }
-            } else if (testAngle <= minAngle) {
+            } else if (testAngle <= minAngleToApply) {
                 //Log.e("ball", "testAngle < minAngle");
                 if (mAngleToRotate > 0f) {
                     //Log.e("ball", "angleToRotate > 0f");
-                    mAngleToRotate -= minAngle - testAngle;
+                    mAngleToRotate -= minAngleToApply - testAngle;
                 } else {
                     //Log.e("ball", "angleToRotate < 0f");
-                    mAngleToRotate += minAngle - testAngle;
+                    mAngleToRotate += minAngleToApply - testAngle;
                 }
             }
 
@@ -1484,8 +1492,11 @@ public class Ball extends Circle{
             final_vx = (float) Utils.getXRotatedFromDegrees(vx, vy, mAngleToRotate);
             final_vy = (float) Utils.getYRotatedFromDegrees(vx, vy, mAngleToRotate);
 
+
             if (notifyBehaviour) {
-                ballBehaviourData.setFinalAngle((float) Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx))));
+                if (ballBehaviourData != null) {
+                    ballBehaviourData.setFinalAngle((float) Math.toDegrees(Math.atan2(Math.abs(final_vy), Math.abs(final_vx))));
+                }
             }
         }
     }
@@ -1813,9 +1824,28 @@ public class Ball extends Circle{
         this.isMovable = false;
     }
 
+    public void changeAngleManualy(boolean left){
+
+        if (!isAlive || isFake){
+            return;
+        }
+
+        if (left){
+            rotateTestingAngle(dvx, dvy, 5, true);
+            Game.sound.playAngleChange();
+        } else {
+            rotateTestingAngle(dvx, dvy, -5, true);
+            Game.sound.playAngleChange();
+        }
+        dvx = final_vx;
+        dvy = final_vy;
+
+
+    }
+
     public void notifyBarMovementAfterCollision(int v) {
 
-        double angle = Math.toDegrees(Math.atan2(dvy, dvx));
+        //double angle = Math.toDegrees(Math.atan2(dvy, dvx));
         //Log.e("ball", "BAR MOVE DEPOIS" + angle);
 
         if (accelStarted == true){

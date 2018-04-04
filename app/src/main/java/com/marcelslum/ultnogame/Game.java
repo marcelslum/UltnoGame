@@ -163,7 +163,7 @@ public class Game {
     static int ballsInvencible;
     static long initialTimePointsDecay;
     
-    public static String currentPlayerId;
+
     static boolean initPausedFlag;
     public static int dpiClassification;
     public static boolean returningFromInterstitialFlag = false;
@@ -172,7 +172,7 @@ public class Game {
     public static boolean forBlueBallExplode = false;
     public static float blueBallExplodeX = 0;
     public static float blueBallExplodeY = 0;
-    public static String messageScorePanel;
+    public static boolean abdicateAngle = false;
     
 
     private Game() {}
@@ -726,6 +726,7 @@ public class Game {
 
         } else if (state == GAME_STATE_PREPARAR){
 
+            abdicateAngle = false;
 
             Sound.loadMusic();
 
@@ -815,6 +816,8 @@ public class Game {
 
         } else if (state == GAME_STATE_JOGAR){
 
+            updateNumberOfTargetsAlive();
+
             Sound.loadStaticGameAudioTracks();
 
             Sound.playMusic();
@@ -861,6 +864,9 @@ public class Game {
 
         } else if (state == GAME_STATE_DERROTA){
 
+            ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
+            ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
+
             Sound.stopAndReleaseMusic();
 
             Sound.soundPool.autoPause();
@@ -890,6 +896,10 @@ public class Game {
             }
             
         } else if (state == GAME_STATE_PAUSE){
+
+            ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
+            ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
+
 
             Sound.soundPool.autoPause();
 
@@ -938,6 +948,10 @@ public class Game {
             MenuHandler.menuInGame.appearAndUnblock(300);
 
         } else if (state == GAME_STATE_VITORIA){
+
+            ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
+            ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
+
 
             Sound.stopAndReleaseMusic();
 
@@ -1926,9 +1940,30 @@ public class Game {
         initialTimePointsDecay = Utils.getTime();
     }
 
+
+    static int numberOfTargets = -1;
+    static int numberOfTargetsAlives = -1;
+
+
+    static void updateNumberOfTargetsAlive(){
+        numberOfTargetsAlives = 0;
+        for (int i = 0; i < targets.size(); i++) {
+            if (targets.get(i).alive) {
+                numberOfTargetsAlives += 1;
+            }
+        }
+
+        if (numberOfTargetsAlives == 1 && gameState == GAME_STATE_JOGAR){
+            if (SaveGame.saveGame.currentLevelNumber < 8) {
+                Game.messages.showMessage(Game.getContext().getResources().getString(R.string.levelMessageLastTarget1));
+            }
+            ButtonHandler.buttonFinalTargetLeft.unblockAndDisplay();
+            ButtonHandler.buttonFinalTargetRight.unblockAndDisplay();
+        }
+    }
+
     static void verifyWin() {
         boolean win = true;
-
         for (int i = 0; i < targets.size(); i++) {
             if (targets.get(i).alive){
                 win = false;
@@ -1946,24 +1981,10 @@ public class Game {
 
         // for debug
         if (Game.ganharComMetadeDasBolas) {
-
-            int numberOfTargets = 0;
-            int numberOfTargetsAlives = 0;
-
-            for (int i = 0; i < targets.size(); i++) {
-                numberOfTargets += 1;
-                if (targets.get(i).alive) {
-                    numberOfTargetsAlives += 1;
-                }
-            }
-
             if (numberOfTargetsAlives < numberOfTargets / 2) {
                 win = true;
             }
         }
-
-
-
 
         if (win) setGameState(GAME_STATE_VITORIA);
     }
@@ -2272,6 +2293,10 @@ public class Game {
             ButtonHandler.buttonReturnObjectivesPause.prepareRender(matrixView, matrixProjection);
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.prepareRender(matrixView, matrixProjection);
         if (ButtonHandler.buttonGroupLeaderboard != null) ButtonHandler.buttonGroupLeaderboard.prepareRender(matrixView, matrixProjection);
+        if (ButtonHandler.buttonFinalTargetLeft != null) ButtonHandler.buttonFinalTargetLeft.prepareRender(matrixView, matrixProjection);
+        if (ButtonHandler.buttonFinalTargetRight != null) ButtonHandler.buttonFinalTargetRight.prepareRender(matrixView, matrixProjection);
+
+
 
         MessagesHandler.bottomTextBox.prepareRender(matrixView, matrixProjection);
 
@@ -2322,6 +2347,8 @@ public class Game {
             ButtonHandler.buttonReturnObjectivesPause.verifyListener();
         if (ButtonHandler.buttonContinue != null) ButtonHandler.buttonContinue.verifyListener();
         if (ButtonHandler.buttonGroupLeaderboard != null) ButtonHandler.buttonGroupLeaderboard.verifyListener();
+        if (ButtonHandler.buttonFinalTargetLeft != null) ButtonHandler.buttonFinalTargetLeft.verifyListener();
+        if (ButtonHandler.buttonFinalTargetRight != null) ButtonHandler.buttonFinalTargetRight.verifyListener();
 
         if (aboutTextView != null) aboutTextView.verifyListener();
         if (notConnectedTextView != null) notConnectedTextView.verifyListener();

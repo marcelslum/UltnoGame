@@ -6,6 +6,9 @@ package com.marcelslum.ultnogame;
 
 public class ButtonHandler {
 
+    static Button buttonFinalTargetLeft;
+    static Button buttonFinalTargetRight;
+
     static Button buttonReturn;
     static Button buttonReturnObjectivesPause;
     static Button buttonContinue;
@@ -17,8 +20,72 @@ public class ButtonHandler {
 
     public static void initButtons(){
         float buttonSize = Game.resolutionX * 0.05f;
-        buttonReturn = Game.buttonPool.get();
 
+        buttonFinalTargetLeft = Game.buttonPool.get();
+        buttonFinalTargetLeft.setData("buttonFinalTargetLeft", Game.resolutionX - buttonSize*1.5f,
+                Game.gameAreaResolutionY * 0.6f, buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_PRESS_ID));
+        buttonFinalTargetLeft.setOnPress(new Button.OnPress() {
+            @Override
+            public void onPress() {
+                if (Game.gameState == Game.GAME_STATE_JOGAR) {
+
+                    if (!Game.abdicateAngle){
+                        if (Game.ballDataPanel != null) {
+                            Game.ballDataPanel.initAbdicateAngleAnim();
+                        }
+
+                        if (SaveGame.saveGame.currentLevelNumber > 3 && SaveGame.saveGame.currentLevelNumber < 8) {
+                            Game.messages.showMessage(Game.getContext().getResources().getString(R.string.levelMessageAbdicate));
+                        }
+                        Game.abdicateAngle = true;
+                    }
+
+                    for (int i = 0; i < Game.balls.size(); i++) {
+                        if (Game.balls.get(i) != null){
+                            Game.balls.get(i).changeAngleManualy(true);
+                        }
+                    }
+                }
+            }
+        });
+
+        buttonFinalTargetRight = Game.buttonPool.get();
+        buttonFinalTargetRight.setData("buttonFinalTargetLeft", buttonSize*0.5f,
+                Game.gameAreaResolutionY * 0.6f, buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));
+        buttonFinalTargetRight.setOnPress(new Button.OnPress() {
+            @Override
+            public void onPress() {
+                if (Game.gameState == Game.GAME_STATE_JOGAR) {
+
+                    if (!Game.abdicateAngle){
+                        if (Game.ballDataPanel != null) {
+                            Game.ballDataPanel.initAbdicateAngleAnim();
+                        }
+
+                        if (SaveGame.saveGame.currentLevelNumber > 3 && SaveGame.saveGame.currentLevelNumber < 8) {
+                            Game.messages.showMessage(Game.getContext().getResources().getString(R.string.levelMessageAbdicate));
+                        }
+
+                        Game.abdicateAngle = true;
+                    }
+
+                    for (int i = 0; i < Game.balls.size(); i++) {
+                        if (Game.balls.get(i) != null){
+                            Game.balls.get(i).changeAngleManualy(false);
+                        }
+                    }
+                }
+            }
+        });
+
+        ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
+        ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
+
+        buttonReturn = Game.buttonPool.get();
 
         buttonReturn.setData("buttonReturn", buttonSize*0.5f,
                 Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,

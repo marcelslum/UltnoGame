@@ -198,6 +198,8 @@ public class Target extends Rectangle {
             alive = false;
         }
 
+        Game.updateNumberOfTargetsAlive();
+
         setType();
 
         showPoints(points);
