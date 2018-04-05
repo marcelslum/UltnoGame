@@ -1,4 +1,9 @@
 <resources>
+
+    <string name="databaseLevelDataVersion">1</string>
+    <string name="databaseSaveDataVersion">2</string>
+
+
     <string name="app_name">Ultno</string>
     <string name="menuTutorialExibirTutorial">Exibir o tutorial</string>
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
@@ -450,8 +455,7 @@
     <string name="levelGoal1m3">1 minuto restante</string>
     <string name="secretLevelUnblocked"></string>
     <string name="messageCurrentLevelSecret">Nível secreto</string>
-    <string name="databaseLevelDataVersion">2</string>
-    <string name="databaseSaveDataVersion">1</string>
+
     <string name="voltar">Voltar</string>
     <string name="continuar">Continuar</string>
     <string name="lerSobre">Sobre</string>
@@ -472,7 +476,7 @@
     <string name="sobre4b">.</string>
     <string name="sobre5">Música:</string>
     <string name="sobre5b">.</string>
-    <string name="sobre6">por Eric Matyas - www.soundimage.org</string>
+    <string name="sobre6">por Fernando Nicknich</string>
     <string name="sobre7">.</string>
     <string name="sobre7b">.</string>
     <string name="sobre8">Efeitos sonoros:</string>
@@ -507,9 +511,7 @@
     <string name="sobre30">- por fins - som 171670</string>
     <string name="sobre31">.</string>
     <string name="sobre32">Testadores/Apoiadores:</string>
-
-
-
+    <string name="orientation">Girar tela</string>
 
 
 </resources>

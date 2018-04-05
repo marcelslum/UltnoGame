@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.content.pm.ActivityInfo;
+
 import java.util.ArrayList;
 
 public class MenuHandler {
@@ -346,7 +348,7 @@ public class MenuHandler {
         //menuObjectives.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.iniciar_jogo), new MenuOption.OnChoice() {@Override public void onChoice() {}});
 
         // -------------------------------------------MENU OPTIONS
-        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
+        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.35f, fontSize, Game.font);
 
         menuOptions.addMenuOption("sobre", Game.getContext().getResources().getString(R.string.lerSobre), new MenuOption.OnChoice() {
             @Override
@@ -540,6 +542,23 @@ public class MenuHandler {
                 }
             }
         });
+
+        menuOptions.addMenuOption("orientation", Game.getContext().getResources().getString(R.string.orientation), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                if (SaveGame.saveGame.orientationInverted) {
+                    SaveGame.saveGame.orientationInverted = false;
+                    Game.mainActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                } else {
+                    SaveGame.saveGame.orientationInverted = true;
+                    Game.mainActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+                }
+            }
+        });
+
+
+
+
 
 
 

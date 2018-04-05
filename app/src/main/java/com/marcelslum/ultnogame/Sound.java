@@ -481,7 +481,6 @@ public class Sound {
         */
     }
 
-
     public static int currentMediaNumber = 0;
     public static int currentMusic = 0;
 

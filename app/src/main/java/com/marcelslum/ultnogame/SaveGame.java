@@ -61,6 +61,7 @@ public class SaveGame {
     public float currentTutorialMenuTranslateX;
     public int lastStars;
     public int levelsPlayed;
+    public boolean orientationInverted;
 
     public static boolean loaded = false;
 
@@ -84,6 +85,7 @@ public class SaveGame {
         currentTutorialMenuTranslateX = builder.currentTutorialMenuTranslateX;
         lastStars = builder.lastStars;
         levelsPlayed = builder.levelsPlayed;
+        orientationInverted = builder.orientationInverted;
     }
 
     public static void load() {
@@ -140,6 +142,7 @@ public class SaveGame {
                     .setCurrentTutorialMenuTranslateX(0)
                     .setLastStars(0)
                     .setLevelsPlayed(0)
+                    .setOrientationInverted(false)
                     .build();
         }
 
@@ -254,6 +257,8 @@ public class SaveGame {
         //Log.e(TAG, "currentTutorialMenuTranslateX -> " + s.currentTutorialMenuTranslateX);
         //Log.e(TAG, "lastStars -> " + s.lastStars);
         //Log.e(TAG, "levelsPlayed -> " + s.levelsPlayed);
+        //Log.e(TAG, "orientationInverted -> " + s.orientationInverted);
+
     }
 
     public static SaveGame mergeSaveGames(SaveGame saveGame1, SaveGame saveGame2) {
@@ -277,6 +282,7 @@ public class SaveGame {
         int flastStars;
         boolean fnewGroupsSeen;
         int flevelsPlayed;
+        boolean fOrientationInverted;
 
         flevelsPoints = Utils.getHigher(saveGame1.levelsPoints, saveGame2.levelsPoints);
         flevelsStars = Utils.getHigher(saveGame1.levelsStars, saveGame2.levelsStars);
@@ -291,6 +297,8 @@ public class SaveGame {
         fsound = Utils.getHigher(saveGame1.sound, saveGame2.sound);
         fvibration = Utils.getHigher(saveGame1.vibration, saveGame2.vibration);
         fgoogleOption = Utils.getHigher(saveGame1.googleOption, saveGame2.googleOption);
+        fOrientationInverted = Utils.getHigher(saveGame1.orientationInverted, saveGame2.orientationInverted);
+
 
         //Log.e(TAG, "merge google option saveGame1.googleOption "+ saveGame1.googleOption);
         //Log.e(TAG, "merge google option saveGame2.googleOption "+ saveGame2.googleOption);
@@ -324,6 +332,7 @@ public class SaveGame {
                 .setCurrentTutorialMenuTranslateX(fcurrentTutorialMenuTranslateX)
                 .setLastStars(flastStars)
                 .setLevelsPlayed(flevelsPlayed)
+                .setOrientationInverted(fOrientationInverted)
                 .build();
     }
 
@@ -496,6 +505,12 @@ public class SaveGame {
                 saveGameBuilder.setLevelsPlayed(0);
             }
 
+            try {
+                saveGameBuilder.setOrientationInverted(obj.getBoolean("orientationInverted"));
+            } catch(JSONException e) {
+                saveGameBuilder.setOrientationInverted(false);
+            }
+
             return saveGameBuilder.build();
 
         } catch (JSONException ex) {
@@ -550,6 +565,7 @@ public class SaveGame {
             obj.put("currentTutorialMenuTranslateX", (double)saveGame.currentTutorialMenuTranslateX);
             obj.put("lastStars", saveGame.lastStars);
             obj.put("levelsPlayed", saveGame.levelsPlayed);
+            obj.put("orientationInverted", saveGame.orientationInverted);
             return obj.toString();
         } catch (JSONException ex) {
             ex.printStackTrace();

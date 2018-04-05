@@ -73,6 +73,7 @@ public final class DataBaseContract {
         public static final String COLUMN_LEVELS_PLAYED = "levels_played";
         public static final String COLUMN_GOOGLE_OPTION = "googleOption";
         public static final String COLUMN_BALL_VELOCITY = "ballVelocity";
+        public static final String COLUMN_ORIENTATION_INVERTED = "orientationInverted";
     }
 
     public static class DataLevels implements BaseColumns {

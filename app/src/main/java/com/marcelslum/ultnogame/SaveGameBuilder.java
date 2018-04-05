@@ -27,6 +27,7 @@ public class SaveGameBuilder {
     public int levelsPlayed;
     public int googleOption;
     public int ballVelocity;
+    public boolean orientationInverted;
 
 
     public SaveGameBuilder(){
@@ -136,6 +137,11 @@ public class SaveGameBuilder {
 
     public SaveGameBuilder setBallVelocity(int v) {
         ballVelocity = v;
+        return this;
+    }
+
+    public SaveGameBuilder setOrientationInverted(boolean orientationInverted) {
+        this.orientationInverted = orientationInverted;
         return this;
     }
 

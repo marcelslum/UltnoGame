@@ -39,43 +39,46 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
             return;
         }
 
-        myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
-
         boolean dbExist = checkDataBase();
 
-        //Log.e(TAG, "dbExist" + dbExist);
+        Log.e(TAG, "dbExist" + dbExist);
 
         SQLiteDatabase db_Read;
         if(dbExist){
-            int currentDBVersion = getVersionId();
 
-           //Log.e(TAG, DB_NAME + " -- banco de dados já existe");
-           //Log.e(TAG, DB_NAME + " -- currentDBVersion "+currentDBVersion);
-           //Log.e(TAG, DB_NAME + " -- version "+version);
-           //Log.e(TAG, DB_NAME + " -- comparação "+((this.version > currentDBVersion)));
 
+           int currentDBVersion = getVersionId();
+
+           Log.e(TAG, DB_NAME + " -- banco de dados já existe");
+           Log.e(TAG, DB_NAME + " -- currentDBVersion "+currentDBVersion);
+           Log.e(TAG, DB_NAME + " -- version "+version);
+           Log.e(TAG, DB_NAME + " -- comparação "+((this.version > currentDBVersion)));
               if (this.version > currentDBVersion) {
-                  //Log.e(TAG, DB_NAME + " Database version is higher than old.");
                   close();
-                  deleteDataBase();
-                     try {
-                         copyDataBase();
-                      } catch (IOException e) {
-                          //Log.e(TAG, e.getMessage());
-                      }
-                  setNotNew(); 
+                  Log.e(TAG, DB_NAME + " Database version is higher than old.");
+                  upgradeVersion();
               }
         }else{
             db_Read = getReadableDatabase();
             db_Read.close();
             try {
-                //Log.e(TAG, DB_NAME + " copiando database");
+                Log.e(TAG, DB_NAME + " database não existe ainda - copiando database");
                 copyDataBase();
             } catch (IOException e) {
-                //Log.e(TAG, e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
             setNotNew(); 
         }
+    }
+
+    public void upgradeVersion(){
+        deleteDataBase();
+        try {
+            copyDataBase();
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        setNotNew();
     }
      
     private boolean checkDataBase(){
@@ -83,9 +86,8 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
         try{
             //Log.e(TAG, DB_NAME + " verificando se existe o banco de dados na pasta ");
             checkDB = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
-
         }catch(SQLiteException e){
-            //Log.e(TAG, DB_NAME + " banco de dados não existe ainda ");
+            Log.e(TAG, DB_NAME + " banco de dados não existe ainda ");
         }
         if(checkDB != null){
             //Log.e(TAG, DB_NAME + " banco de dados já existe ");
@@ -94,7 +96,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
         return checkDB != null ? true : false;
     }
      
-    private void copyDataBase() throws IOException{
+    public void copyDataBase() throws IOException{
            //Open your local db as the input stream
            InputStream myInput = myContext.getAssets().open(DB_NAME);
            //Open the empty db as the output stream
@@ -116,7 +118,6 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
         File file = new File(DB_PATH);
         if(file.exists()) {
               file.delete();
-              //Log.e(TAG, "Banco de dados " + DB_NAME + " deletado.");
         }
     }
      

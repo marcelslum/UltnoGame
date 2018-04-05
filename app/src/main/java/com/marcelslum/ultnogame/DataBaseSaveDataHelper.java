@@ -3,8 +3,11 @@ package com.marcelslum.ultnogame;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DataBaseSaveDataHelper extends DataBaseHelper {
@@ -24,6 +27,20 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             mInstance = new DataBaseSaveDataHelper(ctx, "save_db.db");
         }
         return mInstance;
+    }
+
+    @Override
+    public void upgradeVersion() {
+        Log.e(TAG, "Upgrade version");
+        SaveGame saveGame = getSaveGame();
+        deleteDataBase();
+        try {
+            copyDataBase();
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        setNotNew();
+        saveDataFromSaveGame(saveGame);
     }
 
     public int getLevelPoints(int l) {
@@ -77,24 +94,24 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         );
        
 
-         int[] levelsPoints = new int[Level.NUMBER_OF_LEVELS];
-         int[] levelsStars = new int[Level.NUMBER_OF_LEVELS];
-         boolean[] levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
+        int[] levelsPoints = new int[Level.NUMBER_OF_LEVELS];
+        int[] levelsStars = new int[Level.NUMBER_OF_LEVELS];
+        boolean[] levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
         boolean[] levelsSeen = new boolean[Level.NUMBER_OF_LEVELS];
 
-         int i = 0;
-         while(cursor.moveToNext()){
-             if (i == levelsPoints.length){
-                 break;
-             }
-             if (cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_NUMBER)) == i + 1){
-                levelsPoints[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS));
-                levelsStars[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_STARS));
-                levelsUnlocked[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_UNLOCKED)) == 1 ? true : false;
-                levelsSeen[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_SEEN)) == 1 ? true : false;
-             }
-             i += 1;
-         }
+        int i = 0;
+        while(cursor.moveToNext()){
+            if (i == levelsPoints.length){
+                break;
+            }
+            if (cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_NUMBER)) == i + 1){
+               levelsPoints[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS));
+               levelsStars[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_STARS));
+               levelsUnlocked[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_UNLOCKED)) == 1 ? true : false;
+               levelsSeen[i] = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_SEEN)) == 1 ? true : false;
+            }
+            i += 1;
+        }
         
                     saveGameBuilder
                         .setLevelsPoints(levelsPoints)
@@ -211,11 +228,19 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                 .setLevelsPlayed(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_LEVELS_PLAYED)))
                 .setGoogleOption(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_GOOGLE_OPTION)))
                 .setBallVelocity(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_BALL_VELOCITY)));
-                break;
+
+            try{
+                saveGameBuilder.setOrientationInverted(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED)) == 1 ? true : false);
+            }catch(SQLiteException e){
+                Log.e(TAG, "Campo orientation inverted não existente no banco de dados, setando como falso");
+                saveGameBuilder.setOrientationInverted(false);
+            } catch(Exception e){
+            Log.e(TAG, "Campo orientation inverted não existente no banco de dados, setando como falso -> exception");
+                saveGameBuilder.setOrientationInverted(false);
+            }
+
+             break;
         }
-
-        //Log.e(TAG, "GOGLE OPTION ON LOAD " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_GOOGLE_OPTION)));
-
 
         return saveGameBuilder.build();
     }
@@ -326,6 +351,15 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             values,
             selection,
             null);
+
+        try{
+            values = new ContentValues();
+            values.put(DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED, saveGame.orientationInverted ? 1 : 0);
+            selection = DataBaseContract.Data._ID + " LIKE 1";
+            myDataBase.update(DataBaseContract.Data.TABLE_NAME,values, selection,null);
+        }catch(SQLiteException e){
+            Log.e(TAG, "não foi possível salvar no banco de dados a opção orientationInverted");
+        }
 
 
         for (int i = 0; i < saveGame.levelsPoints.length; i++){
