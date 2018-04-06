@@ -56,46 +56,51 @@ public class Acelerometer {
 
             long time = System.currentTimeMillis();
             if (moveStatus == MOVE_NO) {
-                if (media2 - media1 > 1.5f) {
-                    //Log.e(TAG, " acelerometer detectando movimento para a esquerda ");
-                    //Log.e(TAG, "media1: "+ media1 + "     media2: "+ media2 + "  difference: "+ (media2 - media1));
-                    moveStatus = MOVE_LEFT;
-                    rotateBars(5f);
 
-                    if (Game.balls != null) {
-                        for (int i = 0; i < Game.balls.size(); i++){
+                if (SaveGame.saveGame != null) {
 
 
-                            //Log.e(TAG, " time "+ time);
-                            // //Log.e(TAG, " lastBarCollisionTime "+Game.balls.get(i).lastBarCollisionTime);
-                            // //Log.e(TAG, " diferença de tempo "+(time - Game.balls.get(i).lastBarCollisionTime));
+                    if ((media2 - media1 > 1.5f && !SaveGame.saveGame.orientationInverted)|| (media2 - media1 < -1.5f && SaveGame.saveGame.orientationInverted)) {
+                        //Log.e(TAG, " acelerometer detectando movimento para a esquerda ");
+                        //Log.e(TAG, "media1: "+ media1 + "     media2: "+ media2 + "  difference: "+ (media2 - media1));
+                        moveStatus = MOVE_LEFT;
+                        rotateBars(5f);
 
-                            if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER){
-                                //Log.e(TAG, " notifyBarMovementAfterCollision(MOVE_LEFT)");
-                                Game.balls.get(i).notifyBarMovementAfterCollision(MOVE_LEFT);
+                        if (Game.balls != null) {
+                            for (int i = 0; i < Game.balls.size(); i++) {
+
+
+                                //Log.e(TAG, " time "+ time);
+                                // //Log.e(TAG, " lastBarCollisionTime "+Game.balls.get(i).lastBarCollisionTime);
+                                // //Log.e(TAG, " diferença de tempo "+(time - Game.balls.get(i).lastBarCollisionTime));
+
+                                if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER) {
+                                    //Log.e(TAG, " notifyBarMovementAfterCollision(MOVE_LEFT)");
+                                    Game.balls.get(i).notifyBarMovementAfterCollision(MOVE_LEFT);
+                                }
                             }
                         }
-                    }
-                    lastTime = time;
-                } else if (media2 - media1 < -1.5f) {
-                    // //Log.e(TAG, " acelerometer detectando movimento para a direita ");
-                    // //Log.e(TAG, "media1: "+ media1 + "     media2: "+ media2 + "  difference: "+ (media2 - media1));
-                    moveStatus = MOVE_RIGHT;
-                    rotateBars(-5f);
+                        lastTime = time;
+                    } else if ((media2 - media1 < -1.5f && !SaveGame.saveGame.orientationInverted)|| (media2 - media1 > 1.5f && SaveGame.saveGame.orientationInverted)) {
+                        // //Log.e(TAG, " acelerometer detectando movimento para a direita ");
+                        // //Log.e(TAG, "media1: "+ media1 + "     media2: "+ media2 + "  difference: "+ (media2 - media1));
+                        moveStatus = MOVE_RIGHT;
+                        rotateBars(-5f);
 
-                    if (Game.balls != null) {
-                        for (int i = 0; i < Game.balls.size(); i++){
-                            // //Log.e(TAG, " time "+ time);
-                            // //Log.e(TAG, " lastBarCollisionTime "+Game.balls.get(i).lastBarCollisionTime);
-                            // //Log.e(TAG, " diferença de tempo "+(time - Game.balls.get(i).lastBarCollisionTime));
-                            if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER){
-                                Game.balls.get(i).notifyBarMovementAfterCollision(MOVE_RIGHT);
-                                //Log.e(TAG, " notifyBarMovementAfterCollision(MOVE_RIGHT)");
+                        if (Game.balls != null) {
+                            for (int i = 0; i < Game.balls.size(); i++) {
+                                // //Log.e(TAG, " time "+ time);
+                                // //Log.e(TAG, " lastBarCollisionTime "+Game.balls.get(i).lastBarCollisionTime);
+                                // //Log.e(TAG, " diferença de tempo "+(time - Game.balls.get(i).lastBarCollisionTime));
+                                if (time - Game.balls.get(i).lastBarCollisionTime < Game.TIME_OF_BALL_LISTENER) {
+                                    Game.balls.get(i).notifyBarMovementAfterCollision(MOVE_RIGHT);
+                                    //Log.e(TAG, " notifyBarMovementAfterCollision(MOVE_RIGHT)");
+                                }
                             }
                         }
-                    }
 
-                    lastTime = time;
+                        lastTime = time;
+                    }
                 }
             } else {
                 if (time - lastTime > 800) {

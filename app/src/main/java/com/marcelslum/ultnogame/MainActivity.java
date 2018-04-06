@@ -525,6 +525,7 @@ public class MainActivity extends FragmentActivity implements
         interstitialNoVideo = new InterstitialAd(MainActivity.this);
         interstitialNoVideo.setAdUnitId("ca-app-pub-2413920269734587/7806070555");
 
+
         AdListener adListener = new AdListener() {
             @Override
             public void onAdLoaded() {
