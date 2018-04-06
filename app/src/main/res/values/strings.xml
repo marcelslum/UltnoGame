@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="databaseLevelDataVersion">1</string>
+    <string name="databaseLevelDataVersion">2</string>
     <string name="databaseSaveDataVersion">2</string>
 
 

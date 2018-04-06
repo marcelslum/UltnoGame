@@ -903,8 +903,8 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL 70
         if (levelNumber == ln) {
            lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
-           lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 300));
-           lg.add(new LevelGoal(1, LevelGoal.ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE, 20));
+           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 300));
+           lg.add(new LevelGoal(2, LevelGoal.ACCELERATE_N_TIMES_WITHOUT_REACHING_MIN_ANGLE, 20));
            return lg;
         }
         
@@ -930,7 +930,7 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL 73
         if (levelNumber == ln) {
            lg.add(new LevelGoal(3, LevelGoal.JUST_FINISH, 0));
-           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 200));
+           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 135));
            return lg;
         }
         
@@ -963,7 +963,7 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL 77
         if (levelNumber == ln) {
            lg.add(new LevelGoal(3, LevelGoal.JUST_FINISH, 0));
-           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 300));
+           lg.add(new LevelGoal(2, LevelGoal.FINISH_IN_N_SECONDS, 150));
            return lg;
         }
         
@@ -975,7 +975,7 @@ public class LevelGoalsLoader {
            return lg;
         }
         
-        
+        // RAPIDEZ
         ln += 1; // ---------- LEVEL 79
         if (levelNumber == ln) {
            lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
@@ -987,8 +987,7 @@ public class LevelGoalsLoader {
         ln += 1; // ---------- LEVEL 80
         if (levelNumber == ln) {
            lg.add(new LevelGoal(1, LevelGoal.JUST_FINISH, 0));
-           lg.add(new LevelGoal(1, LevelGoal.FINISH_IN_N_SECONDS, 200));
-           lg.add(new LevelGoal(2, LevelGoal.HIT_OBSTACLE_N_TIMES, 20));
+           lg.add(new LevelGoal(4, LevelGoal.FINISH_IN_N_SECONDS, 240));
            return lg;
         }
         

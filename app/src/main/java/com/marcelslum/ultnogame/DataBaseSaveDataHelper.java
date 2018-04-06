@@ -231,11 +231,9 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
             try{
                 saveGameBuilder.setOrientationInverted(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED)) == 1 ? true : false);
-            }catch(SQLiteException e){
-                Log.e(TAG, "Campo orientation inverted não existente no banco de dados, setando como falso");
-                saveGameBuilder.setOrientationInverted(false);
             } catch(Exception e){
             Log.e(TAG, "Campo orientation inverted não existente no banco de dados, setando como falso -> exception");
+                Log.e(TAG, e.getMessage());
                 saveGameBuilder.setOrientationInverted(false);
             }
 
@@ -327,7 +325,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
     public void saveDataFromSaveGame(SaveGame saveGame){
         myDataBase = getWritable();
 
-        //Log.e(TAG, "saveDataFromSaveGame googleOption"+ saveGame.googleOption);
+        Log.e(TAG, "saveDataFromSaveGame");
 
         ContentValues values = new ContentValues();
             values.put(DataBaseContract.Data.COLUMN_DATE, saveGame.date);

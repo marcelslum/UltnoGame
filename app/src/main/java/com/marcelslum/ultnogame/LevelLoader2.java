@@ -893,9 +893,9 @@ public class LevelLoader2 {
                     )
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.225f)
-                    .setWindowsY(0.3f)
-                    .setWindowsHeight(0.35f)
-                    .setWindowsQuantityOfLines(4)
+                    .setWindowsY(0.25f)
+                    .setWindowsHeight(0.25f)
+                    .setWindowsQuantityOfLines(3)
                     .setWindowsVelocity(0.0027f)
                     .setWindType(Level.WIND_TYPE_RIGHT);
         }
@@ -943,9 +943,9 @@ public class LevelLoader2 {
                     .setSpecialBallPercentage(0.4f)
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.25f)
-                    .setWindowsY(0.25f)
-                    .setWindowsHeight(0.35f)
-                    .setWindowsQuantityOfLines(4)
+                    .setWindowsY(0.22f)
+                    .setWindowsHeight(0.3f)
+                    .setWindowsQuantityOfLines(3)
                     .setWindowsVelocity(-0.003f);
         }
         
@@ -1038,22 +1038,6 @@ public class LevelLoader2 {
                                     .setMinY(0.01f)
                                     .setxVelocity(0.0015f)
                                     .setyVelocity(0f))
-                 .setBarsScaleVariation(
-                            new ScaleVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00025f)
-                                    .setMinWidth_BI(0.05f)
-                                    .setMaxWidth_BI(1.5f)
-                                    .setAlwaysDecrease(true),
-                            new ScaleVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00025f)
-                                    .setMinWidth_BI(0.05f)
-                                    .setMaxWidth_BI(1.5f)
-                                    .setAlwaysDecrease(true))
-                    .setSpecialBallPercentage(0.4f)
                     .setWindowsQuantity(2)
                     .setWindowsDistance(0.2f, 0.2f)
                     .setWindowsY(0.05f, 0.4f)
@@ -1084,22 +1068,6 @@ public class LevelLoader2 {
                                     {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1},
                                     {1, 1, 3, 0, 0, 0, 0, 0, 3, 1, 1}
                             })
-                    .setBarsScaleVariation(
-                            new ScaleVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00025f)
-                                    .setMinWidth_BI(0.05f)
-                                    .setMaxWidth_BI(1.5f)
-                                    .setAlwaysDecrease(true),
-                            new ScaleVariationDataBuilder()
-                                    .setIsActive(true)
-                                    .setIncreaseWidth(false)
-                                    .setWidthVelocity(0.00025f)
-                                    .setMinWidth_BI(0.05f)
-                                    .setMaxWidth_BI(1.5f)
-                                    .setAlwaysDecrease(true))
-                    .setSpecialBallPercentage(0.4f)
                     .setWindType(Level.WIND_TYPE_LEFT)
                     .setWindowsQuantity(2)
                     .setWindowsDistance(0.22f, 0.22f)
@@ -1152,9 +1120,9 @@ public class LevelLoader2 {
                                     {1, 1, 1, 0, 3, 4, 3, 0, 1, 1, 1},
                                     {2, 2, 2, 3, 0, 3, 0, 3, 2, 2, 2},
                                     {2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2},
-                                    {1, 1, 1, 5, 5, 3, 5, 5, 1, 1, 1},
-                                    {0, 1, 1, 5, 5, 7, 5, 5, 0, 1, 1},
-                                    {1, 0, 1, 5, 6, 6, 6, 5, 1, 0, 1},
+                                    {1, 1, 1, 5, 0, 3, 0, 5, 1, 1, 1},
+                                    {0, 1, 1, 0, 0, 7, 0, 0, 0, 1, 1},
+                                    {1, 0, 1, 5, 5, 5, 5, 5, 1, 0, 1},
                                     {0, 0, 0, 5, 1, 5, 1, 5, 0, 0, 1},
                                     {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1}
                             })
