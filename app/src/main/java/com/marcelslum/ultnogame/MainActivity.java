@@ -120,6 +120,8 @@ public class MainActivity extends FragmentActivity implements
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
+
+
         // Create the client used to sign in to Google services.
 
         GoogleSignInOptions signInOption =

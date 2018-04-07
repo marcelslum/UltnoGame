@@ -875,11 +875,11 @@
 },
 {
 	"filename": "tittle.png",
-	"frame": {"x":142,"y":1336,"w":870,"h":357},
+	"frame": {"x":143,"y":1336,"w":869,"h":357},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":870,"h":357},
-	"sourceSize": {"w":870,"h":357},
+	"spriteSourceSize": {"x":0,"y":0,"w":869,"h":357},
+	"sourceSize": {"w":869,"h":357},
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
