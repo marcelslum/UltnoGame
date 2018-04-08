@@ -1277,6 +1277,8 @@ public class LevelLoader2 {
                                 .setMaxWidth_BI(1.5f)
                                 .setMinHeight_BI(1f)
                                 .setMaxHeight_BI(1f));
+
+            // TODO BARRAS SOBEM UMA EM CIMA DA OUTRA QUANDO ESTÃO VARIANDO ESCALA - LEVEL 83
         }
 
         // LEVEL 84
