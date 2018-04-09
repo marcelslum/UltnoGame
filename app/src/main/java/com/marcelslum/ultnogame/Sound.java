@@ -588,7 +588,9 @@ public class Sound {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 //Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
-                mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+                if (mediaPlayer[currentMediaNumber] != null && mediaPlayer[currentMediaNumber].isPlaying()) {
+                    mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+                }
             }
         });
 
@@ -628,7 +630,6 @@ public class Sound {
         if (Game.numberOfTargets > 0) {
             percentageOfTargets = (float) Game.numberOfTargetsAlives / (float) Game.numberOfTargets;
         }
-
 
         Log.e(TAG, "percentageOfTargets " + percentageOfTargets);
 

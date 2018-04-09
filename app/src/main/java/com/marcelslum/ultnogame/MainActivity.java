@@ -103,6 +103,9 @@ public class MainActivity extends FragmentActivity implements
 
         SaveGame.load();
 
+
+        
+
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         //Log.e(TAG, "maxMemory "+maxMemory);
 
@@ -182,8 +185,10 @@ public class MainActivity extends FragmentActivity implements
 
     public boolean isSignedIn() {
         if (GoogleSignIn.getLastSignedInAccount(this) != null && SaveGame.saveGame.googleOption == 1){
+            Log.e(TAG, "isSignedIn true");
             return true;
         } else {
+            Log.e(TAG, "isSignedIn false");
             return false;
         }
     }

@@ -100,7 +100,17 @@ public class SaveGame {
             //Log.e(TAG, "Carregando Save Game");
 
             SaveGame saveGame1 = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
+
             SaveGame saveGame2 = getSaveGameFromJson(Storage.getString(Storage.STORAGE_SAVE_NAME));
+
+            if (Game.forDebugClearAllLevelPoints) {
+                for (int i = 0; i < 100; i++) {
+                    saveGame1.levelsPoints[i] = 0;
+                }
+                for (int i = 0; i < 100; i++) {
+                    saveGame2.levelsPoints[i] = 0;
+                }
+            }
 
             if (saveGame1 == null){
                 saveGame = saveGame2;
@@ -109,6 +119,8 @@ public class SaveGame {
             } else {
                 saveGame = mergeSaveGames(saveGame1, saveGame2);
             }
+
+
 
 
             //log(saveGame);

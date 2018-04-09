@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public abstract class Collision {
 
-    public static final int NUMBER_OF_ITERATIONS = 1;
+    public static final int NUMBER_OF_ITERATIONS = 1; // SEMPRE DEVE SER 1????
 
     private Collision(){}
     public static boolean collided;
@@ -43,6 +43,11 @@ public abstract class Collision {
     private static float bPosAConsiderarX;
     private static float bPosAConsiderarY;
 
+    private static boolean escapeByCenter;
+    private static boolean checkBWeight;
+    private static Bar bar1;
+    private static Bar bar2;
+
     private static final String TAG = "Collision";
 
     public static boolean checkCollision(ArrayList<? extends PhysicalObject> aEntities, Quadtree quad, int bWeight, boolean respond, boolean updateData, boolean verifyCenter){
@@ -64,310 +69,333 @@ public abstract class Collision {
                 PhysicalObject a =  aEntities.get(aCount);
                 collided = false;
 
-
                 quad.retrieve(a);
                 //out = quad.retrieve(a);
 
                 //Log.e(TAG, " a.name " + a.name);
 
                 // roda pelas entidades extraidas e verifica a colisão
-                //Log.e(TAG, " Quadtree.outsInsertIndex " + Quadtree.outsInsertIndex);
                 for (int bCount = 0; bCount <= Quadtree.outsInsertIndex; bCount++) {
-                    boolean escapeByCenter = false;
 
-                    if (verifyCenter && Quadtree.outs[bCount] != null){
-                        if (a.maxWidth != 0f && Quadtree.outs[bCount].maxWidth != 0f){
-                            if (a.centerX > Quadtree.outs[bCount].centerX){
-                                if (a.centerX - Quadtree.outs[bCount].centerX > a.maxWidth + Quadtree.outs[bCount].maxWidth){
-                                    escapeByCenter = true;
-                                }
-                            } else {
-                                if (Quadtree.outs[bCount].centerX - a.centerX> a.maxWidth + Quadtree.outs[bCount].maxWidth){
-                                    escapeByCenter = true;
-                                }
-                            }
-                            if (!escapeByCenter){
 
-                                if (a.centerY > Quadtree.outs[bCount].centerY){
-                                    if (a.centerY - Quadtree.outs[bCount].centerY > a.maxHeight + Quadtree.outs[bCount].maxHeight){
-                                        escapeByCenter = true;
-                                    }
-                                } else {
-                                    if (Quadtree.outs[bCount].centerY - a.centerY> a.maxHeight + Quadtree.outs[bCount].maxHeight){
-                                        escapeByCenter = true;
-                                    }
-                                }
+                    // se ambas as entidades forem barras, faz uma checagem mais simples
+                    if (a.type == Entity.TYPE_BAR && Quadtree.outs[bCount] != null && Quadtree.outs[bCount].type == Entity.TYPE_BAR) {
 
+                        if (a.positionX < Quadtree.outs[bCount].positionX) {
+                            bar1 = (Bar) a;
+                            bar2 = (Bar) Quadtree.outs[bCount];
+
+                            float differenceBetweenBars = (bar2.positionX - (bar1.getTransformedWidth() + bar1.positionX));
+
+                            //Log.e(TAG, "differenceBetweenBars " + differenceBetweenBars);
+
+                            if (differenceBetweenBars < 0) {
+
+                                bar1.accumulatedTranslateX += (differenceBetweenBars / 2f);
+                                bar2.accumulatedTranslateX += ((differenceBetweenBars * -1f) / 2f);
+                                bar1.checkTransformations(false);
+                                bar2.checkTransformations(false);
 
                             }
                         }
                     }
+                    else
+                    {
 
 
-                    //if (escapeByCenter){
+                        escapeByCenter = false;
+                        if (verifyCenter && Quadtree.outs[bCount] != null) {
+                            if (a.maxWidth != 0f && Quadtree.outs[bCount].maxWidth != 0f) {
+                                if (a.centerX > Quadtree.outs[bCount].centerX) {
+                                    if (a.centerX - Quadtree.outs[bCount].centerX > a.maxWidth + Quadtree.outs[bCount].maxWidth) {
+                                        escapeByCenter = true;
+                                    }
+                                } else {
+                                    if (Quadtree.outs[bCount].centerX - a.centerX > a.maxWidth + Quadtree.outs[bCount].maxWidth) {
+                                        escapeByCenter = true;
+                                    }
+                                }
+                                if (!escapeByCenter) {
+
+                                    if (a.centerY > Quadtree.outs[bCount].centerY) {
+                                        if (a.centerY - Quadtree.outs[bCount].centerY > a.maxHeight + Quadtree.outs[bCount].maxHeight) {
+                                            escapeByCenter = true;
+                                        }
+                                    } else {
+                                        if (Quadtree.outs[bCount].centerY - a.centerY > a.maxHeight + Quadtree.outs[bCount].maxHeight) {
+                                            escapeByCenter = true;
+                                        }
+                                    }
+
+
+                                }
+                            }
+                        }
+
+
+                        //if (escapeByCenter){
                         //Log.e(TAG, "escape " + a.name + " - " + Quadtree.outs[bCount].name);
-                    //}
+                        //}
 
-                    if (Quadtree.outs[bCount] != null && !escapeByCenter) {
+                        if (Quadtree.outs[bCount] != null && !escapeByCenter) {
 
-                        //Log.e(TAG, " Quadtree.outs " + bCount);
+                            //Log.e(TAG, " Quadtree.outs " + bCount);
 
-                        PhysicalObject b = (PhysicalObject) Quadtree.outs[bCount];
+                            PhysicalObject b = (PhysicalObject) Quadtree.outs[bCount];
 
-                        //Log.e(TAG, " b.name " + b.name);
+                            //Log.e(TAG, " b.name " + b.name);
 
-                        onQuarentine = false;
+                            onQuarentine = false;
 
-                        if (a.type == Entity.TYPE_BALL && b.type == Entity.TYPE_BALL) {
+                            if (a.type == Entity.TYPE_BALL && b.type == Entity.TYPE_BALL) {
 
-                            Ball ball1 = (Ball) a;
-                            Ball ball2 = (Ball) b;
+                                Ball ball1 = (Ball) a;
+                                Ball ball2 = (Ball) b;
 
-                            if (ball1.quarentineBalls != null) {
-                                for (int q = 0; q < ball1.quarentineBalls.size(); q++) {
-                                    if (ball1.quarentineBalls.get(q) == ball2) {
-                                        //Log.e(TAG, "dispensando bola por estar em quarentena " + ball1.quarentineBallsState.get(q));
-                                        onQuarentine = true;
-                                        break;
+                                if (ball1.quarentineBalls != null) {
+                                    for (int q = 0; q < ball1.quarentineBalls.size(); q++) {
+                                        if (ball1.quarentineBalls.get(q) == ball2) {
+                                            //Log.e(TAG, "dispensando bola por estar em quarentena " + ball1.quarentineBallsState.get(q));
+                                            onQuarentine = true;
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        // verifica o peso da entidade b
-                        // se a variável bWeight for 0, pula essa verificação
-                        boolean check = true;
-                        if (bWeight != 0) {
-                            if (bWeight != b.getWeight()) {
-                                check = false;
-                            }
-                        }
-
-                        // verifica se a entidade não é a mesma e se elas são colidíveis e se o peso é compatível
-                        if ((a.isSolid && b.isSolid) && (b != a) && check && !onQuarentine) {
-
-                            // seta os dados da entidade 'a' e da entidade 'b'
-                            a.setSatData();
-                            b.setSatData();
-
-                            // zera os dados a serem usados nesta passagem
-                            // transfere os dados da entidade para o objeto do game
-
-                            //type false: polygon true: circle
-                            aType = false;
-                            bType = false;
-
-
-                            if (a.circleData != null) {
-                                circle1.pos.x = a.circleData.pos.x;
-                                circle1.pos.y = a.circleData.pos.y;
-                                circle1.r = a.circleData.r;
-                                aType = true;
-                            } else {
-                                polygon1.pos.x = a.polygonData.pos.x;
-                                polygon1.pos.y = a.polygonData.pos.y;
-                                polygon1.setPoints(a.polygonData.points);
-                            }
-
-                            if (b.circleData != null) {
-                                circle2.pos.x = b.circleData.pos.x;
-                                circle2.pos.y = b.circleData.pos.y;
-                                circle2.r = b.circleData.r;
-                                bType = true;
-                            } else {
-                                polygon2.pos.x = b.polygonData.pos.x;
-                                polygon2.pos.y = b.polygonData.pos.y;
-                                polygon2.setPoints(b.polygonData.points);
-                            }
-
-
-
-                            //Log.e("pos bola sat cc2", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
-
-                            velocities[0] = Math.abs(a.vx);
-                            velocities[1] = Math.abs(a.vy);
-                            velocities[2] = Math.abs(b.vx);
-                            velocities[3] = Math.abs(b.vy);
-
-
-                            //if (a.name == "bar" && b.name == "bar"){
-                            //Log.e(TAG, " velocities "+velocities[0]+" - "+velocities[1]+" - "+velocities[2]+" - "+velocities[3]);
-                            //}
-
-
-                            max = -100000;
-                            maxIndex = -1;
-                            for (int n = 0; n < 4; n++) {
-                                if (velocities[n] > max) {
-                                    maxIndex = n;
-                                    max = velocities[n];
+                            // verifica o peso da entidade b
+                            // se a variável bWeight for 0, pula essa verificação
+                            checkBWeight = true;
+                            if (bWeight != 0) {
+                                if (bWeight != b.getWeight()) {
+                                    checkBWeight = false;
                                 }
                             }
 
-                            //if (a.name == "bar" && b.name == "bar"){
-                            //    //Log.e(TAG, " maxIndex "+maxIndex);
-                            //    //Log.e(TAG, " max "+max);
-                            //    //Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
-                            //    //Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
-                            //}
+                            // verifica se a entidade não é a mesma e se elas são colidíveis e se o peso é compatível
+                            if ((a.isSolid && b.isSolid) && (b != a) && checkBWeight && !onQuarentine) {
 
+                                // seta os dados da entidade 'a' e da entidade 'b'
+                                a.setSatData();
+                                b.setSatData();
 
-                            // definir quantas passagens serão realidades, com base na maior velocidade
-                            // quanto maior o número divisor, menor o número de passagens
-                            quantityPassagens = Math.round(velocities[maxIndex] / 1.8f);
-                            if (quantityPassagens == 0) {
-                                quantityPassagens = 1;
-                            }
+                                // zera os dados a serem usados nesta passagem
+                                // transfere os dados da entidade para o objeto do game
 
+                                //type false: polygon true: circle
+                                aType = false;
+                                bType = false;
 
-                            //Log.e("Game", " a.previousPositionX "+a.previousPositionX);
-                            //Log.e("Game", " a.previousPositionY "+a.previousPositionY);
-                            //Log.e("Game", " b.previousPositionX "+b.previousPositionX);
-                            //Log.e("Game", " b.previousPositionY "+b.previousPositionY);
-
-                            aPreviousX = a.previousPositionX;
-                            aPreviousY = a.previousPositionY;
-                            bPreviousX = b.previousPositionX;
-                            bPreviousY = b.previousPositionY;
-
-                            //if (a.name == "ball"){
-                            //    //Log.e(TAG, " quantityPassagens "+quantityPassagens);
-                            //}
-
-                            //Log.e("Game", " a.previousPositionX 2"+aPreviousX);
-                            //Log.e("Game", " a.previousPositionY 2"+aPreviousY);
-                            //Log.e("Game", " b.previousPositionX 2"+bPreviousX);
-                            //Log.e("Game", " b.previousPositionY 2"+bPreviousY);
-
-                            // //Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
-
-                            // calcula a diferença entre as posições
-
-
-                            aDiferencaPosicaoX = a.positionX - aPreviousX;
-                            aDiferencaPosicaoY = a.positionY - aPreviousY;
-
-                            bDiferencaPosicaoX = b.positionX - bPreviousX;
-                            bDiferencaPosicaoY = b.positionY - bPreviousY;
-
-                            // calcula a porcentagem de cada passada;
-                            porcentagem = (100f / quantityPassagens) / 100f;
-
-                            //if (a.name == "bar" && b.name == "bar"){
-                            //    //Log.e(TAG, " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
-                            //}
-
-
-                            //Log.e("Game", " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
-
-                            aPosAConsiderarX = -1000f;
-                            aPosAConsiderarY = -1000f;
-                            bPosAConsiderarX = -1000f;
-                            bPosAConsiderarY = -1000f;
-
-
-                            //if (b.name == "obstacle"){
-                            //    //Log.e("game", " x"+ this.polygon2.pos.x);
-                            //}
-
-                            //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
-
-                            // itera pelas passagens, chegando se há colisão
-
-                            for (int ip = 0; ip < quantityPassagens; ip++) {
-
-                                response.clear();
-                                porcentagemAplicadaNaPassagem = porcentagem * (float) (ip + 1);
-                                //Log.e("Game", "passagem "+ip+" porcentagem "+porcentagem);
-
-                                aPosAConsiderarX = aPreviousX + (aDiferencaPosicaoX * porcentagemAplicadaNaPassagem);
-                                aPosAConsiderarY = aPreviousY + (aDiferencaPosicaoY * porcentagemAplicadaNaPassagem);
-                                //Log.e("Game", "passagem "+ip+" a.previousPositionY "+ aPreviousY +" aDiferencaPosicaoX "+aDiferencaPosicaoX +  " porcentagemAplicadaNaPassagem "+porcentagemAplicadaNaPassagem);
-                                //Log.e("Game", "passagem "+ip+" aPosAConsiderarX "+ aPosAConsiderarX +" aPosAConsiderarY "+aPosAConsiderarY);
-                                //Log.e("Game", "a.y"+aPosAConsiderarY + " b.y"+bPosAConsiderarY);
-
-                                bPosAConsiderarX = bPreviousX + (bDiferencaPosicaoX * porcentagemAplicadaNaPassagem);
-                                bPosAConsiderarY = bPreviousY + (bDiferencaPosicaoY * porcentagemAplicadaNaPassagem);
-
-                                //Log.e("test posicoes", "a.y"+aPosAConsiderarY + " b.y"+bPosAConsiderarY);
-
-
-                                if (!aType) {
-                                    polygon1.pos.x = aPosAConsiderarX;
-                                    polygon1.pos.y = aPosAConsiderarY;
+                                if (a.circleData != null) {
+                                    circle1.pos.x = a.circleData.pos.x;
+                                    circle1.pos.y = a.circleData.pos.y;
+                                    circle1.r = a.circleData.r;
+                                    aType = true;
                                 } else {
-                                    circle1.pos.x = aPosAConsiderarX;
-                                    circle1.pos.y = aPosAConsiderarY;
+                                    polygon1.pos.x = a.polygonData.pos.x;
+                                    polygon1.pos.y = a.polygonData.pos.y;
+                                    polygon1.setPoints(a.polygonData.points);
                                 }
 
-                                if (!bType) {
-                                    polygon2.pos.x = bPosAConsiderarX;
-                                    polygon2.pos.y = bPosAConsiderarY;
+                                if (b.circleData != null) {
+                                    circle2.pos.x = b.circleData.pos.x;
+                                    circle2.pos.y = b.circleData.pos.y;
+                                    circle2.r = b.circleData.r;
+                                    bType = true;
                                 } else {
-                                    circle2.pos.x = bPosAConsiderarX;
-                                    circle2.pos.y = bPosAConsiderarY;
+                                    polygon2.pos.x = b.polygonData.pos.x;
+                                    polygon2.pos.y = b.polygonData.pos.y;
+                                    polygon2.setPoints(b.polygonData.points);
                                 }
 
 
-                                //Log.e("pos bola sat cc5", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
+                                //Log.e("pos bola sat cc2", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
-                                if (!aType) {
-                                    if (!bType) {
-                                        collided = Sat.getInstance().testPolygonPolygon(polygon1, polygon2, response);
+                                velocities[0] = Math.abs(a.vx);
+                                velocities[1] = Math.abs(a.vy);
+                                velocities[2] = Math.abs(b.vx);
+                                velocities[3] = Math.abs(b.vy);
+
+
+                                //if (a.name == "bar" && b.name == "bar"){
+                                //Log.e(TAG, " velocities "+velocities[0]+" - "+velocities[1]+" - "+velocities[2]+" - "+velocities[3]);
+                                //}
+
+
+                                max = -100000;
+                                maxIndex = -1;
+                                for (int n = 0; n < 4; n++) {
+                                    if (velocities[n] > max) {
+                                        maxIndex = n;
+                                        max = velocities[n];
+                                    }
+                                }
+
+                                //if (a.name == "bar" && b.name == "bar"){
+                                //    //Log.e(TAG, " maxIndex "+maxIndex);
+                                //    //Log.e(TAG, " max "+max);
+                                //    //Log.e(TAG, " velocities[maxIndex]/5f "+velocities[maxIndex]/2f);
+                                //    //Log.e(TAG, " Math.round(velocities[maxIndex]/5f) "+Math.round(velocities[maxIndex]/5f));
+                                //}
+
+
+                                // definir quantas passagens serão realidades, com base na maior velocidade
+                                // quanto maior o número divisor, menor o número de passagens
+                                quantityPassagens = Math.round(velocities[maxIndex] / 1.8f);
+                                if (quantityPassagens == 0) {
+                                    quantityPassagens = 1;
+                                }
+
+
+                                //Log.e("Game", " a.previousPositionX "+a.previousPositionX);
+                                //Log.e("Game", " a.previousPositionY "+a.previousPositionY);
+                                //Log.e("Game", " b.previousPositionX "+b.previousPositionX);
+                                //Log.e("Game", " b.previousPositionY "+b.previousPositionY);
+
+                                aPreviousX = a.previousPositionX;
+                                aPreviousY = a.previousPositionY;
+                                bPreviousX = b.previousPositionX;
+                                bPreviousY = b.previousPositionY;
+
+                                //if (a.name == "ball"){
+                                //    //Log.e(TAG, " quantityPassagens "+quantityPassagens);
+                                //}
+
+                                //Log.e("Game", " a.previousPositionX 2"+aPreviousX);
+                                //Log.e("Game", " a.previousPositionY 2"+aPreviousY);
+                                //Log.e("Game", " b.previousPositionX 2"+bPreviousX);
+                                //Log.e("Game", " b.previousPositionY 2"+bPreviousY);
+
+                                // //Log.e("pos bola sat cc3", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
+
+                                // calcula a diferença entre as posições
+
+
+                                aDiferencaPosicaoX = a.positionX - aPreviousX;
+                                aDiferencaPosicaoY = a.positionY - aPreviousY;
+
+                                bDiferencaPosicaoX = b.positionX - bPreviousX;
+                                bDiferencaPosicaoY = b.positionY - bPreviousY;
+
+                                // calcula a porcentagem de cada passada;
+                                porcentagem = (100f / quantityPassagens) / 100f;
+
+                                //if (a.name == "bar" && b.name == "bar"){
+                                //    //Log.e(TAG, " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
+                                //}
+
+
+                                //Log.e("Game", " quantityPassagens "+quantityPassagens+" porcentagem "+porcentagem);
+
+                                aPosAConsiderarX = -1000f;
+                                aPosAConsiderarY = -1000f;
+                                bPosAConsiderarX = -1000f;
+                                bPosAConsiderarY = -1000f;
+
+
+                                //if (b.name == "obstacle"){
+                                //    //Log.e("game", " x"+ this.polygon2.pos.x);
+                                //}
+
+                                //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
+
+                                // itera pelas passagens, chegando se há colisão
+
+                                for (int ip = 0; ip < quantityPassagens; ip++) {
+
+                                    response.clear();
+                                    porcentagemAplicadaNaPassagem = porcentagem * (float) (ip + 1);
+                                    //Log.e("Game", "passagem "+ip+" porcentagem "+porcentagem);
+
+                                    aPosAConsiderarX = aPreviousX + (aDiferencaPosicaoX * porcentagemAplicadaNaPassagem);
+                                    aPosAConsiderarY = aPreviousY + (aDiferencaPosicaoY * porcentagemAplicadaNaPassagem);
+                                    //Log.e("Game", "passagem "+ip+" a.previousPositionY "+ aPreviousY +" aDiferencaPosicaoX "+aDiferencaPosicaoX +  " porcentagemAplicadaNaPassagem "+porcentagemAplicadaNaPassagem);
+                                    //Log.e("Game", "passagem "+ip+" aPosAConsiderarX "+ aPosAConsiderarX +" aPosAConsiderarY "+aPosAConsiderarY);
+                                    //Log.e("Game", "a.y"+aPosAConsiderarY + " b.y"+bPosAConsiderarY);
+
+                                    bPosAConsiderarX = bPreviousX + (bDiferencaPosicaoX * porcentagemAplicadaNaPassagem);
+                                    bPosAConsiderarY = bPreviousY + (bDiferencaPosicaoY * porcentagemAplicadaNaPassagem);
+
+                                    //Log.e("test posicoes", "a.y"+aPosAConsiderarY + " b.y"+bPosAConsiderarY);
+
+
+                                    if (!aType) {
+                                        polygon1.pos.x = aPosAConsiderarX;
+                                        polygon1.pos.y = aPosAConsiderarY;
                                     } else {
-                                        collided = Sat.getInstance().testPolygonCircle(polygon1, circle2, response);
+                                        circle1.pos.x = aPosAConsiderarX;
+                                        circle1.pos.y = aPosAConsiderarY;
                                     }
-                                } else {
+
                                     if (!bType) {
-                                        collided = Sat.getInstance().testCirclePolygon(circle1, polygon2, response);
+                                        polygon2.pos.x = bPosAConsiderarX;
+                                        polygon2.pos.y = bPosAConsiderarY;
                                     } else {
-                                        collided = Sat.getInstance().testCircleCircle(circle1, circle2, response);
+                                        circle2.pos.x = bPosAConsiderarX;
+                                        circle2.pos.y = bPosAConsiderarY;
                                     }
 
-                                }
 
-                                // se houver registro de colisão, mas se a resposta foi zerada, retorna para uma próxima verificação
-                                if (collided) {
-                                    if (!(response.overlapV.x == 0 && response.overlapV.y == 0)) {
-                                        break;
+                                    //Log.e("pos bola sat cc5", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
+
+                                    if (!aType) {
+                                        if (!bType) {
+                                            collided = Sat.getInstance().testPolygonPolygon(polygon1, polygon2, response);
+                                        } else {
+                                            collided = Sat.getInstance().testPolygonCircle(polygon1, circle2, response);
+                                        }
+                                    } else {
+                                        if (!bType) {
+                                            collided = Sat.getInstance().testCirclePolygon(circle1, polygon2, response);
+                                        } else {
+                                            collided = Sat.getInstance().testCircleCircle(circle1, circle2, response);
+                                        }
+
+                                    }
+
+                                    // se houver registro de colisão, mas se a resposta foi zerada, retorna para uma próxima verificação
+                                    if (collided) {
+                                        if (!(response.overlapV.x == 0 && response.overlapV.y == 0)) {
+                                            break;
+                                        }
                                     }
                                 }
-                            }
 
-                            //if (b.name == "obstacle"){
-                            //    //Log.e("game", " x"+ this.polygon2.pos.x);
-                            //}
+                                //if (b.name == "obstacle"){
+                                //    //Log.e("game", " x"+ this.polygon2.pos.x);
+                                //}
 
-                            if (collided && !(response.overlapV.x == 0 && response.overlapV.y == 0)) {
+                                if (collided && !(response.overlapV.x == 0 && response.overlapV.y == 0)) {
 
-                                isHadCollision = true;
+                                    isHadCollision = true;
 
-                                if (respond) {
-                                    a.isCollided = true;
-                                    b.isCollided = true;
-                                    // informa a resposta a ser exercida no objeto "a"
-                                    respond(a, b, -response.overlapV.x * 1.001f, -response.overlapV.y * 1.001f, aPosAConsiderarX, aPosAConsiderarY, bPosAConsiderarX, bPosAConsiderarY);
-                                }
+                                    if (respond) {
+                                        a.isCollided = true;
+                                        b.isCollided = true;
+                                        // informa a resposta a ser exercida no objeto "a"
+                                        respond(a, b, -response.overlapV.x * 1.001f, -response.overlapV.y * 1.001f, aPosAConsiderarX, aPosAConsiderarY, bPosAConsiderarX, bPosAConsiderarY);
+                                    }
 
-                                if (updateData) {
-                                    // grava a resposta exercida no objeto "a"
-                                    a.collisionsData.add(new CollisionData(
-                                            b,
-                                            -response.overlapV.x * 1.001f,
-                                            -response.overlapV.y * 1.001f,
-                                            -response.overlapN.x,
-                                            -response.overlapN.y,
-                                            b.weight
-                                    ));
+                                    if (updateData) {
+                                        // grava a resposta exercida no objeto "a"
+                                        a.collisionsData.add(new CollisionData(
+                                                b,
+                                                -response.overlapV.x * 1.001f,
+                                                -response.overlapV.y * 1.001f,
+                                                -response.overlapN.x,
+                                                -response.overlapN.y,
+                                                b.weight
+                                        ));
 
-                                    // grava a resposta exercida no objeto "b"
-                                    b.collisionsData.add(new CollisionData(
-                                            a,
-                                            response.overlapV.x * 1.0001f,
-                                            response.overlapV.y * 1.0001f,
-                                            response.overlapN.x,
-                                            response.overlapN.y,
-                                            a.weight
-                                    ));
+                                        // grava a resposta exercida no objeto "b"
+                                        b.collisionsData.add(new CollisionData(
+                                                a,
+                                                response.overlapV.x * 1.0001f,
+                                                response.overlapV.y * 1.0001f,
+                                                response.overlapN.x,
+                                                response.overlapN.y,
+                                                a.weight
+                                        ));
+                                    }
                                 }
                             }
                         }

@@ -24,6 +24,7 @@ public class Game {
     public static boolean forDebugDeleteDatabaseAndStorage = false;
     public static boolean ganharComMetadeDasBolas = false;
     public static boolean sempreGanharTodasEstrelas = false;
+    public static boolean forDebugClearAllLevelPoints = false;
     public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
@@ -1501,8 +1502,6 @@ public class Game {
         return memoryInfo;
     }
 
-
-
     public static long initSimulateTime;
     public static ArrayList<Long> frameSimulateDurations1;
     public static ArrayList<Long> frameSimulateDurations2;
@@ -1745,7 +1744,7 @@ public class Game {
         }
 
 
-
+        /*
         for (int i = 0; i < bars.size(); i++){
             if (bars.get(i).collisionsData.size() == 0){
 
@@ -1754,6 +1753,7 @@ public class Game {
                 bars.get(i).secretLevel2LockStep = false;
             }
         }
+        */
 
         // se a bola colidiu, faz o necessário
         if (gameState == GAME_STATE_JOGAR) {
@@ -1793,7 +1793,7 @@ public class Game {
             }
 
             for (int i = 0; i < bars.size(); i++) {
-                if (Game.bordaD.positionX - (bars.get(i).positionX + bars.get(i).width) < 0.1f){
+                if (Game.bordaD.positionX - (bars.get(i).positionX + bars.get(i).getTransformedWidth()) < 0.1f){
                     //Log.e(TAG, "right touch");
                     rightTouch = true;
                 }

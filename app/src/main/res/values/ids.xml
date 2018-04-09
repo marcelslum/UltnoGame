@@ -3,50 +3,82 @@
 Google Play game services IDs.
 Save this file as res/values/games-ids.xml in your project.
 -->
-<resources>
-    <string name="app_id">672110194188</string>
-    <string name="package_name">com.marcelslum.ultno</string>
 
-    <string name="leaderboard_geral">CgkIjNyO58cTEAIQAw</string>
-    <string name="leaderboard_1">CgkIjNyO58cTEAIQCg</string>
-    <string name="leaderboard_2">CgkIjNyO58cTEAIQCw</string>
-    <string name="leaderboard_3">CgkIjNyO58cTEAIQDA</string>
-    <string name="leaderboard_4">CgkIjNyO58cTEAIQDQ</string>
-    <string name="leaderboard_5">CgkIjNyO58cTEAIQDg</string>
-    <string name="leaderboard_6">CgkIjNyO58cTEAIQDw</string>
-    <string name="leaderboard_7">CgkIjNyO58cTEAIQEA</string>
-    <string name="leaderboard_8">CgkIjNyO58cTEAIQEQ</string>
-    <string name="leaderboard_9">CgkIjNyO58cTEAIQEg</string>
-    <string name="leaderboard_10">CgkIjNyO58cTEAIQEw</string>
-    <string name="leaderboard_11">CgkIjNyO58cTEAIQFA</string>
-    <string name="leaderboard_12">CgkIjNyO58cTEAIQFQ</string>
-    <string name="leaderboard_13">CgkIjNyO58cTEAIQFg</string>
-    <string name="leaderboard_14">CgkIjNyO58cTEAIQFw</string>
-    <string name="leaderboard_15">CgkIjNyO58cTEAIQGA</string>
-    <string name="leaderboard_16">CgkIjNyO58cTEAIQGQ</string>
-    <string name="leaderboard_17">CgkIjNyO58cTEAIQGg</string>
-    <string name="leaderboard_18">CgkIjNyO58cTEAIQGw</string>
-    <string name="leaderboard_19">CgkIjNyO58cTEAIQHA</string>
-    <string name="leaderboard_20">CgkIjNyO58cTEAIQHQ</string>
+    <resources>
+        <!-- app_id -->
+        <string name="app_id" translatable="false">672110194188</string>
+        <!-- package_name -->
+        <string name="package_name" translatable="false">com.marcelslum.ultno</string>
+        <!-- achievement Iniciante -->
+        <string name="achievement_iniciante" translatable="false">CgkIjNyO58cTEAIQHg</string>
+        <!-- achievement Aprendiz -->
+        <string name="achievement_aprendiz" translatable="false">CgkIjNyO58cTEAIQHw</string>
+        <!-- achievement Mestre -->
+        <string name="achievement_mestre" translatable="false">CgkIjNyO58cTEAIQIA</string>
+        <!-- achievement Coleta mínima -->
+        <string name="achievement_coleta_mnima" translatable="false">CgkIjNyO58cTEAIQIQ</string>
+        <!-- achievement Coleta média -->
+        <string name="achievement_coleta_mdia" translatable="false">CgkIjNyO58cTEAIQIg</string>
+        <!-- achievement Coleta máxima -->
+        <string name="achievement_coleta_mxima" translatable="false">CgkIjNyO58cTEAIQIw</string>
+        <!-- achievement Acelerar -->
+        <string name="achievement_acelerar" translatable="false">CgkIjNyO58cTEAIQKA</string>
+        <!-- achievement Desacelerar -->
+        <string name="achievement_desacelerar" translatable="false">CgkIjNyO58cTEAIQKQ</string>
+        <!-- achievement Velocidade máxima -->
+        <string name="achievement_velocidade_mxima" translatable="false">CgkIjNyO58cTEAIQKg</string>
+        <!-- achievement Velocidade mínima -->
+        <string name="achievement_velocidade_mnima" translatable="false">CgkIjNyO58cTEAIQKw</string>
+        <!-- achievement Inclinação negativa -->
+        <string name="achievement_inclinao_negativa" translatable="false">CgkIjNyO58cTEAIQLA</string>
+        <!-- achievement Inclinação positiva -->
+        <string name="achievement_inclinao_positiva" translatable="false">CgkIjNyO58cTEAIQLQ</string>
+        <!-- achievement Inclinação mínima -->
+        <string name="achievement_inclinao_mnima" translatable="false">CgkIjNyO58cTEAIQLg</string>
+        <!-- achievement Inclinação máxima -->
+        <string name="achievement_inclinao_mxima" translatable="false">CgkIjNyO58cTEAIQLw</string>
 
-    <string name="achievement_iniciante">CgkIjNyO58cTEAIQHg</string>
-    <string name="achievement_aprendiz">CgkIjNyO58cTEAIQHw</string>
-    <string name="achievement_mestre">CgkIjNyO58cTEAIQIA</string>
-    <string name="achievement_coleta_mnima">CgkIjNyO58cTEAIQIQ</string>
-    <string name="achievement_coleta_mdia">CgkIjNyO58cTEAIQIg</string>
-    <string name="achievement_coleta_mxima">CgkIjNyO58cTEAIQIw</string>
-    <string name="achievement_segredo_1">CgkIjNyO58cTEAIQJA</string>
-    <string name="achievement_segredo_2">CgkIjNyO58cTEAIQJQ</string>
-    <string name="achievement_segredo_3">CgkIjNyO58cTEAIQJg</string>
-    <string name="achievement_segredo_4">CgkIjNyO58cTEAIQJw</string>
-    <string name="achievement_acelerar">CgkIjNyO58cTEAIQKA</string>
-    <string name="achievement_desacelerar">CgkIjNyO58cTEAIQKQ</string>
-    <string name="achievement_velocidade_mxima">CgkIjNyO58cTEAIQKg</string>
-    <string name="achievement_velocidade_mnima">CgkIjNyO58cTEAIQKw</string>
-    <string name="achievement_inclinao_negativa">CgkIjNyO58cTEAIQLA</string>
-    <string name="achievement_inclinao_positiva">CgkIjNyO58cTEAIQLQ</string>
-    <string name="achievement_inclinao_mnima">CgkIjNyO58cTEAIQLg</string>
-    <string name="achievement_inclinao_mxima">CgkIjNyO58cTEAIQLw</string>
+        <!-- leaderboard Geral -->
+        <string name="leaderboard_0" translatable="false">CgkIjNyO58cTEAIQMA</string>
+        <!-- leaderboard Inicio -->
+        <string name="leaderboard_1" translatable="false">CgkIjNyO58cTEAIQMQ</string>
+        <!-- leaderboard Obstáculo -->
+        <string name="leaderboard_2" translatable="false">CgkIjNyO58cTEAIQMg</string>
+        <!-- leaderboard Cor -->
+        <string name="leaderboard_3" translatable="false">CgkIjNyO58cTEAIQMw</string>
+        <!-- leaderboard Explosão -->
+        <string name="leaderboard_4" translatable="false">CgkIjNyO58cTEAIQNA</string>
+        <!-- leaderboard Deslizamento -->
+        <string name="leaderboard_5" translatable="false">CgkIjNyO58cTEAIQNQ</string>
+        <!-- leaderboard Elástico -->
+        <string name="leaderboard_6" translatable="false">CgkIjNyO58cTEAIQNg</string>
+        <!-- leaderboard Vento -->
+        <string name="leaderboard_7" translatable="false">CgkIjNyO58cTEAIQNw</string>
+        <!-- leaderboard Fantasma -->
+        <string name="leaderboard_8" translatable="false">CgkIjNyO58cTEAIQOA</string>
+        <!-- leaderboard Invecibilidade -->
+        <string name="leaderboard_9" translatable="false">CgkIjNyO58cTEAIQOQ</string>
+        <!-- leaderboard Prisão -->
+        <string name="leaderboard_10" translatable="false">CgkIjNyO58cTEAIQOg</string>
+        <!-- leaderboard Encolhimento -->
+        <string name="leaderboard_11" translatable="false">CgkIjNyO58cTEAIQOw</string>
+        <!-- leaderboard Comida -->
+        <string name="leaderboard_12" translatable="false">CgkIjNyO58cTEAIQPA</string>
+        <!-- leaderboard Falsidade -->
+        <string name="leaderboard_13" translatable="false">CgkIjNyO58cTEAIQPQ</string>
+        <!-- leaderboard Espelho -->
+        <string name="leaderboard_14" translatable="false">CgkIjNyO58cTEAIQPg</string>
+        <!-- leaderboard Muro -->
+        <string name="leaderboard_15" translatable="false">CgkIjNyO58cTEAIQPw</string>
+        <!-- leaderboard Divisão -->
+        <string name="leaderboard_16" translatable="false">CgkIjNyO58cTEAIQQA</string>
+        <!-- leaderboard Liberdade -->
+        <string name="leaderboard_17" translatable="false">CgkIjNyO58cTEAIQQQ</string>
+        <!-- leaderboard Grade -->
+        <string name="leaderboard_18" translatable="false">CgkIjNyO58cTEAIQRA</string>
+        <!-- leaderboard Rapidez -->
+        <string name="leaderboard_19" translatable="false">CgkIjNyO58cTEAIQQg</string>
+        <!-- leaderboard Mistura -->
+        <string name="leaderboard_20" translatable="false">CgkIjNyO58cTEAIQQw</string>
 
-
-</resources>
+    </resources>

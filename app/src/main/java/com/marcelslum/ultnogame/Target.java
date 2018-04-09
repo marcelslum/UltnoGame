@@ -138,7 +138,7 @@ public class Target extends Rectangle {
                 percentage *= 0.8f;
             }
 
-            Log.e(TAG, "difference: "+difference + " ----  percentage: "+percentage);
+            //Log.e(TAG, "difference: "+difference + " ----  percentage: "+percentage);
             
             if (Utils.getRandonFloat(0.0f, 1.0f) < percentage){
                 if (Game.specialBalls.size()<2) {

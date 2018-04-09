@@ -1255,6 +1255,7 @@ public class LevelLoader2 {
                                     {0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0},
                                     {0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0},
                                     {0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0}
+
                             })
                     .setBarsScaleVariation(
                         new ScaleVariationDataBuilder()
@@ -1532,7 +1533,6 @@ public class LevelLoader2 {
                                     {0,2,1,1,1,4,1,1,1,2,0},
                                     {1,2,1,0,1,1,1,0,1,2,3},
                                     {1,0,1,1,1,0,1,1,1,0,3},
-                                    {0,1,1,0,1,0,1,0,1,1,0},
                                     {2,0,1,3,1,1,1,3,1,0,2},
                                     {2,3,1,3,1,3,1,3,1,3,2},
                                     {2,3,1,0,1,3,1,0,1,3,2}
@@ -1554,7 +1554,7 @@ public class LevelLoader2 {
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true))
                     .setWindType(Level.WIND_TYPE_RIGHT)
-                    .setFakeBallPercentage(0.1f);
+                    .setFakeBallPercentage(0.05f);
         }
 
         //LEVEL92
@@ -1630,8 +1630,8 @@ public class LevelLoader2 {
 
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.15f)
-                    .setWindowsY(0.3f)
-                    .setWindowsHeight(0.3f)
+                    .setWindowsY(0.25f)
+                    .setWindowsHeight(0.27f)
                     .setWindowsQuantityOfLines(2)
                     .setWindowsVelocity(-0.002f)
                     .setInvertedButtons(true);
@@ -1671,7 +1671,7 @@ public class LevelLoader2 {
                     .setWindowsHeight(0.15f, 0.15f)
                     .setWindowsQuantityOfLines(2, 2)
                     .setWindowsVelocity(0.002f, 0.003f)
-                    .setFakeBallPercentage(0.08f);
+                    .setFakeBallPercentage(0.01f);
 
 
         }
@@ -1804,8 +1804,8 @@ public class LevelLoader2 {
                     .setWindowsQuantity(1)
                     .setWindowsDistance(0.15f)
                     .setWindowsY(0.25f)
-                    .setWindowsHeight(0.3f)
-                    .setWindowsQuantityOfLines(3)
+                    .setWindowsHeight(0.2f)
+                    .setWindowsQuantityOfLines(2)
                     .setWindowsVelocity(-0.003f);
         }
 
@@ -1851,7 +1851,7 @@ public class LevelLoader2 {
                                     .setMinWidth_BI(0.75f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true))
-                    .setFakeBallPercentage(0.15f)
+                    .setFakeBallPercentage(0.04f)
                     .setObstaclesQuantity(3)
 
                     .setObstaclesX(0.01481f, 0.6418083333f, 0.9226166667f)
@@ -1995,7 +1995,7 @@ public class LevelLoader2 {
                                      .setMaxWidth_BI(1.5f)
                                      .setMinHeight_BI(1f)
                                      .setMaxHeight_BI(1f))
-                    .setFakeBallPercentage(0.12f)
+                    .setFakeBallPercentage(0.05f)
                     .setObstaclesQuantity(2)
                     .setObstaclesX(0.46793f, 0.476205f)
                     .setObstaclesY(0.2959294118f, 0.7357411765f)
@@ -2053,7 +2053,7 @@ public class LevelLoader2 {
                                     .setMinWidth_BI(0.05f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true))
-                    .setSpecialBallPercentage(0.63f)
+                    .setSpecialBallPercentage(0.55f)
                     .setWindType(Level.WIND_TYPE_RIGHT);
         }
         
@@ -2103,9 +2103,9 @@ public class LevelLoader2 {
                                     .setMinWidth_BI(0.05f)
                                     .setMaxWidth_BI(1.5f)
                                     .setAlwaysDecrease(true))
-                    .setSpecialBallPercentage(0.63f)
+                    .setSpecialBallPercentage(0.55f)
                     .setWindType(Level.WIND_TYPE_LEFT)
-                    .setFakeBallPercentage(0.08f)
+                    .setFakeBallPercentage(0.045f)
                 
  
                     .setObstaclesQuantity(3)

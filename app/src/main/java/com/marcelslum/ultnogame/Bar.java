@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 /**
  * Created by marcel on 07/08/2016.
  */
@@ -248,7 +250,7 @@ public class Bar extends Rectangle{
 
         }
         verifyAcceleration();
-        //Log.e(TAG, "dvx "+dvx);
+        //Log.e(TAG, "moveLeft dvx "+dvx);
         vx = dvx * timePercentage;
         translate(vx, 0f);
         verifyWind();
@@ -276,7 +278,7 @@ public class Bar extends Rectangle{
         }
         verifyAcceleration();
 
-        //Log.e(TAG, "dvx "+dvx);
+        //Log.e(TAG, "moveRight dvx "+dvx);
         vx = dvx * timePercentage;
         translate(vx, 0f);
         elapsedMoveByWind = 0;
@@ -301,9 +303,11 @@ public class Bar extends Rectangle{
         }
         vx = 0f;
 
-        if (Game.wind != null && Game.gameState == Game.GAME_STATE_JOGAR){
-            elapsedMoveByWind += elapsed;
-            Level.levelObject.levelGoalsObject.notifyBarMoveByWind(elapsedMoveByWind);
+        if (elapsed > 0) {
+            if (Game.wind != null && Game.gameState == Game.GAME_STATE_JOGAR) {
+                elapsedMoveByWind += elapsed;
+                Level.levelObject.levelGoalsObject.notifyBarMoveByWind(elapsedMoveByWind);
+            }
         }
 
         verifyWind();

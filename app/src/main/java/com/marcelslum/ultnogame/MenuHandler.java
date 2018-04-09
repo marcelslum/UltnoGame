@@ -652,7 +652,7 @@ public class MenuHandler {
                 if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
                 } else {
-                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_geral));
+                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
                 }
             }
         });

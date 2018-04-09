@@ -50,7 +50,7 @@ public class ScoreHandler {
 
     public static void submitScores() {
 
-        GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_geral), maxScoreTotal);
+        GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_0), maxScoreTotal);
 
         if (SaveGame.saveGame.currentLevelNumber > 100){
             return;

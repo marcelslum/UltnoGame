@@ -19,6 +19,7 @@ public class GoogleAPI {
     private static final int RC_LEADERBOARD_UI = 9004;
     private static final int RC_ACHIEVEMENTS_UI = 9005;
     public static final int RC_SIGN_IN = 9001;
+    public static final String TAG = "GoogleApi";
 
     public static AchievementsClient mAchievementsClient;
     public static LeaderboardsClient mLeaderboardsClient;
@@ -58,6 +59,7 @@ public class GoogleAPI {
     public static void increment(String  id, int value) {
 
         if (Game.mainActivity.isSignedIn()) {
+            Log.e(TAG, "increment "+value);
             mAchievementsClient.increment(id, value);
         }
     }
@@ -65,6 +67,7 @@ public class GoogleAPI {
     public static void submitScore(String id, long value){
 
         if (Game.mainActivity.isSignedIn()) {
+            Log.e(TAG, "submitScore "+value);
             mLeaderboardsClient.submitScore(id, value);
         }
 
