@@ -185,10 +185,10 @@ public class MainActivity extends FragmentActivity implements
 
     public boolean isSignedIn() {
         if (GoogleSignIn.getLastSignedInAccount(this) != null && SaveGame.saveGame.googleOption == 1){
-            Log.e(TAG, "isSignedIn true");
+            //Log.e(TAG, "isSignedIn true");
             return true;
         } else {
-            Log.e(TAG, "isSignedIn false");
+            //Log.e(TAG, "isSignedIn false");
             return false;
         }
     }
@@ -282,6 +282,7 @@ public class MainActivity extends FragmentActivity implements
         GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
         GoogleAPI.mEventsClient = Games.getEventsClient(this, googleSignInAccount);
         GoogleAPI.mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
+
 
         GoogleAPI.mPlayersClient.getCurrentPlayer()
                 .addOnCompleteListener(new OnCompleteListener<Player>() {

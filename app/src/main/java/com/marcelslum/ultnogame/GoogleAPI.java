@@ -1,15 +1,22 @@
 package com.marcelslum.ultnogame;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.AchievementsClient;
+import com.google.android.gms.games.AnnotatedData;
 import com.google.android.gms.games.EventsClient;
+import com.google.android.gms.games.Games;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.PlayersClient;
+import com.google.android.gms.games.achievement.Achievement;
+import com.google.android.gms.games.achievement.AchievementBuffer;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 /**
  * Created by marcel on 10/10/2016.
@@ -59,8 +66,20 @@ public class GoogleAPI {
     public static void increment(String  id, int value) {
 
         if (Game.mainActivity.isSignedIn()) {
-            Log.e(TAG, "increment "+value);
-            mAchievementsClient.increment(id, value);
+
+            final String innerId = id;
+
+            //Log.e(TAG, "increment "+value);
+            mAchievementsClient.incrementImmediate(id, value).addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                @Override
+                public void onSuccess(Boolean aBoolean) {
+                    Log.e(TAG, "onSuccess "+aBoolean.booleanValue());
+                    if (aBoolean.booleanValue()){
+                        Log.e(TAG, "increment achievement "+ innerId +" desbloqueado ");
+                        Game.messages.showMessage("achievement desbloqueado");
+                    }
+                }
+            });
         }
     }
 

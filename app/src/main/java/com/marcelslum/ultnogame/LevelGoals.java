@@ -256,7 +256,7 @@ public class LevelGoals {
         }
 
         GoogleAPI.increment(
-                Game.getContext().getResources().getString(R.string.achievement_inclinao_mxima), 1);
+                Game.getContext().getResources().getString(R.string.achievement_inclinao_mxima), 500);
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxAngleReached");
         timesOfDecelerationWithoutReachingMaxAngle = 0;
