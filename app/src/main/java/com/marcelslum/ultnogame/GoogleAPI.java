@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+
 /**
  * Created by marcel on 10/10/2016.
  */
@@ -34,6 +36,28 @@ public class GoogleAPI {
     public static EventsClient mEventsClient;
     public static PlayersClient mPlayersClient;
     public static GoogleSignInClient mGoogleSignInClient;
+
+
+    public static ArrayList<AchievementData> achievementsData = new ArrayList<>();
+
+    public static class AchievementData{
+        public String name;
+        public String id;
+        public int currentSteps;
+        public int totalSteps;
+        public int type;
+
+        public static final int TYPE_INCREMENTAL = 0;
+        public static final int TYPE_NOT_INCREMENTAL = 1;
+
+        public AchievementData(String name, String id, int currentSteps, int totalSteps, int type) {
+            this.name = name;
+            this.id = id;
+            this.currentSteps = currentSteps;
+            this.totalSteps = totalSteps;
+            this.type = type;
+        }
+    }
 
     public static void showAchievements() {
         if (Game.mainActivity.isSignedIn()){
@@ -60,22 +84,80 @@ public class GoogleAPI {
 
     public static void unlockAchievement(String  id) {
         if (Game.mainActivity.isSignedIn()) {
-            mAchievementsClient.unlock(id);
+
+            final String innerId = id;
+
+            AchievementData ad = null;
+            boolean unlock = false;
+
+            for (int i = 0; i < achievementsData.size(); i++) {
+                if (achievementsData.get(i).id.equals(id) && (achievementsData.get(i).currentSteps < achievementsData.get(i).totalSteps)){
+                    ad = achievementsData.get(i);
+                    ad.currentSteps += 1;
+                    unlock = true;
+                    Log.e(TAG, "Conquista "+ad.name + " step "+ ad.currentSteps + " total " + ad.totalSteps);
+                    break;
+                }
+            }
+
+            if (!unlock) return;
+
+            final AchievementData innerAd = ad;
+
+            mAchievementsClient.unlockImmediate(id).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                        mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {
+
+
+
+                                if (innerAd != null && innerAd.currentSteps == innerAd.totalSteps) {
+                                    mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {
+                                            AnnotatedData<AchievementBuffer> ad = task.getResult();
+                                            AchievementBuffer ab = ad.get();
+                                            for (int i = 0; i < ab.getCount(); i++) {
+                                                if (ab.get(i).getAchievementId().equals(innerId) && ab.get(i).getState() == Achievement.STATE_UNLOCKED) {
+                                                    Game.messagesToDisplay.add(Game.getContext().getResources().getString(R.string.conquistaDesbloqueada) + " " + innerAd.name);
+                                                    Game.sound.playSuccess1();
+                                                }
+                                            }
+                                            ab.release();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                }
+            });
         }
     }
 
-    static AchievementBuffer achievementBuffer;
+
     public static void loadAchievements(){
         mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
             @Override
             public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {
                 AnnotatedData<AchievementBuffer> ad = task.getResult();
-                achievementBuffer = ad.get();
+                AchievementBuffer ab = ad.get();
+                achievementsData.clear();
+                for (int i = 0; i < ab.getCount(); i++) {
+                    if (ab.get(i).getType() == Achievement.TYPE_INCREMENTAL) {
+                        achievementsData.add(new AchievementData(ab.get(i).getName(), ab.get(i).getAchievementId(), ab.get(i).getCurrentSteps(), ab.get(i).getTotalSteps(), AchievementData.TYPE_INCREMENTAL));
+                    } else {
+                        achievementsData.add(new AchievementData(ab.get(i).getName(), ab.get(i).getAchievementId(), ab.get(i).getState() == Achievement.STATE_UNLOCKED ? 1 : 0, 1, AchievementData.TYPE_INCREMENTAL));
+                    }
+                }
+                ab.release();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                achievementBuffer = null;
+                Log.e(TAG, "Não foi possível carregar os achievements do servidor");
+                achievementsData.clear();
             }
         });
     }
@@ -87,33 +169,43 @@ public class GoogleAPI {
             final String innerId = id;
             final int innerValue = value;
 
-
             boolean increment = false;
-            for (int i = 0; i < achievementBuffer.getCount(); i++) {
-                if (achievementBuffer.get(i).getAchievementId().equals(id) && achievementBuffer.get(i).getState() != Achievement.STATE_UNLOCKED){
+
+            AchievementData ad = null;
+            for (int i = 0; i < achievementsData.size(); i++) {
+                if (achievementsData.get(i).id.equals(id) && (achievementsData.get(i).currentSteps < achievementsData.get(i).totalSteps)){
+                    ad = achievementsData.get(i);
+                    ad.currentSteps += value;
+                    Log.e(TAG, "Conquista "+ad.name + " step "+ ad.currentSteps + " total " + ad.totalSteps);
                     increment = true;
                     break;
                 }
             }
+
+            final AchievementData innerAd = ad;
 
             // TODO Fazer um cache das conquistas antes do level e só verificar se a conquista foi desbloqueada quanto os passos forem realmente concluidos
             if (increment) {
                 mAchievementsClient.incrementImmediate(innerId, innerValue).addOnCompleteListener(new OnCompleteListener<Boolean>() {
                     @Override
                     public void onComplete(@NonNull Task<Boolean> task) {
-                        mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {
-                                AnnotatedData<AchievementBuffer> ad = task.getResult();
-                                AchievementBuffer ab = ad.get();
-                                for (int i = 0; i < ab.getCount(); i++) {
-                                    if (ab.get(i).getAchievementId().equals(innerId) && ab.get(i).getState() == Achievement.STATE_UNLOCKED){
-                                       Game.messagesToDisplay.add("Conquista debloqueada");
+
+                        if (innerAd != null && innerAd.currentSteps == innerAd.totalSteps) {
+                            mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {
+                                    AnnotatedData<AchievementBuffer> ad = task.getResult();
+                                    AchievementBuffer ab = ad.get();
+                                    for (int i = 0; i < ab.getCount(); i++) {
+                                        if (ab.get(i).getAchievementId().equals(innerId) && ab.get(i).getState() == Achievement.STATE_UNLOCKED) {
+                                            Game.messagesToDisplay.add(Game.getContext().getResources().getString(R.string.conquistaDesbloqueada) + " " + innerAd.name);
+                                            Game.sound.playSuccess1();
+                                        }
                                     }
+                                    ab.release();
                                 }
-                                ab.release();
-                            }
-                        });
+                            });
+                        }
                     }
                 });
             }

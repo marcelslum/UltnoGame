@@ -80,8 +80,6 @@ public class Level {
     public void loadEntities() {
         Game.eraseAllGameEntities();
 
-        GoogleAPI.loadAchievements();
-        
         BrickBackground.ballCollidedFx = 0;
 
         SpecialBall.timeOfLastSpecialBall = 0;

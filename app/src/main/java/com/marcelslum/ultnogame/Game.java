@@ -685,8 +685,13 @@ public class Game {
                 MessagesHandler.messageBeta.display();
             }
 
-            //todo tirar
+            //TODO tirar
             messages.showMessage("teste");
+            messages.showMessage("teste121321321231231");
+            messages.showMessage("teste3212121212");
+            messages.showMessage("teste121212121212121212121212");
+
+            GoogleAPI.loadAchievements();
 
 
             SaveGame.saveGame.save();
