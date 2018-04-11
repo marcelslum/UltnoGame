@@ -39,6 +39,7 @@ public class Game {
 
     
     public static String playerName = "-";
+    public static ArrayList<String> messagesToDisplay = new ArrayList<>();
     static Vibrator vibrator;
 
     static final String TAG = "Game";
@@ -417,11 +418,12 @@ public class Game {
 
         if(!tip.equals("")){
             tipTextBox = new TextBoxBuilder("tipTextBox")
-                    .position(Game.resolutionX * 0.2f, Game.resolutionY * 0.75f)
+                    .position(Game.resolutionX * 0.19f, Game.resolutionY * 0.73f)
                     .width(Game.resolutionX * 0.55f)
                     .size(Game.gameAreaResolutionY*0.045f)
                     .text(tip)
-                    .isHaveFrame(true, new Color(0f, 0f, 0.2f, 1f))
+                    .isHaveFrame(true, new Color(0.3f, 0.3f, 0.5f, 1f))
+                    .isHaveBorder(true, Color.cinza2)
                     .isHaveArrowContinue(false)
                     .setTextColor(Color.branco)
                     .addShadow(Color.cinza1)
@@ -682,6 +684,10 @@ public class Game {
             if (Game.versaoBeta) {
                 MessagesHandler.messageBeta.display();
             }
+
+            //todo tirar
+            messages.showMessage("teste");
+
 
             SaveGame.saveGame.save();
 

@@ -138,6 +138,15 @@ public class MyGLSurface extends GLSurfaceView {
             }});
     }
 
+
+    public void showMessage(final String message){
+        queueEvent(new Runnable() {
+            public void run() {
+                Game.messages.showMessage(message);
+            }});
+
+    }
+
     
     public void explodeBlueBall(){
         queueEvent(new Runnable() {

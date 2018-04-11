@@ -631,7 +631,7 @@ public class Sound {
             percentageOfTargets = (float) Game.numberOfTargetsAlives / (float) Game.numberOfTargets;
         }
 
-        Log.e(TAG, "percentageOfTargets " + percentageOfTargets);
+        //Log.e(TAG, "percentageOfTargets " + percentageOfTargets);
 
         if (percentageOfTargets > 0.9f){
             musicState = MUSICA_INICIO;
@@ -644,7 +644,7 @@ public class Sound {
         String nextMusicFileName = "musica1.ogg";
         float random = Utils.getRandonFloat(0f, 1f);
 
-        Log.e(TAG, "random " + random);
+        //Log.e(TAG, "random " + random);
 
         if (musicState == MUSICA_INICIO){
             if (random > 0.5f){

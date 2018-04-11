@@ -25,10 +25,13 @@ public class TextBox extends Entity{
     public float arrowX;
     public float arrowY;
     public Entity frame;
+    public Rectangle border;
     public float frameWidth;
     public int frameType;
     private OnPress onPress;
     Color frameColor;
+    Color borderColor;
+    public boolean isHaveBorder = false;
 
     public TextBox(TextBoxBuilder builder) {
         super(builder.name, builder.x, builder.y, Entity.TYPE_TEXT_BOX);
@@ -43,6 +46,8 @@ public class TextBox extends Entity{
         texts = new ArrayList<>();
         frameType = builder.frameType;
         frameColor = builder.frameColor;
+        borderColor = builder.borderColor;
+        isHaveBorder = builder.isHaveBorder;
         setText(builder.text, builder.textColor, builder.textShadow, builder.shadowColor);
     }
     
@@ -84,12 +89,18 @@ public class TextBox extends Entity{
 
         frameWidth = width + (textPadding*6);
 
+        border = null;
         if (isHaveFrame){
             if (frameType == TextBoxBuilder.FRAME_TYPE_IMAGE) {
                 frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height * 1.1f, -1, frameColor);
 
             } else if (frameType == TextBoxBuilder.FRAME_TYPE_SOLID) {
                 frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height * 1.1f, -1, frameColor);
+            }
+
+            if (isHaveBorder) {
+                border = new Rectangle("border", x - (textPadding * 1.5f), y - (textPadding * 1.5f), Entity.TYPE_OTHER, frameWidth + (textPadding * 3f), height * 1.1f + (textPadding * 3f), -1, borderColor);
+                addChild(border);
             }
             addChild(frame);
         }
@@ -227,6 +238,12 @@ public class TextBox extends Entity{
     }
 
     public void render(float[] matrixView, float[] matrixProjection){
+
+
+        if (isHaveBorder && border != null){
+            border.prepareRender(matrixView, matrixProjection);
+        }
+
         if (isHaveArrow && arrow != null){
             arrow.prepareRender(matrixView, matrixProjection);
         }
@@ -235,11 +252,13 @@ public class TextBox extends Entity{
             miniArrow.prepareRender(matrixView, matrixProjection);
         }
 
-        if (isHaveFrame){
+        if (isHaveFrame && frame != null){
             frame.prepareRender(matrixView, matrixProjection);
         }
 
-        if (isHaveArrowContinue){
+
+
+        if (isHaveArrowContinue && arrowContinuar != null){
             arrowContinuar.alpha = alpha * 0.6f;
             arrowContinuar.prepareRender(matrixView, matrixProjection);
         }

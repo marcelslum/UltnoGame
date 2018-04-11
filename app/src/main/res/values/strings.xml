@@ -72,9 +72,9 @@
     <!-- especifico level 1, 2, 3 e 4 -->
     <string name="tipLevel7">Atingir a bola com a barra se movimentando afetará o ângulo e a velocidade da bola.</string>
     <!-- especifico level 1 e 4-->
-    <string name="tipLevel8">Não é possível acelerar a bola quando ela chegar na sua velocidade máxima.</string>
+    <string name="tipLevel8">Não é possível acelerar a bola quando ela estiver na sua velocidade máxima.</string>
     <!-- especifico level 2 e 3 -->
-    <string name="tipLevel9">Não é possível desacelerar a bola quando ela chegar na sua velocidade mínima.</string>
+    <string name="tipLevel9">Não é possível desacelerar a bola quando ela estiver na sua velocidade mínima.</string>
     
     <!-- geral -->
     <string name="tipLevel10">As estrelas são contabilizadas somente ao completar com sucesso o nível.</string>
@@ -92,11 +92,11 @@
     
     <!-- especifico level 5 e 8 -->
     <string name="tipLevel18">É possível diminuir o ângulo da bola atingindo-a com a barra se movimentando no sentido contrário.</string>    
-    <string name="tipLevel19">Não é possível diminuir o ângulo da bola se ele chegar no seu valor mínimo.</string>
+    <string name="tipLevel19">Não é possível diminuir o ângulo da bola se ele estiver no seu valor mínimo.</string>
     
     <!-- especifico level 6 e 7 -->
     <string name="tipLevel20">Para aumentar o ângulo da bola, atinja-a com a barra se movimentando no mesmo sentido.</string>
-    <string name="tipLevel21">Não é possível aumentar o ângulo da bola se ele chegar no seu valor máximo.</string>
+    <string name="tipLevel21">Não é possível aumentar o ângulo da bola se ele estiver no seu valor máximo.</string>
     
     <!-- especifico level 5 a 8 -->
     <string name="tipLevel22">É possível inclinar a barra dando um leve tranco no celular para a esquerda ou para a direita.</string>

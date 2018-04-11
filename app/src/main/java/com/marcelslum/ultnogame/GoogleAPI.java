@@ -15,6 +15,7 @@ import com.google.android.gms.games.PlayersClient;
 import com.google.android.gms.games.achievement.Achievement;
 import com.google.android.gms.games.achievement.AchievementBuffer;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
@@ -63,23 +64,59 @@ public class GoogleAPI {
         }
     }
 
+    static AchievementBuffer achievementBuffer;
+    public static void loadAchievements(){
+        mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
+            @Override
+            public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {
+                AnnotatedData<AchievementBuffer> ad = task.getResult();
+                achievementBuffer = ad.get();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                achievementBuffer = null;
+            }
+        });
+    }
+
     public static void increment(String  id, int value) {
 
         if (Game.mainActivity.isSignedIn()) {
 
             final String innerId = id;
+            final int innerValue = value;
 
-            //Log.e(TAG, "increment "+value);
-            mAchievementsClient.incrementImmediate(id, value).addOnSuccessListener(new OnSuccessListener<Boolean>() {
-                @Override
-                public void onSuccess(Boolean aBoolean) {
-                    Log.e(TAG, "onSuccess "+aBoolean.booleanValue());
-                    if (aBoolean.booleanValue()){
-                        Log.e(TAG, "increment achievement "+ innerId +" desbloqueado ");
-                        Game.messages.showMessage("achievement desbloqueado");
-                    }
+
+            boolean increment = false;
+            for (int i = 0; i < achievementBuffer.getCount(); i++) {
+                if (achievementBuffer.get(i).getAchievementId().equals(id) && achievementBuffer.get(i).getState() != Achievement.STATE_UNLOCKED){
+                    increment = true;
+                    break;
                 }
-            });
+            }
+
+            // TODO Fazer um cache das conquistas antes do level e só verificar se a conquista foi desbloqueada quanto os passos forem realmente concluidos
+            if (increment) {
+                mAchievementsClient.incrementImmediate(innerId, innerValue).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {
+                                AnnotatedData<AchievementBuffer> ad = task.getResult();
+                                AchievementBuffer ab = ad.get();
+                                for (int i = 0; i < ab.getCount(); i++) {
+                                    if (ab.get(i).getAchievementId().equals(innerId) && ab.get(i).getState() == Achievement.STATE_UNLOCKED){
+                                       Game.messagesToDisplay.add("Conquista debloqueada");
+                                    }
+                                }
+                                ab.release();
+                            }
+                        });
+                    }
+                });
+            }
         }
     }
 

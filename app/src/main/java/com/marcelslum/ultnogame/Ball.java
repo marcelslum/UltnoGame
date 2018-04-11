@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Ball extends Circle{
@@ -855,6 +857,10 @@ public class Ball extends Circle{
                         //Log.e("ball", "zera response X");
                         lastResponseBallX = 0f;
                     }
+
+
+                    Log.e("ball", "após analise colisão de um objeto" + "lastResponseBallX "+lastResponseBallX + " - lastResponseBallY "+lastResponseBallY);
+
                 } else if(numberOfCollisionsObjects > 1 && !collisionOtherBall){
                     //Log.e("ball", "lidando com dois objetos colididos");
 
@@ -922,9 +928,8 @@ public class Ball extends Circle{
 
                     }
 
-                    //Log.e("ball", "após analise");
-                    //Log.e("ball", "lastResponseBallX "+lastResponseBallX);
-                    //Log.e("ball", "lastResponseBallY "+lastResponseBallY);
+                    Log.e("ball", "após analise colisão de mais de um objeto" + "lastResponseBallX "+lastResponseBallX + " - lastResponseBallY "+lastResponseBallY);
+
 
                 }
             }

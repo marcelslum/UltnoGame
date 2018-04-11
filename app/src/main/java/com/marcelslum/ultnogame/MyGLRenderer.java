@@ -5,7 +5,6 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -172,6 +171,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         if (Game.settingMessageForScore) {
             Game.settingMessageForScore = false;
             Game.myGlSurface.setScoreMessage();
+        }
+
+        if (Game.messagesToDisplay.size() > 0) {
+            for (int i = 0; i < Game.messagesToDisplay.size(); i++) {
+                Game.myGlSurface.showMessage(Game.messagesToDisplay.get(i));
+            }
+            Game.messagesToDisplay.clear();
         }
         
         if (Game.forBlueBallExplode){

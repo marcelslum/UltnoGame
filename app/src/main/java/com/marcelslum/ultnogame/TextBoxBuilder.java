@@ -22,6 +22,8 @@ public class TextBoxBuilder {
     public Color shadowColor;
     public Color frameColor;
     public Color textColor;
+    public Color borderColor;
+    public boolean isHaveBorder = false;
     public static final int FRAME_TYPE_IMAGE = 0;
     public static final int FRAME_TYPE_SOLID = 1;
 
@@ -106,7 +108,11 @@ public class TextBoxBuilder {
         return this;
     }
 
-
+    public TextBoxBuilder isHaveBorder(boolean isHaveBorder, Color borderColor){
+        this.isHaveBorder = isHaveBorder;
+        this.borderColor = borderColor;
+        return this;
+    }
 
     public TextBoxBuilder frameType(int frameType){
         this.frameType = frameType;

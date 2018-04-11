@@ -7,11 +7,13 @@ import java.util.ArrayList;
 public class Messages extends Entity {
 
     ArrayList<Entity> childs2;
+    ArrayList<Entity> childs3;
 
     public Messages() {
         super("messages", Game.resolutionX * 0.97f, Game.gameAreaResolutionY * 0.7f, Entity.TYPE_PANEL);
         isVisible = true;
         childs2 = new ArrayList<>();
+        childs3 = new ArrayList<>();
     }
 
     public void showMessage(String messageText){
@@ -30,6 +32,8 @@ public class Messages extends Entity {
 
         final Text textObject;
         final Text textObject2;
+        final Rectangle rectangle;
+        float padd =  Game.gameAreaResolutionX * 0.01f;
         if (childToReplace != -1){
 
             textObject = Game.textPool.get();
@@ -42,6 +46,12 @@ public class Messages extends Entity {
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.6f, 0.6f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs2.set(childToReplace, textObject2);
 
+            float textWidth = textObject.getWidth();
+
+            rectangle = new Rectangle("messageRectangle", x - textWidth - padd , childs.get(childToReplace).y - (padd/4f), Entity.TYPE_OTHER, textWidth + (padd * 4f), Game.gameAreaResolutionY * 0.06f + (padd/2f), -1, Color.pretoCheio);
+            childs3.set(childToReplace, rectangle);
+
+
         } else {
             textObject = Game.textPool.get();
             textObject.setData("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
@@ -52,10 +62,17 @@ public class Messages extends Entity {
             textObject2.setData("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f) + (Game.gameAreaResolutionY * 0.045f * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.6f, 0.6f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs2.add(textObject2);
+
+            float textWidth = textObject.getWidth();
+
+            rectangle = new Rectangle("messageRectangle", x - textWidth - padd , textObject.y - (padd/4f), Entity.TYPE_OTHER, textWidth + (padd * 4f), Game.gameAreaResolutionY * 0.06f + (padd/2f), -1, Color.pretoCheio);
+            childs3.add(rectangle);
         }
 
         textObject.isVisible = true;
         textObject2.isVisible = true;
+        rectangle.isVisible = true;
+        rectangle.alpha = 0.4f;
 
         Game.sound.playTextBoxAppear();
 
@@ -63,6 +80,7 @@ public class Messages extends Entity {
 
         Animation anim1 = Utils.createAnimation3v(textObject, "translateX", "translateX", 2225,
                 0f, Game.resolutionX, 0.1f, 0f, 0.9f, -Game.resolutionX * 0.05f, false, true);
+        anim1.addAttachedEntities(rectangle);
         anim1.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
@@ -72,10 +90,21 @@ public class Messages extends Entity {
                 a2.addAttachedEntities(textObject2);
                 a2.start();
 
+                Utils.createSimpleAnimation(rectangle, "alpha", "alpha", 225, 0.3f, 0f).start();
+
                 //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.05f, 0.05f, 0);
             }
         });
         anim1.start();
+
+        // retangula aumenta bruscamente alpha, depois aumenta aos poucos
+        Utils.createAnimation4v(rectangle, "alpha", "alpha", 2225,
+                0f, 0,
+                0.1f, 0.6f,
+                0.35f, 0.4f,
+                0.9f, 0.3f,
+                false, true).start();
+
 
         Utils.createAnimation3v(textObject2, "translateX", "translateX", 2225,
                 0f, Game.resolutionX, 0.1f, 0f, 0.9f, -Game.resolutionX * 0.05f, false, true).start();
@@ -87,8 +116,11 @@ public class Messages extends Entity {
             public void onAnimationEnd() {
                 textObject.isVisible = false;
                 textObject2.isVisible = false;
+                rectangle.isVisible = false;
             }
         }).start();
+
+
     }
 
     @Override
@@ -96,6 +128,14 @@ public class Messages extends Entity {
         if (childs2 != null) {
             for (int i = 0; i < childs2.size(); i++) {
                 childs2.get(i).checkTransformations(updatePrevious);
+            }
+        }
+
+        if (childs3 != null) {
+            for (int i = 0; i < childs3.size(); i++) {
+                if (childs3.get(i) != null) {
+                    childs3.get(i).checkTransformations(updatePrevious);
+                }
             }
         }
         super.checkTransformations(updatePrevious);
@@ -114,16 +154,29 @@ public class Messages extends Entity {
                 }
             }
         }
+
+        if (childs3 != null) {
+            for (int i = 0; i < childs3.size(); i++) {
+                for (int a = 0; a < childs3.get(i).animations.size(); a++) {
+                    if (childs3.get(i) != null && childs3.get(i).animations.get(a).started) {
+                        //Log.e(TAG, childs2.get(i).animations.get(a).name);
+                        childs3.get(i).animations.get(a).doAnimation();
+                    }
+                }
+            }
+        }
         super.prepareRender(matrixView, matrixProjection);
     }
 
     public void render(float[] matrixView, float[] matrixProjection) {
         for (int i = 0; i < childs.size(); i++) {
             if (childs.get(i).isVisible) {
+                if (childs3.get(i) != null) {
+                    childs3.get(i).render(matrixView, matrixProjection);
+                }
                 childs2.get(i).render(matrixView, matrixProjection);
                 childs.get(i).render(matrixView, matrixProjection);
             }
-
         }
     }
 }
