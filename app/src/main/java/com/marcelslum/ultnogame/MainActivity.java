@@ -167,18 +167,18 @@ public class MainActivity extends FragmentActivity implements
         mAdView = new AdView(this);
         mAdView.setAdUnitId("ca-app-pub-2413920269734587/4375714557");
         mAdView.setAdSize(AdSize.SMART_BANNER);
-	mAdView.setAdListener(new AdListener() {
+		mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-		isAdViewLoaded = true;
-		showAdView();
+				isAdViewLoaded = true;
+				showAdView();
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-		isAdViewLoaded = false;
+				isAdViewLoaded = false;
             }
         });
 
@@ -546,6 +546,11 @@ public class MainActivity extends FragmentActivity implements
     }
     
 	public void loadBannerAd(){
+	
+		if (isBannerLoaded){
+			return;
+		}
+	
      	AdRequest adRequestBanner = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
@@ -579,36 +584,41 @@ public class MainActivity extends FragmentActivity implements
     public void showAdView(){
     
     	if (Game.state == Game_GAME_STATE_JOGAR){
-		return;
-	}
-    
-	if (isAdViewLoaded){
-		if (Game.notConnectedTextView != null) {
-			Game.notConnectedTextView.clearDisplay();
-			Game.topFrame.clearDisplay();
+			return;
 		}
-	
-		runOnUiThread(new Runnable() {
-		    @Override
-		    public void run() {
-			mAdView.resume();
-			mAdView.setVisibility(View.VISIBLE);
-		    }
-		});
-	} else {
-		mAdView.setVisibility(View.GONE);
-		if (Game.notConnectedTextView != null) {
-			ConnectionHandler.connect()
-			if (ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_NOT_CONNECTED) {
-				Game.notConnectedTextView.display();
-				Game.topFrame.display();
-			} else {
+		
+		if (isAdViewLoaded){
+			if (Game.notConnectedTextView != null) {
 				Game.notConnectedTextView.clearDisplay();
 				Game.topFrame.clearDisplay();
 			}
+
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+				mAdView.resume();
+				mAdView.setVisibility(View.VISIBLE);
+				}
+			});
+		} else {
+			mAdView.setVisibility(View.GONE);
+			
+			if (Game.notConnectedTextView != null) {
+			
+				ConnectionHandler.connect()
+			
+				if (ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_NOT_CONNECTED) {
+					Game.notConnectedTextView.display();
+					Game.topFrame.display();
+				} else {
+					Game.notConnectedTextView.clearDisplay();
+					Game.topFrame.clearDisplay();
+				}
+				
+			} 
+			// como não esta carregado, faz um nova tentativa de carregar, para mostrar na próxima vez
+			loadBannerAd();
 		}
-		loadBannerAd();
-	}
     }
 
     public void showInterstitial() {
