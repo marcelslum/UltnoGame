@@ -627,8 +627,8 @@ public class LevelGoals {
 
         //GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_acelerar),1);
 
-        //GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_teste3),1);
-        GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_teste5));
+        GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_teste8),1);
+        //GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_teste5));
 
         timesOfAccelerate += 1;
         timesOfAccelerationInARow += 1;

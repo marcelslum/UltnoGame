@@ -487,6 +487,12 @@ public class MainActivity extends FragmentActivity implements
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     public void hideAdView(){
+
+        if (Game.notConnectedTextView != null) {
+            Game.notConnectedTextView.clearDisplay();
+            Game.topFrame.clearDisplay();
+        }
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

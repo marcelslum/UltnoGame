@@ -48,7 +48,7 @@ public class Sound {
     static AudioData adDestroyTarget;
     //static AudioData adSuccess2;
 
-    public static LoopMediaPlayer loop;
+    //public static LoopMediaPlayer loop;
 
     public static MediaPlayer [] mediaPlayer = new MediaPlayer[3];
 
@@ -328,7 +328,7 @@ public class Sound {
         if (!SaveGame.saveGame.sound){
             return;
         }
-        playStaticAudioTrack(mAudioTrack1, 0.8f);
+        playStaticAudioTrack(mAudioTrack1, 0.6f);
     }
 
     public static void playDestroyTarget(){
@@ -444,7 +444,7 @@ public class Sound {
                 Log.e(TAG, "check loop playing: media not playing - criando novo");
                 stopAndReleaseMusic();
                 mediaPlayer[currentMediaNumber] = null;
-                playMusic();
+                Game.sound.playMusic();
             } else {
                 //Log.e(TAG, "check loop playing: media playing");
             }
@@ -482,13 +482,22 @@ public class Sound {
     }
 
     public static int currentMediaNumber = 0;
-    public static int currentMusic = 0;
 
-    public static void playMusic(){
-
+    public void playMusic(){
+        /*
         if (!SaveGame.saveGame.music){
             return;
         }
+
+        if (AsyncTasks.asyncPlayMusic != null && AsyncTasks.asyncPlayMusic.getStatus() != AsyncTask.Status.FINISHED){
+            AsyncTasks.asyncPlayMusic.cancel(true);
+        }
+
+        AsyncTasks.asyncPlayMusic = null;
+        AsyncTasks.asyncPlayMusic = new PlayMusic().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        */
+
 
         if (mediaPlayer[currentMediaNumber] != null) {
             mediaPlayer[currentMediaNumber].start();
@@ -499,7 +508,7 @@ public class Sound {
             try {
                 afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
                 mediaPlayer[currentMediaNumber].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-                mediaPlayer[currentMediaNumber].prepare();
+                mediaPlayer[currentMediaNumber].prepareAsync();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -514,6 +523,8 @@ public class Sound {
             });
 
         }
+
+
     }
 
     public static int getNextMediaPlayer(){
@@ -563,7 +574,19 @@ public class Sound {
         }
     }
 
-    public static void createNextMediaPlayer(){
+    public void createNextMediaPlayer(){
+
+        /*
+
+        if (AsyncTasks.asyncCreateNextMediaPlayer != null && AsyncTasks.asyncPlayExplosion.getStatus() != AsyncTask.Status.FINISHED){
+            AsyncTasks.asyncCreateNextMediaPlayer.cancel(true);
+        }
+
+        AsyncTasks.asyncCreateNextMediaPlayer = null;
+        AsyncTasks.asyncCreateNextMediaPlayer = new CreateNextMediaPlayer().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+
+        */
 
         //Log.e(TAG, "criando proximo media player: " + getNextMediaPlayer());
 
@@ -579,7 +602,7 @@ public class Sound {
         try {
             afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
             mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-            mediaPlayer[getNextMediaPlayer()].prepare();
+            mediaPlayer[getNextMediaPlayer()].prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -603,6 +626,8 @@ public class Sound {
 
             }
         });
+
+
     }
 
     public static String getNextMusicFileName(){
@@ -710,7 +735,7 @@ public class Sound {
                     public void onCompletion(MediaPlayer mp) {
                         //Log.e(TAG + "loadMusic", "setOnCompletionListener ");
                         currentMediaNumber = getNextMediaPlayer();
-                        createNextMediaPlayer();
+                        Game.sound.createNextMediaPlayer();
 
                     }
                 });
@@ -777,6 +802,127 @@ public class Sound {
                 Log.e(TAG, "Erro ao abrir o arquivo "+ fileName);
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class PlayMusic extends AsyncTask<Void, Integer, Integer> {
+
+        AssetFileDescriptor afd;
+
+        protected Integer doInBackground(Void... data) {
+
+            if (!SaveGame.saveGame.music) {
+                return 0;
+            }
+
+            if (mediaPlayer[currentMediaNumber] != null) {
+                mediaPlayer[currentMediaNumber].start();
+            } else {
+                currentMediaNumber = 0;
+                mediaPlayer[currentMediaNumber] = new MediaPlayer();
+                try {
+                    afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                    mediaPlayer[currentMediaNumber].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    mediaPlayer[currentMediaNumber].prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        Log.e(TAG, "onPrepared ");
+                        mp.start();
+                        createNextMediaPlayer();
+                    }
+                });
+
+            }
+            return 0;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(Integer result) {
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            try {
+                if (afd != null) {
+                    afd.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stopAndReleaseMusic();
+        }
+    }
+
+    private class CreateNextMediaPlayer extends AsyncTask<Void, Integer, Integer> {
+
+        AssetFileDescriptor afd;
+
+        protected Integer doInBackground(Void... data) {
+
+            if (mediaPlayer[getLastMediaPlayer()] != null){
+                //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayer());
+                mediaPlayer[getLastMediaPlayer()].reset();
+                mediaPlayer[getLastMediaPlayer()].release();
+                mediaPlayer[getLastMediaPlayer()] = null;
+            }
+
+            mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
+            try {
+                afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                mediaPlayer[getNextMediaPlayer()].prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    //Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
+                    if (mediaPlayer[currentMediaNumber] != null && mediaPlayer[currentMediaNumber].isPlaying()) {
+                        mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+                    }
+                }
+            });
+
+            mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    //Log.e(TAG, "media completado ");
+                    currentMediaNumber = getNextMediaPlayer();
+                    createNextMediaPlayer();
+
+                }
+            });
+            return 0;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(Integer result) {
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            try {
+                if (afd != null) {
+                    afd.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stopAndReleaseMusic();
         }
     }
 

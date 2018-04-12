@@ -176,12 +176,17 @@ public class LevelGoalsLoader {
         tipsViewed.add(possibleTipsList.get(tipNumber));
 
 
+
+
+        /*
+        //log tipsViwed
         String text = "tipsViwed: ";
         for (int i = 0; i < tipsViewed.size(); i++) {
             text += tipsViewed.get(i).toString() + ", ";
         }
 
         Log.e(TAG, text);
+        */
 
 
 

@@ -89,7 +89,7 @@ public class MessagesHandler {
                 Game.gameAreaResolutionY*0.035f,
                 Game.font, new Color(0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_CENTER, 0.25f);
 
-        Game.notConnectedTextView.addText(resources.getString(R.string.messageNaoConectado1), new Color(0f, 0f, 0f, 1f));
+        Game.notConnectedTextView.addText(resources.getString(R.string.messageNaoConectado1), Color.cinza4);
 
         yOfMessageBackAndContinue = Game.resolutionY*0.898f;
 

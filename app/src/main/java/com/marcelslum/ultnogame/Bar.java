@@ -49,7 +49,7 @@ public class Bar extends Rectangle{
             if (percentageOfVelocity < 1f){
                 percentageOfVelocity = 1f - ((1f - percentageOfVelocity)/2f);   
             } else if (percentageOfVelocity > 1f){
-                percentageOfVelocity = 1f + ((percentageOfVelocity - 1f)/2f);   
+                percentageOfVelocity = 1f + ((percentageOfVelocity - 1f)*0.8f);
             }
         }
         initialDVX = initialNormalDVX * percentageOfVelocity;

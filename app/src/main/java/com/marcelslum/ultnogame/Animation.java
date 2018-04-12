@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 
@@ -8,6 +10,10 @@ import java.util.ArrayList;
  * Created by marcel on 01/08/2016.
  */
 public class Animation{
+
+
+    private final String TAG = "Animation";
+
     public Entity targetAnimationObject;
     String name;
     public String parameterToAnimate;
@@ -96,7 +102,10 @@ public class Animation{
         fireAnimationEnd();
     }
 
+
     void doAnimation(){
+
+        //Log.e(TAG, "doAnimation "+targetAnimationObject.name);
 
         this.elapsedTime = Utils.getTime() - this.startTime;
         this.percentage = this.elapsedTime/(float)this.duration;

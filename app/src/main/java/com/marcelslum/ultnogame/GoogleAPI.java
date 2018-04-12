@@ -138,6 +138,11 @@ public class GoogleAPI {
 
 
     public static void loadAchievements(){
+
+        if (mAchievementsClient == null){
+            return;
+        }
+
         mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
             @Override
             public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {

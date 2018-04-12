@@ -36,10 +36,18 @@ public class ConnectionHandler {
                         Game.mainActivity.initAds();
                     }
                 });
+
+                GoogleAPI.loadAchievements();
+
             }
             internetState = INTERNET_STATE_CONNECTED;
         } else {
             internetState = INTERNET_STATE_NOT_CONNECTED;
+            if (Game.notConnectedTextView != null) {
+                Game.notConnectedTextView.display();
+                Game.topFrame.display();
+            }
+            Game.mainActivity.hideAdView();
         }
     }
 

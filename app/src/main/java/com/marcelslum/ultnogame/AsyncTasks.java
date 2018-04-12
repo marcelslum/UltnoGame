@@ -23,6 +23,8 @@ public class AsyncTasks {
     public static AsyncTask asyncPlayCounter;
     public static AsyncTask asyncPlayExplosion;
     public static AsyncTask asyncPlayAngleChange;
+    //public static AsyncTask asyncPlayMusic;
+    //public static AsyncTask asyncCreateNextMediaPlayer;
 
     public static void cancelAll(){
         if (initLoader != null){
@@ -48,6 +50,8 @@ public class AsyncTasks {
         cancelAsyncTask(asyncPlayCounter);
         cancelAsyncTask(asyncPlayExplosion);
         cancelAsyncTask(asyncPlayAngleChange);
+        //cancelAsyncTask(asyncPlayMusic);
+        //cancelAsyncTask(asyncCreateNextMediaPlayer);
     }
 
     public static void cancelAsyncTask(AsyncTask t){

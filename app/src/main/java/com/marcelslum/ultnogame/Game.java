@@ -681,18 +681,15 @@ public class Game {
 
         } else if (state == GAME_STATE_MENU){
 
+            //Game.sound.playMusic();
+
             if (Game.versaoBeta) {
                 MessagesHandler.messageBeta.display();
             }
 
-            //TODO tirar
-            messages.showMessage("teste");
-            messages.showMessage("teste121321321231231");
-            messages.showMessage("teste3212121212");
-            messages.showMessage("teste121212121212121212121212");
+            //messages.showMessage("teste");
 
             GoogleAPI.loadAchievements();
-
 
             SaveGame.saveGame.save();
 
@@ -704,7 +701,7 @@ public class Game {
                 }
             }
 
-            if (Sound.loop != null) Sound.loop.stopAndRelease();
+            //if (Sound.loop != null) Sound.loop.stopAndRelease();
 
             SelectorHandler.repositionSelectors(state);
             initTittle();
@@ -740,6 +737,8 @@ public class Game {
 
             abdicateAngle = false;
 
+            Sound.loadStaticGameAudioTracks();
+
             //Sound.loadMusic();
 
             if (tipTextBox != null){
@@ -768,12 +767,13 @@ public class Game {
 
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
-                values.add(new float[]{0f,5f});
-                values.add(new float[]{0.1666f,4f});
-                values.add(new float[]{0.3333f,3f});
-                values.add(new float[]{0.5f,2f});
-                values.add(new float[]{0.6666f,1f});
-                values.add(new float[]{0.8333f,0f});
+                values.add(new float[]{0f,6f});
+                values.add(new float[]{0.14f,5f});
+                values.add(new float[]{0.28f,4f});
+                values.add(new float[]{0.4285f,3f});
+                values.add(new float[]{0.5714f,2f});
+                values.add(new float[]{0.7142f,1f});
+                values.add(new float[]{0.8571f,0f});
             final Text innerMessagePreparation = MessagesHandler.messagePreparation;
             MessagesHandler.messagePreparation.setText("5");
             MessagesHandler.messagePreparation.setColor(Color.transparente);
@@ -782,7 +782,7 @@ public class Game {
             //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
             //Sound.playCounter();
 
-            Animation anim = new Animation(MessagesHandler.messagePreparation, "messagePreparation", "numberForAnimation", 6000, values, false, false);
+            Animation anim = new Animation(MessagesHandler.messagePreparation, "messagePreparation", "numberForAnimation", 7000, values, false, false);
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
@@ -830,9 +830,7 @@ public class Game {
 
             updateNumberOfTargetsAlive();
 
-            Sound.loadStaticGameAudioTracks();
-
-            Sound.playMusic();
+            Game.sound.playMusic();
 
             for (int i = 0; i < Game.balls.size(); i++) {
                 if (Game.balls.get(i).listenForExplosion){
@@ -850,11 +848,13 @@ public class Game {
             } else {
                 mainActivity.hideAdView();
                 TimeHandler.resumeTimeOfLevelPlay();
-                if (SaveGame.saveGame.music) {
-                    if (Sound.loop != null) {
-                        Sound.loop.play();
-                    }
-                }
+
+                //if (SaveGame.saveGame.music) {
+                    //if (Sound.loop != null) {
+                    //    Sound.loop.play();
+                    //}
+                //}
+
                 MessageStar.messageStars.reset();
 
                 for (int i = 0; i < bars.size(); i++) {
@@ -924,9 +924,9 @@ public class Game {
 
             //Log.e("game", "ativando game_state_pause");
             if (previousState != GAME_STATE_OPCOES_GAME) {
-                if (Sound.loop != null) {
-                    Sound.loop.pause();
-                }
+                //if (Sound.loop != null) {
+                //    Sound.loop.pause();
+                //}
 
                 //Sound.playPlayMenuBig();
                 stopAllGameEntities();
