@@ -22,31 +22,20 @@ public class ConnectionHandler {
         ConnectivityManager cm = (ConnectivityManager)
                 Game.mainActivity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isAvailable() && cm.getActiveNetworkInfo().isConnected()) {
-
             if (internetState == INTERNET_STATE_NOT_CONNECTED){
-
-                if (Game.notConnectedTextView != null) {
-                        Game.notConnectedTextView.clearDisplay();
-                        Game.topFrame.clearDisplay();
-                }
-
+                   
                 Game.mainActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Game.mainActivity.initAds();
+                        Game.mainActivity.loadBannerAd();
+                        Game.mainActivity.loadInterstitialAd();
                     }
                 });
-
                 GoogleAPI.loadAchievements();
-
             }
             internetState = INTERNET_STATE_CONNECTED;
         } else {
             internetState = INTERNET_STATE_NOT_CONNECTED;
-            if (Game.notConnectedTextView != null) {
-                Game.notConnectedTextView.display();
-                Game.topFrame.display();
-            }
             Game.mainActivity.hideAdView();
         }
     }
