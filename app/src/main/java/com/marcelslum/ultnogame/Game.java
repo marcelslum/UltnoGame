@@ -570,6 +570,8 @@ public class Game {
 
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
 
+            eraseAllGameEntities();
+            
             Sound.stopAndReleaseMusic();
 
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/icons");
