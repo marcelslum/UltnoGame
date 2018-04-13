@@ -234,7 +234,6 @@ public class Splash {
 
             if (!forSignin && loaderConclude == false) {
                 AsyncTasks.initLoader = new InitLoaderAsyncTask().execute();
-                loaderConclude = true;
             } else {
                 loaderConclude = true;
             }
@@ -342,7 +341,6 @@ public class Splash {
                 setSplashState(SPLASH_CONECTANDO_INTERNET);
             }
         } else if (state == SPLASH_CONECTANDO_INTERNET) {
-
             if (forSignin){
                 //Log.e(TAG, "forSignin startintent ");
                 forSignin = false;
@@ -373,19 +371,22 @@ public class Splash {
         } else if (state == SPLASH_CONECTANDO_GOOGLE) {
             if (Game.mainActivity.isGooglePlayAvailable() && ((Game.mainActivity.isSignedIn()))) {
                 setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
-            } else if (Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION && (!Game.mainActivity.isSignedIn()) || (!Game.mainActivity.isGooglePlayAvailable())){
-                    timesGoogle += 1;
+            } else if (Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION * 2 && (!Game.mainActivity.isSignedIn()) || (!Game.mainActivity.isGooglePlayAvailable())){
+                    //timesGoogle += 1;
                     //Log.e(TAG, "timesGoogle "+timesGoogle);
-                    if (timesGoogle < 3) {
-                        forSignin = true;
-                        init();
-                    } else {
+                    //if (timesGoogle < 3) {
+                    //    forSignin = true;
+                    //    init();
+                    //} else {
+                
+                        // se não conseguiu conectar ao google, volta ao início
                         forSignin = false;
-                        SaveGame.saveGame.googleOption = -1;
+                        SaveGame.saveGame.googleOption = 0;
                         SaveGame.saveGame.save();
                         init();
                         setSplashState(SPLASH_CONECTANDO_INTERNET);
-                    }
+                
+                    //}
             }
         } else if (state == SPLASH_CARREGANDO_SAVE_GAME){
             if (Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION / 3f) {
