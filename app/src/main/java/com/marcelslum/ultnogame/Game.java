@@ -9,7 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Vibrator;
-import android.util.Log;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -655,6 +654,9 @@ public class Game {
             Splash.init();
         } else if (state == GAME_STATE_OPCOES){
 
+            //Sound.musicCurrentPart = Sound.MUSIC_PRE_INTRO;
+            //Game.sound.playMusic();
+
             if (previousState == GAME_STATE_SOBRE){
                 Game.aboutTextView.blockAndClearDisplay();
             }
@@ -683,7 +685,7 @@ public class Game {
 
         } else if (state == GAME_STATE_MENU){
 
-            //Game.sound.playMusic();
+            Game.sound.stopAndReleaseMusic();
 
             if (Game.versaoBeta) {
                 MessagesHandler.messageBeta.display();
@@ -738,7 +740,7 @@ public class Game {
         } else if (state == GAME_STATE_PREPARAR){
 
             abdicateAngle = false;
-
+            Sound.musicCurrentPart = Sound.MUSIC_PRE_INTRO;
             Sound.loadStaticGameAudioTracks();
 
             //Sound.loadMusic();

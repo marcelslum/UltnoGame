@@ -498,6 +498,7 @@ public class Sound {
 
         */
 
+        //Log.e(TAG, "playMusic");
 
         if (mediaPlayer[currentMediaNumber] != null) {
             mediaPlayer[currentMediaNumber].start();
@@ -516,7 +517,7 @@ public class Sound {
             mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    Log.e(TAG, "onPrepared ");
+                    //Log.e(TAG, "playMusic onPrepared ");
                     mp.start();
                     createNextMediaPlayer();
                 }
@@ -576,6 +577,8 @@ public class Sound {
 
     public void createNextMediaPlayer(){
 
+        //Log.e(TAG, "createNextMediaPlayer");
+
         /*
 
         if (AsyncTasks.asyncCreateNextMediaPlayer != null && AsyncTasks.asyncPlayExplosion.getStatus() != AsyncTask.Status.FINISHED){
@@ -611,6 +614,8 @@ public class Sound {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 //Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
+
+
                 if (mediaPlayer[currentMediaNumber] != null && mediaPlayer[currentMediaNumber].isPlaying()) {
                     mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
                 }
@@ -630,76 +635,263 @@ public class Sound {
 
     }
 
+
+    public static int musicCurrentPart;
+    public static final int MUSIC_PRE_INTRO = 9;
+    public static final int MUSIC_INTRO = 10;
+    public static final int MUSIC_INTRO_TO_PART_A = 11;
+    public static final int MUSIC_PART_A = 12;
+    public static final int MUSIC_PART_B = 13;
+    public static final int MUSIC_PART_C = 14;
+    public static final int MUSIC_PART_A_TO_PART_A = 15;
+    public static final int MUSIC_PART_A_TO_PART_B = 16;
+    public static final int MUSIC_PART_B_TO_PART_B = 17;
+    public static final int MUSIC_PART_B_TO_PART_C = 18;
+    public static final int MUSIC_PART_C_TO_PART_C = 19;
+
+
+    public static int musicCurrentGlobalPart;
+    public static final int MUSIC_GLOBAL_PART_A = 50;
+    public static final int MUSIC_GLOBAL_PART_B = 51;
+    public static final int MUSIC_GLOBAL_PART_C = 52;
+
+
+    public static int musicCurrentSubPart;
+    public static final int MUSIC_SUB_PART_A_A1 = 20;
+    public static final int MUSIC_SUB_PART_A_A2 = 21;
+    public static final int MUSIC_SUB_PART_A_A3 = 22;
+    public static final int MUSIC_SUB_PART_B_A1 = 23;
+    public static final int MUSIC_SUB_PART_B_A2 = 24;
+    public static final int MUSIC_SUB_PART_B_A3 = 25;
+    public static final int MUSIC_SUB_PART_C_A1 = 26;
+    public static final int MUSIC_SUB_PART_C_A2 = 27;
+    public static final int MUSIC_SUB_PART_C_A3 = 28;
+
     public static String getNextMusicFileName(){
 
 
-        //inicio
-        //musica5
-        //musica6
+        //Log.e(TAG, "------------------ ANTES");
+        //Log.e(TAG, "musicCurrentGlobalPart " + musicCurrentGlobalPart);
+        //Log.e(TAG, "musicCurrentSubPart " + musicCurrentSubPart);
+        //Log.e(TAG, "musicCurrentPart " + musicCurrentPart);
 
-        // meio
-        //musica2
-        //musica3
-        //musica4
-        //musica7
+        String nomeDoArquivo = "00-Intro.ogg";
 
-
-        // fim
-        //musica1
-        //musica7
-        //musica9
-
-
-        float percentageOfTargets = 1f;
-
-        if (Game.numberOfTargets > 0) {
-            percentageOfTargets = (float) Game.numberOfTargetsAlives / (float) Game.numberOfTargets;
+        if (musicCurrentPart == MUSIC_PRE_INTRO){
+            musicCurrentPart = MUSIC_INTRO;
+            return nomeDoArquivo;
         }
 
-        //Log.e(TAG, "percentageOfTargets " + percentageOfTargets);
+        // se estiver na introdução, parteA, B ou C, deverá decidir qual será a próxima parte global
+        if (musicCurrentPart == MUSIC_INTRO || musicCurrentPart == MUSIC_PART_A || musicCurrentPart == MUSIC_PART_B || musicCurrentPart == MUSIC_PART_C) {
+            float percentageOfTargets = 1f;
+            if (Game.numberOfTargets > 0) {
+                percentageOfTargets = (float) Game.numberOfTargetsAlives / (float) Game.numberOfTargets;
+            }
 
-        if (percentageOfTargets > 0.9f){
-            musicState = MUSICA_INICIO;
-        } else if (percentageOfTargets > 0.45f){
-            musicState = MUSICA_MEIO;
-        } else {
-            musicState = MUSICA_FIM;
-        }
+            int nextGlobalPart = 0;
 
-        String nextMusicFileName = "musica1.ogg";
-        float random = Utils.getRandonFloat(0f, 1f);
 
-        //Log.e(TAG, "random " + random);
-
-        if (musicState == MUSICA_INICIO){
-            if (random > 0.5f){
-                nextMusicFileName = "musica6.ogg";
+            // CALCULA A PROXIMA PARTE GLOBAL, DE ACORDO COM O NUMERO DE ALVOS
+            if (musicCurrentPart == MUSIC_INTRO){
+                // se for introdução independe do número de alvos, sempre vai para parte global A
+                nextGlobalPart = MUSIC_GLOBAL_PART_A;
             } else {
-                nextMusicFileName = "musica5.ogg";
+                // se não for transição, calcula de acordo com o número de alvos
+                if (percentageOfTargets > 0.9f) {
+                    nextGlobalPart = MUSIC_GLOBAL_PART_A;
+                } else if (percentageOfTargets > 0.45f) {
+                    nextGlobalPart = MUSIC_GLOBAL_PART_A; // TODO Retirar quando tiver a parte B - reativer as linhas abaixo
+                    //nextGlobalPart  = MUSIC_GLOBAL_PART_B;
+                } else {
+                    nextGlobalPart = MUSIC_GLOBAL_PART_A; // TODO Retirar quando tiver a parte C - reativer as linhas abaixo
+                    //nextGlobalPart = MUSIC_GLOBAL_PART_C;
+                    //como não há transição direta da fase A para C, ajusta a próxima parte para B
+                    //if (musicCurrentGlobalPart == MUSIC_GLOBAL_PART_A){
+                    //    nextGlobalPart = MUSIC_GLOBAL_PART_B;
+                    //}
+                }
             }
-        } else if (musicState == MUSICA_MEIO){
-            if (random > 0.75f){
-                nextMusicFileName = "musica2.ogg";
-            } else if (random > 0.5f){
-                nextMusicFileName = "musica3.ogg";
-            } else if (random > 0.25f){
-                nextMusicFileName = "musica4.ogg";
-            } else{
-                nextMusicFileName = "musica7.ogg";
+
+            // CALCULA A PROXIMA SUBPARTE, RANDOMICAMENTE
+            int nextSubPart = 0;
+            float random = Utils.getRandonFloat(0f, 1f);
+            if (nextGlobalPart == MUSIC_GLOBAL_PART_A) {
+                if (random > 0.66f) {
+                    nextSubPart = MUSIC_SUB_PART_A_A1;
+                } else if (random > 0.33f) {
+                    nextSubPart = MUSIC_SUB_PART_A_A2;
+                } else {
+                    nextSubPart = MUSIC_SUB_PART_A_A3;
+                }
+            } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B) {
+                if (random > 0.66f) {
+                    nextSubPart = MUSIC_SUB_PART_B_A1;
+                } else if (random > 0.33f) {
+                    nextSubPart = MUSIC_SUB_PART_B_A2;
+                } else {
+                    nextSubPart = MUSIC_SUB_PART_B_A3;
+                }
+            } else if (nextGlobalPart == MUSIC_GLOBAL_PART_C) {
+                if (random > 0.66f) {
+                    nextSubPart = MUSIC_SUB_PART_C_A1;
+                } else if (random > 0.33f) {
+                    nextSubPart = MUSIC_SUB_PART_C_A2;
+                } else {
+                    nextSubPart = MUSIC_SUB_PART_C_A3;
+                }
             }
-        } else if (musicState == MUSICA_FIM){
-            if (random > 0.66f){
-                nextMusicFileName = "musica1.ogg";
-            } else if (random > 0.33f){
-                nextMusicFileName = "musica7.ogg";
-            } else{
-                nextMusicFileName = "musica9.ogg";
+
+            // DEFINE A VARIAVEL GLOBAL PART
+            musicCurrentGlobalPart = nextGlobalPart;
+
+
+            // DEFINE A PROXIMA PARTE DE ACORDO COM OS DADOS CALCULADOS ACIMA
+            if (musicCurrentPart == MUSIC_INTRO){
+                    musicCurrentPart = MUSIC_INTRO_TO_PART_A;
+            } else if (musicCurrentPart == MUSIC_PART_A) {
+                if (nextGlobalPart == MUSIC_GLOBAL_PART_A){
+                    musicCurrentPart = MUSIC_PART_A_TO_PART_A;
+                } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B){
+                    musicCurrentPart = MUSIC_PART_A_TO_PART_B;
+                }
+            } else if (musicCurrentPart == MUSIC_PART_B) {
+                if (nextGlobalPart == MUSIC_GLOBAL_PART_B){
+                    musicCurrentPart = MUSIC_PART_B_TO_PART_B;
+                } else if (nextGlobalPart == MUSIC_GLOBAL_PART_C){
+                    musicCurrentPart = MUSIC_PART_B_TO_PART_C;
+                }
+            } else if (musicCurrentPart == MUSIC_PART_C) {
+                    musicCurrentPart = MUSIC_PART_C_TO_PART_C;
+            }
+
+            // DEFINE O ARQUIVO DE ACORDO COM A SITUAÇÃO DEFINIDA ACIMA
+            // DEFINE TAMBÉM A SUBPARTE
+
+            // INTRODUÇÃO PARA PARTE A
+            if (musicCurrentPart == MUSIC_INTRO_TO_PART_A){
+
+                if (nextSubPart == MUSIC_SUB_PART_A_A1){
+                    nomeDoArquivo = "00-Intro_to_Aa1.ogg";
+                } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
+                    nomeDoArquivo = "00-Intro_to_Aa2.ogg";
+                } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
+                    nomeDoArquivo = "00-Intro_to_Aa3.ogg";
+                }
+
+            } else {
+
+                // PARTE A PARA A
+                if (musicCurrentPart == MUSIC_PART_A_TO_PART_A){
+
+                    if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1){
+                        if (nextSubPart == MUSIC_SUB_PART_A_A1){
+                            nomeDoArquivo = "01-Tr-Aa1_to_Aa1.ogg";
+                        } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
+                            nomeDoArquivo = "01-Tr-Aa1_to_Aa2.ogg";
+                        } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
+                            nomeDoArquivo = "01-Tr-Aa1_to_Aa3.ogg";
+                        }
+                    } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2){
+                        if (nextSubPart == MUSIC_SUB_PART_A_A1){
+                            nomeDoArquivo = "01-Tr-Aa2_to_Aa1.ogg";
+                        } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
+                            nomeDoArquivo = "01-Tr-Aa2_to_Aa2.ogg";
+                        } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
+                            nomeDoArquivo = "01-Tr-Aa2_to_Aa3.ogg";
+                        }
+                    } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A3){
+                        if (nextSubPart == MUSIC_SUB_PART_A_A1){
+                            nomeDoArquivo = "01-Tr-Aa3_to_Aa1.ogg";
+                        } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
+                            nomeDoArquivo = "01-Tr-Aa3_to_Aa2.ogg";
+                        } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
+                            nomeDoArquivo = "01-Tr-Aa3_to_Aa3.ogg";
+                        }
+                    }
+                }
+            }
+
+            // DEFINE A VARIAVEL CURRENT SUB PART
+            musicCurrentSubPart = nextSubPart;
+
+        }
+
+        else
+        // SE ESTIVER NUMA TRANSIÇÃO, PULA PARA A PROXIMA PARTE
+        {
+            switch (musicCurrentPart){
+                case MUSIC_INTRO_TO_PART_A:
+                    musicCurrentPart = MUSIC_PART_A;
+                    break;
+                case MUSIC_PART_A_TO_PART_A:
+                    musicCurrentPart = MUSIC_PART_A;
+                    break;
+                case MUSIC_PART_A_TO_PART_B:
+                    musicCurrentPart = MUSIC_PART_B;
+                    break;
+                case MUSIC_PART_B_TO_PART_B:
+                    musicCurrentPart = MUSIC_PART_B;
+                    break;
+                case MUSIC_PART_B_TO_PART_C:
+                    musicCurrentPart = MUSIC_PART_C;
+                    break;
+                case MUSIC_PART_C_TO_PART_C:
+                    musicCurrentPart = MUSIC_PART_C;
+                    break;
+            }
+
+            switch (musicCurrentPart){
+                case MUSIC_PART_A:
+                    switch (musicCurrentSubPart){
+                        case MUSIC_SUB_PART_A_A1:
+                            nomeDoArquivo = "01-Aa1.ogg";
+                            break;
+                        case MUSIC_SUB_PART_A_A2:
+                            nomeDoArquivo = "01-Aa2.ogg";
+                            break;
+                        case MUSIC_SUB_PART_A_A3:
+                            nomeDoArquivo = "01-Aa3.ogg";
+                            break;
+                    }
+                    break;
+                case MUSIC_PART_B:
+                    switch (musicCurrentSubPart){
+                        case MUSIC_SUB_PART_A_A1:
+                            nomeDoArquivo = "01-Ba1.ogg"; // todo atualizar quando tiver o arquivo
+                            break;
+                        case MUSIC_SUB_PART_A_A2:
+                            nomeDoArquivo = "01-Ba2.ogg"; // todo atualizar quando tiver o arquivo
+                            break;
+                        case MUSIC_SUB_PART_A_A3:
+                            nomeDoArquivo = "01-Ba3.ogg"; // todo atualizar quando tiver o arquivo
+                            break;
+                    }
+                    break;
+                case MUSIC_PART_C:
+                    switch (musicCurrentSubPart){
+                        case MUSIC_SUB_PART_A_A1:
+                            nomeDoArquivo = "01-Ca1.ogg"; // todo atualizar quando tiver o arquivo
+                            break;
+                        case MUSIC_SUB_PART_A_A2:
+                            nomeDoArquivo = "01-Ca2.ogg"; // todo atualizar quando tiver o arquivo
+                            break;
+                        case MUSIC_SUB_PART_A_A3:
+                            nomeDoArquivo = "01-Ca3.ogg"; // todo atualizar quando tiver o arquivo
+                            break;
+                    }
+                    break;
             }
         }
 
-        Log.e(TAG, "nextMusicFileName " + nextMusicFileName);
+        //Log.e(TAG, "------------------ DEPOIS");
+        //Log.e(TAG, "musicCurrentGlobalPart " + musicCurrentGlobalPart);
+        //Log.e(TAG, "musicCurrentSubPart " + musicCurrentSubPart);
+        //Log.e(TAG, "musicCurrentPart " + musicCurrentPart);
+        //Log.e(TAG, "nomeDoPróximoArquivo " + nomeDoArquivo);
 
-        return nextMusicFileName;
+        return nomeDoArquivo;
+
     }
 
     public static void loadMusic(){
@@ -832,7 +1024,7 @@ public class Sound {
                 mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
-                        Log.e(TAG, "onPrepared ");
+                        //Log.e(TAG, "onPrepared ");
                         mp.start();
                         createNextMediaPlayer();
                     }

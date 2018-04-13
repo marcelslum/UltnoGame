@@ -28,20 +28,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.squareup.leakcanary.LeakCanary;
 
 import android.os.Vibrator;
-import android.widget.Switch;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends FragmentActivity implements
         SensorEventListener
@@ -59,7 +54,7 @@ public class MainActivity extends FragmentActivity implements
     public final static int INTERSTITIAL_MODE_NO_VIDEO = 2;
 
     AdView mAdView;
-    boolean isAdViewLoaded = false;
+    boolean isBannerLoaded = false;
     boolean isInterstitialLoaded = false;
     private final static String TAG = "MainActivity";
     public boolean isPaused = false;
@@ -171,14 +166,14 @@ public class MainActivity extends FragmentActivity implements
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-				isAdViewLoaded = true;
+				isBannerLoaded = true;
 				showAdView();
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-				isAdViewLoaded = false;
+				isBannerLoaded = false;
             }
         });
 
@@ -550,44 +545,58 @@ public class MainActivity extends FragmentActivity implements
 		if (isBannerLoaded){
 			return;
 		}
-	
-     	AdRequest adRequestBanner = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
-                .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
-                .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
-                .build();
-        mAdView.loadAd(adRequestBanner);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AdRequest adRequestBanner = new AdRequest.Builder()
+                        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                        .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
+                        .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
+                        .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
+                        .build();
+                mAdView.loadAd(adRequestBanner);
+            }
+        });
+
+
     }
 
     public void loadInterstitialAd(){
-    
+
+
         final AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
                 .addTestDevice("AB221C24C4F00E7425323CFD691D8964")
                 .addTestDevice("843225C5776838E9FBAEE4A8D8414389")
                 .build();
-        if (ConnectionHandler.isConnectionWifi()) {
-            //Log.e(TAG, "Conectado ao Wifi - carregando interstitialWithVideo");
-            interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
-            interstitialWithVideo.loadAd(adRequest);
 
-        } else {
-            //Log.e(TAG, "Não conectado ao Wifi - carregando interstitialNoVideo");
-            interstitialActualMode = INTERSTITIAL_MODE_NO_VIDEO;
-            interstitialNoVideo.loadAd(adRequest);
-        }
-	
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (ConnectionHandler.isConnectionWifi()) {
+                    //Log.e(TAG, "Conectado ao Wifi - carregando interstitialWithVideo");
+                    interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
+                    interstitialWithVideo.loadAd(adRequest);
+
+                } else {
+                    //Log.e(TAG, "Não conectado ao Wifi - carregando interstitialNoVideo");
+                    interstitialActualMode = INTERSTITIAL_MODE_NO_VIDEO;
+                    interstitialNoVideo.loadAd(adRequest);
+                }
+            }
+        });
     }
 
     public void showAdView(){
     
-    	if (Game.state == Game_GAME_STATE_JOGAR){
+    	if (Game.gameState == Game.GAME_STATE_JOGAR){
 			return;
 		}
 		
-		if (isAdViewLoaded){
+		if (isBannerLoaded){
 			if (Game.notConnectedTextView != null) {
 				Game.notConnectedTextView.clearDisplay();
 				Game.topFrame.clearDisplay();
@@ -601,11 +610,17 @@ public class MainActivity extends FragmentActivity implements
 				}
 			});
 		} else {
-			mAdView.setVisibility(View.GONE);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                mAdView.setVisibility(View.GONE);
+                }
+            });
+
 			
 			if (Game.notConnectedTextView != null) {
 			
-				ConnectionHandler.connect()
+				ConnectionHandler.connect();
 			
 				if (ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_NOT_CONNECTED) {
 					Game.notConnectedTextView.display();
