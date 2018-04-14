@@ -25,6 +25,12 @@
     <string name="messageGoogle1">Este jogo utiliza serviços do Google Play Games para exibir rankings e conquistas.</string>
     <string name="messageGoogle1b">Deseja utilizar esse serviço?</string>
     <string name="messageGoogle2">Você poderá alterar essa opção mais tarde no menu Opções do jogo.</string>
+
+
+    <string name="messageVelocity1">Atualmente a velocidade global da bola está em 100%.</string>
+    <string name="messageVelocity1b">Atualmente a velocidade global da bola está em 100%.</string>
+    <string name="messageVelocity2">Você poderá alterar essa opção mais tarde no menu Opções do jogo.</string>
+
     <string name="score">score</string>
     <string name="pause">PAUSE</string>
     <string name="continuarJogar">Continuar</string>
@@ -514,6 +520,8 @@
     <string name="orientation">Girar tela</string>
     <string name="conquistaDesbloqueada">Conquista:</string>
     <string name="nao_conectado_google">Não conectado ao Google. </string>
+    <string name="menuVelocityContinuar">Continuar</string>
+    <string name="menuVelocityAlterar">Alterar velocidade</string>
 
 
 </resources>

@@ -16,8 +16,14 @@ public class Splash {
 
     static Text messageSplash1;
     static Menu menuGoogle;
+    static Menu menuVelocity;
+    static Selector selectorDifficultyInitMenu;
     static TextView messageGoogle1;
     static TextView messageGoogle2;
+    static TextView messageVelocity1;
+    static TextView messageVelocity2;
+
+
     static Image tittle;
 
     static long timeInitIntro;
@@ -33,6 +39,7 @@ public class Splash {
     private static final int SPLASH_FINISHED = 36;
     private static final int SPLASH_MENU_GOOGLE = 37;
     private static final int SPLASH_SIGNIN = 38;
+    private static final int SPLASH_MENU_VELOCITY = 39;
 
     private static int state;
 
@@ -40,6 +47,8 @@ public class Splash {
 
     public static boolean forSignin = false;
     public static boolean forJumpGoogle = false;
+
+
 
 
     static void configSplash(){
@@ -141,6 +150,85 @@ public class Splash {
         messageGoogle2.addText(Game.getContext().getResources().getString(R.string.messageGoogle2), new Color(0f, 0f, 0f, 1f));
 
         messageGoogle2.clearDisplay();
+
+        // -------------------------------------------MENU ALTERAR VELOCIDADE
+
+
+        // SELETOR DIFICULDADE
+        selectorDifficultyInitMenu = new Selector("Game.selectorDifficultyInitMenu", 0f,0f, fontSize, "",
+                new String[]{   //Game.getContext().getResources().getString(R.string.v0),
+                        //Game.getContext().getResources().getString(R.string.v1),
+                        Game.getContext().getResources().getString(R.string.v0),
+                        Game.getContext().getResources().getString(R.string.v1),
+                        Game.getContext().getResources().getString(R.string.v2),
+                        Game.getContext().getResources().getString(R.string.v3),
+                        Game.getContext().getResources().getString(R.string.v4),
+                        Game.getContext().getResources().getString(R.string.v5),
+                        Game.getContext().getResources().getString(R.string.v6)
+                },
+                Game.font);
+
+        selectorDifficultyInitMenu.setOnChange(new Selector.OnChange() {
+            @Override
+            public void onChange() {
+                if (SelectorHandler.selectorDifficulty.selectedValue == 0) {
+                    SaveGame.saveGame.ballVelocity = 90;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
+                    SaveGame.saveGame.ballVelocity = 100;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 2) {
+                    SaveGame.saveGame.ballVelocity = 110;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 3) {
+                    SaveGame.saveGame.ballVelocity = 120;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 4) {
+                    SaveGame.saveGame.ballVelocity = 130;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 5) {
+                    SaveGame.saveGame.ballVelocity = 140;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 6) {
+                    SaveGame.saveGame.ballVelocity = 150;
+                }
+            }
+        });
+
+        menuVelocity = new Menu("menuVelocity", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
+        menuVelocity.addMenuOption("Alterar", Game.getContext().getResources().getString(R.string.menuVelocityAlterar), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                selectorDifficultyInitMenu.fromMenu(menuVelocity);
+            }
+        });
+
+        menuVelocity.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.menuVelocityContinuar), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                setSplashState(SPLASH_CONECTANDO_INTERNET);
+            }
+        });
+
+        menuVelocity.blockAndClearDisplay();
+
+        messageVelocity1 = new TextView("messageVelocity1", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.1f,
+                Game.resolutionX * 1f,
+                Game.resolutionY,
+                fontSize * 0.8f,
+                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+
+        messageVelocity1.addText(Game.getContext().getResources().getString(R.string.messageVelocity1), new Color(0f, 0f, 0f, 1f));
+        messageVelocity1.addText(Game.getContext().getResources().getString(R.string.messageVelocity1b), new Color(0f, 0f, 0f, 1f));
+
+        messageVelocity1.clearDisplay();
+
+        messageVelocity2 = new TextView("messageVelocity1", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.8f,
+                Game.resolutionX * 1f,
+                Game.resolutionY,
+                fontSize * 0.55f,
+                Game.font, new Color(0.6f, 0.6f, 0.7f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+
+        messageVelocity2.addText(Game.getContext().getResources().getString(R.string.messageVelocity2), new Color(0f, 0f, 0f, 1f));
+
+        messageVelocity2.clearDisplay();
+
     }
 
     static void init(){
@@ -251,12 +339,21 @@ public class Splash {
             messageGoogle1.clearDisplay();
             messageGoogle2.clearDisplay();
             menuGoogle.blockAndClearDisplay();
-        } else  if (id == SPLASH_CONECTANDO_INTERNET) {
+        } else if (id == SPLASH_CONECTANDO_INTERNET) {
             ConnectionHandler.checkInternetConnection();
             timeInitConectando = Utils.getTime();
             //setMessageConectando();
             tittle.display();
             messageSplash1.display();
+        }
+         else if (id == SPLASH_MENU_VELOCITY) {
+            selectorDifficultyInitMenu.setSelectedValue(1);
+            SaveGame.saveGame.ballVelocity = 100;
+            menuVelocity.appearAndUnblock(100);
+            messageVelocity1.display();
+            messageVelocity2.display();
+            tittle.clearDisplay();
+            messageSplash1.clearDisplay();
         } else if (id == SPLASH_MENU_GOOGLE){
             timeInitConectando = Utils.getTime();
             menuGoogle.appearAndUnblock(100);
@@ -280,6 +377,10 @@ public class Splash {
         if (messageGoogle1 != null) messageGoogle1.checkTransformations(true);
         if (messageGoogle2 != null) messageGoogle2.checkTransformations(true);
 
+        if (menuVelocity != null) menuGoogle.checkTransformations(true);
+        if (messageVelocity1 != null) messageGoogle1.checkTransformations(true);
+        if (messageVelocity2 != null) messageGoogle2.checkTransformations(true);
+
         if (Game.versaoBeta && MessagesHandler.messageBeta != null){
             MessagesHandler.messageBeta.prepareRender(matrixView, matrixProjection);
         }
@@ -289,6 +390,10 @@ public class Splash {
         menuGoogle.prepareRender(matrixView, matrixProjection);
         messageGoogle1.prepareRender(matrixView, matrixProjection);
         if (messageGoogle2 != null) messageGoogle2.prepareRender(matrixView, matrixProjection);
+
+        menuVelocity.prepareRender(matrixView, matrixProjection);
+        messageVelocity1.prepareRender(matrixView, matrixProjection);
+        if (messageVelocity2 != null) messageVelocity2.prepareRender(matrixView, matrixProjection);
     }
 
     static int timesGoogle = 0;
@@ -338,7 +443,14 @@ public class Splash {
 
         if (state == SPLASH_CARREGANDO) {
             if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
-                setSplashState(SPLASH_CONECTANDO_INTERNET);
+
+                SaveGame.saveGame.ballVelocity = -1; // TODO TIRAR
+
+                if (SaveGame.saveGame.ballVelocity < 0) {
+                    setSplashState(SPLASH_MENU_VELOCITY);
+                } else {
+                    setSplashState(SPLASH_CONECTANDO_INTERNET);
+                }
             }
         } else if (state == SPLASH_CONECTANDO_INTERNET) {
             if (forSignin){

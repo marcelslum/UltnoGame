@@ -81,21 +81,21 @@ public class Sound {
         adBlueBallExplosion = new AudioData("blueballexplosion_mono.wav", 0.5f,1);
 
 
-        adSuccess1 = new AudioData("success1_mono.wav", 0.5f, 2);
+        adSuccess1 = new AudioData("success1_mono.wav", 0.35f, 2);
         adGameOver = new AudioData("gameover2_mono.wav", 0.8f,2);
-        adMenuIconDrop = new AudioData("bells9_mono.wav", 0.2f,2);
+        adMenuIconDrop = new AudioData("bells9_mono.wav", 0.1f,2);
 
         adMenuSmall = new AudioData("menuselectsmall.wav", 0.4f,3);
         adMenuBig2 = new AudioData("menuselectbig1.wav", 0.3f,3);
-        adStarsUp = new AudioData("starsup.wav", 0.4f,3);
+        adStarsUp = new AudioData("starsup.wav", 0.45f,3);
         adAngleChange = new AudioData("anglePlus.wav", 0.2f,3);
 
 
-        adWin1 = new AudioData("win0_powerup17_mono.wav", 0.45f,4);
-        adWin2 = new AudioData("win1_powerup16_mono.wav", 0.45f,4);
+        adWin1 = new AudioData("win0_powerup17_mono.wav", 0.4f,4);
+        adWin2 = new AudioData("win1_powerup16_mono.wav", 0.4f,4);
         //adSuccess2 = new AudioData("success2.wav", 0.5f,-1);
 
-        adTextBoxAppear = new AudioData("textboxappear_mono.wav", 0.4f,5);
+        adTextBoxAppear = new AudioData("textboxappear_mono.wav", 0.3f,5);
 
 
         adBallHit =  new AudioData("ballhit1stereo.wav", 0.4f,0);

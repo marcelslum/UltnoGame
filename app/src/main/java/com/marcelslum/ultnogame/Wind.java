@@ -100,7 +100,7 @@ public class Wind extends Entity{
     }
 
     public void init(){
-        soundStreamId = Sound.playSoundPool(Sound.soundWind, 0.6f, 0.6f, -1);
+        soundStreamId = Sound.playSoundPool(Sound.soundWind, 0.3f, 0.3f, -1);
         isActive = true;
         alpha = 1f;
     }
