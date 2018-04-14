@@ -1,6 +1,7 @@
 package com.marcelslum.ultnogame;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class MessagesHandler {
                 Game.resolutionY * 0.02f,
                 Game.resolutionX * 0.94f,
                 Game.resolutionY,
-                Game.gameAreaResolutionY*0.035f,
+                Game.gameAreaResolutionY*0.038f,
                 Game.font, new Color(0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_CENTER, 0.25f);
 
         Game.notConnectedTextView.addText(resources.getString(R.string.messageNaoConectado1), Color.cinza4);
@@ -196,11 +197,15 @@ public class MessagesHandler {
         MessagesHandler.messageTime.addShadow(new Color(0.4f, 0.4f, 0.4f, 1f));
     }
 
+    final static String TAG = "MessagesHandler";
+
     public static void setBottomMessage(String text, int duration){
 
         if (bottomTextBox == null){
             return;
         }
+
+        Log.e(TAG, "showing bottom text: " + text);
 
 
         float previousPosition = bottomTextBox.y;

@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Vibrator;
+import android.util.Log;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -24,6 +25,7 @@ public class Game {
     public static boolean ganharComMetadeDasBolas = false;
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
+    public static boolean showMessageNotConnectedOnGoogle = false;
     public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
@@ -685,6 +687,16 @@ public class Game {
 
         } else if (state == GAME_STATE_MENU){
 
+
+            MessagesHandler.setBottomMessage("", 0);
+
+            if (showMessageNotConnectedOnGoogle){
+                showMessageNotConnectedOnGoogle = false;
+                String message = Game.mainActivity.getApplicationContext().getResources().getString(R.string.nao_conectado_google);
+                MessagesHandler.setBottomMessage(message, 2000);
+            }
+
+
             Game.sound.stopAndReleaseMusic();
 
             if (Game.versaoBeta) {
@@ -733,7 +745,7 @@ public class Game {
             }
 
             MessagesHandler.bottomTextBox.display();
-            MessagesHandler.setBottomMessage("", 0);
+
             MessagesHandler.messageMaxScoreTotal.setText(
                     getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
 

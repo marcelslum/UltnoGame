@@ -252,7 +252,7 @@ public class Splash {
             messageGoogle2.clearDisplay();
             menuGoogle.blockAndClearDisplay();
         } else  if (id == SPLASH_CONECTANDO_INTERNET) {
-            ConnectionHandler.connect();
+            ConnectionHandler.checkInternetConnection();
             timeInitConectando = Utils.getTime();
             //setMessageConectando();
             tittle.display();
@@ -381,7 +381,7 @@ public class Splash {
                 
                         // se não conseguiu conectar ao google, volta ao início
                         forSignin = false;
-                        SaveGame.saveGame.googleOption = 0;
+                        SaveGame.saveGame.googleOption = -1;
                         SaveGame.saveGame.save();
                         init();
                         setSplashState(SPLASH_CONECTANDO_INTERNET);

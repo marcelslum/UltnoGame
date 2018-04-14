@@ -244,17 +244,17 @@ public class MainActivity extends FragmentActivity implements
     }
 
     public void signInSilently() {
-        //Log.e(TAG, "signInSilently()");
+        Log.e(TAG, "signInSilently()");
 
         GoogleAPI.mGoogleSignInClient.silentSignIn().addOnCompleteListener(this,
                 new OnCompleteListener<GoogleSignInAccount>() {
                     @Override
                     public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
                         if (task.isSuccessful()) {
-                            //Log.e(TAG, "signInSilently(): success");
+                            Log.e(TAG, "signInSilently(): success");
                             onConnected(task.getResult());
                         } else {
-                            //Log.e(TAG, "signInSilently(): failure", task.getException());
+                            Log.e(TAG, "signInSilently(): failure", task.getException());
                             onDisconnected();
                         }
                     }
@@ -292,12 +292,13 @@ public class MainActivity extends FragmentActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == GoogleAPI.RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task =
-                    GoogleSignIn.getSignedInAccountFromIntent(intent);
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
 
             try {
+
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 onConnected(account);
+
             } catch (ApiException apiException) {
                 String message = apiException.getMessage();
                 if (message == null || message.isEmpty()) {
@@ -306,8 +307,7 @@ public class MainActivity extends FragmentActivity implements
 
                 onDisconnected();
 
-                // TODO erro ao logar no google - exibir mensagem
-
+                Game.showMessageNotConnectedOnGoogle = true;
             }
         }
     }
@@ -525,7 +525,7 @@ public class MainActivity extends FragmentActivity implements
 
     public void hideAdView(){
         
-	if (Game.notConnectedTextView != null) {
+        if (Game.notConnectedTextView != null) {
             Game.notConnectedTextView.clearDisplay();
             Game.topFrame.clearDisplay();
         }
@@ -537,7 +537,6 @@ public class MainActivity extends FragmentActivity implements
                 mAdView.setVisibility(View.GONE);
             }
         });
-	
     }
     
 	public void loadBannerAd(){
@@ -564,7 +563,6 @@ public class MainActivity extends FragmentActivity implements
 
     public void loadInterstitialAd(){
 
-
         final AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("9BDF327E8C4CD72B8C5DC02B20DD551B")
@@ -575,7 +573,6 @@ public class MainActivity extends FragmentActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 if (ConnectionHandler.isConnectionWifi()) {
                     //Log.e(TAG, "Conectado ao Wifi - carregando interstitialWithVideo");
                     interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
@@ -620,7 +617,7 @@ public class MainActivity extends FragmentActivity implements
 			
 			if (Game.notConnectedTextView != null) {
 			
-				ConnectionHandler.connect();
+				ConnectionHandler.checkInternetConnection();
 			
 				if (ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_NOT_CONNECTED) {
 					Game.notConnectedTextView.display();
@@ -639,39 +636,36 @@ public class MainActivity extends FragmentActivity implements
     public void showInterstitial() {
         runOnUiThread(new Runnable() {
             public void run() {
+                    InterstitialAd interstitialAd;
 
-                InterstitialAd interstitialAd;
+                    if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {
+                        //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
+                        interstitialAd = interstitialWithVideo;
+                    } else if (interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO){
+                        //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
+                        interstitialAd = interstitialNoVideo;
+                    } else {
+                        interstitialAd = interstitialNoVideo;
+                    }
 
-                if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {
-                    //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
-                    interstitialAd = interstitialWithVideo;
-                } else if (interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO){
-                    //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
-                    interstitialAd = interstitialNoVideo;
-                } else {
-                    interstitialAd = interstitialNoVideo;
+                    // se é nulo vai para o menu de seleção de nível
+                    if (interstitialAd == null){
+                        Game.returningFromInterstitialFlag = true;
+                        return;
+                    }
+
+                    // verifica se está carregada
+                    if (interstitialAd.isLoaded()) {
+                        interstitialAd.show();
+                    } else {
+                        Log.e(getLocalClassName(), "Propaganda não carregada");
+                        hideAdView();
+                        isBannerLoaded = false;
+                        Game.returningFromInterstitialFlag = true;
+                        loadInterstitialAd();
+                    }
+
                 }
-
-    		// se é nulo vai para o menu de seleção de nível
-    		if (interstitialAd == null){
-			if (Game.gameState != Game.GAME_STATE_INTRO) {
-                    		Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-                    	}
-			return;
-		}
-    
-		// verifica se está carregada
-		if (interstitialAd.isLoaded()) {
-			interstitialAd.show();
-		} else {
-			Log.e(getLocalClassName(), "Propaganda não carregada");
-			loadInterstitialAd();
-			if (Game.gameState != Game.GAME_STATE_INTRO) {
-				Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
-			}
-		}
-
-            }
         });
     }
 }

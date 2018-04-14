@@ -17,8 +17,8 @@
     <string name="nivel">Nível: </string>
     <string name="messageMaxScoreTotal">Pontuação total: </string>
     <string name="googleLogado">Bem vindo </string>
-    <string name="googleNaoLogado">Não conectado ao Google Play Games.</string>
-    <string name="googleErroLogar">Houve um erro ao conectar com o Google Play Games.</string>
+    <string name="googleNaoLogado">Não conectado ao Google Play Games. Tente conectar novamente no menu opções.</string>
+    <string name="googleErroLogar">Houve um erro ao conectar com o Google Play Games. Tente conectar novamente no menu opções.</string>
     <string name="messageCurrentLevel">Nível</string>
     <string name="messageGameOver">GAME OVER</string>
     <string name="messageNaoConectado1">Este jogo é totalmente gratuito. Apoie o desenvolvedor conectando-se à internet para exibir propagandas.</string>
@@ -283,7 +283,7 @@
 
     <string name="conquistas">Conquistas</string>
     <string name="ligado">Ligado</string>
-    <string name="precisa_google">É necessário estar logado no Google Play Games para acessar esse recurso.</string>
+    <string name="precisa_google">É necessário estar logado no Google Play Games para acessar esse recurso. Conecte-se no menu opções.</string>
     <string name="desligado">Deslig.</string>
     <string name="v0">90%</string>
     <string name="v1">100%</string>
@@ -513,6 +513,7 @@
     <string name="sobre32">Testadores/Apoiadores:</string>
     <string name="orientation">Girar tela</string>
     <string name="conquistaDesbloqueada">Conquista:</string>
+    <string name="nao_conectado_google">Não conectado ao Google. Verifique sua conexão com a internet e tente novamente no menu opções.</string>
 
 
 </resources>

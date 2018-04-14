@@ -15,20 +15,18 @@ public class ConnectionHandler {
     public final static int INTERNET_STATE_CONNECTED = 1;
     public final static int INTERNET_STATE_NOT_CONNECTED = 2;
     public static int internetState = INTERNET_STATE_NOT_CONNECTED;
+    public static ConnectivityManager cm;
 
-    public static void connect() {
-        ConnectivityManager cm = (ConnectivityManager)
-                Game.mainActivity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static void checkInternetConnection() {
+
+        if (cm == null) {
+            cm = (ConnectivityManager) Game.mainActivity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        }
+
         if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isAvailable() && cm.getActiveNetworkInfo().isConnected()) {
             if (internetState == INTERNET_STATE_NOT_CONNECTED){
-                Game.mainActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Game.mainActivity.loadBannerAd();
-                        Game.mainActivity.loadInterstitialAd();
-                    }
-                });
-                
+                Game.mainActivity.loadBannerAd();
+                Game.mainActivity.loadInterstitialAd();
                 GoogleAPI.loadAchievements();
             }
             internetState = INTERNET_STATE_CONNECTED;
