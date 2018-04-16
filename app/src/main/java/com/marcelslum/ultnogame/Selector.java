@@ -232,12 +232,12 @@ public class Selector extends Entity{
 
         ArrayList<float[]> valuesAnimation = new ArrayList<>();
         valuesAnimation.add(new float[]{0f,1f});
-        valuesAnimation.add(new float[]{1f,0.3f});
+        valuesAnimation.add(new float[]{1f,0.15f});
         Animation reduceAlphaAnim = new Animation(menuRelated, "reduceAlphaAnim", "alpha", 500, valuesAnimation, false, true);
         reduceAlphaAnim.start();
 
         ArrayList<float[]> valuesAnimation2 = new ArrayList<>();
-        valuesAnimation2.add(new float[]{0f,0f});
+        valuesAnimation2.add(new float[]{0f,15f});
         valuesAnimation2.add(new float[]{1f,1f});
         Animation increaseAlphaAnim = new Animation(this, "increaseAlphaAnim", "alpha", 500, valuesAnimation2, false, true);
         final Selector innerSelector = this;

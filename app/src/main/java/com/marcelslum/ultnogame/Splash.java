@@ -156,8 +156,7 @@ public class Splash {
 
         // SELETOR DIFICULDADE
         selectorDifficultyInitMenu = new Selector("Game.selectorDifficultyInitMenu", 0f,0f, fontSize, "",
-                new String[]{   //Game.getContext().getResources().getString(R.string.v0),
-                        //Game.getContext().getResources().getString(R.string.v1),
+                new String[]{
                         Game.getContext().getResources().getString(R.string.v0),
                         Game.getContext().getResources().getString(R.string.v1),
                         Game.getContext().getResources().getString(R.string.v2),
@@ -171,25 +170,25 @@ public class Splash {
         selectorDifficultyInitMenu.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
-                if (SelectorHandler.selectorDifficulty.selectedValue == 0) {
+                if (selectorDifficultyInitMenu.selectedValue == 0) {
                     SaveGame.saveGame.ballVelocity = 90;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
+                } else if (selectorDifficultyInitMenu.selectedValue == 1) {
                     SaveGame.saveGame.ballVelocity = 100;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 2) {
+                } else if (selectorDifficultyInitMenu.selectedValue == 2) {
                     SaveGame.saveGame.ballVelocity = 110;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 3) {
+                } else if (selectorDifficultyInitMenu.selectedValue == 3) {
                     SaveGame.saveGame.ballVelocity = 120;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 4) {
+                } else if (selectorDifficultyInitMenu.selectedValue == 4) {
                     SaveGame.saveGame.ballVelocity = 130;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 5) {
+                } else if (selectorDifficultyInitMenu.selectedValue == 5) {
                     SaveGame.saveGame.ballVelocity = 140;
-                } else if (SelectorHandler.selectorDifficulty.selectedValue == 6) {
+                } else if (selectorDifficultyInitMenu.selectedValue == 6) {
                     SaveGame.saveGame.ballVelocity = 150;
                 }
             }
         });
 
-        menuVelocity = new Menu("menuVelocity", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
+        menuVelocity = new Menu("menuVelocity", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
         menuVelocity.addMenuOption("Alterar", Game.getContext().getResources().getString(R.string.menuVelocityAlterar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -197,9 +196,15 @@ public class Splash {
             }
         });
 
+        MenuOption menuOptionBallVelocity = menuVelocity.getMenuOptionByName("Alterar");
+        selectorDifficultyInitMenu.setPosition(menuOptionBallVelocity.x + (menuOptionBallVelocity.width*0.9f), menuOptionBallVelocity.y);
+
         menuVelocity.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.menuVelocityContinuar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                menuVelocity.blockAndClearDisplay();
+                messageVelocity1.clearDisplay();
+                messageVelocity2.clearDisplay();
                 setSplashState(SPLASH_CONECTANDO_INTERNET);
             }
         });
@@ -207,7 +212,7 @@ public class Splash {
         menuVelocity.blockAndClearDisplay();
 
         messageVelocity1 = new TextView("messageVelocity1", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.1f,
+                Game.resolutionY * 0.2f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
                 fontSize * 0.8f,
@@ -225,7 +230,7 @@ public class Splash {
                 fontSize * 0.55f,
                 Game.font, new Color(0.6f, 0.6f, 0.7f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageVelocity2.addText(Game.getContext().getResources().getString(R.string.messageVelocity2), new Color(0f, 0f, 0f, 1f));
+        messageVelocity2.addText(Game.getContext().getResources().getString(R.string.messageVelocity2), Color.cinza3);
 
         messageVelocity2.clearDisplay();
 
@@ -377,9 +382,10 @@ public class Splash {
         if (messageGoogle1 != null) messageGoogle1.checkTransformations(true);
         if (messageGoogle2 != null) messageGoogle2.checkTransformations(true);
 
-        if (menuVelocity != null) menuGoogle.checkTransformations(true);
-        if (messageVelocity1 != null) messageGoogle1.checkTransformations(true);
-        if (messageVelocity2 != null) messageGoogle2.checkTransformations(true);
+        if (menuVelocity != null) menuVelocity.checkTransformations(true);
+        if (messageVelocity1 != null) messageVelocity1.checkTransformations(true);
+        if (messageVelocity2 != null) messageVelocity2.checkTransformations(true);
+        if (selectorDifficultyInitMenu != null) selectorDifficultyInitMenu.checkTransformations(true);
 
         if (Game.versaoBeta && MessagesHandler.messageBeta != null){
             MessagesHandler.messageBeta.prepareRender(matrixView, matrixProjection);
@@ -394,6 +400,7 @@ public class Splash {
         menuVelocity.prepareRender(matrixView, matrixProjection);
         messageVelocity1.prepareRender(matrixView, matrixProjection);
         if (messageVelocity2 != null) messageVelocity2.prepareRender(matrixView, matrixProjection);
+        if (selectorDifficultyInitMenu != null) selectorDifficultyInitMenu.prepareRender(matrixView, matrixProjection);
     }
 
     static int timesGoogle = 0;
@@ -443,9 +450,6 @@ public class Splash {
 
         if (state == SPLASH_CARREGANDO) {
             if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
-
-                SaveGame.saveGame.ballVelocity = -1; // TODO TIRAR
-
                 if (SaveGame.saveGame.ballVelocity < 0) {
                     setSplashState(SPLASH_MENU_VELOCITY);
                 } else {

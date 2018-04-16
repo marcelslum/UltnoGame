@@ -27,8 +27,8 @@
     <string name="messageGoogle2">Você poderá alterar essa opção mais tarde no menu Opções do jogo.</string>
 
 
-    <string name="messageVelocity1">Atualmente a velocidade global da bola está em 100%.</string>
-    <string name="messageVelocity1b">Atualmente a velocidade global da bola está em 100%.</string>
+    <string name="messageVelocity1">O jogo permite ajustar a velocidade global da bola.</string>
+    <string name="messageVelocity1b">Deseja alterar a velocidade padrão?</string>
     <string name="messageVelocity2">Você poderá alterar essa opção mais tarde no menu Opções do jogo.</string>
 
     <string name="score">score</string>

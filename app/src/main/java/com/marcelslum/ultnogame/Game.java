@@ -2356,6 +2356,7 @@ public class Game {
         }
 
         if (Splash.menuGoogle != null) Splash.menuGoogle.verifyListener();
+        if (Splash.menuVelocity != null) Splash.menuVelocity.verifyListener();
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.verifyListener();
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.verifyListener();
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.verifyListener();
@@ -2386,6 +2387,7 @@ public class Game {
         if (SelectorHandler.selectorDifficulty != null) SelectorHandler.selectorDifficulty.verifyListener();
         if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.verifyListener();
         if (SelectorHandler.selectorSound != null) SelectorHandler.selectorSound.verifyListener();
+        if (Splash.selectorDifficultyInitMenu != null) Splash.selectorDifficultyInitMenu.verifyListener();
 
         if (ButtonHandler.button1Left != null) ButtonHandler.button1Left.verifyListener();
         if (ButtonHandler.button1Right != null) ButtonHandler.button1Right.verifyListener();
