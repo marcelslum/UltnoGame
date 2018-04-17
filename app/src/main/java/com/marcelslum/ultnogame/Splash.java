@@ -449,13 +449,28 @@ public class Splash {
     static void verifySplashState() {
 
         if (state == SPLASH_CARREGANDO) {
-            if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
-                if (SaveGame.saveGame.ballVelocity < 0) {
-                    setSplashState(SPLASH_MENU_VELOCITY);
-                } else {
-                    setSplashState(SPLASH_CONECTANDO_INTERNET);
+
+            if (Game.paraGravacaoVideo){
+                if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
+                    if (SaveGame.saveGame.ballVelocity < 0) {
+                        setSplashState(SPLASH_MENU_VELOCITY);
+                    } else {
+                        setSplashState(SPLASH_CONECTANDO_INTERNET);
+                    }
                 }
+
+            } else {
+                if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
+                    if (SaveGame.saveGame.ballVelocity < 0) {
+                        setSplashState(SPLASH_MENU_VELOCITY);
+                    } else {
+                        setSplashState(SPLASH_CONECTANDO_INTERNET);
+                    }
+                }
+
             }
+
+
         } else if (state == SPLASH_CONECTANDO_INTERNET) {
             if (forSignin){
                 //Log.e(TAG, "forSignin startintent ");

@@ -22,10 +22,12 @@ public class Game {
     public static Sound sound = new Sound();
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
+    public static boolean paraGravacaoVideo = true;
     public static boolean ganharComMetadeDasBolas = false;
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
     public static boolean showMessageNotConnectedOnGoogle = false;
+    public static boolean exibirLogDeFramesParaDebug = false;
     public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
@@ -37,6 +39,9 @@ public class Game {
     public static ArrayList<Text> textsForTest;
 
     public static final long TIME_OF_BALL_LISTENER = 250;
+
+    public static long currentFrameTime = -1;
+    public static long elapsedTimeSinceLastFrame = -1;
 
     
     public static String playerName = "-";
@@ -768,8 +773,10 @@ public class Game {
             LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
             mainActivity.hideAdView();
             MessagesHandler.messageTime.cleanAnimations();
+
             MessagesHandler.messageTime.display();
             MessagesHandler.messageCurrentLevel.display();
+
             MessagesHandler.setMessageTime();
             Level.levelGoalsObject.clearAchievements();
             ButtonHandler.buttonContinue.blockAndClearDisplay();
@@ -827,6 +834,11 @@ public class Game {
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
                         innerMessagePreparation.setText(getContext().getResources().getString(R.string.mensagem_jogar));
+                        if(paraGravacaoVideo){
+                            MessagesHandler.messagePreparation.setColor(Color.transparente);
+                        }
+
+
                         Animation anim = Utils.createSimpleAnimation(innerMessagePreparation, "alpha", "alpha", 500, 1f, 0f, new Animation.AnimationListener() {
                             @Override
                             public void onAnimationEnd() {
@@ -2176,9 +2188,12 @@ public class Game {
 
         if (brickBackground != null) brickBackground.prepareRender(matrixView, matrixProjection);
 
-        if (MessagesHandler.messageCurrentLevel != null) MessagesHandler.messageCurrentLevel.prepareRender(matrixView, matrixProjection);
+        if (!Game.paraGravacaoVideo) {
+            if (MessagesHandler.messageCurrentLevel != null)
+                MessagesHandler.messageCurrentLevel.prepareRender(matrixView, matrixProjection);
+        }
 
-        if (Game.versaoBeta) {
+        if (Game.versaoBeta && !Game.paraGravacaoVideo) {
             if (MessagesHandler.messageBeta != null)
                 MessagesHandler.messageBeta.prepareRender(matrixView, matrixProjection);
         }
@@ -2299,7 +2314,11 @@ public class Game {
         if (MessageStar.messageStars != null) MessageStar.messageStars.prepareRender(matrixView, matrixProjection);
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.prepareRender(matrixView, matrixProjection);
 
-        if (MessagesHandler.messageTime != null) MessagesHandler.messageTime.prepareRender(matrixView, matrixProjection);
+
+        if (!Game.paraGravacaoVideo) {
+            if (MessagesHandler.messageTime != null)
+                MessagesHandler.messageTime.prepareRender(matrixView, matrixProjection);
+        }
         if (tipTextBox != null) tipTextBox.prepareRender(matrixView, matrixProjection);
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
         if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
@@ -2332,7 +2351,9 @@ public class Game {
         if (notConnectedTextView != null) notConnectedTextView.prepareRender(matrixView, matrixProjection);
 
 
-        if (messages != null) messages.prepareRender(matrixView, matrixProjection);
+        if (!Game.paraGravacaoVideo) {
+            if (messages != null) messages.prepareRender(matrixView, matrixProjection);
+        }
         if (frame != null)frame.prepareRender(matrixView, matrixProjection);
 
 

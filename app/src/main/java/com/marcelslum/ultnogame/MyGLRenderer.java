@@ -5,6 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -187,13 +188,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 
         // Get the current time
-        long now = System.currentTimeMillis();
+        Game.currentFrameTime = System.currentTimeMillis();
 
         // We should make sure we are valid and sane
-        if (mLastTime > now) return;
+        if (mLastTime > Game.currentFrameTime) return;
 
         // Get the amount of time the last frame took.
-        long elapsed = now - mLastTime;
+        Game.elapsedTimeSinceLastFrame = Game.currentFrameTime - mLastTime;
 
         if (Game.gameState == Game.GAME_STATE_INTRO){
             Game.verifyTouchBlock();
@@ -206,55 +207,61 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                 lastInternetCheck = Utils.getTime();
             }
 
-            if (Game.gameState != Game.GAME_STATE_JOGAR){
-                if (Utils.getTime() - lastInternetCheck > 5000) {
-                    //Log.e(TAG, "Verificando conexão");
-                    ConnectionHandler.checkInternetConnection();
-                    lastInternetCheck = Utils.getTime();
-                }
-            }
-            else {
-                   if (Utils.getTime() - lastInternetCheck > 1000) {
-                        Sound.checkLoopPlaying();   
+
+            // verificações periódicas
+            if (!Game.paraGravacaoVideo) {
+                if (Game.gameState != Game.GAME_STATE_JOGAR) {
+                    if (Utils.getTime() - lastInternetCheck > 5000) {
+                        //Log.e(TAG, "Verificando conexão");
+                        ConnectionHandler.checkInternetConnection();
+                        lastInternetCheck = Game.currentFrameTime;
+                    }
+                } else {
+
+                    if (Utils.getTime() - lastInternetCheck > 1000) {
+                        Sound.checkLoopPlaying();
                         lastInternetCheck = Utils.getTime();
+                    }
                 }
             }
 
             Game.verifyTouchBlock();
             Game.verifyListeners();
 
-            if (frameDurations == null){
-                frameDurations = new ArrayList<>();
-            }
-
-            frameDurations.add(elapsed);
-
-            if (elapsed > longestFrame){
-                longestFrame = elapsed;
-            }
-
-
-            // LOG FRAMES
-            if (frameDurations.size() == 60){
-                float soma = 0;
-                for (int i = 0; i < frameDurations.size(); i++){
-                    soma += frameDurations.get(i);
+            if (Game.exibirLogDeFramesParaDebug) {
+                if (frameDurations == null) {
+                    frameDurations = new ArrayList<>();
                 }
-                //Log.e("MyGLRenderer"," frame duration: "+(soma / frameDurations.size()));
-                //Log.e("MyGLRenderer"," longestFrame: "+longestFrame);
-                frameDurations.clear();
-                longestFrame = 0;
+
+                frameDurations.add(Game.elapsedTimeSinceLastFrame);
+
+                if (Game.elapsedTimeSinceLastFrame > longestFrame) {
+                    longestFrame = Game.elapsedTimeSinceLastFrame;
+                }
+
+
+                // LOG FRAMES
+                if (frameDurations.size() == 60) {
+                    float soma = 0;
+                    for (int i = 0; i < frameDurations.size(); i++) {
+                        soma += frameDurations.get(i);
+                    }
+                    Log.e("MyGLRenderer"," frame duration: "+(soma / frameDurations.size()));
+                    Log.e("MyGLRenderer"," longestFrame: "+longestFrame);
+                    frameDurations.clear();
+                    longestFrame = 0;
+                }
             }
 
-            if (elapsed > (frameDuration*3) && Game.gameState == Game.GAME_STATE_JOGAR){
-                //Log.e("MyGLRenderer", "frame muito longo, reduzindo de " + elapsed + " para " + (frameDuration*3));
-                elapsed = (long)frameDuration*3;
+            if (Game.elapsedTimeSinceLastFrame > (frameDuration*3) && Game.gameState == Game.GAME_STATE_JOGAR){
+                Log.e("MyGLRenderer", "frame muito longo, reduzindo de " + Game.elapsedTimeSinceLastFrame + " para " + (frameDuration*3));
+                Game.elapsedTimeSinceLastFrame = (long)frameDuration*3;
             }
 
-            Game.simulate(elapsed, frameDuration);
+            Game.simulate(Game.elapsedTimeSinceLastFrame, frameDuration);
             Game.render(matrixView, matrixProjection);
         }
         // Save the current time to see how long it took :).
-        mLastTime = now;
+        mLastTime = Game.currentFrameTime;
     }
 }

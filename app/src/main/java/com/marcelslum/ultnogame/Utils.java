@@ -66,7 +66,8 @@ public abstract class Utils {
     }
 
     public static long getTime(){
-        return System.currentTimeMillis();
+        return Game.currentFrameTime;
+        //return System.currentTimeMillis();
     }
 
     public static String readJSONFromAsset(String fileName) {

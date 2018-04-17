@@ -290,7 +290,7 @@ public class Ball extends Circle{
 
 
     public void initFakeAnimation() {
-        startTimeFakeBallAnim = Utils.getTime();
+        startTimeFakeBallAnim = Game.currentFrameTime;
         fakeBallAnimActive = true;
     }
 
