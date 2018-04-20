@@ -13,9 +13,9 @@ import android.util.Log;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
-// TODO verificar os listeners ativos
-// TODO colocar timeout em todos os awaits...
-// TODO colocar uma barra ao final do data panel
+// TODO Resetar ranking geral
+
+
 
 public class Game {
 
