@@ -69,14 +69,24 @@ public class Messages extends Entity {
             childs3.add(rectangle);
         }
 
+
+        textObject.animTranslateX = Game.resolutionX;
+        textObject2.animTranslateX = Game.resolutionX;
+        rectangle.animTranslateX =  Game.resolutionX;
+
+
         textObject.isVisible = true;
         textObject2.isVisible = true;
         rectangle.isVisible = true;
         rectangle.alpha = 0.4f;
 
+
+        Log.e(TAG, "playTextBoxAppear");
         Game.sound.playTextBoxAppear();
 
         //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
+
+
 
         Animation anim1 = Utils.createAnimation3v(textObject, "translateX", "translateX", 2225,
                 0f, Game.resolutionX, 0.1f, 0f, 0.9f, -Game.resolutionX * 0.05f, false, true);

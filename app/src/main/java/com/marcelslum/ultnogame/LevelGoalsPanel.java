@@ -54,10 +54,11 @@ public class LevelGoalsPanel extends Entity{
         }
     }
 
-    public void appear() {
+    public void appear(boolean playSoundAppear) {
         display();
-        Game.sound.playTextBoxAppear();
-
+        if (playSoundAppear) {
+            Game.sound.playTextBoxAppear();
+        }
 
         //Sound.playSoundPool(Sound.soundMenuIconDrop, 1, 1, 0);
         float firstY = lines.get(0).texts.get(0).y;
@@ -100,9 +101,9 @@ public class LevelGoalsPanel extends Entity{
         }
     }
 
-    public void appearGray() {
+    public void appearGray(boolean playSoundAppear) {
         gray = true;
-        appear();
+        appear(playSoundAppear);
 
         for (int l = 0; l < lines.size(); l++) {
             lines.get(l).changeShineStars(false);
@@ -146,8 +147,8 @@ public class LevelGoalsPanel extends Entity{
         }
     }
 
-    public void appearGrayAndShine() {
-        appearGray();
+    public void appearGrayAndShine(boolean playSoundAppear) {
+        appearGray(playSoundAppear);
         final LevelGoalsPanel inner = this;
 
         Utils.createSimpleAnimation(this, "Timer", "Timer", 800, 1f, 1f, new Animation.AnimationListener() {

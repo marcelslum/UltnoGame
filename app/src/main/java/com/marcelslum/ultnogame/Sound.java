@@ -153,6 +153,7 @@ public class Sound {
         if (!SaveGame.saveGame.sound){
             return;
         }
+
         adTextBoxAppear.musicPartNumber = 0;
         if (AsyncTasks.asyncPlayTextBoxAppear == null || AsyncTasks.asyncPlayTextBoxAppear.getStatus() == AsyncTask.Status.FINISHED){
             AsyncTasks.asyncPlayTextBoxAppear = new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, adTextBoxAppear);

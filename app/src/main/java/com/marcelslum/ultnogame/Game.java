@@ -435,13 +435,13 @@ public class Game {
                     .addShadow(Color.cinza1)
                     .build();
 
-            if (gameState == GAME_STATE_OBJETIVO_LEVEL) {
-                Game.sound.playTextBoxAppear();
-                //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.06f, 0.06f, 0);
-            }
+            tipTextBox.animTranslateX = Game.resolutionX * 2f;
+
+            Game.sound.playTextBoxAppear();
+
 
             Animation anim1 = Utils.createAnimation4v(tipTextBox, "translateX", "translateX", 5000,
-                    0f, Game.resolutionX * 2, 0.1f, 0f, 0.85f, 0f, 1f, 0, false, true);
+                    0f, Game.resolutionX * 2, 0.05f, 0f, 0.85f, 0f, 1f, 0, false, true);
             anim1.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
@@ -467,10 +467,6 @@ public class Game {
                         }
                     });
                     a2.start();
-                    if (gameState == GAME_STATE_OBJETIVO_LEVEL) {
-                        //Game.sound.playTextBoxAppear();
-                        //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.03f, 0.03f, 0);
-                    }
                 }
             });
             anim1.start();
@@ -536,7 +532,7 @@ public class Game {
                 LevelGoal lg = Level.levelGoalsObject.levelGoals.get(i);
                 levelGoalsPanel.addLine(lg.numberOfStars, true, lg.text);
             }
-            levelGoalsPanel.appearGray();
+            levelGoalsPanel.appearGray(false);
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             MessagesHandler.messageSubMenu.display();
@@ -560,7 +556,7 @@ public class Game {
 
             mainActivity.showAdView();
 
-            levelGoalsPanel.appearGrayAndShine();
+            levelGoalsPanel.appearGrayAndShine(true);
             MessagesHandler.messageMenu.display();
             MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuObjetivo));
             MessagesHandler.messageSubMenu.display();
@@ -1094,7 +1090,7 @@ public class Game {
                     } else if (!levelGoalsPanel.isVisible){
                         Utils.createSimpleAnimation(ballGoalsPanel, "translateX", "translateX", 2000, 0f, gameAreaResolutionX*2f).start();
                         ballGoalsPanel.clearExplosions();
-                        levelGoalsPanel.appearGray();
+                        levelGoalsPanel.appearGray(true);
                     } else if (levelGoalsPanel.gray) {
                         levelGoalsPanel.shineLines(true);
 
@@ -1127,7 +1123,9 @@ public class Game {
 
             MessagesHandler.messageInGame.increaseAlpha(1600, 1f, new Animation.AnimationListener() {
                 @Override
-                public void onAnimationEnd() {Game.sound.playTextBoxAppear();}
+                public void onAnimationEnd() {
+                    Game.sound.playTextBoxAppear();
+                }
             });
 
 

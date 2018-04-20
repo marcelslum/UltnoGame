@@ -221,7 +221,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
                     if (Game.gameState == Game.GAME_STATE_JOGAR) {
                         if (Utils.getTime() - lastInternetCheck > 1000) {
-                            Sound.checkLoopPlaying();
+                            if (TimeHandler.timeOfLevelPlay > 3000) {
+                                Sound.checkLoopPlaying();
+                            }
                             lastInternetCheck = Utils.getTime();
                         }
                     } else {
@@ -230,7 +232,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                             lastInternetCheck = Utils.getTime();
                             Sound.setMusicVolume(Sound.musicVolume - 0.03f);
                         }
-
                     }
                 }
             }
