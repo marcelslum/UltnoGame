@@ -249,6 +249,7 @@ public class ButtonHandler {
                 if (Game.gameState == Game.GAME_STATE_VITORIA) {
                     Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
                 } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {
+                    Sound.stopAndReleaseMusic();
                     Game.prepareAfterInterstitialFlag = false;
                     Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL) {

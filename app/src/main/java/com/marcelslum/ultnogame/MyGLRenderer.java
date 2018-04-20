@@ -210,7 +210,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
             // verificações periódicas
             if (!Game.paraGravacaoVideo) {
-                if (Game.gameState != Game.GAME_STATE_JOGAR) {
+                if (Game.gameState != Game.GAME_STATE_JOGAR && Game.gameState != Game.GAME_STATE_VITORIA && Game.gameState != Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {
                     if (Utils.getTime() - lastInternetCheck > 5000) {
                         //Log.e(TAG, "Verificando conexão");
                         ConnectionHandler.checkInternetConnection();
@@ -218,12 +218,25 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                     }
                 } else {
 
-                    if (Utils.getTime() - lastInternetCheck > 1000) {
-                        Sound.checkLoopPlaying();
-                        lastInternetCheck = Utils.getTime();
+
+                    if (Game.gameState == Game.GAME_STATE_JOGAR) {
+                        if (Utils.getTime() - lastInternetCheck > 1000) {
+                            Sound.checkLoopPlaying();
+                            lastInternetCheck = Utils.getTime();
+                        }
+                    } else {
+                        if (Utils.getTime() - lastInternetCheck > 300) {
+                            Sound.checkLoopPlaying();
+                            lastInternetCheck = Utils.getTime();
+                            Sound.setMusicVolume(Sound.musicVolume - 0.03f);
+                        }
+
                     }
                 }
             }
+
+
+
 
             Game.verifyTouchBlock();
             Game.verifyListeners();

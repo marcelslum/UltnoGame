@@ -483,6 +483,25 @@ public class Sound {
 
     public static int currentMediaNumber = 0;
 
+    public static float musicVolume = 1f;
+
+    public static void setMusicVolume(float volume){
+        musicVolume = volume;
+
+        if (volume <= 0f){
+            stopAndReleaseMusic();
+        }
+
+        if (mediaPlayer[currentMediaNumber] != null){
+            mediaPlayer[currentMediaNumber].setVolume(musicVolume, musicVolume);
+        }
+
+        if (mediaPlayer[getNextMediaPlayer()] != null){
+            mediaPlayer[getNextMediaPlayer()].setVolume(musicVolume, musicVolume);
+        }
+
+    }
+
     public void playMusic(){
         /*
         if (!SaveGame.saveGame.music){
@@ -518,6 +537,7 @@ public class Sound {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     //Log.e(TAG, "playMusic onPrepared ");
+                    mp.setVolume(musicVolume, musicVolume);
                     mp.start();
                     createNextMediaPlayer();
                 }
@@ -605,7 +625,7 @@ public class Sound {
         try {
             afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
             mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-            mediaPlayer[getNextMediaPlayer()].prepareAsync();
+            mediaPlayer[getNextMediaPlayer()].prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -614,9 +634,8 @@ public class Sound {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 //Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
-
-
                 if (mediaPlayer[currentMediaNumber] != null && mediaPlayer[currentMediaNumber].isPlaying()) {
+                    mediaPlayer[getNextMediaPlayer()].setVolume(musicVolume, musicVolume);
                     mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
                 }
             }
@@ -667,13 +686,12 @@ public class Sound {
     public static final int MUSIC_SUB_PART_C_A2 = 27;
     public static final int MUSIC_SUB_PART_C_A3 = 28;
 
+    public static boolean musicMelodyMode = false;
+
     public static String getNextMusicFileName(){
 
 
-        //Log.e(TAG, "------------------ ANTES");
-        //Log.e(TAG, "musicCurrentGlobalPart " + musicCurrentGlobalPart);
-        //Log.e(TAG, "musicCurrentSubPart " + musicCurrentSubPart);
-        //Log.e(TAG, "musicCurrentPart " + musicCurrentPart);
+        Log.e(TAG, "---- ANTES " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode);
 
         String nomeDoArquivo = "00-Intro.ogg";
 
@@ -701,17 +719,18 @@ public class Sound {
                 if (percentageOfTargets > 0.9f) {
                     nextGlobalPart = MUSIC_GLOBAL_PART_A;
                 } else if (percentageOfTargets > 0.45f) {
-                    nextGlobalPart = MUSIC_GLOBAL_PART_A; // TODO Retirar quando tiver a parte B - reativer as linhas abaixo
-                    //nextGlobalPart  = MUSIC_GLOBAL_PART_B;
+                    nextGlobalPart  = MUSIC_GLOBAL_PART_B;
                 } else {
-                    nextGlobalPart = MUSIC_GLOBAL_PART_A; // TODO Retirar quando tiver a parte C - reativer as linhas abaixo
-                    //nextGlobalPart = MUSIC_GLOBAL_PART_C;
+                    nextGlobalPart = MUSIC_GLOBAL_PART_A;
+                    nextGlobalPart = MUSIC_GLOBAL_PART_C;
                     //como não há transição direta da fase A para C, ajusta a próxima parte para B
-                    //if (musicCurrentGlobalPart == MUSIC_GLOBAL_PART_A){
-                    //    nextGlobalPart = MUSIC_GLOBAL_PART_B;
-                    //}
+                    if (musicCurrentGlobalPart == MUSIC_GLOBAL_PART_A){
+                        nextGlobalPart = MUSIC_GLOBAL_PART_B;
+
+                    }
                 }
             }
+
 
             // CALCULA A PROXIMA SUBPARTE, RANDOMICAMENTE
             int nextSubPart = 0;
@@ -772,47 +791,223 @@ public class Sound {
             if (musicCurrentPart == MUSIC_INTRO_TO_PART_A){
 
                 if (nextSubPart == MUSIC_SUB_PART_A_A1){
-                    nomeDoArquivo = "00-Intro_to_Aa1.ogg";
+                    nomeDoArquivo = "00tr-Intro-Aa1.ogg";
                 } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
-                    nomeDoArquivo = "00-Intro_to_Aa2.ogg";
+                    nomeDoArquivo = "00tr-Intro-Aa2.ogg";
                 } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
-                    nomeDoArquivo = "00-Intro_to_Aa3.ogg";
+                    nomeDoArquivo = "00tr-Intro-Aa3.ogg";
                 }
 
-            } else {
+            } else if (musicCurrentPart == MUSIC_PART_A_TO_PART_A){
 
                 // PARTE A PARA A
-                if (musicCurrentPart == MUSIC_PART_A_TO_PART_A){
+                if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1){
+                    if (nextSubPart == MUSIC_SUB_PART_A_A1){
+                        nomeDoArquivo = "01tr-Aa1-Aa1.ogg";
+                    } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
+                        nomeDoArquivo = "01tr-Aa1-Aa2.ogg";
+                    } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
+                        nomeDoArquivo = "01tr-Aa1-Aa3.ogg";
+                    }
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2){
+                    if (nextSubPart == MUSIC_SUB_PART_A_A1){
+                        nomeDoArquivo = "01tr-Aa2-Aa1.ogg";
+                    } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
+                        nomeDoArquivo = "01tr-Aa2-Aa2.ogg";
+                    } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
+                        nomeDoArquivo = "01tr-Aa2-Aa3.ogg";
+                    }
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A3){
+                    if (nextSubPart == MUSIC_SUB_PART_A_A1){
+                        nomeDoArquivo = "01tr-Aa3-Aa1.ogg";
+                    } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
+                        nomeDoArquivo = "01tr-Aa3-Aa2.ogg";
+                    } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
+                        nomeDoArquivo = "01tr-Aa3-Aa3.ogg";
+                    }
+                }
 
-                    if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1){
-                        if (nextSubPart == MUSIC_SUB_PART_A_A1){
-                            nomeDoArquivo = "01-Tr-Aa1_to_Aa1.ogg";
-                        } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
-                            nomeDoArquivo = "01-Tr-Aa1_to_Aa2.ogg";
-                        } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
-                            nomeDoArquivo = "01-Tr-Aa1_to_Aa3.ogg";
+            } else if (musicCurrentPart == MUSIC_PART_A_TO_PART_B) {
+                // PARTE A PARA B
+                if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1) {
+                    nomeDoArquivo = "01z-Transition-Aa1-Ba1.ogg";
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2) {
+                    nomeDoArquivo = "01z-Transition-Aa2-Ba1.ogg";
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A3) {
+                    nomeDoArquivo = "01z-Transition-Aa3-Ba1.ogg";
+                }
+            } else if (musicCurrentPart == MUSIC_PART_B_TO_PART_B){
+
+                // PARTE B PARA B
+                if (musicCurrentSubPart == MUSIC_SUB_PART_B_A1){
+                    if (nextSubPart == MUSIC_SUB_PART_B_A1){
+                        if (musicMelodyMode){
+                            nomeDoArquivo = "02tr_melody-Ba1-Ba1.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba1-Ba1.ogg";
                         }
-                    } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2){
-                        if (nextSubPart == MUSIC_SUB_PART_A_A1){
-                            nomeDoArquivo = "01-Tr-Aa2_to_Aa1.ogg";
-                        } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
-                            nomeDoArquivo = "01-Tr-Aa2_to_Aa2.ogg";
-                        } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
-                            nomeDoArquivo = "01-Tr-Aa2_to_Aa3.ogg";
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_B_A2){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "02tr_melody-Ba1-Ba2.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba1-Ba2.ogg";
                         }
-                    } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A3){
-                        if (nextSubPart == MUSIC_SUB_PART_A_A1){
-                            nomeDoArquivo = "01-Tr-Aa3_to_Aa1.ogg";
-                        } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
-                            nomeDoArquivo = "01-Tr-Aa3_to_Aa2.ogg";
-                        } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
-                            nomeDoArquivo = "01-Tr-Aa3_to_Aa3.ogg";
+                    } else if (nextSubPart == MUSIC_SUB_PART_B_A3){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "02tr_melody-Ba1-Ba3.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba1-Ba3.ogg";
+                        }
+
+                    }
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_B_A2){
+                    if (nextSubPart == MUSIC_SUB_PART_B_A1){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "02tr_melody-Ba2-Ba1.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba2-Ba1.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_B_A2){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "02tr_melody-Ba2-Ba2.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba2-Ba2.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_B_A3){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "02tr_melody-Ba2-Ba3.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba2-Ba3.ogg";
+                        }
+
+                    }
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_B_A3){
+                    if (nextSubPart == MUSIC_SUB_PART_B_A1){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "02tr_melody-Ba3-Ba1.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba3-Ba1.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_B_A2){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "02tr_melody-Ba3-Ba2.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba3-Ba2.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_B_A3){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "02tr_melody-Ba3-Ba3.ogg";
+                        } else {
+                            nomeDoArquivo = "02tr-Ba3-Ba3.ogg";
+                        }
+
+                    }
+                }
+            } else if (musicCurrentPart == MUSIC_PART_B_TO_PART_C) {
+                // PARTE B PARA C
+                if (musicCurrentSubPart == MUSIC_SUB_PART_B_A1) {
+                    if (musicMelodyMode) {
+                        nomeDoArquivo = "02z_melody-Transition-Ba1-Ca1.ogg";
+                    } else {
+                        nomeDoArquivo = "02z-Transition-Ba1-Ca1.ogg";
+                    }
+                    
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_B_A2) {
+                    if (musicMelodyMode) {
+                        nomeDoArquivo = "02z_melody-Transition-Ba2-Ca1.ogg";
+                    } else {
+                        nomeDoArquivo = "02z-Transition-Ba2-Ca1.ogg";
+                    }
+                    
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_B_A3) {
+                    if (musicMelodyMode) {
+                        nomeDoArquivo = "02z_melody-Transition-Ba3-Ca1.ogg";
+                    } else {
+                        nomeDoArquivo = "02z-Transition-Ba3-Ca1.ogg";
+                    }
+                    
+                }
+            } else if (musicCurrentPart == MUSIC_PART_C_TO_PART_C){
+                // PARTE C PARA C
+                if (musicCurrentSubPart == MUSIC_SUB_PART_C_A1){
+                    if (nextSubPart == MUSIC_SUB_PART_C_A1){
+                        if (musicMelodyMode){
+                            nomeDoArquivo = "03tr_melody-Ca1-Ca1.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca1-Ca1.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_C_A2){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "03tr_melody-Ca1-Ca2.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca1-Ca2.ogg";
+                        }
+                    } else if (nextSubPart == MUSIC_SUB_PART_C_A3){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "03tr_melody-Ca1-Ca3.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca1-Ca3.ogg";
+                        }
+
+                    }
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_C_A2){
+                    if (nextSubPart == MUSIC_SUB_PART_C_A1){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "03tr_melody-Ca2-Ca1.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca2-Ca1.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_C_A2){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "03tr_melody-Ca2-Ca2.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca2-Ca2.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_C_A3){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "03tr_melody-Ca2-Ca3.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca2-Ca3.ogg";
+                        }
+
+                    }
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_C_A3){
+                    if (nextSubPart == MUSIC_SUB_PART_C_A1){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "03tr_melody-Ca3-Ca1.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca3-Ca1.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_C_A2){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "03tr_melody-Ca3-Ca2.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca3-Ca2.ogg";
+                        }
+
+                    } else if (nextSubPart == MUSIC_SUB_PART_C_A3){
+                        if (musicMelodyMode) {
+                            nomeDoArquivo = "03tr_melody-Ca3-Ca3.ogg";
+                        } else {
+                            nomeDoArquivo = "03tr-Ca3-Ca3.ogg";
                         }
                     }
                 }
             }
 
-            // DEFINE A VARIAVEL CURRENT SUB PART
+
+
+
+                // DEFINE A VARIAVEL CURRENT SUB PART
             musicCurrentSubPart = nextSubPart;
 
         }
@@ -856,39 +1051,83 @@ public class Sound {
                     }
                     break;
                 case MUSIC_PART_B:
+
+                    // SE FOR PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
+                    if (Utils.getRandonFloat(0f, 1f) < 0.5f){
+                        musicMelodyMode = false;
+                    } else {
+                        musicMelodyMode = true;
+                    }
+
                     switch (musicCurrentSubPart){
-                        case MUSIC_SUB_PART_A_A1:
-                            nomeDoArquivo = "01-Ba1.ogg"; // todo atualizar quando tiver o arquivo
+                        case MUSIC_SUB_PART_B_A1:
+                            if (musicMelodyMode){
+                                nomeDoArquivo = "02melody-Ba1.ogg";
+                            } else {
+                                nomeDoArquivo = "02-Ba1.ogg";
+                            }
+
                             break;
-                        case MUSIC_SUB_PART_A_A2:
-                            nomeDoArquivo = "01-Ba2.ogg"; // todo atualizar quando tiver o arquivo
+                        case MUSIC_SUB_PART_B_A2:
+                            if (musicMelodyMode){
+                                nomeDoArquivo = "02melody-Ba2.ogg";
+                            } else {
+                                nomeDoArquivo = "02-Ba2.ogg";
+                            }
+
                             break;
-                        case MUSIC_SUB_PART_A_A3:
-                            nomeDoArquivo = "01-Ba3.ogg"; // todo atualizar quando tiver o arquivo
+                        case MUSIC_SUB_PART_B_A3:
+                            if (musicMelodyMode){
+                                nomeDoArquivo = "02melody-Ba3.ogg";
+                            } else {
+                                nomeDoArquivo = "02-Ba3.ogg";
+                            }
+
                             break;
                     }
                     break;
                 case MUSIC_PART_C:
+
+
+                    // SE FOR PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
+                    if (Utils.getRandonFloat(0f, 1f) < 0.5f){
+                        musicMelodyMode = false;
+                    } else {
+                        musicMelodyMode = true;
+                    }
+
                     switch (musicCurrentSubPart){
-                        case MUSIC_SUB_PART_A_A1:
-                            nomeDoArquivo = "01-Ca1.ogg"; // todo atualizar quando tiver o arquivo
+                        case MUSIC_SUB_PART_C_A1:
+                            if (musicMelodyMode){
+                                nomeDoArquivo = "03melody-Ca1.ogg";
+                            } else {
+                                nomeDoArquivo = "03-Ca1.ogg";
+                            }
+
                             break;
-                        case MUSIC_SUB_PART_A_A2:
-                            nomeDoArquivo = "01-Ca2.ogg"; // todo atualizar quando tiver o arquivo
+                        case MUSIC_SUB_PART_C_A2:
+                            if (musicMelodyMode){
+                                nomeDoArquivo = "03melody-Ca2.ogg";
+                            } else {
+                                nomeDoArquivo = "03-Ca2.ogg";
+                            }
+
                             break;
-                        case MUSIC_SUB_PART_A_A3:
-                            nomeDoArquivo = "01-Ca3.ogg"; // todo atualizar quando tiver o arquivo
+                        case MUSIC_SUB_PART_C_A3:
+                            if (musicMelodyMode){
+                                nomeDoArquivo = "03melody-Ca3.ogg";
+                            } else {
+                                nomeDoArquivo = "03-Ca3.ogg";
+                            }
+
                             break;
                     }
                     break;
             }
         }
 
-        //Log.e(TAG, "------------------ DEPOIS");
-        //Log.e(TAG, "musicCurrentGlobalPart " + musicCurrentGlobalPart);
-        //Log.e(TAG, "musicCurrentSubPart " + musicCurrentSubPart);
-        //Log.e(TAG, "musicCurrentPart " + musicCurrentPart);
-        //Log.e(TAG, "nomeDoPróximoArquivo " + nomeDoArquivo);
+        Log.e(TAG, "---- DEPOIS " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode);
+        Log.e(TAG, "nomeDoPróximoArquivo " + nomeDoArquivo);
 
         return nomeDoArquivo;
 

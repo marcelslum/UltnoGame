@@ -103,7 +103,7 @@ public class InteractionListener {
                     float distance = Vector.distanceBetweenTwoPoints(touch.initialX, touch.initialY, touch.x, touch.y);
                     //Log.e(TAG, "distance= "+distance);
 
-                    if (touch.type == TouchEvent.TOUCH_TYPE_UP && (!touch.moved || distance < 50f)){
+                    if (touch.type == TouchEvent.TOUCH_TYPE_UP && (!touch.moved || distance < 100f)){
                         //Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_UP && !touch.moved");
                         mode = MODE_PRESS;
                     } else if (touch.type == TouchEvent.TOUCH_TYPE_DOWN) {

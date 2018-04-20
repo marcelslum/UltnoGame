@@ -22,7 +22,7 @@ public class Game {
     public static Sound sound = new Sound();
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
-    public static boolean paraGravacaoVideo = true;
+    public static boolean paraGravacaoVideo = false;
     public static boolean ganharComMetadeDasBolas = false;
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
@@ -661,8 +661,10 @@ public class Game {
             Splash.init();
         } else if (state == GAME_STATE_OPCOES){
 
-            //Sound.musicCurrentPart = Sound.MUSIC_PRE_INTRO;
-            //Game.sound.playMusic();
+            Sound.musicCurrentPart = Sound.MUSIC_PRE_INTRO;
+            Sound.musicCurrentGlobalPart = Sound.MUSIC_GLOBAL_PART_A;
+            Sound.musicCurrentSubPart = Sound.MUSIC_SUB_PART_A_A1;
+            Game.sound.playMusic();
 
             if (previousState == GAME_STATE_SOBRE){
                 Game.aboutTextView.blockAndClearDisplay();
@@ -758,6 +760,9 @@ public class Game {
 
             abdicateAngle = false;
             Sound.musicCurrentPart = Sound.MUSIC_PRE_INTRO;
+            Sound.musicCurrentGlobalPart = Sound.MUSIC_GLOBAL_PART_A;
+            Sound.musicCurrentSubPart = Sound.MUSIC_SUB_PART_A_A1;
+            Sound.musicVolume = 1f;
             Sound.loadStaticGameAudioTracks();
 
             //Sound.loadMusic();
@@ -993,7 +998,7 @@ public class Game {
             ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
 
 
-            Sound.stopAndReleaseMusic();
+            //Sound.stopAndReleaseMusic();
 
             Sound.soundPool.autoPause();
 
