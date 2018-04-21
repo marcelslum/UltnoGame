@@ -64,7 +64,7 @@ public class MenuHandler {
                 groupMenu.addGraph("graph "+i, Game.resolutionY * 0.07f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_BAR, false);
 
                 groupMenu.addText(2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
-                        Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, new Color(0.35f, 0.35f, 0.35f, 1f), false);
+                        Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, Color.cinza1, false);
 
                 //Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
 

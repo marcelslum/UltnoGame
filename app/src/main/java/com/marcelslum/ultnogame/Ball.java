@@ -842,6 +842,7 @@ public class Ball extends Circle{
             } else {
 
                 int numberOfCollisionsObjects = 0;
+                boolean sameObject = false;
                 for (int i = 0; i < collisionsData.size(); i++){
                     if (!collisionsData.get(i).isRepeated){
                         numberOfCollisionsObjects += 1;
@@ -916,6 +917,7 @@ public class Ball extends Circle{
                         lastResponseBallY = 0f;
                     }
 
+                    /*
                     if (lastResponseBallX != 0 && lastResponseBallY != 0){
                         if (Math.abs(lastResponseBallX) > Math.abs(lastResponseBallY)){
                             //Log.e(TAG, "zerando lastResponseBallY");
@@ -927,6 +929,7 @@ public class Ball extends Circle{
 
 
                     }
+                    */
 
                     Log.e("ball", "após analise colisão de mais de um objeto" + "lastResponseBallX "+lastResponseBallX + " - lastResponseBallY "+lastResponseBallY);
 

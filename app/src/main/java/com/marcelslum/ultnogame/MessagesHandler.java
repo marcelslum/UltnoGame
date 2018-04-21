@@ -101,7 +101,7 @@ public class MessagesHandler {
                 resources.getString(R.string.messageGameOver), Game.font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
         messageMenu = new Text("messageMenu",
-                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.18f, Game.gameAreaResolutionY*0.08f, ".", Game.font, new Color(0.2f, 0.2f, 0.2f, 1f));
+                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.18f, Game.gameAreaResolutionY*0.08f, ".", Game.font, Color.azul);
 
         messageSubMenu = new Text("messageSubMenu",
                 Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.28f, Game.gameAreaResolutionY*0.05f, ".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f));

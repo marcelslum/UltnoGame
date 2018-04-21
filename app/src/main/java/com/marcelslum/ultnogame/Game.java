@@ -81,7 +81,6 @@ public class Game {
     static ArrayList<BallBehaviourData> ballBehaviourDatas;
     static Messages messages;
     static ArrayList<Line> lines;
-    static Background background;
     static BrickBackground brickBackground;
     static WindNoShader wind;
     static ArrayList<SpecialBall> specialBalls;
@@ -298,10 +297,10 @@ public class Game {
     }
 
     public static void initEdges(){
-        Game.bordaE = new Edge("bordaE", -999, 0, Entity.TYPE_LEFT_BORDER, 1000, Game.resolutionY*2);
-        Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0,  Entity.TYPE_RIGHT_BORDER, 2000, Game.resolutionY*2);
-        Game.bordaC = new Edge("bordaC",  1, -1000,  Entity.TYPE_TOP_BORDER, Game.resolutionX-4, 1001);
-        Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY,  Entity.TYPE_BOTTOM_BORDER, Game.resolutionX*3, 1000);
+        Game.bordaE = new Edge("bordaE", -999, 0, Entity.TYPE_LEFT_BORDER, 1000, Game.resolutionY*2, Color.pretoCheio);
+        Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0,  Entity.TYPE_RIGHT_BORDER, 2000, Game.resolutionY*2, Color.pretoCheio);
+        Game.bordaC = new Edge("bordaC",  1, -1000,  Entity.TYPE_TOP_BORDER, Game.resolutionX-4, 1001, Color.pretoCheio);
+        Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY,  Entity.TYPE_BOTTOM_BORDER, Game.resolutionX*3, 1000, Color.pretoCheio);
     }
 
     public static void initTittle(){
@@ -1467,7 +1466,7 @@ public class Game {
         ButtonHandler.button1Right = null;
         ButtonHandler.button2Left = null;
         ButtonHandler.button2Right = null;
-        background = null;
+
         brickBackground = null;
         MessagesHandler.messageTime.clearDisplay();
         MessagesHandler.messageCurrentLevel.clearDisplay();
@@ -2306,7 +2305,7 @@ public class Game {
         MessagesHandler.messagePreparation.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageInGame.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageMenu.prepareRender(matrixView, matrixProjection);
-        MessagesHandler.messageSubMenu.prepareRender(matrixView, matrixProjection);
+
         MessagesHandler.messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageGoogleLogged.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageConqueredStarsTotal.prepareRender(matrixView, matrixProjection);
@@ -2346,6 +2345,7 @@ public class Game {
         if (ButtonHandler.buttonFinalTargetRight != null) ButtonHandler.buttonFinalTargetRight.prepareRender(matrixView, matrixProjection);
 
 
+        MessagesHandler.messageSubMenu.prepareRender(matrixView, matrixProjection);
 
         MessagesHandler.bottomTextBox.prepareRender(matrixView, matrixProjection);
 

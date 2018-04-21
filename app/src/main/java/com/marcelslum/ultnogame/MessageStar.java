@@ -25,6 +25,9 @@ public class MessageStar extends Entity {
                     y + ((4 - i) * size * 1.2f),
                     size, size, Texture.TEXTURES,
                     TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
+
+
+
             stars.add(star);
             addChild(star);
         }
@@ -63,6 +66,8 @@ public class MessageStar extends Entity {
                         a2.start();
                         ab2.start();
                         star.updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
+
+
                     }
                 });
                 a.start();
@@ -110,6 +115,9 @@ public class MessageStar extends Entity {
                     }
                     animStars.start();
                 }
+
+
+
 
                 Animation anim = Utils.createAnimation4v(stars.get(0), "translateX", "translateX", 2000,
                         0f, stars.get(0).animTranslateX, 0.2f, 0f, 0.8f, 0f, 1f, Game.resolutionX, false, true);

@@ -41,6 +41,7 @@ public class MenuIconGraph extends Entity{
             for (int i = 0; i < 5; i++) {
                 Image im = new Image("star"+i, x + (sizeStars * i), y, sizeStars, sizeStars, Texture.TEXTURES,
                         TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
+
                 stars.add(im);
                 addChild(im);
 

@@ -189,6 +189,10 @@ public class LevelGoalsPanel extends Entity{
                     im = new Image("star" + i, starX, y + (size * 0.1f), size, size, Texture.TEXTURES,
                             TextureData.getTextureDataById(TextureData.TEXTURE_STAR_OFF_ID));
                 }
+
+                Utils.createAnimation2v(im, "rotateDuravel", "rotate", 10000, 0f, 0f, 1f, 360f, true, true).start();
+                Utils.createAnimation2v(im, "translateXDuravel", "translateX", 10000, 0f, 0f, 1f, -Game.resolutionX*0.001f, true, true).start();
+
                 stars.add(im);
                 addChild(im);
                 starX -= size;
