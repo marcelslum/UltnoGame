@@ -228,10 +228,10 @@ public class MenuIcon extends Entity{
                         Utils.createAnimation5v(innerIcon, "a"+iconNumber, "animTranslateY",
                                 3000,
                                 0f, 0f,
-                                0.2f + (0.1f * iconNumber), 0f,
-                                0.23f + (0.1f * iconNumber), -Game.resolutionY * 0.2f,
-                                0.26f + (0.1f * iconNumber), 0f,
-                                0f, 0f,
+                                0.2f + (0.03f * iconNumber), 0f,
+                                0.23f + (0.03f * iconNumber), -Game.resolutionY * 0.07f,
+                                0.37f + (0.03f * iconNumber), 0f,
+                                1f, 0f,
                                 true, true
                         ).start();
                         innerMenuIcon.unblock();
