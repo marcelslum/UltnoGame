@@ -17,7 +17,7 @@
     <string name="nivel">Nível: </string>
     <string name="messageMaxScoreTotal">Pontuação total: </string>
     <string name="googleLogado">Bem vindo </string>
-    <string name="googleNaoLogado">Não conectado ao Google Play Games. Tente conectar novamente no menu opções.</string>
+    <string name="googleNaoLogado">Não conectado ao Google Play Games.</string>
     <string name="googleErroLogar">Houve um erro ao conectar com o Google Play Games. Tente conectar novamente no menu opções.</string>
     <string name="messageCurrentLevel">Nível</string>
     <string name="messageGameOver">GAME OVER</string>

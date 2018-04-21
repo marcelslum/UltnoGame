@@ -702,14 +702,13 @@ public class Sound {
         }
 
         // se estiver na introdução, parteA, B ou C, deverá decidir qual será a próxima parte global
-        if (musicCurrentPart == MUSIC_INTRO || musicCurrentPart == MUSIC_PART_A || musicCurrentPart == MUSIC_PART_B || musicCurrentPart == MUSIC_PART_C) {
+        if (musicCurrentPart == MUSIC_INTRO || musicCurrentPart == MUSIC_PART_A || musicCurrentPart == MUSIC_PART_B || musicCurrentPart == MUSIC_PART_C || musicCurrentPart == MUSIC_PART_A_TO_PART_B || musicCurrentPart == MUSIC_PART_B_TO_PART_C) {
             float percentageOfTargets = 1f;
             if (Game.numberOfTargets > 0) {
                 percentageOfTargets = (float) Game.numberOfTargetsAlives / (float) Game.numberOfTargets;
             }
 
-            int nextGlobalPart = 0;
-
+            int nextGlobalPart;
 
             // CALCULA A PROXIMA PARTE GLOBAL, DE ACORDO COM O NUMERO DE ALVOS
             if (musicCurrentPart == MUSIC_INTRO){
@@ -722,12 +721,10 @@ public class Sound {
                 } else if (percentageOfTargets > 0.45f) {
                     nextGlobalPart  = MUSIC_GLOBAL_PART_B;
                 } else {
-                    nextGlobalPart = MUSIC_GLOBAL_PART_A;
                     nextGlobalPart = MUSIC_GLOBAL_PART_C;
                     //como não há transição direta da fase A para C, ajusta a próxima parte para B
                     if (musicCurrentGlobalPart == MUSIC_GLOBAL_PART_A){
                         nextGlobalPart = MUSIC_GLOBAL_PART_B;
-
                     }
                 }
             }
@@ -775,13 +772,13 @@ public class Sound {
                 } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B){
                     musicCurrentPart = MUSIC_PART_A_TO_PART_B;
                 }
-            } else if (musicCurrentPart == MUSIC_PART_B) {
+            } else if (musicCurrentPart == MUSIC_PART_B || musicCurrentPart == MUSIC_PART_A_TO_PART_B) {
                 if (nextGlobalPart == MUSIC_GLOBAL_PART_B){
                     musicCurrentPart = MUSIC_PART_B_TO_PART_B;
                 } else if (nextGlobalPart == MUSIC_GLOBAL_PART_C){
                     musicCurrentPart = MUSIC_PART_B_TO_PART_C;
                 }
-            } else if (musicCurrentPart == MUSIC_PART_C) {
+            } else if (musicCurrentPart == MUSIC_PART_C || musicCurrentPart == MUSIC_PART_B_TO_PART_C) {
                     musicCurrentPart = MUSIC_PART_C_TO_PART_C;
             }
 
@@ -838,6 +835,13 @@ public class Sound {
                     nomeDoArquivo = "01z-Transition-Aa3-Ba1.ogg";
                 }
             } else if (musicCurrentPart == MUSIC_PART_B_TO_PART_B){
+
+                // SE FOR ENTRAR TRANSIÇÃO PARA PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
+                if (Utils.getRandonFloat(0f, 1f) < 0.5f){
+                    musicMelodyMode = false;
+                } else {
+                    musicMelodyMode = true;
+                }
 
                 // PARTE B PARA B
                 if (musicCurrentSubPart == MUSIC_SUB_PART_B_A1){
@@ -911,6 +915,14 @@ public class Sound {
                 }
             } else if (musicCurrentPart == MUSIC_PART_B_TO_PART_C) {
                 // PARTE B PARA C
+
+                // SE FOR ENTRAR TRANSIÇÃO PARA PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
+                if (Utils.getRandonFloat(0f, 1f) < 0.5f){
+                    musicMelodyMode = false;
+                } else {
+                    musicMelodyMode = true;
+                }
+
                 if (musicCurrentSubPart == MUSIC_SUB_PART_B_A1) {
                     if (musicMelodyMode) {
                         nomeDoArquivo = "02z_melody-Transition-Ba1-Ca1.ogg";
@@ -933,8 +945,18 @@ public class Sound {
                     }
                     
                 }
+
             } else if (musicCurrentPart == MUSIC_PART_C_TO_PART_C){
                 // PARTE C PARA C
+
+
+                // SE FOR ENTRAR TRANSIÇÃO PARA PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
+                if (Utils.getRandonFloat(0f, 1f) < 0.5f){
+                    musicMelodyMode = false;
+                } else {
+                    musicMelodyMode = true;
+                }
+
                 if (musicCurrentSubPart == MUSIC_SUB_PART_C_A1){
                     if (nextSubPart == MUSIC_SUB_PART_C_A1){
                         if (musicMelodyMode){
@@ -1006,16 +1028,12 @@ public class Sound {
             }
 
 
-
-
-                // DEFINE A VARIAVEL CURRENT SUB PART
+            // DEFINE A VARIAVEL CURRENT SUB PART
             musicCurrentSubPart = nextSubPart;
 
-        }
-
-        else
+        } else {
         // SE ESTIVER NUMA TRANSIÇÃO, PULA PARA A PROXIMA PARTE
-        {
+
             switch (musicCurrentPart){
                 case MUSIC_INTRO_TO_PART_A:
                     musicCurrentPart = MUSIC_PART_A;
@@ -1023,14 +1041,8 @@ public class Sound {
                 case MUSIC_PART_A_TO_PART_A:
                     musicCurrentPart = MUSIC_PART_A;
                     break;
-                case MUSIC_PART_A_TO_PART_B:
-                    musicCurrentPart = MUSIC_PART_B;
-                    break;
                 case MUSIC_PART_B_TO_PART_B:
                     musicCurrentPart = MUSIC_PART_B;
-                    break;
-                case MUSIC_PART_B_TO_PART_C:
-                    musicCurrentPart = MUSIC_PART_C;
                     break;
                 case MUSIC_PART_C_TO_PART_C:
                     musicCurrentPart = MUSIC_PART_C;
@@ -1052,14 +1064,6 @@ public class Sound {
                     }
                     break;
                 case MUSIC_PART_B:
-
-                    // SE FOR PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
-                    if (Utils.getRandonFloat(0f, 1f) < 0.5f){
-                        musicMelodyMode = false;
-                    } else {
-                        musicMelodyMode = true;
-                    }
-
                     switch (musicCurrentSubPart){
                         case MUSIC_SUB_PART_B_A1:
                             if (musicMelodyMode){
@@ -1088,15 +1092,6 @@ public class Sound {
                     }
                     break;
                 case MUSIC_PART_C:
-
-
-                    // SE FOR PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
-                    if (Utils.getRandonFloat(0f, 1f) < 0.5f){
-                        musicMelodyMode = false;
-                    } else {
-                        musicMelodyMode = true;
-                    }
-
                     switch (musicCurrentSubPart){
                         case MUSIC_SUB_PART_C_A1:
                             if (musicMelodyMode){

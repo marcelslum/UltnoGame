@@ -218,19 +218,34 @@ public class MenuIcon extends Entity{
                 } else {
                     Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateX", 500, (Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
                 }
-                Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateY", 500, (-Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0).start();
+
+                final Button innerIcon = icons.get(i);
+                final int iconNumber = i;
+                Animation a = Utils.createSimpleAnimation(icons.get(i), "a" + i, "animTranslateY", 500, (-Game.resolutionX * 0.5f) + (-Game.resolutionX * Utils.getRandonFloat(0f, 1f)), 0);
+                a.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        Utils.createAnimation5v(innerIcon, "a"+iconNumber, "animTranslateY",
+                                3000,
+                                0f, 0f,
+                                0.2f + (0.1f * iconNumber), 0f,
+                                0.23f + (0.1f * iconNumber), -Game.resolutionY * 0.2f,
+                                0.26f + (0.1f * iconNumber), 0f,
+                                0f, 0f,
+                                true, true
+                        ).start();
+                        innerMenuIcon.unblock();
+                        SaveGame.setAllSecretSeen();
+                    }
+                });
+                a.start();
+
+
                 Utils.createSimpleAnimation(icons.get(i), "a" + i, "alpha", 500, 0f, 1f).start();
             } else {
                 Animation anim = Utils.createAnimation3v(icons.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true);
                 if (!delayShowUnblockMarked) {
                     //Sound.playSoundPool(Sound.soundSecretMenuUnblocked, 0.5f, 0.5f, 0);
-                    anim.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationEnd() {
-                            innerMenuIcon.unblock();
-                            SaveGame.setAllSecretSeen();
-                        }
-                    });
                     delayShowUnblockMarked = true;
                 }
                 anim.start();
@@ -260,9 +275,18 @@ public class MenuIcon extends Entity{
             if (!graphDelayShow.get(i)){
                 graph.get(i).increaseAlpha(1200, 1f);
             } else {
-                Utils.createAnimation3v(graph.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true).start();
+                Animation a = Utils.createAnimation3v(graph.get(i), "a"+i, "alpha", 4000, 0, 0f, 0.5f, 0f, 1f, 1f, false, true);
+                a.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+
+                    }
+                });
+                a.start();
+
             }
         }
+
         
         for (int i = 0; i < innerTexts.size(); i++) {
             innerTexts.get(i).alpha = 0f;
