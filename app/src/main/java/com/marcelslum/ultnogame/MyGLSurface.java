@@ -108,6 +108,17 @@ public class MyGLSurface extends GLSurfaceView {
             // thread:
             public void run() {
                 Game.bordaB.y = Game.resolutionY;
+                Game.bordaB2.clearDisplay();
+                Game.bordaB3.clearDisplay();
+                Game.bordaB4.clearDisplay();
+                Game.bordaB5.clearDisplay();
+                Game.bordaB6.clearDisplay();
+                Game.bordaB7.clearDisplay();
+                Game.bordaB8.clearDisplay();
+                Game.bordaB9.clearDisplay();
+                Game.bordaB10.clearDisplay();
+
+
                 Game.eraseAllGameEntities();
                 Game.eraseAllHudEntities();
 

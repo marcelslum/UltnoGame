@@ -26,7 +26,7 @@ public class BallDataPanel extends Entity{
     private static final Color COLOR_BAR_GREEN_LIGHT = new Color (0.65f, 0.83f, 0.82f, 1f);
     private static final Color COLOR_BAR_BLUE_DARK = new Color (0.21f, 0.27f, 0.64f, 1f);//54 69 164
     private static final Color COLOR_BAR_BLUE_LIGHT = new Color (0.79f, 0.82f, 1f, 1f); //202 204 256
-    private static final Color COLOR_BACK = new Color (0.2f, 0.2f, 0.2f, 0.5f);
+    private static final Color COLOR_BACK = new Color (0.25f, 0.25f, 0.25f, 0.7f);
    
     
     float velocityPercent = 0f;

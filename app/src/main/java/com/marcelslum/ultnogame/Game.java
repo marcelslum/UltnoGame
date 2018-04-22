@@ -91,6 +91,15 @@ public class Game {
     static Edge bordaE;
     static Edge bordaD;
     static Edge bordaB;
+    static Rectangle bordaB2;
+    static Rectangle bordaB3;
+    static Rectangle bordaB4;
+    static Rectangle bordaB5;
+    static Rectangle bordaB6;
+    static Rectangle bordaB7;
+    static Rectangle bordaB8;
+    static Rectangle bordaB9;
+    static Rectangle bordaB10;
     static Rectangle frame;
     static Rectangle topFrame;
 
@@ -301,12 +310,21 @@ public class Game {
         Game.bordaD = new Edge("bordaD", Game.resolutionX-2, 0,  Entity.TYPE_RIGHT_BORDER, 2000, Game.resolutionY*2, Color.pretoCheio);
         Game.bordaC = new Edge("bordaC",  1, -1000,  Entity.TYPE_TOP_BORDER, Game.resolutionX-4, 1001, Color.pretoCheio);
         Game.bordaB = new Edge("bordaB", -1000, Game.resolutionY,  Entity.TYPE_BOTTOM_BORDER, Game.resolutionX*3, 1000, Color.pretoCheio);
+        Game.bordaB2 = new Rectangle("bordaB2", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX, Game.gameAreaResolutionY * 0.008f, -1, Color.cinza2);
+        Game.bordaB3 = new Rectangle("bordaB3", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.2f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.5f, 0.5f, 0.5f, 0.4f ));
+        Game.bordaB4 = new Rectangle("bordaB4", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.3f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.5f, 0.5f, 0.5f, 0.4f ));
+        Game.bordaB5 = new Rectangle("bordaB5", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.1f, Game.gameAreaResolutionY * 0.008f, -1, new Color(1f, 1f, 1f, 0.4f ));
+        Game.bordaB6 = new Rectangle("bordaB6", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.22f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.2f, 0.2f, 0.2f, 0.4f ));
+        Game.bordaB7 = new Rectangle("bordaB7", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.35f, Game.gameAreaResolutionY * 0.008f, -1, new Color(1f, 1f, 1f, 0.4f));
+        Game.bordaB8 = new Rectangle("bordaB8", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.13f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.8f, 0.8f, 0.8f, 0.3f ));
+        Game.bordaB9 = new Rectangle("bordaB9", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.05f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.1f, 0.1f, 0.1f, 0.4f ));
+        Game.bordaB10 = new Rectangle("bordaB10", 0f, Game.resolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.18f, Game.gameAreaResolutionY * 0.008f, -1, new Color(1f, 1f, 1f, 0.2f ));
     }
 
     public static void initTittle(){
 
         tittle = new Image("tittle",
-                gameAreaResolutionX * 0.33f, gameAreaResolutionY * 0.15f,
+                gameAreaResolutionX * 0.34f, gameAreaResolutionY * 0.15f,
                 gameAreaResolutionX * 0.32f, gameAreaResolutionX * 0.32f * 0.3671875f,
                 Texture.TEXTURES,
                 TextureData.getTextureDataById(TextureData.TEXTURE_TITTLE_ID),
@@ -586,6 +604,8 @@ public class Game {
 
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
+            Game.bordaB2.clearDisplay();
+            Game.bordaB3.clearDisplay();
 
             MenuHandler.updateGroupMenu();
             MenuHandler.groupMenu.appear();
@@ -725,6 +745,16 @@ public class Game {
             initTittle();
             mainActivity.showAdView();
             Game.bordaB.y = Game.resolutionY;
+            Game.bordaB2.clearDisplay();
+            Game.bordaB3.clearDisplay();
+            Game.bordaB4.clearDisplay();
+            Game.bordaB5.clearDisplay();
+            Game.bordaB6.clearDisplay();
+            Game.bordaB7.clearDisplay();
+            Game.bordaB8.clearDisplay();
+            Game.bordaB9.clearDisplay();
+            Game.bordaB10.clearDisplay();
+
             MenuHandler.menuOptions.block();
             MenuHandler.menuInGame.block();
             MenuHandler.groupMenu.block();
@@ -1022,6 +1052,17 @@ public class Game {
             reduceAllGameEntitiesAlpha(300);
 
             Utils.createSimpleAnimation(bordaB, "translateVitoria", "translateY", 2000, 0f, resolutionY - gameAreaResolutionY).start();
+            Utils.createSimpleAnimation(bordaB2, "translateVitoria", "translateY", 2000, 0f, resolutionY - gameAreaResolutionY).start();
+            Utils.createSimpleAnimation(bordaB2, "alphaVitoria", "alpha", 2000, 1f, 0f).start();
+            Utils.createSimpleAnimation(bordaB3, "alphaVitoria", "alpha", 500, 1f, 0f).start();
+            Utils.createSimpleAnimation(bordaB4, "alphaVitoria", "alpha", 500, 1f, 0f).start();
+            Utils.createSimpleAnimation(bordaB5, "alphaVitoria", "alpha", 500, 1f, 0f).start();
+            Utils.createSimpleAnimation(bordaB6, "alphaVitoria", "alpha", 500, 1f, 0f).start();
+            Utils.createSimpleAnimation(bordaB7, "alphaVitoria", "alpha", 500, 1f, 0f).start();
+            Utils.createSimpleAnimation(bordaB8, "alphaVitoria", "alpha", 500, 1f, 0f).start();
+            Utils.createSimpleAnimation(bordaB9, "alphaVitoria", "alpha", 500, 1f, 0f).start();
+            Utils.createSimpleAnimation(bordaB10, "alphaVitoria", "alpha", 500, 1f, 0f).start();
+
             if (ButtonHandler.button1Left != null) {
                 Utils.createSimpleAnimation(ButtonHandler.button1Left, "alphaVitoria", "alpha", 1000, ButtonHandler.button1Left.alpha, 0f).start();
                 ButtonHandler.button1Left.block();
@@ -1250,6 +1291,18 @@ public class Game {
             currentLevelIcon.display();
 
             MessageStarWin.messageStarsWin.show(StarsHandler.newStars, StarsHandler.newStars - StarsHandler.previousStars, true);
+
+            for (int i = 0; i < MessageStarWin.messageStarsWin.stars.size(); i++) {
+                Utils.createAnimation5v(MessageStarWin.messageStarsWin.stars.get(i), "a"+i, "animTranslateY",
+                        3000,
+                        0f, 0f,
+                        0.2f + (0.03f * i), 0f,
+                        0.22f + (0.03f * i), -Game.resolutionY * 0.01f,
+                        0.3f + (0.03f * i), 0f,
+                        1f, 0f,
+                        true, true
+                ).start();
+            }
 
             MessagesHandler.starForMessage.alpha = 0f;
             MessagesHandler.messageConqueredStarsTotal.alpha = 0f;
@@ -2162,6 +2215,16 @@ public class Game {
         if (bordaD != null)bordaD.checkTransformations(true);
         if (bordaC != null)bordaC.checkTransformations(true);
         if (bordaB != null)bordaB.checkTransformations(true);
+        if (bordaB2 != null)bordaB2.checkTransformations(true);
+        if (bordaB3 != null)bordaB3.checkTransformations(true);
+        if (bordaB4 != null)bordaB4.checkTransformations(true);
+        if (bordaB5 != null)bordaB5.checkTransformations(true);
+        if (bordaB6 != null)bordaB6.checkTransformations(true);
+        if (bordaB7 != null)bordaB7.checkTransformations(true);
+        if (bordaB8 != null)bordaB8.checkTransformations(true);
+        if (bordaB9 != null)bordaB9.checkTransformations(true);
+        if (bordaB10 != null)bordaB10.checkTransformations(true);
+
 
         if (frame != null)frame.checkTransformations(true);
         if (frame != null)topFrame.checkTransformations(true);
@@ -2322,10 +2385,19 @@ public class Game {
                 MessagesHandler.messageTime.prepareRender(matrixView, matrixProjection);
         }
         if (tipTextBox != null) tipTextBox.prepareRender(matrixView, matrixProjection);
-        if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
-        if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
         if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
         if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
+        if (bordaB2 != null)bordaB2.prepareRender(matrixView, matrixProjection);
+        if (bordaB3 != null)bordaB3.prepareRender(matrixView, matrixProjection);
+        if (bordaB4 != null)bordaB4.prepareRender(matrixView, matrixProjection);
+        if (bordaB5 != null)bordaB5.prepareRender(matrixView, matrixProjection);
+        if (bordaB6 != null)bordaB6.prepareRender(matrixView, matrixProjection);
+        if (bordaB7 != null)bordaB7.prepareRender(matrixView, matrixProjection);
+        if (bordaB8 != null)bordaB8.prepareRender(matrixView, matrixProjection);
+        if (bordaB9 != null)bordaB9.prepareRender(matrixView, matrixProjection);
+        if (bordaB10 != null)bordaB10.prepareRender(matrixView, matrixProjection);
+        if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
+        if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
 
         if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
         if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.prepareRender(matrixView, matrixProjection);
