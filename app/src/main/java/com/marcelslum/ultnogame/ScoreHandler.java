@@ -37,7 +37,7 @@ public class ScoreHandler {
 
     public static void createScorePanel() {
         ScoreHandler.scorePanel = new ScorePanel("scorePanel",
-                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.047f, Game.resolutionY * 0.07f);
+                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.046f, Game.resolutionY * 0.07f);
     }
 
     public static float getScorePanelX() {

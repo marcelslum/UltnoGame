@@ -14,22 +14,22 @@ import java.util.ArrayList;
  */
 public class Entity{
 
+    protected final int SIZEOF_FLOAT = 4;
+    protected final int SIZEOF_SHORT = 2;
 
     public boolean inUse = false;
     
     final public static int ATTRIB_POS = 0;
     final public static int ATTRIB_UV = 1;
     final public static int ATTRIB_COLOR = 2;
-    
-    static final int SIZEOF_FLOAT = 4;
-    static final int SIZEOF_SHORT = 2;
+
     
     public static int currentBoundedTextureId;
 
     public TextureData textureData;
 
-    public int [] vbo;
-    public int [] ibo;
+    protected int [] vbo;
+    protected int [] ibo;
 
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
@@ -531,6 +531,7 @@ public class Entity{
             Matrix.translateM(matrixModel, 0, positionX + animTranslateX,
                     positionY + animTranslateY, 0);
         }
+
         if (accumulatedRotate != 0 || animRotateAngle != 0) {
             float width = getWidth();
             float height = getHeight();

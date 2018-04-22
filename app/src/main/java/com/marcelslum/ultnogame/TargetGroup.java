@@ -6,23 +6,12 @@ import android.util.Log;
 
 class TargetGroup extends Entity{
 
-    static final String TAG = "TargetGroup";
-    private static final int SIZEOF_FLOAT = 4;
-    private static final int SIZEOF_SHORT = 2;
-
-
-    	public static int [] vbo = new int[3];
-    	public static int [] ibo = new int[1];
-
-    	public float[] individualUvsData;
-    	public float[] individualColorsData;
-
-    	public final int BYTES_PER_FLOAT = 4;
-    	public final int BYTES_PER_SHORT = 2;
-	
+    final String TAG = "TargetGroup";
 
     TargetGroup(){
         super("targetGroup", 0f, 0f, Entity.TYPE_TARGET_GROUP);
+        vbo = new int[3];
+        ibo = new int[1];
         textureId = Texture.TEXTURES;
         program = Game.imageColorizedProgram;
         setDrawInfo();
@@ -192,7 +181,9 @@ class TargetGroup extends Entity{
     @Override
     public void render(float[] matrixView, float[] matrixProjection) {
 
-	 checkBufferChange();   
+        if (MyGLRenderer.tick){
+            checkBufferChange();
+        }
 	    
         if (!isVisible){
             return;

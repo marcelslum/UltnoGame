@@ -32,6 +32,12 @@ public abstract class Utils {
     public static float getVectorMagnitude(float x, float y){
         return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
     }
+
+    public static void resetAlphaCleanAnimationAndDisplay(Entity object){
+        object.cleanAnimations();
+        object.alpha = 1f;
+        object.display();
+    }
     
     public static double getVectorMagnitude(double x, double y){
         return Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
@@ -61,7 +67,9 @@ public abstract class Utils {
         }
     }
 
+
     public static float getRandonFloat(float min, float max){
+
         return min + ((float)Math.random() * ((max - min)));
     }
 
@@ -161,6 +169,25 @@ public abstract class Utils {
     }
     
     public static void insertRectangleVerticesData(float[] array, int startIndex, float x1, float x2, float y1, float y2, float z){
+        array[startIndex] = x1;
+        array[1 + (startIndex)] = y2;
+        array[2 + (startIndex)] = z;
+        array[3 + (startIndex)] = x2;
+        array[4 + (startIndex)] = y2;
+        array[5 + (startIndex)] = z;
+        array[6 + (startIndex)] = x2;
+        array[7 + (startIndex)] = y1;
+        array[8 + (startIndex)] = z;
+        array[9 + (startIndex)] = x1;
+        array[10 + (startIndex)] = y1;
+        array[11 + (startIndex)] = z;
+    }
+
+    public static void insertRectangleVerticesDataAndLog(float[] array, int startIndex, float x1, float x2, float y1, float y2, float z){
+
+        Log.e(TAG, x1 + "; " + x2 + "; " + y1 + "; " + y2);
+
+
         array[startIndex] = x1;
         array[1 + (startIndex)] = y2;
         array[2 + (startIndex)] = z;

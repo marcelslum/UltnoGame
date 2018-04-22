@@ -80,8 +80,6 @@ public class Messages extends Entity {
         rectangle.isVisible = true;
         rectangle.alpha = 0.4f;
 
-
-        Log.e(TAG, "playTextBoxAppear");
         Game.sound.playTextBoxAppear();
 
         //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);

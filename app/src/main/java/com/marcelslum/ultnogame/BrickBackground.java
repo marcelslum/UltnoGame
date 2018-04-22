@@ -131,6 +131,10 @@ public class BrickBackground extends Entity {
 
     public void changeDrawInfo(){
 
+        if (MyGLRenderer.tick){
+            return;
+        }
+
         //Log.e(TAG, "ballCollidedGreen "+ballCollidedGreen);
         //Log.e(TAG, "ballCollidedBlue "+ballCollidedBlue);
         //Log.e(TAG, "ballCollidedRed "+ballCollidedRed);
@@ -155,9 +159,8 @@ public class BrickBackground extends Entity {
 
          for (int i = 0; i < numberOfBricks; i++){
 
-            float randonColor = Utils.getRandonFloat(0f, 1f);
+            float randonColor = Utils.getRandonFloat(0.0000001f, 1.0000001f);
             float randonGray = Utils.getRandonFloat(0f, 1f);
-
 
             if (ballCollidedBlue == 2000 && randonColor < percentage){
                 //Log.e(TAG, "1");

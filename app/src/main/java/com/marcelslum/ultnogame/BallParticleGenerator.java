@@ -124,7 +124,11 @@ public class BallParticleGenerator extends Entity {
     @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection){
         if (isActive) {
-            updateDrawInfo();
+
+            if (MyGLRenderer.tick){
+                updateDrawInfo();
+            }
+            
             super.prepareRender(matrixView, matrixProjection);
         }
     }

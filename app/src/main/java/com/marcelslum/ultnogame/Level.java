@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -98,13 +96,13 @@ public class Level {
         ScoreHandler.createScorePanel();
 
         Game.ballDataPanel = new BallDataPanel("ballDataPanel",
-            ScoreHandler.getScorePanelX(),
-            Game.gameAreaResolutionY * 1.05f + Game.resolutionY * 0.075f,
-            ScoreHandler.getScorePanelWidth(),
+            ScoreHandler.getScorePanelX() - (ScoreHandler.getScorePanelWidth() / 4f),
+            Game.gameAreaResolutionY * 1.05f + Game.resolutionY * 0.0725f,
+            ScoreHandler.getScorePanelWidth() * 1.5f,
             Game.resolutionY * 0.025f);
 
         Game.ballGoalsPanel = new BallGoalsPanel("ballGoalsPanel", this.game,
-                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.005f, Game.resolutionY * 0.027f);
+                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.007f, Game.resolutionY * 0.027f);
         Game.ballGoalsPanel.alpha = 0.9f;
 
         // escolhe o background de acordo com o número do nível
@@ -127,111 +125,8 @@ public class Level {
             Game.wind = new WindNoShader("wind", 0f, 0f, Game.gameAreaResolutionY, Game.gameAreaResolutionX, Game.gameAreaResolutionX * 0.2f, false);
         }
 
+
         Game.bordaB.y = Game.gameAreaResolutionY-2;
-        Game.bordaB.cleanAnimations();
-        Game.bordaB2.display();
-        Game.bordaB2.alpha = 1f;
-        Game.bordaB2.y = Game.gameAreaResolutionY-2;
-        Game.bordaB2.cleanAnimations();
-
-        Game.bordaB3.display();
-        Game.bordaB3.alpha = 1f;
-        Game.bordaB3.y = Game.gameAreaResolutionY-2;
-        Game.bordaB3.cleanAnimations();
-
-        Game.bordaB4.display();
-        Game.bordaB4.alpha = 1f;
-        Game.bordaB4.y = Game.gameAreaResolutionY-2;
-        Game.bordaB4.cleanAnimations();
-
-        Game.bordaB5.display();
-        Game.bordaB5.alpha = 1f;
-        Game.bordaB5.y = Game.gameAreaResolutionY-2;
-        Game.bordaB5.cleanAnimations();
-
-        Game.bordaB6.display();
-        Game.bordaB6.alpha = 1f;
-        Game.bordaB6.y = Game.gameAreaResolutionY-2;
-        Game.bordaB6.cleanAnimations();
-
-        Game.bordaB7.display();
-        Game.bordaB7.alpha = 1f;
-        Game.bordaB7.y = Game.gameAreaResolutionY-2;
-        Game.bordaB7.cleanAnimations();
-
-        Game.bordaB8.display();
-        Game.bordaB8.alpha = 1f;
-        Game.bordaB8.y = Game.gameAreaResolutionY-2;
-        Game.bordaB8.cleanAnimations();
-
-        Game.bordaB9.display();
-        Game.bordaB9.alpha = 1f;
-        Game.bordaB9.y = Game.gameAreaResolutionY-2;
-        Game.bordaB9.cleanAnimations();
-
-        Game.bordaB10.display();
-        Game.bordaB10.alpha = 1f;
-        Game.bordaB10.y = Game.gameAreaResolutionY-2;
-        Game.bordaB10.cleanAnimations();
-
-
-        Utils.createAnimation4v(Game.bordaB3, "b3", "animTranslateX", 4000,
-                0f, -Game.gameAreaResolutionX,
-                0.2f, -Game.gameAreaResolutionX,
-                0.5f, Game.gameAreaResolutionX,
-                1f, Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(Game.bordaB4, "b4", "animTranslateX", 3750,
-                0f, -Game.gameAreaResolutionX,
-                0.2f, -Game.gameAreaResolutionX,
-                0.5f, Game.gameAreaResolutionX,
-                1f, Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(Game.bordaB5, "b5", "animTranslateX", 4900,
-                0f, -Game.gameAreaResolutionX,
-                0.2f, -Game.gameAreaResolutionX,
-                0.5f, Game.gameAreaResolutionX,
-                1f, Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(Game.bordaB6, "b6", "animTranslateX", 5500,
-                0f, Game.gameAreaResolutionX,
-                0.2f, Game.gameAreaResolutionX,
-                0.5f, -Game.gameAreaResolutionX,
-                1f, -Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(Game.bordaB7, "b7", "animTranslateX", 4300,
-                0f, Game.gameAreaResolutionX,
-                0.2f, Game.gameAreaResolutionX,
-                0.5f, -Game.gameAreaResolutionX,
-                1f, -Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(Game.bordaB8, "b8", "animTranslateX", 4800,
-                0f, Game.gameAreaResolutionX,
-                0.2f, Game.gameAreaResolutionX,
-                0.5f, -Game.gameAreaResolutionX,
-                1f, -Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(Game.bordaB9, "b9", "animTranslateX", 5500,
-                0f, -Game.gameAreaResolutionX,
-                0.2f, -Game.gameAreaResolutionX,
-                0.5f, Game.gameAreaResolutionX,
-                1f, Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(Game.bordaB10, "b10", "animTranslateX", 3800,
-                0f, Game.gameAreaResolutionX,
-                0.2f, Game.gameAreaResolutionX,
-                0.5f, -Game.gameAreaResolutionX,
-                1f, -Game.gameAreaResolutionX,
-                true, true).start();
-
-
 
         //Log.e("Level loadEnt", "1");
 

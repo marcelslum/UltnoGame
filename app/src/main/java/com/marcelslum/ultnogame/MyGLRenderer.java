@@ -158,8 +158,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     long lastInternetCheck = -1;
 
+    public static boolean tick = false;
+
+
     @Override
     public void onDrawFrame(GL10 unused) {
+
+
+        if (tick){
+            tick = false;
+        } else {
+            tick = true;
+        }
+
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
         GLES20.glClearColor(0.895f, 0.89f, 0.896f, 1.0f);
 
