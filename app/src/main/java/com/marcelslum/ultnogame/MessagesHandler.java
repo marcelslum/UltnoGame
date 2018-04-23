@@ -205,8 +205,7 @@ public class MessagesHandler {
             return;
         }
 
-        Log.e(TAG, "showing bottom text: " + text);
-
+        //Log.e(TAG, "showing bottom text: " + text);
 
         float previousPosition = bottomTextBox.y;
         String previousText = bottomTextBox.text;

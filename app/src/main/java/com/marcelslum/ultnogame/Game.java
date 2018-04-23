@@ -9,7 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Vibrator;
-import android.util.Log;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -27,7 +26,7 @@ public class Game {
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
     public static boolean showMessageNotConnectedOnGoogle = false;
-    public static boolean exibirLogDeFramesParaDebug = true;
+    public static boolean exibirLogDeFramesParaDebug = false;
     public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
@@ -255,7 +254,7 @@ public class Game {
         setGameState(Game.GAME_STATE_INTRO);
     }
 
-    public static void activateFrame(int duration){
+    public static void showBlackFrameTransition(int duration){
         frame.display();
         frame.alpha = 1f;
 
@@ -576,6 +575,10 @@ public class Game {
         } else if (state == GAME_STATE_SELECAO_GRUPO) {
 
             eraseAllGameEntities();
+
+            if (!sameState) {
+                    showBlackFrameTransition(500);
+            }
             
             Sound.stopAndReleaseMusic();
 
@@ -602,6 +605,10 @@ public class Game {
             
         } else if (state == GAME_STATE_MENU_TUTORIAL){
 
+            if (!sameState) {
+                showBlackFrameTransition(500);
+            }
+
             Game.sound.playMenuIconDrop();
 
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/tutorials");
@@ -615,6 +622,11 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
 
         } else if (state == GAME_STATE_SELECAO_LEVEL) {
+
+
+            if (!sameState) {
+                showBlackFrameTransition(500);
+            }
 
             mainActivity.showAdView();
 
@@ -662,7 +674,7 @@ public class Game {
             Sound.musicCurrentPart = Sound.MUSIC_PRE_INTRO;
             Sound.musicCurrentGlobalPart = Sound.MUSIC_GLOBAL_PART_A;
             Sound.musicCurrentSubPart = Sound.MUSIC_SUB_PART_A_A1;
-            Game.sound.playMusic();
+            //Game.sound.playMusic();
 
             if (previousState == GAME_STATE_SOBRE){
                 Game.aboutTextView.blockAndClearDisplay();
@@ -718,7 +730,7 @@ public class Game {
 
             if (!sameState) {
                 if (previousState != GAME_STATE_OPCOES) {
-                    activateFrame(500);
+                    showBlackFrameTransition(500);
                 }
             }
 
@@ -789,7 +801,8 @@ public class Game {
             TimeHandler.secondsOfLevelPlay = 0;
             TimeHandler.lastSeconds = 0;
             mainActivity.hideAdView();
-            if (!sameState) {activateFrame(2500);}
+            if (!sameState) {
+                showBlackFrameTransition(2500);}
             Level.levelObject.loadEntities();
 
             // cria a animação de preparação;
@@ -1357,7 +1370,7 @@ public class Game {
             MenuHandler.tutorialMenu.clearDisplay();
             MenuHandler.tutorialMenu.block();
             if (!sameState) {
-                activateFrame(500);
+                showBlackFrameTransition(500);
             }
             mainActivity.hideAdView();
             Tutorial.loadTutorial();

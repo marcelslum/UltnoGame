@@ -241,7 +241,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                         if (Utils.getTime() - lastInternetCheck > 300) {
                             Sound.checkLoopPlaying();
                             lastInternetCheck = Utils.getTime();
-                            Sound.setMusicVolume(Sound.musicVolume - 0.03f);
+                            Sound.setMusicVolume(Sound.musicVolume - 0.02f);
                         }
                     }
                 }

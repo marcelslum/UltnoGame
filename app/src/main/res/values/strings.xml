@@ -522,6 +522,8 @@
     <string name="nao_conectado_google">Não conectado ao Google. </string>
     <string name="menuVelocityContinuar">Continuar</string>
     <string name="menuVelocityAlterar">Alterar velocidade</string>
+    <string name="mais">+</string>
+    <string name="menos">-</string>
 
 
 </resources>

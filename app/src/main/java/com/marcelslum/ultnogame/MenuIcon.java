@@ -198,7 +198,29 @@ public class MenuIcon extends Entity{
 
         blockAllIcons();
 
+        for (int i = 0; i < MAX_NUMBER_OF_ELEMENTS; i++) {
+            icons[i].accumulatedTranslateX = 0f;
+            texts[i].accumulatedTranslateX = 0f;
+            texts2[i].accumulatedTranslateX = 0f;
+            innerTexts[i].accumulatedTranslateX = 0f;
+            if (graph[i] != null) {
+                graph[i].accumulatedTranslateX = 0f;
+            }
+
+            icons[i].cleanAnimations();
+            texts[i].cleanAnimations();
+            texts2[i].cleanAnimations();
+            innerTexts[i].cleanAnimations();
+            if (graph[i] != null) {
+                graph[i].cleanAnimations();
+            }
+        }
+
+
         display();
+
+
+
 
         final MenuIcon innerMenuIcon = this;
 

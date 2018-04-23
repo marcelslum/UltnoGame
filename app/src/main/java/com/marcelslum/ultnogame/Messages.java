@@ -9,11 +9,34 @@ public class Messages extends Entity {
     ArrayList<Entity> childs2;
     ArrayList<Entity> childs3;
 
+
+    private static Text [] texts;
+
     public Messages() {
         super("messages", Game.resolutionX * 0.97f, Game.gameAreaResolutionY * 0.7f, Entity.TYPE_PANEL);
+
+        if (texts == null){
+            texts = new Text[40];
+        }
+
+        for (int i = 0; i < texts.length; i++) {
+            texts[i] = new Text();
+            texts[i].isVisible = false;
+        }
+
         isVisible = true;
         childs2 = new ArrayList<>();
         childs3 = new ArrayList<>();
+    }
+
+    private Text getUnusedText(){
+        for (int i = 0; i < texts.length; i++) {
+            Log.e(TAG, "text " + i + " isVisible " + texts[i].isVisible);
+            if (!texts[i].isVisible){
+                return texts[i];
+            }
+        }
+        return new Text();
     }
 
     public void showMessage(String messageText){
@@ -36,14 +59,18 @@ public class Messages extends Entity {
         float padd =  Game.gameAreaResolutionX * 0.01f;
         if (childToReplace != -1){
 
-            textObject = new Text();//Game.textPool.get();
+            textObject = getUnusedText();//Game.textPool.get();
             textObject.setData("text", x, childs.get(childToReplace).y,
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (1f, 1f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
+            textObject.isVisible = true;
             childs.set(childToReplace, textObject);
 
-            textObject2 = Game.textPool.get();
+
+
+            textObject2 = getUnusedText();
             textObject2.setData("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), childs.get(childToReplace).y + (Game.gameAreaResolutionY * 0.045f * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.6f, 0.6f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
+            textObject2.isVisible = true;
             childs2.set(childToReplace, textObject2);
 
             float textWidth = textObject.getWidth();
@@ -53,14 +80,16 @@ public class Messages extends Entity {
 
 
         } else {
-            textObject = new Text();//Game.textPool.get();
+            textObject = getUnusedText();//Game.textPool.get();
             textObject.setData("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (1f, 1f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
+            textObject.isVisible = true;
             childs.add(textObject);
 
-            textObject2 = Game.textPool.get();
+            textObject2 = getUnusedText();
             textObject2.setData("text2", x + (Game.gameAreaResolutionY * 0.045f * 0.07f), y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f) + (Game.gameAreaResolutionY * 0.045f * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (0.6f, 0.6f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
+            textObject2.isVisible = true;
             childs2.add(textObject2);
 
             float textWidth = textObject.getWidth();
@@ -74,17 +103,12 @@ public class Messages extends Entity {
         textObject2.animTranslateX = Game.resolutionX;
         rectangle.animTranslateX =  Game.resolutionX;
 
-
-        textObject.isVisible = true;
-        textObject2.isVisible = true;
         rectangle.isVisible = true;
         rectangle.alpha = 0.4f;
 
         Game.sound.playTextBoxAppear();
 
         //Sound.playSoundPool(Sound.soundTextBoxAppear, 0.3f, 0.3f, 0);
-
-
 
         Animation anim1 = Utils.createAnimation3v(textObject, "translateX", "translateX", 2225,
                 0f, Game.resolutionX, 0.1f, 0f, 0.9f, -Game.resolutionX * 0.05f, false, true);
