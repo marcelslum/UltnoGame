@@ -36,7 +36,7 @@ public class Messages extends Entity {
         float padd =  Game.gameAreaResolutionX * 0.01f;
         if (childToReplace != -1){
 
-            textObject = Game.textPool.get();
+            textObject = new Text();//Game.textPool.get();
             textObject.setData("text", x, childs.get(childToReplace).y,
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (1f, 1f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.set(childToReplace, textObject);
@@ -53,7 +53,7 @@ public class Messages extends Entity {
 
 
         } else {
-            textObject = Game.textPool.get();
+            textObject = new Text();//Game.textPool.get();
             textObject.setData("text", x, y - (numberOfActiveTexts * Game.gameAreaResolutionY * 0.07f),
                     Game.gameAreaResolutionY * 0.045f, messageText, Game.font, new Color (1f, 1f, 0f, 1f), Text.TEXT_ALIGN_RIGHT);
             childs.add(textObject);

@@ -209,10 +209,13 @@ public class Target extends Rectangle {
                 //Log.e("target", "ghostanimstarted");
                 ghostAlphaAnim.start();
             }
-            if (states[this.currentState] == 0){
-                isCollidable = false;
-                isMovable = false;
-                isSolid = false;
+
+            if (this.currentState != -1) {
+                if (states[this.currentState] == 0) {
+                    isCollidable = false;
+                    isMovable = false;
+                    isSolid = false;
+                }
             }
         } else if (this.currentState != -1){
             if (states[this.currentState] == 0){

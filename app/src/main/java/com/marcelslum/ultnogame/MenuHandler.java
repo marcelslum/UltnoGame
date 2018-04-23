@@ -26,14 +26,13 @@ public class MenuHandler {
         groupMenu.clear();
         
         StarsHandler.updateConqueredStars();
-        
-        int lastId = 0;
+
         for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++){
             
             final LevelsGroupData lgd = LevelsGroupData.levelsGroupData.get(i);
             
             if (StarsHandler.conqueredStarsTotal >= lgd.starsToUnlock){
-                groupMenu.addOption(i, lgd.textureUnit, lgd.textureData, new Animation.AnimationListener() {
+                groupMenu.addOption(i, i, lgd.textureUnit, lgd.textureData, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Game.currentLevelsGroupDataSelected = lgd;
@@ -52,19 +51,19 @@ public class MenuHandler {
                         
                         Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
                     }
-                }, false, false);
+                }, false);
 
-                groupMenu.addText(1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
+                groupMenu.addText(i,1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f));
 
                 int totalPoints = 0;
                 for (int i2 = 0; i2 < lgd.levelsData.size(); i2++){
                         totalPoints += (int) SaveGame.saveGame.levelsPoints[lgd.levelsData.get(i2).number - 1];
                 }
 
-                groupMenu.addGraph("graph "+i, Game.resolutionY * 0.07f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_BAR, false);
+                groupMenu.addGraph(i,"graph "+i, Game.resolutionY * 0.07f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_BAR);
 
-                groupMenu.addText(2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
-                        Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, Color.cinza2, false);
+                groupMenu.addText(i,2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
+                        Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, Color.cinza2);
 
                 //Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
 
@@ -72,91 +71,30 @@ public class MenuHandler {
                 //Log.e(TAG, "group i = "+ i + " seen "+SaveGame.saveGame.groupsSeen[i]);
                 if (!SaveGame.saveGame.groupsSeen[i]){
 
-                    groupMenu.addInnerText(lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
+                    groupMenu.addInnerText(i,lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
                     groupMenu.iconNumberToShow = i;
                 }
 
                 int cStars = LevelsGroupData.getLevelsConqueredStars(lgd.firstLevel, lgd.finalLevel);
                 int totalStarsToConquer = (lgd.finalLevel - lgd.firstLevel + 1) * 5;
                 float percentage = (float)cStars/(float)totalStarsToConquer;
-                groupMenu.graph.get(groupMenu.graph.size() - 1).setPercentage(percentage);
+                groupMenu.graph[i].setPercentage(percentage);
             }
 
             if (StarsHandler.conqueredStarsTotal < lgd.starsToUnlock){
-                groupMenu.addOption(i, lgd.textureUnit, lgd.textureData, new Animation.AnimationListener() {
+                groupMenu.addOption(i, i, lgd.textureUnit, lgd.textureData, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_sem_estrelas), 2000);
                     }
-                }, true, false);
+                }, true);
 
-                groupMenu.icons.get(i).alpha = 0.2f;
-                groupMenu.addText(1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.7f, 0.7f, 0.7f, 1f), false);
-                groupMenu.addText(2, lgd.name+"2", Game.getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + Game.getContext().getResources().getString(R.string.estrelas), Game.resolutionY * 0.03f, Game.resolutionY * 0.07f, new Color(0.5f, 0.5f, 0.5f, 1f), false);
+                groupMenu.icons[i].alpha = 0.2f;
+                groupMenu.addText(i,1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.7f, 0.7f, 0.7f, 1f));
+                groupMenu.addText(i,2, lgd.name+"2", Game.getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + Game.getContext().getResources().getString(R.string.estrelas), Game.resolutionY * 0.03f, Game.resolutionY * 0.07f, new Color(0.5f, 0.5f, 0.5f, 1f));
             }
-            lastId = i;
         }
 
-        lastId += 1;
-        
-        int firstSecretLevelOnArray = 100;
-        for (int i = 0; i < Level.NUMBER_OF_SECRET; i++){
-            
-               final int numberOfCurrentLevelNumber = firstSecretLevelOnArray + 1 + i;
-            
-               if (SaveGame.saveGame.levelsUnlocked[firstSecretLevelOnArray + i]){
-
-
-                   int textureId;
-                   if (i == 0){
-                       textureId = TextureData.TEXTURE_l101;
-                   } else if (i == 1){
-                       textureId = TextureData.TEXTURE_l102;
-                   } else if (i == 2){
-                       textureId = TextureData.TEXTURE_l103;
-                   } else {
-                       textureId = TextureData.TEXTURE_l104;
-                   }
-                   final int ftextureId = textureId;
-
-                   groupMenu.addOption(lastId+i, Texture.TEXTURE_ICONS_CHANGE_TUTORIALS, TextureData.getTextureDataById(textureId), new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        SaveGame.saveGame.currentLevelNumber = numberOfCurrentLevelNumber;
-                        float size = Game.resolutionX * 0.21f;
-
-                        Game.currentLevelIcon = new Image("Game.currentLevelIcon", (Game.resolutionX * 0.5f) - size * 0.5f,
-                                Game.resolutionY * 0.2f,
-                                size, size,
-                                Texture.TEXTURE_ICONS_CHANGE_TUTORIALS, TextureData.getTextureDataById(ftextureId)
-                        );
-                        Game.currentLevelIcon.clearDisplay();
-                        Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
-                        }
-                    }, false, !SaveGame.saveGame.levelsSeen[firstSecretLevelOnArray + i]);
-                   
-                   groupMenu.addText(1, "Level secreto " + (i + 1), "Level secreto " + (i + 1), Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), !SaveGame.saveGame.levelsSeen[firstSecretLevelOnArray + i]);
-                   MenuIconGraph menuGraph = groupMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, !SaveGame.saveGame.levelsSeen[firstSecretLevelOnArray + i]);
-
-                   groupMenu.addText(2, "Level secreto " + (i + 1) + "2",  (int)SaveGame.saveGame.levelsPoints[firstSecretLevelOnArray + i]+" "+Game.getContext().getResources().getString(R.string.pontos),
-                            Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f), !SaveGame.saveGame.levelsSeen[firstSecretLevelOnArray + i]);
-
-                    float percentage = 0f;
-                    float starsOfLevel = SaveGame.saveGame.levelsStars[firstSecretLevelOnArray + i];
-                    if (starsOfLevel == 1){
-                        percentage = 0.2f;
-                    } else if (starsOfLevel == 2){
-                        percentage = 0.4f;
-                    } else if (starsOfLevel == 3){
-                        percentage = 0.6f;
-                    } else if (starsOfLevel == 4){
-                        percentage = 0.8f;
-                    } else if (starsOfLevel == 5){
-                        percentage = 1f;
-                    }
-                    menuGraph.setPercentage(percentage); 
-               }
-        }
     }
 
     public static void updateLevelMenu(){
@@ -172,7 +110,7 @@ public class MenuHandler {
             if (ld.textureData == null){
                 //Log.e(TAG, "ld.textureData nulo");
             }
-            levelMenu.addOption(i, ld.textureUnit, ld.textureData, new Animation.AnimationListener() {
+            levelMenu.addOption(i, i, ld.textureUnit, ld.textureData, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     SaveGame.saveGame.currentLevelNumber = ld.number;
@@ -186,13 +124,13 @@ public class MenuHandler {
                     Game.currentLevelIcon.clearDisplay();
                     Game.setGameState(Game.GAME_STATE_OBJETIVO_LEVEL);
                 }
-            }, false, false);
+            }, false);
 
-            levelMenu.addText(1, ld.name, ld.name,Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
-            levelMenu.addGraph("graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS, false);
+            levelMenu.addText(i,1, ld.name, ld.name,Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f));
+            levelMenu.addGraph(i,"graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
 
-            levelMenu.addText(2, ld.name+"2",  (int)SaveGame.saveGame.levelsPoints[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),
-                    Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f), false);
+            levelMenu.addText(i,2, ld.name+"2",  (int)SaveGame.saveGame.levelsPoints[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),
+                    Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f));
 
             float percentage = 0f;
             float starsOfLevel = SaveGame.saveGame.levelsStars[ld.number-1];
@@ -208,7 +146,7 @@ public class MenuHandler {
                 percentage = 1f;
             }
 
-            levelMenu.graph.get(i).setPercentage(percentage);
+            levelMenu.graph[i].setPercentage(percentage);
         }
     }
 
@@ -307,19 +245,19 @@ public class MenuHandler {
 
             final int tutorialNumber = i;
             if (Tutorial.isTutorialUnblocked(i)){
-                tutorialMenu.addOption(i, Texture.TEXTURE_ICONS_CHANGE_TUTORIALS, textureData, new Animation.AnimationListener() {
+                tutorialMenu.addOption(i, i, Texture.TEXTURE_ICONS_CHANGE_TUTORIALS, textureData, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
                         Tutorial.currentTutorial = tutorialNumber;
                         Game.setGameState(Game.GAME_STATE_TUTORIAL);
                     }
-                }, false, false);
+                }, false);
 
-                tutorialMenu.addText(1, "t"+i, text,
-                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f), false);
+                tutorialMenu.addText(i,1, "t"+i, text,
+                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
 
                 if (!SaveGame.saveGame.tutorialsSeen[i]){
-                    tutorialMenu.addInnerText("ti"+i, Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f), false);
+                    tutorialMenu.addInnerText(i,"ti"+i, Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
                 }
             }
    

@@ -9,12 +9,8 @@ import android.util.Log;
 
 public class BallDataPanel extends Entity{
 
-    private static final int SIZEOF_FLOAT = 4;
-    private static final int SIZEOF_SHORT = 2;
-
-    public int [] vbo = new int[2];
-    public int [] ibo = new int[1];
-
+    private static int [] vbo;
+    private static int [] ibo;
 
     Rectangle velocityRectangle;
     Rectangle angleRectangle;
@@ -111,8 +107,6 @@ public class BallDataPanel extends Entity{
         float markSize =  width*0.008f;
         endVelocity = new Rectangle("velocityRectangle", ballDataPanelX + width - markSize, ballDataPanelY, Entity.TYPE_OTHER, markSize, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
         endAngle = new Rectangle("velocityRectangle", ballDataPanelX + width - markSize, ballDataPanelY + (baseHeight * 3f), Entity.TYPE_OTHER, markSize, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
-
-
 
         ////// BORDAS
 
@@ -288,8 +282,18 @@ public class BallDataPanel extends Entity{
 
     public void setDrawInfo(){
 
-        GLES20.glGenBuffers(2, vbo, 0);
-        GLES20.glGenBuffers(1, ibo, 0);
+
+        if (vbo == null || vbo.length == 0) {
+            vbo = new int[2];
+            GLES20.glGenBuffers(2, vbo, 0);
+            Log.e(TAG, " ballDataPanel " + "vbo create " + " vbo " + vbo[0] + " " + vbo[1]);
+        }
+
+        if (ibo == null || ibo.length == 0) {
+            ibo = new int[1];
+            GLES20.glGenBuffers(1, ibo, 0);
+            Log.e(TAG, " ballDataPanel " + " ibo create " + ibo[0]);
+        }
 
         initializeData(12 * rectangles.length, 6 * rectangles.length, 0, 16 * rectangles.length);
 

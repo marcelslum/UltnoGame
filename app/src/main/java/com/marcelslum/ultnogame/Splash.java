@@ -48,9 +48,6 @@ public class Splash {
     public static boolean forSignin = false;
     public static boolean forJumpGoogle = false;
 
-
-
-
     static void configSplash(){
 
         tittle = new Image("tittle",
