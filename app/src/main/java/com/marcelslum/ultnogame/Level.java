@@ -102,7 +102,7 @@ public class Level {
             Game.resolutionY * 0.025f);
 
         Game.ballGoalsPanel = new BallGoalsPanel("ballGoalsPanel", this.game,
-                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.007f, Game.resolutionY * 0.027f);
+                Game.gameAreaResolutionX * 0.5f, Game.gameAreaResolutionY * 1.01f, Game.resolutionY * 0.027f);
         Game.ballGoalsPanel.alpha = 0.9f;
 
         // escolhe o background de acordo com o número do nível

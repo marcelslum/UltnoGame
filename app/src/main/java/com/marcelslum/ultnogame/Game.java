@@ -2343,10 +2343,10 @@ public class Game {
 
         if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
 
+        if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
+
         if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
         if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
-
-        if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
 
         if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
 

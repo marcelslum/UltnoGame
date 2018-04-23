@@ -6,12 +6,17 @@ import android.util.Log;
 
 class TargetGroup extends Entity{
 
-    final String TAG = "TargetGroup";
+    static final String TAG = "TargetGroup";
+    private static final int SIZEOF_FLOAT = 4;
+    private static final int SIZEOF_SHORT = 2;
+
+    public int [] vbo = new int[3];
+    public int [] ibo = new int[1];
+
+
 
     TargetGroup(){
         super("targetGroup", 0f, 0f, Entity.TYPE_TARGET_GROUP);
-        vbo = new int[3];
-        ibo = new int[1];
         textureId = Texture.TEXTURES;
         program = Game.imageColorizedProgram;
         setDrawInfo();

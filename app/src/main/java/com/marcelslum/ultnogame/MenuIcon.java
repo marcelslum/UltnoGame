@@ -103,16 +103,28 @@ public class MenuIcon extends Entity{
             icons.get(i).render(matrixView, matrixProjection);
         }
         for (int i = 0; i < texts.size();i++){
-            //Log.e(TAG, "render text " + texts.get(i).text + " "+ texts.get(i).alpha + " " + texts.get(i).isVisible +
-            //" "+ texts.get(i).positionX + " "+ texts.get(i).positionY +
-            //" "+texts.get(i).accumulatedTranslateX +
-            //" "+ texts.get(i).accumulatedTranslateY);
+
+            //if (i == 0) {
+                //Log.e(TAG, "render text " + texts.get(i).text + " "+ texts.get(i).alpha + " " + texts.get(i).isVisible +
+                //" "+ texts.get(i).positionX + " "+ texts.get(i).positionY +
+                //" "+texts.get(i).accumulatedTranslateX +
+                //" "+ texts.get(i).accumulatedTranslateY);
+            //}
             if (texts.get(i).shadowText != null){
                 texts.get(i).shadowText.render(matrixView, matrixProjection);
             }
             texts.get(i).render(matrixView, matrixProjection);
         }
         for (int i = 0; i < texts2.size();i++){
+            //if (i == 0) {
+            //    Log.e(TAG, "render text " + texts2.get(i).text + " " + texts2.get(i).alpha + " " + texts2.get(i).isVisible +
+            //            " " + texts2.get(i).positionX + " " + texts2.get(i).positionY +
+            //           " " + texts2.get(i).accumulatedTranslateX +
+            //            " " + texts2.get(i).accumulatedTranslateY);
+            //}
+
+
+
             texts2.get(i).render(matrixView, matrixProjection);
         }
         for (int i = 0; i < innerTexts.size();i++){
@@ -328,7 +340,7 @@ public class MenuIcon extends Entity{
         float centerPosition = positionX + (size/2);
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
-        Text t = Game.textPool.get();
+        Text t = new Text();//Game.textPool.get();
         t.setData(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
 
         if (number == 1){

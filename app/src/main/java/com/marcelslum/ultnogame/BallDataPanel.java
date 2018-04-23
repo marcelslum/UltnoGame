@@ -9,6 +9,12 @@ import android.util.Log;
 
 public class BallDataPanel extends Entity{
 
+    private static final int SIZEOF_FLOAT = 4;
+    private static final int SIZEOF_SHORT = 2;
+
+    public int [] vbo = new int[2];
+    public int [] ibo = new int[1];
+
 
     Rectangle velocityRectangle;
     Rectangle angleRectangle;
@@ -21,8 +27,9 @@ public class BallDataPanel extends Entity{
     Rectangle initRectangle;
     Rectangle finalRectangle;
 
-
     Rectangle bordaBmeio;
+    Rectangle bordaBmeioE;
+    Rectangle bordaBmeioD;
 
     Rectangle bordaB3;
     Rectangle bordaB4;
@@ -42,7 +49,7 @@ public class BallDataPanel extends Entity{
     Rectangle bordaBE1;
     Rectangle bordaBE2;
 
-    Rectangle [] rectangles = new Rectangle[27];
+    Rectangle [] rectangles = new Rectangle[29];
 
     Ball ballAnimating;
     
@@ -50,7 +57,7 @@ public class BallDataPanel extends Entity{
     private static final Color COLOR_BAR_GREEN_LIGHT = new Color (0.65f, 0.83f, 0.82f, 1f);
     private static final Color COLOR_BAR_BLUE_DARK = new Color (0.31f, 0.37f, 0.74f, 1f);//54 69 164
     private static final Color COLOR_BAR_BLUE_LIGHT = new Color (0.79f, 0.82f, 1f, 1f); //202 204 256
-    private static final Color COLOR_BACK = new Color (0.25f, 0.25f, 0.25f, 0.7f);
+    private static final Color COLOR_BACK = new Color (0.28f, 0.28f, 0.28f, 0.8f);
    
     
     float velocityPercent = 0f;
@@ -72,10 +79,6 @@ public class BallDataPanel extends Entity{
         ballDataPanelX = _x;
         ballDataPanelY = _y;
 
-
-        vbo = new int[3];
-        ibo = new int[1];
-
         this.width = width;
         this.height = height;
         isCollidable = false;
@@ -87,8 +90,8 @@ public class BallDataPanel extends Entity{
 
         float initRectangleSize = width * 0.01f;
 
-        initRectangle = new Rectangle("initRectangle", ballDataPanelX - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1, Color.pretoCheio);
-        finalRectangle = new Rectangle("finalRectangle", ballDataPanelX + width - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1, Color.pretoCheio);
+        initRectangle = new Rectangle("initRectangle", ballDataPanelX - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1, new Color(0.19f, 0.19f, 0.19f, 1f));
+        finalRectangle = new Rectangle("finalRectangle", ballDataPanelX + width - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1, new Color(0.19f, 0.19f, 0.19f, 1f));
 
         velocityRectangle = new Rectangle("velocityRectangle", ballDataPanelX, ballDataPanelY, Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
         velocityNewRectangle = new Rectangle("velocityNewRectangle", ballDataPanelX, ballDataPanelY, Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BAR_GREEN_LIGHT);
@@ -113,69 +116,72 @@ public class BallDataPanel extends Entity{
 
         ////// BORDAS
 
-        bordaBmeio = new Rectangle("bordaBmeio", Game.resolutionX * 0.35f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*0.3f, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.018f, 0.018f, 0.2f, 1f));
-
-        bordaB3 = new Rectangle("bordaB3", 0f, Game.gameAreaResolutionX, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.2f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.5f, 0.5f, 0.5f, 0.4f ));
-        bordaB4 = new Rectangle("bordaB4", 0f, Game.gameAreaResolutionX, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.3f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.5f, 0.5f, 0.5f, 0.4f ));
-        bordaB5 = new Rectangle("bordaB5", 0f, Game.gameAreaResolutionX, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.1f, Game.gameAreaResolutionY * 0.008f, -1, new Color(1f, 1f, 1f, 0.4f ));
-        bordaB6 = new Rectangle("bordaB6", 0f, Game.gameAreaResolutionX, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.22f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.2f, 0.2f, 0.2f, 0.4f ));
-        bordaB7 = new Rectangle("bordaB7", 0f, Game.gameAreaResolutionX, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.35f, Game.gameAreaResolutionY * 0.008f, -1, new Color(1f, 1f, 1f, 0.4f));
-        bordaB8 = new Rectangle("bordaB8", 0f, Game.gameAreaResolutionX, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.13f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.8f, 0.8f, 0.8f, 0.3f ));
-        bordaB9 = new Rectangle("bordaB9", 0f, Game.gameAreaResolutionX, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.05f, Game.gameAreaResolutionY * 0.008f, -1, new Color(0.1f, 0.1f, 0.1f, 0.4f ));
-        bordaB10 = new Rectangle("bordaB10", 0f, Game.gameAreaResolutionX, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.18f, Game.gameAreaResolutionY * 0.008f, -1, new Color(1f, 1f, 1f, 0.2f ));
-
-
-
         float bordaEsp = Game.gameAreaResolutionY * 0.008f;
         float bordaEsp_1_4 = bordaEsp / 4f;
 
+        bordaBmeio = new Rectangle("bordaBmeio", Game.resolutionX * 0.35f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*0.3f, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.19f, 0.19f, 0.19f, 1f));
+        bordaBmeioE = new Rectangle("bordaBmeioE", Game.resolutionX * 0.35f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.17f, 0.17f, 0.19f, 1f));
+        bordaBmeioD = new Rectangle("bordaBmeioD", (Game.resolutionX * 0.65f) - bordaEsp, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.17f, 0.17f, 0.19f, 1f));
+
+        bordaB3 = new Rectangle("bordaB3", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.2f, bordaEsp*0.8f, -1, new Color(0.5f, 0.5f, 0.5f, 0.2f ));
+        bordaB4 = new Rectangle("bordaB4", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.3f, bordaEsp*0.8f, -1, new Color(0.5f, 0.5f, 0.5f, 0.2f ));
+        bordaB5 = new Rectangle("bordaB5", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.1f, bordaEsp*0.8f, -1, new Color(1f, 1f, 1f, 0.2f ));
+        bordaB6 = new Rectangle("bordaB6", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.22f, bordaEsp*0.8f, -1, new Color(0.2f, 0.2f, 0.2f, 0.2f ));
+        bordaB7 = new Rectangle("bordaB7", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.35f, bordaEsp*0.8f, -1, new Color(1f, 1f, 1f, 0.2f));
+        bordaB8 = new Rectangle("bordaB8", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.13f, bordaEsp*0.8f, -1, new Color(0.8f, 0.8f, 0.8f, 0.2f ));
+        bordaB9 = new Rectangle("bordaB9", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.05f, bordaEsp*0.8f, -1, new Color(0.1f, 0.1f, 0.1f, 0.2f ));
+        bordaB10 = new Rectangle("bordaB10", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.18f, bordaEsp*0.8f, -1, new Color(1f, 1f, 1f, 0.2f ));
+        
+
         Color colorBorda1 = new Color(0.3f, 0.3f, 0.3f, 0.8f);
         Color colorBorda1B = new Color(0.2f, 0.2f, 0.2f, 0.8f);
-        Color colorBorda2 = new Color(0.3f, 0.3f, 0.6f, 0.6f);
+        Color colorBorda2 = new Color(0.3f, 0.3f, 0.31f, 1f);
+        //colorBorda2 = Color.vermelhoCheio;
 
-        bordaBC1 = new Rectangle("bordaBC1", 0f,Game.gameAreaResolutionY,Entity.TYPE_OTHER, Game.gameAreaResolutionX, bordaEsp, -1, colorBorda1);
+        bordaBC1 = new Rectangle("bordaBC1", 0f,Game.gameAreaResolutionY,Entity.TYPE_OTHER, Game.gameAreaResolutionX, bordaEsp*0.8f, -1, colorBorda1);
         bordaBB1 = new Rectangle("bordaBB1", 0f,Game.resolutionY - bordaEsp,Entity.TYPE_OTHER, Game.gameAreaResolutionX,    bordaEsp, -1, colorBorda1B);
-        bordaBD1 = new Rectangle("bordaBD1", Game.gameAreaResolutionX - bordaEsp,Game.gameAreaResolutionY, Entity.TYPE_OTHER, bordaEsp,  Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda1);
-        bordaBE1 = new Rectangle("bordaBE1", 0f,Game.gameAreaResolutionY,   Entity.TYPE_OTHER, bordaEsp,Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda1);
+        bordaBD1 = new Rectangle("bordaBD1", Game.gameAreaResolutionX - bordaEsp - (bordaEsp / 8f),Game.gameAreaResolutionY, Entity.TYPE_OTHER, bordaEsp*4f,  Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda1);
+        bordaBE1 = new Rectangle("bordaBE1", bordaEsp / 8f,Game.gameAreaResolutionY,   Entity.TYPE_OTHER, bordaEsp,Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda1);
 
-        bordaBC2 = new Rectangle("bordaBC2", 0f,Game.gameAreaResolutionY,Entity.TYPE_OTHER, Game.gameAreaResolutionX, bordaEsp_1_4, -1, colorBorda2);
+        bordaBC2 = new Rectangle("bordaBC2", 0f,Game.gameAreaResolutionY - (bordaEsp_1_4) /2f,Entity.TYPE_OTHER, Game.gameAreaResolutionX, bordaEsp_1_4, -1, colorBorda2);
         bordaBB2 = new Rectangle("bordaBB2", 0f, Game.resolutionY - bordaEsp_1_4,Entity.TYPE_OTHER, Game.gameAreaResolutionX, bordaEsp_1_4, -1, colorBorda2);
-        bordaBD2 = new Rectangle("bordaBD2", Game.gameAreaResolutionX-(bordaEsp_1_4),Game.gameAreaResolutionY, Entity.TYPE_OTHER, bordaEsp_1_4,  Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda2);
-        bordaBE2 = new Rectangle("bordaBE2", 0f,Game.gameAreaResolutionY,Entity.TYPE_OTHER, bordaEsp_1_4,Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda2);
+        bordaBD2 = new Rectangle("bordaBD2", Game.gameAreaResolutionX-(bordaEsp*0.75f),Game.gameAreaResolutionY, Entity.TYPE_OTHER, bordaEsp_1_4,  Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda2);
+        bordaBE2 = new Rectangle("bordaBE2", bordaEsp / 8f,Game.gameAreaResolutionY,Entity.TYPE_OTHER, bordaEsp_1_4,Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda2);
 
 
         rectangles[0] = bordaBmeio;
+        rectangles[1] = bordaBmeioD;
+        rectangles[2] = bordaBmeioE;
 
-        rectangles[1] = backVelocityRectangle;
-        rectangles[2] = backAngleRectangle;
-        rectangles[3] = velocityNewRectangle;
-        rectangles[4] = angleNewRectangle;
-        rectangles[5] = velocityRectangle;
-        rectangles[6] = angleRectangle;
-        rectangles[7] = endVelocity;
-        rectangles[8] = endAngle;
-        rectangles[9] = initRectangle;
-        rectangles[10] = finalRectangle;
+        rectangles[3] = backVelocityRectangle;
+        rectangles[4] = backAngleRectangle;
+        rectangles[5] = velocityNewRectangle;
+        rectangles[6] = angleNewRectangle;
+        rectangles[7] = velocityRectangle;
+        rectangles[8] = angleRectangle;
+        rectangles[9] = endVelocity;
+        rectangles[10] = endAngle;
+        rectangles[11] = initRectangle;
+        rectangles[12] = finalRectangle;
 
-        rectangles[11] = bordaBC1;
-        rectangles[12] = bordaBB1;
-        rectangles[13] = bordaBD1;
-        rectangles[14] = bordaBE1;
+        rectangles[13] = bordaBC1;
+        rectangles[14] = bordaBB1;
+        rectangles[15] = bordaBD1;
+        rectangles[16] = bordaBE1;
 
-        rectangles[15] = bordaB3;
-        rectangles[16] = bordaB4;
-        rectangles[17] = bordaB5;
-        rectangles[18] = bordaB6;
-        rectangles[19] = bordaB7;
-        rectangles[20] = bordaB8;
-        rectangles[21] = bordaB9;
-        rectangles[22] = bordaB10;
+        rectangles[17] = bordaBC2;
+        rectangles[18] = bordaBB2;
+        rectangles[19] = bordaBE2;
+        rectangles[20] = bordaBD2;
 
-        rectangles[23] = bordaBC2;
-        rectangles[24] = bordaBB2;
-        rectangles[25] = bordaBE2;
-        rectangles[26] = bordaBD2;
-
+        rectangles[21] = bordaB3;
+        rectangles[22] = bordaB4;
+        rectangles[23] = bordaB5;
+        rectangles[24] = bordaB6;
+        rectangles[25] = bordaB7;
+        rectangles[26] = bordaB8;
+        rectangles[27] = bordaB9;
+        rectangles[28] = bordaB10;
 
 
         Utils.createAnimation4v(bordaB3, "b3", "animTranslateX", 4000,
@@ -259,7 +265,6 @@ public class BallDataPanel extends Entity{
                         rectangles[i].positionY + rectangles[i].animTranslateY + (rectangles[i].getTransformedHeight() * rectangles[i].animScaleY), 0f);
 
                 Utils.insertRectangleColorsData(colorsData, i * 16, rectangles[i].color.r, rectangles[i].color.g, rectangles[i].color.b, rectangles[i].color.a * rectangles[i].alpha * alpha);
-
         }
 
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
@@ -269,7 +274,7 @@ public class BallDataPanel extends Entity{
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
                 verticesBuffer, GLES20.GL_STATIC_DRAW);
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
                 colorsBuffer, GLES20.GL_STATIC_DRAW);
 
@@ -283,7 +288,7 @@ public class BallDataPanel extends Entity{
 
     public void setDrawInfo(){
 
-        GLES20.glGenBuffers(3, vbo, 0);
+        GLES20.glGenBuffers(2, vbo, 0);
         GLES20.glGenBuffers(1, ibo, 0);
 
         initializeData(12 * rectangles.length, 6 * rectangles.length, 0, 16 * rectangles.length);
@@ -307,7 +312,7 @@ public class BallDataPanel extends Entity{
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
                 verticesBuffer, GLES20.GL_STATIC_DRAW);
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
                 colorsBuffer, GLES20.GL_STATIC_DRAW);
 
@@ -357,7 +362,7 @@ public class BallDataPanel extends Entity{
         GLES20.glEnableVertexAttribArray(av4_verticesHandle);
         GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, 0);
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[2]);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
         GLES20.glEnableVertexAttribArray(av4_colorsHandle);
         GLES20.glVertexAttribPointer(av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, 0);
 
@@ -368,13 +373,10 @@ public class BallDataPanel extends Entity{
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
 
-
-
         // function for deleting buffers
         //final int[] buffersToDelete = new int[] { mCubePositionsBufferIdx, mCubeNormalsBufferIdx,
         //mCubeTexCoordsBufferIdx };
         //GLES20.glDeleteBuffers(buffersToDelete.length, buffersToDelete, 0);
-
 
     }
 

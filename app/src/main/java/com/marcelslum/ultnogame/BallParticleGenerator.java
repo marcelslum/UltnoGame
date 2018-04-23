@@ -128,7 +128,7 @@ public class BallParticleGenerator extends Entity {
             if (MyGLRenderer.tick){
                 updateDrawInfo();
             }
-            
+
             super.prepareRender(matrixView, matrixProjection);
         }
     }

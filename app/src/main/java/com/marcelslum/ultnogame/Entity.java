@@ -19,11 +19,6 @@ public class Entity{
 
     public boolean inUse = false;
     
-    final public static int ATTRIB_POS = 0;
-    final public static int ATTRIB_UV = 1;
-    final public static int ATTRIB_COLOR = 2;
-
-    
     public static int currentBoundedTextureId;
 
     public TextureData textureData;
@@ -57,8 +52,8 @@ public class Entity{
     final public static int TYPE_WINDOW_GAME = 23;
     final public static int TYPE_TARGET_GROUP = 24;
     final public static int TYPE_TEXT_VIEW = 25;
-    
-    
+
+
 
     public final static String TAG = "Entity";
     final public static int SHOW_POINTS_ON = 1;
