@@ -286,6 +286,18 @@ public class Entity{
             childs.get(i).cleanAnimations();
         }
     }
+
+    void cleanAnimationsNoChild() {
+        for (int i = 0; i < animations.size(); i++) {
+            if (animations.get(i).started && !this.animations.get(i).name.equals("ballInvencible")){
+                animations.get(i).stopAndConclude();
+            }
+        }
+        animTranslateX = 0;
+        animTranslateY = 0;
+        animScaleX = 1f;
+        animScaleY = 1f;
+    }
     
     void clean(){
         inUse = false;
@@ -393,6 +405,17 @@ public class Entity{
                 for (int a = 0; a < childs.get(i).animations.size(); a++) {
                     if (childs.get(i).animations.get(a).started) {
                         childs.get(i).animations.get(a).doAnimation();
+                    }
+                }
+
+                if (childs.get(i).childs != null){
+                    for (int j = 0; j < childs.get(i).childs.size(); j++) {
+                        for (int k = 0; k < childs.get(i).childs.get(j).animations.size(); k++) {
+                            if (childs.get(i).childs.get(j).animations.get(k).started) {
+                                childs.get(i).childs.get(j).animations.get(k).doAnimation();
+                            }
+                        }
+
                     }
                 }
             }
@@ -517,7 +540,26 @@ public class Entity{
             //Log.e(TAG, "getTransformedHeight() " + getTransformedHeight());
             //Log.e(TAG, "getHeight() " + getHeight());
         }
+
+
+
         */
+
+        if (name == "frontMenuIconGraph"){
+            //Log.e(TAG, "SHINE-----------------------");
+            //Log.e(TAG, "accumulatedScaleX " + accumulatedScaleX);
+            //Log.e(TAG, "accumulatedScaleY " + accumulatedScaleY);
+            //Log.e(TAG, "positionX " + positionX);
+            //Log.e(TAG, "animTranslateX " + animTranslateX);
+            //Log.e(TAG, "animScaleX " + animScaleX);
+
+            //Log.e(TAG, "getTransformedWidth() " + getTransformedWidth());
+            //Log.e(TAG, "getWidth() " + getWidth());
+            //Log.e(TAG, "positionY " + positionY);
+            //Log.e(TAG, "animTranslateY " + animTranslateY);
+            //Log.e(TAG, "getTransformedHeight() " + getTransformedHeight());
+            //Log.e(TAG, "getHeight() " + getHeight());
+        }
 
         if (accumulatedScaleX != 1f || accumulatedScaleY != 1f) {
             Matrix.translateM(matrixModel, 0, positionX + animTranslateX + (getTransformedWidth() - getWidth()) / 2f,

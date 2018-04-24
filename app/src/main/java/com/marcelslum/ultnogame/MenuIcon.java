@@ -88,6 +88,7 @@ public class MenuIcon extends Entity{
     }
     
     public void clear(){
+
         for (int i = 0; i < MAX_NUMBER_OF_ELEMENTS; i++) {
 
             iconsMap[i] = false;
@@ -117,10 +118,12 @@ public class MenuIcon extends Entity{
             texts2[i].cleanAnimations();
             innerTexts[i].cleanAnimations();
             if (graph[i] != null) {
-                graph[i].cleanAnimations();
+                //graph[i].cleanAnimations();
             }
 
         }
+
+        currentTranslateX = 0;
 
         childs.clear();
         numberOfElements = 0;
@@ -129,7 +132,6 @@ public class MenuIcon extends Entity{
     @Override
     public void render(float[] matrixView, float[] matrixProjection){
         //Log.e("menu", "render MenuIcon");
-        //checkAnimations();
 
         if (!isVisible){
             return;
@@ -207,19 +209,17 @@ public class MenuIcon extends Entity{
                 graph[i].accumulatedTranslateX = 0f;
             }
 
-            icons[i].cleanAnimations();
-            texts[i].cleanAnimations();
-            texts2[i].cleanAnimations();
-            innerTexts[i].cleanAnimations();
+            icons[i].cleanAnimationsNoChild();
+            texts[i].cleanAnimationsNoChild();
+            texts2[i].cleanAnimationsNoChild();
+            innerTexts[i].cleanAnimationsNoChild();
             if (graph[i] != null) {
-                graph[i].cleanAnimations();
+                graph[i].cleanAnimationsNoChild();
             }
         }
 
 
         display();
-
-
 
 
         final MenuIcon innerMenuIcon = this;
@@ -468,7 +468,16 @@ public class MenuIcon extends Entity{
 
         addChild(icons[position]);
     }
-    
+
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection){
+
+        if (isVisible){
+            checkAnimations();
+            render(matrixView, matrixProjection);
+        }
+    }
+
     // primeiro icone é número 0
     public float getPositionXFromIconNumber(int number){
         float padd = size * 0.1f;

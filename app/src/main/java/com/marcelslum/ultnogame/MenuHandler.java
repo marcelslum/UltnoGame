@@ -1,6 +1,7 @@
 package com.marcelslum.ultnogame;
 
 import android.content.pm.ActivityInfo;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -78,7 +79,7 @@ public class MenuHandler {
                 int cStars = LevelsGroupData.getLevelsConqueredStars(lgd.firstLevel, lgd.finalLevel);
                 int totalStarsToConquer = (lgd.finalLevel - lgd.firstLevel + 1) * 5;
                 float percentage = (float)cStars/(float)totalStarsToConquer;
-                groupMenu.graph[i].setPercentage(percentage);
+                groupMenu.graph[i].setPercentage(percentage, i);
             }
 
             if (StarsHandler.conqueredStarsTotal < lgd.starsToUnlock){
@@ -93,6 +94,13 @@ public class MenuHandler {
                 groupMenu.addText(i,1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.7f, 0.7f, 0.7f, 1f));
                 groupMenu.addText(i,2, lgd.name+"2", Game.getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + Game.getContext().getResources().getString(R.string.estrelas), Game.resolutionY * 0.03f, Game.resolutionY * 0.07f, new Color(0.5f, 0.5f, 0.5f, 1f));
             }
+
+
+            if (groupMenu.graph[i] != null){
+                Log.e(TAG, "frontRectangle.animTranslateX "+groupMenu.graph[i].frontRectangle.animTranslateX);
+                Log.e(TAG, "frontRectangle.animScaleX "+groupMenu.graph[i].frontRectangle.animScaleX);
+            }
+
         }
 
     }
@@ -146,7 +154,7 @@ public class MenuHandler {
                 percentage = 1f;
             }
 
-            levelMenu.graph[i].setPercentage(percentage);
+            levelMenu.graph[i].setPercentage(percentage, i);
         }
     }
 
