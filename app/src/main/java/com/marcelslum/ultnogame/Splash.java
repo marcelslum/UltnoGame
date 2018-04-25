@@ -16,10 +16,15 @@ public class Splash {
 
     static Text messageSplash1;
     static Menu menuGoogle;
+    static Menu menuGoogle2;
     static Menu menuVelocity;
     static Selector selectorDifficultyInitMenu;
     static TextView messageGoogle1;
     static TextView messageGoogle2;
+
+    static TextView messageGoogle1_2;
+
+
     static TextView messageVelocity1;
     static TextView messageVelocity2;
 
@@ -40,6 +45,7 @@ public class Splash {
     private static final int SPLASH_MENU_GOOGLE = 37;
     private static final int SPLASH_SIGNIN = 38;
     private static final int SPLASH_MENU_VELOCITY = 39;
+    private static final int SPLASH_MENU_GOOGLE_2 = 40;
 
     private static int state;
 
@@ -147,6 +153,59 @@ public class Splash {
         messageGoogle2.addText(Game.getContext().getResources().getString(R.string.messageGoogle2), new Color(0f, 0f, 0f, 1f));
 
         messageGoogle2.clearDisplay();
+
+        // -------------------------------------------MENU CONECTAR GOOGLE 2
+
+        menuGoogle2 = new Menu("menuGoogle", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
+        menuGoogle2.addMenuOption("Sim", Game.getContext().getResources().getString(R.string.menuGoogleSim2), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                timesGoogle = 0;
+                SaveGame.saveGame.googleOption = 1;
+                SaveGame.saveGame.save();
+                forSignin = true;
+                init();
+
+            }
+        });
+
+        menuGoogle2.addMenuOption("Nao", Game.getContext().getResources().getString(R.string.menuGoogleNao2), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                timesGoogle = 0;
+                SaveGame.saveGame.googleOption = 0;
+                forSignin = false;
+                SaveGame.saveGame.save();
+                init();
+            }
+        });
+
+        menuGoogle2.addMenuOption("MaisTarde", Game.getContext().getResources().getString(R.string.menuGoogleMaisTarde2), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                timesGoogle = 0;
+                SaveGame.saveGame.googleOption = -1;
+                forSignin = false;
+                SaveGame.saveGame.save();
+                forJumpGoogle = true;
+                init();
+            }
+        });
+
+        menuGoogle2.blockAndClearDisplay();
+
+        messageGoogle1_2 = new TextView("messageGoogle1_2", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.1f,
+                Game.resolutionX * 1f,
+                Game.resolutionY,
+                fontSize * 0.8f,
+                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+
+        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1_2), new Color(0f, 0f, 0f, 1f));
+        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b_2), new Color(0f, 0f, 0f, 1f));
+
+        messageGoogle1_2.clearDisplay();
+
 
         // -------------------------------------------MENU ALTERAR VELOCIDADE
 
@@ -363,6 +422,12 @@ public class Splash {
             messageGoogle2.display();
             tittle.clearDisplay();
             messageSplash1.clearDisplay();
+        } else if (id == SPLASH_MENU_GOOGLE_2){
+            timeInitConectando = Utils.getTime();
+            menuGoogle2.appearAndUnblock(100);
+            messageGoogle1_2.display();
+            tittle.clearDisplay();
+            messageSplash1.clearDisplay();
         } else if (id == SPLASH_CONECTANDO_GOOGLE){
             timeInitConectando = Utils.getTime();
         } else if (id == SPLASH_CARREGANDO_SAVE_GAME) {
@@ -470,7 +535,7 @@ public class Splash {
 
         } else if (state == SPLASH_CONECTANDO_INTERNET) {
             if (forSignin){
-                //Log.e(TAG, "forSignin startintent ");
+                Log.e(TAG, "forSignin startintent ");
                 forSignin = false;
                 Game.mainActivity.startSignInIntent();
             } else if (Utils.getTime() - timeInitConectando > (INTRO_PARTIAL_DURATION / 2f)) {
@@ -487,13 +552,14 @@ public class Splash {
                         setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
                     }
                 } else if (googlePlayOption == 1){
-
-                    if (!Game.mainActivity.isGooglePlayAvailable()){
+                    if (!Game.mainActivity.isGooglePlayAvailable() || !Game.mainActivity.isSignedIn()){
                         Game.mainActivity.startSignInIntent();
                     }
                     setSplashState(SPLASH_CONECTANDO_GOOGLE);
                 } else if (googlePlayOption == 0){
                     setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
+                } else if (googlePlayOption == -2){
+                    setSplashState(SPLASH_MENU_GOOGLE_2);
                 }
             }
         } else if (state == SPLASH_CONECTANDO_GOOGLE) {
@@ -509,7 +575,7 @@ public class Splash {
                 
                         // se não conseguiu conectar ao google, volta ao início
                         forSignin = false;
-                        SaveGame.saveGame.googleOption = -1;
+                        SaveGame.saveGame.googleOption = -2;
                         SaveGame.saveGame.save();
                         init();
                         setSplashState(SPLASH_CONECTANDO_INTERNET);

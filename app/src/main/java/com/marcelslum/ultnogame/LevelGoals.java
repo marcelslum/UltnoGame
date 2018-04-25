@@ -261,6 +261,11 @@ public class LevelGoals {
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxAngleReached");
         timesOfDecelerationWithoutReachingMaxAngle = 0;
 
+
+        if (Game.ballDataPanel != null){
+            Game.ballDataPanel.showAngleMessage(Game.getContext().getResources().getString(R.string.max));
+        }
+
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.REACH_MAXIMUN_ANGLE && !lg.achieved){
@@ -277,6 +282,10 @@ public class LevelGoals {
 
         if (Game.abdicateAngle) {
             return;
+        }
+
+        if (Game.ballDataPanel != null){
+            Game.ballDataPanel.showAngleMessage(Game.getContext().getResources().getString(R.string.min));
         }
 
         GoogleAPI.increment(
@@ -307,6 +316,10 @@ public class LevelGoals {
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_positiva), 1);
 
+        if (Game.ballDataPanel != null){
+            Game.ballDataPanel.showAngleMessage(Game.getContext().getResources().getString(R.string.mais));
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"increaseAngle");
         timesWhereAngleIncreased += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -330,6 +343,10 @@ public class LevelGoals {
 
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_inclinao_negativa), 1);
+
+        if (Game.ballDataPanel != null){
+            Game.ballDataPanel.showAngleMessage(Game.getContext().getResources().getString(R.string.menos));
+        }
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"decreaseAngle");
         timesWhereAngleDecreased += 1;
@@ -568,6 +585,10 @@ public class LevelGoals {
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_velocidade_mxima), 1);
 
+        if (Game.ballDataPanel != null){
+            Game.ballDataPanel.showVelocityMessage(Game.getContext().getResources().getString(R.string.max));
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMaxVelocityReached");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -582,6 +603,10 @@ public class LevelGoals {
 
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_velocidade_mnima), 1);
+
+        if (Game.ballDataPanel != null){
+            Game.ballDataPanel.showVelocityMessage(Game.getContext().getResources().getString(R.string.min));
+        }
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyMinVelocityReached");
         for (int i = 0; i < levelGoals.size(); i++){
@@ -630,6 +655,10 @@ public class LevelGoals {
         GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_teste8),1);
         //GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_teste5));
 
+        if (Game.ballDataPanel != null){
+            Game.ballDataPanel.showVelocityMessage(Game.getContext().getResources().getString(R.string.mais));
+        }
+
         timesOfAccelerate += 1;
         timesOfAccelerationInARow += 1;
         timesOfDecelerationInARow = 0;
@@ -662,6 +691,11 @@ public class LevelGoals {
         timesOfDecelerate += 1;
         timesOfDecelerationInARow += 1;
         timesOfAccelerationInARow = 0;
+
+        if (Game.ballDataPanel != null){
+            Game.ballDataPanel.showVelocityMessage(Game.getContext().getResources().getString(R.string.menos));
+        }
+
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.DECELERATE_N_TIMES && !lg.achieved){

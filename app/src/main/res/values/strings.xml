@@ -11,6 +11,9 @@
     <string name="menuGoogleSim">Sim</string>
     <string name="menuGoogleNao">Não</string>
     <string name="menuGoogleMaisTarde">Lembrar-me depois</string>
+    <string name="menuGoogleSim2">Sim, tentar novamente</string>
+    <string name="menuGoogleNao2">Não se conectar mais ao Google</string>
+    <string name="menuGoogleMaisTarde2">Tentar mais tarde</string>
     <string name="menuGoogleOk">Ok</string>
     <string name="menuPrincipalAlterarNivel">Alterar nível</string>
     <string name="messageMaxScoreLevel">Maior pontução neste nível:</string>
@@ -25,6 +28,10 @@
     <string name="messageGoogle1">Este jogo utiliza serviços do Google Play Games para exibir rankings e conquistas.</string>
     <string name="messageGoogle1b">Deseja utilizar esse serviço?</string>
     <string name="messageGoogle2">Você poderá alterar essa opção mais tarde no menu Opções do jogo.</string>
+
+
+    <string name="messageGoogle1_2">Não foi possível se conectar ao GooglePlay.</string>
+    <string name="messageGoogle1b_2">Deseja tentar novamente?</string>
 
 
     <string name="messageVelocity1">O jogo permite ajustar a velocidade global da bola.</string>
@@ -524,6 +531,8 @@
     <string name="menuVelocityAlterar">Alterar velocidade</string>
     <string name="mais">+</string>
     <string name="menos">-</string>
+    <string name="max">max</string>
+    <string name="min">min</string>
 
 
 </resources>

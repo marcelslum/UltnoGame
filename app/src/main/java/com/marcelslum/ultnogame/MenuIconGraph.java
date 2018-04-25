@@ -23,9 +23,12 @@ public class MenuIconGraph extends Entity{
     private static final Color COLOR_BAR_DARK = new Color (1f, 1f, 0f, 1f);
     private static final Color COLOR_BAR_DARK2 = new Color (1f, 0.95f, 0f, 0.2f);
     private static final Color COLOR_BAR_LIGHT = new Color (1f, 1f, 0.95f, 1f);
+    private static final Color COLOR_BAR_LIGHT_BORDER = new Color (0.5f, 0.5f, 0f, 0.2f);
 
     public Rectangle frontRectangle;
     public Rectangle backRectangle;
+    public Rectangle backRectangleB;
+    public Rectangle backRectangleC;
     public Rectangle frontRectangle2;
 
     static final String TAG = "MenuIconGraph";
@@ -34,17 +37,29 @@ public class MenuIconGraph extends Entity{
         super(name, x, y, Entity.TYPE_MENU);
         if (type == TYPE_BAR) {
             backRectangle = new Rectangle("backMenuIconGraph", x, y, Entity.TYPE_OTHER, width, height, -1, COLOR_BAR_LIGHT);
+            backRectangleC = new Rectangle("backMenuIconGraphC", x, y, Entity.TYPE_OTHER, width, height/8f, -1, COLOR_BAR_LIGHT_BORDER);
+            backRectangleB = new Rectangle("backMenuIconGraphB", x, y + height - (height/8f), Entity.TYPE_OTHER, width, height/8f, -1, COLOR_BAR_LIGHT_BORDER);
             frontRectangle = new Rectangle("frontMenuIconGraph", x, y, Entity.TYPE_OTHER, width, height, -1, COLOR_BAR_DARK);
             frontRectangle2 = new Rectangle("frontMenuIconGraph2", x, y-(height/2f), Entity.TYPE_OTHER, width, height*2, -1, COLOR_BAR_DARK2);
             addChild(backRectangle);
+            addChild(backRectangleC);
+            addChild(backRectangleB);
             addChild(frontRectangle);
             addChild(frontRectangle2);
         } else if (type == TYPE_STARS){
             stars = new ArrayList<>();
             float sizeStars = width / 5f;
             for (int i = 0; i < 5; i++) {
+
                 Image im = new Image("star"+i, x + (sizeStars * i), y, sizeStars, sizeStars, Texture.TEXTURES,
                         TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
+
+                Utils.createAnimation4v(im, "translateY"+i, "translateY", 5000,
+                        0f, 0f,
+                        0.33f + (i * 0.02f), -Game.gameAreaResolutionY * 0.015f,
+                        0.66f + (i * 0.03f), Game.gameAreaResolutionY * 0.015f,
+                        1f, 0,
+                        true, true).start();
 
                 stars.add(im);
                 addChild(im);
@@ -151,6 +166,8 @@ public class MenuIconGraph extends Entity{
             frontRectangle.translate(translateX, translateY);
             frontRectangle2.translate(translateX, translateY);
             backRectangle.translate(translateX, translateY);
+            backRectangleC.translate(translateX, translateY);
+            backRectangleB.translate(translateX, translateY);
         } else if (type == TYPE_STARS){
             for (int i = 0; i < stars.size(); i++){
                 stars.get(i).translate(translateX, translateY);
@@ -171,6 +188,12 @@ public class MenuIconGraph extends Entity{
 
             frontRectangle.alpha *= alpha;
             frontRectangle.render(matrixView, matrixProjection);
+
+            backRectangleC.alpha *= alpha;
+            backRectangleC.render(matrixView, matrixProjection);
+
+            backRectangleB.alpha *= alpha;
+            backRectangleB.render(matrixView, matrixProjection);
 
 
 

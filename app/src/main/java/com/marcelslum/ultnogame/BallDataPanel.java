@@ -29,8 +29,11 @@ public class BallDataPanel extends Entity{
     Rectangle finalRectangle;
 
     Rectangle bordaBmeio;
+    Rectangle bordaBmeioEffect;
     Rectangle bordaBmeioE;
     Rectangle bordaBmeioD;
+    Rectangle bordaBmeioEFront;
+    Rectangle bordaBmeioDFront;
 
     Rectangle bordaB3;
     Rectangle bordaB4;
@@ -50,7 +53,7 @@ public class BallDataPanel extends Entity{
     Rectangle bordaBE1;
     Rectangle bordaBE2;
 
-    Rectangle [] rectangles = new Rectangle[29];
+    Rectangle [] rectangles = new Rectangle[32];
 
     Ball ballAnimating;
     
@@ -59,6 +62,10 @@ public class BallDataPanel extends Entity{
     private static final Color COLOR_BAR_BLUE_DARK = new Color (0.31f, 0.37f, 0.74f, 1f);//54 69 164
     private static final Color COLOR_BAR_BLUE_LIGHT = new Color (0.79f, 0.82f, 1f, 1f); //202 204 256
     private static final Color COLOR_BACK = new Color (0.28f, 0.28f, 0.28f, 0.8f);
+    private static final Color COLOR_BAR_GREEN_LIGHT_EFFECT = new Color (0.65f, 0.83f, 0.82f, 1f);
+    private static final Color COLOR_BAR_BLUE_LIGHT_BORDER = new Color (0.79f, 0.82f, 1f, 0.15f);
+    private static final Color COLOR_BAR_BLUE_DARK_BORDER = new Color (0.31f, 0.37f, 0.43f, 0.17f);
+
    
     
     float velocityPercent = 0f;
@@ -98,9 +105,9 @@ public class BallDataPanel extends Entity{
             textAngle2 = new Text();
         }
 
-        textVelocity1.setData("textVelocity1", ballDataPanelX + (initRectangleSize * 2), ballDataPanelY - (baseHeight * 12), Game.gameAreaResolutionY * 0.03f, "Vel", Game.font, COLOR_BAR_GREEN_DARK, Text.TEXT_ALIGN_CENTER);
+        textVelocity1.setData("textVelocity1", ballDataPanelX + (initRectangleSize * 2), ballDataPanelY - (baseHeight * 14), Game.gameAreaResolutionY * 0.03f, "Vel", Game.font, COLOR_BAR_GREEN_DARK, Text.TEXT_ALIGN_CENTER);
         textVelocity2.setData("textVelocity2", ballDataPanelX + (initRectangleSize * 2), ballDataPanelY - (baseHeight * 8), Game.gameAreaResolutionY * 0.03f, "+", Game.font, COLOR_BAR_GREEN_LIGHT, Text.TEXT_ALIGN_CENTER);
-        textAngle1.setData("textAngle1", ballDataPanelX + width - (initRectangleSize * 2), ballDataPanelY - (baseHeight * 12), Game.gameAreaResolutionY * 0.03f, "Ang", Game.font, COLOR_BAR_BLUE_DARK, Text.TEXT_ALIGN_CENTER);
+        textAngle1.setData("textAngle1", ballDataPanelX + width - (initRectangleSize * 2), ballDataPanelY - (baseHeight * 14), Game.gameAreaResolutionY * 0.03f, "Ang", Game.font, COLOR_BAR_BLUE_DARK, Text.TEXT_ALIGN_CENTER);
         textAngle2.setData("textAngle2", ballDataPanelX + width - (initRectangleSize * 2), ballDataPanelY - (baseHeight * 8), Game.gameAreaResolutionY * 0.03f, "-", Game.font, COLOR_BAR_BLUE_LIGHT, Text.TEXT_ALIGN_CENTER);
         textVelocity1.alpha = 0f;
         textVelocity2.alpha = 0f;
@@ -135,9 +142,33 @@ public class BallDataPanel extends Entity{
         float bordaEsp = Game.gameAreaResolutionY * 0.008f;
         float bordaEsp_1_4 = bordaEsp / 4f;
 
-        bordaBmeio = new Rectangle("bordaBmeio", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*0.36f, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.19f, 0.19f, 0.19f, 1f));
-        bordaBmeioE = new Rectangle("bordaBmeioE", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.17f, 0.17f, 0.19f, 1f));
-        bordaBmeioD = new Rectangle("bordaBmeioD", (Game.resolutionX * 0.68f) - bordaEsp, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.17f, 0.17f, 0.19f, 1f));
+        bordaBmeio = new Rectangle("bordaBmeio", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*0.36f, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.2f, 0.21f, 0.2f, 1f));
+        bordaBmeioE = new Rectangle("bordaBmeioE", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp*2f, Game.resolutionY - Game.gameAreaResolutionY, -1,
+               COLOR_BAR_BLUE_DARK_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
+        bordaBmeioD = new Rectangle("bordaBmeioD", (Game.resolutionX * 0.68f) - (bordaEsp*1.5f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp*2f, Game.resolutionY - Game.gameAreaResolutionY, -1,
+               COLOR_BAR_BLUE_DARK_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
+        bordaBmeioEFront = new Rectangle("bordaBmeioEFront", Game.resolutionX * 0.32f + (bordaEsp*2f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, (bordaEsp*2f)/5f, Game.resolutionY - Game.gameAreaResolutionY, -1,
+               COLOR_BAR_BLUE_LIGHT_BORDER);
+        bordaBmeioDFront = new Rectangle("bordaBmeioDFront", (Game.resolutionX * 0.68f) - (bordaEsp*2f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, (bordaEsp*2f)/5f, Game.resolutionY - Game.gameAreaResolutionY, -1,
+               COLOR_BAR_BLUE_LIGHT_BORDER);
+        bordaBmeioEffect = new Rectangle("bordaBmeioEffect", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp*3f, Game.resolutionY - Game.gameAreaResolutionY, -1,
+                COLOR_BAR_GREEN_LIGHT_EFFECT);
+
+        Utils.createAnimation4v(bordaBmeioEffect, "bordaBmeioEffectTranslate", "animTranslateX", 7000,
+                0f, 0f,
+                0.4f, 0f,
+                0.43f, Game.resolutionX*0.36f,
+                1f, Game.resolutionX*0.36f,
+                true, true).start();
+
+        Utils.createAnimation5v(bordaBmeioEffect, "bordaBmeioEffectAlpha", "alpha", 7000,
+                0f, 0f,
+                0.4f, 0f,
+                0.415f, 0.4f,
+                0.43f, 0f,
+                1f, 0f,
+                true, true).start();
+
 
         bordaB3 = new Rectangle("bordaB3", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.2f, bordaEsp*0.8f, -1, new Color(0.5f, 0.5f, 0.5f, 0.2f ));
         bordaB4 = new Rectangle("bordaB4", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.3f, bordaEsp*0.8f, -1, new Color(0.5f, 0.5f, 0.5f, 0.2f ));
@@ -165,39 +196,75 @@ public class BallDataPanel extends Entity{
         bordaBE2 = new Rectangle("bordaBE2", bordaEsp / 8f,Game.gameAreaResolutionY,Entity.TYPE_OTHER, bordaEsp_1_4,Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda2);
 
 
-        rectangles[0] = bordaBmeio;
-        rectangles[1] = bordaBmeioD;
-        rectangles[2] = bordaBmeioE;
+        int number = 0;
+        rectangles[number] = bordaBmeio;
+        number +=1;
+        rectangles[number] = bordaBmeioEffect;
+        number +=1;
+        rectangles[number] = bordaBmeioD;
+        number +=1;
+        rectangles[number] = bordaBmeioE;
 
-        rectangles[3] = backVelocityRectangle;
-        rectangles[4] = backAngleRectangle;
-        rectangles[5] = velocityNewRectangle;
-        rectangles[6] = angleNewRectangle;
-        rectangles[7] = velocityRectangle;
-        rectangles[8] = angleRectangle;
-        rectangles[9] = endVelocity;
-        rectangles[10] = endAngle;
-        rectangles[11] = initRectangle;
-        rectangles[12] = finalRectangle;
+        number +=1;
+        rectangles[number] = bordaBmeioDFront;
+        number +=1;
+        rectangles[number] = bordaBmeioEFront;
 
-        rectangles[13] = bordaBC1;
-        rectangles[14] = bordaBB1;
-        rectangles[15] = bordaBD1;
-        rectangles[16] = bordaBE1;
+        number +=1;
+        rectangles[number] = backVelocityRectangle;
+        number +=1;
+        rectangles[number] = backAngleRectangle;
+        number +=1;
+        rectangles[number] = velocityNewRectangle;
+        number +=1;
+        rectangles[number] = angleNewRectangle;
+        number +=1;
+        rectangles[number] = velocityRectangle;
+        number +=1;
+        rectangles[number] = angleRectangle;
+        number +=1;
+        rectangles[number] = endVelocity;
+        number +=1;
+        rectangles[number] = endAngle;
+        number +=1;
+        rectangles[number] = initRectangle;
+        number +=1;
+        rectangles[number] = finalRectangle;
 
-        rectangles[17] = bordaBC2;
-        rectangles[18] = bordaBB2;
-        rectangles[19] = bordaBE2;
-        rectangles[20] = bordaBD2;
+        number +=1;
+        rectangles[number] = bordaBC1;
+        number +=1;
+        rectangles[number] = bordaBB1;
+        number +=1;
+        rectangles[number] = bordaBD1;
+        number +=1;
+        rectangles[number] = bordaBE1;
 
-        rectangles[21] = bordaB3;
-        rectangles[22] = bordaB4;
-        rectangles[23] = bordaB5;
-        rectangles[24] = bordaB6;
-        rectangles[25] = bordaB7;
-        rectangles[26] = bordaB8;
-        rectangles[27] = bordaB9;
-        rectangles[28] = bordaB10;
+        number +=1;
+        rectangles[number] = bordaBC2;
+        number +=1;
+        rectangles[number] = bordaBB2;
+        number +=1;
+        rectangles[number] = bordaBE2;
+        number +=1;
+        rectangles[number] = bordaBD2;
+
+        number +=1;
+        rectangles[number] = bordaB3;
+        number +=1;
+        rectangles[number] = bordaB4;
+        number +=1;
+        rectangles[number] = bordaB5;
+        number +=1;
+        rectangles[number] = bordaB6;
+        number +=1;
+        rectangles[number] = bordaB7;
+        number +=1;
+        rectangles[number] = bordaB8;
+        number +=1;
+        rectangles[number] = bordaB9;
+        number +=1;
+        rectangles[number] = bordaB10;
 
 
         Utils.createAnimation4v(bordaB3, "b3", "animTranslateX", 4000,
@@ -476,6 +543,32 @@ public class BallDataPanel extends Entity{
         Utils.createAnimation3v(angleRectangle, "initAbdicateAngleAnim", "scaleX", 2000, 0f, 0.008f, 0.5f, 0.99f, 1f, 0.008f,true, true).start();
     }
 
+    public void showVelocityMessage(String message){
+        textVelocity1.cleanAnimations();
+        textVelocity2.cleanAnimations();
+
+        //Game.getContext().getResources().getString(R.string.mais)
+        //textAngle2.setText(Game.getContext().getResources().getString(R.string.menos));
+
+        textVelocity2.setText(message);
+        Utils.createAnimation3v(textVelocity1, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
+        Utils.createAnimation3v(textVelocity2, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
+
+    }
+
+    public void showAngleMessage(String message){
+
+        textAngle1.cleanAnimations();
+        textAngle2.cleanAnimations();
+
+        textAngle2.setText(message);
+
+        Utils.createAnimation3v(textAngle1, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
+        Utils.createAnimation3v(textAngle2, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
+
+
+    }
+
     public void setData(float velocityPercentage, float anglePercentage, boolean animationOn) {
 
         if (velocityPercentage < 0){
@@ -515,28 +608,10 @@ public class BallDataPanel extends Entity{
                 velocityRectangle.animScaleX = previousVelocityPercent;
                 Utils.createSimpleAnimation(velocityRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
 
-                textVelocity1.cleanAnimations();
-                textVelocity2.cleanAnimations();
-
-                if (velocityPercentage > 0.005f) {
-                    textVelocity2.setText(Game.getContext().getResources().getString(R.string.mais));
-                    Utils.createAnimation3v(textVelocity1, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
-                    Utils.createAnimation3v(textVelocity2, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
-                }
-
             } else if (velocityPercent < previousVelocityPercent){
                 velocityRectangle.animScaleX = velocityPercent;
                 velocityNewRectangle.animScaleX = previousVelocityPercent;
                 Utils.createSimpleAnimation(velocityNewRectangle, "velocityRectangle", "scaleX", 500, previousVelocityPercent, velocityPercent).start();
-
-                textVelocity1.cleanAnimations();
-                textVelocity2.cleanAnimations();
-
-                textVelocity2.setText(Game.getContext().getResources().getString(R.string.menos));
-
-                Utils.createAnimation3v(textVelocity1, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
-                Utils.createAnimation3v(textVelocity2, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
-
             }
         } else {
             velocityNewRectangle.animScaleX = velocityPercent;
@@ -547,29 +622,11 @@ public class BallDataPanel extends Entity{
             if (animationOn) {
                 if (anglePercent > previousAnglePercent) {
 
-                    textAngle1.cleanAnimations();
-                    textAngle2.cleanAnimations();
-
-                    if (anglePercentage > 0.005f) {
-
-                        textAngle2.setText(Game.getContext().getResources().getString(R.string.mais));
-
-                        Utils.createAnimation3v(textAngle1, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
-                        Utils.createAnimation3v(textAngle2, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
-                    }
-
                     angleNewRectangle.animScaleX = anglePercent;
                     angleRectangle.animScaleX = previousAnglePercent;
                     Utils.createSimpleAnimation(angleRectangle, "velocityRectangle", "scaleX", 500, previousAnglePercent, anglePercent).start();
+
                 } else if (anglePercent < previousAnglePercent){
-
-                    textAngle1.cleanAnimations();
-                    textAngle2.cleanAnimations();
-
-                    textAngle2.setText(Game.getContext().getResources().getString(R.string.menos));
-
-                    Utils.createAnimation3v(textAngle1, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
-                    Utils.createAnimation3v(textAngle2, "alpha", "alpha", 2500, 0f, 0f, 0.12f, 1f, 1f, 0f, false, true).start();
 
                     angleRectangle.animScaleX = anglePercent;
                     angleNewRectangle.animScaleX = previousAnglePercent;

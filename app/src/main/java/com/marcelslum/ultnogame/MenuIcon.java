@@ -241,7 +241,7 @@ public class MenuIcon extends Entity{
                                 3000,
                                 0f, 0f,
                                 0.2f + (0.03f * iconNumber), 0f,
-                                0.23f + (0.03f * iconNumber), -Game.resolutionY * 0.05f,
+                                0.23f + (0.03f * iconNumber), -Game.resolutionY * 0.025f,
                                 0.37f + (0.03f * iconNumber), 0f,
                                 1f, 0f,
                                 true, true
