@@ -34,6 +34,8 @@ public class BallDataPanel extends Entity{
     Rectangle bordaBmeioD;
     Rectangle bordaBmeioEFront;
     Rectangle bordaBmeioDFront;
+    Rectangle bordaBmeioEFront2;
+    Rectangle bordaBmeioDFront2;
 
     Rectangle bordaB3;
     Rectangle bordaB4;
@@ -53,7 +55,8 @@ public class BallDataPanel extends Entity{
     Rectangle bordaBE1;
     Rectangle bordaBE2;
 
-    Rectangle [] rectangles = new Rectangle[32];
+    Rectangle [] rectangles = new Rectangle[34];
+
 
     Ball ballAnimating;
     
@@ -63,8 +66,15 @@ public class BallDataPanel extends Entity{
     private static final Color COLOR_BAR_BLUE_LIGHT = new Color (0.79f, 0.82f, 1f, 1f); //202 204 256
     private static final Color COLOR_BACK = new Color (0.28f, 0.28f, 0.28f, 0.8f);
     private static final Color COLOR_BAR_GREEN_LIGHT_EFFECT = new Color (0.65f, 0.83f, 0.82f, 1f);
-    private static final Color COLOR_BAR_BLUE_LIGHT_BORDER = new Color (0.79f, 0.82f, 1f, 0.15f);
-    private static final Color COLOR_BAR_BLUE_DARK_BORDER = new Color (0.31f, 0.37f, 0.43f, 0.17f);
+    private static final Color COLOR_BAR_BLUE_LIGHT_BORDER = new Color (0.79f, 0.82f, 1f, 1f);
+    private static final Color COLOR_BAR_BLUE_DARK_BORDER = new Color (0.31f, 0.37f, 0.43f, 1f);
+
+
+    private static final Color COLOR_BORDER = new Color (0.11f, 0.25f, 0.25f, 1f);
+    private static final Color COLOR_BORDER_TOP = new Color(0.2f, 0.2f, 0.2f, 1f);
+    private static final Color COLOR_BORDER_TOP_INSIDE = new Color(0.5f, 0.5f, 0.46f, 1f);
+    private static final Color COLOR_PANEL = new Color(0.16f, 0.14f, 0.13f, 1f);
+
 
    
     
@@ -115,8 +125,8 @@ public class BallDataPanel extends Entity{
         textAngle2.alpha = 0f;
 
 
-        initRectangle = new Rectangle("initRectangle", ballDataPanelX - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1, new Color(0.19f, 0.19f, 0.19f, 1f));
-        finalRectangle = new Rectangle("finalRectangle", ballDataPanelX + width - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1, new Color(0.19f, 0.19f, 0.19f, 1f));
+        initRectangle = new Rectangle("initRectangle", ballDataPanelX - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1,  COLOR_PANEL);
+        finalRectangle = new Rectangle("finalRectangle", ballDataPanelX + width - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1,  COLOR_PANEL);
 
         velocityRectangle = new Rectangle("velocityRectangle", ballDataPanelX, ballDataPanelY, Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
         velocityNewRectangle = new Rectangle("velocityNewRectangle", ballDataPanelX, ballDataPanelY, Entity.TYPE_OTHER, width, baseHeight *2f, -1, COLOR_BAR_GREEN_LIGHT);
@@ -142,15 +152,34 @@ public class BallDataPanel extends Entity{
         float bordaEsp = Game.gameAreaResolutionY * 0.008f;
         float bordaEsp_1_4 = bordaEsp / 4f;
 
-        bordaBmeio = new Rectangle("bordaBmeio", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*0.36f, Game.resolutionY - Game.gameAreaResolutionY, -1, new Color(0.2f, 0.21f, 0.2f, 1f));
+        bordaBmeio = new Rectangle("bordaBmeio", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*0.36f, Game.resolutionY - Game.gameAreaResolutionY, -1, COLOR_PANEL);
+
         bordaBmeioE = new Rectangle("bordaBmeioE", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp*2f, Game.resolutionY - Game.gameAreaResolutionY, -1,
-               COLOR_BAR_BLUE_DARK_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
+                COLOR_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
+
+        bordaBmeioE.setMultiColor(
+                Game.COLOR_BORDA_B, COLOR_BORDER_TOP_INSIDE, Game.COLOR_BORDA_B, COLOR_BORDER_TOP_INSIDE);
+
         bordaBmeioD = new Rectangle("bordaBmeioD", (Game.resolutionX * 0.68f) - (bordaEsp*1.5f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp*2f, Game.resolutionY - Game.gameAreaResolutionY, -1,
-               COLOR_BAR_BLUE_DARK_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
+                COLOR_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
+
+        bordaBmeioD.setMultiColor(
+                COLOR_BORDER_TOP_INSIDE, Game.COLOR_BORDA_B, COLOR_BORDER_TOP_INSIDE, Game.COLOR_BORDA_B);
+
+
+        // bordas final internas
         bordaBmeioEFront = new Rectangle("bordaBmeioEFront", Game.resolutionX * 0.32f + (bordaEsp*2f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, (bordaEsp*2f)/5f, Game.resolutionY - Game.gameAreaResolutionY, -1,
-               COLOR_BAR_BLUE_LIGHT_BORDER);
+                COLOR_BORDER_TOP_INSIDE);
         bordaBmeioDFront = new Rectangle("bordaBmeioDFront", (Game.resolutionX * 0.68f) - (bordaEsp*2f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, (bordaEsp*2f)/5f, Game.resolutionY - Game.gameAreaResolutionY, -1,
-               COLOR_BAR_BLUE_LIGHT_BORDER);
+                COLOR_BORDER_TOP_INSIDE);
+
+        // bordar finas externas
+        bordaBmeioEFront2 = new Rectangle("bordaBmeioEFront2", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, (bordaEsp*2f)/5f, Game.resolutionY - Game.gameAreaResolutionY, -1,
+                COLOR_BORDER_TOP);
+        bordaBmeioDFront2 = new Rectangle("bordaBmeioDFront2", Game.resolutionX * 0.68f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, (bordaEsp*2f)/5f, Game.resolutionY - Game.gameAreaResolutionY, -1,
+                COLOR_BORDER_TOP);
+
+
         bordaBmeioEffect = new Rectangle("bordaBmeioEffect", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp*3f, Game.resolutionY - Game.gameAreaResolutionY, -1,
                 COLOR_BAR_GREEN_LIGHT_EFFECT);
 
@@ -209,6 +238,11 @@ public class BallDataPanel extends Entity{
         rectangles[number] = bordaBmeioDFront;
         number +=1;
         rectangles[number] = bordaBmeioEFront;
+
+        number +=1;
+        rectangles[number] = bordaBmeioDFront2;
+        number +=1;
+        rectangles[number] = bordaBmeioEFront2;
 
         number +=1;
         rectangles[number] = backVelocityRectangle;
@@ -347,7 +381,18 @@ public class BallDataPanel extends Entity{
                         rectangles[i].positionY + rectangles[i].animTranslateY,
                         rectangles[i].positionY + rectangles[i].animTranslateY + (rectangles[i].getTransformedHeight() * rectangles[i].animScaleY), 0f);
 
-                Utils.insertRectangleColorsData(colorsData, i * 16, rectangles[i].color.r, rectangles[i].color.g, rectangles[i].color.b, rectangles[i].color.a * rectangles[i].alpha * alpha);
+                if (rectangles[i].multiColor){
+
+                    rectangles[i].colorTopLeft.a *= alpha;
+                    rectangles[i].colorTopRight.a *= alpha;
+                    rectangles[i].colorBottomLeft.a *= alpha;
+                    rectangles[i].colorBottomRight.a *= alpha;
+
+                    Utils.insertRectangleColorsData(colorsData, i * 16, rectangles[i].colorTopLeft, rectangles[i].colorTopRight, rectangles[i].colorBottomLeft, rectangles[i].colorBottomRight);
+                } else {
+                    Utils.insertRectangleColorsData(colorsData, i * 16, rectangles[i].color.r, rectangles[i].color.g, rectangles[i].color.b, rectangles[i].color.a * rectangles[i].alpha * alpha);
+                }
+
         }
 
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);

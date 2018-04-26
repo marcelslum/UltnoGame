@@ -298,11 +298,13 @@ public class Game {
 
     }
 
+    public static final Color COLOR_BORDA_B = new Color(0.17f, 0.17f, 0.17f, 1f);
+
     public static void initEdges(){
         bordaE = new Edge("bordaE", -999, 0, Entity.TYPE_LEFT_BORDER, 1000, resolutionY*2, Color.pretoCheio);
         bordaD = new Edge("bordaD", resolutionX-2, 0,  Entity.TYPE_RIGHT_BORDER, 2000, resolutionY*2, Color.pretoCheio);
         bordaC = new Edge("bordaC",  1, -1000,  Entity.TYPE_TOP_BORDER, resolutionX-4, 1001, Color.pretoCheio);
-        bordaB = new Edge("bordaB", -1000, resolutionY,  Entity.TYPE_BOTTOM_BORDER, resolutionX*3, 1000, new Color(0.15f, 0.15f, 0.18f, 1f));
+        bordaB = new Edge("bordaB", -1000, resolutionY,  Entity.TYPE_BOTTOM_BORDER, resolutionX*3, 1000, COLOR_BORDA_B);
 
     }
 

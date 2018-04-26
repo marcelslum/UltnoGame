@@ -17,6 +17,12 @@ public class Rectangle extends PhysicalObject {
     public float borderThicknes;
 
 
+    boolean multiColor = false;
+    Color colorBottomRight;
+    Color colorBottomLeft;
+    Color colorTopRight;
+    Color colorTopLeft;
+
     Rectangle(String name, float x, float y, int type, float width, float height, int weight, Color color){
         super(name, x, y, type, weight);
         this.program = Game.solidProgram;
@@ -45,6 +51,15 @@ public class Rectangle extends PhysicalObject {
         //Log.e("rectangle", " setDrawInfo end");
     }
 
+
+    public void setMultiColor(Color colorTopLeft, Color colorTopRight, Color colorBottomLeft, Color colorBottomRight){
+        multiColor = true;
+        this.colorBottomLeft = colorBottomLeft;
+        this.colorBottomRight = colorBottomRight;
+        this.colorTopLeft = colorTopLeft;
+        this.colorTopRight = colorTopRight;
+    }
+
     public void setDrawInfo(){
         //Log.e("rectangle", " setDrawInfo init");
 
@@ -56,7 +71,12 @@ public class Rectangle extends PhysicalObject {
 
         Utils.insertRectangleVerticesData(verticesData, 0,  0f, width, 0f, height, 0f);
         Utils.insertRectangleIndicesData(indicesData, 0, 0);
-        Utils.insertRectangleColorsData(colorsData, 0, color);
+        if (multiColor){
+            Utils.insertRectangleColorsData(colorsData, 0, colorTopLeft, colorTopRight, colorBottomLeft, colorBottomRight);
+        } else {
+            Utils.insertRectangleColorsData(colorsData, 0, color);
+        }
+
 
 
         //Log.e("rectangle", " borderPercentage "+borderPercentage);

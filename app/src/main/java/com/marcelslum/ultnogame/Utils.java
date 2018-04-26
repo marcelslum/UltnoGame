@@ -256,6 +256,28 @@ public abstract class Utils {
         array[15 + (startIndex)] = color.a;
     }
 
+
+
+    public static void insertRectangleColorsData(float[] array, int startIndex, Color colorTopLeft, Color colorTopRight, Color colorBottomLeft, Color colorBottomRight){
+        array[startIndex] = colorBottomLeft.r;
+        array[1 + (startIndex)] = colorBottomLeft.g;
+        array[2 + (startIndex)] = colorBottomLeft.b;
+        array[3 + (startIndex)] = colorBottomLeft.a;
+        array[4 + (startIndex)] = colorBottomRight.r;
+        array[5 + (startIndex)] = colorBottomRight.g;
+        array[6 + (startIndex)] = colorBottomRight.b;
+        array[7 + (startIndex)] = colorBottomRight.a;
+        array[8 + (startIndex)] = colorTopRight.r;
+        array[9 + (startIndex)] = colorTopRight.g;
+        array[10 + (startIndex)] = colorTopRight.b;
+        array[11 + (startIndex)] = colorTopRight.a;
+        array[12 + (startIndex)] = colorTopLeft.r;
+        array[13 + (startIndex)] = colorTopLeft.g;
+        array[14 + (startIndex)] = colorTopLeft.b;
+        array[15 + (startIndex)] = colorTopLeft.a;
+    }
+
+
     public static void insertRectangleColorsData(float[] array, int startIndex, float r, float g, float b, float a){
         array[startIndex] = r;
         array[1 + (startIndex)] = g;
