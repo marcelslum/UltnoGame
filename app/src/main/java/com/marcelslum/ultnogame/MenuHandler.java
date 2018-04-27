@@ -64,7 +64,7 @@ public class MenuHandler {
                 groupMenu.addGraph(i,"graph "+i, Game.resolutionY * 0.07f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_BAR);
 
                 groupMenu.addText(i,2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
-                        Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, Color.cinza2);
+                        Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, Color.cinza40);
 
                 //Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
 
@@ -72,7 +72,7 @@ public class MenuHandler {
                 //Log.e(TAG, "group i = "+ i + " seen "+SaveGame.saveGame.groupsSeen[i]);
                 if (!SaveGame.saveGame.groupsSeen[i]){
 
-                    groupMenu.addInnerText(i,lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+                    groupMenu.addInnerText(i,lgd.name+"inner", Game.getContext().getResources().getString(R.string.novo), Game.resolutionY * 0.05f, Game.resolutionY * 0.05f, new Color(0.1f, 0.1f, 0.9f, 1f));
                     groupMenu.iconNumberToShow = i;
                 }
 
@@ -265,7 +265,7 @@ public class MenuHandler {
                     textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
 
                 if (!SaveGame.saveGame.tutorialsSeen[i]){
-                    tutorialMenu.addInnerText(i,"ti"+i, Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.025f, new Color(0.1f, 0.1f, 0.9f, 1f));
+                    tutorialMenu.addInnerText(i,"ti"+i, Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.05f, new Color(0.1f, 0.1f, 0.9f, 1f));
                 }
             }
    
@@ -544,7 +544,7 @@ public class MenuHandler {
             public void onChange() {
                 if (optionTutorialUnvisite.numberForAnimation == 1f){
                     if (Game.gameState != Game.GAME_STATE_JOGAR) {
-                        optionTutorialUnvisite.setColor(Color.cinza2);
+                        optionTutorialUnvisite.setColor(Color.cinza40);
                     }
                 } else if (optionTutorialUnvisite.numberForAnimation == 2f) {
                     if (Game.gameState != Game.GAME_STATE_JOGAR) {

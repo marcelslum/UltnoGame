@@ -212,7 +212,7 @@ public class MenuIcon extends Entity{
             icons[i].cleanAnimationsNoChild();
             texts[i].cleanAnimationsNoChild();
             texts2[i].cleanAnimationsNoChild();
-            innerTexts[i].cleanAnimationsNoChild();
+            //innerTexts[i].cleanAnimationsNoChild();
             if (graph[i] != null) {
                 graph[i].cleanAnimationsNoChild();
             }

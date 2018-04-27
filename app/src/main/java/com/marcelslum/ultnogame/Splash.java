@@ -2,8 +2,6 @@ package com.marcelslum.ultnogame;
 
 import android.util.Log;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-
 import java.util.ArrayList;
 
 /**
@@ -286,7 +284,7 @@ public class Splash {
                 fontSize * 0.55f,
                 Game.font, new Color(0.6f, 0.6f, 0.7f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageVelocity2.addText(Game.getContext().getResources().getString(R.string.messageVelocity2), Color.cinza3);
+        messageVelocity2.addText(Game.getContext().getResources().getString(R.string.messageVelocity2), Color.cinza60);
 
         messageVelocity2.clearDisplay();
 

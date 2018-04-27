@@ -32,7 +32,7 @@ public class TextBoxBuilder {
         width = 0f;
         size = 0f;
         text = "";
-        textColor = Color.cinza1;
+        textColor = Color.cinza20;
         textShadow = false;
         frameColor = new Color(0.7f, 0.7f, 0.7f, 1.0f);
         x = 0f;

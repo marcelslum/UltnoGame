@@ -75,7 +75,7 @@ public class Messages extends Entity {
 
             float textWidth = textObject.getWidth();
 
-            rectangle = new Rectangle("messageRectangle", x - textWidth - padd , childs.get(childToReplace).y - (padd/4f), Entity.TYPE_OTHER, textWidth + (padd * 4f), Game.gameAreaResolutionY * 0.06f + (padd/2f), -1, Color.cinza3);
+            rectangle = new Rectangle("messageRectangle", x - textWidth - padd , childs.get(childToReplace).y - (padd/4f), Entity.TYPE_OTHER, textWidth + (padd * 4f), Game.gameAreaResolutionY * 0.06f + (padd/2f), -1, Color.cinza60);
             childs3.set(childToReplace, rectangle);
 
 
@@ -94,7 +94,7 @@ public class Messages extends Entity {
 
             float textWidth = textObject.getWidth();
 
-            rectangle = new Rectangle("messageRectangle", x - textWidth - padd , textObject.y - (padd/4f), Entity.TYPE_OTHER, textWidth + (padd * 4f), Game.gameAreaResolutionY * 0.06f + (padd/2f), -1, Color.cinza3);
+            rectangle = new Rectangle("messageRectangle", x - textWidth - padd , textObject.y - (padd/4f), Entity.TYPE_OTHER, textWidth + (padd * 4f), Game.gameAreaResolutionY * 0.06f + (padd/2f), -1, Color.cinza60);
             childs3.add(rectangle);
         }
 

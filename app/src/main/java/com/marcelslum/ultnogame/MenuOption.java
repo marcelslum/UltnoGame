@@ -17,8 +17,10 @@ class MenuOption {
     public Font font;
     public float size;
     public Game game;
+    public Color textColor;
+    public Color textShadowColor;
 
-    public MenuOption(int id, String name, String text, Font font, float size, float x, float y) {
+    public MenuOption(int id, String name, String text, Font font, float size, float x, float y, Color textColor, Color textShadowColor) {
 
         this.id = id;
         this.name = name;
@@ -28,13 +30,16 @@ class MenuOption {
         this.isSelected = false;
         this.x = x;
         this.y = y;
+        this.textColor = textColor;
+        this.textShadowColor = textShadowColor;
         setText(text);
 
     }
 
     public void setText(String text){
         if (textObject == null) {
-            textObject = new Text("menuOptions" + name + "text", x, y, this.size, text, this.font);
+            textObject = new Text("menuOptions" + name + "text", x, y, this.size, text, this.font, textColor);
+            textObject.addShadow(textShadowColor);
         } else {
             textObject.setText(text);
         }

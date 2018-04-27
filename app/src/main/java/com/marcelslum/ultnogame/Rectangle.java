@@ -17,6 +17,13 @@ public class Rectangle extends PhysicalObject {
     public float borderThicknes;
 
 
+    boolean topMultiColorRectangle = false;
+    float percentageOfTopRectangle;
+    Color topRectangleColorBottomRight;
+    Color topRectangleColorBottomLeft;
+    Color topRectangleColorTopRight;
+    Color topRectangleColorTopLeft;
+
     boolean multiColor = false;
     Color colorBottomRight;
     Color colorBottomLeft;
@@ -29,6 +36,35 @@ public class Rectangle extends PhysicalObject {
         this.color = color;
         this.width = width;
         this.height = height;
+        setDrawInfo();
+    }
+
+    public void addTopRectangle(float percentageOfTopRectangle, Color topColorTopLeft, Color topColorTopRight, Color topColorBottomLeft, Color topColorBottomRight, float percentageOfBorder, float minThicknessOfBorder, float maxThicknessOfBorder, Color borderColor){
+
+
+        if (percentageOfBorder <= 0f){
+            Log.e(TAG, "Não é possível criar borda igual a zero");
+            return;
+        }
+
+        this.borderPercentage = percentageOfBorder;
+        this.borderMinThickness = minThicknessOfBorder;
+        this.borderMaxThickness = maxThicknessOfBorder;
+        this.borderColor = borderColor;
+
+        borderThicknes = width * borderPercentage;
+        if (borderThicknes > borderMaxThickness){
+            borderThicknes = borderMaxThickness;
+        } else if (borderThicknes < borderMinThickness){
+            borderThicknes = borderMinThickness;
+        }
+
+        topMultiColorRectangle = true;
+        this.percentageOfTopRectangle = percentageOfTopRectangle;
+        this.topRectangleColorBottomLeft = topColorBottomLeft;
+        this.topRectangleColorBottomRight = topColorBottomRight;
+        this.topRectangleColorTopLeft = topColorTopLeft;
+        this.topRectangleColorTopRight = topColorTopRight;
         setDrawInfo();
     }
 
@@ -66,7 +102,12 @@ public class Rectangle extends PhysicalObject {
         if (borderPercentage == 0f) {
             initializeData(12, 6, 0, 16);
         } else {
-            initializeData(12*5, 6*5, 0, 16*5);
+            if (topMultiColorRectangle){
+                initializeData(12*6, 6*6, 0, 16*6);
+            } else {
+                initializeData(12*5, 6*5, 0, 16*5);
+            }
+
         }
 
         Utils.insertRectangleVerticesData(verticesData, 0,  0f, width, 0f, height, 0f);
@@ -77,6 +118,11 @@ public class Rectangle extends PhysicalObject {
             Utils.insertRectangleColorsData(colorsData, 0, color);
         }
 
+        if (topMultiColorRectangle){
+            Utils.insertRectangleVerticesData(verticesData, 1 * 12,  0f, width, 0f, height, 0f);
+            Utils.insertRectangleIndicesData(indicesData, 1 * 6, 1 * 4);
+            Utils.insertRectangleColorsData(colorsData, 1 * 16, topRectangleColorTopLeft, topRectangleColorTopRight, topRectangleColorBottomLeft, topRectangleColorBottomRight);
+        }
 
 
         //Log.e("rectangle", " borderPercentage "+borderPercentage);
@@ -85,18 +131,20 @@ public class Rectangle extends PhysicalObject {
             for (int i = 0; i < 4; i++){
                 //Log.e("rectangle", " borda "+i);
                 if (i == 0){
-                    Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, width, 0f, borderThicknes, 0f);
+                    Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, width, 0f, borderThicknes, 0f);
                 } else if (i == 1){
-                    Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, width, height - borderThicknes, height, 0f);
+                    Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, width, height - borderThicknes, height, 0f);
                 } else if (i == 2){
-                    Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, borderThicknes, 0f, height, 0f);
+                    Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, borderThicknes, 0f, height, 0f);
                 } else {
-                    Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  width - borderThicknes, width, 0f, height, 0f);
+                    Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  width - borderThicknes, width, 0f, height, 0f);
                 }
-                Utils.insertRectangleIndicesData(indicesData, (i+1)*6, (i+1)*4);
-                Utils.insertRectangleColorsData(colorsData, (i+1)*16, borderColor);
+                Utils.insertRectangleIndicesData(indicesData, (i+2)*6, (i+2)*4);
+                Utils.insertRectangleColorsData(colorsData, (i+2)*16, borderColor);
             }
         }
+
+
 
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
         indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
@@ -267,13 +315,13 @@ public class Rectangle extends PhysicalObject {
 
                 for (int i = 0; i < 4; i++){
                     if (i == 0){
-                        Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, width, 0f, borderThicknes * difHeight, 0f);
+                        Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, width, 0f, borderThicknes * difHeight, 0f);
                     } else if (i == 1){
-                        Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, width, height - (borderThicknes * difHeight), height, 0f);
+                        Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, width, height - (borderThicknes * difHeight), height, 0f);
                     } else if (i == 2){
-                        Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, borderThicknes * difWidth, 0f, height, 0f);
+                        Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, borderThicknes * difWidth, 0f, height, 0f);
                     } else {
-                        Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  width - (borderThicknes * difWidth), width, 0f, height, 0f);
+                        Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  width - (borderThicknes * difWidth), width, 0f, height, 0f);
                     }
                 }
             }

@@ -24,11 +24,11 @@ public class Tutorial {
     static final int TUTORIAL_OBSTACULO = 4;
     static final int TUTORIAL_CORES = 5;
     static final int TUTORIAL_EXPLOSAO = 6;
-    static final int TUTORIAL_ALVO_FANTASMA = 7;
-    static final int TUTORIAL_OBSTACULOS_DINAMICOS = 8;
-    static final int TUTORIAL_BOLAS_INVENCIVEIS = 9;
-    static final int TUTORIAL_BOLAS_PRESAS = 10;
-    static final int TUTORIAL_VENTO = 11;
+    static final int TUTORIAL_OBSTACULOS_DINAMICOS = 7;
+    static final int TUTORIAL_VENTO = 8;
+    static final int TUTORIAL_ALVO_FANTASMA = 9;
+    static final int TUTORIAL_BOLAS_INVENCIVEIS = 10;
+    static final int TUTORIAL_BOLAS_PRESAS = 11;
     static final int TUTORIAL_BARRA_DINAMICA = 12;
     static final int TUTORIAL_COMIDA = 13;
     static final int TUTORIAL_BOLA_FALSA = 14;

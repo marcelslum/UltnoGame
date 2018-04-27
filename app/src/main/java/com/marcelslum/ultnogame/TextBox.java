@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -24,7 +22,7 @@ public class TextBox extends Entity{
     public Image miniArrow;
     public float arrowX;
     public float arrowY;
-    public Entity frame;
+    public Rectangle frame;
     public Rectangle border;
     public float frameWidth;
     public int frameType;
@@ -233,7 +231,7 @@ public class TextBox extends Entity{
             }
         }
         //Log.e("textbox appendArrow", " initialX " + initialX + " initialY " + initialY);
-        arrow = new Line("line", initialX, initialY, arrowX, arrowY, Color.cinza1);
+        arrow = new Line("line", initialX, initialY, arrowX, arrowY, Color.cinza20);
         addChild(arrow);
     }
 

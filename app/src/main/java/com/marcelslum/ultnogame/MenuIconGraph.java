@@ -37,9 +37,11 @@ public class MenuIconGraph extends Entity{
         super(name, x, y, Entity.TYPE_MENU);
         if (type == TYPE_BAR) {
             backRectangle = new Rectangle("backMenuIconGraph", x, y, Entity.TYPE_OTHER, width, height, -1, COLOR_BAR_LIGHT);
+            backRectangle.setMultiColor(COLOR_BAR_LIGHT, COLOR_BAR_LIGHT.changeAlpha(0.2f), COLOR_BAR_LIGHT, COLOR_BAR_LIGHT.changeAlpha(0.2f));
             backRectangleC = new Rectangle("backMenuIconGraphC", x, y, Entity.TYPE_OTHER, width, height/8f, -1, COLOR_BAR_LIGHT_BORDER);
             backRectangleB = new Rectangle("backMenuIconGraphB", x, y + height - (height/8f), Entity.TYPE_OTHER, width, height/8f, -1, COLOR_BAR_LIGHT_BORDER);
             frontRectangle = new Rectangle("frontMenuIconGraph", x, y, Entity.TYPE_OTHER, width, height, -1, COLOR_BAR_DARK);
+            frontRectangle.setMultiColor(COLOR_BAR_DARK, COLOR_BAR_DARK, COLOR_BAR_DARK, COLOR_BAR_DARK2);
             frontRectangle2 = new Rectangle("frontMenuIconGraph2", x, y-(height/2f), Entity.TYPE_OTHER, width, height*2, -1, COLOR_BAR_DARK2);
             addChild(backRectangle);
             addChild(backRectangleC);

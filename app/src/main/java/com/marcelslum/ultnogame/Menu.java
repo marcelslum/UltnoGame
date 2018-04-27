@@ -110,10 +110,35 @@ class Menu extends Entity{
         return null;
     }
 
+
+    static int lastMenuOptionColor = 0;
+
     public MenuOption addMenuOption(String name, String text, MenuOption.OnChoice onChoice){
         float optionY = this.y + (optionsIds * (size *(1.01f+bottomPad)));
         optionsIds += 1;
-        MenuOption newMenuOption = new MenuOption(optionsIds, name, text, font, size, x, optionY);
+
+        Color color;
+        Color shadow;
+        if (lastMenuOptionColor == 0){
+            lastMenuOptionColor += 1;
+            color = Color.pretoCheio;
+            shadow = Color.cinza60.changeAlpha(0.2f);
+        } else if (lastMenuOptionColor == 1){
+            lastMenuOptionColor += 1;
+            color = Color.azul40;
+            shadow = Color.azulCheio.changeAlpha(0.2f);
+        } else if (lastMenuOptionColor == 2){
+            lastMenuOptionColor += 1;
+            color = Color.vermelho40;
+            shadow = Color.vermelhoCheio.changeAlpha(0.2f);
+        } else {
+            lastMenuOptionColor = 0;
+            color = Color.verde40;
+            shadow = Color.verdeCheio.changeAlpha(0.2f);
+        }
+
+
+        MenuOption newMenuOption = new MenuOption(optionsIds, name, text, font, size, x, optionY, color, shadow);
         addChild(newMenuOption.textObject);
         newMenuOption.setOnChoice(onChoice);
         menuOptions.add(newMenuOption);
@@ -191,7 +216,10 @@ class Menu extends Entity{
         //Log.e("menu", "render menu");
         for (int i = 0; i < this.menuOptions.size();i++){
             this.menuOptions.get(i).textObject.alpha = alpha;
+            this.menuOptions.get(i).textObject.shadowText.alpha = alpha;
+            this.menuOptions.get(i).textObject.shadowText.render(matrixView, matrixProjection);
             this.menuOptions.get(i).textObject.render(matrixView, matrixProjection);
+
         }
     }
 

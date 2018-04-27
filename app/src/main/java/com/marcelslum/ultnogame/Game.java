@@ -433,11 +433,84 @@ public class Game {
                     .size(Game.gameAreaResolutionY*0.045f)
                     .text(tip)
                     .isHaveFrame(true, new Color(0.3f, 0.3f, 0.5f, 1f))
-                    .isHaveBorder(true, Color.cinza2)
                     .isHaveArrowContinue(false)
                     .setTextColor(Color.branco)
-                    .addShadow(Color.cinza1)
+                    .addShadow(Color.cinza20)
                     .build();
+
+
+
+            float random = Utils.getRandonFloat(0f, 1f);
+
+
+            if (random < 0.33f) {
+                tipTextBox.frame.setMultiColor(
+                        Color.verdeCheio,
+                        Color.branco,
+                        Color.verdeCheio,
+                        Color.verdeCheio
+                );
+
+                tipTextBox.frame.addTopRectangle(
+                        0.9f,
+                        Color.cinza20.changeAlpha(0.4f),
+                        Color.cinza40.changeAlpha(0.4f),
+                        Color.cinza20.changeAlpha(0.4f),
+                        Color.cinza20.changeAlpha(0.4f),
+                        .05f,
+                        Game.gameAreaResolutionX * 0.003f,
+                        Game.gameAreaResolutionX * 0.003f,
+                        Color.verde40
+                );
+
+            } else if (random < 0.66f){
+                tipTextBox.frame.setMultiColor(
+                        Color.vermelhoCheio,
+                        Color.branco,
+                        Color.vermelhoCheio,
+                        Color.vermelhoCheio
+                );
+
+                tipTextBox.frame.addTopRectangle(
+                        0.9f,
+                        Color.cinza20.changeAlpha(0.4f),
+                        Color.cinza40.changeAlpha(0.4f),
+                        Color.cinza20.changeAlpha(0.4f),
+                        Color.cinza20.changeAlpha(0.4f),
+                        .05f,
+                        Game.gameAreaResolutionX * 0.003f,
+                        Game.gameAreaResolutionX * 0.003f,
+                        Color.vermelho40
+                );
+
+            } else {
+                tipTextBox.frame.setMultiColor(
+                        Color.azulCheio,
+                        Color.branco,
+                        Color.azulCheio,
+                        Color.azulCheio
+                );
+
+                tipTextBox.frame.addTopRectangle(
+                        0.9f,
+                        Color.cinza20.changeAlpha(0.4f),
+                        Color.cinza40.changeAlpha(0.4f),
+                        Color.cinza20.changeAlpha(0.4f),
+                        Color.cinza20.changeAlpha(0.4f),
+                        .05f,
+                        Game.gameAreaResolutionX * 0.003f,
+                        Game.gameAreaResolutionX * 0.003f,
+                        Color.azul40
+                );
+            }
+
+
+
+
+
+
+
+
 
             tipTextBox.animTranslateX = Game.resolutionX * 2f;
 

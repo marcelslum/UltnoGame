@@ -5,10 +5,39 @@ package com.marcelslum.ultnogame;
  */
 public class Obstacle extends Rectangle{
 
-    public float sizeOfSquares;
-
     Obstacle(String name, float x, float y, float width, float height) {
         super(name, x, y, Entity.TYPE_OBSTACLE, width, height, Game.OBSTACLES_WEIGHT, new Color(0.52f, 0.6f, 0.6f, 1.0f));
+
+        Color steelBlue4  = new Color(0.43f, 0.48f, 0.55f, 1.0f);
+        Color skyBlue  = new Color(0.42f, 0.65f, 0.80f, 1.0f);
+
+        Color steelBlue4Alpha40  = new Color(0.43f, 0.48f, 0.55f, 1.0f);
+        Color skyBlueAlpha40  = new Color(0.42f, 0.65f, 0.80f, 1.0f);
+        Color border = new Color(.4f, .4f, .4f, 1f);
+
+
+        setMultiColor(
+                steelBlue4,
+                steelBlue4,
+                steelBlue4,
+                skyBlue
+        );
+
+
+        addTopRectangle(
+                0.9f,
+                skyBlueAlpha40,//skyBlueAlpha40
+                steelBlue4Alpha40,
+                steelBlue4Alpha40,
+                steelBlue4Alpha40,
+                .05f,
+                Game.gameAreaResolutionX * 0.003f,
+                Game.gameAreaResolutionX * 0.003f,
+                border
+        );
+
+
+
         this.program = Game.solidProgram;
         setDrawInfo();
     }
