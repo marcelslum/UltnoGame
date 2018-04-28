@@ -278,6 +278,11 @@ public class Ball extends Circle{
 
     @Override
     public void checkTransformations(boolean updatePrevious) {
+
+        if (!isVisible){
+            return;
+        }
+
         if (ballParticleGenerator != null && ballParticleGenerator.isActive){
             ballParticleGenerator.checkTransformations(updatePrevious);
         }

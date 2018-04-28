@@ -446,6 +446,11 @@ public class Entity{
     }
     
     public void checkTransformations(boolean updatePrevious){
+
+        if (!isVisible){
+            return;
+        }
+
         for (int i = 0; i < childs.size(); i++) {
             childs.get(i).checkTransformations(updatePrevious);
         }

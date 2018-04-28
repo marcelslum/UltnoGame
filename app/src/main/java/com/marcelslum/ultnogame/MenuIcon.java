@@ -486,6 +486,10 @@ public class MenuIcon extends Entity{
 
     @Override
     public void checkTransformations(boolean updatePrevious) {
+        if (!isVisible){
+            return;
+        }
+
         if (desacelerationActivated){
             desacelerate();
         }

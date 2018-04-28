@@ -187,7 +187,7 @@ class TargetGroup extends Entity{
     public void render(float[] matrixView, float[] matrixProjection) {
 
         if (MyGLRenderer.tick){
-            checkBufferChange();
+            checkBufferChange(); // TODO verificar se dá para otimizar
         }
 	    
         if (!isVisible){

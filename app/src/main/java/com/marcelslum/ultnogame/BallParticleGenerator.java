@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class BallParticleGenerator extends Entity {
     
-    int number_of_particles = 35;
+    int number_of_particles = 15;
     boolean isActive = true;
     boolean isVisible = true;
     

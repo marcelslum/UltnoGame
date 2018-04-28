@@ -9,13 +9,25 @@ import android.util.Log;
 
 public class BallDataPanel extends Entity{
 
-    private static int [] vbo;
-    private static int [] ibo;
+    private static int [] vboStatic;
+    private static int [] iboStatic;
+
+    private static int [] vboVariable;
+    private static int [] iboVariable;
+
+    private static int [] vboStaticFront;
+    private static int [] iboStaticFront;
 
     static Text textAngle1;
     static Text textAngle2;
     static Text textVelocity1;
     static Text textVelocity2;
+
+    Rectangle bordaB;
+    Rectangle bordaE;
+    Rectangle bordaC;
+    Rectangle bordaD;
+
 
     Rectangle velocityRectangle;
     Rectangle angleRectangle;
@@ -45,9 +57,6 @@ public class BallDataPanel extends Entity{
     Rectangle bordaB5;
     Rectangle bordaB6;
     Rectangle bordaB7;
-    Rectangle bordaB8;
-    Rectangle bordaB9;
-    Rectangle bordaB10;
 
     Rectangle bordaBC1;
     Rectangle bordaBC2;
@@ -58,8 +67,22 @@ public class BallDataPanel extends Entity{
     Rectangle bordaBE1;
     Rectangle bordaBE2;
 
-    Rectangle [] rectangles = new Rectangle[30];
+    public float[] verticesDataStatic;
+    public short[] indicesDataStatic;
+    public float[] colorsDataStatic;
 
+    public float[] verticesDataStaticFront;
+    public short[] indicesDataStaticFront;
+    public float[] colorsDataStaticFront;
+
+    public float[] verticesDataVariable;
+    public short[] indicesDataVariable;
+    public float[] colorsDataVariable;
+
+
+    Rectangle [] rectanglesStatic = new Rectangle[17];
+    Rectangle [] rectanglesVariable = new Rectangle[10];
+    Rectangle [] rectanglesStaticFront = new Rectangle[2];
 
     Ball ballAnimating;
     
@@ -129,6 +152,11 @@ public class BallDataPanel extends Entity{
         textAngle2.alpha = 0f;
 
 
+        bordaE = new Rectangle("bordaEDataPanel", -999, 0, Entity.TYPE_OTHER, 1000, Game.resolutionY*2, -1, Color.pretoCheio);
+        bordaD = new Rectangle("bordaDDataPanel", Game.resolutionX-2, 0,  Entity.TYPE_OTHER, 1000, Game.resolutionY*2,-1, Color.pretoCheio);
+        bordaC = new Rectangle("bordaCDataPanel",  1, -1000,  Entity.TYPE_OTHER, Game.resolutionX-4, 1001,-1, Color.pretoCheio);
+        bordaB = new Rectangle("bordaBDataPanel", -1000, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*3, 1000,-1, Game.COLOR_BORDA_B);
+
         initRectangle = new Rectangle("initRectangle", ballDataPanelX - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1,  COLOR_PANEL);
         finalRectangle = new Rectangle("finalRectangle", ballDataPanelX + width - initRectangleSize, ballDataPanelY - initRectangleSize/4f, Entity.TYPE_OTHER, initRectangleSize * 2f, (baseHeight * 5) + initRectangleSize/4f, -1,  COLOR_PANEL);
 
@@ -146,10 +174,6 @@ public class BallDataPanel extends Entity{
 
         angleRectangle.animScaleX = 0.008f;
         angleNewRectangle.animScaleX = 0.008f;
-
-        float markSize =  width*0.008f;
-        endVelocity = new Rectangle("velocityRectangle", ballDataPanelX + width - markSize, ballDataPanelY, Entity.TYPE_OTHER, markSize, baseHeight *2f, -1, COLOR_BAR_GREEN_DARK);
-        endAngle = new Rectangle("velocityRectangle", ballDataPanelX + width - markSize, ballDataPanelY + (baseHeight * 3f), Entity.TYPE_OTHER, markSize, baseHeight *2f, -1, COLOR_BAR_BLUE_DARK);
 
         ////// BORDAS
 
@@ -210,10 +234,7 @@ public class BallDataPanel extends Entity{
         bordaB5 = new Rectangle("bordaB5", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.1f, bordaEsp*0.8f, -1, new Color(1f, 1f, 1f, 0.2f ));
         bordaB6 = new Rectangle("bordaB6", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.22f, bordaEsp*0.8f, -1, new Color(0.2f, 0.2f, 0.2f, 0.2f ));
         bordaB7 = new Rectangle("bordaB7", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.35f, bordaEsp*0.8f, -1, new Color(1f, 1f, 1f, 0.2f));
-        bordaB8 = new Rectangle("bordaB8", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.13f, bordaEsp*0.8f, -1, new Color(0.8f, 0.8f, 0.8f, 0.2f ));
-        bordaB9 = new Rectangle("bordaB9", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.05f, bordaEsp*0.8f, -1, new Color(0.1f, 0.1f, 0.1f, 0.2f ));
-        bordaB10 = new Rectangle("bordaB10", 0f, Game.gameAreaResolutionY, Entity.TYPE_OTHER, Game.gameAreaResolutionX * 0.18f, bordaEsp*0.8f, -1, new Color(1f, 1f, 1f, 0.2f ));
-        
+
 
         Color colorBorda1 = new Color(0.3f, 0.3f, 0.3f, 0.8f);
         Color colorBorda1B = new Color(0.2f, 0.2f, 0.2f, 0.8f);
@@ -231,83 +252,69 @@ public class BallDataPanel extends Entity{
         bordaBE2 = new Rectangle("bordaBE2", bordaEsp / 8f,Game.gameAreaResolutionY,Entity.TYPE_OTHER, bordaEsp_1_4,Game.resolutionY - Game.gameAreaResolutionY, -1, colorBorda2);
 
 
-        int number = 0;
-        rectangles[number] = bordaBmeio;
-        number +=1;
-        rectangles[number] = bordaBmeioEffect;
-        number +=1;
-        rectangles[number] = bordaBmeioD;
-        number +=1;
-        rectangles[number] = bordaBmeioE;
+        int numberStatic = 0;
 
-        /*
-        number +=1;
-        rectangles[number] = bordaBmeioDFront;
-        number +=1;
-        rectangles[number] = bordaBmeioEFront;
+        rectanglesStatic[numberStatic] = bordaE;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaD;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaC;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaB;
+        numberStatic +=1;
 
-        number +=1;
-        rectangles[number] = bordaBmeioDFront2;
-        number +=1;
-        rectangles[number] = bordaBmeioEFront2;
-        */
 
-        number +=1;
-        rectangles[number] = backVelocityRectangle;
-        number +=1;
-        rectangles[number] = backAngleRectangle;
-        number +=1;
-        rectangles[number] = velocityNewRectangle;
-        number +=1;
-        rectangles[number] = angleNewRectangle;
-        number +=1;
-        rectangles[number] = velocityRectangle;
-        number +=1;
-        rectangles[number] = angleRectangle;
-        number +=1;
-        rectangles[number] = endVelocity;
-        number +=1;
-        rectangles[number] = endAngle;
-        number +=1;
-        rectangles[number] = initRectangle;
-        number +=1;
-        rectangles[number] = finalRectangle;
+        rectanglesStatic[numberStatic] = bordaBmeio;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBmeioD;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBmeioE;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = backVelocityRectangle;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = backAngleRectangle;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBC1;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBB1;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBD1;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBE1;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBC2;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBB2;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBE2;
+        numberStatic +=1;
+        rectanglesStatic[numberStatic] = bordaBD2;
 
-        number +=1;
-        rectangles[number] = bordaBC1;
-        number +=1;
-        rectangles[number] = bordaBB1;
-        number +=1;
-        rectangles[number] = bordaBD1;
-        number +=1;
-        rectangles[number] = bordaBE1;
 
-        number +=1;
-        rectangles[number] = bordaBC2;
-        number +=1;
-        rectangles[number] = bordaBB2;
-        number +=1;
-        rectangles[number] = bordaBE2;
-        number +=1;
-        rectangles[number] = bordaBD2;
+        
+        int numberVariable = 0;
+        rectanglesVariable[numberVariable] = bordaB3;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = bordaB4;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = bordaB5;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = bordaB6;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = bordaB7;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = bordaBmeioEffect;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = velocityNewRectangle;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = angleNewRectangle;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = velocityRectangle;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = angleRectangle;
 
-        number +=1;
-        rectangles[number] = bordaB3;
-        number +=1;
-        rectangles[number] = bordaB4;
-        number +=1;
-        rectangles[number] = bordaB5;
-        number +=1;
-        rectangles[number] = bordaB6;
-        number +=1;
-        rectangles[number] = bordaB7;
-        number +=1;
-        rectangles[number] = bordaB8;
-        number +=1;
-        rectangles[number] = bordaB9;
-        number +=1;
-        rectangles[number] = bordaB10;
-
+        rectanglesStaticFront[0] = initRectangle;
+        rectanglesStaticFront[1] = finalRectangle;
 
         Utils.createAnimation4v(bordaB3, "b3", "animTranslateX", 4000,
                 0f, -Game.gameAreaResolutionX,
@@ -343,29 +350,7 @@ public class BallDataPanel extends Entity{
                 0.5f, -Game.gameAreaResolutionX,
                 1f, -Game.gameAreaResolutionX,
                 true, true).start();
-
-        Utils.createAnimation4v(bordaB8, "b8", "animTranslateX", 4800,
-                0f, Game.gameAreaResolutionX,
-                0.2f, Game.gameAreaResolutionX,
-                0.5f, -Game.gameAreaResolutionX,
-                1f, -Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(bordaB9, "b9", "animTranslateX", 5500,
-                0f, -Game.gameAreaResolutionX,
-                0.2f, -Game.gameAreaResolutionX,
-                0.5f, Game.gameAreaResolutionX,
-                1f, Game.gameAreaResolutionX,
-                true, true).start();
-
-        Utils.createAnimation4v(bordaB10, "b10", "animTranslateX", 3800,
-                0f, Game.gameAreaResolutionX,
-                0.2f, Game.gameAreaResolutionX,
-                0.5f, -Game.gameAreaResolutionX,
-                1f, -Game.gameAreaResolutionX,
-                true, true).start();
-
-
+        
         setDrawInfo();
 
     }
@@ -373,7 +358,7 @@ public class BallDataPanel extends Entity{
 
     public void checkDrawInfo(){
 
-        for (int i = 0; i < rectangles.length; i++){
+        for (int i = 0; i < rectanglesVariable.length; i++){
 
                 //Log.e(TAG, "rectangles[i].positionX " + rectangles[i].positionX);
                 //Log.e(TAG, "getTransformedWidth() " + rectangles[i].getTransformedWidth());
@@ -383,34 +368,33 @@ public class BallDataPanel extends Entity{
                 //Log.e(TAG, "animScaleY " + rectangles[i].animScaleY);
                 //Log.e(TAG, "rectangles[i].animTranslateX " + rectangles[i].animTranslateX);
 
-                Utils.insertRectangleVerticesData(verticesData, i * 12,
-                        rectangles[i].positionX + rectangles[i].animTranslateX,
-                        rectangles[i].positionX + rectangles[i].animTranslateX + (rectangles[i].getTransformedWidth() * rectangles[i].animScaleX),
-                        rectangles[i].positionY + rectangles[i].animTranslateY,
-                        rectangles[i].positionY + rectangles[i].animTranslateY + (rectangles[i].getTransformedHeight() * rectangles[i].animScaleY), 0f);
+                Utils.insertRectangleVerticesData(verticesDataVariable, i * 12,
+                        rectanglesVariable[i].positionX + rectanglesVariable[i].animTranslateX,
+                        rectanglesVariable[i].positionX + rectanglesVariable[i].animTranslateX + (rectanglesVariable[i].getTransformedWidth() * rectanglesVariable[i].animScaleX),
+                        rectanglesVariable[i].positionY + rectanglesVariable[i].animTranslateY,
+                        rectanglesVariable[i].positionY + rectanglesVariable[i].animTranslateY + (rectanglesVariable[i].getTransformedHeight() * rectanglesVariable[i].animScaleY), 0f);
 
-                if (rectangles[i].multiColor){
+                if (rectanglesVariable[i].multiColor){
+                    rectanglesVariable[i].colorTopLeft.a *= alpha;
+                    rectanglesVariable[i].colorTopRight.a *= alpha;
+                    rectanglesVariable[i].colorBottomLeft.a *= alpha;
+                    rectanglesVariable[i].colorBottomRight.a *= alpha;
 
-                    rectangles[i].colorTopLeft.a *= alpha;
-                    rectangles[i].colorTopRight.a *= alpha;
-                    rectangles[i].colorBottomLeft.a *= alpha;
-                    rectangles[i].colorBottomRight.a *= alpha;
-
-                    Utils.insertRectangleColorsData(colorsData, i * 16, rectangles[i].colorTopLeft, rectangles[i].colorTopRight, rectangles[i].colorBottomLeft, rectangles[i].colorBottomRight);
+                    Utils.insertRectangleColorsData(colorsDataVariable, i * 16, rectanglesVariable[i].colorTopLeft, rectanglesVariable[i].colorTopRight, rectanglesVariable[i].colorBottomLeft, rectanglesVariable[i].colorBottomRight);
                 } else {
-                    Utils.insertRectangleColorsData(colorsData, i * 16, rectangles[i].color.r, rectangles[i].color.g, rectangles[i].color.b, rectangles[i].color.a * rectangles[i].alpha * alpha);
+                    Utils.insertRectangleColorsData(colorsDataVariable, i * 16, rectanglesVariable[i].color.r, rectanglesVariable[i].color.g, rectanglesVariable[i].color.b, rectanglesVariable[i].color.a * rectanglesVariable[i].alpha * alpha);
                 }
 
         }
 
-        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
-        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesDataVariable, verticesBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsDataVariable, colorsBuffer);
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboVariable[0]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
                 verticesBuffer, GLES20.GL_STATIC_DRAW);
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboVariable[1]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
                 colorsBuffer, GLES20.GL_STATIC_DRAW);
 
@@ -425,44 +409,63 @@ public class BallDataPanel extends Entity{
     public void setDrawInfo(){
 
 
-        if (vbo == null || vbo.length == 0) {
-            vbo = new int[2];
-            GLES20.glGenBuffers(2, vbo, 0);
-            Log.e(TAG, " ballDataPanel " + "vbo create " + " vbo " + vbo[0] + " " + vbo[1]);
+        if (vboStatic == null || vboStatic.length == 0) {
+            vboStatic = new int[2];
+            GLES20.glGenBuffers(2, vboStatic, 0);
         }
 
-        if (ibo == null || ibo.length == 0) {
-            ibo = new int[1];
-            GLES20.glGenBuffers(1, ibo, 0);
-            Log.e(TAG, " ballDataPanel " + " ibo create " + ibo[0]);
+        if (iboStatic == null || iboStatic.length == 0) {
+            iboStatic = new int[1];
+            GLES20.glGenBuffers(1, iboStatic, 0);
         }
 
-        initializeData(12 * rectangles.length, 6 * rectangles.length, 0, 16 * rectangles.length);
-
-        for (int i = 0; i < rectangles.length; i++){
-
-                Utils.insertRectangleVerticesData(verticesData, i * 12, rectangles[i].x,
-                        rectangles[i].x + rectangles[i].width, rectangles[i].y, rectangles[i].y + rectangles[i].height, 0f);
-
-                Utils.insertRectangleIndicesData(indicesData, i * 6, i * 4);
-
-                Utils.insertRectangleColorsData(colorsData, i * 16, rectangles[i].color.r, rectangles[i].color.g, rectangles[i].color.b, rectangles[i].color.a);
-
+        if (vboStaticFront == null || vboStaticFront.length == 0) {
+            vboStaticFront = new int[2];
+            GLES20.glGenBuffers(2, vboStaticFront, 0);
         }
 
-        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesData, verticesBuffer);
-        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesData, indicesBuffer);
-        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsData, colorsBuffer);
+        if (iboStaticFront == null || iboStaticFront.length == 0) {
+            iboStaticFront = new int[1];
+            GLES20.glGenBuffers(1, iboStaticFront, 0);
+        }
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+        if (vboVariable == null || vboVariable.length == 0) {
+            vboVariable = new int[2];
+            GLES20.glGenBuffers(2, vboVariable, 0);
+        }
+
+        if (iboVariable == null || iboVariable.length == 0) {
+            iboVariable = new int[1];
+            GLES20.glGenBuffers(1, iboVariable, 0);
+        }
+
+        initializeDataStatic(12 * rectanglesStatic.length, 6 * rectanglesStatic.length, 0, 16 * rectanglesStatic.length);
+        initializeDataStaticFront(12 * rectanglesStaticFront.length, 6 * rectanglesStaticFront.length, 0, 16 * rectanglesStaticFront.length);
+        initializeDataVariable(12 * rectanglesVariable.length, 6 * rectanglesVariable.length, 0, 16 * rectanglesVariable.length);
+        
+        // static
+        for (int i = 0; i < rectanglesStatic.length; i++){
+                Utils.insertRectangleVerticesData(verticesDataStatic, i * 12, rectanglesStatic[i].x,
+                        rectanglesStatic[i].x + rectanglesStatic[i].width, rectanglesStatic[i].y, rectanglesStatic[i].y + rectanglesStatic[i].height, 0f);
+
+                Utils.insertRectangleIndicesData(indicesDataStatic, i * 6, i * 4);
+
+                Utils.insertRectangleColorsData(colorsDataStatic, i * 16, rectanglesStatic[i].color.r, rectanglesStatic[i].color.g, rectanglesStatic[i].color.b, rectanglesStatic[i].color.a);
+        }
+
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesDataStatic, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesDataStatic, indicesBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsDataStatic, colorsBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboStatic[0]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
                 verticesBuffer, GLES20.GL_STATIC_DRAW);
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboStatic[1]);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
                 colorsBuffer, GLES20.GL_STATIC_DRAW);
 
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, iboStatic[0]);
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
                 indicesBuffer, GLES20.GL_STATIC_DRAW);
 
@@ -475,6 +478,137 @@ public class BallDataPanel extends Entity{
         colorsBuffer = null;
         indicesBuffer.limit(0);
         indicesBuffer = null;
+
+        // staticFront
+        for (int i = 0; i < rectanglesStaticFront.length; i++){
+            Utils.insertRectangleVerticesData(verticesDataStaticFront, i * 12, rectanglesStaticFront[i].x,
+                    rectanglesStaticFront[i].x + rectanglesStaticFront[i].width, rectanglesStaticFront[i].y, rectanglesStaticFront[i].y + rectanglesStaticFront[i].height, 0f);
+
+            Utils.insertRectangleIndicesData(indicesDataStaticFront, i * 6, i * 4);
+
+            Utils.insertRectangleColorsData(colorsDataStaticFront, i * 16, rectanglesStaticFront[i].color.r, rectanglesStaticFront[i].color.g, rectanglesStaticFront[i].color.b, rectanglesStaticFront[i].color.a);
+        }
+
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesDataStaticFront, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesDataStaticFront, indicesBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsDataStaticFront, colorsBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboStaticFront[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboStaticFront[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
+                colorsBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, iboStaticFront[0]);
+        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
+                indicesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        verticesBuffer.limit(0);
+        verticesBuffer = null;
+        colorsBuffer.limit(0);
+        colorsBuffer = null;
+        indicesBuffer.limit(0);
+        indicesBuffer = null;
+
+
+        // variable
+        for (int i = 0; i < rectanglesVariable.length; i++){
+            Utils.insertRectangleVerticesData(verticesDataVariable, i * 12, rectanglesVariable[i].x,
+                    rectanglesVariable[i].x + rectanglesVariable[i].width, rectanglesVariable[i].y, rectanglesVariable[i].y + rectanglesVariable[i].height, 0f);
+
+            Utils.insertRectangleIndicesData(indicesDataVariable, i * 6, i * 4);
+
+            Utils.insertRectangleColorsData(colorsDataVariable, i * 16, rectanglesVariable[i].color.r, rectanglesVariable[i].color.g, rectanglesVariable[i].color.b, rectanglesVariable[i].color.a);
+        }
+
+        verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesDataVariable, verticesBuffer);
+        indicesBuffer = Utils.generateOrUpdateShortBuffer(indicesDataVariable, indicesBuffer);
+        colorsBuffer = Utils.generateOrUpdateFloatBuffer(colorsDataVariable, colorsBuffer);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboVariable[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticesBuffer.capacity() * SIZEOF_FLOAT,
+                verticesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboVariable[1]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorsBuffer.capacity() * SIZEOF_FLOAT,
+                colorsBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, iboVariable[0]);
+        GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * SIZEOF_SHORT,
+                indicesBuffer, GLES20.GL_STATIC_DRAW);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        verticesBuffer.limit(0);
+        verticesBuffer = null;
+        colorsBuffer.limit(0);
+        colorsBuffer = null;
+        indicesBuffer.limit(0);
+        indicesBuffer = null;
+        
+    }
+
+    public void initializeDataStatic(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
+        if (verticesSize > 0){
+            if (verticesDataStatic == null || verticesDataStatic.length != verticesSize){
+                verticesDataStatic = new float[verticesSize];
+            }
+        }
+        if (indicesSize > 0){
+            if (indicesDataStatic == null || indicesDataStatic.length != indicesSize){
+                indicesDataStatic = new short[indicesSize];
+            }
+
+        }
+        if (colorsSize > 0){
+            if (colorsDataStatic == null || colorsDataStatic.length != colorsSize){
+                colorsDataStatic = new float[colorsSize];
+            }
+        }
+    }
+
+    public void initializeDataStaticFront(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
+        if (verticesSize > 0){
+            if (verticesDataStaticFront == null || verticesDataStaticFront.length != verticesSize){
+                verticesDataStaticFront = new float[verticesSize];
+            }
+        }
+        if (indicesSize > 0){
+            if (indicesDataStaticFront == null || indicesDataStaticFront.length != indicesSize){
+                indicesDataStaticFront = new short[indicesSize];
+            }
+
+        }
+        if (colorsSize > 0){
+            if (colorsDataStaticFront == null || colorsDataStaticFront.length != colorsSize){
+                colorsDataStaticFront = new float[colorsSize];
+            }
+        }
+    }
+
+    public void initializeDataVariable(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
+        if (verticesSize > 0){
+            if (verticesDataVariable == null || verticesDataVariable.length != verticesSize){
+                verticesDataVariable = new float[verticesSize];
+            }
+        }
+        if (indicesSize > 0){
+            if (indicesDataVariable == null || indicesDataVariable.length != indicesSize){
+                indicesDataVariable = new short[indicesSize];
+            }
+
+        }
+        if (colorsSize > 0){
+            if (colorsDataVariable == null || colorsDataVariable.length != colorsSize){
+                colorsDataVariable = new float[colorsSize];
+            }
+        }
     }
 
     @Override
@@ -504,16 +638,50 @@ public class BallDataPanel extends Entity{
         GLES20.glUniform1f(uf_alphaHandle, 1f);
 
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0]);
+
+        // static
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboStatic[0]);
         GLES20.glEnableVertexAttribArray(av4_verticesHandle);
         GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, 0);
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1]);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboStatic[1]);
         GLES20.glEnableVertexAttribArray(av4_colorsHandle);
         GLES20.glVertexAttribPointer(av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, 0);
 
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibo[0]);
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, indicesData.length, GLES20.GL_UNSIGNED_SHORT, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, iboStatic[0]);
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, indicesDataStatic.length, GLES20.GL_UNSIGNED_SHORT, 0);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+
+
+        // variable
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboVariable[0]);
+        GLES20.glEnableVertexAttribArray(av4_verticesHandle);
+        GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, 0);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboVariable[1]);
+        GLES20.glEnableVertexAttribArray(av4_colorsHandle);
+        GLES20.glVertexAttribPointer(av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, 0);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, iboVariable[0]);
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, indicesDataVariable.length, GLES20.GL_UNSIGNED_SHORT, 0);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+
+
+        // staticFront
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboStaticFront[0]);
+        GLES20.glEnableVertexAttribArray(av4_verticesHandle);
+        GLES20.glVertexAttribPointer(av4_verticesHandle, 3, GLES20.GL_FLOAT, false, 0, 0);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vboStaticFront[1]);
+        GLES20.glEnableVertexAttribArray(av4_colorsHandle);
+        GLES20.glVertexAttribPointer(av4_colorsHandle, 4, GLES20.GL_FLOAT, false, 0, 0);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, iboStaticFront[0]);
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, indicesDataStaticFront.length, GLES20.GL_UNSIGNED_SHORT, 0);
 
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
@@ -550,11 +718,11 @@ public class BallDataPanel extends Entity{
     public void checkTransformations(boolean updatePrevious) {
         super.checkTransformations(updatePrevious);
 
-        if (rectangles == null){
+        if (rectanglesVariable == null){
             return;
         }
-        for (int i = 0; i < rectangles.length; i++) {
-            rectangles[i].checkTransformations(updatePrevious);
+        for (int i = 0; i < rectanglesVariable.length; i++) {
+            rectanglesVariable[i].checkTransformations(updatePrevious);
         }
 
         if (isVisible) {
@@ -571,12 +739,12 @@ public class BallDataPanel extends Entity{
 
         super.checkAnimations();
 
-        if (rectangles == null){
+        if (rectanglesVariable == null){
             return 0;
         }
 
-        for (int i = 0; i < rectangles.length; i++) {
-            rectangles[i].checkAnimations();
+        for (int i = 0; i < rectanglesVariable.length; i++) {
+            rectanglesVariable[i].checkAnimations();
         }
 
         if (isVisible) {

@@ -96,10 +96,12 @@ public class MenuHandler {
             }
 
 
+            /*
             if (groupMenu.graph[i] != null){
                 Log.e(TAG, "frontRectangle.animTranslateX "+groupMenu.graph[i].frontRectangle.animTranslateX);
                 Log.e(TAG, "frontRectangle.animScaleX "+groupMenu.graph[i].frontRectangle.animScaleX);
             }
+            */
 
         }
 

@@ -26,7 +26,7 @@ public class Game {
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
     public static boolean showMessageNotConnectedOnGoogle = false;
-    public static boolean exibirLogDeFramesParaDebug = false;
+    public static boolean exibirLogDeFramesParaDebug = true;
     public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
@@ -2263,30 +2263,31 @@ public class Game {
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.checkTransformations(true);
         if (MessageStar.messageStars != null) MessageStar.messageStars.checkTransformations(true);
 
-        if (bordaE != null)bordaE.checkTransformations(true);
-        if (bordaD != null)bordaD.checkTransformations(true);
-        if (bordaC != null)bordaC.checkTransformations(true);
+
+        //otimização if (bordaE != null)bordaE.checkTransformations(true);
+        //otimização if (bordaD != null)bordaD.checkTransformations(true);
+        //otimização if (bordaC != null)bordaC.checkTransformations(true);
         if (bordaB != null)bordaB.checkTransformations(true);
 
 
-        if (frame != null)frame.checkTransformations(true);
-        if (frame != null)topFrame.checkTransformations(true);
+        //otimização if (frame != null)frame.checkTransformations(true);
+        //otimização if (frame != null)topFrame.checkTransformations(true);
 
         if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.checkTransformations(true);
-        if (ballDataPanel != null) ballDataPanel.checkTransformations(true);
+        //otimização if (ballDataPanel != null) ballDataPanel.checkTransformations(true);
         if (ballGoalsPanel != null) ballGoalsPanel.checkTransformations(true);
 
-        if (ButtonHandler.button1Left != null) ButtonHandler.button1Left.checkTransformations(true);
-        if (ButtonHandler.button1Right != null) ButtonHandler.button1Right.checkTransformations(true);
-        if (ButtonHandler.button2Left != null) ButtonHandler.button2Left.checkTransformations(true);
-        if (ButtonHandler.button2Right != null) ButtonHandler.button2Right.checkTransformations(true);
+        //otimização if (ButtonHandler.button1Left != null) ButtonHandler.button1Left.checkTransformations(true);
+        //otimização if (ButtonHandler.button1Right != null) ButtonHandler.button1Right.checkTransformations(true);
+        //otimização if (ButtonHandler.button2Left != null) ButtonHandler.button2Left.checkTransformations(true);
+        //otimização if (ButtonHandler.button2Right != null) ButtonHandler.button2Right.checkTransformations(true);
 
         if (imageTutorialDown != null) imageTutorialDown.checkTransformations(true);
         if (imageTutorialTop != null) imageTutorialTop.checkTransformations(true);
 
         if (messages != null) messages.checkTransformations(true);
         
-        if (brickBackground != null) brickBackground.checkTransformations(true);
+        //otimização if (brickBackground != null) brickBackground.checkTransformations(true);
     }
 
     static void render(float[] matrixView, float[] matrixProjection){
@@ -2294,7 +2295,7 @@ public class Game {
         initSimulateTime = Utils.getTime();
 
 
-        if (brickBackground != null) brickBackground.prepareRender(matrixView, matrixProjection);
+        if (brickBackground != null) brickBackground.prepareRender(matrixView, matrixProjection); // 761
 
         if (!Game.paraGravacaoVideo) {
             if (MessagesHandler.messageCurrentLevel != null)
@@ -2343,7 +2344,7 @@ public class Game {
 
 
         for (int i = 0; i < bars.size(); i++){
-            bars.get(i).prepareRender(matrixView, matrixProjection);
+            bars.get(i).prepareRender(matrixView, matrixProjection); // TODO otimizar????? 3ms
         }
 
         for (int i = 0; i < obstacles.size(); i++){
@@ -2429,17 +2430,15 @@ public class Game {
         }
         if (tipTextBox != null) tipTextBox.prepareRender(matrixView, matrixProjection);
 
-        if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
+
+        if (gameState == GAME_STATE_MENU || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL){
+            if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
+            if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
+            if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
+            if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
+        }
 
         if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
-
-        if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
-        if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
-
-        if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
-
-
-
 
         if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.prepareRender(matrixView, matrixProjection);
         if (ballGoalsPanel != null) ballGoalsPanel.prepareRender(matrixView, matrixProjection);

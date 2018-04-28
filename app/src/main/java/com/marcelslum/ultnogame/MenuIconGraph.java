@@ -75,7 +75,7 @@ public class MenuIconGraph extends Entity{
 
     public void setPercentage(float percentage, int position){
         if (type == TYPE_BAR){
-            Log.e(TAG, "setPercentage "+percentage);
+            //Log.e(TAG, "setPercentage "+percentage);
 
             Animation a1 = Utils.createAnimation3v(frontRectangle, "frontScale"+position,"scaleX", 4000,
                     0f, 0f,
@@ -118,7 +118,7 @@ public class MenuIconGraph extends Entity{
 
         } else if (type == TYPE_STARS){
 
-            Log.e(TAG, "setPercentage "+percentage);
+            //Log.e(TAG, "setPercentage "+percentage);
 
             if (percentage == 1f) {
                 stars.get(0).updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
