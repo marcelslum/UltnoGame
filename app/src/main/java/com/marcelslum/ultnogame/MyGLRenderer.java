@@ -160,6 +160,21 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     public static boolean tick = false;
 
+    /*
+    tick = true
+    BallDataPanel.checkTransformations();
+    checkBufferChange.checkBufferChange();
+    BallParticleGenerator.updateDrawInfo();
+    TargetGroup.checkBufferChange()
+
+    tick = false
+    BallDataPanel.checkDrawInfo();
+    ParticleGenerator.updateDrawInfo();
+    BrickBackgroud.changeDrawInfo()
+
+
+    */
+
 
     @Override
     public void onDrawFrame(GL10 unused) {

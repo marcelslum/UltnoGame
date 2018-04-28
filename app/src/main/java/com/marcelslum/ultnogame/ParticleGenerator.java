@@ -43,11 +43,11 @@ public class ParticleGenerator extends Entity {
                     TextureData.getTextureDataById(TextureData.TEXTURE_EXPLOSION_RED_3_ID));
 
             for (int j = 0; j < numberOfParticles;j++) {
-                float vx = Utils.getRandonFloat(-2.1f, 2.1f);
-                float vy = Utils.getRandonFloat(-2.1f, 2.1f);
+                float vx = Utils.getRandonFloat(-4.2f, 4.2f);
+                float vy = Utils.getRandonFloat(-4.2f, 4.2f);
                 float velocity_variation_x = Utils.getRandonFloat(-0.1f, 0.1f);
                 float velocity_variation_y = Utils.getRandonFloat(-0.1f, 0.1f);
-                float alpha_decay = Utils.getRandonFloat(0.01f, 0.005f);
+                float alpha_decay = Utils.getRandonFloat(0.02f, 0.01f);
                 float size = Utils.getRandonFloat(0.5f, 5f);
 
                 float textureMapFilter = Utils.getRandonFloat(0f, 1f);
@@ -104,8 +104,8 @@ public class ParticleGenerator extends Entity {
         for (int i = 0; i < numberOfParticles; i++) {
             particlesArray[i].initX = 0;
             particlesArray[i].initY = 0;
-            particlesArray[i].vx = Utils.getRandonFloat(-2.1f, 2.1f);
-            particlesArray[i].vy = Utils.getRandonFloat(-2.1f, 2.1f);
+            particlesArray[i].vx = Utils.getRandonFloat(-4.2f, 4.2f);
+            particlesArray[i].vy = Utils.getRandonFloat(-4.2f, 4.2f);
             particlesArray[i].alpha = 1f;
         }
     }
@@ -149,12 +149,18 @@ public class ParticleGenerator extends Entity {
 
     public void prepareRender(float[] matrixView, float[] matrixProjection){
         if (isActive) {
-            updateDrawInfo();
+
+            Log.e(TAG, "prepareRender "+x);
+
+            if (!MyGLRenderer.tick) {
+                updateDrawInfo();
+            }
             super.prepareRender(matrixView, matrixProjection);
         }
     }
 
     private void updateDrawInfo() {
+
         boolean ended = true;
         for (int i = 0; i < particlesArray.length;i++) {
 

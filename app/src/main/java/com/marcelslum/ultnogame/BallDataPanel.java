@@ -80,9 +80,9 @@ public class BallDataPanel extends Entity{
     public float[] colorsDataVariable;
 
 
-    Rectangle [] rectanglesStatic = new Rectangle[17];
+    Rectangle [] rectanglesStatic = new Rectangle[14];
     Rectangle [] rectanglesVariable = new Rectangle[10];
-    Rectangle [] rectanglesStaticFront = new Rectangle[2];
+    Rectangle [] rectanglesStaticFront = new Rectangle[5];
 
     Ball ballAnimating;
     
@@ -254,15 +254,8 @@ public class BallDataPanel extends Entity{
 
         int numberStatic = 0;
 
-        rectanglesStatic[numberStatic] = bordaE;
-        numberStatic +=1;
-        rectanglesStatic[numberStatic] = bordaD;
-        numberStatic +=1;
-        rectanglesStatic[numberStatic] = bordaC;
-        numberStatic +=1;
         rectanglesStatic[numberStatic] = bordaB;
         numberStatic +=1;
-
 
         rectanglesStatic[numberStatic] = bordaBmeio;
         numberStatic +=1;
@@ -290,8 +283,6 @@ public class BallDataPanel extends Entity{
         numberStatic +=1;
         rectanglesStatic[numberStatic] = bordaBD2;
 
-
-        
         int numberVariable = 0;
         rectanglesVariable[numberVariable] = bordaB3;
         numberVariable +=1;
@@ -315,6 +306,9 @@ public class BallDataPanel extends Entity{
 
         rectanglesStaticFront[0] = initRectangle;
         rectanglesStaticFront[1] = finalRectangle;
+        rectanglesStaticFront[2] = bordaE;
+        rectanglesStaticFront[3] = bordaD;
+        rectanglesStaticFront[4] = bordaC;
 
         Utils.createAnimation4v(bordaB3, "b3", "animTranslateX", 4000,
                 0f, -Game.gameAreaResolutionX,
@@ -718,7 +712,9 @@ public class BallDataPanel extends Entity{
     public void checkTransformations(boolean updatePrevious) {
         super.checkTransformations(updatePrevious);
 
-        if (rectanglesVariable == null){
+
+
+        if (rectanglesVariable == null || !MyGLRenderer.tick){
             return;
         }
         for (int i = 0; i < rectanglesVariable.length; i++) {

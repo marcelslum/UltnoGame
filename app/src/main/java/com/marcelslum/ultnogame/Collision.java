@@ -12,10 +12,10 @@ public abstract class Collision {
     public static boolean collided;
 
     // sat data
-    private static SatPolygon polygon1;
-    private static SatPolygon polygon2;
-    private static SatCircle circle1;
-    private static SatCircle circle2;
+    //private static SatPolygon polygon1;
+    //private static SatPolygon polygon2;
+    //private static SatCircle circle1;
+    //private static SatCircle circle2;
 
     private static float [] velocities = new float[4];
 
@@ -48,12 +48,14 @@ public abstract class Collision {
     private static Bar bar1;
     private static Bar bar2;
 
+    private static boolean bTarget = false;
+
     private static final String TAG = "Collision";
 
     public static boolean checkCollision(ArrayList<? extends PhysicalObject> aEntities, Quadtree quad, int bWeight, boolean respond, boolean updateData, boolean verifyCenter){
-        if (polygon1 == null){
-            initData();
-        }
+        //if (polygon1 == null){
+        //    initData();
+        //}
 
         collided = false;
 
@@ -134,7 +136,7 @@ public abstract class Collision {
 
 
                         //if (escapeByCenter){
-                        //Log.e(TAG, "escape " + a.name + " - " + Quadtree.outs[bCount].name);
+                        //    Log.e(TAG, "escape by center" + a.name + " - " + Quadtree.outs[bCount].name);
                         //}
 
                         if (Quadtree.outs[bCount] != null && !escapeByCenter) {
@@ -186,25 +188,25 @@ public abstract class Collision {
                                 bType = false;
 
                                 if (a.circleData != null) {
-                                    circle1.pos.x = a.circleData.pos.x;
-                                    circle1.pos.y = a.circleData.pos.y;
-                                    circle1.r = a.circleData.r;
+                                    //circle1.pos.x = a.circleData.pos.x;
+                                    //circle1.pos.y = a.circleData.pos.y;
+                                    //circle1.r = a.circleData.r;
                                     aType = true;
                                 } else {
-                                    polygon1.pos.x = a.polygonData.pos.x;
-                                    polygon1.pos.y = a.polygonData.pos.y;
-                                    polygon1.setPoints(a.polygonData.points);
+                                    //polygon1.pos.x = a.polygonData.pos.x;
+                                    //polygon1.pos.y = a.polygonData.pos.y;
+                                    //polygon1.copyDataFromAnotherPolygon(a.polygonData);
                                 }
 
                                 if (b.circleData != null) {
-                                    circle2.pos.x = b.circleData.pos.x;
-                                    circle2.pos.y = b.circleData.pos.y;
-                                    circle2.r = b.circleData.r;
+                                    //circle2.pos.x = b.circleData.pos.x;
+                                    //circle2.pos.y = b.circleData.pos.y;
+                                    //circle2.r = b.circleData.r;
                                     bType = true;
                                 } else {
-                                    polygon2.pos.x = b.polygonData.pos.x;
-                                    polygon2.pos.y = b.polygonData.pos.y;
-                                    polygon2.setPoints(b.polygonData.points);
+                                    //polygon2.pos.x = b.polygonData.pos.x;
+                                    //polygon2.pos.y = b.polygonData.pos.y;
+                                    //polygon2.copyDataFromAnotherPolygon(b.polygonData);
                                 }
 
 
@@ -298,7 +300,7 @@ public abstract class Collision {
 
                                 //Log.e("pos bola sat cc4", "x "+this.balls.get(0).circleData.pos.x+ " y "+this.balls.get(0).circleData.pos.y+ " radius "+ this.balls.get(0).circleData.r);
 
-                                // itera pelas passagens, chegando se há colisão
+                                // itera pelas passagens, checando se há colisão
 
                                 for (int ip = 0; ip < quantityPassagens; ip++) {
 
@@ -319,19 +321,19 @@ public abstract class Collision {
 
 
                                     if (!aType) {
-                                        polygon1.pos.x = aPosAConsiderarX;
-                                        polygon1.pos.y = aPosAConsiderarY;
+                                        a.polygonData.pos.x = aPosAConsiderarX;
+                                        a.polygonData.pos.y = aPosAConsiderarY;
                                     } else {
-                                        circle1.pos.x = aPosAConsiderarX;
-                                        circle1.pos.y = aPosAConsiderarY;
+                                        a.circleData.pos.x = aPosAConsiderarX;
+                                        a.circleData.pos.y = aPosAConsiderarY;
                                     }
 
                                     if (!bType) {
-                                        polygon2.pos.x = bPosAConsiderarX;
-                                        polygon2.pos.y = bPosAConsiderarY;
+                                        b.polygonData.pos.x = bPosAConsiderarX;
+                                        b.polygonData.pos.y = bPosAConsiderarY;
                                     } else {
-                                        circle2.pos.x = bPosAConsiderarX;
-                                        circle2.pos.y = bPosAConsiderarY;
+                                        b.circleData.pos.x = bPosAConsiderarX;
+                                        b.circleData.pos.y = bPosAConsiderarY;
                                     }
 
 
@@ -339,15 +341,15 @@ public abstract class Collision {
 
                                     if (!aType) {
                                         if (!bType) {
-                                            collided = Sat.getInstance().testPolygonPolygon(polygon1, polygon2, response);
+                                            collided = Sat.getInstance().testPolygonPolygon(a.polygonData, b.polygonData, response);
                                         } else {
-                                            collided = Sat.getInstance().testPolygonCircle(polygon1, circle2, response);
+                                            collided = Sat.getInstance().testPolygonCircle(a.polygonData, b.circleData, response);
                                         }
                                     } else {
                                         if (!bType) {
-                                            collided = Sat.getInstance().testCirclePolygon(circle1, polygon2, response);
+                                            collided = Sat.getInstance().testCirclePolygon(a.circleData, b.polygonData, response);
                                         } else {
-                                            collided = Sat.getInstance().testCircleCircle(circle1, circle2, response);
+                                            collided = Sat.getInstance().testCircleCircle(a.circleData, b.circleData, response);
                                         }
 
                                     }
@@ -407,6 +409,7 @@ public abstract class Collision {
     }
 
     public static void initData(){
+        /*
         ArrayList<Vector> points = new ArrayList<>();
         points.add(new Vector(0, 0));
         points.add(new Vector(0, 0));
@@ -423,6 +426,7 @@ public abstract class Collision {
 
         Collision.circle1 = new SatCircle(new Vector(0,0),0);
         Collision.circle2 = new SatCircle(new Vector(0,0),0);
+        */
     }
 
     public static void respond(PhysicalObject a, PhysicalObject b, float responseX, float responseY, float ax, float ay, float bx, float by) {

@@ -39,6 +39,47 @@ public class SatPolygon {
     // it will _appear_ visually that the points are being specified clockwise. This is just
     // because of the inversion of the Y-axis when being displayed.
 
+
+
+    public void copyDataFromAnotherPolygon(SatPolygon c){
+
+        if (c.points.size() == points.size()){
+            pos.x = c.pos.x;
+            pos.y = c.pos.y;
+            for (int i = 0; i < points.size(); i++) {
+                points.get(i).x = c.points.get(i).x;
+                points.get(i).y = c.points.get(i).y;
+            }
+
+            for (int i = 0; i < calcPoints.size(); i++) {
+                calcPoints.get(i).x = c.calcPoints.get(i).x;
+                calcPoints.get(i).y = c.calcPoints.get(i).y;
+            }
+
+            for (int i = 0; i < edges.size(); i++) {
+                edges.get(i).x = c.edges.get(i).x;
+                edges.get(i).y = c.edges.get(i).y;
+            }
+
+            for (int i = 0; i < normals.size(); i++) {
+                normals.get(i).x = c.normals.get(i).x;
+                normals.get(i).y = c.normals.get(i).y;
+            }
+
+            offset = c.offset;
+            angle = c.angle;
+
+        } else {
+            pos.x = c.pos.x;
+            pos.y = c.pos.y;
+            setPoints(c.points);
+        }
+
+
+
+    }
+
+
     public SatPolygon setPoints(ArrayList<Vector> points){
         // Only re-allocate if this is a new polygon or the number of points has changed.
         boolean lengthChanged = false;

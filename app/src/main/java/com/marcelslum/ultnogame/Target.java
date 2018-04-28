@@ -12,11 +12,12 @@ public class Target extends Rectangle {
 
     static final String TAG = "Target";
 
+
+
     private int [] states;
     private int currentState;
     int special;
 
-    float posYVariation;
     public int type;
     public static final int TARGET_BLACK = 0;
     public static final int TARGET_GREEN = 1;
@@ -25,18 +26,14 @@ public class Target extends Rectangle {
     private Animation ghostAlphaAnim;
     private Animation desapearAnim;
     private boolean isGhost;
-    private Point pointsObject;
-    private final static int POINTS_DURATION = 1000;
     boolean alive = true;
     public long timeOfLastDecay = 0;
-    public float percentageOfDecay = 0f;
     
     int pointsToShow = -1;
     float pointAlpha = 1f;
     float pointY;
     float pointX;
     float pointSize;
-
 
     @Override
     public void render(float[] matrixView, float[] matrixProjection) {
@@ -47,7 +44,7 @@ public class Target extends Rectangle {
     }
 
     Target(String name, float x, float y, float width, float height, int [] states, int currentState, int special, boolean ghost){
-        super(name, x, y, Entity.TYPE_TARGET, width, height, Game.TARGET_WEIGHT, new Color(0,0,0,1));
+        super(name, x, y, Entity.TYPE_TARGET, width, height, Game.BORDA_WEIGHT, new Color(0,0,0,1));
         this.states = states;
         this.currentState = currentState;
         this.special = special;

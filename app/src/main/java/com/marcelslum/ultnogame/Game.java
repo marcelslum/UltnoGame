@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Vibrator;
+import android.util.Log;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -27,6 +28,7 @@ public class Game {
     public static boolean forDebugClearAllLevelPoints = false;
     public static boolean showMessageNotConnectedOnGoogle = false;
     public static boolean exibirLogDeFramesParaDebug = true;
+    public static boolean exibirLogDeTempoDeDuracaoDaChecagemDeColisao = false;
     public static boolean versaoBeta = true;
 
     public static MyGLSurface myGlSurface;
@@ -59,7 +61,6 @@ public class Game {
     static final int BALL_WEIGHT = 2;
     static final int BORDA_WEIGHT = 10;
     static final int OBSTACLES_WEIGHT = 9;
-    static final int TARGET_WEIGHT = 10;
     static final int BAR_WEIGHT = 5;
 
     static LevelGoalsPanel levelGoalsPanel;
@@ -1655,6 +1656,10 @@ public class Game {
     static boolean leftTouch = false;
     static boolean rightTouch = false;
 
+    static long [] timesOfCollisionCheck = new long[50];
+    static int lastCollisiontDebugCheck = 0;
+    static long timeInitCheckCollision;
+
     static void simulate(long elapsed, float frameDuration){
 
         //Log.e(TAG, "elapsed " + elapsed);
@@ -1841,8 +1846,6 @@ public class Game {
             quad.insert(bordaB);
         }
 
-
-
         // verifica a colisão da bola
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < balls.size(); i++) {
@@ -1865,27 +1868,60 @@ public class Game {
 
         }
 
+        timeInitCheckCollision = 0;
+
+
+        if (exibirLogDeTempoDeDuracaoDaChecagemDeColisao) {
+            timeInitCheckCollision = System.nanoTime();
+        }
+
         // verifica as demais colisões
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < 1; i++) {
 
                 Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true, false);
+
                 Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true, false);
+
                 Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+
                 Collision.checkCollision(obstacles, quad, Game.BORDA_WEIGHT, true, true, false);
+
                 Collision.checkCollision(obstacles, quad, Game.BAR_WEIGHT, true, true, false);
+
                 Collision.checkCollision(obstacles, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+
                 Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true, true);
+
                 Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true, false);
+
                 Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+
                 Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true, false);
-                
+
                 Collision.checkCollision(fakeBalls, quad, Game.BORDA_WEIGHT, true, true, false);
+
                 Collision.checkCollision(fakeBalls, quad, Game.BAR_WEIGHT, true, true, false);
+
                 Collision.checkCollision(fakeBalls, quad, Game.OBSTACLES_WEIGHT, true, true, false);
 
-                
             }
+
+            if (exibirLogDeTempoDeDuracaoDaChecagemDeColisao) {
+                timesOfCollisionCheck[lastCollisiontDebugCheck] = System.nanoTime() - timeInitCheckCollision;
+                if (lastCollisiontDebugCheck == 49){
+                    long soma = 0;
+                    for (int i = 0; i < timesOfCollisionCheck.length; i++) {
+                        soma += timesOfCollisionCheck[i];
+                    }
+                    Log.e(TAG, "checkCollisionTime " + (soma / (long)50));
+                    lastCollisiontDebugCheck = 0;
+                } else {
+                    lastCollisiontDebugCheck += 1;
+                }
+            }
+
+
             quad.clear();
         }
 
@@ -1910,6 +1946,7 @@ public class Game {
                     if (fakeBalls.get(i).isCollided) {
                         fakeBalls.get(i).onCollision();
                     }
+
                 }
             }
 

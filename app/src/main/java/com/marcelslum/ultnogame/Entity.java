@@ -129,6 +129,8 @@ public class Entity{
     public SatCircle circleData;
     public SatPolygon polygonData;
 
+    public boolean stationary = false;
+
     public float[] verticesData;
     public short[] indicesData;
     public float[] uvsData;

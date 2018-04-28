@@ -238,28 +238,32 @@ public class Ball extends Circle{
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_YELLOW_ID));
         }
     }
-    
+
     @Override
     public void translate(float tx, float ty) {
         super.translate(tx, ty);
         if (isMovable && isFree){
 
-            float randon = Utils.getRandonFloat(0f, 1f);
-            int numberOfParticles = 2;
-            
-            if (randon < 0.33f){
-                numberOfParticles = 4;
-            } else if (randon < 0.66f){
-                numberOfParticles = 3;
-            }
+            if (!MyGLRenderer.tick && TimeHandler.timeOfLevelPlay > 500) {
 
-            if (    (dvx > 0 && dvy < 0)    ||
-                    (dvx < 0 && dvy > 0)    ){
-                ballParticleGenerator.addParticles(positionX - radius, positionY, radius, numberOfParticles);
-                //Log.e(TAG, "1");
-            } else {
-                //Log.e(TAG, "2");
-                ballParticleGenerator.addParticles(positionX, positionY, radius, numberOfParticles);
+                float randon = Utils.getRandonFloat(0f, 1f);
+                int numberOfParticles = 2;
+
+                if (randon < 0.33f){
+                    numberOfParticles = 4;
+                } else if (randon < 0.66f){
+                    numberOfParticles = 3;
+                }
+
+                if (    (dvx > 0 && dvy < 0)    ||
+                        (dvx < 0 && dvy > 0)    ){
+                    ballParticleGenerator.addParticles(positionX - radius, positionY, radius, numberOfParticles);
+                    //Log.e(TAG, "1");
+                } else {
+                    //Log.e(TAG, "2");
+                    ballParticleGenerator.addParticles(positionX, positionY, radius, numberOfParticles);
+                }
+
             }
         }
     }

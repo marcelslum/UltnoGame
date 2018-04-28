@@ -81,7 +81,9 @@ public class Level {
 
         SpecialBall.timeOfLastSpecialBall = 0;
         
+        //Game.quad = new Quadtree(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY,1,15);
         Game.quad = new Quadtree(0,0,Game.gameAreaResolutionX,Game.gameAreaResolutionY,2,8);
+        //1.300.000
 
         MessageStarWin.initMessageStarsWin();
 
@@ -225,7 +227,7 @@ public class Level {
                             .y(targetY)
                             .width(targetWidth)
                             .height(targetHeight)
-                            .weight(Game.TARGET_WEIGHT)
+                            .weight(Game.BORDA_WEIGHT)
                             .type(targetsMap[iY][iX])
                             .states(targetsStates)
                             .build();
