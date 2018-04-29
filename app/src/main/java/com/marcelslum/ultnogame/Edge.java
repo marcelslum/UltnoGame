@@ -17,4 +17,10 @@ public class Edge extends Rectangle{
         maxHeight = height;
 
     }
+
+    public void setY(float _y){
+        y = _y;
+        positionY = y;
+        centerY = positionY + (height/2f);
+    }
 }

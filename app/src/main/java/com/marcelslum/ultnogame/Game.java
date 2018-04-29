@@ -684,7 +684,7 @@ public class Game {
             //Sound.playSoundPool(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             mainActivity.showAdView();
-            Game.bordaB.y = Game.resolutionY;
+            Game.bordaB.setY(Game.resolutionY);
             MenuHandler.updateGroupMenu();
             MenuHandler.groupMenu.appear();
             MessagesHandler.messageMenu.display();
@@ -831,7 +831,7 @@ public class Game {
             SelectorHandler.repositionSelectors(state);
             initTittle();
             mainActivity.showAdView();
-            Game.bordaB.y = Game.resolutionY;
+            Game.bordaB.setY(Game.resolutionY);
 
             MenuHandler.menuOptions.block();
             MenuHandler.menuInGame.block();
@@ -975,7 +975,7 @@ public class Game {
         } else if (state == GAME_STATE_JOGAR){
 
 
-
+            Game.bordaB.setY(Game.gameAreaResolutionY);
 
 
             for (int i = 0; i < Game.balls.size(); i++) {
@@ -1106,11 +1106,10 @@ public class Game {
 
         } else if (state == GAME_STATE_VITORIA){
 
-            Game.bordaB.y = Game.resolutionY;
+            Game.bordaB.setY(Game.resolutionY);
 
             ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
             ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
-
 
             //Sound.stopAndReleaseMusic();
 

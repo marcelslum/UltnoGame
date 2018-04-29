@@ -139,7 +139,7 @@ public class Rectangle extends PhysicalObject {
                 } else {
                     Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  width - borderThicknes, width, 0f, height, 0f);
                 }
-                Utils.insertRectangleIndicesData(indicesData, (i+1)*6, (i+2)*4);
+                Utils.insertRectangleIndicesData(indicesData, (i+1)*6, (i+1)*4);
                 Utils.insertRectangleColorsData(colorsData, (i+1)*16, borderColor);
             }
         }

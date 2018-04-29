@@ -106,7 +106,7 @@ public class MyGLSurface extends GLSurfaceView {
             // This method will be called on the rendering
             // thread:
             public void run() {
-                Game.bordaB.y = Game.resolutionY;
+                Game.bordaB.setY(Game.resolutionY);
 
                 Game.eraseAllGameEntities();
                 Game.eraseAllHudEntities();

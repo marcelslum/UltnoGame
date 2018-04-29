@@ -172,17 +172,21 @@ class Node implements Poolable<Node>{
 
     public static boolean preCheck(Entity a, Entity b){
 
+        if (Game.debugCollisionEscape)Log.e(TAG, "init preCheck ´´´´´´´´´´´´´´´´´´");
+
+        if (Game.debugCollisionEscape)Log.e(TAG, a.name +" contra " + b.name + "    a.type "+ a.type + " b.type " + b.type);
+
         if (a == b){
-            //Log.e(TAG, "escape on node - same object");
+            if (Game.debugCollisionEscape)Log.e(TAG, "escape on node - same object");
             return false;
         }
 
         if (b.weight != bWeight){
-            //Log.e(TAG, "escape on node - weight invalid");
+            if (Game.debugCollisionEscape)Log.e(TAG, "escape on node - weight invalid");
             return false;
         }
 
-        //Log.e(TAG, a.name +" contra " + b.name + "    a.type "+ a.type + " b.type " + b.type);
+
 
         if (!preCheck){
             return true;
@@ -192,45 +196,43 @@ class Node implements Poolable<Node>{
 
         if (a.type == Entity.TYPE_BAR){
             if (b.type == Entity.TYPE_BOTTOM_BORDER || b.type == Entity.TYPE_TOP_BORDER){
-                //Log.e(TAG, "escape on node - bar com borda cima ou baixo");
+                if (Game.debugCollisionEscape)Log.e(TAG, "escape on node - bar com borda cima ou baixo");
                 return false;
             }
         }
 
         if (a.type == Entity.TYPE_BALL){
-            /*if (b.type == Entity.TYPE_BOTTOM_BORDER){
+
+            if (b.type == Entity.TYPE_BOTTOM_BORDER){
                 if (a.positionY - a.maxHeight > b.y){
-                    //Log.e(TAG, "escape on node - bar com borda B");
+                    if (Game.debugCollisionEscape)Log.e(TAG, "escape on node - ball com borda B");
                     return false;
                 }
-            } else */
+            } else
+
             if (b.type == Entity.TYPE_TOP_BORDER){
                 if (a.positionY + a.maxHeight < (b.y + b.maxHeight)){
-                    //Log.e(TAG, "escape on node - bar com borda C");
+                    if (Game.debugCollisionEscape)Log.e(TAG, "escape on node - ball com borda C");
                     return false;
                 }
             } else if (b.type == Entity.TYPE_LEFT_BORDER){
                 if (a.positionX - a.maxWidth > b.x + b.maxHeight){
-                    //Log.e(TAG, "escape on node - bar com borda E");
+                    if (Game.debugCollisionEscape)Log.e(TAG, "escape on node - ball com borda E");
                     return false;
                 }
             } else if (b.type == Entity.TYPE_RIGHT_BORDER){
                 if (a.positionX + a.maxWidth < b.x){
-                    //Log.e(TAG, "escape on node - bar com borda D");
+                    if (Game.debugCollisionEscape)Log.e(TAG, "escape on node - ball com borda D");
                     return false;
                 }
             }
         }
 
-
-
-
-
         if (verifyCenter) {
 
-            //if (Game.debugCollisionEscape) Log.e(TAG, "verificando center "+ a.name + " com " + Quadtree.outs[bCount].name);
-            //if (Game.debugCollisionEscape)Log.e(TAG, "dados a " + a.centerX + " - " + a.maxWidth + " - " + a.centerY + " - " + a.maxHeight);
-            //if (Game.debugCollisionEscape)Log.e(TAG, "dados b " + Quadtree.outs[bCount].centerX + " - " + Quadtree.outs[bCount].maxWidth + " - " + Quadtree.outs[bCount].centerY + " - " + Quadtree.outs[bCount].maxHeight);
+            if (Game.debugCollisionEscape) Log.e(TAG, "verificando center "+ a.name + " com " + b.name);
+            if (Game.debugCollisionEscape)Log.e(TAG, "dados a " + a.centerX + " - " + a.maxWidth + " - " + a.centerY + " - " + a.maxHeight);
+            if (Game.debugCollisionEscape)Log.e(TAG, "dados b " + b.centerX + " - " + b.maxWidth + " - " + b.centerY + " - " + b.maxHeight);
 
             if (a.maxWidth != 0f && b.maxWidth != 0f) {
                 if (a.centerX > b.centerX) {
@@ -257,7 +259,7 @@ class Node implements Poolable<Node>{
             }
 
             if (escapeByCenter){
-                //Log.e(TAG, "escape on node");
+                Log.e(TAG, "escape on node - escape center");
                 return false;
             } else {
                 return true;
