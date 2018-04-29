@@ -52,10 +52,10 @@ public abstract class Collision {
 
     private static final String TAG = "Collision";
 
-    public static boolean checkCollision(ArrayList<? extends PhysicalObject> aEntities, Quadtree quad, int bWeight, boolean respond, boolean updateData, boolean verifyCenter){
-        //if (polygon1 == null){
-        //    initData();
-        //}
+    public static boolean checkCollision(ArrayList<? extends PhysicalObject> aEntities, Quadtree quad, int bWeight, boolean respond, boolean updateData, boolean verifyCenter, boolean preCheck){
+
+
+
 
         collided = false;
 
@@ -64,6 +64,10 @@ public abstract class Collision {
         if (response == null) {
             response = new SatResponse();
         }
+
+        Node.bWeight = bWeight;
+        Node.verifyCenter = verifyCenter;
+        Node.preCheck = preCheck;
 
         for (int iLoop = 0; iLoop < NUMBER_OF_ITERATIONS; iLoop++){
             // entidades a
@@ -104,27 +108,31 @@ public abstract class Collision {
                     else
                     {
 
-
                         escapeByCenter = false;
                         if (verifyCenter && Quadtree.outs[bCount] != null) {
+
+                            if (Game.debugCollisionEscape)Log.e(TAG, "verificando center "+ a.name + " com " + Quadtree.outs[bCount].name);
+                            if (Game.debugCollisionEscape)Log.e(TAG, "dados a " + a.centerX + " - " + a.maxWidth + " - " + a.centerY + " - " + a.maxHeight);
+                            if (Game.debugCollisionEscape)Log.e(TAG, "dados b " + Quadtree.outs[bCount].centerX + " - " + Quadtree.outs[bCount].maxWidth + " - " + Quadtree.outs[bCount].centerY + " - " + Quadtree.outs[bCount].maxHeight);
+
                             if (a.maxWidth != 0f && Quadtree.outs[bCount].maxWidth != 0f) {
                                 if (a.centerX > Quadtree.outs[bCount].centerX) {
-                                    if (a.centerX - Quadtree.outs[bCount].centerX > a.maxWidth + Quadtree.outs[bCount].maxWidth) {
+                                    if (a.centerX - a.maxWidth/2f > Quadtree.outs[bCount].centerX + Quadtree.outs[bCount].maxWidth/2f) {
                                         escapeByCenter = true;
                                     }
                                 } else {
-                                    if (Quadtree.outs[bCount].centerX - a.centerX > a.maxWidth + Quadtree.outs[bCount].maxWidth) {
+                                    if (Quadtree.outs[bCount].centerX - Quadtree.outs[bCount].maxWidth/2f  > (a.centerX + a.maxWidth/2f)) {
                                         escapeByCenter = true;
                                     }
                                 }
-                                if (!escapeByCenter) {
 
+                                if (!escapeByCenter && a.maxHeight != 0f && Quadtree.outs[bCount].maxHeight != 0f) {
                                     if (a.centerY > Quadtree.outs[bCount].centerY) {
-                                        if (a.centerY - Quadtree.outs[bCount].centerY > a.maxHeight + Quadtree.outs[bCount].maxHeight) {
+                                        if (a.centerY - a.maxHeight/2f > (Quadtree.outs[bCount].centerY + Quadtree.outs[bCount].maxHeight/2f)) {
                                             escapeByCenter = true;
                                         }
                                     } else {
-                                        if (Quadtree.outs[bCount].centerY - a.centerY > a.maxHeight + Quadtree.outs[bCount].maxHeight) {
+                                        if (Quadtree.outs[bCount].centerY - Quadtree.outs[bCount].maxHeight/2f > (a.centerY + a.maxHeight)) {
                                             escapeByCenter = true;
                                         }
                                     }
@@ -134,18 +142,19 @@ public abstract class Collision {
                             }
                         }
 
+                        if (Game.debugCollisionEscape) {
+                            if (escapeByCenter) {
+                                Log.e(TAG, "escape by center" + a.name + " - " + Quadtree.outs[bCount].name);
+                            }
+                        }
 
-                        //if (escapeByCenter){
-                        //    Log.e(TAG, "escape by center" + a.name + " - " + Quadtree.outs[bCount].name);
-                        //}
-
-                        if (Quadtree.outs[bCount] != null && !escapeByCenter) {
+                        if (Quadtree.outs[bCount] != null && !escapeByCenter && !(a.type == Entity.TYPE_BAR && Quadtree.outs[bCount].type == Entity.TYPE_TARGET)) {
 
                             //Log.e(TAG, " Quadtree.outs " + bCount);
 
                             PhysicalObject b = (PhysicalObject) Quadtree.outs[bCount];
 
-                            //Log.e(TAG, " b.name " + b.name);
+                            if (Game.debugCollisionEscape)Log.e(TAG, "verificando  "+ a.name + " com " + b.name);
 
                             onQuarentine = false;
 

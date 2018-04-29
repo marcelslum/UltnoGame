@@ -1,9 +1,7 @@
 package com.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
-import android.opengl.GLES30;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -52,6 +50,8 @@ public class Entity{
     final public static int TYPE_WINDOW_GAME = 23;
     final public static int TYPE_TARGET_GROUP = 24;
     final public static int TYPE_TEXT_VIEW = 25;
+
+    public int weight;
 
 
 
@@ -688,7 +688,7 @@ public class Entity{
 
 
                     if (program == Game.specialBallProgram){
-                        float time = ((Utils.getTime() - Game.initTime)) / 1000f;
+                        float time = ((Utils.getTimeMilliPrecision() - Game.initTime)) / 1000f;
                         int uf_time = GLES20.glGetUniformLocation(this.program.get(), "uf_time");
                         GLES20.glUniform1f(uf_time, time);
                     }

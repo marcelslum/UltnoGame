@@ -9,6 +9,9 @@ import android.util.Log;
  */
 public class Button extends Entity implements Poolable<Button>{
 
+
+    Rectangle frame;
+
     public float height;
     public float width;
     OnPress onPress;
@@ -148,6 +151,11 @@ public class Button extends Entity implements Poolable<Button>{
         setDrawInfo();
     }
 
+    public void addFrame(Rectangle rectangle){
+        frame = rectangle;
+        addChild(frame);
+    }
+
     public void setMoveListener(InteractionListener.MoveListener moveListener){
         if (listener != null){
             listener.setMoveListener(moveListener);
@@ -277,6 +285,21 @@ public class Button extends Entity implements Poolable<Button>{
 
     }
 
+    @Override
+    public void prepareRender(float[] matrixView, float[] matrixProjection) {
+
+        if (!isVisible) return;
+
+
+        checkAnimations();
+
+        if (frame != null) {
+            frame.render(matrixView, matrixProjection);
+        }
+
+        render(matrixView, matrixProjection);
+
+    }
 
     public void setDrawInfoVbo(){
         if (vbo == null || vbo.length == 0){

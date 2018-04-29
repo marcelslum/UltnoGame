@@ -73,8 +73,13 @@ public abstract class Utils {
         return min + ((float)Math.random() * ((max - min)));
     }
 
-    public static long getTime(){
-        return Game.currentFrameTime;
+    public static long getTimeMilliPrecision(){
+        return Game.currentFrameMilliPrecision;
+        //return System.currentTimeMillis();
+    }
+
+    public static long getTimeNano(){
+        return Game.currentFrameNanoPrecision;
         //return System.currentTimeMillis();
     }
 

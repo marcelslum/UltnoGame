@@ -100,10 +100,10 @@ public class MessagesHandler {
                 resources.getString(R.string.messageGameOver), Game.font, new Color(1f, 0f, 0f, 1f), Text.TEXT_ALIGN_CENTER);
 
         messageMenu = new Text("messageMenu",
-                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.18f, Game.gameAreaResolutionY*0.08f, ".", Game.font, Color.azul);
+                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.15f, Game.gameAreaResolutionY*0.08f, ".", Game.font, Color.azul);
 
         messageSubMenu = new Text("messageSubMenu",
-                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.28f, Game.gameAreaResolutionY*0.05f, ".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f));
+                Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.25f, Game.gameAreaResolutionY*0.05f, ".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f));
 
         messageGroupsUnblocked = new Text("messageGroupsUnblocked",
                 Game.gameAreaResolutionX*0.5f, Game.resolutionY*0.6f, Game.gameAreaResolutionY*0.08f,
@@ -187,6 +187,9 @@ public class MessagesHandler {
         MessagesHandler.messageContinue = new Text("messageContinue",
                 Game.resolutionX*0.91f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,
                 resources.getString(R.string.continuar), Game.font, new Color(0.5f, 0.5f, 0.5f, 1f), Text.TEXT_ALIGN_RIGHT);
+
+        Utils.createAnimation3v(messageContinue, "alpha", "alpha", 3000, 0f, 0.3f, 0.5f, 0.6f, 1f, 0.3f, true, true ).start();
+        Utils.createAnimation3v(messageBack, "alpha", "alpha", 3000, 0f, 0.3f, 0.5f, 0.6f, 1f, 0.3f, true, true ).start();
 
     }
 

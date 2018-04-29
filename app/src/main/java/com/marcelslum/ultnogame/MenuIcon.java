@@ -226,6 +226,8 @@ public class MenuIcon extends Entity{
 
         move(currentTranslateX, false);
 
+        //Log.e(TAG, "currentTranslateX " + currentTranslateX);
+
         for (int i = 0; i < numberOfElements; i++){
 
             if (iconsMap[i]) {
@@ -291,7 +293,7 @@ public class MenuIcon extends Entity{
 
         float padd = size * 0.1f;
 
-        float positionX = x + padd + ((position - 1) * size * 1.1f);
+        float positionX = x + padd + ((position) * size * 1.1f);
         float centerPosition = positionX + (size/2);
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
@@ -315,7 +317,7 @@ public class MenuIcon extends Entity{
 
         float padd = size * 0.1f;
 
-        float positionX = x + padd + ((position - 1) * size * 1.1f);
+        float positionX = x + padd + ((position) * size * 1.1f);
         float centerPosition = positionX + (size/2);
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
@@ -353,7 +355,7 @@ public class MenuIcon extends Entity{
     public MenuIconGraph addGraph(int position, String name, float paddFromBottom, float height, int type){
         graphMap[position] = true;
         float padd = size * 0.1f;
-        float positionX = x + padd + ((position-1) * size * 1.1f);
+        float positionX = x + padd + ((position) * size * 1.1f);
         positionX += size * 0.15f;
         graph[position] = new MenuIconGraph(name, positionX, y + size + paddFromBottom, size * 0.7f, height, type);
         childs.add(graph[position]);
@@ -361,7 +363,6 @@ public class MenuIcon extends Entity{
     }
 
     public void addOption(int position, int id, int textureUnit, TextureData textureData, Animation.AnimationListener onSelect, boolean optionBlocked){
-
 
         if (numberOfElements < (position + 1)){
             numberOfElements = (position + 1);
@@ -481,7 +482,7 @@ public class MenuIcon extends Entity{
     // primeiro icone é número 0
     public float getPositionXFromIconNumber(int number){
         float padd = size * 0.1f;
-        return x + padd + ((number-1) * size * 1.1f);
+        return x + padd + ((number) * size * 1.1f);
     }
 
     @Override
@@ -516,7 +517,7 @@ public class MenuIcon extends Entity{
 
     public void move(float iconTranslateX, boolean updateCurrentTranslateX) {
 
-        //Log.e(TAG, "movendo "+ iconTranslateX);
+        if (Game.logMenuIconMoveAndTranslateX)Log.e(TAG, "movendo "+ iconTranslateX);
         float padd = size * 0.1f;
 
         Button lastIcon = icons[numberOfElements-1];
@@ -531,9 +532,9 @@ public class MenuIcon extends Entity{
 
         Button firstIcon = icons[0];
 
-        //Log.e(TAG, " firstIcon.positionX "+firstIcon.positionX);
-        //Log.e(TAG, " iconTranslateX "+iconTranslateX);
-        //Log.e(TAG, " padd "+padd);
+        if (Game.logMenuIconMoveAndTranslateX)Log.e(TAG, " firstIcon.positionX "+firstIcon.positionX);
+        if (Game.logMenuIconMoveAndTranslateX)Log.e(TAG, " iconTranslateX "+iconTranslateX);
+        if (Game.logMenuIconMoveAndTranslateX)Log.e(TAG, " padd "+padd);
 
         if (firstIcon.positionX + iconTranslateX > padd){
             iconTranslateX = padd - firstIcon.positionX;
@@ -544,7 +545,7 @@ public class MenuIcon extends Entity{
             Utils.createSimpleAnimation(beggining, "alpha", "alpha", 1200, 1f, 0f).start();
         }
 
-        //Log.e(TAG, "movendo "+ iconTranslateX);
+        if (Game.logMenuIconMoveAndTranslateX)Log.e(TAG, "movendo "+ iconTranslateX);
 
         for (int i = 0; i < numberOfElements; i++){
             if (iconsMap[i]) icons[i].translate(iconTranslateX, 0f);

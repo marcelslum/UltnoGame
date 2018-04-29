@@ -1,32 +1,11 @@
 package com.marcelslum.ultnogame;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.games.Games;
-import com.google.android.gms.games.SnapshotsClient;
-import com.google.android.gms.games.snapshot.Snapshot;
-import com.google.android.gms.games.snapshot.SnapshotMetadata;
-import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.common.api.Result;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by marcel on 12/10/2016.
@@ -168,7 +147,7 @@ public class SaveGame {
 
     public void save(){
 
-        if (Utils.getTime() - lastSave < MIN_TIME_BEFORE_RESAVE) {
+        if (Utils.getTimeMilliPrecision() - lastSave < MIN_TIME_BEFORE_RESAVE) {
             //Log.e(TAG, "Jogo não foi salvo porque foi salvo recentemente.");
             return;
         }
@@ -184,7 +163,7 @@ public class SaveGame {
                 return -1;
             }
 
-            lastSave = Utils.getTime();
+            lastSave = Utils.getTimeMilliPrecision();
 
 
             try {

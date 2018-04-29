@@ -85,10 +85,10 @@ public class BallDataPanel extends Entity{
     Rectangle [] rectanglesStaticFront = new Rectangle[5];
 
     Ball ballAnimating;
-    
-    private static final Color COLOR_BAR_GREEN_DARK = new Color (0.3f, 0.6f, 0.59f, 1f);
-    private static final Color COLOR_BAR_GREEN_LIGHT = new Color (0.65f, 0.83f, 0.82f, 1f);
-    private static final Color COLOR_BAR_BLUE_DARK = new Color (0.31f, 0.37f, 0.74f, 1f);//54 69 164
+
+    public static final Color COLOR_BAR_GREEN_DARK = new Color (0.3f, 0.6f, 0.59f, 1f);
+    public static final Color COLOR_BAR_GREEN_LIGHT = new Color (0.65f, 0.83f, 0.82f, 1f);
+    public static final Color COLOR_BAR_BLUE_DARK = new Color (0.31f, 0.37f, 0.74f, 1f);//54 69 164
     private static final Color COLOR_BAR_BLUE_LIGHT = new Color (0.79f, 0.82f, 1f, 1f); //202 204 256
     private static final Color COLOR_BACK = new Color (0.28f, 0.28f, 0.28f, 0.8f);
 
@@ -182,7 +182,7 @@ public class BallDataPanel extends Entity{
 
         bordaBmeio = new Rectangle("bordaBmeio", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*0.36f, Game.resolutionY - Game.gameAreaResolutionY, -1, COLOR_PANEL);
 
-        bordaBmeioE = new Rectangle("bordaBmeioE", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp, Game.resolutionY - Game.gameAreaResolutionY, -1,
+        bordaBmeioE = new Rectangle("bordaBmeioE", Game.resolutionX * 0.32f - (bordaEsp*0.5f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp*1.05f, Game.resolutionY - Game.gameAreaResolutionY, -1,
                 COLOR_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
 
         bordaBmeioE.setMultiColor(
@@ -444,7 +444,12 @@ public class BallDataPanel extends Entity{
 
                 Utils.insertRectangleIndicesData(indicesDataStatic, i * 6, i * 4);
 
-                Utils.insertRectangleColorsData(colorsDataStatic, i * 16, rectanglesStatic[i].color.r, rectanglesStatic[i].color.g, rectanglesStatic[i].color.b, rectanglesStatic[i].color.a);
+                if (rectanglesStatic[i].multiColor){
+                    Utils.insertRectangleColorsData(colorsDataStatic, i * 16, rectanglesStatic[i].colorTopLeft, rectanglesStatic[i].colorTopRight, rectanglesStatic[i].colorBottomLeft, rectanglesStatic[i].colorBottomRight);
+                } else {
+                    Utils.insertRectangleColorsData(colorsDataStatic, i * 16, rectanglesStatic[i].color.r, rectanglesStatic[i].color.g, rectanglesStatic[i].color.b, rectanglesStatic[i].color.a);
+                }
+
         }
 
         verticesBuffer = Utils.generateOrUpdateFloatBuffer(verticesDataStatic, verticesBuffer);
@@ -629,8 +634,7 @@ public class BallDataPanel extends Entity{
 
 
         int uf_alphaHandle = GLES20.glGetUniformLocation(program.get(), "uf_alpha");
-        GLES20.glUniform1f(uf_alphaHandle, 1f);
-
+        GLES20.glUniform1f(uf_alphaHandle, alpha);
 
 
         // static

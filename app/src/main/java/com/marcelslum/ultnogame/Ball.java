@@ -244,7 +244,7 @@ public class Ball extends Circle{
         super.translate(tx, ty);
         if (isMovable && isFree){
 
-            if (!MyGLRenderer.tick && TimeHandler.timeOfLevelPlay > 500) {
+            if (!MyGLRenderer.tick && TimeHandler.timeOfLevelPlay > 150) {
 
                 float randon = Utils.getRandonFloat(0f, 1f);
                 int numberOfParticles = 2;
@@ -299,7 +299,7 @@ public class Ball extends Circle{
 
 
     public void initFakeAnimation() {
-        startTimeFakeBallAnim = Game.currentFrameTime;
+        startTimeFakeBallAnim = Utils.getTimeMilliPrecision();
         fakeBallAnimActive = true;
     }
 
@@ -316,7 +316,7 @@ public class Ball extends Circle{
         }
 
         if (fakeBallAnimActive){
-            long elapsedTime = Utils.getTime() - startTimeFakeBallAnim;
+            long elapsedTime = Utils.getTimeMilliPrecision() - startTimeFakeBallAnim;
             if (elapsedTime < fakeBallAnimDuration){
                 color.r = Utils.getRandonFloat(0f, 0.3f) * (1.0f - ((float)elapsedTime/(float)fakeBallAnimDuration));
                 color.g = Utils.getRandonFloat(0f, 0.4f) * (1.0f - ((float)elapsedTime/(float)fakeBallAnimDuration));
@@ -1653,7 +1653,7 @@ public class Ball extends Circle{
     private void waitForExplosion() {
         listenForExplosion = true;
         alarmId = Sound.playSoundPool(Sound.soundAlarm, 1, 1, 100);
-        initialTimeWaitingExplosion = Utils.getTime();
+        initialTimeWaitingExplosion = Utils.getTimeMilliPrecision();
 
         setBallColor(COLOR_BALL_RED);
         

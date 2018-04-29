@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 
@@ -107,7 +105,7 @@ public class Animation{
 
         //Log.e(TAG, "doAnimation "+targetAnimationObject.name);
 
-        this.elapsedTime = Utils.getTime() - this.startTime;
+        this.elapsedTime = Utils.getTimeMilliPrecision() - this.startTime;
         this.percentage = this.elapsedTime/(float)this.duration;
 
         //Log.e("Animation", "this.percentage "+this.percentage);
@@ -208,7 +206,7 @@ public class Animation{
     }
 
     public void setStartTime(){
-        this.startTime = Utils.getTime();
+        this.startTime = Utils.getTimeMilliPrecision();
     }
 
     public void setAnimationListener(AnimationListener listener) {

@@ -150,7 +150,7 @@ public class ParticleGenerator extends Entity {
     public void prepareRender(float[] matrixView, float[] matrixProjection){
         if (isActive) {
 
-            Log.e(TAG, "prepareRender "+x);
+            //Log.e(TAG, "prepareRender "+x);
 
             if (!MyGLRenderer.tick) {
                 updateDrawInfo();

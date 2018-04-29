@@ -255,6 +255,9 @@ public class Text extends Entity implements Poolable<Text>{
                 charData = new float[7];
             }
 
+            //Log.e(TAG, "char " + String.valueOf(c));
+            //Log.e(TAG, "chc_val " + c_val);
+
             float indx = font.getCharToIndex(c_val, charData);
 
             if(indx==-1.0f) {
@@ -282,6 +285,12 @@ public class Text extends Entity implements Poolable<Text>{
             float destLeft   = cursor + (charData[4]*proportion);
             float destTop    = 0 + (charData[5]*proportion); ///// - (size*0.1f);
             float destRight  = destLeft + (charData[2]*proportion);
+            if (c_val == 105){ // afina um pouco a letra i
+                destRight  = destLeft + ((charData[2]*proportion)* 0.7f);
+            } else if (c_val == 108){ // afina um pouco a letra l
+                destRight  = destLeft + ((charData[2]*proportion)* 0.85f);
+            }
+
             float destBottom = destTop + (charData[3]*proportion);/////////- (size*0.1f);
 
             vec[0] = cursor;

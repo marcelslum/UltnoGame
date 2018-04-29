@@ -41,6 +41,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     // Misc
     Context mContext;
     long mLastTime;
+    long mLastNanoTime;
 
     public float screenOffSetX;
     public float screenOffSetY;
@@ -172,9 +173,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     ParticleGenerator.updateDrawInfo();
     BrickBackgroud.changeDrawInfo()
 
-
     */
-
 
     @Override
     public void onDrawFrame(GL10 unused) {
@@ -214,13 +213,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 
         // Get the current time
-        Game.currentFrameTime = System.currentTimeMillis();
+        Game.currentFrameMilliPrecision = System.currentTimeMillis();
+        Game.currentFrameNanoPrecision = System.nanoTime();
 
         // We should make sure we are valid and sane
-        if (mLastTime > Game.currentFrameTime) return;
+        if (mLastTime > Game.currentFrameMilliPrecision) return;
 
         // Get the amount of time the last frame took.
-        Game.elapsedTimeSinceLastFrame = Game.currentFrameTime - mLastTime;
+        Game.elapsedTimeSinceLastFrame = Game.currentFrameMilliPrecision - mLastTime;
+        Game.elapsedNanoTimeSinceLastFrame = Game.currentFrameNanoPrecision - mLastNanoTime;
 
         if (Game.gameState == Game.GAME_STATE_INTRO){
             Game.verifyTouchBlock();
@@ -230,32 +231,32 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         } else {
 
             if (lastInternetCheck < 0){
-                lastInternetCheck = Utils.getTime();
+                lastInternetCheck = Utils.getTimeMilliPrecision();
             }
 
 
             // verificações periódicas
             if (!Game.paraGravacaoVideo) {
                 if (Game.gameState != Game.GAME_STATE_JOGAR && Game.gameState != Game.GAME_STATE_VITORIA && Game.gameState != Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {
-                    if (Utils.getTime() - lastInternetCheck > 5000) {
+                    if (Utils.getTimeMilliPrecision() - lastInternetCheck > 5000) {
                         //Log.e(TAG, "Verificando conexão");
                         ConnectionHandler.checkInternetConnection();
-                        lastInternetCheck = Game.currentFrameTime;
+                        lastInternetCheck = Game.currentFrameMilliPrecision;
                     }
                 } else {
 
 
                     if (Game.gameState == Game.GAME_STATE_JOGAR) {
-                        if (Utils.getTime() - lastInternetCheck > 1000) {
+                        if (Utils.getTimeMilliPrecision() - lastInternetCheck > 1000) {
                             if (TimeHandler.timeOfLevelPlay > 3000) {
                                 Sound.checkLoopPlaying();
                             }
-                            lastInternetCheck = Utils.getTime();
+                            lastInternetCheck = Utils.getTimeMilliPrecision();
                         }
                     } else {
-                        if (Utils.getTime() - lastInternetCheck > 300) {
+                        if (Utils.getTimeMilliPrecision() - lastInternetCheck > 300) {
                             Sound.checkLoopPlaying();
-                            lastInternetCheck = Utils.getTime();
+                            lastInternetCheck = Utils.getTimeMilliPrecision();
                             Sound.setMusicVolume(Sound.musicVolume - 0.02f);
                         }
                     }
@@ -268,19 +269,26 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             Game.verifyTouchBlock();
             Game.verifyListeners();
 
-            if (Game.exibirLogDeFramesParaDebug) {
+            if (Game.logFrame) {
+
                 if (frameDurations == null) {
                     frameDurations = new ArrayList<>();
                 }
 
                 frameDurations.add(Game.elapsedTimeSinceLastFrame);
 
+
+                //Log.e(TAG, "frame " + Game.elapsedTimeSinceLastFrame);
+
+
                 if (Game.elapsedTimeSinceLastFrame > longestFrame) {
                     longestFrame = Game.elapsedTimeSinceLastFrame;
                 }
 
 
+
                 // LOG FRAMES
+
                 if (frameDurations.size() == 60) {
                     float soma = 0;
                     for (int i = 0; i < frameDurations.size(); i++) {
@@ -291,6 +299,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                     frameDurations.clear();
                     longestFrame = 0;
                 }
+
             }
 
             if (Game.elapsedTimeSinceLastFrame > (frameDuration*3) && Game.gameState == Game.GAME_STATE_JOGAR){
@@ -298,10 +307,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                 Game.elapsedTimeSinceLastFrame = (long)frameDuration*3;
             }
 
-            Game.simulate(Game.elapsedTimeSinceLastFrame, frameDuration);
+            //Game.simulate(Game.elapsedTimeSinceLastFrame, frameDuration);
+            Game.simulate(Game.elapsedNanoTimeSinceLastFrame, frameDuration);
             Game.render(matrixView, matrixProjection);
         }
         // Save the current time to see how long it took :).
-        mLastTime = Game.currentFrameTime;
+        mLastTime = Game.currentFrameMilliPrecision;
+        mLastNanoTime = Game.currentFrameNanoPrecision;
     }
 }

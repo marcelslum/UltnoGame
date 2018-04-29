@@ -10,5 +10,11 @@ public class Edge extends Rectangle{
         isVisible = true;
         isCollidable = false;
         program = Game.solidProgram;
+
+        centerX = positionX + (width/2f);
+        centerY = positionY + (height/2f);
+        maxWidth = width;
+        maxHeight = height;
+
     }
 }

@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 /**
  * Created by marcel on 07/08/2016.
  */
@@ -202,7 +200,7 @@ public class Bar extends Rectangle{
     public void prepareRender(float[] matrixView, float[] matrixProjection) {
 
         if (specialBallAnimActive){
-            long elapsedTime = Utils.getTime() - startTimeSpecialBallAnim;
+            long elapsedTime = Utils.getTimeMilliPrecision() - startTimeSpecialBallAnim;
             if (elapsedTime < specialBallAnimDuration){
                 color.r = 0.8f * (1.0f - ((float)elapsedTime/(float)specialBallAnimDuration));
                 color.g = 0.4f * (1.0f - ((float)elapsedTime/(float)specialBallAnimDuration));
@@ -224,7 +222,7 @@ public class Bar extends Rectangle{
 
     public void specialBarScale() {
         scale(0.1f * (1 / accumulatedScaleX), 0.0f);
-        startTimeSpecialBallAnim = Utils.getTime();
+        startTimeSpecialBallAnim = Utils.getTimeMilliPrecision();
         specialBallAnimActive = true;
         SpecialBall.timeOfLastSpecialBall = TimeHandler.secondsOfLevelPlay;
 

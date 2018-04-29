@@ -504,10 +504,12 @@ public class Sound {
     }
 
     public void playMusic(){
-        /*
+
         if (!SaveGame.saveGame.music){
             return;
         }
+
+        /*
 
         if (AsyncTasks.asyncPlayMusic != null && AsyncTasks.asyncPlayMusic.getStatus() != AsyncTask.Status.FINISHED){
             AsyncTasks.asyncPlayMusic.cancel(true);

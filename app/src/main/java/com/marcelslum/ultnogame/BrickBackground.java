@@ -128,19 +128,13 @@ public class BrickBackground extends Entity {
 
 
 
-    boolean brickTick = false;
+    int brickTick = 0;
 
     public void changeDrawInfo(){
 
-        if (MyGLRenderer.tick){
-            return;
-        }
+        brickTick += 1;
+        if (brickTick == 15) brickTick = 0;
 
-        if (brickTick == true){
-            brickTick = false;
-        } else {
-            brickTick = true;
-        }
 
         //Log.e(TAG, "ballCollidedGreen "+ballCollidedGreen);
         //Log.e(TAG, "ballCollidedBlue "+ballCollidedBlue);
@@ -155,43 +149,61 @@ public class BrickBackground extends Entity {
             percentage = 0.005f;
         }
 
-
         //Log.e(TAG, " percentage "+percentage);
 
-        float percentageGray = 0.9997f;
+        float percentageGray = 0.999f;
         if (Game.gameState == Game.GAME_STATE_VITORIA || Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
-            percentageGray = 0.995f;
+            percentageGray = 0.99f;
         }
 
 
+        float numberOfBricksDiv16 = numberOfBricks/16;
+
          for (int i = 0; i < numberOfBricks; i++){
 
-            if ((brickTick == true && i < numberOfBricks/2) || (brickTick == false && i >= numberOfBricks/2)) {
+            if (
+                (brickTick == 0 && i > numberOfBricksDiv16*15) ||
+                (brickTick == 2 && i > numberOfBricksDiv16*14 && i <= numberOfBricksDiv16*15)||
+                (brickTick == 3 && i > numberOfBricksDiv16*13 && i <= numberOfBricksDiv16*14)||
+                (brickTick == 4 && i > numberOfBricksDiv16*12 && i <= numberOfBricksDiv16*13)||
+                (brickTick == 5 && i > numberOfBricksDiv16*11 && i <= numberOfBricksDiv16*12)||
+                (brickTick == 6 && i > numberOfBricksDiv16*10 && i <= numberOfBricksDiv16*11)||
+                (brickTick == 7 && i > numberOfBricksDiv16*9 && i <= numberOfBricksDiv16*10)||
+                (brickTick == 8 && i > numberOfBricksDiv16*8 && i <= numberOfBricksDiv16*9)||
+                (brickTick == 9 && i > numberOfBricksDiv16*7 && i <= numberOfBricksDiv16*8)||
+                (brickTick == 10 && i > numberOfBricksDiv16*6 && i <= numberOfBricksDiv16*7)||
+                (brickTick == 11 && i > numberOfBricksDiv16*5 && i <= numberOfBricksDiv16*6) ||
+                (brickTick == 12 && i > numberOfBricksDiv16*4 && i <= numberOfBricksDiv16*5) ||
+                (brickTick == 13 && i > numberOfBricksDiv16*3 && i <= numberOfBricksDiv16*4)||
+                (brickTick == 14 && i > numberOfBricksDiv16*2 && i <= numberOfBricksDiv16*3) ||
+                (brickTick == 15 && i >= 0 && i <= numberOfBricksDiv16)
+             )
+            {
 
                 float randonColor = Utils.getRandonFloat(0.0000001f, 1.0000001f);
                 float randonGray = Utils.getRandonFloat(0f, 1f);
 
-                if (ballCollidedBlue == 2000 && randonColor < percentage) {
+                if (ballCollidedBlue > 1986 && randonColor < percentage) {
                     //Log.e(TAG, "1");
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLUE);
                     bricksAlpha[i] = 0.3f;
-                } else if (ballCollidedBlack == 2000 && randonColor > percentage && randonColor < percentage * 2f) {
+                } else if (ballCollidedBlack > 1986 && randonColor > percentage && randonColor < percentage * 2f) {
                     //Log.e(TAG, "2");
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_BLACK);
                     bricksAlpha[i] = 0.3f;
-                } else if (ballCollidedGreen == 2000 && randonColor > percentage * 2f && randonColor < percentage * 3f) {
+                } else if (ballCollidedGreen > 1986 && randonColor > percentage * 2f && randonColor < percentage * 3f) {
                     //Log.e(TAG, "3");
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_GREEN);
                     bricksAlpha[i] = 0.3f;
-                } else if (ballCollidedRed == 2000 && randonColor > percentage * 3f && randonColor < percentage * 4f) {
+                } else if (ballCollidedRed > 1986 && randonColor > percentage * 3f && randonColor < percentage * 4f) {
                     //Log.e(TAG, "4");
                     bricksTextureData[i] = TextureData.getTextureDataById(TextureData.TEXTURE_BACK_RED);
                     bricksAlpha[i] = 0.3f;
                 } else if (
                         (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLUE && randonColor >= (float) ballCollidedBlue / 2000f) ||
-                                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLACK && randonColor >= (float) ballCollidedBlack / 2000f) ||
-                                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_GREEN && randonColor >= (float) ballCollidedGreen / 2000f) ||
-                                (bricksTextureData[i].id == TextureData.TEXTURE_BACK_RED && randonColor >= (float) ballCollidedRed / 2000f)
+                        (bricksTextureData[i].id == TextureData.TEXTURE_BACK_BLACK && randonColor >= (float) ballCollidedBlack / 2000f) ||
+                        (bricksTextureData[i].id == TextureData.TEXTURE_BACK_GREEN && randonColor >= (float) ballCollidedGreen / 2000f) ||
+                        (bricksTextureData[i].id == TextureData.TEXTURE_BACK_RED && randonColor >= (float) ballCollidedRed / 2000f)
                         ) {
                     //Log.e(TAG, "5");
                     bricksAlpha[i] = 0.5f;

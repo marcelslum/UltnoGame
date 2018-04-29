@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -131,15 +133,20 @@ class Node implements Poolable<Node>{
         for (int i = 0; i < stuckChildren.size(); i++){
             //if (item.type == Entity.TYPE_BALL)
                 //System.out.println("adicionando " + stuckChildren.get(i).name);
-            Quadtree.outs[Quadtree.outsInsertIndex] = stuckChildren.get(i);
-            Quadtree.outsInsertIndex += 1;
+
+            if (preCheck(item, stuckChildren.get(i))) {
+                Quadtree.outs[Quadtree.outsInsertIndex] = stuckChildren.get(i);
+                Quadtree.outsInsertIndex += 1;
+            }
         }
 
         for (int i = 0; i < children.size(); i++){
             //if (item.type == Entity.TYPE_BALL)
                 //System.out.println("adicionando " + children.get(i).name);
-            Quadtree.outs[Quadtree.outsInsertIndex] = children.get(i);
-            Quadtree.outsInsertIndex += 1;
+            if (preCheck(item, children.get(i))) {
+                Quadtree.outs[Quadtree.outsInsertIndex] = children.get(i);
+                Quadtree.outsInsertIndex += 1;
+            }
         }
 
 
@@ -148,6 +155,119 @@ class Node implements Poolable<Node>{
 
         //return outs;
     }
+
+
+    public static boolean verifyCenter = false;
+    public static boolean preCheck = false;
+    public static int bWeight = -1;
+    public static String TAG = "Node";
+
+    // faz uma checagem para ver se vai retornar o objeto mesmo
+    // checa vários aspectos
+    // checa o pesa
+    // checa se não é o mesmo objeto
+    // checa barra e bola com borda
+    // checa o centro
+
+
+    public static boolean preCheck(Entity a, Entity b){
+
+        if (a == b){
+            //Log.e(TAG, "escape on node - same object");
+            return false;
+        }
+
+        if (b.weight != bWeight){
+            //Log.e(TAG, "escape on node - weight invalid");
+            return false;
+        }
+
+        //Log.e(TAG, a.name +" contra " + b.name + "    a.type "+ a.type + " b.type " + b.type);
+
+        if (!preCheck){
+            return true;
+        }
+
+        boolean escapeByCenter = false;
+
+        if (a.type == Entity.TYPE_BAR){
+            if (b.type == Entity.TYPE_BOTTOM_BORDER || b.type == Entity.TYPE_TOP_BORDER){
+                //Log.e(TAG, "escape on node - bar com borda cima ou baixo");
+                return false;
+            }
+        }
+
+        if (a.type == Entity.TYPE_BALL){
+            /*if (b.type == Entity.TYPE_BOTTOM_BORDER){
+                if (a.positionY - a.maxHeight > b.y){
+                    //Log.e(TAG, "escape on node - bar com borda B");
+                    return false;
+                }
+            } else */
+            if (b.type == Entity.TYPE_TOP_BORDER){
+                if (a.positionY + a.maxHeight < (b.y + b.maxHeight)){
+                    //Log.e(TAG, "escape on node - bar com borda C");
+                    return false;
+                }
+            } else if (b.type == Entity.TYPE_LEFT_BORDER){
+                if (a.positionX - a.maxWidth > b.x + b.maxHeight){
+                    //Log.e(TAG, "escape on node - bar com borda E");
+                    return false;
+                }
+            } else if (b.type == Entity.TYPE_RIGHT_BORDER){
+                if (a.positionX + a.maxWidth < b.x){
+                    //Log.e(TAG, "escape on node - bar com borda D");
+                    return false;
+                }
+            }
+        }
+
+
+
+
+
+        if (verifyCenter) {
+
+            //if (Game.debugCollisionEscape) Log.e(TAG, "verificando center "+ a.name + " com " + Quadtree.outs[bCount].name);
+            //if (Game.debugCollisionEscape)Log.e(TAG, "dados a " + a.centerX + " - " + a.maxWidth + " - " + a.centerY + " - " + a.maxHeight);
+            //if (Game.debugCollisionEscape)Log.e(TAG, "dados b " + Quadtree.outs[bCount].centerX + " - " + Quadtree.outs[bCount].maxWidth + " - " + Quadtree.outs[bCount].centerY + " - " + Quadtree.outs[bCount].maxHeight);
+
+            if (a.maxWidth != 0f && b.maxWidth != 0f) {
+                if (a.centerX > b.centerX) {
+                    if (a.centerX - a.maxWidth/2f > b.centerX + b.maxWidth/2f) {
+                        escapeByCenter = true;
+                    }
+                } else {
+                    if (b.centerX - b.maxWidth/2f  > (a.centerX + a.maxWidth/2f)) {
+                        escapeByCenter = true;
+                    }
+                }
+
+                if (!escapeByCenter && a.maxHeight != 0f && b.maxHeight != 0f) {
+                    if (a.centerY > b.centerY) {
+                        if (a.centerY - a.maxHeight/2f > (b.centerY + b.maxHeight/2f)) {
+                            escapeByCenter = true;
+                        }
+                    } else {
+                        if (b.centerY - b.maxHeight/2f > (a.centerY + a.maxHeight)) {
+                            escapeByCenter = true;
+                        }
+                    }
+                }
+            }
+
+            if (escapeByCenter){
+                //Log.e(TAG, "escape on node");
+                return false;
+            } else {
+                return true;
+            }
+
+        } else {
+            return true;
+        }
+    }
+
 
     public void getAllContent(Entity item){
 
@@ -162,15 +282,19 @@ class Node implements Poolable<Node>{
         for (int i = 0; i < stuckChildren.size(); i++){
             //if (item.type == Entity.TYPE_BALL)
             //    System.out.println("adicionando " + children.get(i).name);
-            Quadtree.outs[Quadtree.outsInsertIndex] = stuckChildren.get(i);
-            Quadtree.outsInsertIndex += 1;
+            if (preCheck(item, stuckChildren.get(i))) {
+                Quadtree.outs[Quadtree.outsInsertIndex] = stuckChildren.get(i);
+                Quadtree.outsInsertIndex += 1;
+            }
         }
 
         for (int i = 0; i < children.size(); i++){
             //if (item.type == Entity.TYPE_BALL)
             //    System.out.println("adicionando " + children.get(i).name);
-            Quadtree.outs[Quadtree.outsInsertIndex] = children.get(i);
-            Quadtree.outsInsertIndex += 1;
+            if (preCheck(item, children.get(i))) {
+                Quadtree.outs[Quadtree.outsInsertIndex] = children.get(i);
+                Quadtree.outsInsertIndex += 1;
+            }
         }
 
 

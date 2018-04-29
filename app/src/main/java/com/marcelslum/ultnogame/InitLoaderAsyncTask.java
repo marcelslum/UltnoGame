@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.util.Log;
 
 public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
     
@@ -17,7 +15,7 @@ public class InitLoaderAsyncTask extends AsyncTask<Integer , Integer, Integer> {
                 return 0;   
             }
             
-            Game.initTime = Utils.getTime();
+            Game.initTime = Utils.getTimeMilliPrecision();
             if (isCancelled()){
                 //Log.e(TAG, "cancelado 2");
                 Game.forInitGame = true;

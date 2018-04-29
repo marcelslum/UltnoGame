@@ -20,6 +20,7 @@ public class ButtonHandler {
 
     public static void initButtons(){
         float buttonSize = Game.resolutionX * 0.05f;
+        float framePadd = buttonSize*0.15f;
 
         buttonFinalTargetLeft = Game.buttonPool.get();
         buttonFinalTargetLeft.setData("buttonFinalTargetLeft", Game.resolutionX - buttonSize*1.5f,
@@ -51,6 +52,18 @@ public class ButtonHandler {
             }
         });
 
+        Rectangle frame4 = new Rectangle("frameButton", Game.resolutionX - buttonSize*1.5f - framePadd,
+                Game.gameAreaResolutionY * 0.6f - framePadd,  Entity.TYPE_OTHER, buttonSize + (framePadd * 2f), buttonSize + (framePadd * 2f), -1, BallDataPanel.COLOR_BAR_GREEN_DARK);
+
+        frame4.setMultiColor(Color.cinza60.changeAlpha(0.6f), Color.branco.changeAlpha(0.6f), Color.cinza60.changeAlpha(0.6f), Color.cinza60.changeAlpha(0.6f));
+        frame4.addTopRectangle(0.9f, BallDataPanel.COLOR_BAR_GREEN_LIGHT.changeAlpha(0.1f).changeAlpha(0.6f), Color.zero, Color.zero, Color.zero,
+                0.05f, 0f, 1000f, Color.cinza40);
+
+        buttonFinalTargetLeft.addFrame(frame4);
+
+
+        //-------------------
+
         buttonFinalTargetRight = Game.buttonPool.get();
         buttonFinalTargetRight.setData("buttonFinalTargetLeft", buttonSize*0.5f,
                 Game.gameAreaResolutionY * 0.6f, buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
@@ -81,6 +94,15 @@ public class ButtonHandler {
                 }
             }
         });
+
+        Rectangle frame5 = new Rectangle("frameButton", buttonSize*0.5f - framePadd,
+                Game.gameAreaResolutionY * 0.6f - framePadd,  Entity.TYPE_OTHER, buttonSize + (framePadd * 2f), buttonSize + (framePadd * 2f), -1, BallDataPanel.COLOR_BAR_GREEN_DARK);
+        frame5.setMultiColor(Color.cinza60.changeAlpha(0.6f), Color.branco.changeAlpha(0.6f), Color.cinza60.changeAlpha(0.6f), Color.cinza60.changeAlpha(0.6f));
+        frame5.addTopRectangle(0.9f, BallDataPanel.COLOR_BAR_GREEN_LIGHT.changeAlpha(0.1f).changeAlpha(0.6f), Color.zero, Color.zero, Color.zero,
+                0.05f, 0f, 1000f, Color.cinza40.changeAlpha(0.6f));
+        buttonFinalTargetRight.addFrame(frame5);
+
+
 
         ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
         ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
@@ -122,6 +144,18 @@ public class ButtonHandler {
             }
         });
 
+
+        Rectangle frame1 = new Rectangle("frameButtonReturn", buttonSize*0.5f - framePadd,
+                Game.resolutionY - (buttonSize*1.5f) - framePadd,  Entity.TYPE_OTHER, buttonSize + (framePadd * 2f), buttonSize + (framePadd * 2f), -1, BallDataPanel.COLOR_BAR_GREEN_DARK);
+        frame1.setMultiColor(Color.cinza60, Color.branco, Color.cinza60, Color.cinza60);
+        frame1.addTopRectangle(0.9f, BallDataPanel.COLOR_BAR_GREEN_LIGHT.changeAlpha(0.1f), Color.zero, Color.zero, Color.zero,
+                0.05f, 0f, 1000f, Color.cinza40);
+
+        buttonReturn.addFrame(frame1);
+
+
+        //-------------
+
         buttonReturnObjectivesPause = Game.buttonPool.get();
         buttonReturnObjectivesPause.setData("buttonReturnObjectivesPause", buttonSize*0.5f, Game.gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
@@ -141,6 +175,15 @@ public class ButtonHandler {
                 }
             }
         });
+
+        Rectangle frame2 = new Rectangle("frameButtonReturn", buttonSize*0.5f - framePadd,
+                Game.gameAreaResolutionY - (buttonSize*1.5f) - framePadd,  Entity.TYPE_OTHER, buttonSize + (framePadd * 2f), buttonSize + (framePadd * 2f), -1, BallDataPanel.COLOR_BAR_GREEN_DARK);
+
+        frame2.setMultiColor(Color.cinza60, Color.branco, Color.cinza60, Color.cinza60);
+        frame2.addTopRectangle(0.9f, BallDataPanel.COLOR_BAR_GREEN_LIGHT.changeAlpha(0.1f), Color.zero, Color.zero, Color.zero,
+                0.05f, 0f, 1000f, Color.cinza40);
+        buttonReturnObjectivesPause.addFrame(frame2);
+
 
         buttonGroupLeaderboard = Game.buttonPool.get();
         buttonGroupLeaderboard.setData("buttonGroupLeaderboard", Game.resolutionX - buttonSize*1.5f,
@@ -259,6 +302,16 @@ public class ButtonHandler {
                 }
             }
         });
+
+        Rectangle frame3 = new Rectangle("frameButtonReturn", Game.resolutionX - buttonSize*1.5f - framePadd,
+                Game.resolutionY - (buttonSize*1.5f) - framePadd,  Entity.TYPE_OTHER, buttonSize + (framePadd * 2f), buttonSize + (framePadd * 2f), -1, BallDataPanel.COLOR_BAR_GREEN_DARK);
+
+        frame3.setMultiColor(Color.cinza60, Color.branco, Color.cinza60, Color.cinza60);
+        frame3.addTopRectangle(0.9f, BallDataPanel.COLOR_BAR_GREEN_LIGHT.changeAlpha(0.1f), Color.zero, Color.zero, Color.zero,
+                0.05f, 0f, 1000f, Color.cinza40);
+
+        buttonContinue.addFrame(frame3);
+
     }
 
 

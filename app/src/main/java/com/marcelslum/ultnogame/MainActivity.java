@@ -446,7 +446,7 @@ public class MainActivity extends FragmentActivity implements
             MenuHandler.menuInGame.reduceAlpha(500,0f, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
-                    Game.setGameState(Game.GAME_STATE_JOGAR);
+                    Game.setGameState(Game.GAME_STATE_PRE_JOGAR);
                 }
             });
         } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){

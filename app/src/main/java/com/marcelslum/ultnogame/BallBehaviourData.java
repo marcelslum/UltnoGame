@@ -1,7 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.util.Log;
-
 /**
  * Created by marcel on 07/02/2017.
  */
@@ -235,7 +233,7 @@ public class BallBehaviourData {
     }
 
     public void clear() {
-        timeOfCollision = Utils.getTime();
+        timeOfCollision = Utils.getTimeMilliPrecision();
         active = true;
         angleDecreasedWithBarMovement = false;
         angleIncreasedWithBarMovement = false;

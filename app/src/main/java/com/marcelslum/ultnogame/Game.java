@@ -23,13 +23,16 @@ public class Game {
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
     public static boolean paraGravacaoVideo = false;
-    public static boolean ganharComMetadeDasBolas = false;
+    public static boolean ganharComMetadeDasBolas = true;
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
     public static boolean showMessageNotConnectedOnGoogle = false;
-    public static boolean exibirLogDeFramesParaDebug = true;
+    public static boolean logFrame = true;
     public static boolean exibirLogDeTempoDeDuracaoDaChecagemDeColisao = false;
     public static boolean versaoBeta = true;
+    public static boolean debugListener = false;
+    public static boolean debugCollisionEscape = false;
+    public static boolean logMenuIconMoveAndTranslateX = false;
 
     public static MyGLSurface myGlSurface;
 
@@ -41,8 +44,16 @@ public class Game {
 
     public static final long TIME_OF_BALL_LISTENER = 250;
 
-    public static long currentFrameTime = -1;
+    public static long currentFrameMilliPrecision = -1;
     public static long elapsedTimeSinceLastFrame = -1;
+
+    public static long currentFrameNanoPrecision = -1;
+    public static long elapsedNanoTimeSinceLastFrame = -1;
+
+
+    public static float nanoPrecisionElapsed = 0f;
+
+    public static long timeOfPrePlay = 0;
 
     
     public static String playerName = "-";
@@ -129,6 +140,7 @@ public class Game {
     
     // game state
     public static int gameState;
+    public final static int GAME_STATE_PRE_JOGAR = 9;
     public final static int GAME_STATE_JOGAR = 10;
     public final static int GAME_STATE_PREPARAR = 11;
     public final static int GAME_STATE_MENU =  12;
@@ -595,12 +607,16 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
 
+
+            if (!sameState) {
+                showBlackFrameTransition(500);
+            }
+
             Sound.stopAndReleaseMusic();
 
             mainActivity.showAdView();
             Level.levelGoalsObject = new LevelGoals();
             Level.levelGoalsObject.levelGoals = LevelGoalsLoader.getLevelGoals(SaveGame.saveGame.currentLevelNumber);
-
 
             showTip();
             
@@ -843,7 +859,7 @@ public class Game {
             MessagesHandler.messageMaxScoreTotal.setText(
                     getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
 
-        } else if (state == GAME_STATE_PREPARAR){
+        } else if (state == GAME_STATE_PREPARAR) {
 
             abdicateAngle = false;
             Sound.musicCurrentPart = Sound.MUSIC_PRE_INTRO;
@@ -854,12 +870,12 @@ public class Game {
 
             //Sound.loadMusic();
 
-            if (tipTextBox != null){
+            if (tipTextBox != null) {
                 tipTextBox.clearDisplay();
             }
 
             ParticleGenerator.loadParticleGenerators();
-            
+
             eraseAllGameEntities();
             eraseAllHudEntities();
             LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
@@ -878,18 +894,19 @@ public class Game {
             TimeHandler.lastSeconds = 0;
             mainActivity.hideAdView();
             if (!sameState) {
-                showBlackFrameTransition(2500);}
+                showBlackFrameTransition(2500);
+            }
             Level.levelObject.loadEntities();
 
             // cria a animação de preparação;
             ArrayList<float[]> values = new ArrayList<>();
-                values.add(new float[]{0f,6f});
-                values.add(new float[]{0.14f,5f});
-                values.add(new float[]{0.28f,4f});
-                values.add(new float[]{0.4285f,3f});
-                values.add(new float[]{0.5714f,2f});
-                values.add(new float[]{0.7142f,1f});
-                values.add(new float[]{0.8571f,0f});
+            values.add(new float[]{0f, 6f});
+            values.add(new float[]{0.14f, 5f});
+            values.add(new float[]{0.28f, 4f});
+            values.add(new float[]{0.4285f, 3f});
+            values.add(new float[]{0.5714f, 2f});
+            values.add(new float[]{0.7142f, 1f});
+            values.add(new float[]{0.8571f, 0f});
             final Text innerMessagePreparation = MessagesHandler.messagePreparation;
             MessagesHandler.messagePreparation.setText("5");
             MessagesHandler.messagePreparation.setColor(Color.transparente);
@@ -902,20 +919,20 @@ public class Game {
             anim.setOnChangeNotFluid(new Animation.OnChange() {
                 @Override
                 public void onChange() {
-                    if (innerMessagePreparation.numberForAnimation == 4f){
+                    if (innerMessagePreparation.numberForAnimation == 4f) {
                         //Sound.playCounter();
                         //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         MessagesHandler.messagePreparation.setColor(Color.transparente);
                         //innerMessagePreparation.setText("4");
-                    } else if (innerMessagePreparation.numberForAnimation == 3f){
+                    } else if (innerMessagePreparation.numberForAnimation == 3f) {
                         Game.sound.playCounter();
                         //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
                         MessagesHandler.messagePreparation.display();
                         MessagesHandler.messagePreparation.setColor(Color.vermelhoCheio);
                         innerMessagePreparation.setText("3");
-                    } else if (innerMessagePreparation.numberForAnimation == 2f){
+                    } else if (innerMessagePreparation.numberForAnimation == 2f) {
                         Game.sound.playCounter();
                         //Sound.playSoundPool(Sound.soundCounter, 1, 1, 0);
                         //Sound.playCounter();
@@ -927,7 +944,7 @@ public class Game {
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
                         innerMessagePreparation.setText(getContext().getResources().getString(R.string.mensagem_jogar));
-                        if(paraGravacaoVideo){
+                        if (paraGravacaoVideo) {
                             MessagesHandler.messagePreparation.setColor(Color.transparente);
                         }
 
@@ -937,7 +954,7 @@ public class Game {
                             public void onAnimationEnd() {
                                 innerMessagePreparation.clearDisplay();
                                 innerMessagePreparation.alpha = 1f;
-                                Game.setGameState(GAME_STATE_JOGAR);
+                                Game.setGameState(GAME_STATE_PRE_JOGAR);
                             }
                         });
                         anim.start();
@@ -947,11 +964,19 @@ public class Game {
             anim.start();
             verifyDead();
 
-        } else if (state == GAME_STATE_JOGAR){
-
-            updateNumberOfTargetsAlive();
+        } else if (state == GAME_STATE_PRE_JOGAR){
 
             Game.sound.playMusic();
+            updateNumberOfTargetsAlive();
+            Game.notConnectedTextView.clearDisplay();
+            Game.topFrame.clearDisplay();
+
+            timeOfPrePlay = Utils.getTimeMilliPrecision();
+        } else if (state == GAME_STATE_JOGAR){
+
+
+
+
 
             for (int i = 0; i < Game.balls.size(); i++) {
                 if (Game.balls.get(i).listenForExplosion){
@@ -960,8 +985,7 @@ public class Game {
             }
 
 
-            Game.notConnectedTextView.clearDisplay();
-            Game.topFrame.clearDisplay();
+
 
             if (initPausedFlag){
                 initPausedFlag = false;
@@ -1082,6 +1106,8 @@ public class Game {
 
         } else if (state == GAME_STATE_VITORIA){
 
+            Game.bordaB.y = Game.resolutionY;
+
             ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
             ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
 
@@ -1113,8 +1139,6 @@ public class Game {
             Game.sound.playWin1();
             stopAllGameEntities();
             reduceAllGameEntitiesAlpha(300);
-
-            Utils.createSimpleAnimation(bordaB, "translateVitoria", "translateY", 2000, 0f, resolutionY - gameAreaResolutionY).start();
 
             if (ButtonHandler.button1Left != null) {
                 Utils.createSimpleAnimation(ButtonHandler.button1Left, "alphaVitoria", "alpha", 1000, ButtonHandler.button1Left.alpha, 0f).start();
@@ -1660,18 +1684,41 @@ public class Game {
     static int lastCollisiontDebugCheck = 0;
     static long timeInitCheckCollision;
 
+
+
+    static boolean atrasarPasso = false;
+    static int simulatePasso = 0;
+
     static void simulate(long elapsed, float frameDuration){
 
-        //Log.e(TAG, "elapsed " + elapsed);
+        simulatePasso += 1;
 
-        if (gameState != GAME_STATE_VITORIA) {
-            TimeHandler.updateTimeOfLevelPlay(elapsed);
+        if (atrasarPasso) {
+            if (simulatePasso < 10) {
+                return;
+            } else {
+                simulatePasso = 0;
+            }
         }
 
+        nanoPrecisionElapsed = ((float)elapsed/1000000f);
+
+        //Log.e(TAG, "elapsed " + elapsed);
+        //Log.e(TAG, "nanoPrecisionElapsed " + nanoPrecisionElapsed);
+        //Log.e(TAG, "frameDuration " + frameDuration);
+
+        if (gameState == GAME_STATE_PRE_JOGAR) {
+            if (Utils.getTimeMilliPrecision() - timeOfPrePlay > 500){
+                timeOfPrePlay = 0;
+                setGameState(GAME_STATE_JOGAR);
+            }
+        }
+
+        if (gameState != GAME_STATE_VITORIA) {
+            TimeHandler.updateTimeOfLevelPlay((long)nanoPrecisionElapsed);
+        }
 
         //Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
-
-
 
         if (ButtonHandler.buttonReturn != null){
             //Log.e(TAG, "buttonReturn ");
@@ -1684,9 +1731,6 @@ public class Game {
             //Log.e(TAG, " " + ButtonHandler.buttonReturn.isVisible);
         }
 
-
-
-
         // Before doing something that requires a lot of memory,
         // check to see whether the device is in a low memory state.
         //ActivityManager.MemoryInfo memoryInfo = getAvailableMemory();
@@ -1695,8 +1739,6 @@ public class Game {
         //    //Log.e(TAG, "lowMemory");
         //}
 
-
-        
 
         // atualiza posição da bola
         if (gameState == GAME_STATE_JOGAR) {
@@ -1712,8 +1754,8 @@ public class Game {
 
                      Ball ball = balls.get(i);
                      ball.verifyAcceleration();
-                     ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
-                     ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+                     ball.vx = (ball.dvx * (float) nanoPrecisionElapsed) / frameDuration;
+                     ball.vy = (ball.dvy * (float) nanoPrecisionElapsed) / frameDuration;
 
                      ball.translate(ball.vx, ball.vy);
 
@@ -1727,8 +1769,8 @@ public class Game {
                      
                      Ball ball = fakeBalls.get(i);
                      ball.verifyAcceleration();
-                     ball.vx = (ball.dvx * (float) elapsed) / frameDuration;
-                     ball.vy = (ball.dvy * (float) elapsed) / frameDuration;
+                     ball.vx = (ball.dvx * (float) nanoPrecisionElapsed) / frameDuration;
+                     ball.vy = (ball.dvy * (float) nanoPrecisionElapsed) / frameDuration;
 
                      ball.translate(ball.vx, ball.vy);
 
@@ -1738,8 +1780,8 @@ public class Game {
 
             for (int i = 0; i < specialBalls.size(); i++) {
                 SpecialBall specialBall = specialBalls.get(i);
-                specialBall.vx = (specialBall.dvx * (float) elapsed) / frameDuration;
-                specialBall.vy = (specialBall.dvy * (float) elapsed) / frameDuration;
+                specialBall.vx = (specialBall.dvx * (float) nanoPrecisionElapsed) / frameDuration;
+                specialBall.vy = (specialBall.dvy * (float) nanoPrecisionElapsed) / frameDuration;
 
                 //Log.e("game", "specialBall "+ specialBall.vx+" "+specialBall.vy);
                 specialBall.translate(specialBall.vx, specialBall.vy);
@@ -1748,7 +1790,7 @@ public class Game {
 
         // atualiza posição da barra
         if (gameState == GAME_STATE_JOGAR) {
-                float timePercentage = (float) elapsed / frameDuration;
+                float timePercentage = (float) nanoPrecisionElapsed / frameDuration;
             if (bars != null) {
                 if (bars.size() == 1) {
                     if (ButtonHandler.button1Left.isPressed && !ButtonHandler.button2Right.isPressed) {
@@ -1757,7 +1799,7 @@ public class Game {
                         bars.get(0).moveRight(timePercentage);
                         //bars.get(0).vx = (bars.get(0).dvx * (float) elapsed) / frameDuration;
                     } else {
-                        bars.get(0).stop(elapsed);
+                        bars.get(0).stop((long)nanoPrecisionElapsed);
                     }
                 }
                 if (bars.size() == 2) {
@@ -1766,7 +1808,7 @@ public class Game {
                     } else if (ButtonHandler.button1Right.isPressed && !ButtonHandler.button1Left.isPressed) {
                         bars.get(0).moveRight(timePercentage);
                     } else {
-                        bars.get(0).stop(elapsed);
+                        bars.get(0).stop((long)nanoPrecisionElapsed);
                     }
 
                     if (ButtonHandler.button2Left.isPressed) {
@@ -1774,7 +1816,7 @@ public class Game {
                     } else if (ButtonHandler.button2Right.isPressed) {
                         bars.get(1).moveRight(timePercentage);
                     } else {
-                        bars.get(1).stop(elapsed);
+                        bars.get(1).stop((long)nanoPrecisionElapsed);
                     }
                 }
             }
@@ -1797,14 +1839,14 @@ public class Game {
         checkTransformations();
 
 
-        //initSimulateTime = Utils.getTime();
+        //initSimulateTime = Utils.getTimeMilliPrecision();
 
         if (gameState == GAME_STATE_JOGAR) {
 
             // atualiza posição das windows
             for (int i = 0; i < windows.size(); i++){
                 if (windows.get(i).isActive){
-                    windows.get(i).vx = (windows.get(i).dvx * (float) elapsed) / frameDuration;
+                    windows.get(i).vx = (windows.get(i).dvx * (float) nanoPrecisionElapsed) / frameDuration;
                     windows.get(i).move();
                 }
             }
@@ -1851,12 +1893,12 @@ public class Game {
             for (int i = 0; i < balls.size(); i++) {
                 if (balls.get(i).listenForExplosion) {
                     //Log.e(TAG, "verificando explosão da bola "+i);
-                    if ((int) (Utils.getTime() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode) {
+                    if ((int) (Utils.getTimeMilliPrecision() - balls.get(i).initialTimeWaitingExplosion) > balls.get(i).timeForExplode) {
 
                         balls.get(i).radius *= 4;
                         ArrayList<PhysicalObject> ball = new ArrayList<>();
                         ball.add(balls.get(i));
-                        boolean collision = Collision.checkCollision(ball, quad, 0, false, false, false);
+                        boolean collision = Collision.checkCollision(ball, quad, 0, false, false, false, false);
                         balls.get(i).radius /= 4;
                         if (!collision){
                             balls.get(i).explode();
@@ -1879,31 +1921,44 @@ public class Game {
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < 1; i++) {
 
-                Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.BORDA_WEIGHT");
+                Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true, false, true);
 
-                Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.BAR_WEIGHT");
+                Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true, false, false);
 
-                Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.OBSTACLES_WEIGHT");
+                Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true, false, false);
 
-                Collision.checkCollision(obstacles, quad, Game.BORDA_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.BORDA_WEIGHT");
+                Collision.checkCollision(obstacles, quad, Game.BORDA_WEIGHT, true, true, true, false);
 
-                Collision.checkCollision(obstacles, quad, Game.BAR_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.BAR_WEIGHT");
+                Collision.checkCollision(obstacles, quad, Game.BAR_WEIGHT, true, true, false, false);
 
-                Collision.checkCollision(obstacles, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.OBSTACLES_WEIGHT");
+                Collision.checkCollision(obstacles, quad, Game.OBSTACLES_WEIGHT, true, true, false, false);
 
-                Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true, true);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BORDA_WEIGHT");
+                Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true, true, true);
 
-                Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BAR_WEIGHT");
+                Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true, false, false);
 
-                Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.OBSTACLES_WEIGHT");
+                Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true, true, true);
 
-                Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BALL_WEIGHT");
+                Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true, true, true);
 
-                Collision.checkCollision(fakeBalls, quad, Game.BORDA_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.BORDA_WEIGHT");
+                Collision.checkCollision(fakeBalls, quad, Game.BORDA_WEIGHT, true, true, false, false);
 
-                Collision.checkCollision(fakeBalls, quad, Game.BAR_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.BAR_WEIGHT");
+                Collision.checkCollision(fakeBalls, quad, Game.BAR_WEIGHT, true, true, false, false);
 
-                Collision.checkCollision(fakeBalls, quad, Game.OBSTACLES_WEIGHT, true, true, false);
+                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.OBSTACLES_WEIGHT");
+                Collision.checkCollision(fakeBalls, quad, Game.OBSTACLES_WEIGHT, true, true, false, false);
 
             }
 
@@ -1983,13 +2038,13 @@ public class Game {
             }
 
             if (leftTouch){
-                Level.levelObject.levelGoalsObject.notifyLeftBorderTouch(elapsed);
+                Level.levelObject.levelGoalsObject.notifyLeftBorderTouch((long)nanoPrecisionElapsed);
             } else {
                 Level.levelObject.levelGoalsObject.notifyNotLeftBorderTouch();
             }
 
             if (rightTouch){
-                Level.levelObject.levelGoalsObject.notifyRightBorderTouch(elapsed);
+                Level.levelObject.levelGoalsObject.notifyRightBorderTouch((long)nanoPrecisionElapsed);
             } else {
                 Level.levelObject.levelGoalsObject.notifyNotRightBorderTouch();
             }
@@ -2070,7 +2125,7 @@ public class Game {
             if (frameSimulateDurations1 == null) {
                 frameSimulateDurations1 = new ArrayList<>();
             }
-            frameSimulateDurations1.add(Utils.getTime() - initSimulateTime);
+            frameSimulateDurations1.add(Utils.getTimeMilliPrecision() - initSimulateTime);
             if (frameSimulateDurations1.size() == 30) {
                 long soma = 0;
                 for (int i = 0; i < frameSimulateDurations1.size(); i++) {
@@ -2083,7 +2138,7 @@ public class Game {
             if (frameSimulateDurations2 == null) {
                 frameSimulateDurations2 = new ArrayList<>();
             }
-            frameSimulateDurations2.add(Utils.getTime() - initSimulateTime);
+            frameSimulateDurations2.add(Utils.getTimeMilliPrecision() - initSimulateTime);
             if (frameSimulateDurations2.size() == 30) {
                 long soma = 0;
                 for (int i = 0; i < frameSimulateDurations2.size(); i++) {
@@ -2098,7 +2153,7 @@ public class Game {
     static void verifyBallBehaviourData(){
         for (int i = 0; i < balls.size(); i ++){
             if (balls.get(i).ballBehaviourData != null && balls.get(i).ballBehaviourData.active &&
-                    (Utils.getTime() - balls.get(i).ballBehaviourData.timeOfCollision > TIME_OF_BALL_LISTENER * 1.2f))
+                    (Utils.getTimeMilliPrecision() - balls.get(i).ballBehaviourData.timeOfCollision > TIME_OF_BALL_LISTENER * 1.2f))
                     balls.get(i).ballBehaviourData.processData();
             }
     }
@@ -2120,7 +2175,7 @@ public class Game {
     }
 
     static void resetTimeForPointsDecay(){
-        initialTimePointsDecay = Utils.getTime();
+        initialTimePointsDecay = Utils.getTimeMilliPrecision();
     }
 
 
@@ -2329,7 +2384,7 @@ public class Game {
 
     static void render(float[] matrixView, float[] matrixProjection){
 
-        initSimulateTime = Utils.getTime();
+        initSimulateTime = Utils.getTimeMilliPrecision();
 
 
         if (brickBackground != null) brickBackground.prepareRender(matrixView, matrixProjection); // 761
@@ -2468,7 +2523,8 @@ public class Game {
         if (tipTextBox != null) tipTextBox.prepareRender(matrixView, matrixProjection);
 
 
-        if (gameState == GAME_STATE_MENU || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL){
+        if (gameState == GAME_STATE_MENU || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL
+                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO){
             if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
             if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
             if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);

@@ -15,6 +15,7 @@ public class Color {
     static Color cinza60 = new Color(0.6f, 0.6f, 0.6f, 1f);
     static Color cinza80 = new Color(0.8f, 0.8f, 0.8f, 1f);
     static Color branco = new Color(1f, 1f, 1f, 1f);
+    static Color brancoAlpha0 = new Color(1f, 1f, 1f, 0f);
     static Color azulCheio = new Color(0f, 0f, 1f, 1f);
     static Color verdeCheio = new Color(0f, 1f, 0f, 1f);
     static Color vermelhoCheio = new Color(1f, 0f, 0f, 1f);
@@ -22,6 +23,7 @@ public class Color {
     static Color verde40 = new Color(0f, 0.4f, 0f, 1f);
     static Color vermelho40 = new Color(0.4f, 0f, 0f, 1f);
     static Color amareloCheio = new Color(1f, 1f, 0f, 1f);
+    static Color zero = new Color (0f, 0f, 0f, 0f);
 
 
 

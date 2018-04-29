@@ -48,8 +48,8 @@ class TargetGroup extends Entity{
 
             /*
             float percentage;
-            if (Utils.getTime() - Game.targets.get(i).timeOfLastDecay < 300){
-                percentage = (float)(Utils.getTime() - Game.targets.get(i).timeOfLastDecay)/300f;
+            if (Utils.getTimeMilliPrecision() - Game.targets.get(i).timeOfLastDecay < 300){
+                percentage = (float)(Utils.getTimeMilliPrecision() - Game.targets.get(i).timeOfLastDecay)/300f;
             } else {
                 percentage = 0;
             }

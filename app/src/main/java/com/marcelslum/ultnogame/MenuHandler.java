@@ -24,8 +24,12 @@ public class MenuHandler {
 
     public static void updateGroupMenu(){
 
+        if (Game.logMenuIconMoveAndTranslateX) Log.e(TAG, "groupMenu.currentTranslateX " +groupMenu.currentTranslateX);
         groupMenu.clear();
-        
+        if (Game.logMenuIconMoveAndTranslateX) Log.e(TAG, "groupMenu.currentTranslateX2 " +groupMenu.currentTranslateX);
+        groupMenu.currentTranslateX = SaveGame.saveGame.currentGroupMenuTranslateX;
+        if (Game.logMenuIconMoveAndTranslateX) Log.e(TAG, "groupMenu.currentTranslateX3 " +groupMenu.currentTranslateX);
+
         StarsHandler.updateConqueredStars();
 
         for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++){
@@ -102,9 +106,7 @@ public class MenuHandler {
                 Log.e(TAG, "frontRectangle.animScaleX "+groupMenu.graph[i].frontRectangle.animScaleX);
             }
             */
-
         }
-
     }
 
     public static void updateLevelMenu(){

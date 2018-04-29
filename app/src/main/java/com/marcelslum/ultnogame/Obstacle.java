@@ -68,6 +68,17 @@ public class Obstacle extends Rectangle{
         if (changeUfInfo) {
             updateUvInfo();
         }
+
+
+        maxHeight = getTransformedHeight();
+        maxWidth = getTransformedWidth();
+
+        centerX = positionX + (maxWidth/2f);
+        centerY = positionY + (maxHeight/2f);
+
+
+
+
     }
 
     public void respondToCollision(float responseX, float responseY){

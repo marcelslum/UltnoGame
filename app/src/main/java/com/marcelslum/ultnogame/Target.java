@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -179,7 +177,7 @@ public class Target extends Rectangle {
     }
 
     public void decayState(int points){
-        timeOfLastDecay = Utils.getTime();
+        timeOfLastDecay = Utils.getTimeMilliPrecision();
         Sound.playDestroyTarget();
         //Sound.playSoundPool(Sound.soundDestroyTarget, 1, 1, 0);
         ScoreHandler.scorePanel.setValue(ScoreHandler.scorePanel.value + points,  true, 500, false);

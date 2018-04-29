@@ -304,7 +304,7 @@ public class Splash {
                 loaderConclude = false;
             }
         }
-        Splash.timeInitIntro = Utils.getTime();
+        Splash.timeInitIntro = Utils.getTimeMilliPrecision();
         configSplash();
         setSplashState(SPLASH_CARREGANDO);
     }
@@ -384,7 +384,7 @@ public class Splash {
             } else {
                 loaderConclude = true;
             }
-            timeInitCarregando = Utils.getTime();
+            timeInitCarregando = Utils.getTimeMilliPrecision();
             setMessageCarregando();
             tittle.display();
             messageSplash1.display();
@@ -393,14 +393,14 @@ public class Splash {
             menuGoogle.blockAndClearDisplay();
         } if (id == SPLASH_SIGNIN) {
             tittle.display();
-            timeInitConectando = Utils.getTime();
+            timeInitConectando = Utils.getTimeMilliPrecision();
             messageSplash1.clearDisplay();
             messageGoogle1.clearDisplay();
             messageGoogle2.clearDisplay();
             menuGoogle.blockAndClearDisplay();
         } else if (id == SPLASH_CONECTANDO_INTERNET) {
             ConnectionHandler.checkInternetConnection();
-            timeInitConectando = Utils.getTime();
+            timeInitConectando = Utils.getTimeMilliPrecision();
             //setMessageConectando();
             tittle.display();
             messageSplash1.display();
@@ -414,22 +414,22 @@ public class Splash {
             tittle.clearDisplay();
             messageSplash1.clearDisplay();
         } else if (id == SPLASH_MENU_GOOGLE){
-            timeInitConectando = Utils.getTime();
+            timeInitConectando = Utils.getTimeMilliPrecision();
             menuGoogle.appearAndUnblock(100);
             messageGoogle1.display();
             messageGoogle2.display();
             tittle.clearDisplay();
             messageSplash1.clearDisplay();
         } else if (id == SPLASH_MENU_GOOGLE_2){
-            timeInitConectando = Utils.getTime();
+            timeInitConectando = Utils.getTimeMilliPrecision();
             menuGoogle2.appearAndUnblock(100);
             messageGoogle1_2.display();
             tittle.clearDisplay();
             messageSplash1.clearDisplay();
         } else if (id == SPLASH_CONECTANDO_GOOGLE){
-            timeInitConectando = Utils.getTime();
+            timeInitConectando = Utils.getTimeMilliPrecision();
         } else if (id == SPLASH_CARREGANDO_SAVE_GAME) {
-            timeInitConectando = Utils.getTime();
+            timeInitConectando = Utils.getTimeMilliPrecision();
         }
     }
 
@@ -511,7 +511,7 @@ public class Splash {
         if (state == SPLASH_CARREGANDO) {
 
             if (Game.paraGravacaoVideo){
-                if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
+                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
                     if (SaveGame.saveGame.ballVelocity < 0) {
                         setSplashState(SPLASH_MENU_VELOCITY);
                     } else {
@@ -520,7 +520,7 @@ public class Splash {
                 }
 
             } else {
-                if (Utils.getTime() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
+                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
                     if (SaveGame.saveGame.ballVelocity < 0) {
                         setSplashState(SPLASH_MENU_VELOCITY);
                     } else {
@@ -536,7 +536,7 @@ public class Splash {
                 Log.e(TAG, "forSignin startintent ");
                 forSignin = false;
                 Game.mainActivity.startSignInIntent();
-            } else if (Utils.getTime() - timeInitConectando > (INTRO_PARTIAL_DURATION / 2f)) {
+            } else if (Utils.getTimeMilliPrecision() - timeInitConectando > (INTRO_PARTIAL_DURATION / 2f)) {
                 //Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
                 int googlePlayOption = SaveGame.saveGame.googleOption;
 
@@ -563,7 +563,7 @@ public class Splash {
         } else if (state == SPLASH_CONECTANDO_GOOGLE) {
             if (Game.mainActivity.isGooglePlayAvailable() && ((Game.mainActivity.isSignedIn()))) {
                 setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
-            } else if (Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION * 2 && (!Game.mainActivity.isSignedIn()) || (!Game.mainActivity.isGooglePlayAvailable())){
+            } else if (Utils.getTimeMilliPrecision() - timeInitConectando > INTRO_PARTIAL_DURATION * 2 && (!Game.mainActivity.isSignedIn()) || (!Game.mainActivity.isGooglePlayAvailable())){
                     //timesGoogle += 1;
                     //Log.e(TAG, "timesGoogle "+timesGoogle);
                     //if (timesGoogle < 3) {
@@ -581,7 +581,7 @@ public class Splash {
                     //}
             }
         } else if (state == SPLASH_CARREGANDO_SAVE_GAME){
-            if (Utils.getTime() - timeInitConectando > INTRO_PARTIAL_DURATION / 3f) {
+            if (Utils.getTimeMilliPrecision() - timeInitConectando > INTRO_PARTIAL_DURATION / 3f) {
                 finishSplashLoad();
             }
         }

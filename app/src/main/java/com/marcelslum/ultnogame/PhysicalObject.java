@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -10,7 +8,7 @@ import java.util.ArrayList;
  */
 public class PhysicalObject extends Entity implements Weight{
 
-    public int weight;
+
     public float vx;
     public float vy;
     public float dvx;
@@ -82,7 +80,7 @@ public class PhysicalObject extends Entity implements Weight{
         accumulatedTranslateY += responseY;
 
         if (accelStarted && ((responseX < 0 && dvx > 0)||(responseX > 0 && dvx < 0))){
-            accelInitialTime = Utils.getTime();
+            accelInitialTime = Utils.getTimeMilliPrecision();
            // //Log.e(TAG, "zerando accelInitialTime por haver colisão contrária");
         }
 
@@ -132,7 +130,7 @@ public class PhysicalObject extends Entity implements Weight{
 
     public void verifyAcceleration(){
         if (accelStarted){
-            long elapsedTime = Utils.getTime() - accelInitialTime;
+            long elapsedTime = Utils.getTimeMilliPrecision() - accelInitialTime;
             accelPercentage = (float)elapsedTime / (float)accelDuration;
 
             if (accelPercentage > 1){
@@ -161,7 +159,7 @@ public class PhysicalObject extends Entity implements Weight{
         accelDuration = duration;
         accelInitialVelocityX = dvx;
         accelInitialVelocityY = dvy;
-        accelInitialTime = Utils.getTime();
+        accelInitialTime = Utils.getTimeMilliPrecision();
     }
 
     public void accelerateFrom(int type, int duration, float initialVX, float initialVY, float finalVX, float finalVY){
@@ -172,7 +170,7 @@ public class PhysicalObject extends Entity implements Weight{
         accelFinalVelocityY = finalVY;
         accelStarted = true;
         accelDuration = duration;
-        accelInitialTime = Utils.getTime();
+        accelInitialTime = Utils.getTimeMilliPrecision();
     }
 
     public void clearCollisionData() {
