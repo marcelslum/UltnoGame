@@ -884,7 +884,7 @@ public class Ball extends Circle{
                     }
 
 
-                    Log.e("ball", "após analise colisão de um objeto" + "lastResponseBallX "+lastResponseBallX + " - lastResponseBallY "+lastResponseBallY);
+                    //Log.e("ball", "após analise colisão de um objeto" + "lastResponseBallX "+lastResponseBallX + " - lastResponseBallY "+lastResponseBallY);
 
                 } else if(numberOfCollisionsObjects > 1 && !collisionOtherBall){
                     //Log.e("ball", "lidando com dois objetos colididos");
@@ -955,7 +955,7 @@ public class Ball extends Circle{
                     }
 
 
-                    Log.e("ball", "após analise colisão de mais de um objeto" + "lastResponseBallX "+lastResponseBallX + " - lastResponseBallY "+lastResponseBallY);
+                    //Log.e("ball", "após analise colisão de mais de um objeto" + "lastResponseBallX "+lastResponseBallX + " - lastResponseBallY "+lastResponseBallY);
 
 
                 }

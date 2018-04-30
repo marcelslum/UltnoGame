@@ -79,9 +79,9 @@ public class Splash {
 
         if (Game.versaoBeta) {
             MessagesHandler.messageBeta = new Text("messageBeta",
-                    Game.resolutionX * 0.99f, Game.resolutionY * 0.25f, Game.resolutionY * 0.035f, "Versão beta.", Game.font, new Color(1f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
+                    Game.resolutionX * 0.99f, Game.resolutionY * 0.25f, Game.resolutionY * 0.02f, "Versão beta.", Game.font, new Color(1f, 0.2f, 0.2f, 1f), Text.TEXT_ALIGN_RIGHT);
             MessagesHandler.messageBeta.setAlpha(0.7f);
-            Utils.createAnimation3v(MessagesHandler.messageBeta, "alphaBeta","alpha", 3000, 0f, 0.3f, .5f, 0.6f, 1f, 0.3f, true, true).start();
+            Utils.createAnimation3v(MessagesHandler.messageBeta, "alphaBeta","alpha", 3000, 0f, 0f, .5f, 0.3f, 1f, 0f, true, true).start();
             MessagesHandler.messageBeta.display();
 
         }

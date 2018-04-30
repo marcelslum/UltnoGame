@@ -64,7 +64,7 @@ public class Bar extends Rectangle{
                     shine.color = new Color(0.65f, 0f, 0f, 1f);
                 }
 
-                Game.ballDataPanel.setColor(Color.vermelhoCheio);
+                Game.ballDataPanel.setColor(Color.vermelhoClaro);
 
 
                 break;
@@ -73,42 +73,42 @@ public class Bar extends Rectangle{
                 if (shine != null) {
                     shine.color = new Color(0f, 0.04f, 0.69f, 1f);
                 }
-                Game.ballDataPanel.setColor(Color.azulCheio);
+                Game.ballDataPanel.setColor(Color.azulClaro);
                 break;
             case COLOR_GREEN:
                 updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_GREEN_ID));
                 if (shine != null) {
                     shine.color = new Color(0.02f, 0.41f, 0.10f, 1f);
                 }
-                Game.ballDataPanel.setColor(Color.verdeCheio);
+                Game.ballDataPanel.setColor(Color.verdeClaro);
                 break;
             case COLOR_YELLOW:
                 updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_YELLOW_ID));
                 if (shine != null) {
                     shine.color = new Color(0.74f, 0.73f, 0.33f, 1f);
                 }
-                Game.ballDataPanel.setColor(Color.amareloCheio);
+                Game.ballDataPanel.setColor(Color.amareloClaro);
                 break;
             case COLOR_ORANGE:
                 updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_ORANGE_ID));
                 if (shine != null) {
                     shine.color = new Color(0.61f, 0.43f, 0.06f, 1f);
                 }
-                Game.ballDataPanel.setColor(Color.laranjaCheio);
+                Game.ballDataPanel.setColor(Color.laranjaClaro);
                 break;
             case COLOR_PINK:
                 updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_PINK_ID));;
                 if (shine != null) {
                     shine.color = new Color(0.54f, 0.14f, 0.48f, 1f);
                 }
-                Game.ballDataPanel.setColor(Color.rosaCheio);
+                Game.ballDataPanel.setColor(Color.rosaClaro);
                 break;
             case COLOR_PURPLE:
                 updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_PURPLE_ID));
                 if (shine != null) {
                     shine.color = new Color(0.31f, 0.04f, 0.69f, 1f);
                 }
-                Game.ballDataPanel.setColor(Color.roxoCheio);
+                Game.ballDataPanel.setColor(Color.roxoClaro);
                 break;
             case COLOR_BLACK:
                 updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_BLACK_ID));
