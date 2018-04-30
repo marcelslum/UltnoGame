@@ -67,7 +67,7 @@ public class InteractionListener {
             return;
         }
 
-        if (objectAppend.isBlocked) {
+        if (objectAppend.isBlocked || !objectAppend.isVisible) {
             return;
         }
 
@@ -92,32 +92,32 @@ public class InteractionListener {
 
             if (pressedOnVerify) {
 
-                if (Game.debugListener)Log.e(TAG, "iniciando verificação -----------------------------------------------------------");
+                if (Game.logInteractionListener)Log.e(TAG, "iniciando verificação -----------------------------------------------------------");
 
                 if (myMoveListener == null){
-                    if (Game.debugListener)Log.e(TAG, "SEM MOVE_LISTENER");
-                    if (Game.debugListener)Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
+                    if (Game.logInteractionListener)Log.e(TAG, "SEM MOVE_LISTENER");
+                    if (Game.logInteractionListener)Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
                     mode = MODE_PRESS;
 
                 } else {
-                    if (Game.debugListener)Log.e(TAG, "COM MOVE_LISTENER");
-                    if (Game.debugListener)Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
+                    if (Game.logInteractionListener)Log.e(TAG, "COM MOVE_LISTENER");
+                    if (Game.logInteractionListener)Log.e(TAG, "sem movimento - pressionado " + objectAppend.name);
                     // se está escutando o movimento mas o botão foi solto sem se movimentar
 
                     float distance = Vector.distanceBetweenTwoPoints(touch.initialX, touch.initialY, touch.x, touch.y);
-                    if (Game.debugListener)Log.e(TAG, "distance= "+distance);
+                    if (Game.logInteractionListener)Log.e(TAG, "distance= "+distance);
 
                     if (touch.type == TouchEvent.TOUCH_TYPE_UP && (!touch.moved || distance < 100f)){
-                        if (Game.debugListener)Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_UP && !touch.moved");
+                        if (Game.logInteractionListener)Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_UP && !touch.moved");
                         mode = MODE_PRESS;
                     } else if (touch.type == TouchEvent.TOUCH_TYPE_DOWN) {
-                        if (Game.debugListener)Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_DOWN");
+                        if (Game.logInteractionListener)Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_DOWN");
                         mode = MODE_MOVE_DOWN;
                     } else if (touch.type == TouchEvent.TOUCH_TYPE_MOVE) {
-                        if (Game.debugListener)Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_MOVE");
+                        if (Game.logInteractionListener)Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_MOVE");
                         mode = MODE_MOVE;
                     } else if (touch.type == TouchEvent.TOUCH_TYPE_UP && touch.moved) {
-                        if (Game.debugListener)Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_UP && touch.moved");
+                        if (Game.logInteractionListener)Log.e(TAG, "touch.type == TouchEvent.TOUCH_TYPE_UP && touch.moved");
                         mode = MODE_MOVE_UP;
                     }
                 }
@@ -126,6 +126,7 @@ public class InteractionListener {
         }
 
         if (!pressedOnVerify) {
+
             if (active) {
                 persistentActivated = false;
                 moveDownActivated = false;
@@ -139,12 +140,10 @@ public class InteractionListener {
             if (myMoveListener != null){
                 mode = MODE_EMPTY;
             }
-
-
         }
 
         if (mode == MODE_PRESS) {
-            if (Game.debugListener)Log.e(TAG, "mode press "+objectAppend.name);
+            if (Game.logInteractionListener)Log.e(TAG, "mode press "+objectAppend.name + " active " + active);
             if (!active) {
                 active = true;
                 objectAppend.isPressed = true;
@@ -171,21 +170,22 @@ public class InteractionListener {
         } else if (mode == MODE_MOVE_DOWN) {
             if (!moveDownActivated) {
                 moveDownActivated = true;
-                if (Game.debugListener)Log.e(TAG, "mode down " + objectAppend.name);
+                if (Game.logInteractionListener)Log.e(TAG, "mode down " + objectAppend.name);
                 objectAppend.isPressed = true;
                 startTime = Utils.getTimeMilliPrecision();
                 myMoveListener.onMoveDown();
 
             }
         } else if (mode == MODE_MOVE) {
-            if (Game.debugListener)Log.e(TAG, "mode move "+objectAppend.name);
+            if (Game.logInteractionListener)Log.e(TAG, "mode move "+objectAppend.name);
             myMoveListener.onMove(touch, startTime);
             if (moveDownActivated){
                 moveDownActivated = false;
             }
         } else if (mode == MODE_MOVE_UP) {
-            if (Game.debugListener)Log.e(TAG, "mode move up "+objectAppend.name);
+            if (Game.logInteractionListener)Log.e(TAG, "mode move up "+objectAppend.name);
             myMoveListener.onMoveUp(touch, startTime);
+            active = false;
             if (moveDownActivated){
                 moveDownActivated = false;
             }

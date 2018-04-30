@@ -45,9 +45,9 @@ public class ParticleGenerator extends Entity {
             for (int j = 0; j < numberOfParticles;j++) {
                 float vx = Utils.getRandonFloat(-4.2f, 4.2f);
                 float vy = Utils.getRandonFloat(-4.2f, 4.2f);
-                float velocity_variation_x = Utils.getRandonFloat(-0.1f, 0.1f);
-                float velocity_variation_y = Utils.getRandonFloat(-0.1f, 0.1f);
-                float alpha_decay = Utils.getRandonFloat(0.02f, 0.01f);
+                float velocity_variation_x = Utils.getRandonFloat(-0.2f, 0.2f);
+                float velocity_variation_y = Utils.getRandonFloat(-0.2f, 0.2f);
+                float alpha_decay = Utils.getRandonFloat(0.04f, 0.02f);
                 float size = Utils.getRandonFloat(0.5f, 5f);
 
                 float textureMapFilter = Utils.getRandonFloat(0f, 1f);

@@ -27,11 +27,11 @@ public class Game {
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
     public static boolean showMessageNotConnectedOnGoogle = false;
-    public static boolean logFrame = true;
-    public static boolean exibirLogDeTempoDeDuracaoDaChecagemDeColisao = false;
+    public static boolean logFrame = false;
+    public static boolean logDeTempoDeDuracaoDaChecagemDeColisao = false;
     public static boolean versaoBeta = true;
-    public static boolean debugListener = false;
-    public static boolean debugCollisionEscape = false;
+    public static boolean logInteractionListener = false;
+    public static boolean logCollisionEscape = false;
     public static boolean logMenuIconMoveAndTranslateX = false;
 
     public static MyGLSurface myGlSurface;
@@ -178,6 +178,7 @@ public class Game {
     static Program windProgram;
     static Program specialBallProgram;
     static Program vertex_e_uv_com_alpha_program;
+    static Program vertex_e_uv_com_alpha_program_e_color;
     static Program instancing;
     static Program vertex_e_color;
     
@@ -356,6 +357,11 @@ public class Game {
         vertex_e_uv_com_alpha_program = new Program(
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_uv_com_alpha),
             Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_uv_com_alpha)
+        );
+
+        vertex_e_uv_com_alpha_program_e_color = new Program(
+                Utils.readRawTextFile(Game.getContext(), R.raw.shader_vertex_vertex_e_uv_com_alpha_e_color),
+                Utils.readRawTextFile(Game.getContext(), R.raw.shader_frag_vertex_e_uv_com_alpha_e_color)
         );
 
         instancing = new Program(
@@ -1912,7 +1918,7 @@ public class Game {
         timeInitCheckCollision = 0;
 
 
-        if (exibirLogDeTempoDeDuracaoDaChecagemDeColisao) {
+        if (logDeTempoDeDuracaoDaChecagemDeColisao) {
             timeInitCheckCollision = System.nanoTime();
         }
 
@@ -1920,48 +1926,48 @@ public class Game {
         if (gameState == GAME_STATE_JOGAR) {
             for (int i = 0; i < 1; i++) {
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.BORDA_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.BORDA_WEIGHT");
                 Collision.checkCollision(bars, quad, Game.BORDA_WEIGHT, true, true, false, true);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.BAR_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.BAR_WEIGHT");
                 Collision.checkCollision(bars, quad, Game.BAR_WEIGHT, true, true, false, false);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.OBSTACLES_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------bars, quad, Game.OBSTACLES_WEIGHT");
                 Collision.checkCollision(bars, quad, Game.OBSTACLES_WEIGHT, true, true, false, false);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.BORDA_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.BORDA_WEIGHT");
                 Collision.checkCollision(obstacles, quad, Game.BORDA_WEIGHT, true, true, true, false);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.BAR_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.BAR_WEIGHT");
                 Collision.checkCollision(obstacles, quad, Game.BAR_WEIGHT, true, true, false, false);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.OBSTACLES_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------obstacles, quad, Game.OBSTACLES_WEIGHT");
                 Collision.checkCollision(obstacles, quad, Game.OBSTACLES_WEIGHT, true, true, false, false);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BORDA_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BORDA_WEIGHT");
                 Collision.checkCollision(balls, quad, Game.BORDA_WEIGHT, true, true, true, true);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BAR_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BAR_WEIGHT");
                 Collision.checkCollision(balls, quad, Game.BAR_WEIGHT, true, true, false, false);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.OBSTACLES_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.OBSTACLES_WEIGHT");
                 Collision.checkCollision(balls, quad, Game.OBSTACLES_WEIGHT, true, true, true, true);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BALL_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------balls, quad, Game.BALL_WEIGHT");
                 Collision.checkCollision(balls, quad, Game.BALL_WEIGHT, true, true, true, true);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.BORDA_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.BORDA_WEIGHT");
                 Collision.checkCollision(fakeBalls, quad, Game.BORDA_WEIGHT, true, true, false, false);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.BAR_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.BAR_WEIGHT");
                 Collision.checkCollision(fakeBalls, quad, Game.BAR_WEIGHT, true, true, false, false);
 
-                if (debugCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.OBSTACLES_WEIGHT");
+                if (logCollisionEscape)Log.e(TAG, "init CheckCollisiont --------------------------------------------------fakeBalls, quad, Game.OBSTACLES_WEIGHT");
                 Collision.checkCollision(fakeBalls, quad, Game.OBSTACLES_WEIGHT, true, true, false, false);
 
             }
 
-            if (exibirLogDeTempoDeDuracaoDaChecagemDeColisao) {
+            if (logDeTempoDeDuracaoDaChecagemDeColisao) {
                 timesOfCollisionCheck[lastCollisiontDebugCheck] = System.nanoTime() - timeInitCheckCollision;
                 if (lastCollisiontDebugCheck == 49){
                     long soma = 0;

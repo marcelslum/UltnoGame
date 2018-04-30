@@ -136,7 +136,7 @@ public class BallGoalsPanel extends Entity{
             setValues(ballsAlive - 1, minBallsAlive, ballsInvencible);
 
             // TODO verificar se está certo, ou seja, se a bola azul explode no lugar certo
-            Game.blueBallExplodeX = initialX + animTranslateX + ((lastXBall)*animScaleX);
+            Game.blueBallExplodeX = initialX + (animTranslateX*animScaleX) + ((lastXBall)*animScaleX);
             Game.blueBallExplodeY =  y + animTranslateY + ((size/2f)*animScaleY);
             Game.forBlueBallExplode = true;
 

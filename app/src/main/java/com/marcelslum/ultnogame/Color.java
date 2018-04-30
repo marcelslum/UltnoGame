@@ -5,25 +5,31 @@ package com.marcelslum.ultnogame;
  */
 public class Color {
 
-    static Color transparente = new Color(1f, 1f, 1f, 0f);
-    static Color azul = new Color(0f, 0f, 0.7f, 1f);
-    static Color azulClaro = new Color(0.5f, 0.5f, 1f, 1f);
-    static Color pretoCheio = new Color(0f, 0f, 0f, 1f);
-    static Color pretoCheioAlpha60 = new Color(0f, 0f, 0f, 0.6f);
-    static Color cinza20 = new Color(0.2f, 0.2f, 0.2f, 1f);
-    static Color cinza40 = new Color(0.4f, 0.4f, 0.4f, 1f);
-    static Color cinza60 = new Color(0.6f, 0.6f, 0.6f, 1f);
-    static Color cinza80 = new Color(0.8f, 0.8f, 0.8f, 1f);
-    static Color branco = new Color(1f, 1f, 1f, 1f);
-    static Color brancoAlpha0 = new Color(1f, 1f, 1f, 0f);
-    static Color azulCheio = new Color(0f, 0f, 1f, 1f);
-    static Color verdeCheio = new Color(0f, 1f, 0f, 1f);
-    static Color vermelhoCheio = new Color(1f, 0f, 0f, 1f);
-    static Color azul40 = new Color(0f, 0f, 0.4f, 1f);
-    static Color verde40 = new Color(0f, 0.4f, 0f, 1f);
-    static Color vermelho40 = new Color(0.4f, 0f, 0f, 1f);
-    static Color amareloCheio = new Color(1f, 1f, 0f, 1f);
-    static Color zero = new Color (0f, 0f, 0f, 0f);
+    static final Color transparente = new Color(1f, 1f, 1f, 0f);
+    static final Color azul = new Color(0f, 0f, 0.7f, 1f);
+    static final Color azulClaro = new Color(0.5f, 0.5f, 1f, 1f);
+    static final Color pretoCheio = new Color(0f, 0f, 0f, 1f);
+    static final Color pretoCheioAlpha60 = new Color(0f, 0f, 0f, 0.6f);
+    static final Color cinza10 = new Color(0.1f, 0.1f, 0.1f, 1f);
+    static final Color cinza20 = new Color(0.2f, 0.2f, 0.2f, 1f);
+    static final Color cinza30 = new Color(0.3f, 0.3f, 0.3f, 1f);
+    static final Color cinza40 = new Color(0.4f, 0.4f, 0.4f, 1f);
+    static final Color cinza60 = new Color(0.6f, 0.6f, 0.6f, 1f);
+    static final Color cinza70 = new Color(0.7f, 0.7f, 0.7f, 1f);
+    static final Color cinza80 = new Color(0.8f, 0.8f, 0.8f, 1f);
+    static final Color branco = new Color(1f, 1f, 1f, 1f);
+    static final Color brancoAlpha0 = new Color(1f, 1f, 1f, 0f);
+    static final Color azulCheio = new Color(0f, 0f, 1f, 1f);
+    static final Color verdeCheio = new Color(0f, 1f, 0f, 1f);
+    static final Color vermelhoCheio = new Color(1f, 0f, 0f, 1f);
+    static final Color azul40 = new Color(0f, 0f, 0.4f, 1f);
+    static final Color verde40 = new Color(0f, 0.4f, 0f, 1f);
+    static final Color vermelho40 = new Color(0.4f, 0f, 0f, 1f);
+    static final Color amareloCheio = new Color(1f, 1f, 0f, 1f);
+    static final Color zero = new Color (0f, 0f, 0f, 0f);
+    static final Color laranjaCheio = new Color (0.8f, 0.52f, 0f, 1f);
+    static final Color rosaCheio = new Color (0.8f, 0.41f, 79f, 1f);
+    static final Color roxoCheio = new Color (0.49f, 0.15f, 0.8f, 1f);
 
 
 

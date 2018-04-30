@@ -58,17 +58,17 @@ public class MenuHandler {
                     }
                 }, false);
 
-                groupMenu.addText(i,1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f));
+                groupMenu.addText(i,1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.006f, Color.cinza70, Color.cinza20.changeAlpha(0.8f));
 
                 int totalPoints = 0;
                 for (int i2 = 0; i2 < lgd.levelsData.size(); i2++){
-                        totalPoints += (int) SaveGame.saveGame.levelsPoints[lgd.levelsData.get(i2).number - 1];
+                        totalPoints += SaveGame.saveGame.levelsPoints[lgd.levelsData.get(i2).number - 1];
                 }
 
                 groupMenu.addGraph(i,"graph "+i, Game.resolutionY * 0.07f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_BAR);
 
                 groupMenu.addText(i,2, lgd.name+"2",  String.valueOf(totalPoints)+" "+Game.getContext().getResources().getString(R.string.pontos),
-                        Game.resolutionY * 0.03f, Game.resolutionY * 0.09f, Color.cinza40);
+                        Game.resolutionY * 0.028f, Game.resolutionY * 0.095f, Color.pretoCheio.changeAlpha(0.4f), Color.zero);
 
                 //Log.e(TAG, " grupo " + lgd.number + " -> " + SaveGame.saveGame.groupsSeen[lgd.number - 1]);
 
@@ -95,8 +95,8 @@ public class MenuHandler {
                 }, true);
 
                 groupMenu.icons[i].alpha = 0.2f;
-                groupMenu.addText(i,1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, new Color(0.7f, 0.7f, 0.7f, 1f));
-                groupMenu.addText(i,2, lgd.name+"2", Game.getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + Game.getContext().getResources().getString(R.string.estrelas), Game.resolutionY * 0.03f, Game.resolutionY * 0.07f, new Color(0.5f, 0.5f, 0.5f, 1f));
+                groupMenu.addText(i,1, lgd.name, lgd.name, Game.resolutionY * 0.04f, Game.resolutionY * 0.01f, Color.cinza80, Color.cinza40.changeAlpha(0.6f));
+                groupMenu.addText(i,2, lgd.name+"2", Game.getContext().getResources().getString(R.string.tenha) + " " + lgd.starsToUnlock + " " + Game.getContext().getResources().getString(R.string.estrelas), Game.resolutionY * 0.028f, Game.resolutionY * 0.07f, Color.pretoCheio.changeAlpha(0.25f), Color.zero);
             }
 
 
@@ -138,11 +138,11 @@ public class MenuHandler {
                 }
             }, false);
 
-            levelMenu.addText(i,1, ld.name, ld.name,Game.resolutionY * 0.04f, Game.resolutionY * 0.008f, new Color(0.1f, 0.1f, 0.1f, 1f));
+            levelMenu.addText(i,1, ld.name, ld.name,Game.resolutionY * 0.04f, Game.resolutionY * 0.006f, Color.cinza70, Color.cinza20.changeAlpha(0.8f));
             levelMenu.addGraph(i,"graph "+i, Game.resolutionY * 0.06f, Game.resolutionY * 0.015f, MenuIconGraph.TYPE_STARS);
 
             levelMenu.addText(i,2, ld.name+"2",  (int)SaveGame.saveGame.levelsPoints[ld.number - 1]+" "+Game.getContext().getResources().getString(R.string.pontos),
-                    Game.resolutionY * 0.03f, Game.resolutionY * 0.12f, new Color(0.35f, 0.35f, 0.35f, 1f));
+                    Game.resolutionY * 0.03f, Game.resolutionY * 0.125f, Color.pretoCheio.changeAlpha(0.4f), Color.zero);
 
             float percentage = 0f;
             float starsOfLevel = SaveGame.saveGame.levelsStars[ld.number-1];
@@ -266,7 +266,7 @@ public class MenuHandler {
                 }, false);
 
                 tutorialMenu.addText(i,1, "t"+i, text,
-                    textSize, Game.resolutionY * 0.01f, new Color(0.1f, 0.1f, 0.1f, 1f));
+                    textSize, Game.resolutionY * 0.01f, Color.cinza70, Color.cinza20.changeAlpha(0.8f));
 
                 if (!SaveGame.saveGame.tutorialsSeen[i]){
                     tutorialMenu.addInnerText(i,"ti"+i, Game.getContext().getResources().getString(R.string.novo), innerTextSize, Game.resolutionY * 0.05f, new Color(0.1f, 0.1f, 0.9f, 1f));
@@ -526,7 +526,7 @@ public class MenuHandler {
         menuConnect.getMenuOptionByName("conectar").textObject.setColor(new Color(1f, 1f, 1f, 1f));
 
         // -------------------------------------------MENU Tutorial.TUTORIAL
-        menuTutorialUnvisited = new Menu("menuTutorialUnvisited", Game.gameAreaResolutionX/2, Game.resolutionY*0.9f, fontSize*0.6f, Game.font);
+        menuTutorialUnvisited = new Menu("menuTutorialUnvisited", Game.gameAreaResolutionX/2, Game.resolutionY*0.9f, fontSize*0.5f, Game.font);
 
         // adiciona a opção de visualizar tutoriais
         menuTutorialUnvisited.addMenuOption("verTutoriais", Game.getContext().getResources().getString(R.string.menuTutoriais), new MenuOption.OnChoice() {

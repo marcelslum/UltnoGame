@@ -111,9 +111,9 @@ public abstract class Collision {
                         escapeByCenter = false;
                         if (verifyCenter && Quadtree.outs[bCount] != null) {
 
-                            if (Game.debugCollisionEscape)Log.e(TAG, "verificando center "+ a.name + " com " + Quadtree.outs[bCount].name);
-                            if (Game.debugCollisionEscape)Log.e(TAG, "dados a " + a.centerX + " - " + a.maxWidth + " - " + a.centerY + " - " + a.maxHeight);
-                            if (Game.debugCollisionEscape)Log.e(TAG, "dados b " + Quadtree.outs[bCount].centerX + " - " + Quadtree.outs[bCount].maxWidth + " - " + Quadtree.outs[bCount].centerY + " - " + Quadtree.outs[bCount].maxHeight);
+                            if (Game.logCollisionEscape)Log.e(TAG, "verificando center "+ a.name + " com " + Quadtree.outs[bCount].name);
+                            if (Game.logCollisionEscape)Log.e(TAG, "dados a " + a.centerX + " - " + a.maxWidth + " - " + a.centerY + " - " + a.maxHeight);
+                            if (Game.logCollisionEscape)Log.e(TAG, "dados b " + Quadtree.outs[bCount].centerX + " - " + Quadtree.outs[bCount].maxWidth + " - " + Quadtree.outs[bCount].centerY + " - " + Quadtree.outs[bCount].maxHeight);
 
                             if (a.maxWidth != 0f && Quadtree.outs[bCount].maxWidth != 0f) {
                                 if (a.centerX > Quadtree.outs[bCount].centerX) {
@@ -142,7 +142,7 @@ public abstract class Collision {
                             }
                         }
 
-                        if (Game.debugCollisionEscape) {
+                        if (Game.logCollisionEscape) {
                             if (escapeByCenter) {
                                 Log.e(TAG, "escape by center" + a.name + " - " + Quadtree.outs[bCount].name);
                             }
@@ -154,7 +154,7 @@ public abstract class Collision {
 
                             PhysicalObject b = (PhysicalObject) Quadtree.outs[bCount];
 
-                            if (Game.debugCollisionEscape)Log.e(TAG, "verificando  "+ a.name + " com " + b.name);
+                            if (Game.logCollisionEscape)Log.e(TAG, "verificando  "+ a.name + " com " + b.name);
 
                             onQuarentine = false;
 

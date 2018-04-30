@@ -96,8 +96,10 @@ public class Ball extends Circle{
        	mass = Math.pow(radius,3);
 
         isMovable = true;
-        setDrawInfo();
+
         ballParticleGenerator = new BallParticleGenerator(name+"pg", 0f, 0f);
+
+        setDrawInfo();
 
     }
 
@@ -222,21 +224,34 @@ public class Ball extends Circle{
         textureColorId = colorId;
         if (textureColorId == COLOR_BALL_BLACK){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_BLACK_ID));
+            ballParticleGenerator.setColor(Color.cinza60);
         } else if (textureColorId == COLOR_BALL_BLUE){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_BLUE_ID));
+            ballParticleGenerator.setColor(Color.azulCheio);
         } else if (textureColorId == COLOR_BALL_GREEN){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_GREEN_ID));
+            ballParticleGenerator.setColor(Color.verdeCheio);
         } else if (textureColorId == COLOR_BALL_ORANGE){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_ORANGE_ID));
+            ballParticleGenerator.setColor(Color.laranjaCheio);
         } else if (textureColorId == COLOR_BALL_PINK){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_PINK_ID));
+            ballParticleGenerator.setColor(Color.rosaCheio);
         } else if (textureColorId == COLOR_BALL_PURPLE){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_PURPLE_ID));
+            ballParticleGenerator.setColor(Color.roxoCheio);
         } else if (textureColorId == COLOR_BALL_RED){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_RED_ID));
+            ballParticleGenerator.setColor(Color.vermelhoCheio);
         } else if (textureColorId == COLOR_BALL_YELLOW){
             updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_YELLOW_ID));
+            ballParticleGenerator.setColor(Color.amareloCheio);
+        } else {
+            updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BALL_BLACK_ID));
+            ballParticleGenerator.setColor(Color.cinza60);
         }
+
+
     }
 
     @Override

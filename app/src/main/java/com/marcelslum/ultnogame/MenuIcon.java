@@ -1,6 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.opengl.GLES20;
 import android.util.Log;
 import java.util.ArrayList;
 
@@ -289,7 +288,7 @@ public class MenuIcon extends Entity{
         }
     }
 
-    public void addText(int position, int number, String name, String text, float textSize, float paddFromBottom, Color color){
+    public void addText(int position, int number, String name, String text, float textSize, float paddFromBottom, Color color, Color colorShadow){
 
         float padd = size * 0.1f;
 
@@ -298,14 +297,20 @@ public class MenuIcon extends Entity{
         //Log.e(TAG, "adicionando texto ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
 
         if (number == 1){
-            //t.addShadow(new Color(0.7f, 0.7f, 0.7f, 0.9f));
+
             textsMap[position] = true;
-            texts[position].setData(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+            texts[position].setData(name, centerPosition, y + size + (paddFromBottom), textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+            if (colorShadow != Color.zero) {
+                texts[position].addShadow(colorShadow);
+            }
             addChild(texts[position]);
         } else {
             //Log.e(TAG, "adicionando texto 2 ao menu x " + centerPosition + " y " +  y + size + paddFromBottom);
             texts2Map[position] = true;
-            texts2[position].setData(name, centerPosition, y + size + paddFromBottom, textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+            texts2[position].setData(name, centerPosition, y + size + (paddFromBottom), textSize, text, Game.font, color, Text.TEXT_ALIGN_CENTER);
+            if (colorShadow != Color.zero) {
+                texts2[position].addShadow(colorShadow);
+            }
             addChild(texts2[position]);
         }
 
@@ -380,7 +385,7 @@ public class MenuIcon extends Entity{
                     //Log.e(TAG, "onMoveDown");
                     if (innerMenuIcon.desacelerationActivated){
                         innerMenuIcon.desacelerationActivated = false;
-                        innerMenuIcon.cancelNextPress = true;
+                        innerMenuIcon.cancelNextPress = false;
                     }
                 }
 
@@ -397,6 +402,7 @@ public class MenuIcon extends Entity{
                 public void onMoveUp(TouchEvent touch, long startTime) {
                     //Log.e(TAG, "onMoveUp");
                     desacelerationActivated = true;
+                    innerMenuIcon.cancelNextPress = false;
                 }
             });
 
@@ -414,6 +420,9 @@ public class MenuIcon extends Entity{
         icons[position].setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
+
+                if (Game.logInteractionListener)Log.e(TAG, "icons[position].setOnPress innerMenuIcon.cancelNextPress " + innerMenuIcon.cancelNextPress);
+
                 if (innerMenuIcon.cancelNextPress){
 
                     innerMenuIcon.cancelNextPress =  false;

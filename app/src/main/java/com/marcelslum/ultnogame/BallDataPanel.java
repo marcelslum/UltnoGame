@@ -80,8 +80,8 @@ public class BallDataPanel extends Entity{
     public float[] colorsDataVariable;
 
 
-    Rectangle [] rectanglesStatic = new Rectangle[14];
-    Rectangle [] rectanglesVariable = new Rectangle[10];
+    Rectangle [] rectanglesStatic = new Rectangle[12];
+    Rectangle [] rectanglesVariable = new Rectangle[12];
     Rectangle [] rectanglesStaticFront = new Rectangle[5];
 
     Ball ballAnimating;
@@ -182,13 +182,13 @@ public class BallDataPanel extends Entity{
 
         bordaBmeio = new Rectangle("bordaBmeio", Game.resolutionX * 0.32f, Game.gameAreaResolutionY,  Entity.TYPE_OTHER, Game.resolutionX*0.36f, Game.resolutionY - Game.gameAreaResolutionY, -1, COLOR_PANEL);
 
-        bordaBmeioE = new Rectangle("bordaBmeioE", Game.resolutionX * 0.32f - (bordaEsp*0.5f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp*1.05f, Game.resolutionY - Game.gameAreaResolutionY, -1,
+        bordaBmeioE = new Rectangle("bordaBmeioE", Game.resolutionX * 0.32f - (bordaEsp*0.5f), Game.gameAreaResolutionY + (bordaEsp*0.8f),  Entity.TYPE_OTHER, bordaEsp*1.05f, Game.resolutionY - Game.gameAreaResolutionY - (bordaEsp*1.6f), -1,
                 COLOR_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
 
         bordaBmeioE.setMultiColor(
                 Game.COLOR_BORDA_B, COLOR_BORDER_TOP_INSIDE, Game.COLOR_BORDA_B, COLOR_BORDER_TOP_INSIDE);
 
-        bordaBmeioD = new Rectangle("bordaBmeioD", (Game.resolutionX * 0.68f) - (bordaEsp*.8f), Game.gameAreaResolutionY,  Entity.TYPE_OTHER, bordaEsp, Game.resolutionY - Game.gameAreaResolutionY, -1,
+        bordaBmeioD = new Rectangle("bordaBmeioD", (Game.resolutionX * 0.68f) - (bordaEsp*.8f), Game.gameAreaResolutionY + (bordaEsp*0.8f),  Entity.TYPE_OTHER, bordaEsp, Game.resolutionY - Game.gameAreaResolutionY - (bordaEsp*1.6f), -1,
                 COLOR_BORDER);//new Color(0.17f, 0.17f, 0.19f, 1f));
 
         bordaBmeioD.setMultiColor(
@@ -259,10 +259,6 @@ public class BallDataPanel extends Entity{
 
         rectanglesStatic[numberStatic] = bordaBmeio;
         numberStatic +=1;
-        rectanglesStatic[numberStatic] = bordaBmeioD;
-        numberStatic +=1;
-        rectanglesStatic[numberStatic] = bordaBmeioE;
-        numberStatic +=1;
         rectanglesStatic[numberStatic] = backVelocityRectangle;
         numberStatic +=1;
         rectanglesStatic[numberStatic] = backAngleRectangle;
@@ -303,6 +299,12 @@ public class BallDataPanel extends Entity{
         rectanglesVariable[numberVariable] = velocityRectangle;
         numberVariable +=1;
         rectanglesVariable[numberVariable] = angleRectangle;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = bordaBmeioD;
+        numberVariable +=1;
+        rectanglesVariable[numberVariable] = bordaBmeioE;
+
+
 
         rectanglesStaticFront[0] = initRectangle;
         rectanglesStaticFront[1] = finalRectangle;
@@ -551,6 +553,14 @@ public class BallDataPanel extends Entity{
         indicesBuffer.limit(0);
         indicesBuffer = null;
         
+    }
+
+    public void setColor(Color color){
+        bordaBmeioE.setMultiColor(
+                Game.COLOR_BORDA_B, Game.COLOR_BORDA_B, color, color);
+
+        bordaBmeioD.setMultiColor(
+                Game.COLOR_BORDA_B, Game.COLOR_BORDA_B, color, color);
     }
 
     public void initializeDataStatic(int verticesSize, int indicesSize, int uvsSize, int colorsSize){
