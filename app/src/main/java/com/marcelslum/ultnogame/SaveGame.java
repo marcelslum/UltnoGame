@@ -96,6 +96,7 @@ public class SaveGame {
             if (Game.ganharTodasAsEstrelas) {
                 for (int i = 0; i < 100; i++) {
                     saveGame1.levelsStars[i] = 5;
+                    saveGame1.levelsUnlocked[i] = true;
                 }
             }
 

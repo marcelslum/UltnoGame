@@ -167,19 +167,17 @@ public class MessagesHandler {
                 Game.resolutionX*0.02f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
                 resources.getString(R.string.messageMaxScoreTotal) +"\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
 
-
-
         messageGoogleLogged = new Text("messageGoogleLogged",
                 Game.resolutionX*0.98f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
                 ".", Game.font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_RIGHT);
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
                 Game.resolutionX*0.825f, Game.resolutionY*0.15f, Game.resolutionY*0.07f,
-                resources.getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(1f, 1f, 0f, 1f));
+                resources.getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, Color.amareloCheio);
 
-        messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));
+        messageConqueredStarsTotal.addShadow(Color.cinza70);
 
-        starForMessage = new Image("frame", Game.resolutionX*0.75f, MessagesHandler.messageConqueredStarsTotal.y,
+        starForMessage = new Image("frame", Game.resolutionX*0.755f, MessagesHandler.messageConqueredStarsTotal.y + Game.resolutionY*0.011f,
                 Game.resolutionY*0.07f, Game.resolutionY*0.07f, Texture.TEXTURES,
                 TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
 

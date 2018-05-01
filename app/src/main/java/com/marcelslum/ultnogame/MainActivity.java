@@ -336,8 +336,11 @@ public class MainActivity extends FragmentActivity implements
         for (int i = SaveGame.saveGame.levelsUnlocked.length - 1; i >= 0; i--) {
             if (SaveGame.saveGame.levelsUnlocked[i]){
                 lastLevelUnlockeced = i + 1;
+                break;
             }
         }
+
+        Log.e(TAG, "lastLevelUnlockeced " + lastLevelUnlockeced);
 
 
         LevelsGroupData gd = null;
@@ -346,6 +349,8 @@ public class MainActivity extends FragmentActivity implements
                 gd = LevelsGroupData.levelsGroupData.get(i);
             }
         }
+
+        Log.e(TAG, "gd " + gd.number);
 
 
         // First decode with inJustDecodeBounds=true to check dimensions
@@ -358,8 +363,31 @@ public class MainActivity extends FragmentActivity implements
         Bitmap maskBitmap = Bitmap.createBitmap((int)(croppedBitmap.getWidth() * 2f), (int)(croppedBitmap.getHeight()*1.2f), croppedBitmap.getConfig());
         Canvas c = new Canvas();
         c.setBitmap(maskBitmap);
+        Paint p1 = new Paint();
+
+
+        float random = Utils.getRandonFloat(0f, 1f);
+
+
+        if (random > 0.834) {
+            p1.setARGB(255, (int) (Color.azul.r * 255f), (int) (Color.azul.g * 255f), (int) (Color.azul.b * 255f));
+        } else if (random > 0.67) {
+            p1.setARGB(255, (int)(Color.amareloCheio.r * 255f), (int)(Color.amareloCheio.g*255f), (int)(Color.amareloCheio.b*255f));
+        } else if (random > 0.64) {
+            p1.setARGB(255, (int)(Color.vermelhoCheio.r * 255f), (int)(Color.vermelhoCheio.g*255f), (int)(Color.vermelhoCheio.b*255f));
+        } else if (random > 0.51) {
+            p1.setARGB(255, (int)(Color.verdeCheio.r * 255f), (int)(Color.verdeCheio.g*255f), (int)(Color.verdeCheio.b*255f));
+        } else if (random > 0.34) {
+            p1.setARGB(255, (int)(Color.pretoCheio.r * 255f), (int)(Color.pretoCheio.g*255f), (int)(Color.pretoCheio.b*255f));
+        } else if (random > 0.17) {
+            p1.setARGB(255, (int) (Color.branco.r * 255f), (int) (Color.branco.g * 255f), (int) (Color.branco.b * 255f));
+        }
+
+
+
+        c.drawRect(0f, 0f, maskBitmap.getWidth(), maskBitmap.getWidth(), p1);
         Paint p = new Paint();
-        c.drawBitmap(croppedBitmap, (int)(croppedBitmap.getWidth()*0.6f), croppedBitmap.getHeight()*0.17f, p);
+        c.drawBitmap(croppedBitmap, (int)(croppedBitmap.getWidth()*0.8f), croppedBitmap.getHeight()*0.17f, p);
 
         bitmap.recycle();
         croppedBitmap.recycle();

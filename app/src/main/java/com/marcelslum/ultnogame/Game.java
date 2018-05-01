@@ -22,7 +22,7 @@ public class Game {
     public static Sound sound = new Sound();
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
-    public static boolean ganharTodasAsEstrelas = false;
+    public static boolean ganharTodasAsEstrelas = true;
     public static boolean paraGravacaoVideo = false;
     public static boolean ganharComMetadeDasBolas = false;
     public static boolean sempreGanharTodasEstrelas = false;
