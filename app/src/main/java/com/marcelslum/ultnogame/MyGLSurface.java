@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class MyGLSurface extends GLSurfaceView {
@@ -138,11 +140,66 @@ public class MyGLSurface extends GLSurfaceView {
             }});
     }
 
+    public void setMenuCarregarMessage(){
+        queueEvent(new Runnable() {
+            public void run() {
+                int localStars = SaveGame.getTotalStars(SaveGame.saveGame);
+                int cloudStars = SaveGame.getTotalStars(MainActivity.saveGameFromCloud);
+
+                int localPoints = SaveGame.getTotalPoints(SaveGame.saveGame);
+                int cloudPoints = SaveGame.getTotalPoints(MainActivity.saveGameFromCloud);
+
+
+                MessagesHandler.messageMenuCarregarJogo.clearTexts();
+
+                MessagesHandler.messageMenuCarregarJogo.addText(
+                        Game.getContext().getResources().getString(R.string.messageCarregarJogo1),Color.azulClaro);
+                MessagesHandler.messageMenuCarregarJogo.addText(
+                        NumberFormat.getInstance().format(cloudStars) +" "+
+                      Game.getContext().getResources().getString(R.string.messageCarregarJogo2)+
+                      " - " +
+                                NumberFormat.getInstance().format(cloudPoints) +" "+
+                      Game.getContext().getResources().getString(R.string.messageCarregarJogo3),Color.cinza50);
+
+
+                MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
+
+
+
+
+
+                MessagesHandler.messageMenuCarregarJogo.addText(
+                        Game.getContext().getResources().getString(R.string.messageCarregarJogo4),Color.azulClaro);
+                MessagesHandler.messageMenuCarregarJogo.addText(
+                        NumberFormat.getInstance().format(localStars) +" "+
+                                Game.getContext().getResources().getString(R.string.messageCarregarJogo2)+
+                                " - " +
+                                NumberFormat.getInstance().format(localPoints) +" "+
+                                Game.getContext().getResources().getString(R.string.messageCarregarJogo3),Color.cinza50);
+                MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
+
+                MessagesHandler.messageMenuCarregarJogo.addText(
+                        Game.getContext().getResources().getString(R.string.messageCarregarJogo5),
+                        Color.pretoCheio);
+                MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
+                MessagesHandler.messageMenuCarregarJogo.addText(
+                        Game.getContext().getResources().getString(R.string.messageCarregarJogo6),
+                        Color.cinza70);
+            }});
+    }
 
     public void showMessage(final String message){
         queueEvent(new Runnable() {
             public void run() {
                 Game.messages.showMessage(message);
+            }});
+
+    }
+
+    public void showBottomMessage(final String message, final int duration){
+        queueEvent(new Runnable() {
+            public void run() {
+                MessagesHandler.setBottomMessage(message, duration);
             }});
 
     }

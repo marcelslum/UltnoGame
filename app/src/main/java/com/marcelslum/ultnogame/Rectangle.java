@@ -65,6 +65,7 @@ public class Rectangle extends PhysicalObject {
         this.topRectangleColorBottomRight = topColorBottomRight;
         this.topRectangleColorTopLeft = topColorTopLeft;
         this.topRectangleColorTopRight = topColorTopRight;
+
         setDrawInfo();
     }
 
@@ -94,6 +95,8 @@ public class Rectangle extends PhysicalObject {
         this.colorBottomRight = colorBottomRight;
         this.colorTopLeft = colorTopLeft;
         this.colorTopRight = colorTopRight;
+        setDrawInfo();
+
     }
 
     public void setDrawInfo(){
@@ -315,13 +318,13 @@ public class Rectangle extends PhysicalObject {
 
                 for (int i = 0; i < 4; i++){
                     if (i == 0){
-                        Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, width, 0f, borderThicknes * difHeight, 0f);
+                        Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, width, 0f, borderThicknes * difHeight, 0f);
                     } else if (i == 1){
-                        Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, width, height - (borderThicknes * difHeight), height, 0f);
+                        Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, width, height - (borderThicknes * difHeight), height, 0f);
                     } else if (i == 2){
-                        Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  0f, borderThicknes * difWidth, 0f, height, 0f);
+                        Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  0f, borderThicknes * difWidth, 0f, height, 0f);
                     } else {
-                        Utils.insertRectangleVerticesData(verticesData, (i+2)*12,  width - (borderThicknes * difWidth), width, 0f, height, 0f);
+                        Utils.insertRectangleVerticesData(verticesData, (i+1)*12,  width - (borderThicknes * difWidth), width, 0f, height, 0f);
                     }
                 }
             }

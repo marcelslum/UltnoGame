@@ -1,6 +1,8 @@
 package com.marcelslum.ultnogame;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -13,23 +15,28 @@ public class TextBox extends Entity{
     public float size;
     public String text;
     public float padding = 0.2f;
-    public boolean isHaveArrow = false;
-    public boolean isHaveFrame = false;
-    public boolean isHaveMiniArrow = false;
-    public boolean isHaveArrowContinue = false;
+    public boolean isHaveArrow;
+    public boolean isHaveFrame;
+    public boolean isHaveMiniArrow;
+    public boolean isHaveArrowContinue;
     public Button arrowContinuar;
     public Line arrow;
     public Image miniArrow;
     public float arrowX;
     public float arrowY;
     public Rectangle frame;
-    public Rectangle border;
     public float frameWidth;
     public int frameType;
     private OnPress onPress;
     Color frameColor;
     Color borderColor;
-    public boolean isHaveBorder = false;
+    Color shadowColor;
+
+    boolean multiColor = false;
+    Color colorBottomRight;
+    Color colorBottomLeft;
+    Color colorTopRight;
+    Color colorTopLeft;
 
     public TextBox(TextBoxBuilder builder) {
         super(builder.name, builder.x, builder.y, Entity.TYPE_TEXT_BOX);
@@ -45,11 +52,14 @@ public class TextBox extends Entity{
         frameType = builder.frameType;
         frameColor = builder.frameColor;
         borderColor = builder.borderColor;
-        isHaveBorder = builder.isHaveBorder;
-        setText(builder.text, builder.textColor, builder.textShadow, builder.shadowColor);
+        shadowColor = builder.shadowColor;
+        setText(builder.text, builder.textColor);
     }
     
-    public void setText(String text, Color color, boolean haveShadow, Color shadowColor){
+    public void setText(String text, Color color){
+
+        this.shadowColor = shadowColor;
+
         if (texts != null){
             texts = new ArrayList<>();
         }
@@ -71,7 +81,7 @@ public class TextBox extends Entity{
         for (int i = 0; i < texts.size(); i++){
             texts.get(i).x = textX;
 
-            if (haveShadow){
+            if (shadowColor != null){
                 texts.get(i).addShadow(shadowColor);
             }
 
@@ -87,18 +97,24 @@ public class TextBox extends Entity{
 
         frameWidth = width + (textPadding*6);
 
-        border = null;
         if (isHaveFrame){
-            if (frameType == TextBoxBuilder.FRAME_TYPE_IMAGE) {
-                frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height * 1.1f, -1, frameColor);
-
-            } else if (frameType == TextBoxBuilder.FRAME_TYPE_SOLID) {
-                frame = new Rectangle("frame", x, y, Entity.TYPE_OTHER, frameWidth, height * 1.1f, -1, frameColor);
+            frame = new Rectangle("frameOf"+name, x, y, Entity.TYPE_OTHER, frameWidth, height * 1.1f, -1, frameColor);
+            if (multiColor){
+                frame.setMultiColor(colorTopLeft, colorTopRight, colorBottomLeft, colorBottomRight);
             }
 
-            if (isHaveBorder) {
-                border = new Rectangle("border", x - (textPadding * 1.5f), y - (textPadding * 1.5f), Entity.TYPE_OTHER, frameWidth + (textPadding * 3f), height * 1.1f + (textPadding * 3f), -1, borderColor);
-                addChild(border);
+            if (borderColor != null) {
+                frame.addTopRectangle(
+                        0.9f,
+                        Color.transparente,
+                        Color.transparente,
+                        Color.transparente,
+                        Color.transparente,
+                        0.003f,
+                        0f,
+                        Game.gameAreaResolutionX * 0.1f,
+                        borderColor
+                );
             }
             addChild(frame);
         }
@@ -145,6 +161,15 @@ public class TextBox extends Entity{
         }
     }
 
+    public void setMultiColor(Color colorTopLeft, Color colorTopRight, Color colorBottomLeft, Color colorBottomRight){
+        multiColor = true;
+        this.colorBottomLeft = colorBottomLeft;
+        this.colorBottomRight = colorBottomRight;
+        this.colorTopLeft = colorTopLeft;
+        this.colorTopRight = colorTopRight;
+        frame.setMultiColor(colorTopLeft, colorTopRight, colorBottomLeft, colorBottomRight);
+    }
+
     public void setOnPress(OnPress _onPress){
         onPress = _onPress;
     }
@@ -158,7 +183,7 @@ public class TextBox extends Entity{
         float textPadding = size * padding;
         float textY = this.y + (textPadding * 4);
         for (int i = 0; i < this.texts.size(); i++){
-            this.texts.get(i).y = textY;
+            this.texts.get(i).setY(textY);
             textY += size + textPadding;
         }
 
@@ -208,7 +233,6 @@ public class TextBox extends Entity{
         }
     }
 
-
     public void appendArrow(float arrowX, float arrowY){
         isHaveArrow = true;
         float initialX;
@@ -236,11 +260,6 @@ public class TextBox extends Entity{
     }
 
     public void render(float[] matrixView, float[] matrixProjection){
-
-
-        if (isHaveBorder && border != null){
-            border.prepareRender(matrixView, matrixProjection);
-        }
 
         if (isHaveArrow && arrow != null){
             arrow.prepareRender(matrixView, matrixProjection);

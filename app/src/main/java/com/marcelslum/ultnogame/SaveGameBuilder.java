@@ -28,6 +28,7 @@ public class SaveGameBuilder {
     public int googleOption;
     public int ballVelocity;
     public boolean orientationInverted;
+    public boolean saveMenuSeen;
 
 
     public SaveGameBuilder(){
@@ -142,6 +143,11 @@ public class SaveGameBuilder {
 
     public SaveGameBuilder setOrientationInverted(boolean orientationInverted) {
         this.orientationInverted = orientationInverted;
+        return this;
+    }
+
+    public SaveGameBuilder setSaveMenuSeen(boolean saveMenuSeen) {
+        this.saveMenuSeen = saveMenuSeen;
         return this;
     }
 

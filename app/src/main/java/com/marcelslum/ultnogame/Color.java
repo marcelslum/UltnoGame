@@ -9,7 +9,8 @@ public class Color {
     static final Color zero = new Color (0f, 0f, 0f, 0f);
 
     static final Color azulCheio = new Color(0f, 0f, 1f, 1f);
-    static final Color azul = new Color(0f, 0f, 0.7f, 1f);
+    static final Color azul = new Color(0f, 0f, 1f, 1f);
+    static final Color azulMedio = new Color(0f, 0.25f, 0.53f, 1f);
     static final Color azulClaro = new Color(0.48f, 0.66f, 0.87f, 1f);
     static final Color azul40 = new Color(0f, 0f, 0.4f, 1f);
 
@@ -19,6 +20,7 @@ public class Color {
     static final Color cinza20 = new Color(0.2f, 0.2f, 0.2f, 1f);
     static final Color cinza30 = new Color(0.3f, 0.3f, 0.3f, 1f);
     static final Color cinza40 = new Color(0.4f, 0.4f, 0.4f, 1f);
+    static final Color cinza50 = new Color(0.5f, 0.5f, 0.5f, 1f);
     static final Color cinza60 = new Color(0.6f, 0.6f, 0.6f, 1f);
     static final Color cinza70 = new Color(0.7f, 0.7f, 0.7f, 1f);
     static final Color cinza80 = new Color(0.8f, 0.8f, 0.8f, 1f);

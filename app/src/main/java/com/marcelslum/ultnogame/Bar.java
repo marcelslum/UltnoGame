@@ -57,6 +57,7 @@ public class Bar extends Rectangle{
 
     public void setBarColor(int textureColorId){
         this.textureColorId = textureColorId;
+
         switch (textureColorId){
             case COLOR_RED:
                 updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_RED_ID));
@@ -65,8 +66,6 @@ public class Bar extends Rectangle{
                 }
 
                 Game.ballDataPanel.setColor(Color.vermelhoClaro);
-
-
                 break;
             case COLOR_BLUE:
                 updateTextureData(TextureData.getTextureDataById(TextureData.TEXTURE_BAR_BLUE_ID));

@@ -11,7 +11,11 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -156,6 +160,12 @@ public abstract class Utils {
         // set the cursor position to the beginning of the buffer
         buffer.position(0);
         return buffer;
+    }
+
+    public static String getCurrentTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdfDate.format(Calendar.getInstance().getTime());
+        return date;
     }
     
     public static void insertRectangleVerticesData(float[] array, int startIndex){

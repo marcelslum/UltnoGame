@@ -197,7 +197,8 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             DataBaseContract.Data.COLUMN_NEW_GROUPS_SEEN,
             DataBaseContract.Data.COLUMN_LEVELS_PLAYED,
             DataBaseContract.Data.COLUMN_GOOGLE_OPTION,
-            DataBaseContract.Data.COLUMN_BALL_VELOCITY
+            DataBaseContract.Data.COLUMN_BALL_VELOCITY,
+            DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED
         };
         
         String selection =
@@ -232,12 +233,50 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             try{
                 saveGameBuilder.setOrientationInverted(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED)) == 1 ? true : false);
             } catch(Exception e){
-            Log.e(TAG, "Campo orientation inverted não existente no banco de dados, setando como falso -> exception");
+                Log.e(TAG, "Campo orientation inverted não existente no banco de dados, setando como falso -> exception");
                 Log.e(TAG, e.getMessage());
                 saveGameBuilder.setOrientationInverted(false);
             }
 
+
              break;
+        }
+
+
+
+        // DADOS GERAIS, CAMPOS NOVOS
+
+        String[] projection5 = {
+                DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN
+        };
+        String selection2 =
+                DataBaseContract.Targets._ID + " = 1";
+        try {
+
+            cursor = myDataBase.query(
+                    DataBaseContract.Data.TABLE_NAME,          // The table to query
+                    projection3,                                // The columns to return
+                    selection,                                 // The columns for the WHERE clause
+                    null,                                      // The values for the WHERE clause
+                    null,                                      // don't group the rows
+                    null,                                      // don't filter by row groups
+                    null                                       // don't sort
+            );
+
+            while (cursor.moveToNext()) {
+                saveGameBuilder.setBallVelocity(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_BALL_VELOCITY)));
+                try {
+                    saveGameBuilder.setSaveMenuSeen(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN)) == 1 ? true : false);
+                } catch (Exception e) {
+                    Log.e(TAG, "Campo COLUMN_SAVE_MENU_SEEN não existente no banco de dados, setando como falso -> exception");
+                    Log.e(TAG, e.getMessage());
+                    saveGameBuilder.setSaveMenuSeen(false);
+                }
+
+                break;
+            }
+        } catch (Exception e){
+            Log.e(TAG, e.getMessage());
         }
 
         return saveGameBuilder.build();

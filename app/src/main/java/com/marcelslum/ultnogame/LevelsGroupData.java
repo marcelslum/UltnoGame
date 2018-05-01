@@ -16,8 +16,8 @@ public class LevelsGroupData {
     int starsToUnlock;
     int conqueredStars;
     String name;
-    int firstLevel;
-    int finalLevel;
+    public int firstLevel;
+    public int finalLevel;
     boolean isLocked;
     ArrayList<LevelData> levelsData;
     int number;

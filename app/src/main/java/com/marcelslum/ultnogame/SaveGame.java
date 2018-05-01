@@ -41,6 +41,7 @@ public class SaveGame {
     public int lastStars;
     public int levelsPlayed;
     public boolean orientationInverted;
+    public boolean saveMenuSeen;
 
     public static boolean loaded = false;
 
@@ -65,6 +66,7 @@ public class SaveGame {
         lastStars = builder.lastStars;
         levelsPlayed = builder.levelsPlayed;
         orientationInverted = builder.orientationInverted;
+        saveMenuSeen = builder.saveMenuSeen;
     }
 
     public static void load() {
@@ -91,6 +93,12 @@ public class SaveGame {
                 }
             }
 
+            if (Game.ganharTodasAsEstrelas) {
+                for (int i = 0; i < 100; i++) {
+                    saveGame1.levelsStars[i] = 5;
+                }
+            }
+
             if (saveGame1 == null){
                 saveGame = saveGame2;
             } else if (saveGame2 == null){
@@ -98,8 +106,6 @@ public class SaveGame {
             } else {
                 saveGame = mergeSaveGames(saveGame1, saveGame2);
             }
-
-
 
 
             //log(saveGame);
@@ -252,6 +258,33 @@ public class SaveGame {
 
     }
 
+    public static int getTotalStars(SaveGame _saveGame){
+
+        int totalStars = 0;
+
+        for (int i = 0; i < _saveGame.levelsStars.length; i++) {
+            totalStars += _saveGame.levelsStars[i];
+        }
+
+        return totalStars;
+
+    }
+
+    public static int getTotalPoints(SaveGame _saveGame){
+
+        int totalStars = 0;
+
+        for (int i = 0; i < _saveGame.levelsPoints.length; i++) {
+            totalStars += _saveGame.levelsPoints[i];
+        }
+
+        return totalStars;
+
+    }
+
+
+
+
     public static SaveGame mergeSaveGames(SaveGame saveGame1, SaveGame saveGame2) {
         int[] flevelsPoints;
         int[] flevelsStars;
@@ -274,6 +307,7 @@ public class SaveGame {
         boolean fnewGroupsSeen;
         int flevelsPlayed;
         boolean fOrientationInverted;
+        boolean fSaveMenuSeen;
 
         flevelsPoints = Utils.getHigher(saveGame1.levelsPoints, saveGame2.levelsPoints);
         flevelsStars = Utils.getHigher(saveGame1.levelsStars, saveGame2.levelsStars);
@@ -289,6 +323,7 @@ public class SaveGame {
         fvibration = Utils.getHigher(saveGame1.vibration, saveGame2.vibration);
         fgoogleOption = Utils.getHigher(saveGame1.googleOption, saveGame2.googleOption);
         fOrientationInverted = Utils.getHigher(saveGame1.orientationInverted, saveGame2.orientationInverted);
+        fSaveMenuSeen = Utils.getHigher(saveGame1.saveMenuSeen, saveGame2.saveMenuSeen);
 
 
         //Log.e(TAG, "merge google option saveGame1.googleOption "+ saveGame1.googleOption);
@@ -324,6 +359,7 @@ public class SaveGame {
                 .setLastStars(flastStars)
                 .setLevelsPlayed(flevelsPlayed)
                 .setOrientationInverted(fOrientationInverted)
+                .setSaveMenuSeen(fSaveMenuSeen)
                 .build();
     }
 
@@ -502,6 +538,12 @@ public class SaveGame {
                 saveGameBuilder.setOrientationInverted(false);
             }
 
+            try {
+                saveGameBuilder.setSaveMenuSeen(obj.getBoolean("saveMenuSeen"));
+            } catch(JSONException e) {
+                saveGameBuilder.setOrientationInverted(false);
+            }
+
             return saveGameBuilder.build();
 
         } catch (JSONException ex) {
@@ -557,6 +599,7 @@ public class SaveGame {
             obj.put("lastStars", saveGame.lastStars);
             obj.put("levelsPlayed", saveGame.levelsPlayed);
             obj.put("orientationInverted", saveGame.orientationInverted);
+            obj.put("saveMenuSeen", saveGame.saveMenuSeen);
             return obj.toString();
         } catch (JSONException ex) {
             ex.printStackTrace();

@@ -99,7 +99,9 @@ public class Splash {
                 SaveGame.saveGame.googleOption = 1;
                 SaveGame.saveGame.save();
                 forSignin = true;
+                Log.e(TAG, "init2");
                 init();
+
 
             }
         });
@@ -111,6 +113,7 @@ public class Splash {
                 SaveGame.saveGame.googleOption = 0;
                 forSignin = false;
                 SaveGame.saveGame.save();
+                Log.e(TAG, "init3");
                 init();
             }
         });
@@ -123,6 +126,7 @@ public class Splash {
                 forSignin = false;
                 SaveGame.saveGame.save();
                 forJumpGoogle = true;
+                Log.e(TAG, "init4");
                 init();
             }
         });
@@ -142,13 +146,13 @@ public class Splash {
         messageGoogle1.clearDisplay();
 
         messageGoogle2 = new TextView("messageGoogle2", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.8f,
+                Game.resolutionY * 0.85f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
                 fontSize * 0.55f,
                 Game.font, new Color(0.6f, 0.6f, 0.7f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageGoogle2.addText(Game.getContext().getResources().getString(R.string.messageGoogle2), new Color(0f, 0f, 0f, 1f));
+        messageGoogle2.addText(Game.getContext().getResources().getString(R.string.messageGoogle2), Color.cinza60);
 
         messageGoogle2.clearDisplay();
 
@@ -162,6 +166,7 @@ public class Splash {
                 SaveGame.saveGame.googleOption = 1;
                 SaveGame.saveGame.save();
                 forSignin = true;
+                Log.e(TAG, "init6");
                 init();
 
             }
@@ -174,6 +179,7 @@ public class Splash {
                 SaveGame.saveGame.googleOption = 0;
                 forSignin = false;
                 SaveGame.saveGame.save();
+                Log.e(TAG, "init7");
                 init();
             }
         });
@@ -186,6 +192,7 @@ public class Splash {
                 forSignin = false;
                 SaveGame.saveGame.save();
                 forJumpGoogle = true;
+                Log.e(TAG, "init8");
                 init();
             }
         });
@@ -199,8 +206,8 @@ public class Splash {
                 fontSize * 0.8f,
                 Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1_2), new Color(0f, 0f, 0f, 1f));
-        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b_2), new Color(0f, 0f, 0f, 1f));
+        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1_2), Color.cinza80);
+        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b_2), Color.pretoCheio);
 
         messageGoogle1_2.clearDisplay();
 
@@ -256,6 +263,11 @@ public class Splash {
         menuVelocity.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.menuVelocityContinuar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+
+                if (SaveGame.saveGame.ballVelocity < 0){
+                    SaveGame.saveGame.ballVelocity = 100;
+                }
+
                 menuVelocity.blockAndClearDisplay();
                 messageVelocity1.clearDisplay();
                 messageVelocity2.clearDisplay();
@@ -277,8 +289,8 @@ public class Splash {
 
         messageVelocity1.clearDisplay();
 
-        messageVelocity2 = new TextView("messageVelocity1", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.8f,
+        messageVelocity2 = new TextView("messageVelocity2", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.85f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
                 fontSize * 0.55f,
@@ -292,12 +304,12 @@ public class Splash {
 
     static void init(){
 
-        //Log.e(TAG, "init Splash");
+        Log.e(TAG, "init Splash");
         if (forSignin) {
-            //Log.e(TAG, "forSignin");
+            Log.e(TAG, "forSignin");
             loaderConclude = false;
         } else {
-            //Log.e(TAG, "not forSignin");
+            Log.e(TAG, "not forSignin");
             if (Sound.soundPool != null){
                 loaderConclude = true;
             } else {
@@ -407,7 +419,6 @@ public class Splash {
         }
          else if (id == SPLASH_MENU_VELOCITY) {
             selectorDifficultyInitMenu.setSelectedValue(1);
-            SaveGame.saveGame.ballVelocity = 100;
             menuVelocity.appearAndUnblock(100);
             messageVelocity1.display();
             messageVelocity2.display();
@@ -473,11 +484,13 @@ public class Splash {
                 //Log.e(TAG, "timesGoogle "+timesGoogle);
                 if (timesGoogle < 3) {
                     forSignin = true;
+                    Log.e(TAG, "init10");
                     init();
                 } else {
                     forSignin = false;
                     SaveGame.saveGame.googleOption = -1;
                     SaveGame.saveGame.save();
+                    Log.e(TAG, "init11");
                     init();
                 }
                 setSplashState(SPLASH_CARREGANDO);
@@ -508,6 +521,8 @@ public class Splash {
 
     static void verifySplashState() {
 
+        //Log.e(TAG, "state "+ state);
+
         if (state == SPLASH_CARREGANDO) {
 
             if (Game.paraGravacaoVideo){
@@ -532,6 +547,9 @@ public class Splash {
 
 
         } else if (state == SPLASH_CONECTANDO_INTERNET) {
+
+
+
             if (forSignin){
                 Log.e(TAG, "forSignin startintent ");
                 forSignin = false;
@@ -575,6 +593,7 @@ public class Splash {
                         forSignin = false;
                         SaveGame.saveGame.googleOption = -2;
                         SaveGame.saveGame.save();
+                        Log.e(TAG, "init13");
                         init();
                         setSplashState(SPLASH_CONECTANDO_INTERNET);
                 

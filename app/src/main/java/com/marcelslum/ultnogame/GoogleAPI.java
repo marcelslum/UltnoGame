@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.AchievementsClient;
@@ -12,6 +13,7 @@ import com.google.android.gms.games.EventsClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.PlayersClient;
+import com.google.android.gms.games.SnapshotsClient;
 import com.google.android.gms.games.achievement.Achievement;
 import com.google.android.gms.games.achievement.AchievementBuffer;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,13 +28,15 @@ import java.util.ArrayList;
  */
 public class GoogleAPI {
 
-    private static final int RC_LEADERBOARD_UI = 9004;
-    private static final int RC_ACHIEVEMENTS_UI = 9005;
+    public static final int RC_LEADERBOARD_UI = 9004;
+    public static final int RC_ACHIEVEMENTS_UI = 9005;
     public static final int RC_SIGN_IN = 9001;
+    public static final int RC_SAVED_GAMES = 9009;
     public static final String TAG = "GoogleApi";
 
     public static AchievementsClient mAchievementsClient;
     public static LeaderboardsClient mLeaderboardsClient;
+    public static SnapshotsClient mSnapshotsClient;
     public static EventsClient mEventsClient;
     public static PlayersClient mPlayersClient;
     public static GoogleSignInClient mGoogleSignInClient;
@@ -80,6 +84,23 @@ public class GoogleAPI {
                         }
                     });
         }
+    }
+
+    public static void showSnapshots() {
+        if (Game.mainActivity.isSignedIn()){
+
+            int maxNumberOfSavedGamesToShow = 5;
+            Task<Intent> intentTask = mSnapshotsClient.getSelectSnapshotIntent(
+                    Game.mainActivity.getResources().getString(R.string.ver_saves), true, true, maxNumberOfSavedGamesToShow);
+
+            intentTask.addOnSuccessListener(new OnSuccessListener<Intent>() {
+                @Override
+                public void onSuccess(Intent intent) {
+                    Game.mainActivity.startActivityForResult(intent, RC_SAVED_GAMES);
+                }
+            });
+        }
+
     }
 
     public static void unlockAchievement(String  id) {

@@ -79,6 +79,11 @@ public class TextView extends Entity{
 		super.checkTransformations(updatePrevious);
 		desacelerate();
 	}
+
+	public void clearTexts(){
+		texts.clear();
+		childs.clear();
+	}
 	
 	public void addText(String text, Color newTextColor){
 

@@ -3,6 +3,8 @@ package com.marcelslum.ultnogame;
 import android.content.pm.ActivityInfo;
 import android.util.Log;
 
+import com.squareup.haha.perflib.Main;
+
 import java.util.ArrayList;
 
 public class MenuHandler {
@@ -15,6 +17,8 @@ public class MenuHandler {
     static Menu menuGameOver;
     static Menu menuTutorialUnvisited;
     static Menu menuConnect;
+    static Menu menuFirstSaveGame;
+    static Menu menuCarregar;
 
     static MenuIcon groupMenu;
     static MenuIcon levelMenu;
@@ -293,6 +297,62 @@ public class MenuHandler {
             tutorialMenu.currentTranslateX = SaveGame.saveGame.currentTutorialMenuTranslateX;
         }
 
+        // MENU FIRST SAVE GAME
+
+        menuFirstSaveGame = new Menu("menuFirstSaveGame", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.85f, fontSize, Game.font);
+        menuFirstSaveGame.addMenuOption("Ok", Game.getContext().getResources().getString(R.string.okEntendi), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                SaveGame.saveGame.saveMenuSeen = true;
+                menuFirstSaveGame.blockAndClearDisplay();
+                Game.setGameState(Game.GAME_STATE_MENU);
+                GoogleAPI.showSnapshots();
+            }
+        });
+
+        menuFirstSaveGame.addMenuOption("lembrarDepois", Game.getContext().getResources().getString(R.string.lembrarDepois), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                menuFirstSaveGame.blockAndClearDisplay();
+                Game.setGameState(Game.GAME_STATE_MENU);
+                GoogleAPI.showSnapshots();
+            }
+        });
+
+
+        // MENU CARREGAR JOGO DA NUVEM
+
+        menuCarregar = new Menu("menuCarregar", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.78f, fontSize, Game.font);
+        menuCarregar.addMenuOption("carregarJogoDaNuvem", Game.getContext().getResources().getString(R.string.carregarDaNuvem), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                    menuCarregar.blockAndClearDisplay();
+                    SaveGame.saveGame = MainActivity.saveGameFromCloud;
+                    Game.setGameState(Game.GAME_STATE_MENU);
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.carregadoJogo), 4000);
+            }
+        });
+
+        menuCarregar.addMenuOption("mesclar", Game.getContext().getResources().getString(R.string.mesclarJogos), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                menuCarregar.blockAndClearDisplay();
+                SaveGame.saveGame = SaveGame.mergeSaveGames(SaveGame.saveGame, MainActivity.saveGameFromCloud);
+                Game.setGameState(Game.GAME_STATE_MENU);
+                MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.mescladoJogos), 4000);
+            }
+        });
+
+        menuCarregar.addMenuOption("cancelar", Game.getContext().getResources().getString(R.string.cancelar), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                menuCarregar.blockAndClearDisplay();
+                Game.setGameState(Game.GAME_STATE_MENU);
+            }
+        });
+
+
+
         // -------------------------------------------MENU OBJETIVOS
         //menuObjectives = new Menu("menuObjectives", Game.resolutionX*0.5f, Game.resolutionY*0.87f, fontSize, font);
         //menuObjectives.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.iniciar_jogo), new MenuOption.OnChoice() {@Override public void onChoice() {}});
@@ -488,6 +548,7 @@ public class MenuHandler {
                 } else {
                     Splash.forSignin = true;
                     SaveGame.saveGame.googleOption = 1;
+                    Log.e(TAG, "setGameState(Game.GAME_STATE_INTRO)2");
                     Game.setGameState(Game.GAME_STATE_INTRO);
                 }
             }
@@ -519,6 +580,7 @@ public class MenuHandler {
         menuConnect.addMenuOption("conectar", Game.getContext().getResources().getString(R.string.menuConectar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                Log.e(TAG, "setGameState(Game.GAME_STATE_INTRO)3");
                 Game.setGameState(Game.GAME_STATE_INTRO);
             }
         });
@@ -562,7 +624,7 @@ public class MenuHandler {
 
 
         // -------------------------------------------MENU MAIN
-        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
+        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
@@ -603,6 +665,25 @@ public class MenuHandler {
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
                 } else {
                     GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
+                }
+            }
+        });
+
+        menuMain.addMenuOption("salvar", Game.getContext().getResources().getString(R.string.salvar), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
+                } else {
+
+                    if (SaveGame.saveGame.saveMenuSeen){
+                        GoogleAPI.showSnapshots();
+                    } else {
+                        Game.setGameState(Game.GAME_STATE_MENU_SAVE_FIRST_TIME);
+                    }
+
+
+
                 }
             }
         });

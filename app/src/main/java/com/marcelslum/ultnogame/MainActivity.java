@@ -2,9 +2,14 @@ package com.marcelslum.ultnogame;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -29,19 +34,38 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Result;
+import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
+import com.google.android.gms.games.SnapshotsClient;
+import com.google.android.gms.games.snapshot.Snapshot;
+import com.google.android.gms.games.snapshot.SnapshotMetadata;
+import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import android.os.Vibrator;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import static com.marcelslum.ultnogame.GoogleAPI.mSnapshotsClient;
 
 public class MainActivity extends FragmentActivity implements
         SensorEventListener
         {
 
+
+            // Request code for saving the game to a snapshot.
+            private static final int RC_SAVE_SNAPSHOT = 9004;
+
+            private static final int RC_LOAD_SNAPSHOT = 9005;
 
     public static SensorManager mSensorManager;
     public static Sensor mAccelerometer;
@@ -62,7 +86,349 @@ public class MainActivity extends FragmentActivity implements
     private boolean mResolvingError = false;
     private static final String STATE_RESOLVING_ERROR = "resolving_error";
 
+    // progress dialog we display while we're loading state from the cloud
+    ProgressDialog mLoadingDialog = null;
 
+
+
+    static String mCurrentSaveName;
+
+    /*
+    * This callback will be triggered after you call startActivityForResult from the
+    * showSavedGamesUI method.
+    */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == GoogleAPI.RC_SIGN_IN) {
+
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+
+            try {
+
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                onConnected(account);
+
+            } catch (ApiException apiException) {
+                String message = apiException.getMessage();
+                if (message == null || message.isEmpty()) {
+                    message = getString(R.string.signin_other_error);
+                }
+
+                onDisconnected();
+
+                Game.showMessageNotConnectedOnGoogle = true;
+            }
+        }
+
+        if (requestCode == GoogleAPI.RC_SAVED_GAMES) {
+
+            if (intent != null) {
+                if (intent.hasExtra(SnapshotsClient.EXTRA_SNAPSHOT_METADATA)) {
+                    // Load a snapshot.
+                    SnapshotMetadata snapshotMetadata =
+                            intent.getParcelableExtra(SnapshotsClient.EXTRA_SNAPSHOT_METADATA);
+                    mCurrentSaveName = snapshotMetadata.getUniqueName();
+                    loadFromSnapshot(snapshotMetadata);
+
+
+                    // Load the game data from the Snapshot
+                    // ...
+                } else if (intent.hasExtra(SnapshotsClient.EXTRA_SNAPSHOT_NEW)) {
+                    // Create a new snapshot named with a unique string
+                    mCurrentSaveName = "teste"+System.nanoTime();
+                    saveSnapshot(null);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        if (mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
+        super.onStop();
+    }
+
+
+    void loadFromSnapshot(final SnapshotMetadata snapshotMetadata) {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new ProgressDialog(this);
+            mLoadingDialog.setMessage(getString(R.string.carregando_snapshot));
+        }
+
+        mLoadingDialog.show();
+
+        waitForClosedAndOpen(snapshotMetadata)
+                .addOnSuccessListener(new OnSuccessListener<SnapshotsClient.DataOrConflict<Snapshot>>() {
+                    @Override
+                    public void onSuccess(SnapshotsClient.DataOrConflict<Snapshot> result) {
+
+                        // if there is a conflict  - then resolve it.
+                        Snapshot snapshot = processOpenDataOrConflict(RC_LOAD_SNAPSHOT, result, 0);
+
+                        if (snapshot == null) {
+                            Log.w(TAG, "Conflict was not resolved automatically, waiting for user to resolve.");
+                        } else {
+                            try {
+                                readSavedGame(snapshot);
+                                Log.i(TAG, "Snapshot loaded.");
+                            } catch (IOException e) {
+                                Game.myGlSurface.showBottomMessage(Game.getContext().getResources().getString(R.string.erro_ao_salvar), 4000);
+                                Log.e(TAG, "Error while reading snapshot contents: " + e.getMessage());
+                            }
+                        }
+
+                        SnapshotCoordinator.getInstance().discardAndClose(mSnapshotsClient, snapshot)
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, "There was a problem discarding the snapshot!");
+                                    }
+                                });
+
+                        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+                            mLoadingDialog.dismiss();
+                            mLoadingDialog = null;
+                        }
+                    }
+                });
+    }
+
+    static SaveGame saveGameFromCloud;
+
+    private void readSavedGame(Snapshot snapshot) throws IOException {
+
+        Log.e(TAG, "read saveg game");
+
+        String stringToSave = new String(snapshot.getSnapshotContents().readFully());
+        Log.e(TAG, stringToSave);
+        saveGameFromCloud = SaveGame.getSaveGameFromJson(stringToSave);
+
+        Game.myGlSurface.setMenuCarregarMessage();
+
+        Game.setGameState(Game.GAME_STATE_MENU_CARREGAR_JOGO);
+
+    }
+
+
+
+    /**
+     * Conflict resolution for when Snapshots are opened.
+     *
+     * @param requestCode - the request currently being processed.  This is used to forward on the
+     *                    information to another activity, or to send the result intent.
+     * @param result      The open snapshot result to resolve on open.
+     * @param retryCount  - the current iteration of the retry.  The first retry should be 0.
+     * @return The opened Snapshot on success; otherwise, returns null.
+     */
+    Snapshot processOpenDataOrConflict(int requestCode,
+                                       SnapshotsClient.DataOrConflict<Snapshot> result,
+                                       int retryCount) {
+
+        retryCount++;
+
+        if (!result.isConflict()) {
+            return result.getData();
+        }
+
+        Log.i(TAG, "Open resulted in a conflict!");
+
+        SnapshotsClient.SnapshotConflict conflict = result.getConflict();
+        final Snapshot snapshot = conflict.getSnapshot();
+        final Snapshot conflictSnapshot = conflict.getConflictingSnapshot();
+
+        ArrayList<Snapshot> snapshotList = new ArrayList<Snapshot>(2);
+        snapshotList.add(snapshot);
+        snapshotList.add(conflictSnapshot);
+
+        // Display both snapshots to the user and allow them to select the one to resolve.
+        selectSnapshotItem(requestCode, snapshotList, conflict.getConflictId(), retryCount);
+
+        // Since we are waiting on the user for input, there is no snapshot available; return null.
+        return null;
+    }
+
+
+    private void selectSnapshotItem(int requestCode,
+                                    ArrayList<Snapshot> items,
+                                    String conflictId,
+                                    int retryCount) {
+
+        ArrayList<SnapshotMetadata> snapshotList = new ArrayList<SnapshotMetadata>(items.size());
+        for (Snapshot m : items) {
+            snapshotList.add(m.getMetadata().freeze());
+        }
+
+        /*
+        Intent intent = new Intent(this, SelectSnapshotActivity.class);
+        intent.putParcelableArrayListExtra(SelectSnapshotActivity.SNAPSHOT_METADATA_LIST,
+                snapshotList);
+
+        intent.putExtra(SelectSnapshotActivity.CONFLICT_ID, conflictId);
+        intent.putExtra(SelectSnapshotActivity.RETRY_COUNT, retryCount);
+
+        Log.d(TAG, "Starting activity to select snapshot");
+        startActivityForResult(intent, requestCode);
+        */
+    }
+
+
+    void saveSnapshot(final SnapshotMetadata snapshotMetadata) {
+
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new ProgressDialog(this);
+            mLoadingDialog.setMessage(getString(R.string.salvando_snapshot));
+        }
+
+        mLoadingDialog.show();
+
+        waitForClosedAndOpen(snapshotMetadata)
+                .addOnCompleteListener(new OnCompleteListener<SnapshotsClient.DataOrConflict<Snapshot>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<SnapshotsClient.DataOrConflict<Snapshot>> task) {
+                        SnapshotsClient.DataOrConflict<Snapshot> result = task.getResult();
+                        Snapshot snapshotToWrite = processOpenDataOrConflict(RC_SAVE_SNAPSHOT, result, 0);
+
+                        if (snapshotToWrite == null) {
+                            // No snapshot available yet; waiting on the user to choose one.
+                            return;
+                        }
+
+                        Log.d(TAG, "Writing data to snapshot: " + snapshotToWrite.getMetadata().getUniqueName());
+                        writeSnapshot(snapshotToWrite)
+                                .addOnCompleteListener(new OnCompleteListener<SnapshotMetadata>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<SnapshotMetadata> task) {
+                                        if (task.isSuccessful()) {
+                                            Game.myGlSurface.showBottomMessage(Game.getContext().getResources().getString(R.string.jogo_salvo), 4000);
+                                            Log.e(TAG, "Snapshot saved!");
+                                        } else {
+                                            Game.myGlSurface.showBottomMessage(Game.getContext().getResources().getString(R.string.erro_ao_salvar), 4000);
+                                            Log.e(TAG, "Houve um erro");
+                                        }
+
+                                        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+                                            mLoadingDialog.dismiss();
+                                            mLoadingDialog = null;
+                                        }
+
+                                    }
+                                });
+                    }
+                });
+    }
+
+    /**
+     * Gets a screenshot to use with snapshots. Note that in practice you probably do not want to
+     * use this approach because tablet screen sizes can become pretty large and because the image
+     * will contain any UI and layout surrounding the area of interest.
+     */
+    Bitmap getScreenShot() {
+
+
+        int lastLevelUnlockeced = -1;
+        for (int i = SaveGame.saveGame.levelsUnlocked.length - 1; i >= 0; i--) {
+            if (SaveGame.saveGame.levelsUnlocked[i]){
+                lastLevelUnlockeced = i + 1;
+            }
+        }
+
+
+        LevelsGroupData gd = null;
+        for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++) {
+            if (lastLevelUnlockeced >= LevelsGroupData.levelsGroupData.get(i).firstLevel && lastLevelUnlockeced <= LevelsGroupData.levelsGroupData.get(i).finalLevel){
+                gd = LevelsGroupData.levelsGroupData.get(i);
+            }
+        }
+
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.icons, options);
+
+        Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, (int) (gd.textureData.x * 2048f), (int) (gd.textureData.y * 2048f),(int)  ((gd.textureData.w - gd.textureData.x) * 2048f) ,(int)  ((gd.textureData.h - gd.textureData.y) * 2048f));
+
+        Bitmap maskBitmap = Bitmap.createBitmap((int)(croppedBitmap.getWidth() * 2f), (int)(croppedBitmap.getHeight()*1.2f), croppedBitmap.getConfig());
+        Canvas c = new Canvas();
+        c.setBitmap(maskBitmap);
+        Paint p = new Paint();
+        c.drawBitmap(croppedBitmap, (int)(croppedBitmap.getWidth()*0.6f), croppedBitmap.getHeight()*0.17f, p);
+
+        bitmap.recycle();
+        croppedBitmap.recycle();
+
+        return maskBitmap;
+    }
+
+    /**
+     * Generates metadata, takes a screenshot, and performs the write operation for saving a
+     * snapshot.
+     */
+    private Task<SnapshotMetadata> writeSnapshot(Snapshot snapshot) {
+        // Set the data payload for the snapshot.
+        snapshot.getSnapshotContents().
+
+                writeBytes(SaveGame.getStringFromSaveGame(SaveGame.saveGame).getBytes());
+
+
+        DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+
+
+        // Save the snapshot.
+        SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
+                .setCoverImage(getScreenShot())
+                .setDescription(getResources().getString(R.string.conquistadas) + " " + SaveGame.getTotalStars(SaveGame.saveGame) + " " + getResources().getString(R.string.estrelas))
+                .build();
+        return SnapshotCoordinator.getInstance().commitAndClose(mSnapshotsClient, snapshot, metadataChange);
+    }
+
+
+    private Task<SnapshotsClient.DataOrConflict<Snapshot>> waitForClosedAndOpen(final SnapshotMetadata snapshotMetadata) {
+
+        final boolean useMetadata = snapshotMetadata != null && snapshotMetadata.getUniqueName() != null;
+        if (useMetadata) {
+            Log.i(TAG, "Opening snapshot using metadata: " + snapshotMetadata);
+        } else {
+            Log.i(TAG, "Opening snapshot using currentSaveName: " + mCurrentSaveName);
+        }
+
+        final String filename = useMetadata ? snapshotMetadata.getUniqueName() : mCurrentSaveName;
+
+        return SnapshotCoordinator.getInstance()
+                .waitForClosed(filename)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Não foi possível salvar. There was a problem waiting for the file to close!");
+                    }
+                })
+                .continueWithTask(new Continuation<Result, Task<SnapshotsClient.DataOrConflict<Snapshot>>>() {
+                    @Override
+                    public Task<SnapshotsClient.DataOrConflict<Snapshot>> then(@NonNull Task<Result> task) throws Exception {
+                        Task<SnapshotsClient.DataOrConflict<Snapshot>> openTask = useMetadata
+                                ? SnapshotCoordinator.getInstance().open(mSnapshotsClient, snapshotMetadata)
+                                : SnapshotCoordinator.getInstance().open(mSnapshotsClient, filename, true);
+                        return openTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                if (useMetadata){
+                                    Log.e(TAG, "Não foi possível salvar. R.string.error_opening_metadata");
+                                } else {
+                                    Log.e(TAG, "Não foi possível salvar. R.string.error_opening_filename");
+                                }
+                            }
+                        });
+                    }
+                });
+    }
 
 
 
@@ -98,6 +464,20 @@ public class MainActivity extends FragmentActivity implements
 
         Storage.init(this);
 
+        if (Game.forDebugDeleteDatabaseAndStorage){
+            Game.forDebugDeleteDatabaseAndStorage = false;
+            try {
+                DataBaseLevelDataHelper.getInstance(this).prepareDatabase();
+                Game.groupsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getGroupsDataBaseData();
+                Game.levelsDataBaseData = DataBaseLevelDataHelper.getInstance(this).getLevelsDataBaseData();
+                DataBaseSaveDataHelper.getInstance(this).prepareDatabase();
+                Storage.init(this);
+            } catch (IOException ioe) {
+                throw new Error("Unable to create database");
+            }
+
+        }
+
         SaveGame.load();
 
 
@@ -128,6 +508,7 @@ public class MainActivity extends FragmentActivity implements
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
                         // Add the APPFOLDER scope for Snapshot support.
                         //.requestScopes(Drive.SCOPE_APPFOLDER)
+                        .requestScopes(Drive.SCOPE_APPFOLDER)
                         .build();
 
         GoogleAPI.mGoogleSignInClient = GoogleSignIn.getClient(this,
@@ -288,29 +669,6 @@ public class MainActivity extends FragmentActivity implements
                 });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == GoogleAPI.RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
-
-            try {
-
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                onConnected(account);
-
-            } catch (ApiException apiException) {
-                String message = apiException.getMessage();
-                if (message == null || message.isEmpty()) {
-                    message = getString(R.string.signin_other_error);
-                }
-
-                onDisconnected();
-
-                Game.showMessageNotConnectedOnGoogle = true;
-            }
-        }
-    }
 
     private void onConnected(final GoogleSignInAccount googleSignInAccount) {
 
@@ -318,6 +676,7 @@ public class MainActivity extends FragmentActivity implements
 
         GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
         GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
+        mSnapshotsClient = Games.getSnapshotsClient(this, googleSignInAccount);
         GoogleAPI.mEventsClient = Games.getEventsClient(this, googleSignInAccount);
         GoogleAPI.mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
 

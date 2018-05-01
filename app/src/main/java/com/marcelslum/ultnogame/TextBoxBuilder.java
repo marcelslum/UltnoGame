@@ -18,14 +18,10 @@ public class TextBoxBuilder {
     public float arrowX;
     public float arrowY;
     public int frameType;
-    public boolean textShadow;
     public Color shadowColor;
     public Color frameColor;
     public Color textColor;
     public Color borderColor;
-    public boolean isHaveBorder = false;
-    public static final int FRAME_TYPE_IMAGE = 0;
-    public static final int FRAME_TYPE_SOLID = 1;
 
     public TextBoxBuilder(String name) {
         this.name = name;
@@ -33,14 +29,12 @@ public class TextBoxBuilder {
         size = 0f;
         text = "";
         textColor = Color.cinza20;
-        textShadow = false;
         frameColor = new Color(0.7f, 0.7f, 0.7f, 1.0f);
         x = 0f;
         y = 0f;
         isHaveArrow = false;
         isHaveFrame = true;
         isHaveArrowContinue = true;
-        frameType = FRAME_TYPE_IMAGE;
         arrowX = 0f;
         arrowY = 0f;
     }
@@ -56,9 +50,8 @@ public class TextBoxBuilder {
         return this;
     }
 
-    public TextBoxBuilder addShadow(Color color){
-        this.shadowColor = color;
-        this.textShadow = true;
+    public TextBoxBuilder setShadowColor(Color color){
+        shadowColor = color;
         return this;
     }
 
@@ -108,14 +101,8 @@ public class TextBoxBuilder {
         return this;
     }
 
-    public TextBoxBuilder isHaveBorder(boolean isHaveBorder, Color borderColor){
-        this.isHaveBorder = isHaveBorder;
+    public TextBoxBuilder setBorderColor(Color borderColor){
         this.borderColor = borderColor;
-        return this;
-    }
-
-    public TextBoxBuilder frameType(int frameType){
-        this.frameType = frameType;
         return this;
     }
 

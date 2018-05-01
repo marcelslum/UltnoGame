@@ -26,12 +26,14 @@ public class MessagesHandler {
     static Text messageBeta;
     static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
+    static TextView messageMenuSaveNotSeen;
+    static TextView messageMenuCarregarJogo;
 
     static float yOfMessageBackAndContinue;
 
 
     public static void initMessages(){
-        
+
         Game.aboutTextView = new TextView("aboutTextView", Game.resolutionX * 0.1f,
                                           Game.resolutionY * 0.2f,
                                           Game.resolutionX * 0.8f,
@@ -81,6 +83,30 @@ public class MessagesHandler {
         Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
         Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
         Game.aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
+
+
+        float fontSize = Game.gameAreaResolutionY*0.08f;
+        messageMenuSaveNotSeen = new TextView("messageMenuSaveNotSeen", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.25f,
+                Game.resolutionX * 1f,
+                Game.resolutionY,
+                fontSize * 0.55f,
+                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+
+        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen1), Color.azulClaro);
+        messageMenuSaveNotSeen.addText(".", Color.transparente);
+        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen2), Color.azulClaro);
+        messageMenuSaveNotSeen.addText(".", Color.transparente);
+        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen3), Color.azulClaro);
+
+
+        messageMenuCarregarJogo = new TextView("messageMenuCarregarJogo", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.12f,
+                Game.resolutionX * 1f,
+                Game.resolutionY,
+                fontSize * 0.6f,
+                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+
 
         Game.notConnectedTextView = new TextView("about", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.02f,
@@ -140,36 +166,62 @@ public class MessagesHandler {
         messageMaxScoreTotal = new Text("messageMaxScoreTotal",
                 Game.resolutionX*0.02f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
                 resources.getString(R.string.messageMaxScoreTotal) +"\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
-        
-       
+
+
 
         messageGoogleLogged = new Text("messageGoogleLogged",
                 Game.resolutionX*0.98f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
                 ".", Game.font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_RIGHT);
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
-                Game.resolutionX*0.895f, Game.resolutionY*0.3f, Game.resolutionY*0.05f,
+                Game.resolutionX*0.825f, Game.resolutionY*0.15f, Game.resolutionY*0.07f,
                 resources.getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, new Color(1f, 1f, 0f, 1f));
 
         messageConqueredStarsTotal.addShadow(new Color(0.6f, 0.6f, 0.6f, 1f));
 
-        starForMessage = new Image("frame", Game.resolutionX*0.85f, MessagesHandler.messageConqueredStarsTotal.y - (Game.resolutionY*0.05f*0.02f),
-                Game.resolutionY*0.05f, Game.resolutionY*0.05f, Texture.TEXTURES,
+        starForMessage = new Image("frame", Game.resolutionX*0.75f, MessagesHandler.messageConqueredStarsTotal.y,
+                Game.resolutionY*0.07f, Game.resolutionY*0.07f, Texture.TEXTURES,
                 TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
 
         Utils.createAnimation2v(starForMessage, "rotate", "rotate", 10000, 0f, 0f, 1f, 360f, true, true).start();
         Utils.createAnimation2v(starForMessage, "translateX", "translateX", 10000, 0f, 0f, 1f, -Game.resolutionX*0.001f, true, true).start();
 
         bottomTextBox = new TextBoxBuilder("bottomTextBox")
-                .position(Game.resolutionX*0.05f, Game.resolutionY*0.9f)
+                .position(Game.resolutionX*0.05f, Game.resolutionY*0.85f)
                 .width(Game.resolutionX*0.9f)
                 .size(Game.resolutionY*0.032f)
                 .text("...")
                 .withoutArrow()
+                .setTextColor(Color.branco)
+                .setShadowColor(Color.azul40)
+                .setBorderColor(Color.pretoCheio)
                 .isHaveFrame(true)
                 .isHaveArrowContinue(false)
-                .frameType(TextBoxBuilder.FRAME_TYPE_SOLID)
                 .build();
+
+        bottomTextBox.setMultiColor(
+                    Color.azulMedio,
+                    Color.azulClaro,
+                    Color.azulMedio,
+                    Color.azulMedio
+            );
+
+        /*
+
+        bottomTextBox.frame.addTopRectangle(
+                    0.9f,
+                    Color.cinza20.changeAlpha(0.4f),
+                    Color.cinza40.changeAlpha(0.4f),
+                    Color.cinza20.changeAlpha(0.4f),
+                    Color.cinza20.changeAlpha(0.4f),
+                    .05f,
+                    Game.gameAreaResolutionX * 0.003f,
+                    Game.gameAreaResolutionX * 0.003f,
+                    Color.verde40
+            );
+            */
+
+
 
         setMessageTime();
 
@@ -188,6 +240,10 @@ public class MessagesHandler {
                 Game.resolutionX*0.91f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,
                 resources.getString(R.string.continuar), Game.font, new Color(0.5f, 0.5f, 0.5f, 1f), Text.TEXT_ALIGN_RIGHT);
 
+
+        messageBack.addShadow(Color.cinza80.changeAlpha(0.5f));
+        messageContinue.addShadow(Color.cinza80.changeAlpha(0.5f));
+
         Utils.createAnimation3v(messageContinue, "alpha", "alpha", 3000, 0f, 0.3f, 0.5f, 0.6f, 1f, 0.3f, true, true ).start();
         Utils.createAnimation3v(messageBack, "alpha", "alpha", 3000, 0f, 0.3f, 0.5f, 0.6f, 1f, 0.3f, true, true ).start();
 
@@ -203,11 +259,7 @@ public class MessagesHandler {
 
     public static void setBottomMessage(String text, int duration){
 
-        if (bottomTextBox == null){
-            return;
-        }
-
-        //Log.e(TAG, "showing bottom text: " + text);
+        if (bottomTextBox == null) return;
 
         float previousPosition = bottomTextBox.y;
         String previousText = bottomTextBox.text;
@@ -216,27 +268,15 @@ public class MessagesHandler {
             previousPosition = Game.resolutionY * 2;
         }
 
-        boolean appearOrDesapear = false;
         if (!text.equals("")){
-            if (bottomTextBox.y == Game.resolutionY*2 || !bottomTextBox.isVisible){
-                appearOrDesapear = true;
-            }
-
-            bottomTextBox.setText(text, Color.cinza20, false, null);
+            bottomTextBox.setText(text, Color.branco);
             bottomTextBox.display();
-            bottomTextBox.setPositionY(Game.resolutionY - bottomTextBox.height);
+            bottomTextBox.setPositionY(Game.resolutionY - (bottomTextBox.height * 1.15f));
             bottomTextBox.isBlocked = false;
-            messageMaxScoreTotal.y = Game.resolutionY - bottomTextBox.height - (Game.resolutionY * 0.06f);
-            messageGoogleLogged.y =  Game.resolutionY - bottomTextBox.height - (Game.resolutionY * 0.06f);
         } else {
-            if (!previousText.equals("...")){
-                appearOrDesapear = true;
-            }
-            bottomTextBox.setText("...",Color.cinza20, false, null);
+            bottomTextBox.setText("...",Color.transparente);
             bottomTextBox.isBlocked = true;
             bottomTextBox.setPositionY(Game.resolutionY*2);
-            messageMaxScoreTotal.y = Game.resolutionY - (Game.resolutionY * 0.06f);
-            messageGoogleLogged.y =  Game.resolutionY - (Game.resolutionY * 0.06f);
         }
 
         float difference = previousPosition - bottomTextBox.y;
@@ -244,12 +284,9 @@ public class MessagesHandler {
             Utils.createSimpleAnimation(bottomTextBox, "translateY", "translateY", 200, difference, 0.0f).start();
         }
 
-        if (appearOrDesapear){
-            //Sound.play(Sound.soundTextBoxAppear, 0.8f, 0.8f, 0);
-        }
 
         if (duration > 100){
-            Utils.createSimpleAnimation(bottomTextBox, "alpha", "alpha", duration, 1f, 0.8f, new Animation.AnimationListener() {
+            Utils.createSimpleAnimation(bottomTextBox, "alpha", "alpha", duration, 1f, 0.95f, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
                     setBottomMessage("", 0);

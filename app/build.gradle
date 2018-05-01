@@ -48,9 +48,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.google.android.gms:play-services-games:11.8.0"
-    implementation "com.google.android.gms:play-services-auth:11.8.0"
-    implementation 'com.google.android.gms:play-services-ads:11.8.0'
+    implementation "com.google.android.gms:play-services-games:15.0.0"
+    implementation "com.google.android.gms:play-services-auth:15.0.0"
+    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+    implementation 'com.google.android.gms:play-services-drive:15.0.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

@@ -322,12 +322,13 @@ public class ButtonHandler {
         // BOTÃO 1 ESQUERDA
         float x;
         if (invertedButtons){
-            x = Game.resolutionX * 0.87f;
+            x = Game.resolutionX * 0.85f;// se tiver somente um botão, fica vai um pouco mais para a esquerda
             if (barsQuantity > 1) {
-                x = Game.resolutionX * 0.68f;
+                x = Game.resolutionX * 0.7f;
             }
         } else {
-            x = Game.resolutionX * 0.03f;
+
+            x = Game.resolutionX * 0.06f;// se tiver somente um botão, fica vai um pouco mais para a direita
         }
 
         button1Left = Game.buttonPool.get();
@@ -338,12 +339,12 @@ public class ButtonHandler {
 
         // BOTÃO 2 DIREITA
         if (invertedButtons){
-            x = Game.resolutionX * 0.03f;
+            x = Game.resolutionX * 0.06f;// se tiver somente um botão, fica vai um pouco mais para a direita
             if (barsQuantity > 1) {
-                x = Game.resolutionX * 0.22f;
+                x = Game.resolutionX * 0.21f;
             }
         } else {
-            x = Game.resolutionX * 0.87f;
+            x = Game.resolutionX * 0.85f;// se tiver somente um botão, fica vai um pouco mais para a esquerda
         }
 
         button2Right = Game.buttonPool.get();
@@ -351,29 +352,32 @@ public class ButtonHandler {
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_PRESS_ID));
 
+        button2Right.alpha = 0.7f;
+
         if (barsQuantity > 1) {
             // BOTÃO 1 DIREITA
             if (invertedButtons) {
-                x = Game.resolutionX * 0.87f;
+                x = Game.resolutionX * 0.88f;
             } else {
-                x = Game.resolutionX * 0.22f;
+                x = Game.resolutionX * 0.21f;
             }
             button1Right = Game.buttonPool.get();
             button1Right.setData("button1Right",x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_ID),
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_RIGHT_PRESS_ID));
-            ButtonHandler.button1Right.alpha = 0.7f;
+            button1Right.alpha = 0.7f;
 
             // BOTÃO 2 ESQUERDA
             if (invertedButtons) {
                 x = Game.resolutionX * 0.03f;
             } else {
-                x = Game.resolutionX * 0.68f;
+                x = Game.resolutionX * 0.7f;
             }
             button2Left = Game.buttonPool.get();
             button2Left.setData("button2Left", x, y, buttonSize, buttonSize, Texture.TEXTURES, 2f,
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_ID),
                     TextureData.getTextureDataById(TextureData.TEXTURE_BUTTON_BAR_LEFT_PRESS_ID));
+            button2Left.alpha = 0.7f;
         }
     }
 }

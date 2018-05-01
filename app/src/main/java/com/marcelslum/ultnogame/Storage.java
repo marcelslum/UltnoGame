@@ -52,6 +52,7 @@ public class Storage {
 
         if (Game.forDebugDeleteDatabaseAndStorage) {
             setString(STORAGE_SAVE_NAME, "");
+            return;
         }
 
     }
