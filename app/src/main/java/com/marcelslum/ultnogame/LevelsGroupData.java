@@ -19,7 +19,7 @@ public class LevelsGroupData {
     public int firstLevel;
     public int finalLevel;
     boolean isLocked;
-    ArrayList<LevelData> levelsData;
+    public ArrayList<LevelData> levelsData;
     int number;
 
     public LevelsGroupData(String name, int number, int firstLevel, int finalLevel, int starsToUnlock, int conqueredStars, int textureUnit, TextureData textureData) {

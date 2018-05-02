@@ -143,48 +143,56 @@ public class MyGLSurface extends GLSurfaceView {
     public void setMenuCarregarMessage(){
         queueEvent(new Runnable() {
             public void run() {
-                int localStars = SaveGame.getTotalStars(SaveGame.saveGame);
-                int cloudStars = SaveGame.getTotalStars(MainActivity.saveGameFromCloud);
 
-                int localPoints = SaveGame.getTotalPoints(SaveGame.saveGame);
-                int cloudPoints = SaveGame.getTotalPoints(MainActivity.saveGameFromCloud);
+                if (MainActivity.saveGameFromCloud == null){
+                    Game.setGameState(Game.GAME_STATE_MENU);
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.erro_ao_carregar), 4000);
 
+                } else {
 
-                MessagesHandler.messageMenuCarregarJogo.clearTexts();
+                    int localStars = SaveGame.getTotalStars(SaveGame.saveGame);
 
-                MessagesHandler.messageMenuCarregarJogo.addText(
-                        Game.getContext().getResources().getString(R.string.messageCarregarJogo1),Color.azulClaro);
-                MessagesHandler.messageMenuCarregarJogo.addText(
-                        NumberFormat.getInstance().format(cloudStars) +" "+
-                      Game.getContext().getResources().getString(R.string.messageCarregarJogo2)+
-                      " - " +
-                                NumberFormat.getInstance().format(cloudPoints) +" "+
-                      Game.getContext().getResources().getString(R.string.messageCarregarJogo3),Color.cinza50);
+                    int cloudStars = SaveGame.getTotalStars(MainActivity.saveGameFromCloud);
+
+                    int localPoints = SaveGame.getTotalPoints(SaveGame.saveGame);
+                    int cloudPoints = SaveGame.getTotalPoints(MainActivity.saveGameFromCloud);
 
 
-                MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
+                    MessagesHandler.messageMenuCarregarJogo.clearTexts();
+
+                    MessagesHandler.messageMenuCarregarJogo.addText(
+                            Game.getContext().getResources().getString(R.string.messageCarregarJogo1), Color.azulClaro);
+                    MessagesHandler.messageMenuCarregarJogo.addText(
+                            NumberFormat.getInstance().format(cloudStars) + " " +
+                                    Game.getContext().getResources().getString(R.string.messageCarregarJogo2) +
+                                    " - " +
+                                    NumberFormat.getInstance().format(cloudPoints) + " " +
+                                    Game.getContext().getResources().getString(R.string.messageCarregarJogo3), Color.cinza50);
 
 
+                    MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
 
 
+                    MessagesHandler.messageMenuCarregarJogo.addText(
+                            Game.getContext().getResources().getString(R.string.messageCarregarJogo4), Color.azulClaro);
+                    MessagesHandler.messageMenuCarregarJogo.addText(
+                            NumberFormat.getInstance().format(localStars) + " " +
+                                    Game.getContext().getResources().getString(R.string.messageCarregarJogo2) +
+                                    " - " +
+                                    NumberFormat.getInstance().format(localPoints) + " " +
+                                    Game.getContext().getResources().getString(R.string.messageCarregarJogo3), Color.cinza50);
+                    MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
 
-                MessagesHandler.messageMenuCarregarJogo.addText(
-                        Game.getContext().getResources().getString(R.string.messageCarregarJogo4),Color.azulClaro);
-                MessagesHandler.messageMenuCarregarJogo.addText(
-                        NumberFormat.getInstance().format(localStars) +" "+
-                                Game.getContext().getResources().getString(R.string.messageCarregarJogo2)+
-                                " - " +
-                                NumberFormat.getInstance().format(localPoints) +" "+
-                                Game.getContext().getResources().getString(R.string.messageCarregarJogo3),Color.cinza50);
-                MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
+                    MessagesHandler.messageMenuCarregarJogo.addText(
+                            Game.getContext().getResources().getString(R.string.messageCarregarJogo5),
+                            Color.pretoCheio);
+                    MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
+                    MessagesHandler.messageMenuCarregarJogo.addText(
+                            Game.getContext().getResources().getString(R.string.messageCarregarJogo6),
+                            Color.cinza70);
 
-                MessagesHandler.messageMenuCarregarJogo.addText(
-                        Game.getContext().getResources().getString(R.string.messageCarregarJogo5),
-                        Color.pretoCheio);
-                MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
-                MessagesHandler.messageMenuCarregarJogo.addText(
-                        Game.getContext().getResources().getString(R.string.messageCarregarJogo6),
-                        Color.cinza70);
+                    Game.setGameState(Game.GAME_STATE_MENU_CARREGAR_JOGO);
+                }
             }});
     }
 

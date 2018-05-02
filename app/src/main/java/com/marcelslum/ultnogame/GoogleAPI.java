@@ -131,9 +131,6 @@ public class GoogleAPI {
                         mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
                             @Override
                             public void onComplete(@NonNull Task<AnnotatedData<AchievementBuffer>> task) {
-
-
-
                                 if (innerAd != null && innerAd.currentSteps == innerAd.totalSteps) {
                                     mAchievementsClient.load(true).addOnCompleteListener(new OnCompleteListener<AnnotatedData<AchievementBuffer>>() {
                                         @Override

@@ -124,7 +124,7 @@ public class MenuHandler {
 
             //Log.e(TAG, "ld.number "+ ld.number);
             if (ld.textureData == null){
-                //Log.e(TAG, "ld.textureData nulo");
+                Log.e(TAG, "ld.textureData nulo");
             }
             levelMenu.addOption(i, i, ld.textureUnit, ld.textureData, new Animation.AnimationListener() {
                 @Override
@@ -676,14 +676,16 @@ public class MenuHandler {
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
                 } else {
 
-                    if (SaveGame.saveGame.saveMenuSeen){
-                        GoogleAPI.showSnapshots();
-                    } else {
+                    if (Game.sempreVerSaveMenu){
                         Game.setGameState(Game.GAME_STATE_MENU_SAVE_FIRST_TIME);
+                    } else {
+                        if (SaveGame.saveGame.saveMenuSeen) {
+                            GoogleAPI.showSnapshots();
+                        } else {
+                            SaveGame.saveGame.saveMenuSeen = true;
+                            Game.setGameState(Game.GAME_STATE_MENU_SAVE_FIRST_TIME);
+                        }
                     }
-
-
-
                 }
             }
         });

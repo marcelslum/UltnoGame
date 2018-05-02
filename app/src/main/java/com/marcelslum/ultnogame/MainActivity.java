@@ -10,12 +10,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -35,6 +39,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Result;
+import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
@@ -60,8 +65,6 @@ import static com.marcelslum.ultnogame.GoogleAPI.mSnapshotsClient;
 public class MainActivity extends FragmentActivity implements
         SensorEventListener
         {
-
-
             // Request code for saving the game to a snapshot.
             private static final int RC_SAVE_SNAPSHOT = 9004;
 
@@ -211,9 +214,6 @@ public class MainActivity extends FragmentActivity implements
         saveGameFromCloud = SaveGame.getSaveGameFromJson(stringToSave);
 
         Game.myGlSurface.setMenuCarregarMessage();
-
-        Game.setGameState(Game.GAME_STATE_MENU_CARREGAR_JOGO);
-
     }
 
 
@@ -352,47 +352,77 @@ public class MainActivity extends FragmentActivity implements
 
         Log.e(TAG, "gd " + gd.number);
 
+        int levelNumber = (SaveGame.saveGame.lastLevelPlayed >= 1 && SaveGame.saveGame.lastLevelPlayed <= 100) ? SaveGame.saveGame.lastLevelPlayed : 1;
+
+        TextureData td = TextureData.getTextureDataById(LevelDataLoader.getTextureData(levelNumber));
+
+
+        Log.e(TAG, "x "+gd.textureData.x);
+        Log.e(TAG, "y "+gd.textureData.y);
+        Log.e(TAG, "w "+gd.textureData.w);
+        Log.e(TAG, "h "+gd.textureData.h);
+        Log.e(TAG, "x "+(int) (gd.textureData.x * 2048f));
+        Log.e(TAG, "y "+(int) (gd.textureData.y * 2048f));
+        Log.e(TAG, "w "+(int) ((gd.textureData.x + gd.textureData.w) * 2048f));
+        Log.e(TAG, "h "+(int)  ((gd.textureData.h + gd.textureData.y) * 2048f));
+
+
 
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap resourceBitmap = null;
+        Bitmap groupCroppedBitmap = null;
+        Bitmap levelCroppedBitmap = null;
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.icons, options);
 
-        Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, (int) (gd.textureData.x * 2048f), (int) (gd.textureData.y * 2048f),(int)  ((gd.textureData.w - gd.textureData.x) * 2048f) ,(int)  ((gd.textureData.h - gd.textureData.y) * 2048f));
+        try {
+            resourceBitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.icons, options);
 
-        Bitmap maskBitmap = Bitmap.createBitmap((int)(croppedBitmap.getWidth() * 2f), (int)(croppedBitmap.getHeight()*1.2f), croppedBitmap.getConfig());
+            groupCroppedBitmap = Bitmap.createBitmap(resourceBitmap, (int) (gd.textureData.x * 2048f), (int) (gd.textureData.y * 2048f), (int) (gd.textureData.w * 2048f), (int) (gd.textureData.h * 2048f));
+            levelCroppedBitmap = Bitmap.createBitmap(resourceBitmap, (int) (td.x * 2048f), (int) (td.y * 2048f), (int) (td.w * 2048f), (int) (td.h * 2048f));
+        } catch (Exception e){
+            Log.e(TAG, e.getMessage());
+        }
+
+        // cria um bitmap vazio para desenho
+        Bitmap finalBitmap;
+        if (groupCroppedBitmap != null) {
+            finalBitmap = Bitmap.createBitmap((int) (groupCroppedBitmap.getWidth() * 2f), (int) (groupCroppedBitmap.getHeight() * 1.2f), groupCroppedBitmap.getConfig());
+        } else {
+            finalBitmap = Bitmap.createBitmap((int) (256), (int) (164), Bitmap.Config.ARGB_8888);
+        }
+
+        // desenha a cor de fundo
         Canvas c = new Canvas();
-        c.setBitmap(maskBitmap);
+        c.setBitmap(finalBitmap);
         Paint p1 = new Paint();
+        p1.setARGB(255, (int) (Color.branco.r * 255f), (int) (Color.branco.g * 255f), (int) (Color.branco.b * 255f));
+        c.drawRect(0f, 0f, finalBitmap.getWidth(), finalBitmap.getWidth(), p1);
 
+        Paint p = new Paint();
 
-        float random = Utils.getRandonFloat(0f, 1f);
+        // desenha o grupo
+        if (levelCroppedBitmap != null) {
+            c.drawBitmap(levelCroppedBitmap, (int) (finalBitmap.getWidth() * 0.1f), finalBitmap.getHeight() * 0.1f, p);
+        }
 
-
-        if (random > 0.834) {
-            p1.setARGB(255, (int) (Color.azul.r * 255f), (int) (Color.azul.g * 255f), (int) (Color.azul.b * 255f));
-        } else if (random > 0.67) {
-            p1.setARGB(255, (int)(Color.amareloCheio.r * 255f), (int)(Color.amareloCheio.g*255f), (int)(Color.amareloCheio.b*255f));
-        } else if (random > 0.64) {
-            p1.setARGB(255, (int)(Color.vermelhoCheio.r * 255f), (int)(Color.vermelhoCheio.g*255f), (int)(Color.vermelhoCheio.b*255f));
-        } else if (random > 0.51) {
-            p1.setARGB(255, (int)(Color.verdeCheio.r * 255f), (int)(Color.verdeCheio.g*255f), (int)(Color.verdeCheio.b*255f));
-        } else if (random > 0.34) {
-            p1.setARGB(255, (int)(Color.pretoCheio.r * 255f), (int)(Color.pretoCheio.g*255f), (int)(Color.pretoCheio.b*255f));
-        } else if (random > 0.17) {
-            p1.setARGB(255, (int) (Color.branco.r * 255f), (int) (Color.branco.g * 255f), (int) (Color.branco.b * 255f));
+        // desenha o grupo
+        if (groupCroppedBitmap != null) {
+            c.drawBitmap(groupCroppedBitmap, (int) (finalBitmap.getWidth() * 0.4f), groupCroppedBitmap.getHeight() * 0.2f, p);
         }
 
 
+        // libera os recursos
+        resourceBitmap.recycle();
+        groupCroppedBitmap.recycle();
+        levelCroppedBitmap.recycle();
 
-        c.drawRect(0f, 0f, maskBitmap.getWidth(), maskBitmap.getWidth(), p1);
-        Paint p = new Paint();
-        c.drawBitmap(croppedBitmap, (int)(croppedBitmap.getWidth()*0.8f), croppedBitmap.getHeight()*0.17f, p);
 
-        bitmap.recycle();
-        croppedBitmap.recycle();
-
-        return maskBitmap;
+        //if (Game.playerIcon != null){
+        //    return Game.playerIcon;
+        //} else {
+            return finalBitmap;
+        //}
     }
 
     /**
@@ -698,6 +728,8 @@ public class MainActivity extends FragmentActivity implements
     }
 
 
+
+
     private void onConnected(final GoogleSignInAccount googleSignInAccount) {
 
         //Log.e(TAG, "onConnected");
@@ -715,7 +747,18 @@ public class MainActivity extends FragmentActivity implements
                     public void onComplete(@NonNull Task<Player> task) {
                         if (task.isSuccessful()) {
                             //Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
-                            Game.playerName = task.getResult().getDisplayName();
+                            Game.playerName = task.getResult().getName()+"!";
+
+                            Uri uri = task.getResult().getIconImageUri();
+                            Log.e(TAG, "uri " + uri.getPath());
+                            ImageManager.create(Game.mainActivity)
+                                    .loadImage(new ImageManager.OnImageLoadedListener() {
+                                        @Override
+                                        public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {
+                                            Game.playerIcon = Utils.drawableToBitmap(drawable);
+                                        }
+                                    }, uri);
+
                             if (MessagesHandler.messageGoogleLogged != null) {
                                 MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + Game.playerName);
                             }

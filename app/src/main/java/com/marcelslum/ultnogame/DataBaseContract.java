@@ -75,6 +75,22 @@ public final class DataBaseContract {
         public static final String COLUMN_BALL_VELOCITY = "ballVelocity";
         public static final String COLUMN_ORIENTATION_INVERTED = "orientation_inverted";
         public static final String COLUMN_SAVE_MENU_SEEN = "save_menu_seen";
+        public static final String COLUMN_LAST_LEVEL_PLAYED = "last_level_played";
+        public static final String COLUMN_EXTRA_INT_1 = "extra_int_1";
+        public static final String COLUMN_EXTRA_INT_2 = "extra_int_2";
+        public static final String COLUMN_EXTRA_INT_3 = "extra_int_3";
+        public static final String COLUMN_EXTRA_INT_4 = "extra_int_4";
+        public static final String COLUMN_EXTRA_INT_5 = "extra_int_5";
+        public static final String COLUMN_EXTRA_INT_6 = "extra_int_6";
+        public static final String COLUMN_EXTRA_INT_7 = "extra_int_7";
+        public static final String COLUMN_EXTRA_INT_8 = "extra_int_8";
+        public static final String COLUMN_EXTRA_INT_9 = "extra_int_9";
+        public static final String COLUMN_EXTRA_INT_10 = "extra_int_10";
+        public static final String COLUMN_EXTRA_TEXT_1 = "extra_text_1";
+        public static final String COLUMN_EXTRA_TEXT_2 = "extra_text_2";
+        public static final String COLUMN_EXTRA_TEXT_3 = "extra_text_3";
+        public static final String COLUMN_EXTRA_TEXT_4 = "extra_text_4";
+        public static final String COLUMN_EXTRA_TEXT_5 = "extra_text_5";
     }
 
     public static class DataLevels implements BaseColumns {

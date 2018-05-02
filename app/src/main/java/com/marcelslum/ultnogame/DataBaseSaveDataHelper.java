@@ -242,8 +242,6 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
              break;
         }
 
-
-
         // DADOS GERAIS, CAMPOS NOVOS
 
         String[] projection5 = {
@@ -255,8 +253,8 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
             cursor = myDataBase.query(
                     DataBaseContract.Data.TABLE_NAME,          // The table to query
-                    projection3,                                // The columns to return
-                    selection,                                 // The columns for the WHERE clause
+                    projection5,                                // The columns to return
+                    selection2,                                 // The columns for the WHERE clause
                     null,                                      // The values for the WHERE clause
                     null,                                      // don't group the rows
                     null,                                      // don't filter by row groups
@@ -264,7 +262,6 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             );
 
             while (cursor.moveToNext()) {
-                saveGameBuilder.setBallVelocity(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_BALL_VELOCITY)));
                 try {
                     saveGameBuilder.setSaveMenuSeen(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN)) == 1 ? true : false);
                 } catch (Exception e) {
@@ -273,6 +270,39 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                     saveGameBuilder.setSaveMenuSeen(false);
                 }
 
+                break;
+            }
+        } catch (Exception e){
+            Log.e(TAG, e.getMessage());
+        }
+
+
+        // CAMPO LAST LEVEL PLAYED
+
+        String[] projection6 = {
+                DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN
+        };
+        String selection3 =
+                DataBaseContract.Targets._ID + " = 1";
+        try {
+
+            cursor = myDataBase.query(
+                    DataBaseContract.Data.TABLE_NAME,          // The table to query
+                    projection6,                                // The columns to return
+                    selection3,                                 // The columns for the WHERE clause
+                    null,                                      // The values for the WHERE clause
+                    null,                                      // don't group the rows
+                    null,                                      // don't filter by row groups
+                    null                                       // don't sort
+            );
+
+            while (cursor.moveToNext()) {
+                try {
+                    saveGameBuilder.setLastLevelPlayed(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.Data.COLUMN_LAST_LEVEL_PLAYED)));
+                } catch (Exception e) {
+                    Log.e(TAG, "Campo COLUMN_LAST_LEVEL_PLAYED");
+                    Log.e(TAG, e.getMessage());
+                }
                 break;
             }
         } catch (Exception e){
@@ -380,6 +410,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             values.put(DataBaseContract.Data.COLUMN_TUTORIAL_MENU_TRANSLATE_X, saveGame.currentTutorialMenuTranslateX);
             values.put(DataBaseContract.Data.COLUMN_LAST_STARS, saveGame.lastStars);
             values.put(DataBaseContract.Data.COLUMN_LEVELS_PLAYED, saveGame.levelsPlayed);
+
         
         String selection = DataBaseContract.Data._ID + " LIKE 1";
         
@@ -396,6 +427,24 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             myDataBase.update(DataBaseContract.Data.TABLE_NAME,values, selection,null);
         }catch(SQLiteException e){
             Log.e(TAG, "não foi possível salvar no banco de dados a opção orientationInverted");
+        }
+
+        try{
+            values = new ContentValues();
+            values.put(DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN, saveGame.saveMenuSeen ? 1 : 0);
+            selection = DataBaseContract.Data._ID + " LIKE 1";
+            myDataBase.update(DataBaseContract.Data.TABLE_NAME,values, selection,null);
+        }catch(SQLiteException e){
+            Log.e(TAG, "não foi possível salvar no banco de dados a opção saveMenuSeen");
+        }
+
+        try{
+            values = new ContentValues();
+            values.put(DataBaseContract.Data.COLUMN_LAST_LEVEL_PLAYED, saveGame.lastLevelPlayed);
+            selection = DataBaseContract.Data._ID + " LIKE 1";
+            myDataBase.update(DataBaseContract.Data.TABLE_NAME,values, selection,null);
+        }catch(SQLiteException e){
+            Log.e(TAG, "não foi possível salvar no banco de dados a opção lastLevelPlayed");
         }
 
 

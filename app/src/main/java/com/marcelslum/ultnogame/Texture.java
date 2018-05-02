@@ -2,9 +2,12 @@ package com.marcelslum.ultnogame;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 
 import java.util.ArrayList;
@@ -32,6 +35,9 @@ public class Texture {
 
     public final static int TEXTURES = 100;
     public final static int TEXTURE_ICONS_CHANGE_TUTORIALS = 101;
+
+    public final static int TEXTURE_PLAYER_ICON = 102;
+
     //public final static int TEXTURE_TUTORIALS = 102;
 
     public static int MAX_TEXTURES = 8;
@@ -46,9 +52,11 @@ public class Texture {
     public static boolean[] textureNamesUsed;
     String resoureIdentifier;
     int resoureIdentifierId;
+    Drawable drawable = null;
     int textureUnit;
     int id;
     static Bitmap bitmap;
+    Bitmap persistentBitmap;
     boolean bounded = false;
     public static final String TAG = "Texture";
 
@@ -76,6 +84,14 @@ public class Texture {
         }
         bind();
     }
+
+
+    Texture(int id, Bitmap bitmap){
+        this.id = id;
+        this.persistentBitmap = bitmap;
+        bind();
+    }
+
 
     public static Texture getTextureById(int id){
         //Log.e("texture", "getTextureById "+id);
@@ -216,9 +232,6 @@ public class Texture {
             Texture.config();
         }
         
-        
-        
-        
         if (bounded){
             //Log.e("texture", "textureBounded "+id);
             return textureUnit;
@@ -226,7 +239,9 @@ public class Texture {
 
         if (bitmap.isRecycled() || bitmap == null){
             try {
-                bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
+                if (persistentBitmap == null) {
+                    bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
+                }
             }
             catch (Exception e) {
                 //Log.e(TAG, "Erro ao criar a textura", e);
@@ -254,11 +269,13 @@ public class Texture {
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_MIRRORED_REPEAT);
 
         // Load the bitmap into the bound texture.
-
         //Log.e("texture", "nova textura "+id);
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
-
-        bitmap.recycle();
+        if (persistentBitmap != null) {
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, persistentBitmap, 0);
+        } else {
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+            bitmap.recycle();
+        }
 
         return textureUnit;
     }

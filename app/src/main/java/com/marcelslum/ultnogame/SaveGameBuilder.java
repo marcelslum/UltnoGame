@@ -29,6 +29,7 @@ public class SaveGameBuilder {
     public int ballVelocity;
     public boolean orientationInverted;
     public boolean saveMenuSeen;
+    public int lastLevelPlayed;
 
 
     public SaveGameBuilder(){
@@ -148,6 +149,11 @@ public class SaveGameBuilder {
 
     public SaveGameBuilder setSaveMenuSeen(boolean saveMenuSeen) {
         this.saveMenuSeen = saveMenuSeen;
+        return this;
+    }
+
+    public SaveGameBuilder setLastLevelPlayed(int lastLevelPlayed) {
+        this.lastLevelPlayed = lastLevelPlayed;
         return this;
     }
 

@@ -87,6 +87,9 @@ public class Level {
 
         MessageStarWin.initMessageStarsWin();
 
+
+        SaveGame.saveGame.lastLevelPlayed = SaveGame.saveGame.currentLevelNumber;
+
         MessagesHandler.messageTime.setText("00:00");
         if (SaveGame.saveGame.currentLevelNumber < 101) {
             MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));

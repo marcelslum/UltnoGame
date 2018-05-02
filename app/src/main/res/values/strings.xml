@@ -25,7 +25,7 @@
     <string name="messageCurrentLevel">Nível</string>
     <string name="messageGameOver">GAME OVER</string>
     <string name="messageNaoConectado1">Este jogo é totalmente gratuito. Apoie o desenvolvedor conectando-se à internet para exibir propagandas.</string>
-    <string name="messageGoogle1">Este jogo utiliza serviços do Google Play Games para exibir rankings e conquistas.</string>
+    <string name="messageGoogle1">Este jogo utiliza serviços do Google Play Games para exibir rankings/conquistas e realizar o salvamento do progresso na nuvem.</string>
     <string name="messageGoogle1b">Deseja utilizar esse serviço?</string>
     <string name="messageGoogle2">Você poderá alterar essa opção mais tarde no menu Opções do jogo.</string>
 
@@ -540,7 +540,7 @@
     <string name="erro_ao_salvar">Houve um erro ao salvar o jogo na nuvem.</string>
     <string name="carregando_snapshot">Carregando jogo salvo.</string>
     <string name="messageMenuSaveNotSeen1">O seu progresso neste jogo é salvo localmente de maneira automática.</string>
-    <string name="messageMenuSaveNotSeen2">Salve na nuvem para manter um backup do jogo para ser utilizado posteriormente em caso de troca de aparelho, necessidade de reinstalação do jogo ou situação semelhante.</string>
+    <string name="messageMenuSaveNotSeen2">Salve na nuvem para manter um backup do seu progresso para ser utilizado posteriormente em caso de troca de aparelho, necessidade de reinstalação do jogo ou situação semelhante.</string>
     <string name="messageMenuSaveNotSeen3">Lembre-se que o salvamento na nuvem é associado à conta do Google atualmente conectada.</string>
     <string name="lembrarDepois">Avisar-me novamente mais tarde</string>
     <string name="okEntendi">Ok, entendi.</string>
@@ -556,6 +556,7 @@
     <string name="messageCarregarJogo6">(Carregar o jogo da nuvem ou mesclar os jogos sobrescreverá o jogo salvo localmente).</string>
     <string name="mescladoJogos">Salvamentos mesclados com sucesso!</string>
     <string name="carregadoJogo">Salvamento carregado com sucesso da nuvem!</string>
+    <string name="erro_ao_carregar">Houve um erro ao carregador os dados salvos na nuvem! Tente novamente mais tarde.</string>
 
 
 </resources>

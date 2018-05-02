@@ -1,6 +1,10 @@
 package com.marcelslum.ultnogame;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -148,6 +152,27 @@ public abstract class Utils {
         buffer.position(0);
         buffer.put(data);
         buffer.position(0);
+    }
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            Log.e(TAG, "drawable instanceof BitmapDrawable");
+            return ((BitmapDrawable)drawable).getBitmap();
+        }
+
+        int width = drawable.getIntrinsicWidth();
+        Log.e(TAG, "width " + width);
+        width = width > 0 ? width : 1;
+        int height = drawable.getIntrinsicHeight();
+        Log.e(TAG, "height " + height);
+        height = height > 0 ? height : 1;
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
     }
 
     private static ShortBuffer generateShortBuffer(short[] data) {

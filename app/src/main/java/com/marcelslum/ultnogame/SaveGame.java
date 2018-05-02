@@ -42,6 +42,7 @@ public class SaveGame {
     public int levelsPlayed;
     public boolean orientationInverted;
     public boolean saveMenuSeen;
+    public int lastLevelPlayed;
 
     public static boolean loaded = false;
 
@@ -67,6 +68,7 @@ public class SaveGame {
         levelsPlayed = builder.levelsPlayed;
         orientationInverted = builder.orientationInverted;
         saveMenuSeen = builder.saveMenuSeen;
+        lastLevelPlayed = builder.lastLevelPlayed;
     }
 
     public static void load() {
@@ -141,6 +143,7 @@ public class SaveGame {
                     .setLastStars(0)
                     .setLevelsPlayed(0)
                     .setOrientationInverted(false)
+                    .setLastLevelPlayed(0)
                     .build();
         }
 
@@ -309,6 +312,7 @@ public class SaveGame {
         int flevelsPlayed;
         boolean fOrientationInverted;
         boolean fSaveMenuSeen;
+        int flastLevelPlayed;
 
         flevelsPoints = Utils.getHigher(saveGame1.levelsPoints, saveGame2.levelsPoints);
         flevelsStars = Utils.getHigher(saveGame1.levelsStars, saveGame2.levelsStars);
@@ -325,6 +329,7 @@ public class SaveGame {
         fgoogleOption = Utils.getHigher(saveGame1.googleOption, saveGame2.googleOption);
         fOrientationInverted = Utils.getHigher(saveGame1.orientationInverted, saveGame2.orientationInverted);
         fSaveMenuSeen = Utils.getHigher(saveGame1.saveMenuSeen, saveGame2.saveMenuSeen);
+        flastLevelPlayed = Utils.getHigher(saveGame1.lastLevelPlayed, saveGame2.lastLevelPlayed);
 
 
         //Log.e(TAG, "merge google option saveGame1.googleOption "+ saveGame1.googleOption);
@@ -361,6 +366,7 @@ public class SaveGame {
                 .setLevelsPlayed(flevelsPlayed)
                 .setOrientationInverted(fOrientationInverted)
                 .setSaveMenuSeen(fSaveMenuSeen)
+                .setLastLevelPlayed(flastLevelPlayed)
                 .build();
     }
 
@@ -545,6 +551,12 @@ public class SaveGame {
                 saveGameBuilder.setOrientationInverted(false);
             }
 
+            try {
+                saveGameBuilder.setLastLevelPlayed(obj.getInt("lastLevelPlayed"));
+            } catch(JSONException e) {
+                saveGameBuilder.setLastLevelPlayed(0);
+            }
+
             return saveGameBuilder.build();
 
         } catch (JSONException ex) {
@@ -601,6 +613,7 @@ public class SaveGame {
             obj.put("levelsPlayed", saveGame.levelsPlayed);
             obj.put("orientationInverted", saveGame.orientationInverted);
             obj.put("saveMenuSeen", saveGame.saveMenuSeen);
+            obj.put("lastLevelPlayed", saveGame.lastLevelPlayed);
             return obj.toString();
         } catch (JSONException ex) {
             ex.printStackTrace();

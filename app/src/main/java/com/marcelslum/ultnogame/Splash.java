@@ -91,7 +91,7 @@ public class Splash {
         // -------------------------------------------MENU CONECTAR GOOGLE
         float fontSize = Game.gameAreaResolutionY*0.08f;
 
-        menuGoogle = new Menu("menuGoogle", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
+        menuGoogle = new Menu("menuGoogle", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.58f, fontSize, Game.font);
         menuGoogle.addMenuOption("Sim", Game.getContext().getResources().getString(R.string.menuGoogleSim), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -101,8 +101,6 @@ public class Splash {
                 forSignin = true;
                 Log.e(TAG, "init2");
                 init();
-
-
             }
         });
 
@@ -134,14 +132,15 @@ public class Splash {
         menuGoogle.blockAndClearDisplay();
 
         messageGoogle1 = new TextView("messageGoogle1", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.1f,
+                Game.resolutionY * 0.15f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
-                fontSize * 0.8f,
+                fontSize * 0.75f,
                 Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1), new Color(0f, 0f, 0f, 1f));
-        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b), new Color(0f, 0f, 0f, 1f));
+        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1), Color.cinza40);
+        messageGoogle1.addText(".", Color.transparente);
+        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b), Color.pretoCheio);
 
         messageGoogle1.clearDisplay();
 
@@ -150,7 +149,7 @@ public class Splash {
                 Game.resolutionX * 1f,
                 Game.resolutionY,
                 fontSize * 0.55f,
-                Game.font, new Color(0.6f, 0.6f, 0.7f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+                Game.font, Color.cinza60, Text.TEXT_ALIGN_CENTER, 0.2f);
 
         messageGoogle2.addText(Game.getContext().getResources().getString(R.string.messageGoogle2), Color.cinza60);
 
@@ -200,13 +199,14 @@ public class Splash {
         menuGoogle2.blockAndClearDisplay();
 
         messageGoogle1_2 = new TextView("messageGoogle1_2", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.1f,
+                Game.resolutionY * 0.15f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
-                fontSize * 0.8f,
-                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+                fontSize * 0.75f,
+                Game.font, Color.zero, Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1_2), Color.cinza80);
+        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1_2), Color.cinza40);
+        messageGoogle1_2.addText(".", Color.transparente);
         messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b_2), Color.pretoCheio);
 
         messageGoogle1_2.clearDisplay();

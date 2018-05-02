@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -21,8 +23,10 @@ public class Game {
 
     public static Sound sound = new Sound();
 
+    static Bitmap playerIcon;
+
     public static boolean forDebugDeleteDatabaseAndStorage = false;
-    public static boolean ganharTodasAsEstrelas = true;
+    public static boolean ganharTodasAsEstrelas = false;
     public static boolean paraGravacaoVideo = false;
     public static boolean ganharComMetadeDasBolas = false;
     public static boolean sempreGanharTodasEstrelas = false;
@@ -34,6 +38,7 @@ public class Game {
     public static boolean logInteractionListener = false;
     public static boolean logCollisionEscape = false;
     public static boolean logMenuIconMoveAndTranslateX = false;
+    public static boolean sempreVerSaveMenu = true;
 
 
     public static MyGLSurface myGlSurface;
@@ -104,6 +109,7 @@ public class Game {
     static Edge bordaE;
     static Edge bordaD;
     static Edge bordaB;
+    static ImageBitmap playerIconImage;
 
 
 
@@ -609,6 +615,10 @@ public class Game {
 
         TimeHandler.timeOfLevelPlayBlocked = true;
 
+        if (playerIconImage != null){
+            playerIconImage.clearDisplay();
+        }
+
         if (state == GAME_STATE_INTERSTITIAL){
             eraseAllGameEntities();
             mainActivity.showInterstitial();
@@ -890,6 +900,17 @@ public class Game {
             //Log.e(TAG, "playerName "+playerName);
 
             if (mainActivity.isSignedIn()){
+                Log.e(TAG, "mainActivity.isSignedIn()");
+                if (playerIcon != null){
+                    if (Game.playerIconImage != null){
+                        Game.playerIconImage.setBitmap(Game.playerIcon);
+                    } else {
+                        Game.playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, Game.playerIcon);
+                    }
+
+                    playerIconImage.display();
+                }
+
                 MessagesHandler.messageGoogleLogged.setText(getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerName);
             } else {
                 MessagesHandler.messageGoogleLogged.setText(getContext().getResources().getString(R.string.googleNaoLogado));
@@ -2404,6 +2425,8 @@ public class Game {
         //otimização if (bordaC != null)bordaC.checkTransformations(true);
         if (bordaB != null)bordaB.checkTransformations(true);
 
+        if (playerIconImage != null)playerIconImage.checkTransformations(true);
+
 
         //otimização if (frame != null)frame.checkTransformations(true);
         //otimização if (frame != null)topFrame.checkTransformations(true);
@@ -2535,6 +2558,8 @@ public class Game {
         if (Tutorial.tutorialTextBox != null) Tutorial.tutorialTextBox.prepareRender(matrixView, matrixProjection);
 
         if (currentLevelIcon != null) currentLevelIcon.prepareRender(matrixView, matrixProjection);
+
+        if (playerIconImage != null)playerIconImage.prepareRender(matrixView, matrixProjection);
 
         if (groupsUnblocked != null) {
             for (int i = 0; i < groupsUnblocked.size(); i++) {
