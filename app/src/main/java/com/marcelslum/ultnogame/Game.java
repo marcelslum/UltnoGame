@@ -16,6 +16,7 @@ import android.util.Log;
 import static android.content.Context.ACTIVITY_SERVICE;
 
 // TODO Resetar ranking geral
+// TODO fechar banco de dados após uso
 
 
 
@@ -148,6 +149,7 @@ public class Game {
     
     // game state
     public static int gameState;
+    public final static int GAME_STATE_OPCOES_JOGABILIDADE =  6;
     public final static int GAME_STATE_MENU_SAVE_FIRST_TIME =  8;
     public final static int GAME_STATE_MENU_CARREGAR_JOGO = 7;
     public final static int GAME_STATE_PRE_JOGAR = 9;
@@ -339,8 +341,8 @@ public class Game {
     public static void initTittle(){
 
         tittle = new Image("tittle",
-                gameAreaResolutionX * 0.34f, gameAreaResolutionY * 0.15f,
-                gameAreaResolutionX * 0.32f, gameAreaResolutionX * 0.32f * 0.3671875f,
+                gameAreaResolutionX * 0.3f, gameAreaResolutionY * 0.13f,
+                gameAreaResolutionX * 0.4f, gameAreaResolutionX * 0.4f * 0.3671875f,
                 Texture.TEXTURES,
                 TextureData.getTextureDataById(TextureData.TEXTURE_TITTLE_ID),
                 new Color(0.5f, 0.2f, 0.8f, 1f));
@@ -795,7 +797,7 @@ public class Game {
             Log.e(TAG, "init1");
             Splash.init();
         } else if (state == GAME_STATE_OPCOES){
-
+            MessagesHandler.messageBack.display();
             Sound.musicCurrentPart = Sound.MUSIC_PRE_INTRO;
             Sound.musicCurrentGlobalPart = Sound.MUSIC_GLOBAL_PART_A;
             Sound.musicCurrentSubPart = Sound.MUSIC_SUB_PART_A_A1;
@@ -805,7 +807,6 @@ public class Game {
                 Game.aboutTextView.blockAndClearDisplay();
             }
 
-            SelectorHandler.repositionSelectors(state);
             mainActivity.showAdView();
             tittle.display();
             ButtonHandler.buttonReturn.unblockAndDisplay();
@@ -816,6 +817,18 @@ public class Game {
             } else {
                 MenuHandler.menuOptions.getMenuOptionByName("google").setText(getContext().getResources().getString(R.string.logarGoogle));
             }
+
+        } else if (state == GAME_STATE_OPCOES_JOGABILIDADE){
+            MessagesHandler.messageBack.display();
+            MenuHandler.menuOptions.block();
+            MenuHandler.menuOptions.clearDisplay();
+
+            SelectorHandler.repositionSelectors(state);
+            mainActivity.showAdView();
+            tittle.display();
+            ButtonHandler.buttonReturn.unblockAndDisplay();
+            MenuHandler.menuOptionsPlay.appearAndUnblock(50);
+
 
         } else if (state == GAME_STATE_OPCOES_GAME){
 
@@ -2372,6 +2385,7 @@ public class Game {
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.checkTransformations(true);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.checkTransformations(true);
+        if (MenuHandler.menuOptionsPlay != null) MenuHandler.menuOptionsPlay.checkTransformations(true);
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.checkTransformations(true);
         if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.checkTransformations(true);
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.checkTransformations(true);
@@ -2543,6 +2557,7 @@ public class Game {
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.prepareRender(matrixView, matrixProjection);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuOptionsPlay != null) MenuHandler.menuOptionsPlay.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.tutorialMenu != null) MenuHandler.tutorialMenu.prepareRender(matrixView, matrixProjection);
@@ -2597,7 +2612,7 @@ public class Game {
 
 
         if (gameState == GAME_STATE_MENU || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL
-                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO){
+                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO || gameState == GAME_STATE_OPCOES_JOGABILIDADE){
             if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
             if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
             if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
@@ -2664,6 +2679,7 @@ public class Game {
         if (MenuHandler.menuFirstSaveGame != null) MenuHandler.menuFirstSaveGame.verifyListener();
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.verifyListener();
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.verifyListener();
+        if (MenuHandler.menuOptionsPlay != null) MenuHandler.menuOptionsPlay.verifyListener();
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.verifyListener();
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.verifyListener();
 

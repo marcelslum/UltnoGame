@@ -48,7 +48,7 @@ public class Color {
     static final Color rosaClaro = new Color (1f, 0.8f, 0.8f, 1f);
 
     static final Color roxoCheio = new Color (0.49f, 0.15f, 0.8f, 1f);
-    static final Color roxoClaro = new Color (0.62f, 0.47f, 0.93f, 1f);
+    static final Color roxoClaro = new Color (0.49f, 0.15f, 0.8f, 1f);
 
     public float r;
     public float g;

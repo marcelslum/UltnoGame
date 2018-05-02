@@ -138,7 +138,7 @@ public class Splash {
                 fontSize * 0.75f,
                 Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1), Color.cinza40);
+        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1), Color.cinza60);
         messageGoogle1.addText(".", Color.transparente);
         messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b), Color.pretoCheio);
 
@@ -205,7 +205,7 @@ public class Splash {
                 fontSize * 0.75f,
                 Game.font, Color.zero, Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1_2), Color.cinza40);
+        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1_2), Color.azulClaro);
         messageGoogle1_2.addText(".", Color.transparente);
         messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b_2), Color.pretoCheio);
 
@@ -249,7 +249,7 @@ public class Splash {
             }
         });
 
-        menuVelocity = new Menu("menuVelocity", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+        menuVelocity = new Menu("menuVelocity", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.65f, fontSize, Game.font);
         menuVelocity.addMenuOption("Alterar", Game.getContext().getResources().getString(R.string.menuVelocityAlterar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
@@ -278,14 +278,15 @@ public class Splash {
         menuVelocity.blockAndClearDisplay();
 
         messageVelocity1 = new TextView("messageVelocity1", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.2f,
+                Game.resolutionY * 0.17f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
-                fontSize * 0.8f,
+                fontSize * 0.75f,
                 Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageVelocity1.addText(Game.getContext().getResources().getString(R.string.messageVelocity1), new Color(0f, 0f, 0f, 1f));
-        messageVelocity1.addText(Game.getContext().getResources().getString(R.string.messageVelocity1b), new Color(0f, 0f, 0f, 1f));
+        messageVelocity1.addText(Game.getContext().getResources().getString(R.string.messageVelocity1), Color.cinza60);
+        messageVelocity1.addText(".", Color.transparente);
+        messageVelocity1.addText(Game.getContext().getResources().getString(R.string.messageVelocity1b), Color.pretoCheio);
 
         messageVelocity1.clearDisplay();
 
@@ -526,18 +527,22 @@ public class Splash {
         if (state == SPLASH_CARREGANDO) {
 
             if (Game.paraGravacaoVideo){
-                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
+                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION/3f && loaderConclude) {
                     if (SaveGame.saveGame.ballVelocity < 0) {
-                        setSplashState(SPLASH_MENU_VELOCITY);
+                        if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION * 2f) {
+                            setSplashState(SPLASH_MENU_VELOCITY);
+                        }
                     } else {
                         setSplashState(SPLASH_CONECTANDO_INTERNET);
                     }
                 }
 
             } else {
-                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION/6f && loaderConclude) {
+                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION/3f && loaderConclude) {
                     if (SaveGame.saveGame.ballVelocity < 0) {
-                        setSplashState(SPLASH_MENU_VELOCITY);
+                        if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION * 2f) {
+                            setSplashState(SPLASH_MENU_VELOCITY);
+                        }
                     } else {
                         setSplashState(SPLASH_CONECTANDO_INTERNET);
                     }

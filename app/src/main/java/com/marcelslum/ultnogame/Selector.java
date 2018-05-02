@@ -226,7 +226,7 @@ public class Selector extends Entity{
     public void fromMenu(Menu menu){
 
         menuRelated = menu;
-        menu.isBlocked = true;
+        menu.block();
         alpha = 0f;
         isVisible = true;
 
@@ -276,7 +276,7 @@ public class Selector extends Entity{
         reduceAlphaAnim .setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd() {
-                innerMenu.isBlocked = false;
+                innerMenu.unblock();
                 innerSelector2.isVisible = false;
             }
         });

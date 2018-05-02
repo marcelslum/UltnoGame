@@ -25,11 +25,40 @@ class Menu extends Entity{
     public void block(){
         Game.blockAndWaitTouchRelease();
         this.isBlocked = true;
+
+        for (int i = 0; i < menuOptions.size(); i++) {
+            menuOptions.get(i).textObject.cleanAnimations();
+        }
+
     }
 
     public void unblock(){
         Game.blockAndWaitTouchRelease();
         this.isBlocked = false;
+
+
+        for (int i = 0; i < menuOptions.size(); i++) {
+
+            Text t = menuOptions.get(i).textObject;
+
+            Utils.createAnimation5v(t, "scaleXAnim","scaleX", 5000,
+                    0f, 1f,
+                    0.2f + (i * 0.03f), 1f,
+                    0.27f + (i * 0.032f), 1.1f,
+                    0.35f + (i * 0.035f), 1f,
+                    1f, 1f,
+                    true, true).start();
+
+
+            Utils.createAnimation5v(t, "scaleYAnim","scaleY", 5000,
+                    0f, 1f,
+                    0.2f + (i * 0.03f), 1f,
+                    0.27f + (i * 0.032f), 1.05f,
+                    0.35f + (i * 0.035f), 1f,
+                    1f, 1f,
+                    true, true).start();
+
+        }
     }
 
     public void appearAndUnblock(int duration){
@@ -114,7 +143,7 @@ class Menu extends Entity{
     static int lastMenuOptionColor = 0;
 
     public MenuOption addMenuOption(String name, String text, MenuOption.OnChoice onChoice){
-        float optionY = this.y + (optionsIds * (size *(1.01f+bottomPad)));
+        float optionY = this.y + (optionsIds * (size *(1.05f+bottomPad)));
         optionsIds += 1;
 
         Color color;
@@ -122,7 +151,7 @@ class Menu extends Entity{
         if (lastMenuOptionColor == 0){
             lastMenuOptionColor += 1;
             color = Color.pretoCheio;
-            shadow = Color.cinza60.changeAlpha(0.2f);
+            shadow = Color.cinza40.changeAlpha(0.25f);
         } else if (lastMenuOptionColor == 1){
             lastMenuOptionColor += 1;
             color = Color.azul40;
@@ -149,7 +178,7 @@ class Menu extends Entity{
         final int innerId = optionsIds;
 
         newMenuOption.textObject.setListener(new InteractionListener(name,
-                newMenuOption.x - (newMenuOption.width/2) - newMenuOption.width * 0.1f,
+                newMenuOption.x - (newMenuOption.width/2) - newMenuOption.width * 0.2f,
                 optionY - newMenuOption.size * 0.15f,
                 newMenuOption.width * 1.1f,
                 newMenuOption.size * 1.3f,

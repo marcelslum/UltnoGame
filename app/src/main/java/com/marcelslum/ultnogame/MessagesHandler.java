@@ -87,17 +87,19 @@ public class MessagesHandler {
 
         float fontSize = Game.gameAreaResolutionY*0.08f;
         messageMenuSaveNotSeen = new TextView("messageMenuSaveNotSeen", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.25f,
+                Game.resolutionY * 0.125f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
                 fontSize * 0.55f,
                 Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen1), Color.azulClaro);
+        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen1), Color.cinza40);
         messageMenuSaveNotSeen.addText(".", Color.transparente);
-        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen2), Color.azulClaro);
+        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen2), Color.cinza40);
         messageMenuSaveNotSeen.addText(".", Color.transparente);
-        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen3), Color.azulClaro);
+        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen3), Color.cinza40);
+        messageMenuSaveNotSeen.addText(".", Color.transparente);
+        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen4), Color.cinza40);
 
 
         messageMenuCarregarJogo = new TextView("messageMenuCarregarJogo", Game.resolutionX * 0.5f,
@@ -172,12 +174,12 @@ public class MessagesHandler {
                 ".", Game.font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_RIGHT);
 
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
-                Game.resolutionX*0.825f, Game.resolutionY*0.15f, Game.resolutionY*0.07f,
+                Game.resolutionX*0.825f, Game.resolutionY*0.18f, Game.resolutionY*0.07f,
                 resources.getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, Color.amareloCheio);
 
         messageConqueredStarsTotal.addShadow(Color.cinza70);
 
-        starForMessage = new Image("frame", Game.resolutionX*0.755f, MessagesHandler.messageConqueredStarsTotal.y + Game.resolutionY*0.011f,
+        starForMessage = new Image("frame", Game.resolutionX*0.755f, MessagesHandler.messageConqueredStarsTotal.y + Game.resolutionY*0.012f,
                 Game.resolutionY*0.07f, Game.resolutionY*0.07f, Texture.TEXTURES,
                 TextureData.getTextureDataById(TextureData.TEXTURE_STAR_SHINE_ID));
 

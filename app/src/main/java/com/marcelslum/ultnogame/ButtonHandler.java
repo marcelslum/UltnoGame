@@ -138,8 +138,12 @@ public class ButtonHandler {
                 } else if (Game.gameState == Game.GAME_STATE_SOBRE){
                     Game.setGameState(Game.GAME_STATE_OPCOES);
                 } else if (Game.gameState == Game.GAME_STATE_OPCOES){
-                    SelectorHandler.backAllSelectors();
                     Game.setGameState(Game.GAME_STATE_MENU);
+                } else if (Game.gameState == Game.GAME_STATE_OPCOES_JOGABILIDADE){
+                    MenuHandler.menuOptionsPlay.clearDisplay();
+                    MenuHandler.menuOptionsPlay.block();
+                    SelectorHandler.backAllSelectors();
+                    Game.setGameState(Game.GAME_STATE_OPCOES);
                 }
             }
         });

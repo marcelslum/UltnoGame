@@ -3,8 +3,6 @@ package com.marcelslum.ultnogame;
 import android.content.pm.ActivityInfo;
 import android.util.Log;
 
-import com.squareup.haha.perflib.Main;
-
 import java.util.ArrayList;
 
 public class MenuHandler {
@@ -12,6 +10,7 @@ public class MenuHandler {
     static Menu menuMain;
 
     static Menu menuOptions;
+    static Menu menuOptionsPlay;
     static Menu menuInGame;
     static Menu menuInGameOptions;
     static Menu menuGameOver;
@@ -357,44 +356,32 @@ public class MenuHandler {
         //menuObjectives = new Menu("menuObjectives", Game.resolutionX*0.5f, Game.resolutionY*0.87f, fontSize, font);
         //menuObjectives.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.iniciar_jogo), new MenuOption.OnChoice() {@Override public void onChoice() {}});
 
-        // -------------------------------------------MENU OPTIONS
-        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.35f, fontSize, Game.font);
 
-        menuOptions.addMenuOption("sobre", Game.getContext().getResources().getString(R.string.lerSobre), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Game.setGameState(Game.GAME_STATE_SOBRE);
-            }
-        });
 
+        // -------------------------------------------MENU OPTIONS PLAY
+        menuOptionsPlay = new Menu("menuOptionsPlay", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
 
         // SELETOR DIFICULDADE
         SelectorHandler.selectorDifficulty = new Selector("Game.selectorDifficulty", 0f,0f, fontSize, "",
                 new String[]{   //Game.getContext().getResources().getString(R.string.v0),
-                                //Game.getContext().getResources().getString(R.string.v1),
-                                Game.getContext().getResources().getString(R.string.v0),
-                                Game.getContext().getResources().getString(R.string.v1),
-                                Game.getContext().getResources().getString(R.string.v2),
-                                Game.getContext().getResources().getString(R.string.v3),
-                                Game.getContext().getResources().getString(R.string.v4),
-                                Game.getContext().getResources().getString(R.string.v5),
-                                Game.getContext().getResources().getString(R.string.v6)
-                            },
+                        //Game.getContext().getResources().getString(R.string.v1),
+                        Game.getContext().getResources().getString(R.string.v0),
+                        Game.getContext().getResources().getString(R.string.v1),
+                        Game.getContext().getResources().getString(R.string.v2),
+                        Game.getContext().getResources().getString(R.string.v3),
+                        Game.getContext().getResources().getString(R.string.v4),
+                        Game.getContext().getResources().getString(R.string.v5),
+                        Game.getContext().getResources().getString(R.string.v6)
+                },
                 Game.font);
 
-        menuOptions.addMenuOption("difficulty", Game.getContext().getResources().getString(R.string.velocidade), new MenuOption.OnChoice() {
+        menuOptionsPlay.addMenuOption("difficulty", Game.getContext().getResources().getString(R.string.velocidade), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandler.selectorDifficulty.fromMenu(menuOptions);
+                SelectorHandler.selectorDifficulty.fromMenu(menuOptionsPlay);
             }
         });
 
-        //if (SaveGame.saveGame.ballVelocity == 70) {
-        //    SelectorHandler.selectorDifficulty.setSelectedValue(0);
-        //} else if (SaveGame.saveGame.ballVelocity == 80) {
-        //    SelectorHandler.selectorDifficulty.setSelectedValue(1);
-        //} else
-        
         if (SaveGame.saveGame.ballVelocity == 90) {
             SelectorHandler.selectorDifficulty.setSelectedValue(0);
         } else if (SaveGame.saveGame.ballVelocity == 100) {
@@ -414,11 +401,6 @@ public class MenuHandler {
         SelectorHandler.selectorDifficulty.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
-                //if (SelectorHandler.selectorDifficulty.selectedValue == 0) {
-                //    SaveGame.saveGame.ballVelocity = 70;
-                //} else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
-                //    SaveGame.saveGame.ballVelocity = 80;
-                //} else 
                 if (SelectorHandler.selectorDifficulty.selectedValue == 0) {
                     SaveGame.saveGame.ballVelocity = 90;
                 } else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
@@ -435,8 +417,6 @@ public class MenuHandler {
                     SaveGame.saveGame.ballVelocity = 150;
                 }
 
-                //Log.e(TAG, "SaveGame.saveGame.ballVelocity "+SaveGame.saveGame.ballVelocity);
-
                 if (Game.balls != null){
                     for (int i = 0; i < Game.balls.size(); i++) {
                         Game.balls.get(i).updateBaseVelocity(SaveGame.saveGame.ballVelocity);
@@ -448,10 +428,6 @@ public class MenuHandler {
                         Game.bars.get(i).updateBaseVelocity(SaveGame.saveGame.ballVelocity);
                     }
                 }
-
-
-
-
             }
         });
 
@@ -461,10 +437,10 @@ public class MenuHandler {
         SelectorHandler.selectorMusic = new Selector("Game.selectorMusic", 0f,0f, fontSize, "",
                 new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, Game.font);
 
-        menuOptions.addMenuOption("music", Game.getContext().getResources().getString(R.string.musica), new MenuOption.OnChoice() {
+        menuOptionsPlay.addMenuOption("music", Game.getContext().getResources().getString(R.string.musica), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandler.selectorMusic.fromMenu(menuOptions);
+                SelectorHandler.selectorMusic.fromMenu(menuOptionsPlay);
             }
         });
 
@@ -485,10 +461,10 @@ public class MenuHandler {
         SelectorHandler.selectorSound = new Selector("Game.selectorSound", 0f,0f, fontSize, "",
                 new String[]{Game.getContext().getResources().getString(R.string.desligado), Game.getContext().getResources().getString(R.string.ligado)}, Game.font);
 
-        menuOptions.addMenuOption("sound", Game.getContext().getResources().getString(R.string.sons), new MenuOption.OnChoice() {
+        menuOptionsPlay.addMenuOption("sound", Game.getContext().getResources().getString(R.string.sons), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandler.selectorSound.fromMenu(menuOptions);
+                SelectorHandler.selectorSound.fromMenu(menuOptionsPlay);
             }
         });
 
@@ -514,10 +490,10 @@ public class MenuHandler {
                         Game.getContext().getResources().getString(R.string.ligado)},
                 Game.font);
 
-        menuOptions.addMenuOption("vibration", Game.getContext().getResources().getString(R.string.vibracao), new MenuOption.OnChoice() {
+        menuOptionsPlay.addMenuOption("vibration", Game.getContext().getResources().getString(R.string.vibracao), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                SelectorHandler.selectorVibration.fromMenu(menuOptions);
+                SelectorHandler.selectorVibration.fromMenu(menuOptionsPlay);
             }
         });
 
@@ -535,6 +511,25 @@ public class MenuHandler {
                 } else {
                     SaveGame.saveGame.vibration = false;
                 }
+            }
+        });
+
+
+        // -------------------------------------------MENU OPTIONS
+        menuOptions = new Menu("menuOptions", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+
+        menuOptions.addMenuOption("sobre", Game.getContext().getResources().getString(R.string.lerSobre), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.setGameState(Game.GAME_STATE_SOBRE);
+            }
+        });
+
+
+        menuOptions.addMenuOption("jogabilidade", Game.getContext().getResources().getString(R.string.optionsPlay), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.setGameState(Game.GAME_STATE_OPCOES_JOGABILIDADE);
             }
         });
 
@@ -566,10 +561,6 @@ public class MenuHandler {
                 }
             }
         });
-
-
-
-
 
 
 

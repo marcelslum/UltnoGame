@@ -13,14 +13,14 @@ public class SelectorHandler {
 
 
     public static void repositionSelectors(int gameState){
-        if (gameState == Game.GAME_STATE_OPCOES){
-            MenuOption menuOptionMusicMain = MenuHandler.menuOptions.getMenuOptionByName("music");
+        if (gameState == Game.GAME_STATE_OPCOES_JOGABILIDADE){
+            MenuOption menuOptionMusicMain = MenuHandler.menuOptionsPlay.getMenuOptionByName("music");
             selectorMusic.setPosition(menuOptionMusicMain.x + (menuOptionMusicMain.width*1.5f), menuOptionMusicMain.y);
-            MenuOption menuOptionSoundMain = MenuHandler.menuOptions.getMenuOptionByName("sound");
+            MenuOption menuOptionSoundMain = MenuHandler.menuOptionsPlay.getMenuOptionByName("sound");
             selectorSound.setPosition(menuOptionSoundMain.x + (menuOptionSoundMain.width*2.2f), menuOptionSoundMain.y);
-            MenuOption menuOptionVibrationMain = MenuHandler.menuOptions.getMenuOptionByName("vibration");
+            MenuOption menuOptionVibrationMain = MenuHandler.menuOptionsPlay.getMenuOptionByName("vibration");
             selectorVibration.setPosition(menuOptionVibrationMain.x + (menuOptionVibrationMain.width*1.3f), menuOptionVibrationMain.y);
-            MenuOption menuOptionBallVelocity = MenuHandler.menuOptions.getMenuOptionByName("difficulty");
+            MenuOption menuOptionBallVelocity = MenuHandler.menuOptionsPlay.getMenuOptionByName("difficulty");
             selectorDifficulty.setPosition(menuOptionBallVelocity.x + (menuOptionBallVelocity.width*0.9f), menuOptionBallVelocity.y);
 
         } else if (gameState == Game.GAME_STATE_OPCOES_GAME){
