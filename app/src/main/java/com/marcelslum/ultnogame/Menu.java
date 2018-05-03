@@ -53,12 +53,17 @@ class Menu extends Entity{
             Utils.createAnimation5v(t, "scaleYAnim","scaleY", 5000,
                     0f, 1f,
                     0.2f + (i * 0.03f), 1f,
-                    0.27f + (i * 0.032f), 1.05f,
+                    0.27f + (i * 0.032f), 1.1f,
                     0.35f + (i * 0.035f), 1f,
                     1f, 1f,
                     true, true).start();
 
         }
+    }
+
+    @Override
+    public void unblockAndDisplay() {
+        appearAndUnblock(500);
     }
 
     public void appearAndUnblock(int duration){
@@ -75,6 +80,35 @@ class Menu extends Entity{
                 }
             });
         }
+
+
+        for (int i = 0; i < menuOptions.size(); i++) {
+
+            Color color;
+            Color shadow;
+            if (lastMenuOptionColor == 0){
+                lastMenuOptionColor += 1;
+                color = Color.pretoCheio;
+                shadow = Color.cinza40.changeAlpha(0.25f);
+            } else if (lastMenuOptionColor == 1){
+                lastMenuOptionColor += 1;
+                color = Color.azul40;
+                shadow = Color.azulCheio.changeAlpha(0.2f);
+            } else if (lastMenuOptionColor == 2){
+                lastMenuOptionColor += 1;
+                color = Color.vermelho40;
+                shadow = Color.vermelhoCheio.changeAlpha(0.2f);
+            } else {
+                lastMenuOptionColor = 0;
+                color = Color.verde40;
+                shadow = Color.verdeCheio.changeAlpha(0.2f);
+            }
+
+            menuOptions.get(i).textObject.setColor(color);
+            menuOptions.get(i).textObject.addShadow(shadow);
+        }
+
+
     }
 
 

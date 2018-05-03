@@ -280,7 +280,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         // CAMPO LAST LEVEL PLAYED
 
         String[] projection6 = {
-                DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN
+                DataBaseContract.Data.COLUMN_LAST_LEVEL_PLAYED
         };
         String selection3 =
                 DataBaseContract.Targets._ID + " = 1";

@@ -728,6 +728,44 @@ public class MainActivity extends FragmentActivity implements
     }
 
 
+    public void updatePlayerInfo(){
+
+        if (SaveGame.saveGame.googleOption != 1 && !isSignedIn()){
+            return;
+        }
+
+        GoogleAPI.mPlayersClient.getCurrentPlayer()
+                .addOnCompleteListener(new OnCompleteListener<Player>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Player> task) {
+                        if (task.isSuccessful()) {
+                            Game.playerName = task.getResult().getName()+"!";
+                            Uri uri = task.getResult().getIconImageUri();
+                            Log.e(TAG, "uri " + uri.getPath());
+                            ImageManager.create(Game.mainActivity)
+                                    .loadImage(new ImageManager.OnImageLoadedListener() {
+                                        @Override
+                                        public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {
+                                            Game.playerIcon = Utils.drawableToBitmap(drawable);
+                                            Game.playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, Game.playerIcon);
+                                        }
+                                    }, uri);
+
+                            if (MessagesHandler.messageGoogleLogged != null) {
+                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + Game.playerName);
+                            }
+                        } else {
+                            Game.playerName = ".";
+                            signOut();
+                            if (MessagesHandler.messageGoogleLogged != null) {
+                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
+                            }
+
+                        }
+                    }
+                });
+    }
+
 
 
     private void onConnected(final GoogleSignInAccount googleSignInAccount) {

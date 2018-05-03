@@ -19,7 +19,7 @@
     <string name="messageMaxScoreLevel">Maior pontução neste nível:</string>
     <string name="nivel">Nível: </string>
     <string name="messageMaxScoreTotal">Pontuação total: </string>
-    <string name="googleLogado">Bem vindo </string>
+    <string name="googleLogado">Bem vindo(a) </string>
     <string name="googleNaoLogado">Não conectado ao Google Play Jogos.</string>
     <string name="googleErroLogar">Houve um erro ao conectar com o Google Play Jogos. Tente conectar novamente no menu opções.</string>
     <string name="messageCurrentLevel">Nível</string>
@@ -540,7 +540,7 @@
     <string name="erro_ao_salvar">Houve um erro ao salvar o jogo na nuvem.</string>
     <string name="carregando_snapshot">Carregando jogo salvo.</string>
     <string name="messageMenuSaveNotSeen1">Nesta opção é possível salvar ou carregar um jogo salvo na nuvem.</string>
-    <string name="messageMenuSaveNotSeen2">Tenha em mente que o seu progresso neste jogo é salvo localmente de maneira automática.</string>
+    <string name="messageMenuSaveNotSeen2">Tenha em mente que seu progresso no jogo é automaticamente salvo localmente.</string>
     <string name="messageMenuSaveNotSeen3">O salvamento na nuvem, portanto, não é obrigatório, mas pode servir para manter um backup do seu progresso para ser utilizado posteriormente em caso de troca de aparelho, necessidade de reinstalação do jogo ou situação semelhante.</string>
     <string name="messageMenuSaveNotSeen4">Lembre-se que o salvamento na nuvem é associado à conta do Google Play Jogos atualmente conectada.</string>
     <string name="lembrarDepois">Avisar-me novamente mais tarde</string>

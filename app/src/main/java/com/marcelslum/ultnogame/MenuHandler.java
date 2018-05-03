@@ -591,6 +591,7 @@ public class MenuHandler {
             }
         });
 
+        /*
         final Text optionTutorialUnvisite = menuTutorialUnvisited.getMenuOptionByName("verTutoriais").textObject;
         ArrayList<float[]> valuesAnim = new ArrayList<>();
         valuesAnim.add(new float[]{0f,1f});
@@ -611,6 +612,7 @@ public class MenuHandler {
             }
         });
         animOption.start();
+        */
 
 
 

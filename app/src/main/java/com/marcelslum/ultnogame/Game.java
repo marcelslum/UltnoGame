@@ -477,13 +477,12 @@ public class Game {
 
             float random = Utils.getRandonFloat(0f, 1f);
 
-
             if (random < 0.33f) {
                 tipTextBox.frame.setMultiColor(
-                        Color.verdeCheio,
+                        Color.verde40,
                         Color.branco,
-                        Color.verdeCheio,
-                        Color.verdeCheio
+                        Color.verde40,
+                        Color.verde40
                 );
 
                 tipTextBox.frame.addTopRectangle(
@@ -540,14 +539,23 @@ public class Game {
             }
 
 
-
-
-
-
-
-
-
             tipTextBox.animTranslateX = Game.resolutionX * 2f;
+
+            tipTextBox.setOnPress(new TextBox.OnPress() {
+                @Override
+                public void onPress() {
+
+                    tipTextBox.cleanAnimations();
+
+                    tipTextBox.reduceAlpha(500, 0f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            Game.showTip();
+                            Game.sound.playPlayMenuBig();
+                        }
+                    });
+                }
+            });
 
             Game.sound.playTextBoxAppear();
 
@@ -703,7 +711,7 @@ public class Game {
             Texture.getTextureById(Texture.TEXTURE_ICONS_CHANGE_TUTORIALS).changeBitmap("drawable/icons");
 
             if (Tutorial.hasUnvisitedTutorial()){
-                MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
+                MenuHandler.menuTutorialUnvisited.appearAndUnblock(500);
             }
 
             Game.sound.playMenuIconDrop();
@@ -772,7 +780,7 @@ public class Game {
             MenuHandler.levelMenu.appear();
 
             if (Tutorial.hasUnvisitedTutorial()){
-                MenuHandler.menuTutorialUnvisited.appearAndUnblock(100);
+                MenuHandler.menuTutorialUnvisited.appearAndUnblock(500);
             }
 
             MessagesHandler.messageMenu.display();
@@ -810,7 +818,7 @@ public class Game {
             mainActivity.showAdView();
             tittle.display();
             ButtonHandler.buttonReturn.unblockAndDisplay();
-            MenuHandler.menuOptions.appearAndUnblock(50);
+            MenuHandler.menuOptions.appearAndUnblock(500);
 
             if (mainActivity.isSignedIn()) {
                 MenuHandler.menuOptions.getMenuOptionByName("google").setText(getContext().getResources().getString(R.string.deslogarGoogle));
@@ -827,7 +835,7 @@ public class Game {
             mainActivity.showAdView();
             tittle.display();
             ButtonHandler.buttonReturn.unblockAndDisplay();
-            MenuHandler.menuOptionsPlay.appearAndUnblock(50);
+            MenuHandler.menuOptionsPlay.appearAndUnblock(500);
 
 
         } else if (state == GAME_STATE_OPCOES_GAME){
@@ -835,21 +843,21 @@ public class Game {
             SelectorHandler.repositionSelectors(state);
             mainActivity.showAdView();
             MenuHandler.menuInGame.blockAndClearDisplay();
-            MenuHandler.menuInGameOptions.appearAndUnblock(100);
+            MenuHandler.menuInGameOptions.appearAndUnblock(500);
             MessagesHandler.messageInGame.y = gameAreaResolutionY*0.15f;
             MessagesHandler.messageInGame.display();
 
         } else if (state == GAME_STATE_MENU_SAVE_FIRST_TIME){
 
             MenuHandler.menuMain.blockAndClearDisplay();
-            MenuHandler.menuFirstSaveGame.appearAndUnblock(100);
+            MenuHandler.menuFirstSaveGame.appearAndUnblock(500);
 
             MessagesHandler.messageMenuSaveNotSeen.display();
 
         } else if (state == GAME_STATE_MENU_CARREGAR_JOGO){
 
             MenuHandler.menuMain.blockAndClearDisplay();
-            MenuHandler.menuCarregar.appearAndUnblock(100);
+            MenuHandler.menuCarregar.appearAndUnblock(500);
 
             MessagesHandler.messageMenuCarregarJogo.display();
 
@@ -915,6 +923,7 @@ public class Game {
             if (mainActivity.isSignedIn()){
                 Log.e(TAG, "mainActivity.isSignedIn()");
                 if (playerIcon != null){
+                    Log.e(TAG, "playerIcon != null");
                     if (Game.playerIconImage != null){
                         Game.playerIconImage.setBitmap(Game.playerIcon);
                     } else {
@@ -922,6 +931,8 @@ public class Game {
                     }
 
                     playerIconImage.display();
+                } else {
+                    Log.e(TAG, "playerIcon == null");
                 }
 
                 MessagesHandler.messageGoogleLogged.setText(getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerName);
@@ -1177,7 +1188,7 @@ public class Game {
 
             }
             MessagesHandler.messageInGame.display();
-            MenuHandler.menuInGame.appearAndUnblock(300);
+            MenuHandler.menuInGame.appearAndUnblock(500);
 
         } else if (state == GAME_STATE_VITORIA){
 
@@ -1773,11 +1784,17 @@ public class Game {
             }
         }
 
+
         nanoPrecisionElapsed = ((float)elapsed/1000000f);
 
         //Log.e(TAG, "elapsed " + elapsed);
         //Log.e(TAG, "nanoPrecisionElapsed " + nanoPrecisionElapsed);
         //Log.e(TAG, "frameDuration " + frameDuration);
+
+
+        if (gameState == GAME_STATE_MENU && playerIconImage == null && playerIcon != null){
+            mainActivity.updatePlayerInfo();
+        }
 
         if (gameState == GAME_STATE_PRE_JOGAR) {
             if (Utils.getTimeMilliPrecision() - timeOfPrePlay > 500){
@@ -2513,8 +2530,6 @@ public class Game {
         //    targets.get(i).prepareRender(matrixView, matrixProjection);
         //}
 
-
-
         for (int i = 0; i < bars.size(); i++){
             bars.get(i).prepareRender(matrixView, matrixProjection); // TODO otimizar????? 3ms
         }
@@ -2535,7 +2550,6 @@ public class Game {
         for (int i = 0; i < specialBalls.size(); i++){
             specialBalls.get(i).prepareRender(matrixView, matrixProjection);
         }
-        
 
         if (wind != null) {
             wind.prepareRender(matrixView, matrixProjection);
@@ -2544,7 +2558,6 @@ public class Game {
         if (pointsGroup != null) {
             pointsGroup.render(matrixView, matrixProjection);
         }
-
 
         if (topFrame != null)topFrame.prepareRender(matrixView, matrixProjection);
         
@@ -2584,7 +2597,6 @@ public class Game {
 
         if (aboutTextView != null) aboutTextView.prepareRender(matrixView, matrixProjection);
 
-        
         MessagesHandler.messageGameOver.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messagePreparation.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageInGame.prepareRender(matrixView, matrixProjection);
@@ -2603,21 +2615,12 @@ public class Game {
         if (MessageStar.messageStars != null) MessageStar.messageStars.prepareRender(matrixView, matrixProjection);
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.prepareRender(matrixView, matrixProjection);
 
-
         if (!Game.paraGravacaoVideo) {
             if (MessagesHandler.messageTime != null)
                 MessagesHandler.messageTime.prepareRender(matrixView, matrixProjection);
         }
-        if (tipTextBox != null) tipTextBox.prepareRender(matrixView, matrixProjection);
 
 
-        if (gameState == GAME_STATE_MENU || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL
-                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO || gameState == GAME_STATE_OPCOES_JOGABILIDADE){
-            if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
-            if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
-            if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
-            if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
-        }
 
         if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
 
@@ -2637,6 +2640,7 @@ public class Game {
         if (ButtonHandler.buttonFinalTargetLeft != null) ButtonHandler.buttonFinalTargetLeft.prepareRender(matrixView, matrixProjection);
         if (ButtonHandler.buttonFinalTargetRight != null) ButtonHandler.buttonFinalTargetRight.prepareRender(matrixView, matrixProjection);
 
+        if (tipTextBox != null) tipTextBox.prepareRender(matrixView, matrixProjection);
 
         MessagesHandler.messageSubMenu.prepareRender(matrixView, matrixProjection);
 
@@ -2646,12 +2650,20 @@ public class Game {
 
         if (notConnectedTextView != null) notConnectedTextView.prepareRender(matrixView, matrixProjection);
 
-
         if (!Game.paraGravacaoVideo) {
             if (messages != null) messages.prepareRender(matrixView, matrixProjection);
         }
-        if (frame != null)frame.prepareRender(matrixView, matrixProjection);
 
+        if (gameState == GAME_STATE_MENU || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL
+                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO || gameState == GAME_STATE_OPCOES_JOGABILIDADE){
+            if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
+            if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
+            if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
+            if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
+        }
+
+
+        if (frame != null)frame.prepareRender(matrixView, matrixProjection);
 
         processSimulateDurationTest(2);
     }
@@ -2680,6 +2692,8 @@ public class Game {
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.verifyListener();
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.verifyListener();
         if (MenuHandler.menuOptionsPlay != null) MenuHandler.menuOptionsPlay.verifyListener();
+        if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
+        if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.verifyListener();
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.verifyListener();
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.verifyListener();
 
@@ -2700,8 +2714,7 @@ public class Game {
         if (aboutTextView != null) aboutTextView.verifyListener();
         if (notConnectedTextView != null) notConnectedTextView.verifyListener();
         if (tipTextBox != null) tipTextBox.verifyListener();
-        
-        if (MenuHandler.menuInGameOptions != null) MenuHandler.menuInGameOptions.verifyListener();
+
         if (SelectorHandler.selectorVibration != null) SelectorHandler.selectorVibration.verifyListener();
         if (SelectorHandler.selectorDifficulty != null) SelectorHandler.selectorDifficulty.verifyListener();
         if (SelectorHandler.selectorMusic != null) SelectorHandler.selectorMusic.verifyListener();
