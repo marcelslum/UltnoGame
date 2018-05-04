@@ -3,8 +3,6 @@ package com.marcelslum.ultnogame;
 import android.content.pm.ActivityInfo;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 public class MenuHandler {
 
     static Menu menuMain;
@@ -22,6 +20,10 @@ public class MenuHandler {
     static MenuIcon groupMenu;
     static MenuIcon levelMenu;
     static MenuIcon tutorialMenu;
+
+    static Menu menuTutorialTreinamento;
+    static Menu menuExplicacaoTreinamento;
+    static Menu menuDuranteTreinamento;
 
     public static String TAG = "MenuHandler";
 
@@ -357,6 +359,99 @@ public class MenuHandler {
         //menuObjectives.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.iniciar_jogo), new MenuOption.OnChoice() {@Override public void onChoice() {}});
 
 
+        // ----------------------------------------MENU TREINAMENTO TUTORIAL
+
+        menuTutorialTreinamento = new Menu("menuTutorialTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+
+        menuTutorialTreinamento.addMenuOption("tutoriais", Game.getContext().getResources().getString(R.string.tutoriais), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
+            }
+        });
+
+        menuTutorialTreinamento.addMenuOption("treinamento", Game.getContext().getResources().getString(R.string.treinamento), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                MenuHandler.menuTutorialTreinamento.blockAndClearDisplay();
+                Game.setGameState(Game.GAME_STATE_MENU_EXPLICACAO_TREINAMENTO);
+
+            }
+        });
+
+
+        // ----------------------------------------MENU DURANTE TREINAMENTO
+
+        menuDuranteTreinamento = new Menu("menuDuranteTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+
+        menuDuranteTreinamento.addMenuOption("fazerTentativa", Game.getContext().getResources().getString(R.string.fazerTentativa), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+
+                menuDuranteTreinamento.block();
+                Game.blockAndWaitTouchRelease();
+                if (Game.gameState == Game.GAME_STATE_MENU_DURANTE_TREINAMENTO){
+                    Game.increaseAllGameEntitiesAlpha(500);
+                    MessagesHandler.messageExplicacaoDuranteTreinamento.reduceAlpha(500, 0f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            MessagesHandler.messageExplicacaoDuranteTreinamento.clearDisplay();
+                            MessagesHandler.messageExplicacaoDuranteTreinamento.alpha = 1f;
+                        }
+                    });
+
+                    menuDuranteTreinamento.reduceAlpha(500,0f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+
+                            MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (Game.tentativaCertaTreinamento + 1) + " " +Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+                            MessagesHandler.messageTrainingState2.display();
+
+                            Game.setGameState(Game.GAME_STATE_JOGAR);
+                        }
+                    });
+                }
+            }
+        });
+
+        menuDuranteTreinamento.addMenuOption("sairDoTreinamento", Game.getContext().getResources().getString(R.string.sairTreinamento), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.training = false;
+                Game.setGameState(Game.GAME_STATE_MENU);
+            }
+        });
+
+
+        // ----------------------------------------MENU EXPLICAÇÃO TREINAMENTO
+
+        menuExplicacaoTreinamento = new Menu("menuExplicacaoTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.7f, fontSize, Game.font);
+
+        menuExplicacaoTreinamento.addMenuOption("iniciarTreinamento", Game.getContext().getResources().getString(R.string.iniciarTreinamento), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Game.training = true;
+
+                MessagesHandler.messageExplicacaoTreinamento.reduceAlpha(500, 0f, new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        MessagesHandler.messageExplicacaoTreinamento.clearDisplay();
+                        MessagesHandler.messageExplicacaoTreinamento.alpha = 1f;
+                    }
+                });
+
+                MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
+                Game.trainingNumber = Game.TREINAMENTO_AUMENTAR_VELOCIDADE;
+                Game.trainingBarCollisionInit = Long.MAX_VALUE;
+                Game.tentativaCertaTreinamento = 0;
+                Game.setGameState(Game.GAME_STATE_PREPARAR_TREINAMENTO);
+
+
+
+
+            }
+        });
+
 
         // -------------------------------------------MENU OPTIONS PLAY
         menuOptionsPlay = new Menu("menuOptionsPlay", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
@@ -683,10 +778,10 @@ public class MenuHandler {
             }
         });
 
-        menuMain.addMenuOption("tutorial", Game.getContext().getResources().getString(R.string.tutoriais), new MenuOption.OnChoice() {
+        menuMain.addMenuOption("tutorialTreinamento", Game.getContext().getResources().getString(R.string.tutorialTreinamento), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
+                Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL_TREINAMENTO);
             }
         });
 

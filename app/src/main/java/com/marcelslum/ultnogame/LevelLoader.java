@@ -55,12 +55,25 @@ public class LevelLoader {
         // ---------- LEVEL1
         int l = 1;
         if (levelNumber == l) {
-            levelBuilder
-                    .setTargetsMap(
-                    new int[][]{
-                            //{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}
-                        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
-                    });
+
+            if (Game.training){
+                levelBuilder
+                        .setTargetsMap(
+                                new int[][]{
+                                        //{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}
+                                        {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0},
+                                        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0}
+                                });
+
+            } else {
+
+                levelBuilder
+                        .setTargetsMap(
+                                new int[][]{
+                                        //{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}
+                                        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                                });
+            }
         }
 
         // ---------- LEVEL2

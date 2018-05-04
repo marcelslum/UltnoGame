@@ -129,8 +129,13 @@ public class ButtonHandler {
                     } else {
                         Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                     }
-                } else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL){
-                    Game.setGameState(Game.GAME_STATE_MENU);
+                } else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL) {
+                    Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL_TREINAMENTO);
+                }else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL_TREINAMENTO){
+                        Game.setGameState(Game.GAME_STATE_MENU);
+                }else if (Game.gameState == Game.GAME_STATE_MENU_EXPLICACAO_TREINAMENTO){
+                    Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL_TREINAMENTO);
+                }else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL){
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){

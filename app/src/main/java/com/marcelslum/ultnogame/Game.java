@@ -9,7 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -39,7 +38,40 @@ public class Game {
     public static boolean logInteractionListener = false;
     public static boolean logCollisionEscape = false;
     public static boolean logMenuIconMoveAndTranslateX = false;
-    public static boolean sempreVerSaveMenu = true;
+    public static boolean sempreVerSaveMenu = false;
+
+
+    public static boolean training = false;
+    public static int trainingNumber = 0;
+
+    public static long trainingBarCollisionInit = Long.MAX_VALUE;
+
+    public static int tentativaCertaTreinamento = 0;
+
+    public static boolean treinamentoSucesso = false;
+
+    public static int TREINAMENTO_AUMENTAR_VELOCIDADE = 1;
+    public static int TREINAMENTO_DIMINUIR_VELOCIDADE = 3;
+    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO = 5;
+    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO = 7;
+    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO = 9;
+    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO = 11;
+    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO = 13;
+    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO = 15;
+    public static int TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO = 17;
+    public static int TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO = 19;
+
+    public static int TREINAMENTO_AUMENTAR_VELOCIDADE_OPOSTO = 2;
+    public static int TREINAMENTO_DIMINUIR_VELOCIDADE_OPOSTO = 4;
+    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO_OPOSTO = 6;
+    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO_OPOSTO = 8;
+    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_OPOSTO = 10;
+    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_OPOSTO = 12;
+    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO = 14;
+    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO = 16;
+    public static int TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO_OPOSTO = 18;
+    public static int TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO_OPOSTO = 20;
+
 
 
     public static MyGLSurface myGlSurface;
@@ -62,7 +94,6 @@ public class Game {
     public static float nanoPrecisionElapsed = 0f;
 
     public static long timeOfPrePlay = 0;
-
     
     public static String playerName = "-";
     public static ArrayList<String> messagesToDisplay = new ArrayList<>();
@@ -149,6 +180,11 @@ public class Game {
     
     // game state
     public static int gameState;
+    public final static int GAME_STATE_NOVA_TENTATIVA_TREINAMENTO = 70;
+    public final static int GAME_STATE_PREPARAR_TREINAMENTO = 2;
+    public final static int GAME_STATE_MENU_DURANTE_TREINAMENTO = 3;
+    public final static int GAME_STATE_MENU_EXPLICACAO_TREINAMENTO = 4;
+    public final static int GAME_STATE_MENU_TUTORIAL_TREINAMENTO = 5;
     public final static int GAME_STATE_OPCOES_JOGABILIDADE =  6;
     public final static int GAME_STATE_MENU_SAVE_FIRST_TIME =  8;
     public final static int GAME_STATE_MENU_CARREGAR_JOGO = 7;
@@ -215,7 +251,6 @@ public class Game {
     public static void returnFromAd(){
 
     }
-    
     
     static final int VIBRATE_SMALL = 0;
     static final int VIBRATE_BAR = 4;
@@ -735,6 +770,68 @@ public class Game {
 
 
             
+        } else if (state == GAME_STATE_MENU_TUTORIAL_TREINAMENTO){
+
+            if (!sameState) {
+                showBlackFrameTransition(500);
+            }
+
+            tittle.display();
+
+            MessagesHandler.messageBack.display();
+
+            MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
+            MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
+
+            MenuHandler.menuTutorialTreinamento.unblockAndDisplay();
+            ButtonHandler.buttonReturn.unblockAndDisplay();
+
+        } else if (state == GAME_STATE_MENU_EXPLICACAO_TREINAMENTO){
+            if (!sameState) {
+                showBlackFrameTransition(500);
+            }
+
+            MessagesHandler.messageExplicacaoTreinamento.display();
+            MessagesHandler.messageBack.display();
+
+            MenuHandler.menuExplicacaoTreinamento.unblockAndDisplay();
+            ButtonHandler.buttonReturn.unblockAndDisplay();
+
+        } else if (state == GAME_STATE_MENU_DURANTE_TREINAMENTO){
+            if (!sameState) {
+                showBlackFrameTransition(500);
+            }
+
+            tentativaCertaTreinamento = 0;
+            treinamentoSucesso = false;
+
+            resetTrainingEntities();
+
+
+            MessagesHandler.messageExplicacaoDuranteTreinamento.alpha = 1f;
+            MessagesHandler.messageExplicacaoDuranteTreinamento.display();
+
+            // TODO exibir a mensagem correta da explicação do treinamento
+
+            if (MessagesHandler.messageTrainingState != null) {
+                MessagesHandler.messageTrainingState.clearDisplay();
+            }
+            if (MessagesHandler.messageTrainingState2 != null) {
+                MessagesHandler.messageTrainingState2.clearDisplay();
+                //MessagesHandler.messageTrainingState2.setText(getContext().getResources().getString(R.string.tentativa) + " " + (Game.tentativaCertaTreinamento + 1) + " " +getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+                //MessagesHandler.messageTrainingState2.display();
+            }
+
+            MenuHandler.menuDuranteTreinamento.unblockAndDisplay();
+
+        } else if (state == GAME_STATE_NOVA_TENTATIVA_TREINAMENTO){
+
+            if (MessagesHandler.messageTrainingState != null) {
+                MessagesHandler.messageTrainingState.clearDisplay();
+            }
+
+            resetTrainingEntities();
+
         } else if (state == GAME_STATE_MENU_TUTORIAL){
 
             if (!sameState) {
@@ -900,15 +997,19 @@ public class Game {
             mainActivity.showAdView();
             Game.bordaB.setY(Game.resolutionY);
 
-            MenuHandler.menuOptions.block();
-            MenuHandler.menuInGame.block();
-            MenuHandler.groupMenu.block();
-            MenuHandler.levelMenu.block();
-
+            MenuHandler.menuOptions.blockAndClearDisplay();
+            MenuHandler.menuInGame.blockAndClearDisplay();
+            MenuHandler.groupMenu.blockAndClearDisplay();
+            MenuHandler.levelMenu.blockAndClearDisplay();
+            MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
+            MenuHandler.menuTutorialTreinamento.blockAndClearDisplay();
+            MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
 
 
             MessagesHandler.messageMenuSaveNotSeen.clearDisplay();
             MessagesHandler.messageMenuCarregarJogo.clearDisplay();
+            if (MessagesHandler.messageTrainingState != null) MessagesHandler.messageTrainingState.clearDisplay();
+            if (MessagesHandler.messageTrainingState2 != null) MessagesHandler.messageTrainingState2.clearDisplay();
 
             eraseAllGameEntities();
             eraseAllHudEntities();
@@ -964,15 +1065,31 @@ public class Game {
 
             eraseAllGameEntities();
             eraseAllHudEntities();
-            LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+
+            if (Game.training) {
+                LevelLoader.loadLevel(1);
+            } else {
+                LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+            }
             mainActivity.hideAdView();
             MessagesHandler.messageTime.cleanAnimations();
 
-            MessagesHandler.messageTime.display();
+            if (!Game.training){
+                MessagesHandler.messageTime.display();
+                MessagesHandler.setMessageTime();
+            } else {
+                MessagesHandler.messageCurrentLevel.setText(getContext().getResources().getString(R.string.mensagem_treinamento));
+            }
+
             MessagesHandler.messageCurrentLevel.display();
 
-            MessagesHandler.setMessageTime();
-            Level.levelGoalsObject.clearAchievements();
+            if (Game.training) {
+                Level.levelGoalsObject = new LevelGoals();
+            }
+
+                Level.levelGoalsObject.clearAchievements();
+
+
             ButtonHandler.buttonContinue.blockAndClearDisplay();
             ButtonHandler.buttonReturn.blockAndClearDisplay();
             TimeHandler.timeOfLevelPlay = 0;
@@ -1029,7 +1146,13 @@ public class Game {
                         //Sound.playCounter();
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
-                        innerMessagePreparation.setText(getContext().getResources().getString(R.string.mensagem_jogar));
+
+                        if (Game.training) {
+                            innerMessagePreparation.setText(getContext().getResources().getString(R.string.mensagem_treinar));
+                        } else {
+                            innerMessagePreparation.setText(getContext().getResources().getString(R.string.mensagem_jogar));
+                        }
+
                         if (paraGravacaoVideo) {
                             MessagesHandler.messagePreparation.setColor(Color.transparente);
                         }
@@ -1050,6 +1173,42 @@ public class Game {
             anim.start();
             verifyDead();
 
+        } else if (state == GAME_STATE_PREPARAR_TREINAMENTO) {
+
+            abdicateAngle = false;
+            Sound.loadStaticGameAudioTracks();
+
+            ParticleGenerator.loadParticleGenerators();
+
+            eraseAllGameEntities();
+            eraseAllHudEntities();
+
+            LevelLoader.loadLevel(1);
+
+            mainActivity.hideAdView();
+
+            MessagesHandler.messageCurrentLevel.setText(getContext().getResources().getString(R.string.mensagem_treinamento));
+
+            MessagesHandler.messageCurrentLevel.display();
+
+            Level.levelGoalsObject = new LevelGoals();
+
+            ButtonHandler.buttonContinue.blockAndClearDisplay();
+            ButtonHandler.buttonReturn.blockAndClearDisplay();
+
+            mainActivity.hideAdView();
+            if (!sameState) {
+                showBlackFrameTransition(500);
+            }
+
+            Level.levelObject.loadEntities();
+            verifyDead();
+
+            stopAllGameEntities();
+            reduceAllGameEntitiesAlpha(100);
+
+            setGameState(GAME_STATE_MENU_DURANTE_TREINAMENTO);
+
         } else if (state == GAME_STATE_PRE_JOGAR){
 
             Game.sound.playMusic();
@@ -1060,18 +1219,13 @@ public class Game {
             timeOfPrePlay = Utils.getTimeMilliPrecision();
         } else if (state == GAME_STATE_JOGAR){
 
-
             Game.bordaB.setY(Game.gameAreaResolutionY);
-
 
             for (int i = 0; i < Game.balls.size(); i++) {
                 if (Game.balls.get(i).listenForExplosion){
                     Game.balls.get(i).replayAlarm();
                 }
             }
-
-
-
 
             if (initPausedFlag){
                 initPausedFlag = false;
@@ -1142,7 +1296,6 @@ public class Game {
 
             ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
             ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
-
 
             Sound.soundPool.autoPause();
 
@@ -1774,6 +1927,9 @@ public class Game {
 
     static void simulate(long elapsed, float frameDuration){
 
+
+
+
         simulatePasso += 1;
 
         if (atrasarPasso) {
@@ -1790,6 +1946,19 @@ public class Game {
         //Log.e(TAG, "elapsed " + elapsed);
         //Log.e(TAG, "nanoPrecisionElapsed " + nanoPrecisionElapsed);
         //Log.e(TAG, "frameDuration " + frameDuration);
+
+        if (gameState == GAME_STATE_NOVA_TENTATIVA_TREINAMENTO){
+            if (Utils.getTimeMilliPrecision() - trainingBarCollisionInit > 4200){
+                trainingBarCollisionInit  = Long.MAX_VALUE;
+                if (MessagesHandler.messageTrainingState != null) {
+                    MessagesHandler.messageTrainingState.clearDisplay();
+                }
+                setGameState(GAME_STATE_JOGAR);
+
+
+
+            }
+        }
 
 
         if (gameState == GAME_STATE_MENU && playerIconImage == null && playerIcon != null){
@@ -1831,6 +2000,7 @@ public class Game {
 
         // atualiza posição da bola
         if (gameState == GAME_STATE_JOGAR) {
+
              for (int i = 0; i < balls.size(); i++) {
                  if (balls.get(i).isAlive) {
                      //Log.e(TAG, "                  textureMap "+ balls.get(i).textureMap);
@@ -2289,7 +2459,193 @@ public class Game {
         }
     }
 
+    static void resetTrainingEntities(){
+        /*
+        public static int TREINAMENTO_AUMENTAR_VELOCIDADE = 1; ok
+        public static int TREINAMENTO_DIMINUIR_VELOCIDADE = 3; ok
+        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO = 5; ok
+        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO = 7;ok
+        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO = 9;
+        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO = 11;
+        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO = 13; ok
+        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO = 15;ok
+        public static int TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO = 17;ok
+        public static int TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO = 19; ok
+
+        public static int TREINAMENTO_AUMENTAR_VELOCIDADE_OPOSTO = 2;
+        public static int TREINAMENTO_DIMINUIR_VELOCIDADE_OPOSTO = 4;
+        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO_OPOSTO = 6;
+        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO_OPOSTO = 8;
+        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_OPOSTO = 10;
+        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_OPOSTO = 12;
+        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO = 14;
+        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO = 16;
+        public static int TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO_OPOSTO = 18;
+        public static int TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO_OPOSTO = 20;
+
+        */
+
+
+
+
+        balls.get(0).accumulatedTranslateX = 0f;
+        balls.get(0).accumulatedTranslateY = 0f;
+        bars.get(0).accumulatedTranslateX = 0f;
+
+        balls.get(0).dvx = balls.get(0).initialDVX;
+        balls.get(0).dvy = balls.get(0).initialDVY;
+        bars.get(0).dvx = bars.get(0).initialDVX;
+
+        // TREINAMENTO DIRETO
+        if (trainingNumber == TREINAMENTO_AUMENTAR_VELOCIDADE
+                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO
+                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO
+                || trainingNumber == TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO){
+            balls.get(0).x = Game.resolutionX * 0.05f;
+            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
+            bars.get(0).x = Game.resolutionX * 0.7f;
+        }
+
+        if (trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE
+                || trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO
+                || trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO
+                || trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO){
+            balls.get(0).x = Game.resolutionX * 0.05f;
+            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
+            bars.get(0).x = Game.resolutionX * 0.5f;
+        }
+
+        if (trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO
+                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO){
+            balls.get(0).x = Game.resolutionX * 0.05f;
+            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
+            bars.get(0).x = Game.resolutionX * 0.5f;
+        }
+
+        //TREINAMENTO OPOSTO
+        if (trainingNumber == TREINAMENTO_AUMENTAR_VELOCIDADE_OPOSTO
+                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO_OPOSTO
+                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO
+                || trainingNumber == TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO_OPOSTO){
+            balls.get(0).x = Game.resolutionX * 0.93f;
+            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
+            balls.get(0).dvx *= -1;
+            bars.get(0).x = Game.resolutionX * 0.05f;
+        }
+
+        if (trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE_OPOSTO
+                || trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO_OPOSTO
+                || trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO
+                || trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO_OPOSTO){
+            balls.get(0).x = Game.resolutionX * 0.93f;
+            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
+            balls.get(0).dvx *= -1;
+            bars.get(0).x = Game.resolutionX * 0.4f;
+        }
+
+        if (trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_OPOSTO
+                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_OPOSTO){
+            balls.get(0).x = Game.resolutionX * 0.93f;
+            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
+            balls.get(0).dvx *= -1;
+            bars.get(0).x = Game.resolutionX * 0.25f;
+        }
+
+        balls.get(0).checkTransformations(false);
+        bars.get(0).checkTransformations(false);
+
+    }
+
+
+    static boolean resultadoTreinamentoAnotado = false;
+
+
+    static void checkTrainingFinished(){
+
+        resultadoTreinamentoAnotado = false;
+
+        if (treinamentoSucesso){
+            treinamentoSucesso = false;
+
+            tentativaCertaTreinamento += 1;
+
+            if (tentativaCertaTreinamento < 3){
+
+                if (MessagesHandler.messageTrainingState != null) {
+                    MessagesHandler.messageTrainingState.clearDisplay();
+                    /*
+                    MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.sucesso));
+                    MessagesHandler.messageTrainingState.setColor(Color.azulCheio);
+                    Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 800, 0f, 1f, 0.5f, 0.7f, 1f, 1f, true, true).start();
+                    */
+                }
+                if (MessagesHandler.messageTrainingState2 != null) {
+                    MessagesHandler.messageTrainingState2.setText(getContext().getResources().getString(R.string.tentativa) + " " + (Game.tentativaCertaTreinamento + 1) + " " +getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+                }
+
+                stopAllGameEntities();
+                setGameState(GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
+            } else {
+
+                if (MessagesHandler.messageTrainingState != null) {
+                    MessagesHandler.messageTrainingState.clearDisplay();
+                    /*
+                    MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.sucesso));
+                    MessagesHandler.messageTrainingState.setColor(Color.azulCheio);
+                    Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 800, 0f, 1f, 0.5f, 0.7f, 1f, 1f, true, true).start();
+                    */
+                }
+
+                stopAllGameEntities();
+                reduceAllGameEntitiesAlpha(500);
+                trainingNumber += 1;
+                setGameState(GAME_STATE_MENU_DURANTE_TREINAMENTO);
+            }
+        } else {
+            stopAllGameEntities();
+
+
+            if (MessagesHandler.messageTrainingState != null) {
+                MessagesHandler.messageTrainingState.clearDisplay();
+                /*
+                MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.errou));
+                MessagesHandler.messageTrainingState.setColor(Color.vermelhoCheio);
+                Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 1000, 0f, 1f, 0.5f, 0.7f, 1f, 1f, true, true).start();
+                */
+            }
+            if (MessagesHandler.messageTrainingState2 != null) {
+                MessagesHandler.messageTrainingState2.setText(getContext().getResources().getString(R.string.tentativa) + " " + (Game.tentativaCertaTreinamento + 1) + " " +getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+            }
+
+
+            setGameState(GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
+
+
+
+        }
+    }
+
     static void verifyWin() {
+        if (training){
+            if (Utils.getTimeMilliPrecision() - trainingBarCollisionInit > 3000){
+                checkTrainingFinished();
+            } else if (Utils.getTimeMilliPrecision() - trainingBarCollisionInit > 800 && !resultadoTreinamentoAnotado){
+                resultadoTreinamentoAnotado = true;
+                if (!treinamentoSucesso){
+                    MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.errou));
+                    MessagesHandler.messageTrainingState.setColor(Color.vermelhoCheio);
+                } else {
+                    MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.sucesso));
+                    MessagesHandler.messageTrainingState.setColor(Color.verde40);
+                }
+                MessagesHandler.messageTrainingState.alpha = 0.2f;
+                MessagesHandler.messageTrainingState.display();
+                Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 500, 0f, 0.2f, 0.5f, 1f, 1f, 0.2f, true, true).start();
+            }
+            return;
+        }
+
+
         boolean win = true;
         for (int i = 0; i < targets.size(); i++) {
             if (targets.get(i).alive){
@@ -2401,6 +2757,10 @@ public class Game {
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.checkTransformations(true);
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.checkTransformations(true);
 
+        if (MenuHandler.menuTutorialTreinamento != null) MenuHandler.menuTutorialTreinamento.checkTransformations(true);
+        if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.checkTransformations(true);
+        if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.checkTransformations(true);
+
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.checkTransformations(true);
         if (MenuHandler.menuOptionsPlay != null) MenuHandler.menuOptionsPlay.checkTransformations(true);
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.checkTransformations(true);
@@ -2446,6 +2806,8 @@ public class Game {
         MessagesHandler.messageContinue.checkTransformations(true);
         if (MessagesHandler.messageMenuSaveNotSeen != null) MessagesHandler.messageMenuSaveNotSeen.checkTransformations(true);
         if (MessagesHandler.messageMenuCarregarJogo != null) MessagesHandler.messageMenuCarregarJogo.checkTransformations(true);
+        if (MessagesHandler.messageExplicacaoTreinamento != null) MessagesHandler.messageExplicacaoTreinamento.checkTransformations(true);
+        if (MessagesHandler.messageExplicacaoDuranteTreinamento != null) MessagesHandler.messageExplicacaoDuranteTreinamento.checkTransformations(true);
 
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.checkTransformations(true);
         if (MessageStar.messageStars != null) MessageStar.messageStars.checkTransformations(true);
@@ -2490,6 +2852,12 @@ public class Game {
             if (MessagesHandler.messageCurrentLevel != null)
                 MessagesHandler.messageCurrentLevel.prepareRender(matrixView, matrixProjection);
         }
+
+        if (MessagesHandler.messageTrainingState != null)
+            MessagesHandler.messageTrainingState.prepareRender(matrixView, matrixProjection);
+
+        if (MessagesHandler.messageTrainingState2 != null)
+            MessagesHandler.messageTrainingState2.prepareRender(matrixView, matrixProjection);
 
         if (Game.versaoBeta && !Game.paraGravacaoVideo) {
             if (MessagesHandler.messageBeta != null)
@@ -2569,6 +2937,10 @@ public class Game {
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.prepareRender(matrixView, matrixProjection);
 
+        if (MenuHandler.menuTutorialTreinamento != null) MenuHandler.menuTutorialTreinamento.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.prepareRender(matrixView, matrixProjection);
+
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuOptionsPlay != null) MenuHandler.menuOptionsPlay.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.prepareRender(matrixView, matrixProjection);
@@ -2604,6 +2976,8 @@ public class Game {
 
         if (MessagesHandler.messageMenuSaveNotSeen != null) MessagesHandler.messageMenuSaveNotSeen.prepareRender(matrixView, matrixProjection);
         if (MessagesHandler.messageMenuCarregarJogo != null) MessagesHandler.messageMenuCarregarJogo.prepareRender(matrixView, matrixProjection);
+        if (MessagesHandler.messageExplicacaoTreinamento != null) MessagesHandler.messageExplicacaoTreinamento.prepareRender(matrixView, matrixProjection);
+        if (MessagesHandler.messageExplicacaoDuranteTreinamento != null) MessagesHandler.messageExplicacaoDuranteTreinamento.prepareRender(matrixView, matrixProjection);
 
         MessagesHandler.messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageGoogleLogged.prepareRender(matrixView, matrixProjection);
@@ -2619,7 +2993,6 @@ public class Game {
             if (MessagesHandler.messageTime != null)
                 MessagesHandler.messageTime.prepareRender(matrixView, matrixProjection);
         }
-
 
 
         if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
@@ -2655,7 +3028,7 @@ public class Game {
         }
 
         if (gameState == GAME_STATE_MENU || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL
-                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO || gameState == GAME_STATE_OPCOES_JOGABILIDADE){
+                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO || gameState == GAME_STATE_OPCOES_JOGABILIDADE || gameState == GAME_STATE_MENU_EXPLICACAO_TREINAMENTO || gameState == GAME_STATE_MENU_TUTORIAL_TREINAMENTO){
             if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
             if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
             if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
@@ -2696,6 +3069,10 @@ public class Game {
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.verifyListener();
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.verifyListener();
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.verifyListener();
+
+        if (MenuHandler.menuTutorialTreinamento != null) MenuHandler.menuTutorialTreinamento.verifyListener();
+        if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.verifyListener();
+        if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.verifyListener();
 
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.verifyListener();
         if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.verifyListener();

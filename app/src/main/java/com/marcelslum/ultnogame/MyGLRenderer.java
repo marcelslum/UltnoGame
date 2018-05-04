@@ -246,18 +246,20 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                 } else {
 
 
-                    if (Game.gameState == Game.GAME_STATE_JOGAR) {
-                        if (Utils.getTimeMilliPrecision() - lastInternetCheck > 1000) {
-                            if (TimeHandler.timeOfLevelPlay > 3000) {
-                                Sound.checkLoopPlaying();
+                    if (!Game.training) {
+                        if (Game.gameState == Game.GAME_STATE_JOGAR) {
+                            if (Utils.getTimeMilliPrecision() - lastInternetCheck > 1000) {
+                                if (TimeHandler.timeOfLevelPlay > 3000) {
+                                    Sound.checkLoopPlaying();
+                                }
+                                lastInternetCheck = Utils.getTimeMilliPrecision();
                             }
-                            lastInternetCheck = Utils.getTimeMilliPrecision();
-                        }
-                    } else {
-                        if (Utils.getTimeMilliPrecision() - lastInternetCheck > 300) {
-                            Sound.checkLoopPlaying();
-                            lastInternetCheck = Utils.getTimeMilliPrecision();
-                            Sound.setMusicVolume(Sound.musicVolume - 0.02f);
+                        } else {
+                            if (Utils.getTimeMilliPrecision() - lastInternetCheck > 300) {
+                                Sound.checkLoopPlaying();
+                                lastInternetCheck = Utils.getTimeMilliPrecision();
+                                Sound.setMusicVolume(Sound.musicVolume - 0.02f);
+                            }
                         }
                     }
                 }

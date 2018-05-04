@@ -899,6 +899,9 @@ public class MainActivity extends FragmentActivity implements
 
     @Override
     public void onBackPressed() {
+
+        // TODO REVISAR E COMPLETAR
+
         if (Game.gameState == Game.GAME_STATE_OPCOES_GAME) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
         } else if (Game.gameState == Game.GAME_STATE_SOBRE){

@@ -295,6 +295,7 @@ public class Ball extends Circle{
         centerY = positionY;
     }
 
+
     @Override
     public void checkTransformations(boolean updatePrevious) {
 
@@ -999,6 +1000,11 @@ public class Ball extends Circle{
         }
 
         if(collisionBar){
+
+            if (Game.training){
+                Game.trainingBarCollisionInit = Utils.getTimeMilliPrecision();
+                Log.e(TAG, "Game.trainingBarCollisionInit = Utils.getTimeMilliPrecision() " + Game.trainingBarCollisionInit);
+            }
 
             if (isFake){
                 Level.levelObject.levelGoalsObject.notifyFakeBallHited();

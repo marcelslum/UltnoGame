@@ -75,6 +75,7 @@ public class Level {
     }
 
     public void loadEntities() {
+
         Game.eraseAllGameEntities();
 
         BrickBackground.ballCollidedFx = 0;
@@ -87,14 +88,14 @@ public class Level {
 
         MessageStarWin.initMessageStarsWin();
 
-
         SaveGame.saveGame.lastLevelPlayed = SaveGame.saveGame.currentLevelNumber;
 
         MessagesHandler.messageTime.setText("00:00");
-        if (SaveGame.saveGame.currentLevelNumber < 101) {
-            MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));
+
+        if (Game.training){
+            MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.mensagem_treinamento));
         } else {
-            MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevelSecret) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber - 100));
+            MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));
         }
 
         ScoreHandler.createScorePanel();
@@ -147,7 +148,14 @@ public class Level {
                     Game.blockAndWaitTouchRelease();
                     Game.sound.playCounter();
                     //Sound.playSoundPool(Sound.soundCounter, 0.5f, 0.5f, 0);
-                    Game.setGameState(Game.GAME_STATE_PAUSE);
+
+                    if (Game.training){
+                        Game.setGameState(Game.GAME_STATE_MENU_DURANTE_TREINAMENTO);
+                    } else {
+                        Game.setGameState(Game.GAME_STATE_PAUSE);
+                    }
+
+
                 }
             }
 
@@ -158,7 +166,7 @@ public class Level {
         Game.addInteracionListener(gameAreaInteractionListener);
         
         float percentageOfVelocity = (float) SaveGame.saveGame.ballVelocity / 100f;
-        if (percentageOfVelocity != 1f){
+        if (percentageOfVelocity != 1f && !Game.training){
             if (percentageOfVelocity < 1f){
                 percentageOfVelocity = 1f - ((1f - percentageOfVelocity)/2f);   
             } else if (percentageOfVelocity > 1f){
@@ -195,8 +203,6 @@ public class Level {
             bar.initialX = barX;
             bar.initialY = barY;
             bar.initialNormalDVX = barVelocityX;
-
-
 
             bar.initialDVX = bar.initialNormalDVX * percentageOfVelocity;
             

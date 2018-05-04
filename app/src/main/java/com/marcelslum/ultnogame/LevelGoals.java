@@ -68,6 +68,11 @@ public class LevelGoals {
     }
     
     public void notifyFakeBallHited(){
+
+        if (Game.training){
+            return;
+        }
+
         timesOfFakeBallsHitted += 1;
 
         Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyFakeBallHited vezes "+timesOfFakeBallsHitted);
@@ -91,6 +96,10 @@ public class LevelGoals {
     }
 
     public void ballReachedWithMaximunBarSpped(){
+
+        if (Game.training){
+            return;
+        }
         
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"ballReachedWithMaximunBarSpped");
         
@@ -105,6 +114,10 @@ public class LevelGoals {
     }
 
     public void notifyTime(int seconds) {
+
+        if (Game.training){
+            return;
+        }
         for (int i = 0; i < levelGoals.size(); i++) {
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.FINISH_IN_N_SECONDS) {
@@ -132,6 +145,11 @@ public class LevelGoals {
     }
 
     public void notifyBallsAlive(int number, int time){
+
+        if (Game.training){
+            return;
+        }
+
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
             if (lg.type == LevelGoal.KEEP_N_LIVING_BALLS && number >= lg.value && !lg.achieved){
@@ -177,6 +195,10 @@ public class LevelGoals {
 
     public void hitObstacle(){
 
+        if (Game.training){
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"hitObstacle");
         
         timesOfObstacleHit += 1;
@@ -194,6 +216,11 @@ public class LevelGoals {
     }
 
     public void hitAnotherBall(){
+
+        if (Game.training){
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"hitAnotherBall");
         timesOfCollisionBetweenBalls += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -210,6 +237,11 @@ public class LevelGoals {
     }
 
     public void setFinish(int seconds){
+
+        if (Game.training){
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"setFinish");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);
@@ -251,6 +283,10 @@ public class LevelGoals {
 
     public void notifyMaxAngleReached(){
 
+        if (Game.training){
+            return;
+        }
+
         if (Game.abdicateAngle) {
             return;
         }
@@ -280,6 +316,10 @@ public class LevelGoals {
 
     public void notifyMinAngleReached(){
 
+        if (Game.training){
+            return;
+        }
+
         if (Game.abdicateAngle) {
             return;
         }
@@ -307,6 +347,10 @@ public class LevelGoals {
     }
 
     public void increaseAngle(){
+
+        if (Game.training){
+            return;
+        }
 
         if (Game.abdicateAngle) {
             return;
@@ -337,6 +381,10 @@ public class LevelGoals {
 
     public void decreaseAngle(){
 
+        if (Game.training){
+            return;
+        }
+
         if (Game.abdicateAngle) {
             return;
         }
@@ -365,6 +413,16 @@ public class LevelGoals {
 
     public void notifyAngleIncreasedOnlyWithBarMovement(){
 
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO || Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+            return;
+        }
+
         if (Game.abdicateAngle) {
             return;
         }
@@ -386,6 +444,18 @@ public class LevelGoals {
     }
 
     public void notifyAngleDecreasedOnlyWithBarMovement(){
+
+
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO || Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+
+            return;
+        }
 
         if (Game.abdicateAngle) {
             return;
@@ -409,6 +479,16 @@ public class LevelGoals {
 
     public void notifyAngleIncreasedOnlyWithBarInclination(){
 
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO || Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+            return;
+        }
+
         if (Game.abdicateAngle) {
             return;
         }
@@ -430,6 +510,16 @@ public class LevelGoals {
     }
 
     public void notifyAngleDecreasedOnlyWithBarInclination(){
+
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO || Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+            return;
+        }
 
         if (Game.abdicateAngle) {
             return;
@@ -453,6 +543,16 @@ public class LevelGoals {
 
     public void notifyAngleIncreasedWithBarMovementAndInclination(){
 
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO || Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+            return;
+        }
+
         if (Game.abdicateAngle) {
             return;
         }
@@ -474,6 +574,16 @@ public class LevelGoals {
     }
 
     public void notifyAngleDecreasedWithBarMovementAndInclination(){
+
+        if (Game.training){
+            if (Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO || Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+
+            return;
+        }
 
         if (Game.abdicateAngle) {
             return;
@@ -498,6 +608,16 @@ public class LevelGoals {
 
     public void accelerateWithBarIncreasingAngle(){
 
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO || Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+            return;
+        }
+
         if (Game.abdicateAngle) {
             return;
         }
@@ -518,6 +638,16 @@ public class LevelGoals {
     }
 
     public void decelerateWithBarDecreasingAngle(){
+
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO || Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+            return;
+        }
 
         if (Game.abdicateAngle) {
             return;
@@ -540,6 +670,10 @@ public class LevelGoals {
 
     public void decelerateWithoutReachMaxAngle(){
 
+        if (Game.training){
+            return;
+        }
+
         if (Game.abdicateAngle) {
             return;
         }
@@ -560,6 +694,10 @@ public class LevelGoals {
     }
 
     public void accelerateWithoutReachMinAngle(){
+
+        if (Game.training){
+            return;
+        }
 
         if (Game.abdicateAngle) {
             return;
@@ -582,6 +720,10 @@ public class LevelGoals {
 
     public void notifyMaxVelocityReached(){
 
+        if (Game.training){
+            return;
+        }
+
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_velocidade_mxima), 1);
 
@@ -601,6 +743,10 @@ public class LevelGoals {
 
     public void notifyMinVelocityReached(){
 
+        if (Game.training){
+            return;
+        }
+
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_velocidade_mnima), 1);
 
@@ -619,6 +765,11 @@ public class LevelGoals {
     }
 
     public void notifyNotSpeedChange(){
+
+        if (Game.training){
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"notifyNotSpeedChange");
         secretLevel4Step = 0;
         timesOfChangeBallSpeedInARow = 0;
@@ -627,6 +778,10 @@ public class LevelGoals {
     }
 
     public void notifyBarMoveByWind(long time){
+
+        if (Game.training){
+            return;
+        }
 
         if (barMoveByWindLoose){
             return;
@@ -649,6 +804,16 @@ public class LevelGoals {
     }
 
     public void accelerate(){
+
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_VELOCIDADE || Game.trainingNumber == Game.TREINAMENTO_AUMENTAR_VELOCIDADE_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+            return;
+        }
 
         //GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_acelerar),1);
 
@@ -685,6 +850,16 @@ public class LevelGoals {
 
     public void decelerate(){
 
+        if (Game.training){
+
+            if (Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_VELOCIDADE || Game.trainingNumber == Game.TREINAMENTO_DIMINUIR_VELOCIDADE_OPOSTO){
+                MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.sucesso));
+                Game.treinamentoSucesso = true;
+            }
+
+            return;
+        }
+
         GoogleAPI.increment(
                 Game.getContext().getResources().getString(R.string.achievement_desacelerar), 1);
 
@@ -718,6 +893,11 @@ public class LevelGoals {
     }
 
     public void speedChange(){
+
+        if (Game.training){
+            return;
+        }
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"speedChange");
         timesOfChangeBallSpeedInARow += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -761,6 +941,10 @@ public class LevelGoals {
 
     public void notifyLeftBorderTouch(long elapsed) {
 
+        if (Game.training){
+            return;
+        }
+
         if (!leftBorderTouch) {
             leftBorderTouchTime += elapsed;
             //Log.e(TAG, "leftBorderTouchTime " + leftBorderTouchTime);
@@ -783,6 +967,10 @@ public class LevelGoals {
 
 
     public void notifyRightBorderTouch(long elapsed) {
+
+        if (Game.training){
+            return;
+        }
 
         if (!rightBorderTouch) {
             rightBorderTouchTime += elapsed;

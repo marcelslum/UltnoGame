@@ -22,12 +22,17 @@ public class MessagesHandler {
     static Text messageConqueredStarsTotal;
     static Image starForMessage;
     static Text messageTime;
+    static Text messageTrainingState;
+    static Text messageTrainingState2;
     static Text messageCurrentLevel;
+
     static Text messageBeta;
     static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
     static TextView messageMenuSaveNotSeen;
     static TextView messageMenuCarregarJogo;
+    static TextView messageExplicacaoTreinamento;
+    static TextView messageExplicacaoDuranteTreinamento;
 
     static float yOfMessageBackAndContinue;
 
@@ -101,6 +106,28 @@ public class MessagesHandler {
         messageMenuSaveNotSeen.addText(".", Color.transparente);
         messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen4), Color.cinza40);
 
+
+        messageExplicacaoTreinamento = new TextView("explicacaoTreinamento", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.12f,
+                Game.resolutionX * 1f,
+                Game.resolutionY,
+                fontSize * 0.6f,
+                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+
+        messageExplicacaoTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoTreinamento1), Color.cinza40);
+
+        messageExplicacaoTreinamento.clearDisplay();
+
+        messageExplicacaoDuranteTreinamento = new TextView("explicacaoTreinamento", Game.resolutionX * 0.5f,
+                Game.resolutionY * 0.12f,
+                Game.resolutionX * 1f,
+                Game.resolutionY,
+                fontSize * 0.6f,
+                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
+
+        messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoDuranteTreinamento1), Color.cinza40);
+
+        messageExplicacaoDuranteTreinamento.clearDisplay();
 
         messageMenuCarregarJogo = new TextView("messageMenuCarregarJogo", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.12f,
@@ -229,6 +256,13 @@ public class MessagesHandler {
                 Game.resolutionX*0.987f, Game.gameAreaResolutionY*0.885f, Game.resolutionY*0.051f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
         MessagesHandler.messageCurrentLevel.setAlpha(0.7f);
 
+        MessagesHandler.messageTrainingState2 = new Text("messageTrainingState2",
+                Game.resolutionX*0.975f, Game.gameAreaResolutionY*0.815f, Game.resolutionY*0.051f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
+        MessagesHandler.messageTrainingState2.setAlpha(0.7f);
+
+        MessagesHandler.messageTrainingState = new Text("messageTrainingState",
+                Game.resolutionX*0.98f, Game.gameAreaResolutionY*0.745f, Game.resolutionY*0.051f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
+        MessagesHandler.messageTrainingState.setAlpha(0.7f);
 
 
         MessagesHandler.messageBack = new Text("messageBack",

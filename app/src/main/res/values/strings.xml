@@ -559,6 +559,21 @@
     <string name="carregadoJogo">Salvamento carregado com sucesso da nuvem!</string>
     <string name="erro_ao_carregar">Houve um erro ao carregador os dados salvos na nuvem! Tente novamente mais tarde.</string>
     <string name="optionsPlay">Opções de jogabilidade</string>
+    <string name="treinamento">Treinamento</string>
+    <string name="iniciarTreinamento">Iniciar Treinamento</string>
+    <string name="explicacaoTreinamento1">Dar explicação sobre o treinamento</string>
+    <string name="explicacaoDuranteTreinamento1">Explicação Durante Treinamento</string>
+    <string name="mensagem_treinar">Treinar</string>
+    <string name="mensagem_treinamento">Treinamento</string>
+    <string name="tutorialTreinamento">Tutorial/Treinamento</string>
+    <string name="fazerTentativa">Tentar</string>
+    <string name="sairTreinamento">Sair do Treinamento</string>
+    <string name="tentativa">Tentativa</string>
+    <string name="tentando">Treine...</string>
+    <string name="de_como_em_1_de_3">de</string>
+    <string name="sucesso">Sucesso na tentativa</string>
+    <string name="agurdandoTentativa">Aguardando tentativa.</string>
+    <string name="errou">Errou a tentativa</string>
 
 
 </resources>
