@@ -636,6 +636,50 @@
     <string name="jogar">Jogar</string>
     <string name="sessao_treinamento">Sessão de Treinamento</string>
     <string name="continuarMenuExplicacaoTreinamento">Continuar</string>
+    <string name="estatisticasDeJogo">Estatísticas de Jogo</string>
+    <string name="estatisticaTitulo">Estatísticas de Jogo</string>
+    <string name="stat0">Angulo da bola aumentado:</string>
+    <string name="stat1">Ângulo da bola diminuido:</string>
+    <string name="stat2">Velocidade aumentada:</string>
+    <string name="stat3">Velocidade diminuída:</string>
+    <string name="stat4">Ângulo aumentado com inclinação da barra:</string>
+    <string name="stat5">Ângulo diminuído com inclinação da barra:</string>
+    <string name="stat6">Ângulo aumentado com movimento da barra:</string>
+    <string name="stat7">Ângulo diminuído com movimento da barra:</string>
+    <string name="stat8">Ângulo aumentado com movimento e inclinação da barra:</string>
+    <string name="stat9">Ângulo diminuído com movimento e inclinação da barra:</string>
+    <string name="stat10">Velocidade aumentada com ângulo aumentado pela inclinação:</string>
+    <string name="stat11">Velocidade diminuída com ângulo diminuído pela inclinação:</string>
+    <string name="stat12">Tempo de bola na velocidade mínima:</string>
+    <string name="stat13">Tempo de bola na velocidade máxima:</string>
+    <string name="stat14">Tempo da bola no ângulo mínimo:</string>
+    <string name="stat15">Tempo da bola no ângulo máximo:</string>
+    <string name="stat16">Tempo da bola em velocidade intermediária:</string>
+    <string name="stat17">Tempo da bola em ângulo intermediário:</string>
+    <string name="stat18">Tempo de jogo com 1 bola viva:</string>
+    <string name="stat19">Tempo de jogo com 2 bolas vivas:</string>
+    <string name="stat20">Tempo de jogo com 3 bolas vivas:</string>
+    <string name="stat21">Tempo de jogo com 4 bolas vivas:</string>
+    <string name="stat22">Tempo de jogo com 5 bolas vivas:</string>
+    <string name="stat23">Tempo de jogo com 6 bolas vivas:</string>
+    <string name="stat24">Tempo de jogo com 7 bolas vivas:</string>
+    <string name="stat25">Tempo de jogo com 8 bolas vivas:</string>
+    <string name="stat26">Tempo de jogo com 9 bolas vivas:</string>
+    <string name="stat27">Tempo de jogo com 10 ou mais bolas vivas:</string>
+    <string name="stat28">Número de bolas falsas atingidas:</string>
+    <string name="stat29">Tempo jogado com final com vitória:</string>
+    <string name="stat30">Tempo jogado com final com derrota:</string>
+    <string name="stat31">Número de vezes em que a bola foi atingida sem mudar de velocidade:</string>
+    <string name="stat32">Alvos verdes atingidos:</string>
+    <string name="stat33">Alvos azuis atingidos:</string>
+    <string name="stat34">Alvos pretos atingidos:</string>
+    <string name="stat35">Alvos fantasmas atingidos:</string>
+    <string name="stat36">Alvos vermelhos atingidos:</string>
+    <string name="stat37">Obstáculos atingidos:</string>
+    <string name="stat38">Número de colisão entre bolas:</string>
+    <string name="stat39">Tempo jogado com final com desistência do jogador:</string>
+
+
 
 
 </resources>

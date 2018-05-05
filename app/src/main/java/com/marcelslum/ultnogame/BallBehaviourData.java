@@ -97,19 +97,20 @@ public class BallBehaviourData {
 
         logData();
 
-
-        
         if (finalLen != initialLen){
             velocityChanged = true;   
         }
             
         if (!velocityChanged){
             Level.levelObject.levelGoalsObject.notifyNotSpeedChange();
+            Stats.atingirBolaSemMudarVelocidade += 1;
         }
 
         if (finalLen > initialLen){
             Level.levelObject.levelGoalsObject.accelerate();
+            Stats.velocidadeAumentada += 1;
         } else if (initialLen > finalLen){
+            Stats.velocidadeDiminuida += 1;
             Level.levelObject.levelGoalsObject.decelerate();
         }
 
@@ -118,6 +119,44 @@ public class BallBehaviourData {
         } else if ((initialLen > finalLen) && finalAngle != maxAngle){
             Level.levelObject.levelGoalsObject.decelerateWithoutReachMaxAngle();
         }
+
+
+        if (!ball.onMinAngle){
+
+            if (angleDecreasedWithBarInclination){
+                Stats.anguloDiminuidoInclinacao += 1;
+            }
+            if (angleDecreasedWithBarMovement){
+                Stats.anguloDiminuidoMovimento += 1;
+            }
+            if (angleDecreasedWithBarMovement && angleDecreasedWithBarInclination) {
+                Stats.anguloDiminuidoMovimentoInclinacao += 1;
+            }
+
+
+            if (angleDecreasedWithBarInclination || angleDecreasedWithBarMovement){
+                Stats.anguloDiminuido += 1;
+            }
+
+        }
+
+
+        if (!ball.onMaxAngle){
+            if (angleIncreasedWithBarInclination){
+                Stats.anguloAumentadoInclinacao += 1;
+            }
+            if (angleIncreasedWithBarMovement){
+                Stats.anguloAumentadoMovimento += 1;
+            }
+            if (angleIncreasedWithBarMovement && angleDecreasedWithBarInclination) {
+                Stats.anguloAumentadoMovimentoInclinacao += 1;
+            }
+
+            if (angleIncreasedWithBarInclination || angleIncreasedWithBarMovement){
+                Stats.anguloAumentado += 1;
+            }
+        }
+
 
         if (angleDecreasedWithBarInclination && !angleIncreasedWithBarMovement && !angleDecreasedWithBarMovement && !ball.onMinAngle){
             Level.levelObject.levelGoalsObject.notifyAngleDecreasedOnlyWithBarInclination();
@@ -135,19 +174,24 @@ public class BallBehaviourData {
 
         if ((finalLen > initialLen) && angleIncreasedWithBarInclination){
             Level.levelObject.levelGoalsObject.accelerateWithBarIncreasingAngle();
+            Stats.velocidadeAumentadaAnguloAumentadoInclinacao += 1;
             if (finalAngle > initialAngle){
-                    Level.levelObject.levelGoalsObject.increaseAngle();
+                Stats.anguloAumentado += 1;
+                Level.levelObject.levelGoalsObject.increaseAngle();
             } else if (finalAngle > initialAngle){
-                    Level.levelObject.levelGoalsObject.decreaseAngle();
+                Stats.anguloDiminuido += 1;
+                Level.levelObject.levelGoalsObject.decreaseAngle();
             }
         } else if ((initialLen > finalLen) && angleDecreasedWithBarInclination){
             Level.levelObject.levelGoalsObject.decelerateWithBarDecreasingAngle();
+            Stats.velocidadeDiminuidaAnguloDiminuidoInclinacao += 1;
             if (finalAngle > initialAngle){
-                    Level.levelObject.levelGoalsObject.increaseAngle();
+                Stats.anguloAumentado += 1;
+                Level.levelObject.levelGoalsObject.increaseAngle();
             } else if (finalAngle > initialAngle){
-                    Level.levelObject.levelGoalsObject.decreaseAngle();
+                Stats.anguloDiminuido += 1;
+                Level.levelObject.levelGoalsObject.decreaseAngle();
             }
-
         }
 
         if (finalLen >= maxLen){

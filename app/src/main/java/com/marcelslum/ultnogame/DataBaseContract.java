@@ -93,6 +93,71 @@ public final class DataBaseContract {
         public static final String COLUMN_EXTRA_TEXT_5 = "extra_text_5";
     }
 
+    public static class DataStats implements BaseColumns {
+        public static final String TABLE_NAME = "stats";
+        public static final String STAT0 = "stat0";
+        public static final String STAT1 = "stat1";
+        public static final String STAT2 = "stat2";
+        public static final String STAT3 = "stat3";
+        public static final String STAT4 = "stat4";
+        public static final String STAT5 = "stat5";
+        public static final String STAT6 = "stat6";
+        public static final String STAT7 = "stat7";
+        public static final String STAT8 = "stat8";
+        public static final String STAT9 = "stat9";
+        public static final String STAT10 = "stat10";
+        public static final String STAT11 = "stat11";
+        public static final String STAT12 = "stat12";
+        public static final String STAT13 = "stat13";
+        public static final String STAT14 = "stat14";
+        public static final String STAT15 = "stat15";
+        public static final String STAT16 = "stat16";
+        public static final String STAT17 = "stat17";
+        public static final String STAT18 = "stat18";
+        public static final String STAT19 = "stat19";
+        public static final String STAT20 = "stat20";
+        public static final String STAT21 = "stat21";
+        public static final String STAT22 = "stat22";
+        public static final String STAT23 = "stat23";
+        public static final String STAT24 = "stat24";
+        public static final String STAT25 = "stat25";
+        public static final String STAT26 = "stat26";
+        public static final String STAT27 = "stat27";
+        public static final String STAT28 = "stat28";
+        public static final String STAT29 = "stat29";
+        public static final String STAT30 = "stat30";
+        public static final String STAT31 = "stat31";
+        public static final String STAT32 = "stat32";
+        public static final String STAT33 = "stat33";
+        public static final String STAT34 = "stat34";
+        public static final String STAT35 = "stat35";
+        public static final String STAT36 = "stat36";
+        public static final String STAT37 = "stat37";
+        public static final String STAT38 = "stat38";
+        public static final String STAT39 = "stat39";
+        public static final String STAT40 = "stat40";
+        public static final String STAT41 = "stat41";
+        public static final String STAT42 = "stat42";
+        public static final String STAT43 = "stat43";
+        public static final String STAT44 = "stat44";
+        public static final String STAT45 = "stat45";
+        public static final String STAT46 = "stat46";
+        public static final String STAT47 = "stat47";
+        public static final String STAT48 = "stat48";
+        public static final String STAT49 = "stat49";
+        public static final String STAT50 = "stat50";
+        public static final String STAT51 = "stat51";
+        public static final String STAT52 = "stat52";
+        public static final String STAT53 = "stat53";
+        public static final String STAT54 = "stat54";
+        public static final String STAT55 = "stat55";
+        public static final String STAT56 = "stat56";
+        public static final String STAT57 = "stat57";
+        public static final String STAT58 = "stat58";
+        public static final String STAT59 = "stat59";
+        public static final String STAT60 = "stat60";
+    }
+
     public static class DataLevels implements BaseColumns {
         public static final String TABLE_NAME = "levels";
         public static final String COLUMN_NUMBER = "number";

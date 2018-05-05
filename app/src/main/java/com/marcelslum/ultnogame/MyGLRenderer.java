@@ -220,7 +220,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         if (mLastTime > Game.currentFrameMilliPrecision) return;
 
         // Get the amount of time the last frame took.
-        Game.elapsedTimeSinceLastFrame = Game.currentFrameMilliPrecision - mLastTime;
+        Game.elapsedMiliTimeSinceLastFrame = Game.currentFrameMilliPrecision - mLastTime;
         Game.elapsedNanoTimeSinceLastFrame = Game.currentFrameNanoPrecision - mLastNanoTime;
 
         if (Game.gameState == Game.GAME_STATE_INTRO){
@@ -277,14 +277,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                     frameDurations = new ArrayList<>();
                 }
 
-                frameDurations.add(Game.elapsedTimeSinceLastFrame);
+                frameDurations.add(Game.elapsedMiliTimeSinceLastFrame);
 
 
-                //Log.e(TAG, "frame " + Game.elapsedTimeSinceLastFrame);
+                //Log.e(TAG, "frame " + Game.elapsedMiliTimeSinceLastFrame);
 
 
-                if (Game.elapsedTimeSinceLastFrame > longestFrame) {
-                    longestFrame = Game.elapsedTimeSinceLastFrame;
+                if (Game.elapsedMiliTimeSinceLastFrame > longestFrame) {
+                    longestFrame = Game.elapsedMiliTimeSinceLastFrame;
                 }
 
 
@@ -304,12 +304,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
             }
 
-            if (Game.elapsedTimeSinceLastFrame > (frameDuration*3) && Game.gameState == Game.GAME_STATE_JOGAR){
-                Log.e("MyGLRenderer", "frame muito longo, reduzindo de " + Game.elapsedTimeSinceLastFrame + " para " + (frameDuration*3));
-                Game.elapsedTimeSinceLastFrame = (long)frameDuration*3;
+            if (Game.elapsedMiliTimeSinceLastFrame > (frameDuration*3) && Game.gameState == Game.GAME_STATE_JOGAR){
+                Log.e("MyGLRenderer", "frame muito longo, reduzindo de " + Game.elapsedMiliTimeSinceLastFrame + " para " + (frameDuration*3));
+                Game.elapsedMiliTimeSinceLastFrame = (long)frameDuration*3;
             }
 
-            //Game.simulate(Game.elapsedTimeSinceLastFrame, frameDuration);
+            //Game.simulate(Game.elapsedMiliTimeSinceLastFrame, frameDuration);
             Game.simulate(Game.elapsedNanoTimeSinceLastFrame, frameDuration);
             Game.render(matrixView, matrixProjection);
         }

@@ -104,12 +104,16 @@ public class Target extends Rectangle {
         
         if (type == TARGET_BLACK){
             BrickBackground.ballCollidedBlack = 2000;
+            Stats.alvosPretosAtingidos += 1;
         } else if (type == TARGET_BLUE){
             BrickBackground.ballCollidedBlue = 2000;
+            Stats.alvosAzuisAtingidos += 1;
         } else if (type == TARGET_GREEN){
             BrickBackground.ballCollidedGreen = 2000;
+            Stats.alvosVerdesAtingidos += 1;
         } else if (type == TARGET_RED){
             BrickBackground.ballCollidedRed = 2000;
+            Stats.alvosVermelhosAtingidos += 1;
         }
 
         decayState(points);
@@ -200,6 +204,9 @@ public class Target extends Rectangle {
         showPoints(points);
 
         if (isGhost){
+
+            Stats.alvosFantasmasAtingidos += 1;
+
             if (ghostAlphaAnim != null) {
                 //Log.e("target", "ghostanimstarted");
                 ghostAlphaAnim.start();

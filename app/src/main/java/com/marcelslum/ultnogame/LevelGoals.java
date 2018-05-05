@@ -2,6 +2,7 @@ package com.marcelslum.ultnogame;
 
 import android.util.Log;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 /**
@@ -72,6 +73,8 @@ public class LevelGoals {
         if (Training.training){
             return;
         }
+
+        Stats.numeroBolasFalsasAtinjidas += 1;
 
         timesOfFakeBallsHitted += 1;
 
@@ -199,6 +202,9 @@ public class LevelGoals {
             return;
         }
 
+
+        Stats.obstaculosAtingidos += 1;
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"hitObstacle");
         
         timesOfObstacleHit += 1;
@@ -221,6 +227,8 @@ public class LevelGoals {
             return;
         }
 
+        Stats.colisaoEntreBolas += 1;
+
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"hitAnotherBall");
         timesOfCollisionBetweenBalls += 1;
         for (int i = 0; i < levelGoals.size(); i++){
@@ -241,6 +249,9 @@ public class LevelGoals {
         if (Training.training){
             return;
         }
+
+        Stats.tempoJogadoVitoria += TimeHandler.timeOfLevelPlay;
+        Stats.saveData();
 
         //Log.e(TAG, " NOTIFICANDO ->->->-> "+"setFinish");
         for (int i = 0; i < levelGoals.size(); i++){

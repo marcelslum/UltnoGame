@@ -30,6 +30,7 @@ public class SaveGameBuilder {
     public boolean orientationInverted;
     public boolean saveMenuSeen;
     public int lastLevelPlayed;
+    public long[] stats;
 
 
     public SaveGameBuilder(){
@@ -154,6 +155,11 @@ public class SaveGameBuilder {
 
     public SaveGameBuilder setLastLevelPlayed(int lastLevelPlayed) {
         this.lastLevelPlayed = lastLevelPlayed;
+        return this;
+    }
+
+    public SaveGameBuilder setStats(long [] stats) {
+        this.stats = stats;
         return this;
     }
 

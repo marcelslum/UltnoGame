@@ -143,6 +143,9 @@ public class ButtonHandler {
                     Tutorial.currentTutorialObject.previous();
                 } else if (Game.gameState == Game.GAME_STATE_SOBRE){
                     Game.setGameState(Game.GAME_STATE_OPCOES);
+                } else if (Game.gameState == Game.GAME_STATE_ESTATISTICAS){
+                    Game.statsTextView.blockAndClearDisplay();
+                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                 } else if (Game.gameState == Game.GAME_STATE_OPCOES){
                     Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                 } else if (Game.gameState == Game.GAME_STATE_OPCOES_JOGABILIDADE){

@@ -392,6 +392,17 @@ public class MenuHandler {
         });
 
 
+        menuPlay.addMenuOption("estatisticas", Game.getContext().getResources().getString(R.string.estatisticasDeJogo), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                MenuHandler.menuPlay.blockAndClearDisplay();
+                Game.blockAndWaitTouchRelease();
+                Game.setGameState(Game.GAME_STATE_ESTATISTICAS);
+
+            }
+        });
+
+
         // ----------------------------------------MENU DURANTE TREINAMENTO
 
         menuDuranteTreinamento = new Menu("menuDuranteTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.65f, fontSize, Game.font);
@@ -872,6 +883,16 @@ public class MenuHandler {
         menuInGame.addMenuOption("RetornarAoMenuPrincipal", Game.getContext().getResources().getString(R.string.sairDoJogo), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+
+                Stats.tempoJogadoNaoCompletado += TimeHandler.timeOfLevelPlay;
+
+                for (int i = 0; i < Game.balls.size(); i++) {
+                    Stats.collectBallData(Game.balls.get(i));
+                }
+
+                Stats.saveData();
+                SaveGame.saveGame.save();
+
                 Game.timesInterstitialOnGameOver = 0;
                 Game.prepareAfterInterstitialFlag = false;
                 Game.setGameState(Game.GAME_STATE_INTERSTITIAL);

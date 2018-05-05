@@ -43,6 +43,7 @@ public class SaveGame {
     public boolean orientationInverted;
     public boolean saveMenuSeen;
     public int lastLevelPlayed;
+    public long[] stats;
 
     public static boolean loaded = false;
 
@@ -69,6 +70,7 @@ public class SaveGame {
         orientationInverted = builder.orientationInverted;
         saveMenuSeen = builder.saveMenuSeen;
         lastLevelPlayed = builder.lastLevelPlayed;
+        stats = builder.stats;
     }
 
     public static void load() {
@@ -84,7 +86,14 @@ public class SaveGame {
 
             SaveGame saveGame1 = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
 
+            Log.e(TAG, "================================== log save do banco de dados");
+            log(saveGame1);
+
+
             SaveGame saveGame2 = getSaveGameFromJson(Storage.getString(Storage.STORAGE_SAVE_NAME));
+
+            Log.e(TAG, "================================== log save storage");
+            log(saveGame2);
 
             if (Game.forDebugClearAllLevelPoints) {
                 for (int i = 0; i < 100; i++) {
@@ -110,6 +119,15 @@ public class SaveGame {
                 saveGame = mergeSaveGames(saveGame1, saveGame2);
             }
 
+            Log.e(TAG, "================================== log save mesclado");
+            log(saveGame);
+
+            if (Game.apagarEstatisticas){
+                for (int i = 0; i < saveGame.stats.length; i++) {
+                    saveGame.stats[i] = 0;
+                }
+            }
+
 
             //log(saveGame);
         } else {
@@ -121,6 +139,12 @@ public class SaveGame {
             boolean[] _tutorialsSeen = new boolean[Tutorial.NUMBER_OF_TUTORIALS];
             boolean[] _groupsSeen = new boolean[Level.NUMBER_OF_GROUPS];
             _groupsSeen[0] = true;
+
+            long[] _stats = new long[Stats.STATS_DATABASE_SIZE];
+
+            for (int i = 0; i < _stats.length; i++) {
+                _stats[i] = 0;
+            }
 
             saveGame = new SaveGameBuilder()
                     .setLevelsPoints(_levelsPoints)
@@ -144,12 +168,19 @@ public class SaveGame {
                     .setLevelsPlayed(0)
                     .setOrientationInverted(false)
                     .setLastLevelPlayed(0)
+                    .setStats(_stats)
                     .build();
+
+
+
         }
 
+        /*
         for (int i = 0; i < 99; i++) {
             setLevelStars(i + 1, 0);
         }
+        */
+
 
         //Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
         loaded = true;
@@ -176,15 +207,18 @@ public class SaveGame {
             lastSave = Utils.getTimeMilliPrecision();
 
 
+            Log.e(TAG, "-----------------------------------------Salvando SaveGame");
+            log(SaveGame.saveGame);
+
+
             try {
                 DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
             } catch (Exception e) {
-                //Log.e(TAG, "Erro ao salvar no banco.");
+                Log.e(TAG, "Erro ao salvar no banco   " + e);
             }
 
 
-
-            Storage.setString(Storage.STORAGE_SAVE_NAME, getStringFromSaveGame(saveGame));
+            Storage.setString(Storage.STORAGE_SAVE_NAME, getJSONFromSaveGame(saveGame));
 
             return 1;
         }
@@ -201,64 +235,70 @@ public class SaveGame {
 
 
     public static void log(SaveGame s){
-        //Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        //Log.e(TAG, "pontos --------------- ");
-
+        Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        Log.e(TAG, "pontos --------------- ");
         String log= " ";
         for (int i = 0; i < s.levelsPoints.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsPoints[i];
         }
-        //Log.e(TAG, "level "+ log);
+        Log.e(TAG, " "+ log);
 
         log= " ";
-        //Log.e(TAG, "estrelas --------------- ");
+        Log.e(TAG, "estrelas --------------- ");
         for (int i = 0; i < s.levelsStars.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsStars[i];
         }
-        //Log.e(TAG, "level "+ log);
+        Log.e(TAG, " "+ log);
 
         log= " ";
-        //Log.e(TAG, "desbloqueados --------------- ");
+        Log.e(TAG, "desbloqueados --------------- ");
         for (int i = 0; i < s.levelsUnlocked.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsUnlocked[i];
         }
-        //Log.e(TAG, "level "+ log);
+        Log.e(TAG, " "+ log);
 
         log= " ";
-        //Log.e(TAG, "vistos --------------- ");
+        Log.e(TAG, "vistos --------------- ");
         for (int i = 0; i < s.levelsSeen.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsSeen[i];
         }
-        //Log.e(TAG, "level "+ log);
+        Log.e(TAG, " "+ log);
 
         log= " ";
-        //Log.e(TAG, "tutoriais vistos --------------- ");
+        Log.e(TAG, "tutoriais vistos --------------- ");
         for (int i = 0; i < s.tutorialsSeen.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.tutorialsSeen[i];
         }
-        //Log.e(TAG, "level "+ log);
+        Log.e(TAG, " "+ log);
 
         log= " ";
-        //Log.e(TAG, "grupos vistos --------------- ");
+        Log.e(TAG, "grupos vistos --------------- ");
         for (int i = 0; i < s.groupsSeen.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.groupsSeen[i];
         }
-        //Log.e(TAG, "level "+ log);
-              
-        //Log.e(TAG, "date -> " + s.date)   ;
-        //Log.e(TAG, "currentLevelNumber -> " + s.currentLevelNumber);
-        //Log.e(TAG, "currentGroupNumber -> " + s.currentGroupNumber);
-        //Log.e(TAG, "music  -> " + s.music );
-        //Log.e(TAG, "sound  -> " + s.sound );
-        //Log.e(TAG, "vibration  -> " + s.vibration );
-        //Log.e(TAG, "googleOption  -> " + s.googleOption );
-        //Log.e(TAG, "ballVelocity  -> " + s.ballVelocity );
-        //Log.e(TAG, "currentGroupMenuTranslateX -> " + s.currentGroupMenuTranslateX);
-        //Log.e(TAG, "currentLevelMenuTranslateX -> " + s.currentLevelMenuTranslateX);
-        //Log.e(TAG, "currentTutorialMenuTranslateX -> " + s.currentTutorialMenuTranslateX);
-        //Log.e(TAG, "lastStars -> " + s.lastStars);
-        //Log.e(TAG, "levelsPlayed -> " + s.levelsPlayed);
-        //Log.e(TAG, "orientationInverted -> " + s.orientationInverted);
+        Log.e(TAG, " "+ log);
+
+        Log.e(TAG, "stats  --------------- ");
+        for (int i = 0; i < 50; i++){
+            Log.e(TAG,"stat "+ i +" -> " + s.stats[i]);
+        }
+
+        Log.e(TAG, "date -> " + s.date)   ;
+        Log.e(TAG, "currentLevelNumber -> " + s.currentLevelNumber);
+        Log.e(TAG, "currentGroupNumber -> " + s.currentGroupNumber);
+        Log.e(TAG, "music  -> " + s.music );
+        Log.e(TAG, "sound  -> " + s.sound );
+        Log.e(TAG, "vibration  -> " + s.vibration );
+        Log.e(TAG, "googleOption  -> " + s.googleOption );
+        Log.e(TAG, "ballVelocity  -> " + s.ballVelocity );
+        Log.e(TAG, "currentGroupMenuTranslateX -> " + s.currentGroupMenuTranslateX);
+        Log.e(TAG, "currentLevelMenuTranslateX -> " + s.currentLevelMenuTranslateX);
+        Log.e(TAG, "currentTutorialMenuTranslateX -> " + s.currentTutorialMenuTranslateX);
+        Log.e(TAG, "lastStars -> " + s.lastStars);
+        Log.e(TAG, "levelsPlayed -> " + s.levelsPlayed);
+        Log.e(TAG, "orientationInverted -> " + s.orientationInverted);
+        Log.e(TAG, "saveMenuSeen -> " + s.saveMenuSeen);
+        Log.e(TAG, "lastLevelPlayed -> " + s.lastLevelPlayed);
 
     }
 
@@ -313,6 +353,7 @@ public class SaveGame {
         boolean fOrientationInverted;
         boolean fSaveMenuSeen;
         int flastLevelPlayed;
+        long [] fstats = new long[Stats.STATS_DATABASE_SIZE];
 
         flevelsPoints = Utils.getHigher(saveGame1.levelsPoints, saveGame2.levelsPoints);
         flevelsStars = Utils.getHigher(saveGame1.levelsStars, saveGame2.levelsStars);
@@ -330,6 +371,11 @@ public class SaveGame {
         fOrientationInverted = Utils.getHigher(saveGame1.orientationInverted, saveGame2.orientationInverted);
         fSaveMenuSeen = Utils.getHigher(saveGame1.saveMenuSeen, saveGame2.saveMenuSeen);
         flastLevelPlayed = Utils.getHigher(saveGame1.lastLevelPlayed, saveGame2.lastLevelPlayed);
+
+
+        for (int i = 0; i < fstats.length; i++) {
+            fstats[i] = Utils.getHigher(saveGame1.stats[i], saveGame2.stats[i]);
+        }
 
 
         //Log.e(TAG, "merge google option saveGame1.googleOption "+ saveGame1.googleOption);
@@ -367,6 +413,7 @@ public class SaveGame {
                 .setOrientationInverted(fOrientationInverted)
                 .setSaveMenuSeen(fSaveMenuSeen)
                 .setLastLevelPlayed(flastLevelPlayed)
+                .setStats(fstats)
                 .build();
     }
 
@@ -454,6 +501,7 @@ public class SaveGame {
                     fGroupsSeen[i] = array.getBoolean(i);
                 }
             } catch(JSONException e) {
+                Log.e(TAG, "504 erro ao coletar groupsSeen do JSON");
                 for (int i = 0; i < fGroupsSeen.length; i++) {
                     fGroupsSeen[i] = false;
                 }
@@ -557,6 +605,21 @@ public class SaveGame {
                 saveGameBuilder.setLastLevelPlayed(0);
             }
 
+            long[] fstats = new long[Stats.STATS_DATABASE_SIZE];
+            try {
+                JSONArray array = obj.getJSONArray("stats");
+                for (int i = 0; i < fstats.length; i++) {
+                    fstats[i] = array.getLong(i);
+                }
+            } catch(JSONException e) {
+                Log.e(TAG, "erro ao coletar dados de stats no JSON");
+                for (int i = 0; i < fstats.length; i++) {
+                    fstats[i] = 0;
+                }
+            }
+            saveGameBuilder.setStats(fstats);
+
+
             return saveGameBuilder.build();
 
         } catch (JSONException ex) {
@@ -570,11 +633,11 @@ public class SaveGame {
         return null;
     }
 
-    public static String getStringFromLocal() {
+    public static String getJSONFromStorage() {
         return Storage.getString(SHARED_PREFERENCES_KEY_NAME);
     }
 
-    public static String getStringFromSaveGame(SaveGame saveGame) {
+    public static String getJSONFromSaveGame(SaveGame saveGame) {
 
         if (MenuHandler.groupMenu != null) {
             saveGame.currentGroupMenuTranslateX = MenuHandler.groupMenu.currentTranslateX;
@@ -614,6 +677,7 @@ public class SaveGame {
             obj.put("orientationInverted", saveGame.orientationInverted);
             obj.put("saveMenuSeen", saveGame.saveMenuSeen);
             obj.put("lastLevelPlayed", saveGame.lastLevelPlayed);
+            obj.put("stats", new JSONArray(saveGame.stats));
             return obj.toString();
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -689,7 +753,7 @@ public class SaveGame {
 
             log(saveGame);
 
-            //saveGame = getSaveGameFromJson(getStringFromLocal());
+            //saveGame = getSaveGameFromJson(getJSONFromStorage());
         } else {
             //Log.e(TAG, "Não existe ainda nenhum dado, criando novo");
             int[] _levelsPoints = new int[Level.NUMBER_OF_LEVELS];

@@ -431,7 +431,7 @@ public class MainActivity extends FragmentActivity implements
         // Set the data payload for the snapshot.
         snapshot.getSnapshotContents().
 
-                writeBytes(SaveGame.getStringFromSaveGame(SaveGame.saveGame).getBytes());
+                writeBytes(SaveGame.getJSONFromSaveGame(SaveGame.saveGame).getBytes());
 
 
         DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
