@@ -177,7 +177,7 @@ class Menu extends Entity{
     static int lastMenuOptionColor = 0;
 
     public MenuOption addMenuOption(String name, String text, MenuOption.OnChoice onChoice){
-        float optionY = this.y + (optionsIds * (size *(1.05f+bottomPad)));
+        float optionY = this.y + (optionsIds * (size *(1.1f+bottomPad)));
         optionsIds += 1;
 
         Color color;

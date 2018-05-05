@@ -22,7 +22,7 @@ public class MenuHandler {
     static MenuIcon tutorialMenu;
 
     static Menu menuPlay;
-    static Menu menuExplicacaoTreinamento;
+    static Menu menuExplicacaoAntesDoTreinamento;
     static Menu menuDuranteTreinamento;
 
     public static String TAG = "MenuHandler";
@@ -381,7 +381,7 @@ public class MenuHandler {
             }
         });
 
-        menuPlay.addMenuOption("treinamento", Game.getContext().getResources().getString(R.string.treinamento), new MenuOption.OnChoice() {
+        menuPlay.addMenuOption("treinamento", Game.getContext().getResources().getString(R.string.sessao_treinamento), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 MenuHandler.menuPlay.blockAndClearDisplay();
@@ -404,7 +404,7 @@ public class MenuHandler {
                 Game.blockAndWaitTouchRelease();
                 if (Game.gameState == Game.GAME_STATE_MENU_DURANTE_TREINAMENTO){
                     Game.increaseAllGameEntitiesAlpha(500);
-                    
+
                     for (int i = 0; i < MessagesHandler.messageExplicacaoDuranteTreinamento.texts.size(); i++) {
                         if (MessagesHandler.messageExplicacaoDuranteTreinamento.texts.get(i).color != Color.azul40){
                             MessagesHandler.messageExplicacaoDuranteTreinamento.texts.get(i).setColor(Color.transparente);
@@ -431,21 +431,26 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 Training.training = false;
-                Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+                MessagesHandler.messageExplicacaoDuranteTreinamento.clearDisplay();
+                Game.timesInterstitialOnGameOver = 0;
+                Game.prepareAfterInterstitialFlag = false;
+                Game.returningFromTraining = true;
+                Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
+
             }
         });
 
 
         // ----------------------------------------MENU EXPLICAÇÃO TREINAMENTO
 
-        menuExplicacaoTreinamento = new Menu("menuExplicacaoTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.9f, fontSize, Game.font);
+        menuExplicacaoAntesDoTreinamento = new Menu("menuExplicacaoAntesDoTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.93f, fontSize, Game.font);
 
-        menuExplicacaoTreinamento.addMenuOption("iniciarTreinamento", Game.getContext().getResources().getString(R.string.iniciarTreinamento), new MenuOption.OnChoice() {
+        menuExplicacaoAntesDoTreinamento.addMenuOption("iniciarTreinamento", Game.getContext().getResources().getString(R.string.continuarMenuExplicacaoTreinamento), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 Training.training = true;
                 MessagesHandler.messageExplicacaoTreinamento.clearDisplay();
-                MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
+                MenuHandler.menuExplicacaoAntesDoTreinamento.blockAndClearDisplay();
                 Training.trainingNumber = Training.TREINAMENTO_AUMENTAR_VELOCIDADE;
                 Training.trainingBarCollisionInit = Long.MAX_VALUE;
                 Training.tentativaCertaTreinamento = 0;
@@ -717,7 +722,7 @@ public class MenuHandler {
 
 
         // -------------------------------------------MENU MAIN
-        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
+        menuMain = new Menu("menuMain", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;

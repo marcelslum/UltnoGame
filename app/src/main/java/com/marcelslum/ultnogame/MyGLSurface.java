@@ -113,7 +113,7 @@ public class MyGLSurface extends GLSurfaceView {
                 Game.eraseAllGameEntities();
                 Game.eraseAllHudEntities();
 
-                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+
 
                 if (Game.gameState == Game.GAME_STATE_MENU_PRINCIPAL){
                     Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
@@ -121,15 +121,20 @@ public class MyGLSurface extends GLSurfaceView {
                     return;
                 }
 
-                if (Game.prepareAfterInterstitialFlag){
-                    Game.prepareAfterInterstitialFlag = false;
-                    LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                    Game.setGameState(Game.GAME_STATE_PREPARAR);
-                } else if (SaveGame.saveGame.currentLevelNumber < 101){
-                    Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                if (Game.returningFromTraining) {
+                    Game.returningFromTraining = false;
+                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+
                 } else {
-                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                    if (Game.prepareAfterInterstitialFlag) {
+                        Game.prepareAfterInterstitialFlag = false;
+                        LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
+                        Game.setGameState(Game.GAME_STATE_PREPARAR);
+                    } else {
+                        Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                    }
                 }
+
             }});
     }
 

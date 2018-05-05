@@ -135,6 +135,7 @@ public class Game {
 
     static int timesInterstitialOnGameOver = 0;
     static boolean prepareAfterInterstitialFlag = false;
+    static boolean returningFromTraining = false;
 
     // options
     public static boolean isBlocked;
@@ -746,7 +747,7 @@ public class Game {
 
             MessagesHandler.messageBack.display();
 
-            MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
+            MenuHandler.menuExplicacaoAntesDoTreinamento.blockAndClearDisplay();
             MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
 
             MenuHandler.menuOptions.blockAndClearDisplay();
@@ -754,7 +755,7 @@ public class Game {
             MenuHandler.groupMenu.blockAndClearDisplay();
             MenuHandler.levelMenu.blockAndClearDisplay();
             MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
-            MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
+            MenuHandler.menuExplicacaoAntesDoTreinamento.blockAndClearDisplay();
 
             MessagesHandler.messageMenuSaveNotSeen.clearDisplay();
             MessagesHandler.messageMenuCarregarJogo.clearDisplay();
@@ -774,7 +775,7 @@ public class Game {
             MessagesHandler.messageExplicacaoTreinamento.display();
             MessagesHandler.messageBack.display();
 
-            MenuHandler.menuExplicacaoTreinamento.unblockAndDisplay();
+            MenuHandler.menuExplicacaoAntesDoTreinamento.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
 
         } else if (state == GAME_STATE_MENU_DURANTE_TREINAMENTO){
@@ -981,7 +982,7 @@ public class Game {
             MenuHandler.levelMenu.blockAndClearDisplay();
             MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
             MenuHandler.menuPlay.blockAndClearDisplay();
-            MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
+            MenuHandler.menuExplicacaoAntesDoTreinamento.blockAndClearDisplay();
 
             MessagesHandler.messageMenuSaveNotSeen.clearDisplay();
             MessagesHandler.messageMenuCarregarJogo.clearDisplay();
@@ -2550,7 +2551,7 @@ public class Game {
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.checkTransformations(true);
 
         if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.checkTransformations(true);
-        if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.checkTransformations(true);
+        if (MenuHandler.menuExplicacaoAntesDoTreinamento != null) MenuHandler.menuExplicacaoAntesDoTreinamento.checkTransformations(true);
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.checkTransformations(true);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.checkTransformations(true);
@@ -2730,7 +2731,7 @@ public class Game {
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.prepareRender(matrixView, matrixProjection);
 
         if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.prepareRender(matrixView, matrixProjection);
-        if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuExplicacaoAntesDoTreinamento != null) MenuHandler.menuExplicacaoAntesDoTreinamento.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.prepareRender(matrixView, matrixProjection);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.prepareRender(matrixView, matrixProjection);
@@ -2868,7 +2869,7 @@ public class Game {
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.verifyListener();
 
         if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.verifyListener();
-        if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.verifyListener();
+        if (MenuHandler.menuExplicacaoAntesDoTreinamento != null) MenuHandler.menuExplicacaoAntesDoTreinamento.verifyListener();
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.verifyListener();
 
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.verifyListener();
