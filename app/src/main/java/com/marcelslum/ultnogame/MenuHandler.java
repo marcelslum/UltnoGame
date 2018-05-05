@@ -21,7 +21,7 @@ public class MenuHandler {
     static MenuIcon levelMenu;
     static MenuIcon tutorialMenu;
 
-    static Menu menuTutorialTreinamento;
+    static Menu menuPlay;
     static Menu menuExplicacaoTreinamento;
     static Menu menuDuranteTreinamento;
 
@@ -306,7 +306,7 @@ public class MenuHandler {
             public void onChoice() {
                 SaveGame.saveGame.saveMenuSeen = true;
                 menuFirstSaveGame.blockAndClearDisplay();
-                Game.setGameState(Game.GAME_STATE_MENU);
+                Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                 GoogleAPI.showSnapshots();
             }
         });
@@ -315,7 +315,7 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 menuFirstSaveGame.blockAndClearDisplay();
-                Game.setGameState(Game.GAME_STATE_MENU);
+                Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                 GoogleAPI.showSnapshots();
             }
         });
@@ -329,7 +329,7 @@ public class MenuHandler {
             public void onChoice() {
                     menuCarregar.blockAndClearDisplay();
                     SaveGame.saveGame = MainActivity.saveGameFromCloud;
-                    Game.setGameState(Game.GAME_STATE_MENU);
+                    Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.carregadoJogo), 4000);
             }
         });
@@ -339,7 +339,7 @@ public class MenuHandler {
             public void onChoice() {
                 menuCarregar.blockAndClearDisplay();
                 SaveGame.saveGame = SaveGame.mergeSaveGames(SaveGame.saveGame, MainActivity.saveGameFromCloud);
-                Game.setGameState(Game.GAME_STATE_MENU);
+                Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                 MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.mescladoJogos), 4000);
             }
         });
@@ -348,7 +348,7 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 menuCarregar.blockAndClearDisplay();
-                Game.setGameState(Game.GAME_STATE_MENU);
+                Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
             }
         });
 
@@ -359,21 +359,33 @@ public class MenuHandler {
         //menuObjectives.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.iniciar_jogo), new MenuOption.OnChoice() {@Override public void onChoice() {}});
 
 
-        // ----------------------------------------MENU TREINAMENTO TUTORIAL
+        // ----------------------------------------MENU JOGAR
 
-        menuTutorialTreinamento = new Menu("menuTutorialTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+        menuPlay = new Menu("menuPlay", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
 
-        menuTutorialTreinamento.addMenuOption("tutoriais", Game.getContext().getResources().getString(R.string.tutoriais), new MenuOption.OnChoice() {
+        menuPlay.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.jogar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                MenuHandler.menuPlay.blockAndClearDisplay();
+                Game.blockAndWaitTouchRelease();
+                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+            }
+        });
+
+        menuPlay.addMenuOption("tutoriais", Game.getContext().getResources().getString(R.string.tutoriais), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                MenuHandler.menuPlay.blockAndClearDisplay();
+                Game.blockAndWaitTouchRelease();
                 Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
             }
         });
 
-        menuTutorialTreinamento.addMenuOption("treinamento", Game.getContext().getResources().getString(R.string.treinamento), new MenuOption.OnChoice() {
+        menuPlay.addMenuOption("treinamento", Game.getContext().getResources().getString(R.string.treinamento), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                MenuHandler.menuTutorialTreinamento.blockAndClearDisplay();
+                MenuHandler.menuPlay.blockAndClearDisplay();
+                Game.blockAndWaitTouchRelease();
                 Game.setGameState(Game.GAME_STATE_MENU_EXPLICACAO_TREINAMENTO);
 
             }
@@ -382,7 +394,7 @@ public class MenuHandler {
 
         // ----------------------------------------MENU DURANTE TREINAMENTO
 
-        menuDuranteTreinamento = new Menu("menuDuranteTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+        menuDuranteTreinamento = new Menu("menuDuranteTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.65f, fontSize, Game.font);
 
         menuDuranteTreinamento.addMenuOption("fazerTentativa", Game.getContext().getResources().getString(R.string.fazerTentativa), new MenuOption.OnChoice() {
             @Override
@@ -392,19 +404,20 @@ public class MenuHandler {
                 Game.blockAndWaitTouchRelease();
                 if (Game.gameState == Game.GAME_STATE_MENU_DURANTE_TREINAMENTO){
                     Game.increaseAllGameEntitiesAlpha(500);
-                    MessagesHandler.messageExplicacaoDuranteTreinamento.reduceAlpha(500, 0f, new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationEnd() {
-                            MessagesHandler.messageExplicacaoDuranteTreinamento.clearDisplay();
-                            MessagesHandler.messageExplicacaoDuranteTreinamento.alpha = 1f;
+                    
+                    for (int i = 0; i < MessagesHandler.messageExplicacaoDuranteTreinamento.texts.size(); i++) {
+                        if (MessagesHandler.messageExplicacaoDuranteTreinamento.texts.get(i).color != Color.azul40){
+                            MessagesHandler.messageExplicacaoDuranteTreinamento.texts.get(i).setColor(Color.transparente);
+                        } else {
+                            MessagesHandler.messageExplicacaoDuranteTreinamento.texts.get(i).setColor(Color.azul40.changeAlpha(0.7f));
                         }
-                    });
+                    }
 
                     menuDuranteTreinamento.reduceAlpha(500,0f, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
 
-                            MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (Game.tentativaCertaTreinamento + 1) + " " +Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+                            MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (Training.tentativaCertaTreinamento + 1) + " " +Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
                             MessagesHandler.messageTrainingState2.display();
 
                             Game.setGameState(Game.GAME_STATE_JOGAR);
@@ -417,33 +430,25 @@ public class MenuHandler {
         menuDuranteTreinamento.addMenuOption("sairDoTreinamento", Game.getContext().getResources().getString(R.string.sairTreinamento), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                Game.training = false;
-                Game.setGameState(Game.GAME_STATE_MENU);
+                Training.training = false;
+                Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
             }
         });
 
 
         // ----------------------------------------MENU EXPLICAÇÃO TREINAMENTO
 
-        menuExplicacaoTreinamento = new Menu("menuExplicacaoTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.7f, fontSize, Game.font);
+        menuExplicacaoTreinamento = new Menu("menuExplicacaoTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.9f, fontSize, Game.font);
 
         menuExplicacaoTreinamento.addMenuOption("iniciarTreinamento", Game.getContext().getResources().getString(R.string.iniciarTreinamento), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                Game.training = true;
-
-                MessagesHandler.messageExplicacaoTreinamento.reduceAlpha(500, 0f, new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        MessagesHandler.messageExplicacaoTreinamento.clearDisplay();
-                        MessagesHandler.messageExplicacaoTreinamento.alpha = 1f;
-                    }
-                });
-
+                Training.training = true;
+                MessagesHandler.messageExplicacaoTreinamento.clearDisplay();
                 MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
-                Game.trainingNumber = Game.TREINAMENTO_AUMENTAR_VELOCIDADE;
-                Game.trainingBarCollisionInit = Long.MAX_VALUE;
-                Game.tentativaCertaTreinamento = 0;
+                Training.trainingNumber = Training.TREINAMENTO_AUMENTAR_VELOCIDADE;
+                Training.trainingBarCollisionInit = Long.MAX_VALUE;
+                Training.tentativaCertaTreinamento = 0;
                 Game.setGameState(Game.GAME_STATE_PREPARAR_TREINAMENTO);
 
 
@@ -716,13 +721,12 @@ public class MenuHandler {
 
         // adiciona a opção de iniciar o jogo
         final Menu innerMenu = menuMain;
-        menuMain.addMenuOption("IniciarJogo", Game.getContext().getResources().getString(R.string.menuPrincipalIniciar), new MenuOption.OnChoice() {
+        menuMain.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.jogar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 innerMenu.block();
                 Game.blockAndWaitTouchRelease();
-                Game.clearAllMenuEntities();
-                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
             }
         });
 
@@ -777,22 +781,6 @@ public class MenuHandler {
                 }
             }
         });
-
-        menuMain.addMenuOption("tutorialTreinamento", Game.getContext().getResources().getString(R.string.tutorialTreinamento), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL_TREINAMENTO);
-            }
-        });
-
-        /*
-        menuMain.addMenuOption("insterstitial", "Mostrar propaganda", new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                Game.mainActivity.showInterstitial();
-            }
-        });
-        */
 
         // ----------------------------------------------------MENU GAME OVER
         menuGameOver = new Menu("menuGameOver",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);

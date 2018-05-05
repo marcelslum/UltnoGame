@@ -24,7 +24,7 @@ public class ScoreHandler {
         return scoreTotal;
     }
 
-    static void verifyScoreDecay(){
+    static void checkIfScoreHasToDecay(){
         long time = Utils.getTimeMilliPrecision();
         if ((time - Game.initialTimePointsDecay)> TIME_FOR_POINTS_DECAY){
             if (scorePanel.value > POINTS_DECAY) {

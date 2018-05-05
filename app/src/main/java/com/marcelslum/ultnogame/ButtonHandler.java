@@ -122,7 +122,7 @@ public class ButtonHandler {
                 if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                 } else if (Game.gameState == Game.GAME_STATE_SELECAO_GRUPO){
-                    Game.setGameState(Game.GAME_STATE_MENU);
+                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
                     if (SaveGame.saveGame.currentLevelNumber < 1000){
                         Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
@@ -130,12 +130,13 @@ public class ButtonHandler {
                         Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                     }
                 } else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL) {
-                    Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL_TREINAMENTO);
-                }else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL_TREINAMENTO){
-                        Game.setGameState(Game.GAME_STATE_MENU);
+                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                }else if (Game.gameState == Game.GAME_STATE_MENU_JOGAR){
+                        Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                 }else if (Game.gameState == Game.GAME_STATE_MENU_EXPLICACAO_TREINAMENTO){
-                    Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL_TREINAMENTO);
+                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                 }else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL){
+                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
                 } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){
@@ -143,7 +144,7 @@ public class ButtonHandler {
                 } else if (Game.gameState == Game.GAME_STATE_SOBRE){
                     Game.setGameState(Game.GAME_STATE_OPCOES);
                 } else if (Game.gameState == Game.GAME_STATE_OPCOES){
-                    Game.setGameState(Game.GAME_STATE_MENU);
+                    Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                 } else if (Game.gameState == Game.GAME_STATE_OPCOES_JOGABILIDADE){
                     MenuHandler.menuOptionsPlay.clearDisplay();
                     MenuHandler.menuOptionsPlay.block();

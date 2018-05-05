@@ -84,26 +84,30 @@ public class TextView extends Entity{
 		texts.clear();
 		childs.clear();
 	}
-	
-	public void addText(String text, Color newTextColor){
+
+	public void addText(String text, Color newTextColor, float sizeProportion){
 
 
-		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth("novo text", text, font, newTextColor, size, width, alignment);
+		ArrayList<Text> newTexts = Text.splitStringAtMaxWidth("novo text", text, font, newTextColor, size * sizeProportion, width, alignment);
 
-        texts.addAll(newTexts);
-		Text.doLinesWithStringCollection(texts, y, size, size * padding, false);
+		texts.addAll(newTexts);
+		Text.doLinesWithStringCollection(texts, y, size * sizeProportion, size * sizeProportion * padding, false);
 
 		for (int i = 0; i < texts.size(); i++){
 			texts.get(i).setX(x);
 		}
-		
+
 		if (childs != null){
-            		childs.clear();
+			childs.clear();
 		}
-		
+
 		for (int i = 0; i < texts.size(); i++){
 			addChild(texts.get(i));
 		}
+	}
+
+	public void addText(String text, Color newTextColor){
+		addText(text, newTextColor, 1f);
 	}
 	
 	public void render(float[] matrixView, float[] matrixProjection){

@@ -92,7 +92,7 @@ public class Level {
 
         MessagesHandler.messageTime.setText("00:00");
 
-        if (Game.training){
+        if (Training.training){
             MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.mensagem_treinamento));
         } else {
             MessagesHandler.messageCurrentLevel.setText(Game.getContext().getResources().getString(R.string.messageCurrentLevel) + " " + String.valueOf(SaveGame.saveGame.currentLevelNumber));
@@ -149,7 +149,7 @@ public class Level {
                     Game.sound.playCounter();
                     //Sound.playSoundPool(Sound.soundCounter, 0.5f, 0.5f, 0);
 
-                    if (Game.training){
+                    if (Training.training){
                         Game.setGameState(Game.GAME_STATE_MENU_DURANTE_TREINAMENTO);
                     } else {
                         Game.setGameState(Game.GAME_STATE_PAUSE);
@@ -166,7 +166,7 @@ public class Level {
         Game.addInteracionListener(gameAreaInteractionListener);
         
         float percentageOfVelocity = (float) SaveGame.saveGame.ballVelocity / 100f;
-        if (percentageOfVelocity != 1f && !Game.training){
+        if (percentageOfVelocity != 1f && !Training.training){
             if (percentageOfVelocity < 1f){
                 percentageOfVelocity = 1f - ((1f - percentageOfVelocity)/2f);   
             } else if (percentageOfVelocity > 1f){

@@ -1001,9 +1001,9 @@ public class Ball extends Circle{
 
         if(collisionBar){
 
-            if (Game.training){
-                Game.trainingBarCollisionInit = Utils.getTimeMilliPrecision();
-                Log.e(TAG, "Game.trainingBarCollisionInit = Utils.getTimeMilliPrecision() " + Game.trainingBarCollisionInit);
+            if (Training.training){
+                Training.trainingBarCollisionInit = Utils.getTimeMilliPrecision();
+                Log.e(TAG, "Game.trainingBarCollisionInit = Utils.getTimeMilliPrecision() " + Training.trainingBarCollisionInit);
             }
 
             if (isFake){
@@ -1840,26 +1840,46 @@ public class Ball extends Circle{
     }
 
     private void setDead() {
-        this.isAlive = false;
-        final Ball self = this;
-        reduceAlpha(500, 0f,new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd() {
-                self.isVisible = false;
-            }
-        });
+
         Game.sound.playBallFall();
-        //Sound.playSoundPool(Sound.soundBallFall, 1, 1, 0);
-
-        if (listenForExplosion){
-            Sound.soundPool.stop(alarmId);
-        }
-
-        clearParticles();
-
-        this.isSolid = false;
         this.isCollidable = false;
         this.isMovable = false;
+        this.isAlive = false;
+
+        if (Training.training){
+            reduceAlpha(1000, 0.2f);
+            Training.trainingBarCollisionInit = Utils.getTimeMilliPrecision();
+            Game.resultadoTreinamentoAnotado = true;
+            Training.treinamentoSucesso = false;
+            MessagesHandler.messageTrainingState.setText(Game.getContext().getResources().getString(R.string.errou));
+            MessagesHandler.messageTrainingState.setColor(Color.vermelhoCheio);
+            MessagesHandler.messageTrainingState.alpha = 0.2f;
+            MessagesHandler.messageTrainingState.display();
+            Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 500, 0f, 0.2f, 0.5f, 1f, 1f, 0.2f, true, true).start();
+
+            Game.bars.get(0).isMovable = false;
+
+        } else {
+            this.isAlive = false;
+
+            final Ball self = this;
+            reduceAlpha(500, 0f, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    self.isVisible = false;
+                }
+            });
+
+            //Sound.playSoundPool(Sound.soundBallFall, 1, 1, 0);
+            if (listenForExplosion) {
+                Sound.soundPool.stop(alarmId);
+            }
+            this.isSolid = false;
+
+
+
+            clearParticles();
+        }
     }
 
     public void changeAngleManualy(boolean left){

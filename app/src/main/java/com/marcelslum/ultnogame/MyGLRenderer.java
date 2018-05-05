@@ -58,7 +58,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         if (Game.gameState == Game.GAME_STATE_JOGAR) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
         } else if (Game.gameState == Game.GAME_STATE_PREPARAR || Game.gameState == Game.GAME_STATE_TUTORIAL) {
-            Game.setGameState(Game.GAME_STATE_MENU);
+            Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
         }
     }
 
@@ -246,7 +246,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                 } else {
 
 
-                    if (!Game.training) {
+                    if (!Training.training) {
                         if (Game.gameState == Game.GAME_STATE_JOGAR) {
                             if (Utils.getTimeMilliPrecision() - lastInternetCheck > 1000) {
                                 if (TimeHandler.timeOfLevelPlay > 3000) {

@@ -108,13 +108,21 @@ public class MessagesHandler {
 
 
         messageExplicacaoTreinamento = new TextView("explicacaoTreinamento", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.12f,
+                Game.resolutionY * 0.2f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
-                fontSize * 0.6f,
+                fontSize * 0.58f,
                 Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
 
-        messageExplicacaoTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoTreinamento1), Color.cinza40);
+        messageExplicacaoTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoTreinamento1), Color.azul40, 1.3f);
+        messageExplicacaoTreinamento.addText(".", Color.transparente);
+        messageExplicacaoTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoTreinamento2), Color.cinza20);
+        messageExplicacaoTreinamento.addText(".", Color.transparente);
+        messageExplicacaoTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoTreinamento3), Color.cinza20);
+        messageExplicacaoTreinamento.addText(".", Color.transparente);
+        messageExplicacaoTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoTreinamento4), Color.cinza20);
+        messageExplicacaoTreinamento.addText(".", Color.transparente);
+        messageExplicacaoTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoTreinamento5), Color.azul40);
 
         messageExplicacaoTreinamento.clearDisplay();
 

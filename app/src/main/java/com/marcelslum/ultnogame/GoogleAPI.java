@@ -1,16 +1,14 @@
 package com.marcelslum.ultnogame;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.AnnotatedData;
 import com.google.android.gms.games.EventsClient;
-import com.google.android.gms.games.Games;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.PlayersClient;
 import com.google.android.gms.games.SnapshotsClient;
@@ -43,6 +41,39 @@ public class GoogleAPI {
 
 
     public static ArrayList<AchievementData> achievementsData = new ArrayList<>();
+    public static String playerName = "-";
+    static ImageBitmap playerIconImage;
+    static Bitmap playerIcon;
+
+    public static void displayGoogleInfo(){
+
+        MessagesHandler.messageGoogleLogged.display();
+
+        //Log.e(TAG, "playerName "+playerName);
+
+        if (Game.mainActivity.isSignedIn()){
+            Log.e(TAG, "mainActivity.isSignedIn()");
+            if (playerIcon != null){
+                Log.e(TAG, "playerIcon != null");
+                if (playerIconImage != null){
+                    playerIconImage.setBitmap(playerIcon);
+                } else {
+                    playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, playerIcon);
+                }
+
+                playerIconImage.display();
+            } else {
+                Log.e(TAG, "playerIcon == null");
+            }
+
+            MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerName);
+        } else {
+            MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado));
+        }
+
+
+    }
+
 
     public static class AchievementData{
         public String name;

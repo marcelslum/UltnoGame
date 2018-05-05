@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.graphics.Bitmap;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -22,8 +21,6 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class Game {
 
     public static Sound sound = new Sound();
-
-    static Bitmap playerIcon;
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
     public static boolean ganharTodasAsEstrelas = false;
@@ -39,39 +36,6 @@ public class Game {
     public static boolean logCollisionEscape = false;
     public static boolean logMenuIconMoveAndTranslateX = false;
     public static boolean sempreVerSaveMenu = false;
-
-
-    public static boolean training = false;
-    public static int trainingNumber = 0;
-
-    public static long trainingBarCollisionInit = Long.MAX_VALUE;
-
-    public static int tentativaCertaTreinamento = 0;
-
-    public static boolean treinamentoSucesso = false;
-
-    public static int TREINAMENTO_AUMENTAR_VELOCIDADE = 1;
-    public static int TREINAMENTO_DIMINUIR_VELOCIDADE = 3;
-    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO = 5;
-    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO = 7;
-    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO = 9;
-    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO = 11;
-    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO = 13;
-    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO = 15;
-    public static int TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO = 17;
-    public static int TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO = 19;
-
-    public static int TREINAMENTO_AUMENTAR_VELOCIDADE_OPOSTO = 2;
-    public static int TREINAMENTO_DIMINUIR_VELOCIDADE_OPOSTO = 4;
-    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO_OPOSTO = 6;
-    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO_OPOSTO = 8;
-    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_OPOSTO = 10;
-    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_OPOSTO = 12;
-    public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO = 14;
-    public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO = 16;
-    public static int TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO_OPOSTO = 18;
-    public static int TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO_OPOSTO = 20;
-
 
 
     public static MyGLSurface myGlSurface;
@@ -94,8 +58,7 @@ public class Game {
     public static float nanoPrecisionElapsed = 0f;
 
     public static long timeOfPrePlay = 0;
-    
-    public static String playerName = "-";
+
     public static ArrayList<String> messagesToDisplay = new ArrayList<>();
     static Vibrator vibrator;
 
@@ -141,8 +104,6 @@ public class Game {
     static Edge bordaE;
     static Edge bordaD;
     static Edge bordaB;
-    static ImageBitmap playerIconImage;
-
 
 
     static Rectangle frame;
@@ -184,14 +145,14 @@ public class Game {
     public final static int GAME_STATE_PREPARAR_TREINAMENTO = 2;
     public final static int GAME_STATE_MENU_DURANTE_TREINAMENTO = 3;
     public final static int GAME_STATE_MENU_EXPLICACAO_TREINAMENTO = 4;
-    public final static int GAME_STATE_MENU_TUTORIAL_TREINAMENTO = 5;
+    public final static int GAME_STATE_MENU_JOGAR = 5;
     public final static int GAME_STATE_OPCOES_JOGABILIDADE =  6;
     public final static int GAME_STATE_MENU_SAVE_FIRST_TIME =  8;
     public final static int GAME_STATE_MENU_CARREGAR_JOGO = 7;
     public final static int GAME_STATE_PRE_JOGAR = 9;
     public final static int GAME_STATE_JOGAR = 10;
     public final static int GAME_STATE_PREPARAR = 11;
-    public final static int GAME_STATE_MENU =  12;
+    public final static int GAME_STATE_MENU_PRINCIPAL =  12;
     public final static int GAME_STATE_VITORIA =  13;
     public final static int GAME_STATE_DERROTA =  14;
     public final static int GAME_STATE_TUTORIAL =  15;
@@ -660,8 +621,8 @@ public class Game {
 
         TimeHandler.timeOfLevelPlayBlocked = true;
 
-        if (playerIconImage != null){
-            playerIconImage.clearDisplay();
+        if (GoogleAPI.playerIconImage != null){
+            GoogleAPI.playerIconImage.clearDisplay();
         }
 
         if (state == GAME_STATE_INTERSTITIAL){
@@ -753,6 +714,7 @@ public class Game {
             //Sound.playSoundPool(Sound.soundMenuIconDrop2, 0.15f, 0.15f, 0);
 
             mainActivity.showAdView();
+
             Game.bordaB.setY(Game.resolutionY);
             MenuHandler.updateGroupMenu();
             MenuHandler.groupMenu.appear();
@@ -770,11 +732,15 @@ public class Game {
 
 
             
-        } else if (state == GAME_STATE_MENU_TUTORIAL_TREINAMENTO){
+        } else if (state == GAME_STATE_MENU_JOGAR){
 
             if (!sameState) {
                 showBlackFrameTransition(500);
             }
+
+            GoogleAPI.displayGoogleInfo();
+
+            mainActivity.showAdView();
 
             tittle.display();
 
@@ -783,7 +749,21 @@ public class Game {
             MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
             MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
 
-            MenuHandler.menuTutorialTreinamento.unblockAndDisplay();
+            MenuHandler.menuOptions.blockAndClearDisplay();
+            MenuHandler.menuInGame.blockAndClearDisplay();
+            MenuHandler.groupMenu.blockAndClearDisplay();
+            MenuHandler.levelMenu.blockAndClearDisplay();
+            MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
+            MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
+
+            MessagesHandler.messageMenuSaveNotSeen.clearDisplay();
+            MessagesHandler.messageMenuCarregarJogo.clearDisplay();
+            if (MessagesHandler.messageExplicacaoTreinamento != null) MessagesHandler.messageExplicacaoTreinamento.clearDisplay();
+            if (MessagesHandler.messageTrainingState != null) MessagesHandler.messageTrainingState.clearDisplay();
+            if (MessagesHandler.messageTrainingState2 != null) MessagesHandler.messageTrainingState2.clearDisplay();
+
+            MenuHandler.menuPlay.unblockAndDisplay();
+
             ButtonHandler.buttonReturn.unblockAndDisplay();
 
         } else if (state == GAME_STATE_MENU_EXPLICACAO_TREINAMENTO){
@@ -798,20 +778,18 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
 
         } else if (state == GAME_STATE_MENU_DURANTE_TREINAMENTO){
+
             if (!sameState) {
-                showBlackFrameTransition(500);
+                showBlackFrameTransition(1000);
             }
 
-            tentativaCertaTreinamento = 0;
-            treinamentoSucesso = false;
+            Training.tentativaCertaTreinamento = 0;
+            Training.treinamentoSucesso = false;
 
-            resetTrainingEntities();
+            Training.resetTrainingEntities();
 
-
-            MessagesHandler.messageExplicacaoDuranteTreinamento.alpha = 1f;
+            Training.setMenuDuranteTreinamentoMessage();
             MessagesHandler.messageExplicacaoDuranteTreinamento.display();
-
-            // TODO exibir a mensagem correta da explicação do treinamento
 
             if (MessagesHandler.messageTrainingState != null) {
                 MessagesHandler.messageTrainingState.clearDisplay();
@@ -830,7 +808,7 @@ public class Game {
                 MessagesHandler.messageTrainingState.clearDisplay();
             }
 
-            resetTrainingEntities();
+            Training.resetTrainingEntities();
 
         } else if (state == GAME_STATE_MENU_TUTORIAL){
 
@@ -958,7 +936,7 @@ public class Game {
 
             MessagesHandler.messageMenuCarregarJogo.display();
 
-        } else if (state == GAME_STATE_MENU){
+        } else if (state == GAME_STATE_MENU_PRINCIPAL){
 
             //mainActivity.getScreenShot();
 
@@ -1002,9 +980,8 @@ public class Game {
             MenuHandler.groupMenu.blockAndClearDisplay();
             MenuHandler.levelMenu.blockAndClearDisplay();
             MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
-            MenuHandler.menuTutorialTreinamento.blockAndClearDisplay();
+            MenuHandler.menuPlay.blockAndClearDisplay();
             MenuHandler.menuExplicacaoTreinamento.blockAndClearDisplay();
-
 
             MessagesHandler.messageMenuSaveNotSeen.clearDisplay();
             MessagesHandler.messageMenuCarregarJogo.clearDisplay();
@@ -1017,29 +994,7 @@ public class Game {
             tittle.display();
             MessagesHandler.messageMaxScoreTotal.display();
 
-            MessagesHandler.messageGoogleLogged.display();
-
-            //Log.e(TAG, "playerName "+playerName);
-
-            if (mainActivity.isSignedIn()){
-                Log.e(TAG, "mainActivity.isSignedIn()");
-                if (playerIcon != null){
-                    Log.e(TAG, "playerIcon != null");
-                    if (Game.playerIconImage != null){
-                        Game.playerIconImage.setBitmap(Game.playerIcon);
-                    } else {
-                        Game.playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, Game.playerIcon);
-                    }
-
-                    playerIconImage.display();
-                } else {
-                    Log.e(TAG, "playerIcon == null");
-                }
-
-                MessagesHandler.messageGoogleLogged.setText(getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerName);
-            } else {
-                MessagesHandler.messageGoogleLogged.setText(getContext().getResources().getString(R.string.googleNaoLogado));
-            }
+            GoogleAPI.displayGoogleInfo();
 
             MessagesHandler.bottomTextBox.display();
 
@@ -1066,7 +1021,7 @@ public class Game {
             eraseAllGameEntities();
             eraseAllHudEntities();
 
-            if (Game.training) {
+            if (Training.training) {
                 LevelLoader.loadLevel(1);
             } else {
                 LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
@@ -1074,7 +1029,7 @@ public class Game {
             mainActivity.hideAdView();
             MessagesHandler.messageTime.cleanAnimations();
 
-            if (!Game.training){
+            if (!Training.training){
                 MessagesHandler.messageTime.display();
                 MessagesHandler.setMessageTime();
             } else {
@@ -1083,11 +1038,11 @@ public class Game {
 
             MessagesHandler.messageCurrentLevel.display();
 
-            if (Game.training) {
+            if (Training.training) {
                 Level.levelGoalsObject = new LevelGoals();
             }
 
-                Level.levelGoalsObject.clearAchievements();
+            Level.levelGoalsObject.clearAchievements();
 
 
             ButtonHandler.buttonContinue.blockAndClearDisplay();
@@ -1147,7 +1102,7 @@ public class Game {
                         innerMessagePreparation.setText("1");
                     } else if (innerMessagePreparation.numberForAnimation == 0f) {
 
-                        if (Game.training) {
+                        if (Training.training) {
                             innerMessagePreparation.setText(getContext().getResources().getString(R.string.mensagem_treinar));
                         } else {
                             innerMessagePreparation.setText(getContext().getResources().getString(R.string.mensagem_jogar));
@@ -1171,9 +1126,14 @@ public class Game {
                 }
             });
             anim.start();
-            verifyDead();
+            checkIfDead();
 
         } else if (state == GAME_STATE_PREPARAR_TREINAMENTO) {
+
+            mainActivity.hideAdView();
+            if (!sameState) {
+                showBlackFrameTransition(1500);
+            }
 
             abdicateAngle = false;
             Sound.loadStaticGameAudioTracks();
@@ -1196,15 +1156,12 @@ public class Game {
             ButtonHandler.buttonContinue.blockAndClearDisplay();
             ButtonHandler.buttonReturn.blockAndClearDisplay();
 
-            mainActivity.hideAdView();
-            if (!sameState) {
-                showBlackFrameTransition(500);
-            }
-
             Level.levelObject.loadEntities();
-            verifyDead();
+
+            checkIfDead();
 
             stopAllGameEntities();
+
             reduceAllGameEntitiesAlpha(100);
 
             setGameState(GAME_STATE_MENU_DURANTE_TREINAMENTO);
@@ -1753,7 +1710,7 @@ public class Game {
 
     }
 
-    private static void stopAllGameEntities() {
+    public static void stopAllGameEntities() {
         for (Ball b : balls){
             b.isMovable = false;
             b.clearParticles();
@@ -1799,7 +1756,7 @@ public class Game {
 
     }
 
-    private static void reduceAllGameEntitiesAlpha(int duration){
+    public static void reduceAllGameEntitiesAlpha(int duration){
 
         //Log.e(TAG, "reduceAllGameEntitiesAlpha");
 
@@ -1927,9 +1884,6 @@ public class Game {
 
     static void simulate(long elapsed, float frameDuration){
 
-
-
-
         simulatePasso += 1;
 
         if (atrasarPasso) {
@@ -1948,8 +1902,8 @@ public class Game {
         //Log.e(TAG, "frameDuration " + frameDuration);
 
         if (gameState == GAME_STATE_NOVA_TENTATIVA_TREINAMENTO){
-            if (Utils.getTimeMilliPrecision() - trainingBarCollisionInit > 4200){
-                trainingBarCollisionInit  = Long.MAX_VALUE;
+            if (Utils.getTimeMilliPrecision() - Training.trainingBarCollisionInit > 4200){
+                Training.trainingBarCollisionInit  = Long.MAX_VALUE;
                 if (MessagesHandler.messageTrainingState != null) {
                     MessagesHandler.messageTrainingState.clearDisplay();
                 }
@@ -1961,7 +1915,7 @@ public class Game {
         }
 
 
-        if (gameState == GAME_STATE_MENU && playerIconImage == null && playerIcon != null){
+        if (gameState == GAME_STATE_MENU_PRINCIPAL && GoogleAPI.playerIconImage == null && GoogleAPI.playerIcon != null){
             mainActivity.updatePlayerInfo();
         }
 
@@ -2325,8 +2279,8 @@ public class Game {
             //    
             //}
 
-            verifyDead();
-            ScoreHandler.verifyScoreDecay();
+            checkIfDead();
+            ScoreHandler.checkIfScoreHasToDecay();
             verifyTargetsAppend();
             if (brickBackground != null){
                 brickBackground.changeDrawInfo();
@@ -2459,179 +2413,17 @@ public class Game {
         }
     }
 
-    static void resetTrainingEntities(){
-        /*
-        public static int TREINAMENTO_AUMENTAR_VELOCIDADE = 1; ok
-        public static int TREINAMENTO_DIMINUIR_VELOCIDADE = 3; ok
-        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO = 5; ok
-        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO = 7;ok
-        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO = 9;
-        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO = 11;
-        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO = 13; ok
-        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO = 15;ok
-        public static int TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO = 17;ok
-        public static int TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO = 19; ok
-
-        public static int TREINAMENTO_AUMENTAR_VELOCIDADE_OPOSTO = 2;
-        public static int TREINAMENTO_DIMINUIR_VELOCIDADE_OPOSTO = 4;
-        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO_OPOSTO = 6;
-        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO_OPOSTO = 8;
-        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_OPOSTO = 10;
-        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_OPOSTO = 12;
-        public static int TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO = 14;
-        public static int TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO = 16;
-        public static int TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO_OPOSTO = 18;
-        public static int TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO_OPOSTO = 20;
-
-        */
-
-
-
-
-        balls.get(0).accumulatedTranslateX = 0f;
-        balls.get(0).accumulatedTranslateY = 0f;
-        bars.get(0).accumulatedTranslateX = 0f;
-
-        balls.get(0).dvx = balls.get(0).initialDVX;
-        balls.get(0).dvy = balls.get(0).initialDVY;
-        bars.get(0).dvx = bars.get(0).initialDVX;
-
-        // TREINAMENTO DIRETO
-        if (trainingNumber == TREINAMENTO_AUMENTAR_VELOCIDADE
-                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO
-                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO
-                || trainingNumber == TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO){
-            balls.get(0).x = Game.resolutionX * 0.05f;
-            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
-            bars.get(0).x = Game.resolutionX * 0.7f;
-        }
-
-        if (trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE
-                || trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO
-                || trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO
-                || trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO){
-            balls.get(0).x = Game.resolutionX * 0.05f;
-            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
-            bars.get(0).x = Game.resolutionX * 0.5f;
-        }
-
-        if (trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO
-                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO){
-            balls.get(0).x = Game.resolutionX * 0.05f;
-            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
-            bars.get(0).x = Game.resolutionX * 0.5f;
-        }
-
-        //TREINAMENTO OPOSTO
-        if (trainingNumber == TREINAMENTO_AUMENTAR_VELOCIDADE_OPOSTO
-                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_MOVIMENTO_OPOSTO
-                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO
-                || trainingNumber == TREINAMENTO_AUMENTAR_VELOCIDADE_AUMENTANDO_ANGULO_COM_INCLINACAO_OPOSTO){
-            balls.get(0).x = Game.resolutionX * 0.93f;
-            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
-            balls.get(0).dvx *= -1;
-            bars.get(0).x = Game.resolutionX * 0.05f;
-        }
-
-        if (trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE_OPOSTO
-                || trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_MOVIMENTO_OPOSTO
-                || trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_E_MOVIMENTO_OPOSTO
-                || trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE_DIMINUINDO_ANGULO_COM_INCLINACAO_OPOSTO){
-            balls.get(0).x = Game.resolutionX * 0.93f;
-            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
-            balls.get(0).dvx *= -1;
-            bars.get(0).x = Game.resolutionX * 0.4f;
-        }
-
-        if (trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_OPOSTO
-                || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO_OPOSTO){
-            balls.get(0).x = Game.resolutionX * 0.93f;
-            balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
-            balls.get(0).dvx *= -1;
-            bars.get(0).x = Game.resolutionX * 0.25f;
-        }
-
-        balls.get(0).checkTransformations(false);
-        bars.get(0).checkTransformations(false);
-
-    }
-
 
     static boolean resultadoTreinamentoAnotado = false;
 
 
-    static void checkTrainingFinished(){
-
-        resultadoTreinamentoAnotado = false;
-
-        if (treinamentoSucesso){
-            treinamentoSucesso = false;
-
-            tentativaCertaTreinamento += 1;
-
-            if (tentativaCertaTreinamento < 3){
-
-                if (MessagesHandler.messageTrainingState != null) {
-                    MessagesHandler.messageTrainingState.clearDisplay();
-                    /*
-                    MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.sucesso));
-                    MessagesHandler.messageTrainingState.setColor(Color.azulCheio);
-                    Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 800, 0f, 1f, 0.5f, 0.7f, 1f, 1f, true, true).start();
-                    */
-                }
-                if (MessagesHandler.messageTrainingState2 != null) {
-                    MessagesHandler.messageTrainingState2.setText(getContext().getResources().getString(R.string.tentativa) + " " + (Game.tentativaCertaTreinamento + 1) + " " +getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
-                }
-
-                stopAllGameEntities();
-                setGameState(GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
-            } else {
-
-                if (MessagesHandler.messageTrainingState != null) {
-                    MessagesHandler.messageTrainingState.clearDisplay();
-                    /*
-                    MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.sucesso));
-                    MessagesHandler.messageTrainingState.setColor(Color.azulCheio);
-                    Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 800, 0f, 1f, 0.5f, 0.7f, 1f, 1f, true, true).start();
-                    */
-                }
-
-                stopAllGameEntities();
-                reduceAllGameEntitiesAlpha(500);
-                trainingNumber += 1;
-                setGameState(GAME_STATE_MENU_DURANTE_TREINAMENTO);
-            }
-        } else {
-            stopAllGameEntities();
-
-
-            if (MessagesHandler.messageTrainingState != null) {
-                MessagesHandler.messageTrainingState.clearDisplay();
-                /*
-                MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.errou));
-                MessagesHandler.messageTrainingState.setColor(Color.vermelhoCheio);
-                Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 1000, 0f, 1f, 0.5f, 0.7f, 1f, 1f, true, true).start();
-                */
-            }
-            if (MessagesHandler.messageTrainingState2 != null) {
-                MessagesHandler.messageTrainingState2.setText(getContext().getResources().getString(R.string.tentativa) + " " + (Game.tentativaCertaTreinamento + 1) + " " +getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
-            }
-
-
-            setGameState(GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
-
-
-
-        }
-    }
-
     static void verifyWin() {
-        if (training){
-            if (Utils.getTimeMilliPrecision() - trainingBarCollisionInit > 3000){
-                checkTrainingFinished();
-            } else if (Utils.getTimeMilliPrecision() - trainingBarCollisionInit > 800 && !resultadoTreinamentoAnotado){
+        if (Training.training){
+            if (Utils.getTimeMilliPrecision() - Training.trainingBarCollisionInit > 3000){
+                Training.checkTrainingFinished();
+            } else if (Utils.getTimeMilliPrecision() - Training.trainingBarCollisionInit > 800 && !resultadoTreinamentoAnotado){
                 resultadoTreinamentoAnotado = true;
-                if (!treinamentoSucesso){
+                if (!Training.treinamentoSucesso){
                     MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.errou));
                     MessagesHandler.messageTrainingState.setColor(Color.vermelhoCheio);
                 } else {
@@ -2672,9 +2464,9 @@ public class Game {
         if (win) setGameState(GAME_STATE_VITORIA);
     }
 
-    static void verifyDead() {
+    static void checkIfDead() {
 
-        //Log.e(TAG, "verifyDead");
+        //Log.e(TAG, "checkIfDead");
 
         ballsNotInvencibleAlive = 0;
         ballsInvencible = 0;
@@ -2695,8 +2487,8 @@ public class Game {
         Level.levelObject.levelGoalsObject.notifyBallsAlive(ballsNotInvencibleAlive + ballsInvencible, TimeHandler.secondsOfLevelPlay);
 
         ballGoalsPanel.setValues(ballsNotInvencibleAlive + ballsInvencible, Level.levelObject.minBallsAlive, ballsInvencible);
-        if (Level.levelObject.minBallsAlive > ballsNotInvencibleAlive){
-            setGameState(GAME_STATE_DERROTA);
+        if (Level.levelObject.minBallsAlive > ballsNotInvencibleAlive && !Training.training){
+                setGameState(GAME_STATE_DERROTA);
         }
         
         for (int i = 0; i < ballCollisionStars.size(); i++){
@@ -2757,7 +2549,7 @@ public class Game {
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.checkTransformations(true);
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.checkTransformations(true);
 
-        if (MenuHandler.menuTutorialTreinamento != null) MenuHandler.menuTutorialTreinamento.checkTransformations(true);
+        if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.checkTransformations(true);
         if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.checkTransformations(true);
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.checkTransformations(true);
 
@@ -2818,7 +2610,7 @@ public class Game {
         //otimização if (bordaC != null)bordaC.checkTransformations(true);
         if (bordaB != null)bordaB.checkTransformations(true);
 
-        if (playerIconImage != null)playerIconImage.checkTransformations(true);
+        if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.checkTransformations(true);
 
 
         //otimização if (frame != null)frame.checkTransformations(true);
@@ -2937,7 +2729,7 @@ public class Game {
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.prepareRender(matrixView, matrixProjection);
 
-        if (MenuHandler.menuTutorialTreinamento != null) MenuHandler.menuTutorialTreinamento.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.prepareRender(matrixView, matrixProjection);
 
@@ -2959,7 +2751,7 @@ public class Game {
 
         if (currentLevelIcon != null) currentLevelIcon.prepareRender(matrixView, matrixProjection);
 
-        if (playerIconImage != null)playerIconImage.prepareRender(matrixView, matrixProjection);
+        if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.prepareRender(matrixView, matrixProjection);
 
         if (groupsUnblocked != null) {
             for (int i = 0; i < groupsUnblocked.size(); i++) {
@@ -2977,7 +2769,7 @@ public class Game {
         if (MessagesHandler.messageMenuSaveNotSeen != null) MessagesHandler.messageMenuSaveNotSeen.prepareRender(matrixView, matrixProjection);
         if (MessagesHandler.messageMenuCarregarJogo != null) MessagesHandler.messageMenuCarregarJogo.prepareRender(matrixView, matrixProjection);
         if (MessagesHandler.messageExplicacaoTreinamento != null) MessagesHandler.messageExplicacaoTreinamento.prepareRender(matrixView, matrixProjection);
-        if (MessagesHandler.messageExplicacaoDuranteTreinamento != null) MessagesHandler.messageExplicacaoDuranteTreinamento.prepareRender(matrixView, matrixProjection);
+
 
         MessagesHandler.messageMaxScoreTotal.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageGoogleLogged.prepareRender(matrixView, matrixProjection);
@@ -3027,13 +2819,18 @@ public class Game {
             if (messages != null) messages.prepareRender(matrixView, matrixProjection);
         }
 
-        if (gameState == GAME_STATE_MENU || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL
-                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO || gameState == GAME_STATE_OPCOES_JOGABILIDADE || gameState == GAME_STATE_MENU_EXPLICACAO_TREINAMENTO || gameState == GAME_STATE_MENU_TUTORIAL_TREINAMENTO){
+
+
+        if (gameState == GAME_STATE_MENU_PRINCIPAL || gameState == GAME_STATE_MENU_TUTORIAL || gameState == GAME_STATE_OBJETIVO_LEVEL || gameState == GAME_STATE_OPCOES || gameState == GAME_STATE_SELECAO_GRUPO || gameState == GAME_STATE_SELECAO_LEVEL || gameState == GAME_STATE_SOBRE || gameState == GAME_STATE_TUTORIAL
+                || gameState == GAME_STATE_VITORIA || gameState == GAME_STATE_VITORIA_COMPLEMENTACAO || gameState == GAME_STATE_OPCOES_JOGABILIDADE || gameState == GAME_STATE_MENU_EXPLICACAO_TREINAMENTO || gameState == GAME_STATE_MENU_JOGAR){
             if (bordaB != null)bordaB.prepareRender(matrixView, matrixProjection);
             if (bordaE != null)bordaE.prepareRender(matrixView, matrixProjection);
             if (bordaD != null)bordaD.prepareRender(matrixView, matrixProjection);
             if (bordaC != null)bordaC.prepareRender(matrixView, matrixProjection);
         }
+
+
+        if (MessagesHandler.messageExplicacaoDuranteTreinamento != null) MessagesHandler.messageExplicacaoDuranteTreinamento.prepareRender(matrixView, matrixProjection);
 
 
         if (frame != null)frame.prepareRender(matrixView, matrixProjection);
@@ -3070,7 +2867,7 @@ public class Game {
         if (MenuHandler.menuTutorialUnvisited != null) MenuHandler.menuTutorialUnvisited.verifyListener();
         if (MenuHandler.menuConnect != null) MenuHandler.menuConnect.verifyListener();
 
-        if (MenuHandler.menuTutorialTreinamento != null) MenuHandler.menuTutorialTreinamento.verifyListener();
+        if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.verifyListener();
         if (MenuHandler.menuExplicacaoTreinamento != null) MenuHandler.menuExplicacaoTreinamento.verifyListener();
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.verifyListener();
 

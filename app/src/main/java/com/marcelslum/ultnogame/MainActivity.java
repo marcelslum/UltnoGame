@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -19,7 +18,6 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -739,23 +737,23 @@ public class MainActivity extends FragmentActivity implements
                     @Override
                     public void onComplete(@NonNull Task<Player> task) {
                         if (task.isSuccessful()) {
-                            Game.playerName = task.getResult().getName()+"!";
+                            GoogleAPI.playerName = task.getResult().getName()+"!";
                             Uri uri = task.getResult().getIconImageUri();
                             Log.e(TAG, "uri " + uri.getPath());
                             ImageManager.create(Game.mainActivity)
                                     .loadImage(new ImageManager.OnImageLoadedListener() {
                                         @Override
                                         public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {
-                                            Game.playerIcon = Utils.drawableToBitmap(drawable);
-                                            Game.playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, Game.playerIcon);
+                                            GoogleAPI.playerIcon = Utils.drawableToBitmap(drawable);
+                                            GoogleAPI.playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, GoogleAPI.playerIcon);
                                         }
                                     }, uri);
 
                             if (MessagesHandler.messageGoogleLogged != null) {
-                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + Game.playerName);
+                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + GoogleAPI.playerName);
                             }
                         } else {
-                            Game.playerName = ".";
+                            GoogleAPI.playerName = ".";
                             signOut();
                             if (MessagesHandler.messageGoogleLogged != null) {
                                 MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
@@ -785,7 +783,7 @@ public class MainActivity extends FragmentActivity implements
                     public void onComplete(@NonNull Task<Player> task) {
                         if (task.isSuccessful()) {
                             //Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
-                            Game.playerName = task.getResult().getName()+"!";
+                            GoogleAPI.playerName = task.getResult().getName()+"!";
 
                             Uri uri = task.getResult().getIconImageUri();
                             Log.e(TAG, "uri " + uri.getPath());
@@ -793,16 +791,16 @@ public class MainActivity extends FragmentActivity implements
                                     .loadImage(new ImageManager.OnImageLoadedListener() {
                                         @Override
                                         public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {
-                                            Game.playerIcon = Utils.drawableToBitmap(drawable);
+                                            GoogleAPI.playerIcon = Utils.drawableToBitmap(drawable);
                                         }
                                     }, uri);
 
                             if (MessagesHandler.messageGoogleLogged != null) {
-                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + Game.playerName);
+                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + GoogleAPI.playerName);
                             }
                         } else {
                             //Log.e(TAG, "Não foi possível carregar o nome do jogador");
-                            Game.playerName = ".";
+                            GoogleAPI.playerName = ".";
                             signOut();
                             if (MessagesHandler.messageGoogleLogged != null) {
                                 MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
@@ -817,7 +815,7 @@ public class MainActivity extends FragmentActivity implements
         //Log.e(TAG, "checkGoogleConnection");
         if (isGooglePlayAvailable() && isSignedIn()){
             //Log.e(TAG, "checking");
-            if (Game.playerName.equals(".") || Game.playerName.equals("-")){
+            if (GoogleAPI.playerName.equals(".") || GoogleAPI.playerName.equals("-")){
                 //Log.e(TAG, "possible not connected - erro");
                 signOut();
                 if (MessagesHandler.messageGoogleLogged != null) {
@@ -908,7 +906,7 @@ public class MainActivity extends FragmentActivity implements
                     Game.setGameState(Game.GAME_STATE_OPCOES);
 	} else if (Game.gameState == Game.GAME_STATE_JOGAR) {
             Game.setGameState(Game.GAME_STATE_PAUSE);
-        } else if (Game.gameState == Game.GAME_STATE_MENU) {
+        } else if (Game.gameState == Game.GAME_STATE_MENU_PRINCIPAL) {
             onPause();
             moveTaskToBack(true);
         } else if (Game.gameState == Game.GAME_STATE_PAUSE){
@@ -929,7 +927,7 @@ public class MainActivity extends FragmentActivity implements
         } else if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
             Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
         } else if (Game.gameState == Game.GAME_STATE_SELECAO_GRUPO) {
-            Game.setGameState(Game.GAME_STATE_MENU);
+            Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
         }else if (Game.gameState == Game.GAME_STATE_PREPARAR){
             Game.initPausedFlag = true;
         }else if (Game.gameState == Game.GAME_STATE_DERROTA){
@@ -945,7 +943,7 @@ public class MainActivity extends FragmentActivity implements
                 Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
             }
 	    } else if (Game.gameState != Game.GAME_STATE_INTRO){
-            Game.setGameState(Game.GAME_STATE_MENU);
+            Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
 	    }
     }
 

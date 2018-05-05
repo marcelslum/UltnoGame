@@ -115,8 +115,8 @@ public class MyGLSurface extends GLSurfaceView {
 
                 Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
 
-                if (Game.gameState == Game.GAME_STATE_MENU){
-                    Game.setGameState(Game.GAME_STATE_MENU);
+                if (Game.gameState == Game.GAME_STATE_MENU_PRINCIPAL){
+                    Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                     Game.prepareAfterInterstitialFlag = false;
                     return;
                 }
@@ -145,7 +145,7 @@ public class MyGLSurface extends GLSurfaceView {
             public void run() {
 
                 if (MainActivity.saveGameFromCloud == null){
-                    Game.setGameState(Game.GAME_STATE_MENU);
+                    Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.erro_ao_carregar), 4000);
 
                 } else {

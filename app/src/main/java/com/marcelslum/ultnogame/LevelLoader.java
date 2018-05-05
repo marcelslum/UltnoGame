@@ -1,10 +1,5 @@
 package com.marcelslum.ultnogame;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -56,7 +51,7 @@ public class LevelLoader {
         int l = 1;
         if (levelNumber == l) {
 
-            if (Game.training){
+            if (Training.training){
                 levelBuilder
                         .setTargetsMap(
                                 new int[][]{

@@ -7,7 +7,6 @@
     <string name="app_name">Ultno</string>
     <string name="menuTutorialExibirTutorial">Exibir o tutorial</string>
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
-    <string name="menuPrincipalIniciar">Jogar</string>
     <string name="menuGoogleSim">Sim</string>
     <string name="menuGoogleNao">Não</string>
     <string name="menuGoogleMaisTarde">Lembrar-me depois</string>
@@ -561,12 +560,16 @@
     <string name="optionsPlay">Opções de jogabilidade</string>
     <string name="treinamento">Treinamento</string>
     <string name="iniciarTreinamento">Iniciar Treinamento</string>
-    <string name="explicacaoTreinamento1">Dar explicação sobre o treinamento</string>
+    <string name="explicacaoTreinamento1">Sessão de Treinamento</string>
+    <string name="explicacaoTreinamento2">Aqui é possível treinar os movimentos básicos de jogo.</string>
+    <string name="explicacaoTreinamento3">Você terá que executar vinte movimentos diferentes, cada um deles por três vezes.</string>
+    <string name="explicacaoTreinamento4">Para saber mais sobre os movimentos aqui treinados, consulte os tutoriais do jogo.</string>
+    <string name="explicacaoTreinamento5">Boa sorte!</string>
     <string name="explicacaoDuranteTreinamento1">Explicação Durante Treinamento</string>
     <string name="mensagem_treinar">Treinar</string>
     <string name="mensagem_treinamento">Treinamento</string>
     <string name="tutorialTreinamento">Tutorial/Treinamento</string>
-    <string name="fazerTentativa">Tentar</string>
+    <string name="fazerTentativa">Iniciar Treinamento</string>
     <string name="sairTreinamento">Sair do Treinamento</string>
     <string name="tentativa">Tentativa</string>
     <string name="tentando">Treine...</string>
@@ -574,6 +577,63 @@
     <string name="sucesso">Sucesso na tentativa</string>
     <string name="agurdandoTentativa">Aguardando tentativa.</string>
     <string name="errou">Errou a tentativa</string>
+
+    <string name="menuDuranteTrainamento1">Faça a bola acelerar</string>
+    <string name="menuDuranteTrainamento1b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, para acelerá-la, você deve atingir a bola com a barra se movimentando para a esquerda, ou seja, no sentido contrário à bola.</string>
+    <string name="menuDuranteTrainamento2">Faça a bola acelerar</string>
+    <string name="menuDuranteTrainamento2b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, para acelerá-la, você deve atingir a bola com a barra se movimentando para a direita, ou seja, no sentido contrário à bola.</string>
+
+    <string name="menuDuranteTrainamento3">Faça a bola desacelerar</string>
+    <string name="menuDuranteTrainamento3b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, para desacelerá-la, você deve atingir a bola com a barra se movimentando para a direita, ou seja, no mesmo sentido da bola.</string>
+    <string name="menuDuranteTrainamento4">Faça a bola desacelerar</string>
+    <string name="menuDuranteTrainamento4b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, para desacelerá-la, você deve atingir a bola com a barra se movimentando para a esquerda, ou seja, na mesmo sentido da bola.</string>
+
+
+    <string name="menuDuranteTrainamento5">Aumente o ângulo da bola em relação à barra, utilizando-se de movimento</string>
+    <string name="menuDuranteTrainamento5b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, para aumentar o seu ângulo, você deve atingir a bola com a barra se movimentando para a direita, ou seja, no mesmo sentido da bola..</string>
+    <string name="menuDuranteTrainamento6">Aumente o ângulo da bola em relação à barra, utilizando-se de movimento</string>
+    <string name="menuDuranteTrainamento6b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, para aumentar o seu ângulo, você deve atingir a bola com a barra se movimentando para a esquerda, ou seja, na mesmo sentido da bola.</string>
+
+    <string name="menuDuranteTrainamento7">Diminua o ângulo da bola em relação à barra, utilizando-se de movimento</string>
+    <string name="menuDuranteTrainamento7b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, para diminuir o seu ângulo, você deve atingir a bola com a barra se movimentando para a esquerda, ou seja, no sentido contrário à bola.</string>
+    <string name="menuDuranteTrainamento8">Diminua o ângulo da bola em relação à barra, utilizando-se de movimento</string>
+    <string name="menuDuranteTrainamento8b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, para diminuir o seu ângulo, você deve atingir a bola com a barra se movimentando para a direita, ou seja, no sentido contrário à bola.</string>
+
+
+
+    <string name="menuDuranteTrainamento9">Aumente o ângulo da bola em relação à barra, utilizando-se de inclinação</string>
+    <string name="menuDuranteTrainamento9b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, para aumentar o seu ângulo, você deve inclinar a barra para a esquerda, dando um tranco no celular para o lado direito.</string>
+    <string name="menuDuranteTrainamento10">Aumente o ângulo da bola em relação à barra, utilizando-se de inclinação</string>
+    <string name="menuDuranteTrainamento10b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, para aumentar o seu ângulo, você deve inclinar a barra para a direita, dando um tranco no celular para o lado esquerdo.</string>
+
+    <string name="menuDuranteTrainamento11">Diminua o ângulo da bola em relação à barra, utilizando-se de inclinação</string>
+    <string name="menuDuranteTrainamento11b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, para diminuir o seu ângulo, você deve inclinar a barra para a direita, dando um tranco no celular para o lado esquerdo.</string>
+    <string name="menuDuranteTrainamento12">Diminua o ângulo da bola em relação à barra, utilizando-se de inclinação</string>
+    <string name="menuDuranteTrainamento12b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, para diminuir o seu ângulo, você deve inclinar a barra para a esquerda, dando um tranco no celular para o lado direito.</string>
+
+
+
+    <string name="menuDuranteTrainamento13">Aumente o ângulo da bola em relação à barra, utilizando-se de inclinação e movimento, ao mesmo tempo</string>
+    <string name="menuDuranteTrainamento13b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, para aumentar o seu ângulo, você deve inclinar a barra para a esquerda e, ao mesmo tempo, atingir a bola com a barra indo para a direita.</string>
+    <string name="menuDuranteTrainamento14">Aumente o ângulo da bola em relação à barra, utilizando-se de inclinação e movimento, ao mesmo tempo</string>
+    <string name="menuDuranteTrainamento14b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, para aumentar o seu ângulo, você deve inclinar a barra para a direita e, ao mesmo tempo, atingir a bola com a barra indo para a esquerda.</string>
+
+    <string name="menuDuranteTrainamento15">Diminua o ângulo da bola em relação à barra, utilizando-se de inclinação e movimento, ao mesmo tempo</string>
+    <string name="menuDuranteTrainamento15b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, para diminuir o seu ângulo, você deve inclinar a barra para a direita e, ao mesmo tempo, atingir a bola com a barra indo para a esquerda.</string>
+    <string name="menuDuranteTrainamento16">Diminua o ângulo da bola em relação à barra, utilizando-se de inclinação e movimento, ao mesmo tempo</string>
+    <string name="menuDuranteTrainamento16b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, para diminuir o seu ângulo, você deve inclinar a barra para a esquerda e, ao mesmo tempo, atingir a bola com a barra indo para a direita.</string>
+
+
+    <string name="menuDuranteTrainamento17">Aumente o ângulo com inclinação, ao mesmo tempo em que acelera a bola</string>
+    <string name="menuDuranteTrainamento17b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, você deve inclinar a barra para a esquerda e, ao mesmo tempo, atingir a bola com a barra indo também para a esquerda.</string>
+    <string name="menuDuranteTrainamento18">Aumente o ângulo com inclinação, ao mesmo tempo em que acelera a bola</string>
+    <string name="menuDuranteTrainamento18b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, você deve inclinar a barra para a direita e, ao mesmo tempo, atingir a bola com a barra indo também para a direita.</string>
+
+    <string name="menuDuranteTrainamento19">Diminua o ângulo com inclinação, ao mesmo tempo em que desacelera a bola</string>
+    <string name="menuDuranteTrainamento19b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, você deve inclinar a barra para a direita e, ao mesmo tempo, atingir a bola com a barra indo também para a direita.</string>
+    <string name="menuDuranteTrainamento20">Diminua o ângulo com inclinação, ao mesmo tempo em que desacelera a bola</string>
+    <string name="menuDuranteTrainamento20b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, você deve inclinar a barra para a esquerda e, ao mesmo tempo, atingir a bola com a barra indo também para a esquerda.</string>
+    <string name="jogar">Jogar</string>
 
 
 </resources>
