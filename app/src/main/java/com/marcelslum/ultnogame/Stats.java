@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 public class Stats {
 
     public static int STATS_DATABASE_SIZE = 60;
@@ -56,12 +58,45 @@ public class Stats {
 
     static int ultimoNumeroBolasVivas = 0;
     static long ultimoNumeroBolasVivasTempoDeRegistro;
+    static String TAG = "Stats";
 
-
-    public static void collectBallData(Ball ball) {
+    public static void
+    collectBallData(Ball ball) {
 
         if (ball.isFake){
             return;
+        }
+
+        Log.e(TAG, "coletando dados da bola");
+
+
+        Log.e(TAG, "initTempoVelocidadeMedia " + ball.initTempoVelocidadeMedia);
+
+        if (ball.initTempoVelocidadeMedia != -1) {
+            Log.e(TAG, "tempoVelocidadeMedia adicionando " + (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMedia));
+            ball.tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMedia);
+            Log.e(TAG, "tempoVelocidadeMedia depois " + tempoVelocidadeMedia);
+        }
+        if (ball.initTempoVelocidadeMaxima != -1) {
+            ball.tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMaxima);
+        }
+        if (ball.initTempoVelocidadeMinima != -1) {
+            ball.tempoVelocidadeMinima += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMinima);
+        }
+
+
+        Log.e(TAG, "initTempoAnguloMedio " + ball.initTempoAnguloMedio);
+
+        if (ball.initTempoAnguloMedio != -1) {
+            Log.e(TAG, "tempoAnguloMedio adicionando " + (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedio));
+            ball.tempoAnguloMedio += (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedio);
+            Log.e(TAG, "tempoAnguloMedio depois " + tempoAnguloMedio);
+        }
+        if (ball.initTempoAnguloMaximo != -1) {
+            ball.tempoAnguloMaximo += (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMaximo);
+        }
+        if (ball.initTempoAnguloMinimo != -1) {
+            ball.tempoAnguloMinimo += (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMinimo);
         }
 
         tempoVelocidadeMinima += ball.tempoVelocidadeMinima;

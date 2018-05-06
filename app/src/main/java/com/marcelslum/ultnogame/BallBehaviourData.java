@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 /**
  * Created by marcel on 07/02/2017.
  */
@@ -91,8 +93,14 @@ public class BallBehaviourData {
         }
 
         Game.ballDataPanel.previousAnglePercent = (initialAngle - minAngle) / (maxAngle - minAngle);
+        Log.e(TAG, "Game.ballDataPanel.previousAnglePercent "+ Game.ballDataPanel.previousAnglePercent);
         Game.ballDataPanel.previousVelocityPercent = (initialLen - minLen) / (maxLen - minLen);
+        Log.e(TAG, "Game.ballDataPanel.previousVelocityPercent "+ Game.ballDataPanel.previousVelocityPercent);
+
+        Log.e(TAG, "Game.ballDataPanel.newVelocityPercent "+ ((finalLen - minLen) / (maxLen - minLen)));
+        Log.e(TAG, "Game.ballDataPanel.newAnglePercent "+ ((finalAngle - minAngle) / (maxAngle - minAngle)));
         Game.ballDataPanel.setData((finalLen - minLen) / (maxLen - minLen), (finalAngle - minAngle) / (maxAngle - minAngle), true);
+
         Game.ballDataPanel.ballAnimating = ball;
 
         logData();
@@ -123,18 +131,16 @@ public class BallBehaviourData {
 
         if (!ball.onMinAngle){
 
-            if (angleDecreasedWithBarInclination){
+            if (angleDecreasedWithBarInclination && !Game.abdicateAngle){
                 Stats.anguloDiminuidoInclinacao += 1;
             }
-            if (angleDecreasedWithBarMovement){
+            if (angleDecreasedWithBarMovement && !Game.abdicateAngle){
                 Stats.anguloDiminuidoMovimento += 1;
             }
-            if (angleDecreasedWithBarMovement && angleDecreasedWithBarInclination) {
+            if (angleDecreasedWithBarMovement && angleDecreasedWithBarInclination && !Game.abdicateAngle) {
                 Stats.anguloDiminuidoMovimentoInclinacao += 1;
             }
-
-
-            if (angleDecreasedWithBarInclination || angleDecreasedWithBarMovement){
+            if ((angleDecreasedWithBarInclination || angleDecreasedWithBarMovement)&& !Game.abdicateAngle){
                 Stats.anguloDiminuido += 1;
             }
 
@@ -142,17 +148,17 @@ public class BallBehaviourData {
 
 
         if (!ball.onMaxAngle){
-            if (angleIncreasedWithBarInclination){
+            if (angleIncreasedWithBarInclination && !Game.abdicateAngle){
                 Stats.anguloAumentadoInclinacao += 1;
             }
-            if (angleIncreasedWithBarMovement){
+            if (angleIncreasedWithBarMovement && !Game.abdicateAngle){
                 Stats.anguloAumentadoMovimento += 1;
             }
-            if (angleIncreasedWithBarMovement && angleDecreasedWithBarInclination) {
+            if (angleIncreasedWithBarMovement && angleIncreasedWithBarInclination && !Game.abdicateAngle) {
                 Stats.anguloAumentadoMovimentoInclinacao += 1;
             }
 
-            if (angleIncreasedWithBarInclination || angleIncreasedWithBarMovement){
+            if ((angleIncreasedWithBarInclination || angleIncreasedWithBarMovement) && !Game.abdicateAngle){
                 Stats.anguloAumentado += 1;
             }
         }
@@ -174,22 +180,34 @@ public class BallBehaviourData {
 
         if ((finalLen > initialLen) && angleIncreasedWithBarInclination){
             Level.levelObject.levelGoalsObject.accelerateWithBarIncreasingAngle();
-            Stats.velocidadeAumentadaAnguloAumentadoInclinacao += 1;
+            if (!Game.abdicateAngle) {
+                Stats.velocidadeAumentadaAnguloAumentadoInclinacao += 1;
+            }
             if (finalAngle > initialAngle){
-                Stats.anguloAumentado += 1;
+                if (!Game.abdicateAngle) {
+                    Stats.anguloAumentado += 1;
+                }
                 Level.levelObject.levelGoalsObject.increaseAngle();
             } else if (finalAngle > initialAngle){
-                Stats.anguloDiminuido += 1;
+                if (!Game.abdicateAngle) {
+                    Stats.anguloDiminuido += 1;
+                }
                 Level.levelObject.levelGoalsObject.decreaseAngle();
             }
         } else if ((initialLen > finalLen) && angleDecreasedWithBarInclination){
             Level.levelObject.levelGoalsObject.decelerateWithBarDecreasingAngle();
-            Stats.velocidadeDiminuidaAnguloDiminuidoInclinacao += 1;
+            if (!Game.abdicateAngle) {
+                Stats.velocidadeDiminuidaAnguloDiminuidoInclinacao += 1;
+            }
             if (finalAngle > initialAngle){
-                Stats.anguloAumentado += 1;
+                if (!Game.abdicateAngle) {
+                    Stats.anguloAumentado += 1;
+                }
                 Level.levelObject.levelGoalsObject.increaseAngle();
             } else if (finalAngle > initialAngle){
-                Stats.anguloDiminuido += 1;
+                if (!Game.abdicateAngle) {
+                    Stats.anguloDiminuido += 1;
+                }
                 Level.levelObject.levelGoalsObject.decreaseAngle();
             }
         }

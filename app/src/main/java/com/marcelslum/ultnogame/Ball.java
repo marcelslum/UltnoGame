@@ -1577,6 +1577,10 @@ public class Ball extends Circle{
 
     public void markMinAngle(){
 
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         if (initTempoAnguloMinimo == -1) {
             initTempoAnguloMinimo = TimeHandler.timeOfLevelPlay;
         } else {
@@ -1599,13 +1603,16 @@ public class Ball extends Circle{
     
     public void markMaxAngle(){
 
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         if (initTempoAnguloMaximo == -1) {
             initTempoAnguloMaximo = TimeHandler.timeOfLevelPlay;
         } else {
             tempoAnguloMaximo += (TimeHandler.timeOfLevelPlay - initTempoAnguloMaximo);
             initTempoAnguloMaximo = TimeHandler.timeOfLevelPlay;
         }
-
 
         if (initTempoAnguloMinimo != -1){
             tempoAnguloMinimo += (TimeHandler.timeOfLevelPlay - initTempoAnguloMinimo);
@@ -1622,10 +1629,19 @@ public class Ball extends Circle{
     
     public void markNotMinOrMaxAngle(){
 
+        Log.e(TAG, "markNotMinOrMaxAngle");
+
+        if (Game.abdicateAngle) {
+            return;
+        }
+
         if (initTempoAnguloMedio == -1) {
+            Log.e(TAG, "iniciado angulo medio");
             initTempoAnguloMedio = TimeHandler.timeOfLevelPlay;
         } else {
+            Log.e(TAG, "adicionando angulo medio por mais " + (TimeHandler.timeOfLevelPlay - initTempoAnguloMedio));
             tempoAnguloMedio += (TimeHandler.timeOfLevelPlay - initTempoAnguloMedio);
+            Log.e(TAG, "total tempoAnguloMedio " + tempoAnguloMedio);
             initTempoAnguloMedio = TimeHandler.timeOfLevelPlay;
         }
         if (initTempoAnguloMinimo != -1){
@@ -1688,13 +1704,18 @@ public class Ball extends Circle{
     
     public void markNotMinOrMaxVelocity(){
 
+        Log.e(TAG, "markNotMinOrMaxVelocity");
+
         if (initTempoVelocidadeMedia == -1) {
+            Log.e(TAG, "initTempoVelocidadeMedia ");
             initTempoVelocidadeMedia = TimeHandler.timeOfLevelPlay;
         } else {
-            tempoAnguloMedio += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia);
+            Log.e(TAG, "adicionando TempoVelocidadeMedia " + (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia));
+            tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia);
+            Log.e(TAG, "total tempoVelocidadeMedia " + tempoVelocidadeMedia);
             initTempoVelocidadeMedia = TimeHandler.timeOfLevelPlay;
         }
-        
+
         if (initTempoVelocidadeMaxima != -1) {
             tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMaxima);
             initTempoVelocidadeMaxima = -1;

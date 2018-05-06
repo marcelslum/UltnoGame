@@ -1,6 +1,7 @@
 package com.marcelslum.ultnogame;
 
 import android.content.res.Resources;
+import android.icu.text.TimeZoneFormat;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class MessagesHandler {
     static TextView messageExplicacaoDuranteTreinamento;
 
     static float yOfMessageBackAndContinue;
+    static TextView statsTextView;
 
 
     public static void initMessages(){
@@ -336,5 +338,60 @@ public class MessagesHandler {
                 }
             }).start();
         }
+    }
+
+    public static void initStatsTextBox() {
+
+        statsTextView = new TextView("statsTextView", Game.resolutionX * 0.1f,
+                Game.resolutionY * 0.2f,
+                Game.resolutionX * 0.8f,
+                Game.resolutionY * 0.8f,
+                Game.gameAreaResolutionY*0.05f,
+                Game.font, new Color(0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT, 0.4f);
+
+        Resources resources = Game.getContext().getResources();
+        statsTextView.addText(resources.getString(R.string.estatisticaTitulo), Color.azul);
+        statsTextView.addText(".", Color.transparente);
+        statsTextView.addText(resources.getString(R.string.stat0) + " " + SaveGame.saveGame.stats[0], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat1)+ " " + SaveGame.saveGame.stats[1], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat2)+ " " + SaveGame.saveGame.stats[2], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat3)+ " " + SaveGame.saveGame.stats[3], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat4)+ " " + SaveGame.saveGame.stats[4], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat5)+ " " + SaveGame.saveGame.stats[5], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat6)+ " " + SaveGame.saveGame.stats[6], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat7)+ " " + SaveGame.saveGame.stats[7], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat8)+ " " + SaveGame.saveGame.stats[8], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat9)+ " " + SaveGame.saveGame.stats[9], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat10)+ " " + SaveGame.saveGame.stats[10], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat11)+ " " + SaveGame.saveGame.stats[11], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat12)+ " " + SaveGame.saveGame.stats[12], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat13)+ " " + SaveGame.saveGame.stats[13], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat14)+ " " + SaveGame.saveGame.stats[14], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat15)+ " " + SaveGame.saveGame.stats[15], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat16)+ " " + SaveGame.saveGame.stats[16], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat17)+ " " + SaveGame.saveGame.stats[17], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat18)+ " " + SaveGame.saveGame.stats[18], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat19)+ " " + SaveGame.saveGame.stats[19], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat20)+ " " + SaveGame.saveGame.stats[20], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat21)+ " " + SaveGame.saveGame.stats[21], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat22)+ " " + SaveGame.saveGame.stats[22], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat23)+ " " + SaveGame.saveGame.stats[23], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat24)+ " " + SaveGame.saveGame.stats[24], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat25)+ " " + SaveGame.saveGame.stats[25], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat26)+ " " + SaveGame.saveGame.stats[26], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat27)+ " " + SaveGame.saveGame.stats[27], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat28)+ " " + SaveGame.saveGame.stats[28], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat29)+ " " + SaveGame.saveGame.stats[29], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat30)+ " " + SaveGame.saveGame.stats[30], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat31)+ " " + SaveGame.saveGame.stats[31], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat32)+ " " + SaveGame.saveGame.stats[32], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat33)+ " " + SaveGame.saveGame.stats[33], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat34)+ " " + SaveGame.saveGame.stats[34], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat35)+ " " + SaveGame.saveGame.stats[35], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat36)+ " " + SaveGame.saveGame.stats[36], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat37)+ " " + SaveGame.saveGame.stats[37], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat38)+ " " + SaveGame.saveGame.stats[38], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat39)+ " " + SaveGame.saveGame.stats[39], Color.cinza20);
+
     }
 }

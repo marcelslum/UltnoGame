@@ -890,6 +890,37 @@ public class MenuHandler {
                     Stats.collectBallData(Game.balls.get(i));
                 }
 
+                switch (Stats.ultimoNumeroBolasVivas){
+                    case 1:
+                        Stats.tempo1Bola += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                    case 2:
+                        Stats.tempo2Bolas += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                    case 3:
+                        Stats.tempo3Bolas += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                    case 4:
+                        Stats.tempo4Bolas += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                    case 5:
+                        Stats.tempo5Bolas += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                    case 6:
+                        Stats.tempo6Bolas += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                    case 7:
+                        Stats.tempo7Bolas += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                    case 8:
+                        Stats.tempo8Bolas += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                    case 9:
+                        Stats.tempo9Bolas += TimeHandler.timeOfLevelPlay - Stats.ultimoNumeroBolasVivasTempoDeRegistro;
+                        break;
+                }
+
+
                 Stats.saveData();
                 SaveGame.saveGame.save();
 

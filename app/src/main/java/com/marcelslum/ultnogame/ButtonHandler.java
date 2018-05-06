@@ -41,6 +41,23 @@ public class ButtonHandler {
                             Game.messages.showMessage(Game.getContext().getResources().getString(R.string.levelMessageAbdicate));
                         }
                         Game.abdicateAngle = true;
+
+                        for (int i = 0; i < Game.balls.size(); i++) {
+
+                            if (Game.balls.get(i).isAlive && !Game.balls.get(i).isFake){
+                                if (Game.balls.get(i).initTempoAnguloMedio != -1) {
+                                    Game.balls.get(i).tempoAnguloMedio += (TimeHandler.timeOfLevelPlay - Game.balls.get(i).initTempoAnguloMedio);
+                                }
+                                if (Game.balls.get(i).initTempoAnguloMaximo != -1) {
+                                    Game.balls.get(i).tempoAnguloMaximo += (TimeHandler.timeOfLevelPlay - Game.balls.get(i).initTempoAnguloMaximo);
+                                }
+                                if (Game.balls.get(i).initTempoAnguloMinimo != -1) {
+                                    Game.balls.get(i).tempoAnguloMinimo += (TimeHandler.timeOfLevelPlay - Game.balls.get(i).initTempoAnguloMinimo);
+                                }
+
+                            }
+
+                        }
                     }
 
                     for (int i = 0; i < Game.balls.size(); i++) {
@@ -144,7 +161,7 @@ public class ButtonHandler {
                 } else if (Game.gameState == Game.GAME_STATE_SOBRE){
                     Game.setGameState(Game.GAME_STATE_OPCOES);
                 } else if (Game.gameState == Game.GAME_STATE_ESTATISTICAS){
-                    Game.statsTextView.blockAndClearDisplay();
+                    MessagesHandler.statsTextView.blockAndClearDisplay();
                     Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                 } else if (Game.gameState == Game.GAME_STATE_OPCOES){
                     Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);

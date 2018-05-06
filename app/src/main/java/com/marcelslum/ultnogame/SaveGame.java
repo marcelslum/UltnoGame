@@ -122,7 +122,7 @@ public class SaveGame {
             Log.e(TAG, "================================== log save mesclado");
             log(saveGame);
 
-            if (Game.apagarEstatisticas){
+            if (Game.apagarEstatisticasNoInicio){
                 for (int i = 0; i < saveGame.stats.length; i++) {
                     saveGame.stats[i] = 0;
                 }

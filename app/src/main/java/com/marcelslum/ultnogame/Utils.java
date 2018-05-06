@@ -192,6 +192,34 @@ public abstract class Utils {
         String date = sdfDate.format(Calendar.getInstance().getTime());
         return date;
     }
+
+
+    public static String getTimeTextFromMiliSeconds(long time){
+
+        long secondsRaw = (long)((double) time / 1000d);
+
+        long minutes = (long)((double) secondsRaw/60d);
+
+        long seconds = secondsRaw % 60;
+
+        long hour = 0;
+
+        if (minutes > 60){
+            long minutesRaw = minutes;
+            hour = (long)((double) minutesRaw/60d);
+            minutes = minutesRaw % 60;
+        }
+
+        long days = 0;
+        if (hour > 24){
+            long hourRaw = hour;
+            days = (long)((double) hour/24d);
+            hour = hourRaw % 60;
+        }
+
+        return days + "d " + hour + "h " + minutes + "m " + seconds + "s ";
+    }
+
     
     public static void insertRectangleVerticesData(float[] array, int startIndex){
         array[startIndex] = x1;
