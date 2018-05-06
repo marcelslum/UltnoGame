@@ -214,10 +214,18 @@ public abstract class Utils {
         if (hour > 24){
             long hourRaw = hour;
             days = (long)((double) hour/24d);
-            hour = hourRaw % 60;
+            hour = hourRaw % 24;
         }
 
-        return days + "d " + hour + "h " + minutes + "m " + seconds + "s ";
+        if (days > 0){
+            return days + "d " + hour + "h " + minutes + "min " + seconds + "s ";
+        } else if (hour > 0){
+            return hour + "h " + minutes + "min " + seconds + "s ";
+        } else if (minutes > 0){
+            return  minutes + "min " + seconds + "s ";
+        } else {
+            return  seconds + "s ";
+        }
     }
 
     

@@ -37,6 +37,7 @@ public class MessagesHandler {
 
     static float yOfMessageBackAndContinue;
     static TextView statsTextView;
+    static Text messageStatTittle;
 
 
     public static void initMessages(){
@@ -167,6 +168,10 @@ public class MessagesHandler {
 
         messageMenu = new Text("messageMenu",
                 Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.15f, Game.gameAreaResolutionY*0.08f, ".", Game.font, Color.azul);
+
+        messageStatTittle  = new Text("messageStatTittle",
+                Game.gameAreaResolutionX*0.5f, Game.resolutionY*0.9f, Game.gameAreaResolutionY*0.06f, ".", Game.font, Color.azul40, Text.TEXT_ALIGN_CENTER);
+        messageStatTittle.clearDisplay();
 
         messageSubMenu = new Text("messageSubMenu",
                 Game.gameAreaResolutionX*0.05f, Game.gameAreaResolutionY*0.25f, Game.gameAreaResolutionY*0.05f, ".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f));
@@ -364,25 +369,25 @@ public class MessagesHandler {
         statsTextView.addText(resources.getString(R.string.stat9)+ " " + SaveGame.saveGame.stats[9], Color.cinza20);
         statsTextView.addText(resources.getString(R.string.stat10)+ " " + SaveGame.saveGame.stats[10], Color.cinza20);
         statsTextView.addText(resources.getString(R.string.stat11)+ " " + SaveGame.saveGame.stats[11], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat12)+ " " + SaveGame.saveGame.stats[12], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat13)+ " " + SaveGame.saveGame.stats[13], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat14)+ " " + SaveGame.saveGame.stats[14], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat15)+ " " + SaveGame.saveGame.stats[15], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat16)+ " " + SaveGame.saveGame.stats[16], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat17)+ " " + SaveGame.saveGame.stats[17], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat18)+ " " + SaveGame.saveGame.stats[18], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat19)+ " " + SaveGame.saveGame.stats[19], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat20)+ " " + SaveGame.saveGame.stats[20], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat21)+ " " + SaveGame.saveGame.stats[21], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat22)+ " " + SaveGame.saveGame.stats[22], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat23)+ " " + SaveGame.saveGame.stats[23], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat24)+ " " + SaveGame.saveGame.stats[24], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat25)+ " " + SaveGame.saveGame.stats[25], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat26)+ " " + SaveGame.saveGame.stats[26], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat27)+ " " + SaveGame.saveGame.stats[27], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat12)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[12]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat13)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[13]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat14)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[14]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat15)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[15]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat16)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[16]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat17)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[17]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat18)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[18]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat19)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[19]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat20)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[20]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat21)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[21]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat22)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[22]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat23)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[23]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat24)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[24]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat25)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[25]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat26)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[26]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat27)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[27]), Color.cinza20);
         statsTextView.addText(resources.getString(R.string.stat28)+ " " + SaveGame.saveGame.stats[28], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat29)+ " " + SaveGame.saveGame.stats[29], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat30)+ " " + SaveGame.saveGame.stats[30], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat29)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[29]), Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat30)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[30]), Color.cinza20);
         statsTextView.addText(resources.getString(R.string.stat31)+ " " + SaveGame.saveGame.stats[31], Color.cinza20);
         statsTextView.addText(resources.getString(R.string.stat32)+ " " + SaveGame.saveGame.stats[32], Color.cinza20);
         statsTextView.addText(resources.getString(R.string.stat33)+ " " + SaveGame.saveGame.stats[33], Color.cinza20);
@@ -391,7 +396,7 @@ public class MessagesHandler {
         statsTextView.addText(resources.getString(R.string.stat36)+ " " + SaveGame.saveGame.stats[36], Color.cinza20);
         statsTextView.addText(resources.getString(R.string.stat37)+ " " + SaveGame.saveGame.stats[37], Color.cinza20);
         statsTextView.addText(resources.getString(R.string.stat38)+ " " + SaveGame.saveGame.stats[38], Color.cinza20);
-        statsTextView.addText(resources.getString(R.string.stat39)+ " " + SaveGame.saveGame.stats[39], Color.cinza20);
+        statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
 
     }
 }

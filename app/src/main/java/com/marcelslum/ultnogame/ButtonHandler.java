@@ -138,38 +138,95 @@ public class ButtonHandler {
                 //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
                 if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
                     Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+
                 } else if (Game.gameState == Game.GAME_STATE_SELECAO_GRUPO){
                     Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
+
                     if (SaveGame.saveGame.currentLevelNumber < 1000){
                         Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
                     } else {
                         Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
                     }
+
                 } else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL) {
                     Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+
                 }else if (Game.gameState == Game.GAME_STATE_MENU_JOGAR){
                         Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+
                 }else if (Game.gameState == Game.GAME_STATE_MENU_EXPLICACAO_TREINAMENTO){
                     Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
-                }else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL){
+
+                } else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL){
                     Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+
                 } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
                     Game.setGameState(Game.GAME_STATE_PAUSE);
+
                 } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){
                     Tutorial.currentTutorialObject.previous();
+
                 } else if (Game.gameState == Game.GAME_STATE_SOBRE){
                     Game.setGameState(Game.GAME_STATE_OPCOES);
-                } else if (Game.gameState == Game.GAME_STATE_ESTATISTICAS){
-                    MessagesHandler.statsTextView.blockAndClearDisplay();
-                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
-                } else if (Game.gameState == Game.GAME_STATE_OPCOES){
+
+                }  else if (Game.gameState == Game.GAME_STATE_OPCOES){
                     Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+
                 } else if (Game.gameState == Game.GAME_STATE_OPCOES_JOGABILIDADE){
                     MenuHandler.menuOptionsPlay.clearDisplay();
                     MenuHandler.menuOptionsPlay.block();
                     SelectorHandler.backAllSelectors();
                     Game.setGameState(Game.GAME_STATE_OPCOES);
+
+                } else if (Game.gameState == Game.GAME_STATE_ESTATISTICAS) {
+                    if (Stats.currentStatsSheet > 1){
+
+                        if (Stats.currentStatsSheet == Stats.NUMBER_OF_STATS_SHEETS){
+                            buttonContinue.unblockAndDisplay();
+                        }
+
+                        Stats.currentStatsSheet -= 1;
+                        Stats.showCurrentStat();
+                    } else {
+                        Game.statsGraphs.clear();
+                        Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                    }
+
+                }
+            }
+        });
+
+        buttonContinue = Game.buttonPool.get();
+        buttonContinue.setData("buttonContinue", Game.resolutionX - buttonSize*1.5f, Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_ID),
+                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_PRESS_ID));
+        buttonContinue.setOnPress(new Button.OnPress() {
+            @Override
+            public void onPress() {
+
+                Game.vibrate(Game.VIBRATE_SMALL);
+                Game.sound.playPlayMenuBig();
+                //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
+                if (Game.gameState == Game.GAME_STATE_VITORIA) {
+                    Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
+                } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {
+                    Sound.stopAndReleaseMusic();
+                    Game.prepareAfterInterstitialFlag = false;
+                    Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
+                } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL) {
+                    Game.setGameState(Game.GAME_STATE_PREPARAR);
+                } else if (Game.gameState == Game.GAME_STATE_TUTORIAL) {
+                    Tutorial.currentTutorialObject.next();
+                } else if (Game.gameState == Game.GAME_STATE_ESTATISTICAS) {
+                    if (Stats.currentStatsSheet < Stats.NUMBER_OF_STATS_SHEETS){
+                        Stats.currentStatsSheet += 1;
+                        Stats.showCurrentStat();
+                        if (Stats.currentStatsSheet == Stats.NUMBER_OF_STATS_SHEETS){
+                            buttonContinue.blockAndClearDisplay();
+                        }
+                    }
                 }
             }
         });
@@ -308,30 +365,7 @@ public class ButtonHandler {
             }
         });
 
-        buttonContinue = Game.buttonPool.get();
-        buttonContinue.setData("buttonContinue", Game.resolutionX - buttonSize*1.5f, Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
-                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_ID),
-                TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_PRESS_ID));
-        buttonContinue.setOnPress(new Button.OnPress() {
-            @Override
-            public void onPress() {
 
-                Game.vibrate(Game.VIBRATE_SMALL);
-                Game.sound.playPlayMenuBig();
-                //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
-                if (Game.gameState == Game.GAME_STATE_VITORIA) {
-                    Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
-                } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {
-                    Sound.stopAndReleaseMusic();
-                    Game.prepareAfterInterstitialFlag = false;
-                    Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
-                } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL) {
-                    Game.setGameState(Game.GAME_STATE_PREPARAR);
-                } else if (Game.gameState == Game.GAME_STATE_TUTORIAL) {
-                    Tutorial.currentTutorialObject.next();
-                }
-            }
-        });
 
         Rectangle frame3 = new Rectangle("frameButtonReturn", Game.resolutionX - buttonSize*1.5f - framePadd,
                 Game.resolutionY - (buttonSize*1.5f) - framePadd,  Entity.TYPE_OTHER, buttonSize + (framePadd * 2f), buttonSize + (framePadd * 2f), -1, BallDataPanel.COLOR_BAR_GREEN_DARK);

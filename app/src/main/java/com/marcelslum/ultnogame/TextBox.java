@@ -31,6 +31,7 @@ public class TextBox extends Entity{
     Color frameColor;
     Color borderColor;
     Color shadowColor;
+    int textAlign;
 
     boolean multiColor = false;
     Color colorBottomRight;
@@ -53,6 +54,7 @@ public class TextBox extends Entity{
         frameColor = builder.frameColor;
         borderColor = builder.borderColor;
         shadowColor = builder.shadowColor;
+        textAlign = builder.textAlign;
         setText(builder.text, builder.textColor);
     }
     
@@ -71,7 +73,7 @@ public class TextBox extends Entity{
         float widthToSplit = width * 0.9f;
         if (!isHaveArrowContinue) {widthToSplit = width;}
 
-        texts = Text.splitStringAtMaxWidth(name, text, Game.font, color, size, widthToSplit,Text.TEXT_ALIGN_LEFT);
+        texts = Text.splitStringAtMaxWidth(name, text, Game.font, color, size, widthToSplit, textAlign);
 
         float textPadding = size * padding;
 

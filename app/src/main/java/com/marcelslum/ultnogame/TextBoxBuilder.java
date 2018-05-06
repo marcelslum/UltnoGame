@@ -22,6 +22,7 @@ public class TextBoxBuilder {
     public Color frameColor;
     public Color textColor;
     public Color borderColor;
+    public int textAlign = Text.TEXT_ALIGN_LEFT;
 
     public TextBoxBuilder(String name) {
         this.name = name;
@@ -108,6 +109,11 @@ public class TextBoxBuilder {
 
     public TextBoxBuilder isHaveArrowContinue(boolean isHaveArrowContinue){
         this.isHaveArrowContinue = isHaveArrowContinue;
+        return this;
+    }
+
+    public TextBoxBuilder setTextAlign(int textAlign){
+        this.textAlign = textAlign;
         return this;
     }
 

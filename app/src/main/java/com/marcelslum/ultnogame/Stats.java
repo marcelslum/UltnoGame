@@ -60,6 +60,16 @@ public class Stats {
     static long ultimoNumeroBolasVivasTempoDeRegistro;
     static String TAG = "Stats";
 
+
+    static int currentStatsSheet = 0;
+
+    public final static int VELOCIDADE = 1;
+    public final static int ANGULO_AUMENTADO = 2;
+    public final static int ANGULO_DIMINUIDO = 3;
+    public final static int TEMPO_BOLAS = 4;
+    public final static int NUMBER_OF_STATS_SHEETS = 4;
+
+
     public static void
     collectBallData(Ball ball) {
 
@@ -197,5 +207,80 @@ public class Stats {
         obstaculosAtingidos = 0;
         colisaoEntreBolas = 0;
         tempoJogadoNaoCompletado = 0;
+    }
+
+    public static void showCurrentStat() {
+
+        Game.statsGraphs.clear();
+
+        MessagesHandler.messageStatTittle.display();
+
+
+        if (currentStatsSheet == VELOCIDADE){
+
+            MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.statSheet1));
+
+            
+
+            StatsGraph statsGraph = new StatsGraph("statGraph", Game.resolutionX * 0.05f, Game.gameAreaResolutionY * 0.2f, Game.resolutionX * 0.95f, Game.gameAreaResolutionY * 0.75f);
+
+            statsGraph.addData("Velocidade Aumentada", (float)SaveGame.saveGame.stats[2]);
+            statsGraph.addData("Velocidade Diminuida", (float)SaveGame.saveGame.stats[3]);
+
+            statsGraph.make(true, false);
+
+            Game.statsGraphs.add(statsGraph);
+
+        } else if (currentStatsSheet == ANGULO_AUMENTADO){
+
+            MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.statSheet2));
+
+            StatsGraph statsGraph = new StatsGraph("statGraph", Game.resolutionX * 0.05f, Game.gameAreaResolutionY * 0.2f, Game.resolutionX * 0.95f, Game.gameAreaResolutionY * 0.75f);
+
+            statsGraph.addData("Ângulo aumentado", (float)SaveGame.saveGame.stats[0]);
+            statsGraph.addData("Ângulo aumentado pela inclinação", (float)SaveGame.saveGame.stats[4]);
+            statsGraph.addData("Ângulo aumentado pelo movimento", (float)SaveGame.saveGame.stats[6]);
+            statsGraph.addData("Ângulo aumentado pelo movimento e inclinação", (float)SaveGame.saveGame.stats[8]);
+            statsGraph.make(true, false);
+            Game.statsGraphs.add(statsGraph);
+
+        } else if (currentStatsSheet == ANGULO_DIMINUIDO) {
+
+            MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.statSheet3));
+
+            StatsGraph statsGraph = new StatsGraph("statGraph", Game.resolutionX * 0.05f, Game.gameAreaResolutionY * 0.2f, Game.resolutionX * 0.95f, Game.gameAreaResolutionY * 0.75f);
+            statsGraph.addData("Ângulo diminuído", (float)SaveGame.saveGame.stats[1]);
+            statsGraph.addData("Ângulo diminuído pela inclinação", (float)SaveGame.saveGame.stats[5]);
+            statsGraph.addData("Ângulo diminuído pelo movimento", (float)SaveGame.saveGame.stats[7]);
+            statsGraph.addData("Ângulo diminuído pelo movimento e inclinação", (float)SaveGame.saveGame.stats[9]);
+            statsGraph.make(true, false);
+            Game.statsGraphs.add(statsGraph);
+
+
+        } else if (currentStatsSheet == TEMPO_BOLAS) {
+
+            MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.statSheet3));
+
+            StatsGraph statsGraph = new StatsGraph("statGraph", Game.resolutionX * 0.05f, Game.gameAreaResolutionY * 0.2f, Game.resolutionX * 0.95f, Game.gameAreaResolutionY * 0.75f);
+            statsGraph.addData("1", (float)SaveGame.saveGame.stats[18]);
+            statsGraph.addData("2", (float)SaveGame.saveGame.stats[19]);
+            statsGraph.addData("3", (float)SaveGame.saveGame.stats[20]);
+            statsGraph.addData("4", (float)SaveGame.saveGame.stats[21]);
+            statsGraph.addData("5", (float)SaveGame.saveGame.stats[22]);
+            statsGraph.addData("6", (float)SaveGame.saveGame.stats[23]);
+            statsGraph.addData("7", (float)SaveGame.saveGame.stats[24]);
+            statsGraph.addData("8", (float)SaveGame.saveGame.stats[25]);
+            statsGraph.addData("9", (float)SaveGame.saveGame.stats[26]);
+            statsGraph.addData("10+", (float)SaveGame.saveGame.stats[27]);
+            statsGraph.make(false, true);
+            Game.statsGraphs.add(statsGraph);
+
+
+        }
+
+
+
+
+
     }
 }

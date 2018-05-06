@@ -49,6 +49,8 @@ public class Game {
 
     public static ArrayList<Text> textsForTest;
 
+
+
     public static final long TIME_OF_BALL_LISTENER = 250;
 
     public static long currentFrameMilliPrecision = -1;
@@ -94,6 +96,7 @@ public class Game {
     static ArrayList<InteractionListener> interactionListeners;
     static ArrayList<TextBox> textBoxes;
     static ArrayList<BallBehaviourData> ballBehaviourDatas;
+    public static ArrayList<StatsGraph> statsGraphs;
     static Messages messages;
     static ArrayList<Line> lines;
     static BrickBackground brickBackground;
@@ -312,6 +315,7 @@ public class Game {
         bars = new ArrayList<>();
         menus = new ArrayList<>();
         textBoxes = new ArrayList<>();
+        statsGraphs = new ArrayList<>();
         ballBehaviourDatas = new ArrayList<>();
         messages = new Messages();
         lines = new ArrayList<> ();
@@ -642,14 +646,17 @@ public class Game {
         }
         else if (state == GAME_STATE_ESTATISTICAS){
                 mainActivity.showAdView();
-                MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuAbout));
+                //MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuAbout));
 
-            MessagesHandler.initStatsTextBox();
+            //MessagesHandler.initStatsTextBox();
+            //MessagesHandler.statsTextView.unblockAndDisplay();
 
+            Stats.currentStatsSheet = Stats.VELOCIDADE;
 
-            MessagesHandler.statsTextView.unblockAndDisplay();
+            Stats.showCurrentStat();
+
             ButtonHandler.buttonReturn.unblockAndDisplay();
-
+            ButtonHandler.buttonContinue.unblockAndDisplay();
 
         } else if (state == GAME_STATE_OBJETIVO_LEVEL){
 
@@ -899,6 +906,20 @@ public class Game {
 
             mainActivity.hideAdView();
             Log.e(TAG, "init1");
+
+
+
+            /* teste de conversão de milisegundos para tempo formatado
+            Log.e(TAG, Utils.getTimeTextFromMiliSeconds(2000));
+            Log.e(TAG, Utils.getTimeTextFromMiliSeconds(60000));
+            Log.e(TAG, Utils.getTimeTextFromMiliSeconds(300000));
+            Log.e(TAG, Utils.getTimeTextFromMiliSeconds(24020000));
+            Log.e(TAG, Utils.getTimeTextFromMiliSeconds(324020000));
+            Log.e(TAG, ""+Long.MAX_VALUE);
+            Log.e(TAG, ""+Integer.MAX_VALUE);
+            */
+
+
             Splash.init();
         } else if (state == GAME_STATE_OPCOES){
             MessagesHandler.messageBack.display();
@@ -960,6 +981,19 @@ public class Game {
         } else if (state == GAME_STATE_MENU_PRINCIPAL){
 
             //mainActivity.getScreenShot();
+
+
+            StatsGraph statsGraph = new StatsGraph("statGraph", Game.resolutionX * 0.05f, Game.gameAreaResolutionY * 0.2f, Game.resolutionX * 0.95f, Game.gameAreaResolutionY * 0.75f);
+
+            statsGraph.addData("valor 1", 1f);
+            statsGraph.addData("valor 2", 2f);
+            statsGraph.addData("valor 3", 3f);
+            statsGraph.addData("valor 4", 4f);
+            statsGraph.addData("valor 5", 20f);
+
+            statsGraph.make(true, false);
+
+            statsGraphs.add(statsGraph);
 
             MessagesHandler.setBottomMessage("", 0);
 
@@ -2710,6 +2744,10 @@ public class Game {
             specialBalls.get(i).checkTransformations(true);
         }
 
+        for (int i = 0; i < statsGraphs.size(); i++){
+            statsGraphs.get(i).checkTransformations(true);
+        }
+
         if (MenuHandler.menuMain != null) MenuHandler.menuMain.checkTransformations(true);
         if (MenuHandler.menuInGame != null) MenuHandler.menuInGame.checkTransformations(true);
         if (MenuHandler.menuGameOver != null) MenuHandler.menuGameOver.checkTransformations(true);
@@ -2768,6 +2806,7 @@ public class Game {
         if (MessagesHandler.messageMenuCarregarJogo != null) MessagesHandler.messageMenuCarregarJogo.checkTransformations(true);
         if (MessagesHandler.messageExplicacaoTreinamento != null) MessagesHandler.messageExplicacaoTreinamento.checkTransformations(true);
         if (MessagesHandler.messageExplicacaoDuranteTreinamento != null) MessagesHandler.messageExplicacaoDuranteTreinamento.checkTransformations(true);
+        if (MessagesHandler.messageStatTittle != null) MessagesHandler.messageStatTittle.checkTransformations(true);
 
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.checkTransformations(true);
         if (MessageStar.messageStars != null) MessageStar.messageStars.checkTransformations(true);
@@ -2879,6 +2918,10 @@ public class Game {
             specialBalls.get(i).prepareRender(matrixView, matrixProjection);
         }
 
+        for (int i = 0; i < statsGraphs.size(); i++){
+            statsGraphs.get(i).prepareRender(matrixView, matrixProjection);
+        }
+
         if (wind != null) {
             wind.prepareRender(matrixView, matrixProjection);
         }
@@ -2934,6 +2977,7 @@ public class Game {
         MessagesHandler.messagePreparation.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageInGame.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageMenu.prepareRender(matrixView, matrixProjection);
+        if (MessagesHandler.messageStatTittle != null) MessagesHandler.messageStatTittle.prepareRender(matrixView, matrixProjection);
 
         if (MessagesHandler.messageMenuSaveNotSeen != null) MessagesHandler.messageMenuSaveNotSeen.prepareRender(matrixView, matrixProjection);
         if (MessagesHandler.messageMenuCarregarJogo != null) MessagesHandler.messageMenuCarregarJogo.prepareRender(matrixView, matrixProjection);
