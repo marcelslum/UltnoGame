@@ -191,6 +191,11 @@ public class ButtonHandler {
                         Stats.showCurrentStat();
                     } else {
                         Game.statsGraphs.clear();
+
+                        MessagesHandler.messageStatTittle.clearDisplay();
+                        MessagesHandler.messageStatDescricao.clearDisplay();
+
+
                         Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                     }
 
@@ -223,9 +228,9 @@ public class ButtonHandler {
                     if (Stats.currentStatsSheet < Stats.NUMBER_OF_STATS_SHEETS){
                         Stats.currentStatsSheet += 1;
                         Stats.showCurrentStat();
-                        if (Stats.currentStatsSheet == Stats.NUMBER_OF_STATS_SHEETS){
-                            buttonContinue.blockAndClearDisplay();
-                        }
+                    } else {
+                        MessagesHandler.statsTextView.clearDisplay();
+                        Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                     }
                 }
             }

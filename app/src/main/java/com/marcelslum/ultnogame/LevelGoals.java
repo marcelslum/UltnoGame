@@ -2,7 +2,6 @@ package com.marcelslum.ultnogame;
 
 import android.util.Log;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 /**
@@ -74,7 +73,7 @@ public class LevelGoals {
             return;
         }
 
-        Stats.numeroBolasFalsasAtinjidas += 1;
+        Stats.numeroBolasFalsasAtingidas += 1;
 
         timesOfFakeBallsHitted += 1;
 

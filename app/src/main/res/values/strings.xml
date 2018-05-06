@@ -678,9 +678,16 @@
     <string name="stat37">Obstáculos atingidos:</string>
     <string name="stat38">Número de colisão entre bolas:</string>
     <string name="stat39">Tempo jogado com final com desistência do jogador:</string>
-    <string name="statSheet1">Velocidade</string>
+    <string name="statSheet1">Velocidade X Ângulo</string>
     <string name="statSheet2">Ângulo aumentado</string>
     <string name="statSheet3">Ângulo diminuído</string>
+    <string name="statSheet4">Bolas Vivas</string>
+    <string name="tempo_de_jogo">Tempo de Jogo</string>
+    <string name="tempoVelocidade">Velocidade X Tempo</string>
+    <string name="tempoAngulo">Ângulo X Tempo</string>
+    <string name="alvos_atingidos">Alvos Atingidos</string>
+    <string name="dados_diveros">Dados Diversos</string>
+    <string name="velocidade_titulo_stat">Velocidade</string>
 
 
 </resources>

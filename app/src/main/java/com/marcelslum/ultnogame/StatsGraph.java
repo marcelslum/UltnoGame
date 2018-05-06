@@ -15,6 +15,7 @@ public class StatsGraph extends Entity{
     ArrayList<String> colunasString;
     ArrayList<TextBox> linhasTextBox;
     ArrayList<TextBox> colunasTextBox;
+    Rectangle fundo;
 
     float width;
     float height;
@@ -43,7 +44,7 @@ public class StatsGraph extends Entity{
         valoresDouble.add(value);
     }
 
-    public void make(boolean exibirNomeLinhas, boolean valoresEmTempo, boolean exibirValoresEmInteger){
+    public void make(boolean exibirNomeLinhas, boolean valoresEmTempo, boolean exibirValoresEmInteger, float variacaoTamanhoTextoColuna, float variacaoPosicaoTextoColuna){
 
         double maiorValorDouble = 0;
         if (valoresDouble.size() > 0) {
@@ -58,6 +59,14 @@ public class StatsGraph extends Entity{
         float comprimentoRetanguloDados = (width * 0.9f) / (float) valoresDouble.size();
         float alturaColunas = height - tamanhoTextoColunas;
 
+        fundo = new Rectangle("fundo",
+                0,
+                y - (Game.resolutionY * 0.06f),
+                Rectangle.TYPE_OTHER,
+                Game.resolutionX,
+                height + (Game.resolutionY * 0.06f),
+                -1,
+                Color.cinza85);
 
         for (int i = 0; i < valoresDouble.size(); i++) {
 
@@ -65,46 +74,80 @@ public class StatsGraph extends Entity{
             double valorASerConsiderado = valoresDouble.get(i);
             if (valorASerConsiderado == 0f) valorASerConsiderado = 0.001f;
 
+            if (valoresEmTempo){
+                valorASerConsiderado = valorASerConsiderado - (valorASerConsiderado % 1000);
+                maiorValorDouble =  maiorValorDouble - (maiorValorDouble % 1000);
+            } else if (exibirValoresEmInteger){
+                valorASerConsiderado = Math.floor(valorASerConsiderado);
+                maiorValorDouble = Math.floor(maiorValorDouble);
+            }
+
+
             double alturaDoValor = alturaColunas * (valorASerConsiderado / maiorValorDouble);
 
+
             Color color;
-            switch (i) {
-                case 0:
-                    color = Color.azul40;
-                    break;
-                case 1:
-                    color = Color.verde40;
-                    break;
-                case 2:
-                    color = Color.azulClaro;
-                    break;
-                case 3:
-                    color = Color.verdeClaro;
-                    break;
-                case 4:
-                    color = Color.cinza40;
-                    break;
-                case 5:
-                    color = Color.roxoCheio;
-                    break;
-                case 6:
-                    color = Color.roxoClaro;
-                    break;
-                case 7:
-                    color = Color.laranjaCheio;
-                    break;
-                case 8:
-                    color = Color.laranjaClaro;
-                    break;
-                case 9:
-                    color = Color.rosaCheio;
-                    break;
-                case 10:
-                    color = Color.vermelhoCheio;
-                    break;
-                default:
-                    color =  new Color(Utils.getRandonFloat(0f, 1f),Utils.getRandonFloat(0f, 1f),Utils.getRandonFloat(0f, 1f),1f );
-                    break;
+            if (Stats.currentStatsSheet == Stats.ALVOS_ATINGIDOS){
+                switch (i) {
+                    case 0:
+                        color = Color.cinza10;
+                        break;
+                    case 1:
+                        color = Color.azul40;
+                        break;
+                    case 2:
+                        color = Color.verde40;
+                        break;
+                    case 3:
+                        color = Color.vermelho40;
+                        break;
+                    case 4:
+                        color = Color.cinza40;
+                        break;
+                    default:
+                        color = new Color(Utils.getRandonFloat(0f, 1f), Utils.getRandonFloat(0f, 1f), Utils.getRandonFloat(0f, 1f), 1f);
+                        break;
+                }
+
+            } else {
+                switch (i) {
+                    case 0:
+                        color = Color.azul;
+                        break;
+                    case 1:
+                        color = Color.verde40;
+                        break;
+                    case 2:
+                        color = Color.vermelhoClaro;
+                        break;
+                    case 3:
+                        color = Color.verdeClaro;
+                        break;
+                    case 4:
+                        color = Color.cinza40;
+                        break;
+                    case 5:
+                        color = Color.roxoCheio;
+                        break;
+                    case 6:
+                        color = Color.amareloCheio;
+                        break;
+                    case 7:
+                        color = Color.laranjaCheio;
+                        break;
+                    case 8:
+                        color = Color.azul40;
+                        break;
+                    case 9:
+                        color = Color.rosaCheio;
+                        break;
+                    case 10:
+                        color = Color.vermelhoCheio;
+                        break;
+                    default:
+                        color = new Color(Utils.getRandonFloat(0f, 1f), Utils.getRandonFloat(0f, 1f), Utils.getRandonFloat(0f, 1f), 1f);
+                        break;
+                }
             }
 
 
@@ -133,14 +176,14 @@ public class StatsGraph extends Entity{
             dados.add(dado);
 
             TextBox textBox = new TextBoxBuilder("textBox"+i)
-                    .position(dado.x + ((dado.width * 0.85f) / 2f), y + alturaColunas)
+                    .position(dado.x + (((dado.width * 0.85f) / 2f)*variacaoPosicaoTextoColuna), y + alturaColunas)
                     .width(comprimentoRetanguloDados)
-                    .size(Game.gameAreaResolutionY*0.031f)
+                    .size(Game.gameAreaResolutionY*0.033f * variacaoTamanhoTextoColuna)
                     .text(colunasString.get(i))
                     .setTextAlign(Text.TEXT_ALIGN_CENTER)
                     .isHaveFrame(false)
                     .isHaveArrowContinue(false)
-                    .setTextColor(Color.pretoCheio)
+                    .setTextColor(Color.cinza20)
                     .build();
 
             colunasTextBox.add(textBox);
@@ -163,7 +206,7 @@ public class StatsGraph extends Entity{
                     textoRotuloAltura,
                     textoAExibir,
                     Game.font,
-                    dado.color,
+                    Color.pretoCheio,
                     Text.TEXT_ALIGN_CENTER);
 
             rotulos.add(rotulo);
@@ -239,6 +282,9 @@ public class StatsGraph extends Entity{
         if (!isVisible) return;
         if (dados == null || dados.size() <= 0) return;
 
+
+        fundo.checkTransformations(false);
+
         for (int i = 0; i < dados.size(); i++) {
             dados.get(i).checkTransformations(false);
 
@@ -269,6 +315,9 @@ public class StatsGraph extends Entity{
     public void prepareRender(float[] matrixView, float[] matrixProjection) {
 
         if (!isVisible)return;
+
+        fundo.checkAnimations();
+        fundo.render(matrixView, matrixProjection);
 
         for (int i = 0; i < linhas.size(); i++) {
             linhas.get(i).checkAnimations();

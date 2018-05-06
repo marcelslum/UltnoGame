@@ -651,7 +651,7 @@ public class Game {
             //MessagesHandler.initStatsTextBox();
             //MessagesHandler.statsTextView.unblockAndDisplay();
 
-            Stats.currentStatsSheet = Stats.VELOCIDADE;
+            Stats.currentStatsSheet = Stats.TEMPO_JOGO;
 
             Stats.showCurrentStat();
 
@@ -982,7 +982,7 @@ public class Game {
 
             //mainActivity.getScreenShot();
 
-
+            /*
             StatsGraph statsGraph = new StatsGraph("statGraph", Game.resolutionX * 0.05f, Game.gameAreaResolutionY * 0.2f, Game.resolutionX * 0.95f, Game.gameAreaResolutionY * 0.75f);
 
             statsGraph.addData("valor 1", 1f);
@@ -994,6 +994,7 @@ public class Game {
             statsGraph.make(true, false);
 
             statsGraphs.add(statsGraph);
+            */
 
             MessagesHandler.setBottomMessage("", 0);
 
@@ -2807,6 +2808,7 @@ public class Game {
         if (MessagesHandler.messageExplicacaoTreinamento != null) MessagesHandler.messageExplicacaoTreinamento.checkTransformations(true);
         if (MessagesHandler.messageExplicacaoDuranteTreinamento != null) MessagesHandler.messageExplicacaoDuranteTreinamento.checkTransformations(true);
         if (MessagesHandler.messageStatTittle != null) MessagesHandler.messageStatTittle.checkTransformations(true);
+        if (MessagesHandler.messageStatDescricao != null) MessagesHandler.messageStatDescricao.checkTransformations(true);
 
         if (MessageStarWin.messageStarsWin != null) MessageStarWin.messageStarsWin.checkTransformations(true);
         if (MessageStar.messageStars != null) MessageStar.messageStars.checkTransformations(true);
@@ -2978,6 +2980,7 @@ public class Game {
         MessagesHandler.messageInGame.prepareRender(matrixView, matrixProjection);
         MessagesHandler.messageMenu.prepareRender(matrixView, matrixProjection);
         if (MessagesHandler.messageStatTittle != null) MessagesHandler.messageStatTittle.prepareRender(matrixView, matrixProjection);
+        if (MessagesHandler.messageStatDescricao != null) MessagesHandler.messageStatDescricao.prepareRender(matrixView, matrixProjection);
 
         if (MessagesHandler.messageMenuSaveNotSeen != null) MessagesHandler.messageMenuSaveNotSeen.prepareRender(matrixView, matrixProjection);
         if (MessagesHandler.messageMenuCarregarJogo != null) MessagesHandler.messageMenuCarregarJogo.prepareRender(matrixView, matrixProjection);
@@ -3176,3 +3179,4 @@ public class Game {
     }
 
 }
+
