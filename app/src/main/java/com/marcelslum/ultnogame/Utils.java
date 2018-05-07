@@ -228,6 +228,51 @@ public abstract class Utils {
         }
     }
 
+    public static String getTimeTextFromSeconds(long time){
+
+        long secondsRaw = time;
+
+        long minutes = (long)((double) secondsRaw/60d);
+
+        long seconds = secondsRaw % 60;
+
+        long hour = 0;
+
+        if (minutes > 60){
+            long minutesRaw = minutes;
+            hour = (long)((double) minutesRaw/60d);
+            minutes = minutesRaw % 60;
+        }
+
+        long days = 0;
+        if (hour > 24){
+            long hourRaw = hour;
+            days = (long)((double) hour/24d);
+            hour = hourRaw % 24;
+        }
+
+        if (days > 0){
+            return days + "d " + hour + "h " + minutes + "min " + seconds + "s ";
+        } else if (hour > 0){
+            return hour + "h " + minutes + "min " + seconds + "s ";
+        } else if (minutes > 0){
+            return  minutes + "min " + seconds + "s ";
+        } else {
+            return  seconds + "s ";
+        }
+    }
+
+
+    public static long converterMilisegundosEmSegundos(long milisegundos){
+
+        long add = 0;
+        if (milisegundos%1000 > 500){
+            add = 1;
+        }
+
+        return (milisegundos - (milisegundos%1000) + add)/1000;
+    }
+
     
     public static void insertRectangleVerticesData(float[] array, int startIndex){
         array[startIndex] = x1;

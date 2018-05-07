@@ -128,6 +128,13 @@ public class Training {
             Game.bars.get(0).x = Game.resolutionX * 0.25f;
         }
 
+        if (trainingNumber > 20){
+            Game.balls.get(0).x = Game.resolutionX * 0.93f;
+            Game.balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
+            Game.balls.get(0).dvx *= -1;
+            Game.bars.get(0).x = Game.resolutionX * 0.25f;
+        }
+
         Game.balls.get(0).checkTransformations(false);
         Game.bars.get(0).checkTransformations(false);
 
@@ -153,7 +160,7 @@ public class Training {
                     */
                 }
                 if (MessagesHandler.messageTrainingState2 != null) {
-                    MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (tentativaCertaTreinamento + 1) + " " + Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+                    MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (tentativaCertaTreinamento) + " " + Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
                 }
 
                 Game.stopAllGameEntities();
@@ -172,7 +179,11 @@ public class Training {
                 Game.stopAllGameEntities();
                 Game.reduceAllGameEntitiesAlpha(500);
                 trainingNumber += 1;
-                Game.setGameState(Game.GAME_STATE_MENU_DURANTE_TREINAMENTO);
+                if (trainingNumber <= 20) {
+                    Game.setGameState(Game.GAME_STATE_MENU_DURANTE_TREINAMENTO);
+                } else {
+                    Game.setGameState(Game.GAME_STATE_MENU_FINAL_TREINAMENTO);
+                }
             }
         } else {
             Game.stopAllGameEntities();
@@ -327,9 +338,9 @@ public class Training {
                 break;
             default:
                 MessagesHandler.messageExplicacaoDuranteTreinamento.clearTexts();
-                MessagesHandler.messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.menuDuranteTrainamento20), Color.transparente, 1.2f);
+                MessagesHandler.messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.menuDuranteTrainamento21), Color.azul40, 1.2f);
                 MessagesHandler.messageExplicacaoDuranteTreinamento.addText(".", Color.transparente);
-                MessagesHandler.messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.menuDuranteTrainamento20b), Color.transparente);
+                MessagesHandler.messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.menuDuranteTrainamento21b), Color.cinza20);
                 break;
         }
     }

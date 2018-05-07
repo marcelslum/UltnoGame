@@ -106,9 +106,9 @@ public class StatsGraph extends Entity{
 
 
             if (valoresEmTempo){
-                valorASerConsiderado = valorASerConsiderado - (valorASerConsiderado % 1000);
+                valorASerConsiderado = valorASerConsiderado;
                 if (maiorValorDouble != 0) {
-                    maiorValorDouble = maiorValorDouble - (maiorValorDouble % 1000);
+                    maiorValorDouble = maiorValorDouble;
                 }
             } else if (exibirValoresEmInteger){
                 valorASerConsiderado = Math.floor(valorASerConsiderado);
@@ -218,8 +218,8 @@ public class StatsGraph extends Entity{
             dados.add(dado);
 
             TextBox textBox = new TextBoxBuilder("textBox"+i)
-                    .position(dado.x + (((dado.width * 0.85f) / 2f)*variacaoPosicaoTextoColuna), y + alturaColunas)
-                    .width(comprimentoRetanguloDados)
+                    .position(dado.x + (((dado.width * 0.8f) / 2f)*variacaoPosicaoTextoColuna), y + alturaColunas)
+                    .width(comprimentoRetanguloDados * 0.9f)
                     .size(Game.gameAreaResolutionY*0.033f * variacaoTamanhoTextoColuna)
                     .text(colunasString.get(i))
                     .setTextAlign(Text.TEXT_ALIGN_CENTER)
@@ -236,7 +236,8 @@ public class StatsGraph extends Entity{
             String textoAExibir = valoresDouble.get(i).toString();
 
             if (valoresEmTempo){
-                textoAExibir = Utils.getTimeTextFromMiliSeconds((long)(Math.floor(valoresDouble.get(i))));
+                textoAExibir = Utils.getTimeTextFromSeconds((long)(Math.floor(valoresDouble.get(i))));
+                //textoAExibir = Utils.getTimeTextFromMiliSeconds((long)(Math.floor(valoresDouble.get(i))));
             } else if (exibirValoresEmInteger){
                 textoAExibir = String.valueOf((int)(Math.floor(valoresDouble.get(i))));
             }
@@ -251,7 +252,7 @@ public class StatsGraph extends Entity{
                     Color.pretoCheio,
                     Text.TEXT_ALIGN_CENTER);
 
-            if (valoresDouble.get(i) != 0d) {
+            if (valoresDouble.get(i) != 0d || valoresDouble.get(i) != 0) {
                 Utils.createAnimation2v(rotulo, "animDadoTranslate", "translateY", 500, 0f, dado.height, 1f, 1f, false, true).start();
                 Utils.createAnimation2v(rotulo, "animDadoAlpha", "alpha", 500, 0f, 0f, 1f, 1f, false, true).start();
             }

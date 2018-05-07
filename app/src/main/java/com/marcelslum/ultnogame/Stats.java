@@ -63,6 +63,11 @@ public class Stats {
     static long numeroTotalAlvosAtingidosLevelsFinalizadosVitoria;
     static long numeroTotalAlvosAtingidosLevelsFinalizadosDerrota;
 
+    static long tempoVelocidadeMediaBaixa;
+    static long tempoAnguloMedioBaixo;
+    static long tempoVelocidadeMediaAlta;
+    static long tempoAnguloMedioAlto;
+
 
     // FIM DOS DADOS ARMAZENADOS
 
@@ -100,14 +105,15 @@ public class Stats {
 
         Log.e(TAG, "coletando dados da bola");
 
-
-        Log.e(TAG, "initTempoVelocidadeMedia " + ball.initTempoVelocidadeMedia);
-
-        if (ball.initTempoVelocidadeMedia != -1) {
-            Log.e(TAG, "tempoVelocidadeMedia adicionando " + (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMedia));
-            ball.tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMedia);
-            Log.e(TAG, "tempoVelocidadeMedia depois " + tempoVelocidadeMedia);
+        if (ball.initTempoVelocidadeMediaAlta != -1) {
+            ball.tempoVelocidadeMediaAlta += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMediaAlta);
         }
+
+        if (ball.initTempoVelocidadeMediaBaixa != -1) {
+            ball.tempoVelocidadeMediaBaixa += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMediaBaixa);
+
+        }
+        
         if (ball.initTempoVelocidadeMaxima != -1) {
             ball.tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMaxima);
         }
@@ -115,14 +121,20 @@ public class Stats {
             ball.tempoVelocidadeMinima += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMinima);
         }
 
+        
 
-        Log.e(TAG, "initTempoAnguloMedio " + ball.initTempoAnguloMedio);
+        if (ball.initTempoAnguloMedioAlto != -1) {
 
-        if (ball.initTempoAnguloMedio != -1) {
-            Log.e(TAG, "tempoAnguloMedio adicionando " + (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedio));
-            ball.tempoAnguloMedio += (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedio);
-            Log.e(TAG, "tempoAnguloMedio depois " + tempoAnguloMedio);
+            ball.tempoAnguloMedioAlto += (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedioAlto);
+
         }
+
+        if (ball.initTempoAnguloMedioBaixo != -1) {
+            Log.e(TAG, "tempoAnguloMedioBaixo adicionando " + (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedioBaixo));
+            ball.tempoAnguloMedioBaixo += (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedioBaixo);
+
+        }
+        
         if (ball.initTempoAnguloMaximo != -1) {
             ball.tempoAnguloMaximo += (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMaximo);
         }
@@ -134,8 +146,10 @@ public class Stats {
         tempoVelocidadeMaxima += ball.tempoVelocidadeMaxima;
         tempoAnguloMinimo += ball.tempoAnguloMinimo;
         tempoAnguloMaximo += ball.tempoAnguloMaximo;
-        tempoVelocidadeMedia += ball.tempoVelocidadeMedia;
-        tempoAnguloMedio += ball.tempoAnguloMedio;
+        tempoVelocidadeMediaAlta += ball.tempoVelocidadeMediaAlta;
+        tempoAnguloMedioAlto += ball.tempoAnguloMedioAlto;
+        tempoVelocidadeMediaBaixa += ball.tempoVelocidadeMediaBaixa;
+        tempoAnguloMedioBaixo += ball.tempoAnguloMedioBaixo;
     }
 
     public static void saveData() {
@@ -153,25 +167,25 @@ public class Stats {
             SaveGame.saveGame.stats[9] += anguloDiminuidoMovimentoInclinacao;
             SaveGame.saveGame.stats[10] += velocidadeAumentadaAnguloAumentadoInclinacao;
             SaveGame.saveGame.stats[11] += velocidadeDiminuidaAnguloDiminuidoInclinacao;
-            SaveGame.saveGame.stats[12] += tempoVelocidadeMinima;
-            SaveGame.saveGame.stats[13] += tempoVelocidadeMaxima;
-            SaveGame.saveGame.stats[14] += tempoAnguloMinimo;
-            SaveGame.saveGame.stats[15] += tempoAnguloMaximo;
-            SaveGame.saveGame.stats[16] += tempoVelocidadeMedia;
-            SaveGame.saveGame.stats[17] += tempoAnguloMedio;
-            SaveGame.saveGame.stats[18] += tempo1Bola;
-            SaveGame.saveGame.stats[19] += tempo2Bolas;
-            SaveGame.saveGame.stats[20] += tempo3Bolas;
-            SaveGame.saveGame.stats[21] += tempo4Bolas;
-            SaveGame.saveGame.stats[22] += tempo5Bolas;
-            SaveGame.saveGame.stats[23] += tempo6Bolas;
-            SaveGame.saveGame.stats[24] += tempo7Bolas;
-            SaveGame.saveGame.stats[25] += tempo8Bolas;
-            SaveGame.saveGame.stats[26] += tempo9Bolas;
-            SaveGame.saveGame.stats[27] += tempo10OuMaisBolas;
+            SaveGame.saveGame.stats[12] += Utils.converterMilisegundosEmSegundos(tempoVelocidadeMinima);
+            SaveGame.saveGame.stats[13] += Utils.converterMilisegundosEmSegundos(tempoVelocidadeMaxima);
+            SaveGame.saveGame.stats[14] += Utils.converterMilisegundosEmSegundos(tempoAnguloMinimo);
+            SaveGame.saveGame.stats[15] += Utils.converterMilisegundosEmSegundos(tempoAnguloMaximo);
+            SaveGame.saveGame.stats[16] += Utils.converterMilisegundosEmSegundos(tempoVelocidadeMedia);
+            SaveGame.saveGame.stats[17] += Utils.converterMilisegundosEmSegundos(tempoAnguloMedio);
+            SaveGame.saveGame.stats[18] += Utils.converterMilisegundosEmSegundos(tempo1Bola);
+            SaveGame.saveGame.stats[19] += Utils.converterMilisegundosEmSegundos(tempo2Bolas);
+            SaveGame.saveGame.stats[20] += Utils.converterMilisegundosEmSegundos(tempo3Bolas);
+            SaveGame.saveGame.stats[21] += Utils.converterMilisegundosEmSegundos(tempo4Bolas);
+            SaveGame.saveGame.stats[22] += Utils.converterMilisegundosEmSegundos(tempo5Bolas);
+            SaveGame.saveGame.stats[23] += Utils.converterMilisegundosEmSegundos(tempo6Bolas);
+            SaveGame.saveGame.stats[24] += Utils.converterMilisegundosEmSegundos(tempo7Bolas);
+            SaveGame.saveGame.stats[25] += Utils.converterMilisegundosEmSegundos(tempo8Bolas);
+            SaveGame.saveGame.stats[26] += Utils.converterMilisegundosEmSegundos(tempo9Bolas);
+            SaveGame.saveGame.stats[27] += Utils.converterMilisegundosEmSegundos(tempo10OuMaisBolas);
             SaveGame.saveGame.stats[28] += numeroBolasFalsasAtingidas;
-            SaveGame.saveGame.stats[29] += tempoJogadoVitoria;
-            SaveGame.saveGame.stats[30] += tempoJogadoDerrota;
+            SaveGame.saveGame.stats[29] += Utils.converterMilisegundosEmSegundos(tempoJogadoVitoria);
+            SaveGame.saveGame.stats[30] += Utils.converterMilisegundosEmSegundos(tempoJogadoDerrota);
             SaveGame.saveGame.stats[31] += atingirBolaSemMudarVelocidade;
             SaveGame.saveGame.stats[32] += alvosVerdesAtingidos;
             SaveGame.saveGame.stats[33] += alvosAzuisAtingidos;
@@ -180,7 +194,7 @@ public class Stats {
             SaveGame.saveGame.stats[36] += alvosVermelhosAtingidos;
             SaveGame.saveGame.stats[37] += obstaculosAtingidos;
             SaveGame.saveGame.stats[38] += colisaoEntreBolas;
-            SaveGame.saveGame.stats[39] += tempoJogadoNaoCompletado;
+            SaveGame.saveGame.stats[39] += Utils.converterMilisegundosEmSegundos(tempoJogadoNaoCompletado);
             SaveGame.saveGame.stats[40] += totalPontosInclusiveRepetidosVitoria;
             SaveGame.saveGame.stats[41] += totalPontosInclusiveRepetidosDerrota;
             SaveGame.saveGame.stats[42] += totalEstrelasInclusiveRepetidos;
@@ -188,6 +202,10 @@ public class Stats {
             SaveGame.saveGame.stats[44] += numeroTotalLevelsFinalizadosDerrota;
             SaveGame.saveGame.stats[45] += numeroTotalAlvosAtingidosLevelsFinalizadosVitoria;
             SaveGame.saveGame.stats[46] += numeroTotalAlvosAtingidosLevelsFinalizadosDerrota;
+            SaveGame.saveGame.stats[47] += Utils.converterMilisegundosEmSegundos(tempoVelocidadeMediaBaixa);
+            SaveGame.saveGame.stats[48] += Utils.converterMilisegundosEmSegundos(tempoAnguloMedioBaixo);
+            SaveGame.saveGame.stats[49] += Utils.converterMilisegundosEmSegundos(tempoVelocidadeMediaAlta);
+            SaveGame.saveGame.stats[50] += Utils.converterMilisegundosEmSegundos(tempoAnguloMedioAlto);
         }
 
         clearData();
@@ -373,7 +391,8 @@ public class Stats {
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
             statsGraph.addData("Velocidade mínima", (double)SaveGame.saveGame.stats[12]);
-            statsGraph.addData("Velocidade média", (double)SaveGame.saveGame.stats[16]);
+            statsGraph.addData("Velocidade média baixa", (double)SaveGame.saveGame.stats[47]);
+            statsGraph.addData("Velocidade média alta", (double)SaveGame.saveGame.stats[49]);
             statsGraph.addData("Velocidade máxima", (double)SaveGame.saveGame.stats[13]);
 
             statsGraph.make(false, true, true, 1f, 1f);
@@ -415,9 +434,10 @@ public class Stats {
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Velocidade mínima", (double)SaveGame.saveGame.stats[14]);
-            statsGraph.addData("Velocidade média", (double)SaveGame.saveGame.stats[17]);
-            statsGraph.addData("Velocidade máxima", (double)SaveGame.saveGame.stats[15]);
+            statsGraph.addData("Ângulo mínimo", (double)SaveGame.saveGame.stats[14]);
+            statsGraph.addData("Ângulo médio baixo", (double)SaveGame.saveGame.stats[48]);
+            statsGraph.addData("Ângulo médio alto", (double)SaveGame.saveGame.stats[50]);
+            statsGraph.addData("Ângulo máximo", (double)SaveGame.saveGame.stats[15]);
 
             statsGraph.make(false, true, true, 1f, 1f);
 
@@ -464,7 +484,7 @@ public class Stats {
             MessagesHandler.messageStatDescricao.addText("Outros dados diversos.", corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph",  graficoX, graficoY, graficoComprimento, graficoAltura);
-            statsGraph.addData("Obstáculos atingidos", (float)SaveGame.saveGame.stats[34]);
+            statsGraph.addData("Obstáculos atingidos", (float)SaveGame.saveGame.stats[37]);
             statsGraph.addData("Colisão entre bolas", (float)SaveGame.saveGame.stats[38]);
             statsGraph.addData("Bolas falsas atingidas", (float)SaveGame.saveGame.stats[28]);
             statsGraph.make(true, false, true, 1f, 1f);

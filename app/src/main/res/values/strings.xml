@@ -571,7 +571,7 @@
     <string name="tutorialTreinamento">Tutorial/Treinamento</string>
     <string name="fazerTentativa">Iniciar Treinamento</string>
     <string name="sairTreinamento">Sair do Treinamento</string>
-    <string name="tentativa">Tentativa</string>
+    <string name="tentativa">Acertos:</string>
     <string name="tentando">Treine...</string>
     <string name="de_como_em_1_de_3">de</string>
     <string name="sucesso">Sucesso na tentativa</string>
@@ -633,6 +633,9 @@
     <string name="menuDuranteTrainamento19b">Neste treinamento, a bola estará se movimentando para a direita. Portanto, você deve inclinar a barra para a direita e, ao mesmo tempo, atingir a bola com a barra indo também para a direita.</string>
     <string name="menuDuranteTrainamento20">Diminua o ângulo com inclinação, ao mesmo tempo em que desacelera a bola</string>
     <string name="menuDuranteTrainamento20b">Neste treinamento, a bola estará se movimentando para a esquerda. Portanto, você deve inclinar a barra para a esquerda e, ao mesmo tempo, atingir a bola com a barra indo também para a esquerda.</string>
+    <string name="menuDuranteTrainamento21">Parabéns!</string>
+    <string name="menuDuranteTrainamento21a">Você completou o treinamento.</string>
+    <string name="menuDuranteTrainamento21b">Repita o treinamento quantas vezes quiser.</string>
     <string name="jogar">Jogar</string>
     <string name="sessao_treinamento">Sessão de Treinamento</string>
     <string name="continuarMenuExplicacaoTreinamento">Continuar</string>

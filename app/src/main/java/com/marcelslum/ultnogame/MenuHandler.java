@@ -24,6 +24,7 @@ public class MenuHandler {
     static Menu menuPlay;
     static Menu menuExplicacaoAntesDoTreinamento;
     static Menu menuDuranteTreinamento;
+    static Menu menuFimTreinamento;
 
     public static String TAG = "MenuHandler";
 
@@ -404,6 +405,25 @@ public class MenuHandler {
         });
 
 
+        // ----------------------------------------MENU FIM TREINAMENTO
+
+        menuFimTreinamento = new Menu("menuFimTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.65f, fontSize, Game.font);
+
+        menuFimTreinamento.addMenuOption("sairDoTreinamento", Game.getContext().getResources().getString(R.string.sairTreinamento), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                Training.training = false;
+                menuFimTreinamento.blockAndClearDisplay();
+                MessagesHandler.messageExplicacaoDuranteTreinamento.clearDisplay();
+                Game.timesInterstitialOnGameOver = 0;
+                Game.prepareAfterInterstitialFlag = false;
+                Game.returningFromTraining = true;
+                Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
+
+            }
+        });
+
+
         // ----------------------------------------MENU DURANTE TREINAMENTO
 
         menuDuranteTreinamento = new Menu("menuDuranteTreinamento", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.65f, fontSize, Game.font);
@@ -429,7 +449,7 @@ public class MenuHandler {
                         @Override
                         public void onAnimationEnd() {
 
-                            MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (Training.tentativaCertaTreinamento + 1) + " " +Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+                            MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (Training.tentativaCertaTreinamento) + " " +Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
                             MessagesHandler.messageTrainingState2.display();
 
                             Game.setGameState(Game.GAME_STATE_JOGAR);
@@ -442,6 +462,7 @@ public class MenuHandler {
         menuDuranteTreinamento.addMenuOption("sairDoTreinamento", Game.getContext().getResources().getString(R.string.sairTreinamento), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
+                menuDuranteTreinamento.blockAndClearDisplay();
                 Training.training = false;
                 MessagesHandler.messageExplicacaoDuranteTreinamento.clearDisplay();
                 Game.timesInterstitialOnGameOver = 0;

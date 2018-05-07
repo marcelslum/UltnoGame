@@ -37,7 +37,7 @@ public class Game {
     public static boolean logMenuIconMoveAndTranslateX = false;
     public static boolean sempreVerSaveMenu = false;
     public static boolean apagarEstatisticasNoInicio = false;
-    public static boolean apagarEstatisticasNoMenu = true;
+    public static boolean apagarEstatisticasNoMenu = false;
     public static boolean logNotificacaoLevelGoals = false;
 
 
@@ -147,6 +147,7 @@ public class Game {
     
     // game state
     public static int gameState;
+    public final static int GAME_STATE_MENU_FINAL_TREINAMENTO = 72;
     public final static int GAME_STATE_ESTATISTICAS = 71;
     public final static int GAME_STATE_NOVA_TENTATIVA_TREINAMENTO = 70;
     public final static int GAME_STATE_PREPARAR_TREINAMENTO = 2;
@@ -827,6 +828,37 @@ public class Game {
             }
 
             MenuHandler.menuDuranteTreinamento.unblockAndDisplay();
+            MenuHandler.menuFimTreinamento.blockAndClearDisplay();
+
+        } else if (state == GAME_STATE_MENU_FINAL_TREINAMENTO){
+
+            if (!sameState) {
+                showBlackFrameTransition(1000);
+            }
+
+            Training.tentativaCertaTreinamento = 0;
+            Training.treinamentoSucesso = false;
+
+            Training.resetTrainingEntities();
+
+            MessagesHandler.messageExplicacaoDuranteTreinamento.clearTexts();
+            MessagesHandler.messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.menuDuranteTrainamento21), Color.azul40, 1.8f);
+            MessagesHandler.messageExplicacaoDuranteTreinamento.addText(".", Color.transparente);
+            MessagesHandler.messageExplicacaoDuranteTreinamento.addText(".", Color.transparente);
+            MessagesHandler.messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.menuDuranteTrainamento21a), Color.azul40, 1.2f);
+            MessagesHandler.messageExplicacaoDuranteTreinamento.addText(".", Color.transparente);
+            MessagesHandler.messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.menuDuranteTrainamento21b), Color.cinza20);
+            MessagesHandler.messageExplicacaoDuranteTreinamento.display();
+
+            if (MessagesHandler.messageTrainingState != null) {
+                MessagesHandler.messageTrainingState.clearDisplay();
+            }
+            if (MessagesHandler.messageTrainingState2 != null) {
+                MessagesHandler.messageTrainingState2.clearDisplay();
+            }
+
+            MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
+            MenuHandler.menuFimTreinamento.unblockAndDisplay();
 
         } else if (state == GAME_STATE_NOVA_TENTATIVA_TREINAMENTO){
 
@@ -2022,8 +2054,13 @@ public class Game {
             if (Utils.getTimeMilliPrecision() - timeOfPrePlay > 500){
                 timeOfPrePlay = 0;
                 for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).initTempoVelocidadeMedia = 0;
-                    balls.get(i).initTempoAnguloMedio = 0;
+
+                    // todo definir qual a velocidade e angulo inicial para contar, para começar a contar o tempo desde o início
+
+                    balls.get(i).initTempoVelocidadeMediaAlta = -1;
+                    balls.get(i).initTempoAnguloMedioAlto = -1;
+                    balls.get(i).initTempoVelocidadeMediaBaixa = 0; //todo ?????????????????????????????
+                    balls.get(i).initTempoAnguloMedioBaixo = 0; //todo ?????????????????????????????
                 }
                 setGameState(GAME_STATE_JOGAR);
             }
@@ -2534,6 +2571,10 @@ public class Game {
                     MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.sucesso));
                     MessagesHandler.messageTrainingState.setColor(Color.verde40);
                     Game.sound.playSuccess1();
+
+                    if (MessagesHandler.messageTrainingState2 != null) {
+                        MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (Training.tentativaCertaTreinamento + 1) + " " + Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+                    }
                 }
                 MessagesHandler.messageTrainingState.alpha = 0.2f;
                 MessagesHandler.messageTrainingState.display();
@@ -2790,6 +2831,7 @@ public class Game {
 
         if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.checkTransformations(true);
         if (MenuHandler.menuExplicacaoAntesDoTreinamento != null) MenuHandler.menuExplicacaoAntesDoTreinamento.checkTransformations(true);
+        if (MenuHandler.menuFimTreinamento != null) MenuHandler.menuFimTreinamento.checkTransformations(true);
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.checkTransformations(true);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.checkTransformations(true);
@@ -2978,6 +3020,7 @@ public class Game {
         if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuExplicacaoAntesDoTreinamento != null) MenuHandler.menuExplicacaoAntesDoTreinamento.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.prepareRender(matrixView, matrixProjection);
+        if (MenuHandler.menuFimTreinamento != null) MenuHandler.menuFimTreinamento.prepareRender(matrixView, matrixProjection);
 
         if (MenuHandler.menuOptions != null) MenuHandler.menuOptions.prepareRender(matrixView, matrixProjection);
         if (MenuHandler.menuOptionsPlay != null) MenuHandler.menuOptionsPlay.prepareRender(matrixView, matrixProjection);
@@ -3119,6 +3162,7 @@ public class Game {
         if (MenuHandler.menuPlay != null) MenuHandler.menuPlay.verifyListener();
         if (MenuHandler.menuExplicacaoAntesDoTreinamento != null) MenuHandler.menuExplicacaoAntesDoTreinamento.verifyListener();
         if (MenuHandler.menuDuranteTreinamento != null) MenuHandler.menuDuranteTreinamento.verifyListener();
+        if (MenuHandler.menuFimTreinamento != null) MenuHandler.menuFimTreinamento.verifyListener();
 
         if (MenuHandler.groupMenu != null) MenuHandler.groupMenu.verifyListener();
         if (MenuHandler.levelMenu != null) MenuHandler.levelMenu.verifyListener();

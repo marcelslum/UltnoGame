@@ -238,6 +238,11 @@ public class SaveGame {
         Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         Log.e(TAG, "pontos --------------- ");
         String log= " ";
+
+        if (s == null || s.levelsPoints == null){
+            return;
+        }
+
         for (int i = 0; i < s.levelsPoints.length; i++){
             log = log + " " + "level "+ (i + 1) +" -> " + s.levelsPoints[i];
         }

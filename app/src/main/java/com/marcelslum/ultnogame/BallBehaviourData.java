@@ -220,6 +220,11 @@ public class BallBehaviourData {
             ball.markMinVelocity();
         } else {
             ball.markNotMinOrMaxVelocity();
+            if ((finalLen - minLen) > ((maxLen - minLen)/ 2f)){
+                ball.markMediumHighVelocity();
+            } else {
+                ball.markMediumLowVelocity();
+            }
         }
 
         if (finalAngle >= maxAngle){
@@ -230,6 +235,11 @@ public class BallBehaviourData {
             ball.markMinAngle();
         } else {
             ball.markNotMinOrMaxAngle();
+            if ((finalAngle - minAngle) > ((maxAngle - minAngle)/ 2f)){
+                ball.markMediumHighAngle();
+            } else {
+                ball.markMediumLowAngle();
+            }
         }
 
         active = false;
