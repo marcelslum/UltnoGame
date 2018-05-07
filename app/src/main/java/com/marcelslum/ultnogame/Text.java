@@ -274,8 +274,8 @@ public class Text extends Entity implements Poolable<Text>{
 
             float x = textureData.x + (charData[0]/TextureData.textureSize);
             float x2 = textureData.x + ((charData[0] + charData[2])/TextureData.textureSize);
-            float y = textureData.y + (charData[1]/TextureData.textureSize);
-            float y2 = textureData.y + ((charData[1] + charData[3])/TextureData.textureSize);
+            float y = textureData.y + ((charData[1]-0.5f)/TextureData.textureSize);
+            float y2 = textureData.y + ((charData[1] + charData[3]+0.5f)/TextureData.textureSize);
 
             // Creating the triangle information
             float[] vec = new float[12];

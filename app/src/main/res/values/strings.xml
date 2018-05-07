@@ -688,6 +688,9 @@
     <string name="alvos_atingidos">Alvos Atingidos</string>
     <string name="dados_diveros">Dados Diversos</string>
     <string name="velocidade_titulo_stat">Velocidade</string>
+    <string name="pontos_stat_titulo">Pontos por nível</string>
+    <string name="estrelas_titulo">Estrelas por nível</string>
+    <string name="media_alvos">Alvos abatidos por nível</string>
 
 
 </resources>

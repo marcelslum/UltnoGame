@@ -24,6 +24,7 @@ public class Color {
     static final Color cinza60 = new Color(0.6f, 0.6f, 0.6f, 1f);
     static final Color cinza70 = new Color(0.7f, 0.7f, 0.7f, 1f);
     static final Color cinza80 = new Color(0.8f, 0.8f, 0.8f, 1f);
+    static final Color cinza83 = new Color(0.83f, 0.83f, 0.83f, 1f);
     static final Color cinza85 = new Color(0.85f, 0.85f, 0.85f, 1f);
 
     static final Color branco = new Color(1f, 1f, 1f, 1f);

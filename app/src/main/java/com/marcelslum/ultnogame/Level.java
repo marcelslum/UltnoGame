@@ -45,6 +45,8 @@ public class Level {
     public static final int NUMBER_OF_LEVELS = 100;
     public static final int NUMBER_OF_GROUPS = 20;
 
+    public static int numeroAlvosLevel = 0;
+
     private Level(){
 
         ballDataBaseData = LevelBuilder.ballDataBaseData;
@@ -218,6 +220,7 @@ public class Level {
         float targetY;
 
         //Log.e("level", "targetsMap.length "+targetsMap.length);
+
         int contador = 0;
         for (int iY = 0; iY < targetsMap.length;iY++){
             for (int iX = 0; iX < targetsMap[iY].length; iX++) {
@@ -244,10 +247,15 @@ public class Level {
                     //Log.e("Game", "target "+contador +": "+t.x + " " + t.y);
 
                     Game.addTarget(t);
+
+
+
                     contador += 1;
                 }
             }
         }
+
+        numeroAlvosLevel = contador;
 
         Game.updateNumberOfTargetsAlive();
 

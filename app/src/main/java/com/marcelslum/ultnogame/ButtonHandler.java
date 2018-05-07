@@ -195,6 +195,7 @@ public class ButtonHandler {
                         MessagesHandler.messageStatTittle.clearDisplay();
                         MessagesHandler.messageStatDescricao.clearDisplay();
 
+                        Game.statsGraphs.clear();
 
                         Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                     }
@@ -229,7 +230,10 @@ public class ButtonHandler {
                         Stats.currentStatsSheet += 1;
                         Stats.showCurrentStat();
                     } else {
+                        MessagesHandler.messageStatTittle.clearDisplay();
+                        MessagesHandler.messageStatDescricao.clearDisplay();
                         MessagesHandler.statsTextView.clearDisplay();
+                        Game.statsGraphs.clear();
                         Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
                     }
                 }

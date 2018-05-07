@@ -96,7 +96,7 @@ public class Training {
                 || trainingNumber == TREINAMENTO_DIMINUIR_ANGULO_COM_INCLINACAO){
             Game.balls.get(0).x = Game.resolutionX * 0.05f;
             Game.balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
-            Game.bars.get(0).x = Game.resolutionX * 0.5f;
+            Game.bars.get(0).x = Game.resolutionX * 0.4f;
         }
 
         //TREINAMENTO OPOSTO
@@ -107,7 +107,7 @@ public class Training {
             Game.balls.get(0).x = Game.resolutionX * 0.93f;
             Game.balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
             Game.balls.get(0).dvx *= -1;
-            Game.bars.get(0).x = Game.resolutionX * 0.05f;
+            Game.bars.get(0).x = Game.resolutionX * 0.04f;
         }
 
         if (trainingNumber == TREINAMENTO_DIMINUIR_VELOCIDADE_OPOSTO
@@ -117,7 +117,7 @@ public class Training {
             Game.balls.get(0).x = Game.resolutionX * 0.93f;
             Game.balls.get(0).y = Game.gameAreaResolutionY * 0.1f;
             Game.balls.get(0).dvx *= -1;
-            Game.bars.get(0).x = Game.resolutionX * 0.4f;
+            Game.bars.get(0).x = Game.resolutionX * 0.3f;
         }
 
         if (trainingNumber == TREINAMENTO_AUMENTAR_ANGULO_COM_INCLINACAO_OPOSTO

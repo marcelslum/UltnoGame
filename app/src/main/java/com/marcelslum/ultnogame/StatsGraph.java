@@ -17,6 +17,12 @@ public class StatsGraph extends Entity{
     ArrayList<TextBox> colunasTextBox;
     Rectangle fundo;
 
+    Rectangle linhaC;
+    Rectangle linhaM;
+    Rectangle linhaB;
+
+
+
     float width;
     float height;
 
@@ -54,6 +60,9 @@ public class StatsGraph extends Entity{
             }
         }
 
+
+
+
         float comprimentoTextoLinhas = width * 0.1f;
         float tamanhoTextoColunas = height * 0.2f;
         float comprimentoRetanguloDados = (width * 0.9f) / (float) valoresDouble.size();
@@ -68,23 +77,51 @@ public class StatsGraph extends Entity{
                 -1,
                 Color.cinza85);
 
+
+        linhaC = new Rectangle("linhaC",
+                0,
+                fundo.y,
+                Rectangle.TYPE_OTHER,
+                Game.resolutionX,
+                (Game.resolutionY * 0.01f),
+                -1,
+                Color.cinza83);
+
+        linhaB = new Rectangle("linhaB",
+                0,
+                fundo.y + fundo.height - ((Game.resolutionY * 0.009f)),
+                Rectangle.TYPE_OTHER,
+                Game.resolutionX,
+                (Game.resolutionY * 0.01f),
+                -1,
+                Color.cinza83);
+
+
         for (int i = 0; i < valoresDouble.size(); i++) {
 
-
             double valorASerConsiderado = valoresDouble.get(i);
-            if (valorASerConsiderado == 0f) valorASerConsiderado = 0.001f;
+            if (valorASerConsiderado == 0f) valorASerConsiderado = 0.01f;
+
+
+
 
             if (valoresEmTempo){
                 valorASerConsiderado = valorASerConsiderado - (valorASerConsiderado % 1000);
-                maiorValorDouble =  maiorValorDouble - (maiorValorDouble % 1000);
+                if (maiorValorDouble != 0) {
+                    maiorValorDouble = maiorValorDouble - (maiorValorDouble % 1000);
+                }
             } else if (exibirValoresEmInteger){
                 valorASerConsiderado = Math.floor(valorASerConsiderado);
-                maiorValorDouble = Math.floor(maiorValorDouble);
+                if (maiorValorDouble != 0) {
+                    maiorValorDouble = Math.floor(maiorValorDouble);
+                }
             }
 
+            float alturaDoValor = (float)(alturaColunas * (valorASerConsiderado / maiorValorDouble));
 
-            double alturaDoValor = alturaColunas * (valorASerConsiderado / maiorValorDouble);
-
+            if (maiorValorDouble == 0){
+                alturaDoValor = 0.1f;
+            }
 
             Color color;
             if (Stats.currentStatsSheet == Stats.ALVOS_ATINGIDOS){
@@ -152,15 +189,20 @@ public class StatsGraph extends Entity{
 
 
             Rectangle dado = new Rectangle("dado"+i,
-                    (float)(comprimentoTextoLinhas + (comprimentoRetanguloDados * i) + (comprimentoRetanguloDados * 0.1f)),
+                    x + (comprimentoTextoLinhas + (comprimentoRetanguloDados * i) + (comprimentoRetanguloDados * 0.1f)),
                     (float)(y + (alturaColunas - alturaDoValor)),
                     Rectangle.TYPE_OTHER,
                     (float)(comprimentoRetanguloDados - (comprimentoRetanguloDados * 0.2f)),
-                    (float)(alturaColunas * (valorASerConsiderado / maiorValorDouble)),
+                    (float)alturaDoValor,
                     -1,
                     color);
 
+            if (valoresDouble.get(i) != 0) {
+                Utils.createAnimation2v(dado, "animDadoScale", "scaleY", 500, 0f, 0f, 1f, 1f, false, true).start();
+                Utils.createAnimation2v(dado, "animDadoTranslate", "translateY", 500, 0f, (dado.height / 2f), 1f, 1f, false, true).start();
+            }
 
+            //dado.logDataForDebug("dado ");
             /*
             dado.setMultiColor(
                     Color.branco,
@@ -209,69 +251,117 @@ public class StatsGraph extends Entity{
                     Color.pretoCheio,
                     Text.TEXT_ALIGN_CENTER);
 
+            if (valoresDouble.get(i) != 0d) {
+                Utils.createAnimation2v(rotulo, "animDadoTranslate", "translateY", 500, 0f, dado.height, 1f, 1f, false, true).start();
+                Utils.createAnimation2v(rotulo, "animDadoAlpha", "alpha", 500, 0f, 0f, 1f, 1f, false, true).start();
+            }
+
             rotulos.add(rotulo);
         }
 
 
-        float [] valoresLinhas;
-        if (maiorValorDouble <= 10){
-            valoresLinhas = new float[]{0f, 2f, 4f, 6f, 8f, 10};
-        } else if (maiorValorDouble <= 20){
-            valoresLinhas = new float[]{0f, 5f, 10f, 15f, 20f};
-        } else if (maiorValorDouble <= 50){
-            valoresLinhas = new float[]{0f, 10f, 20f, 30f, 40f, 50f};
-        } else if (maiorValorDouble <= 100){
-            valoresLinhas = new float[]{0f, 20f, 40f, 60f, 80f, 100f};
-        } else if (maiorValorDouble <= 1000){
-            valoresLinhas = new float[]{0f, 200f, 400f, 600f, 800f, 1000f};
-        } else if (maiorValorDouble <= 10000){
-            valoresLinhas = new float[]{0f, 2000f, 4000f, 6000f, 8000f, 10000f};
-        } else if (maiorValorDouble <= 100000){
-            valoresLinhas = new float[]{0f, 20000f, 40000f, 60000f, 80000f, 100000f};
-        } else if (maiorValorDouble <= 1000000){
-            valoresLinhas = new float[]{0f, 2000000f, 4000000f, 6000000f, 8000000f, 10000000f};
-        } else {
-            valoresLinhas = new float[]{0f, 200f, 400f, 600f, 800f, 1000f};
-        }
+        Log.e(TAG, "maiorValorDouble "+maiorValorDouble);
 
+        if (maiorValorDouble != 0d) {
 
-        for (int i = 0; i < valoresLinhas.length; i++) {
-
-            if (valoresLinhas[i] > maiorValorDouble){
-                break;
+            float[] valoresLinhas;
+            if (maiorValorDouble <= 10) {
+                valoresLinhas = new float[]{0f, 2f, 4f, 6f, 8f, 10};
+            } else if (maiorValorDouble <= 20) {
+                valoresLinhas = new float[]{0f, 5f, 10f, 15f, 20f};
+            } else if (maiorValorDouble <= 50) {
+                valoresLinhas = new float[]{0f, 10f, 20f, 30f, 40f, 50f};
+            } else if (maiorValorDouble <= 100) {
+                valoresLinhas = new float[]{0f, 20f, 40f, 60f, 80f, 100f};
+            } else if (maiorValorDouble <= 1000) {
+                valoresLinhas = new float[]{0f, 200f, 400f, 600f, 800f, 1000f};
+            } else if (maiorValorDouble <= 10000) {
+                valoresLinhas = new float[]{0f, 2000f, 4000f, 6000f, 8000f, 10000f};
+            } else if (maiorValorDouble <= 100000) {
+                valoresLinhas = new float[]{0f, 20000f, 40000f, 60000f, 80000f, 100000f};
+            } else if (maiorValorDouble <= 1000000) {
+                valoresLinhas = new float[]{0f, 2000000f, 4000000f, 6000000f, 8000000f, 10000000f};
+            } else {
+                valoresLinhas = new float[]{0f, 200f, 400f, 600f, 800f, 1000f};
             }
 
 
-            double posicaoLinha = y + alturaColunas - (alturaColunas * (valoresLinhas[i] / maiorValorDouble)) - (Game.gameAreaResolutionY * 0.005f);
-            double alturaTextoLinha = Game.gameAreaResolutionY*0.035f;
-
-            Rectangle dado = new Rectangle("linha"+i,
-                    comprimentoTextoLinhas,
-                    (float)posicaoLinha,
+            linhaM = new Rectangle("linhaM",
+                    x + comprimentoTextoLinhas,
+                    y + alturaColunas - (Game.gameAreaResolutionY * 0.005f),
                     Rectangle.TYPE_OTHER,
                     width - comprimentoTextoLinhas,
-                    Game.gameAreaResolutionY * 0.005f,
+                    Game.gameAreaResolutionY * 0.0075f,
                     -1,
-                    Color.cinza60);
-            linhas.add(dado);
+                    Color.cinza50);
 
-            if (exibirNomeLinhas) {
-                TextBox textBox = new TextBoxBuilder("textBoxLinha" + i)
-                        .position(x + (comprimentoTextoLinhas * 0.2f),
-                                (float)(posicaoLinha - (alturaTextoLinha * 1.5f)))
-                        .width(comprimentoTextoLinhas)
-                        .size((float)alturaTextoLinha)
-                        .text(String.valueOf((int) valoresLinhas[i]))
-                        .setTextAlign(Text.TEXT_ALIGN_RIGHT)
-                        .isHaveFrame(false)
-                        .isHaveArrowContinue(false)
-                        .setTextColor(Color.cinza60)
-                        .build();
+            for (int i = 0; i < valoresLinhas.length; i++) {
 
-                linhasTextBox.add(textBox);
+                if (valoresLinhas[i] > maiorValorDouble) {
+                    break;
+                }
+
+                double maiorValorASerConsiderado = maiorValorDouble;
+                if (maiorValorASerConsiderado == 0) {
+                    maiorValorASerConsiderado = 0.1f;
+                }
+
+                double posicaoLinha = y + alturaColunas - (alturaColunas * (valoresLinhas[i] / maiorValorASerConsiderado)) - (Game.gameAreaResolutionY * 0.005f);
+                double alturaTextoLinha = Game.gameAreaResolutionY * 0.035f;
+
+                Rectangle dado = new Rectangle("linha" + i,
+                        x + comprimentoTextoLinhas,
+                        (float) posicaoLinha,
+                        Rectangle.TYPE_OTHER,
+                        width - comprimentoTextoLinhas,
+                        Game.gameAreaResolutionY * 0.005f,
+                        -1,
+                        Color.cinza60);
+                linhas.add(dado);
+
+                //dado.logDataForDebug("linha ");
+
+                if (exibirNomeLinhas) {
+                    TextBox textBox = new TextBoxBuilder("textBoxLinha" + i)
+                            .position(x + (comprimentoTextoLinhas * 0.5f),
+                                    (float) (posicaoLinha - (alturaTextoLinha * 1.5f)))
+                            .width(comprimentoTextoLinhas)
+                            .size((float) alturaTextoLinha)
+                            .text(String.valueOf((int) valoresLinhas[i]))
+                            .setTextAlign(Text.TEXT_ALIGN_RIGHT)
+                            .isHaveFrame(false)
+                            .isHaveArrowContinue(false)
+                            .setTextColor(Color.cinza60)
+                            .build();
+
+                    linhasTextBox.add(textBox);
+                }
             }
+        } else { //maiorValorDouble != 0
 
 
+            linhaM = new Rectangle("linhaM",
+                    x + comprimentoTextoLinhas,
+                    y + (height - tamanhoTextoColunas) - (Game.gameAreaResolutionY * 0.005f),
+                    Rectangle.TYPE_OTHER,
+                    width - comprimentoTextoLinhas,
+                    Game.gameAreaResolutionY * 0.0075f,
+                    -1,
+                    Color.cinza40);
+
+
+            for (int i = 0; i < 4; i++) {
+                double posicaoLinha = y + (height - tamanhoTextoColunas) - ((height - tamanhoTextoColunas) * ((float)i / 4)) - (Game.gameAreaResolutionY * 0.005f);
+                Rectangle dado = new Rectangle("linha" + i,
+                        x + comprimentoTextoLinhas,
+                        (float) posicaoLinha,
+                        Rectangle.TYPE_OTHER,
+                        width - comprimentoTextoLinhas,
+                        Game.gameAreaResolutionY * 0.005f,
+                        -1,
+                        Color.cinza60);
+                linhas.add(dado);
+            }
         }
     }
 
@@ -284,6 +374,9 @@ public class StatsGraph extends Entity{
 
 
         fundo.checkTransformations(false);
+        linhaC.checkTransformations(false);
+        linhaM.checkTransformations(false);
+        linhaB.checkTransformations(false);
 
         for (int i = 0; i < dados.size(); i++) {
             dados.get(i).checkTransformations(false);
@@ -319,6 +412,7 @@ public class StatsGraph extends Entity{
         fundo.checkAnimations();
         fundo.render(matrixView, matrixProjection);
 
+
         for (int i = 0; i < linhas.size(); i++) {
             linhas.get(i).checkAnimations();
             linhas.get(i).render(matrixView, matrixProjection);
@@ -343,5 +437,13 @@ public class StatsGraph extends Entity{
             rotulos.get(i).checkAnimations();
             rotulos.get(i).render(matrixView, matrixProjection);
         }
+
+        linhaC.checkAnimations();
+        linhaC.render(matrixView, matrixProjection);
+        linhaM.checkAnimations();
+        linhaM.render(matrixView, matrixProjection);
+        linhaB.checkAnimations();
+        linhaB.render(matrixView, matrixProjection);
+
     }
 }

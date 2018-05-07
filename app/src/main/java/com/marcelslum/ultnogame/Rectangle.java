@@ -39,6 +39,13 @@ public class Rectangle extends PhysicalObject {
         setDrawInfo();
     }
 
+    public void logDataForDebug(String titulo){
+
+        Log.e(TAG, titulo + "    Log Rectangle x, y, w, h "+ x + "; " + y + "; " + width + "; " +  height);
+
+
+    }
+
     public void addTopRectangle(float percentageOfTopRectangle, Color topColorTopLeft, Color topColorTopRight, Color topColorBottomLeft, Color topColorBottomRight, float percentageOfBorder, float minThicknessOfBorder, float maxThicknessOfBorder, Color borderColor){
 
 

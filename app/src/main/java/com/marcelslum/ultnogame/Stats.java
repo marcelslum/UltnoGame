@@ -55,6 +55,15 @@ public class Stats {
 
     static long tempoJogadoNaoCompletado;
 
+    static long totalPontosInclusiveRepetidosVitoria;
+    static long totalPontosInclusiveRepetidosDerrota;
+    static long totalEstrelasInclusiveRepetidos;
+    static long numeroTotalLevelsFinalizadosDerrota;
+    static long numeroTotalLevelsFinalizadosVitoria;
+    static long numeroTotalAlvosAtingidosLevelsFinalizadosVitoria;
+    static long numeroTotalAlvosAtingidosLevelsFinalizadosDerrota;
+
+
     // FIM DOS DADOS ARMAZENADOS
 
     static int ultimoNumeroBolasVivas = 0;
@@ -66,17 +75,20 @@ public class Stats {
 
 
     public final static int TEMPO_JOGO = 1;
-    public final static int VELOCIDADE_ANGULO = 2;
-    public final static int VELOCIDADE = 3;
-    public final static int TEMPO_VELOCIDADE = 4;
-    public final static int ANGULO_AUMENTADO = 5;
-    public final static int ANGULO_DIMINUIDO = 6;
-    public final static int TEMPO_ANGULO = 7;
-    public final static int TEMPO_BOLAS = 8;
-    public final static int ALVOS_ATINGIDOS = 9;
-    public final static int OUTROS_DADOS = 10;
-    public final static int TODOS_DADOS = 11;
-    public final static int NUMBER_OF_STATS_SHEETS = 11;
+    public final static int MEDIA_PONTOS = 2;
+    public final static int MEDIA_ESTRELAS = 3;
+    public final static int MEDIA_ALVOS = 4;
+    public final static int VELOCIDADE_ANGULO = 5;
+    public final static int VELOCIDADE = 6;
+    public final static int TEMPO_VELOCIDADE = 7;
+    public final static int ANGULO_AUMENTADO = 8;
+    public final static int ANGULO_DIMINUIDO = 9;
+    public final static int TEMPO_ANGULO = 10;
+    public final static int TEMPO_BOLAS = 11;
+    public final static int ALVOS_ATINGIDOS = 12;
+    public final static int OUTROS_DADOS = 13;
+    public final static int TODOS_DADOS = 14;
+    public final static int NUMBER_OF_STATS_SHEETS = 14;
 
 
     public static void
@@ -127,46 +139,56 @@ public class Stats {
     }
 
     public static void saveData() {
-        SaveGame.saveGame.stats[0] += anguloAumentado;
-        SaveGame.saveGame.stats[1] += anguloDiminuido;
-        SaveGame.saveGame.stats[2] += velocidadeAumentada;
-        SaveGame.saveGame.stats[3] += velocidadeDiminuida;
-        SaveGame.saveGame.stats[4] += anguloAumentadoInclinacao;
-        SaveGame.saveGame.stats[5] += anguloDiminuidoInclinacao;
-        SaveGame.saveGame.stats[6] += anguloAumentadoMovimento;
-        SaveGame.saveGame.stats[7] += anguloDiminuidoMovimento;
-        SaveGame.saveGame.stats[8] += anguloAumentadoMovimentoInclinacao;
-        SaveGame.saveGame.stats[9] += anguloDiminuidoMovimentoInclinacao;
-        SaveGame.saveGame.stats[10] += velocidadeAumentadaAnguloAumentadoInclinacao;
-        SaveGame.saveGame.stats[11] += velocidadeDiminuidaAnguloDiminuidoInclinacao;
-        SaveGame.saveGame.stats[12] += tempoVelocidadeMinima;
-        SaveGame.saveGame.stats[13] += tempoVelocidadeMaxima;
-        SaveGame.saveGame.stats[14] += tempoAnguloMinimo;
-        SaveGame.saveGame.stats[15] += tempoAnguloMaximo;
-        SaveGame.saveGame.stats[16] += tempoVelocidadeMedia;
-        SaveGame.saveGame.stats[17] += tempoAnguloMedio;
-        SaveGame.saveGame.stats[18] += tempo1Bola;
-        SaveGame.saveGame.stats[19] += tempo2Bolas;
-        SaveGame.saveGame.stats[20] += tempo3Bolas;
-        SaveGame.saveGame.stats[21] += tempo4Bolas;
-        SaveGame.saveGame.stats[22] += tempo5Bolas;
-        SaveGame.saveGame.stats[23] += tempo6Bolas;
-        SaveGame.saveGame.stats[24] += tempo7Bolas;
-        SaveGame.saveGame.stats[25] += tempo8Bolas;
-        SaveGame.saveGame.stats[26] += tempo9Bolas;
-        SaveGame.saveGame.stats[27] += tempo10OuMaisBolas;
-        SaveGame.saveGame.stats[28] += numeroBolasFalsasAtingidas;
-        SaveGame.saveGame.stats[29] += tempoJogadoVitoria;
-        SaveGame.saveGame.stats[30] += tempoJogadoDerrota;
-        SaveGame.saveGame.stats[31] += atingirBolaSemMudarVelocidade;
-        SaveGame.saveGame.stats[32] += alvosVerdesAtingidos;
-        SaveGame.saveGame.stats[33] += alvosAzuisAtingidos;
-        SaveGame.saveGame.stats[34] += alvosPretosAtingidos;
-        SaveGame.saveGame.stats[35] += alvosFantasmasAtingidos;
-        SaveGame.saveGame.stats[36] += alvosVermelhosAtingidos;
-        SaveGame.saveGame.stats[37] += obstaculosAtingidos;
-        SaveGame.saveGame.stats[38] += colisaoEntreBolas;
-        SaveGame.saveGame.stats[39] += tempoJogadoNaoCompletado;
+
+        if (!Training.training) {
+            SaveGame.saveGame.stats[0] += anguloAumentado;
+            SaveGame.saveGame.stats[1] += anguloDiminuido;
+            SaveGame.saveGame.stats[2] += velocidadeAumentada;
+            SaveGame.saveGame.stats[3] += velocidadeDiminuida;
+            SaveGame.saveGame.stats[4] += anguloAumentadoInclinacao;
+            SaveGame.saveGame.stats[5] += anguloDiminuidoInclinacao;
+            SaveGame.saveGame.stats[6] += anguloAumentadoMovimento;
+            SaveGame.saveGame.stats[7] += anguloDiminuidoMovimento;
+            SaveGame.saveGame.stats[8] += anguloAumentadoMovimentoInclinacao;
+            SaveGame.saveGame.stats[9] += anguloDiminuidoMovimentoInclinacao;
+            SaveGame.saveGame.stats[10] += velocidadeAumentadaAnguloAumentadoInclinacao;
+            SaveGame.saveGame.stats[11] += velocidadeDiminuidaAnguloDiminuidoInclinacao;
+            SaveGame.saveGame.stats[12] += tempoVelocidadeMinima;
+            SaveGame.saveGame.stats[13] += tempoVelocidadeMaxima;
+            SaveGame.saveGame.stats[14] += tempoAnguloMinimo;
+            SaveGame.saveGame.stats[15] += tempoAnguloMaximo;
+            SaveGame.saveGame.stats[16] += tempoVelocidadeMedia;
+            SaveGame.saveGame.stats[17] += tempoAnguloMedio;
+            SaveGame.saveGame.stats[18] += tempo1Bola;
+            SaveGame.saveGame.stats[19] += tempo2Bolas;
+            SaveGame.saveGame.stats[20] += tempo3Bolas;
+            SaveGame.saveGame.stats[21] += tempo4Bolas;
+            SaveGame.saveGame.stats[22] += tempo5Bolas;
+            SaveGame.saveGame.stats[23] += tempo6Bolas;
+            SaveGame.saveGame.stats[24] += tempo7Bolas;
+            SaveGame.saveGame.stats[25] += tempo8Bolas;
+            SaveGame.saveGame.stats[26] += tempo9Bolas;
+            SaveGame.saveGame.stats[27] += tempo10OuMaisBolas;
+            SaveGame.saveGame.stats[28] += numeroBolasFalsasAtingidas;
+            SaveGame.saveGame.stats[29] += tempoJogadoVitoria;
+            SaveGame.saveGame.stats[30] += tempoJogadoDerrota;
+            SaveGame.saveGame.stats[31] += atingirBolaSemMudarVelocidade;
+            SaveGame.saveGame.stats[32] += alvosVerdesAtingidos;
+            SaveGame.saveGame.stats[33] += alvosAzuisAtingidos;
+            SaveGame.saveGame.stats[34] += alvosPretosAtingidos;
+            SaveGame.saveGame.stats[35] += alvosFantasmasAtingidos;
+            SaveGame.saveGame.stats[36] += alvosVermelhosAtingidos;
+            SaveGame.saveGame.stats[37] += obstaculosAtingidos;
+            SaveGame.saveGame.stats[38] += colisaoEntreBolas;
+            SaveGame.saveGame.stats[39] += tempoJogadoNaoCompletado;
+            SaveGame.saveGame.stats[40] += totalPontosInclusiveRepetidosVitoria;
+            SaveGame.saveGame.stats[41] += totalPontosInclusiveRepetidosDerrota;
+            SaveGame.saveGame.stats[42] += totalEstrelasInclusiveRepetidos;
+            SaveGame.saveGame.stats[43] += numeroTotalLevelsFinalizadosVitoria;
+            SaveGame.saveGame.stats[44] += numeroTotalLevelsFinalizadosDerrota;
+            SaveGame.saveGame.stats[45] += numeroTotalAlvosAtingidosLevelsFinalizadosVitoria;
+            SaveGame.saveGame.stats[46] += numeroTotalAlvosAtingidosLevelsFinalizadosDerrota;
+        }
 
         clearData();
     }
@@ -216,6 +238,15 @@ public class Stats {
         obstaculosAtingidos = 0;
         colisaoEntreBolas = 0;
         tempoJogadoNaoCompletado = 0;
+
+        totalPontosInclusiveRepetidosVitoria = 0;
+        totalPontosInclusiveRepetidosDerrota = 0;
+        totalEstrelasInclusiveRepetidos = 0;
+        numeroTotalLevelsFinalizadosDerrota = 0;
+        numeroTotalLevelsFinalizadosVitoria = 0;
+        numeroTotalAlvosAtingidosLevelsFinalizadosVitoria = 0;
+        numeroTotalAlvosAtingidosLevelsFinalizadosDerrota = 0;
+
     }
 
     public static void showCurrentStat() {
@@ -235,7 +266,7 @@ public class Stats {
         MessagesHandler.messageStatDescricao.display();
 
 
-        float graficoX = Game.resolutionX * 0.05f;
+        float graficoX = 0f;
         float graficoY = Game.resolutionY * 0.28f;
         float graficoAltura = Game.resolutionY * 0.58f;
         float graficoComprimento = Game.resolutionX * 0.95f;
@@ -256,6 +287,50 @@ public class Stats {
             statsGraph.addData("Total", (double)(SaveGame.saveGame.stats[29]+SaveGame.saveGame.stats[30]+SaveGame.saveGame.stats[39]));
 
             statsGraph.make(false, true, true, 1f, 1f);
+
+            Game.statsGraphs.add(statsGraph);
+
+        } else if (currentStatsSheet == MEDIA_PONTOS){
+
+            MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.pontos_stat_titulo));
+            MessagesHandler.messageStatDescricao.addText("Média de pontos conquistados por nível completado.", corExplicacaoGrafico);
+
+            StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
+
+            statsGraph.addData("Em vitórias", (double)SaveGame.saveGame.stats[40]/SaveGame.saveGame.stats[43]);
+            statsGraph.addData("Em derrotas", (double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]);
+            statsGraph.addData("Média total", ((double)SaveGame.saveGame.stats[40] + (double)SaveGame.saveGame.stats[41])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
+
+            statsGraph.make(true, false, true, 1f, 1f);
+
+            Game.statsGraphs.add(statsGraph);
+
+        } else if (currentStatsSheet == MEDIA_ESTRELAS){
+
+            MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.estrelas_titulo));
+            MessagesHandler.messageStatDescricao.addText("Média de estrelas conquistas em níveis finalizados com vitória.", corExplicacaoGrafico);
+
+
+            StatsGraph statsGraph = new StatsGraph("statGraph", Game.resolutionX * 0.3f, graficoY, Game.resolutionX * 0.4f, graficoAltura);
+
+            statsGraph.addData("Média de estrelas", (double)SaveGame.saveGame.stats[42]/SaveGame.saveGame.stats[43]);
+
+            statsGraph.make(true, false, true, 1f, 1f);
+
+            Game.statsGraphs.add(statsGraph);
+
+        } else if (currentStatsSheet == MEDIA_ALVOS){
+
+            MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.media_alvos));
+            MessagesHandler.messageStatDescricao.addText("Média de alvos abatidos por nível completado.", corExplicacaoGrafico);
+
+            StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
+
+            statsGraph.addData("Em vitórias", (double)SaveGame.saveGame.stats[45]/SaveGame.saveGame.stats[43]);
+            statsGraph.addData("Em derrotas", (double)SaveGame.saveGame.stats[46]/SaveGame.saveGame.stats[44]);
+            statsGraph.addData("Média total", ((double)SaveGame.saveGame.stats[45] + (double)SaveGame.saveGame.stats[46])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
+
+            statsGraph.make(true, false, true, 1f, 1f);
 
             Game.statsGraphs.add(statsGraph);
 
@@ -452,6 +527,13 @@ public class Stats {
             MessagesHandler.statsTextView.addText(resources.getString(R.string.stat36)+ " " + SaveGame.saveGame.stats[36], Color.cinza20);
             MessagesHandler.statsTextView.addText(resources.getString(R.string.stat37)+ " " + SaveGame.saveGame.stats[37], Color.cinza20);
             MessagesHandler.statsTextView.addText(resources.getString(R.string.stat38)+ " " + SaveGame.saveGame.stats[38], Color.cinza20);
+            MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
+            MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
+            MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
+            MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
+            MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
+            MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
+            MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
             MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
 
             MessagesHandler.statsTextView.display();

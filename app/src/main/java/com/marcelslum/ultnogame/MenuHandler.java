@@ -397,6 +397,7 @@ public class MenuHandler {
             public void onChoice() {
                 MenuHandler.menuPlay.blockAndClearDisplay();
                 Game.blockAndWaitTouchRelease();
+                Log.e(TAG, "Ir para estatísticas");
                 Game.setGameState(Game.GAME_STATE_ESTATISTICAS);
 
             }

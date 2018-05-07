@@ -25,7 +25,7 @@ public class Game {
     public static boolean forDebugDeleteDatabaseAndStorage = false;
     public static boolean ganharTodasAsEstrelas = false;
     public static boolean paraGravacaoVideo = false;
-    public static boolean ganharComMetadeDosAlvos = false;
+    public static boolean ganharComMetadeDosAlvos = true;
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
     public static boolean showMessageNotConnectedOnGoogle = false;
@@ -147,7 +147,7 @@ public class Game {
     
     // game state
     public static int gameState;
-    public final static int GAME_STATE_ESTATISTICAS = 70;
+    public final static int GAME_STATE_ESTATISTICAS = 71;
     public final static int GAME_STATE_NOVA_TENTATIVA_TREINAMENTO = 70;
     public final static int GAME_STATE_PREPARAR_TREINAMENTO = 2;
     public final static int GAME_STATE_MENU_DURANTE_TREINAMENTO = 3;
@@ -645,6 +645,9 @@ public class Game {
             ButtonHandler.buttonReturn.unblockAndDisplay();
         }
         else if (state == GAME_STATE_ESTATISTICAS){
+
+            Log.e(TAG, "setGameState estatisticas");
+
                 mainActivity.showAdView();
                 //MessagesHandler.messageMenu.setText(getContext().getResources().getString(R.string.messageMenuAbout));
 
@@ -1286,8 +1289,7 @@ public class Game {
             Sound.stopAndReleaseMusic();
 
             TimeHandler.stopTimeOfLevelPlay();
-            Stats.tempoJogadoDerrota += TimeHandler.timeOfLevelPlay;
-            Stats.saveData();
+
 
 
             Sound.soundPool.autoPause();
@@ -1306,9 +1308,27 @@ public class Game {
             reduceAllGameEntitiesAlpha(300);
             MenuHandler.menuGameOver.appearAndUnblock(1000);
             MessagesHandler.messageGameOver.display();
+
+
+            // ATUALIZA AS ESTATÍSTICAS
+            Stats.totalPontosInclusiveRepetidosDerrota += (long)((float)ScoreHandler.scorePanel.value / 2f);
+            Stats.numeroTotalLevelsFinalizadosDerrota += 1;
+            int contador = 0;
+            for (int i = 0; i < targets.size(); i++) {
+                if (!targets.get(i).alive){
+                    contador += 1;
+                    break;
+                }
+            }
+            Stats.numeroTotalAlvosAtingidosLevelsFinalizadosDerrota += contador;
+            Stats.tempoJogadoDerrota += TimeHandler.timeOfLevelPlay;
+            Stats.saveData();
+            //^
+
+
             if (ScoreHandler.scorePanel.value > 0) {
                 ScoreHandler.scorePanel.showMessage("-50%", 1000);
-                int points = ScoreHandler.scorePanel.value / 2;
+                int points = (int)((float)ScoreHandler.scorePanel.value / 2f);
                 ScoreHandler.scorePanel.setValue(points, true, 1000, true);
                 SaveGame.saveGame.setLevelPoints(SaveGame.saveGame.currentLevelNumber, points);
                 ScoreHandler.setMaxScoreTotal();
@@ -1456,6 +1476,17 @@ public class Game {
             SaveGame.saveGame.save();
             ScoreHandler.setMaxScoreTotal();
             ScoreHandler.submitScores();
+
+
+            // ATUALIZA AS ESTATÍSTICAS
+            Stats.totalPontosInclusiveRepetidosVitoria += pointsTotal;
+            Stats.totalEstrelasInclusiveRepetidos += StarsHandler.newStars;
+            Stats.numeroTotalLevelsFinalizadosVitoria += 1;
+            Stats.numeroTotalAlvosAtingidosLevelsFinalizadosVitoria += Level.numeroAlvosLevel;
+            Stats.tempoJogadoVitoria += TimeHandler.timeOfLevelPlay;
+            Stats.saveData();
+            //^
+
 
             // verifica a quantidade de bolas azuis, e atualiza a pontuação
             Timer timer = new Timer();
@@ -2498,9 +2529,11 @@ public class Game {
                 if (!Training.treinamentoSucesso){
                     MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.errou));
                     MessagesHandler.messageTrainingState.setColor(Color.vermelhoCheio);
+                    Game.sound.playGameOver();
                 } else {
                     MessagesHandler.messageTrainingState.setText(getContext().getResources().getString(R.string.sucesso));
                     MessagesHandler.messageTrainingState.setColor(Color.verde40);
+                    Game.sound.playSuccess1();
                 }
                 MessagesHandler.messageTrainingState.alpha = 0.2f;
                 MessagesHandler.messageTrainingState.display();

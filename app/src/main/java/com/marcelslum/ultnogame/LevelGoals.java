@@ -249,9 +249,6 @@ public class LevelGoals {
             return;
         }
 
-        Stats.tempoJogadoVitoria += TimeHandler.timeOfLevelPlay;
-        Stats.saveData();
-
         if (Game.logNotificacaoLevelGoals)Log.e(TAG, " NOTIFICANDO ->->->-> "+"setFinish");
         for (int i = 0; i < levelGoals.size(); i++){
             LevelGoal lg = levelGoals.get(i);

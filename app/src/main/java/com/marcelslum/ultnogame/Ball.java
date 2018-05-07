@@ -1635,22 +1635,24 @@ public class Ball extends Circle{
             return;
         }
 
-        if (initTempoAnguloMedio == -1) {
-            Log.e(TAG, "iniciado angulo medio");
-            initTempoAnguloMedio = TimeHandler.timeOfLevelPlay;
-        } else {
-            Log.e(TAG, "adicionando angulo medio por mais " + (TimeHandler.timeOfLevelPlay - initTempoAnguloMedio));
-            tempoAnguloMedio += (TimeHandler.timeOfLevelPlay - initTempoAnguloMedio);
-            Log.e(TAG, "total tempoAnguloMedio " + tempoAnguloMedio);
-            initTempoAnguloMedio = TimeHandler.timeOfLevelPlay;
-        }
-        if (initTempoAnguloMinimo != -1){
-            tempoAnguloMinimo += (TimeHandler.timeOfLevelPlay - initTempoAnguloMinimo);
-            initTempoAnguloMinimo = -1;
-        }
-        if (initTempoAnguloMaximo != -1){
-            tempoAnguloMaximo += (TimeHandler.timeOfLevelPlay - initTempoAnguloMaximo);
-            initTempoAnguloMaximo = -1;
+        if (!Training.training) {
+            if (initTempoAnguloMedio == -1) {
+                Log.e(TAG, "iniciado angulo medio");
+                initTempoAnguloMedio = TimeHandler.timeOfLevelPlay;
+            } else {
+                Log.e(TAG, "adicionando angulo medio por mais " + (TimeHandler.timeOfLevelPlay - initTempoAnguloMedio));
+                tempoAnguloMedio += (TimeHandler.timeOfLevelPlay - initTempoAnguloMedio);
+                Log.e(TAG, "total tempoAnguloMedio " + tempoAnguloMedio);
+                initTempoAnguloMedio = TimeHandler.timeOfLevelPlay;
+            }
+            if (initTempoAnguloMinimo != -1) {
+                tempoAnguloMinimo += (TimeHandler.timeOfLevelPlay - initTempoAnguloMinimo);
+                initTempoAnguloMinimo = -1;
+            }
+            if (initTempoAnguloMaximo != -1) {
+                tempoAnguloMaximo += (TimeHandler.timeOfLevelPlay - initTempoAnguloMaximo);
+                initTempoAnguloMaximo = -1;
+            }
         }
 
         onMaxAngle = false;
@@ -1659,20 +1661,22 @@ public class Ball extends Circle{
     
     public void markMinVelocity(){
 
-        if (initTempoVelocidadeMinima == -1) {
-            initTempoVelocidadeMinima = TimeHandler.timeOfLevelPlay;
-        } else {
-            tempoVelocidadeMinima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMinima);
-            initTempoVelocidadeMinima = TimeHandler.timeOfLevelPlay;
-        }
+        if (!Training.training) {
+            if (initTempoVelocidadeMinima == -1) {
+                initTempoVelocidadeMinima = TimeHandler.timeOfLevelPlay;
+            } else {
+                tempoVelocidadeMinima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMinima);
+                initTempoVelocidadeMinima = TimeHandler.timeOfLevelPlay;
+            }
 
-        if (initTempoVelocidadeMaxima != -1){
-            tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMaxima);
-            initTempoVelocidadeMaxima = -1;
-        }
-        if (initTempoVelocidadeMedia != -1){
-            tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia);
-            initTempoVelocidadeMedia = -1;
+            if (initTempoVelocidadeMaxima != -1) {
+                tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMaxima);
+                initTempoVelocidadeMaxima = -1;
+            }
+            if (initTempoVelocidadeMedia != -1) {
+                tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia);
+                initTempoVelocidadeMedia = -1;
+            }
         }
         
         onMinVelocity = true;
@@ -1681,21 +1685,23 @@ public class Ball extends Circle{
     
     public void markMaxVelocity(){
 
-        if (initTempoVelocidadeMaxima == -1) {
-            initTempoVelocidadeMaxima = TimeHandler.timeOfLevelPlay;
-        } else {
-            tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMaxima);
-            initTempoVelocidadeMaxima = TimeHandler.timeOfLevelPlay;
-        }
+        if (!Training.training) {
+            if (initTempoVelocidadeMaxima == -1) {
+                initTempoVelocidadeMaxima = TimeHandler.timeOfLevelPlay;
+            } else {
+                tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMaxima);
+                initTempoVelocidadeMaxima = TimeHandler.timeOfLevelPlay;
+            }
 
 
-        if (initTempoVelocidadeMinima != -1){
-            tempoVelocidadeMinima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMinima);
-            initTempoVelocidadeMinima = -1;
-        }
-        if (initTempoVelocidadeMedia != -1){
-            tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia);
-            initTempoVelocidadeMedia = -1;
+            if (initTempoVelocidadeMinima != -1) {
+                tempoVelocidadeMinima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMinima);
+                initTempoVelocidadeMinima = -1;
+            }
+            if (initTempoVelocidadeMedia != -1) {
+                tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia);
+                initTempoVelocidadeMedia = -1;
+            }
         }
         
         onMaxVelocity = true;
@@ -1706,23 +1712,25 @@ public class Ball extends Circle{
 
         Log.e(TAG, "markNotMinOrMaxVelocity");
 
-        if (initTempoVelocidadeMedia == -1) {
-            Log.e(TAG, "initTempoVelocidadeMedia ");
-            initTempoVelocidadeMedia = TimeHandler.timeOfLevelPlay;
-        } else {
-            Log.e(TAG, "adicionando TempoVelocidadeMedia " + (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia));
-            tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia);
-            Log.e(TAG, "total tempoVelocidadeMedia " + tempoVelocidadeMedia);
-            initTempoVelocidadeMedia = TimeHandler.timeOfLevelPlay;
-        }
+        if (!Training.training) {
+            if (initTempoVelocidadeMedia == -1) {
+                Log.e(TAG, "initTempoVelocidadeMedia ");
+                initTempoVelocidadeMedia = TimeHandler.timeOfLevelPlay;
+            } else {
+                Log.e(TAG, "adicionando TempoVelocidadeMedia " + (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia));
+                tempoVelocidadeMedia += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMedia);
+                Log.e(TAG, "total tempoVelocidadeMedia " + tempoVelocidadeMedia);
+                initTempoVelocidadeMedia = TimeHandler.timeOfLevelPlay;
+            }
 
-        if (initTempoVelocidadeMaxima != -1) {
-            tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMaxima);
-            initTempoVelocidadeMaxima = -1;
-        }
-        if (initTempoVelocidadeMinima != -1){
-            tempoVelocidadeMinima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMinima);
-            initTempoVelocidadeMinima = -1;
+            if (initTempoVelocidadeMaxima != -1) {
+                tempoVelocidadeMaxima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMaxima);
+                initTempoVelocidadeMaxima = -1;
+            }
+            if (initTempoVelocidadeMinima != -1) {
+                tempoVelocidadeMinima += (TimeHandler.timeOfLevelPlay - initTempoVelocidadeMinima);
+                initTempoVelocidadeMinima = -1;
+            }
         }
         
         onMaxVelocity = false;  
@@ -2004,6 +2012,7 @@ public class Ball extends Circle{
             MessagesHandler.messageTrainingState.setColor(Color.vermelhoCheio);
             MessagesHandler.messageTrainingState.alpha = 0.2f;
             MessagesHandler.messageTrainingState.display();
+            Game.sound.playGameOver();
             Utils.createAnimation3v(MessagesHandler.messageTrainingState, "alpha","alpha", 500, 0f, 0.2f, 0.5f, 1f, 1f, 0.2f, true, true).start();
 
             Game.bars.get(0).isMovable = false;
