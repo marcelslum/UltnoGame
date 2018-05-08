@@ -2054,13 +2054,7 @@ public class Game {
             if (Utils.getTimeMilliPrecision() - timeOfPrePlay > 500){
                 timeOfPrePlay = 0;
                 for (int i = 0; i < balls.size(); i++) {
-
-                    // todo definir qual a velocidade e angulo inicial para contar, para começar a contar o tempo desde o início
-
-                    balls.get(i).initTempoVelocidadeMediaAlta = -1;
-                    balls.get(i).initTempoAnguloMedioAlto = -1;
-                    balls.get(i).initTempoVelocidadeMediaBaixa = 0; //todo ?????????????????????????????
-                    balls.get(i).initTempoAnguloMedioBaixo = 0; //todo ?????????????????????????????
+                    balls.get(i).initializeVelocityAngleTimeRecord();
                 }
                 setGameState(GAME_STATE_JOGAR);
             }
@@ -2518,7 +2512,7 @@ public class Game {
                 if (ball.targetsAppend != null) {
                     for (int ia = 0; ia < ball.targetsAppend.size(); ia++) {
                         if (!ball.targetsAppend.get(ia).alive) {
-                            ball.isFree = true;
+                            ball.freeBall();
                             return;
                         }
                     }

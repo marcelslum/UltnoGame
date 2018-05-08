@@ -323,8 +323,8 @@ public class Level {
             ball.velocityMin_BI = ballDataBaseData.get(i).minVelocity;
             ball.maxAngle = ballDataBaseData.get(i).maxAngle;
             ball.minAngle = ballDataBaseData.get(i).minAngle;
-            ball.initialNormalDVX = ballVelocityX;
-            ball.initialNormalDVY = ballVelocityY;
+            ball.initial_dvx_padrao = ballVelocityX;
+            ball.initial_dvy_padrao = ballVelocityY;
             ball.initialDVX = ballVelocityX * ((float) SaveGame.saveGame.ballVelocity / 100f);
             ball.initialDVY = ballVelocityY * ((float) SaveGame.saveGame.ballVelocity / 100f);
             ball.initialX = ballX;
@@ -352,6 +352,8 @@ public class Level {
             if (ballDataBaseData.get(i).invencible == 1 ? true : false){
                 ball.setInvencible();
             }
+
+
 
             Game.addBall(ball);
 

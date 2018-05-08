@@ -87,7 +87,6 @@ public class PhysicalObject extends Entity implements Weight{
         checkTransformations(false);
     }
 
-
     public RectangleM getQuadtreeData() {
         this.updateQuatreeData();
         return this.quadtreeData;

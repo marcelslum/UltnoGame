@@ -92,8 +92,8 @@ public class Stats {
     public final static int TEMPO_BOLAS = 11;
     public final static int ALVOS_ATINGIDOS = 12;
     public final static int OUTROS_DADOS = 13;
-    public final static int TODOS_DADOS = 14;
-    public final static int NUMBER_OF_STATS_SHEETS = 14;
+    //public final static int TODOS_DADOS = 14;
+    public final static int NUMBER_OF_STATS_SHEETS = 13;
 
 
     public static void
@@ -295,14 +295,14 @@ public class Stats {
         if (currentStatsSheet == TEMPO_JOGO){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.tempo_de_jogo));
-            MessagesHandler.messageStatDescricao.addText("Tempo jogado de acordo com o modo em que o nível é finalizado", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_tempo_jogo_explicaocao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Vitória", (double)SaveGame.saveGame.stats[29]);
-            statsGraph.addData("Derrota", (double)SaveGame.saveGame.stats[30]);
-            statsGraph.addData("Não completado", (double)SaveGame.saveGame.stats[39]);
-            statsGraph.addData("Total", (double)(SaveGame.saveGame.stats[29]+SaveGame.saveGame.stats[30]+SaveGame.saveGame.stats[39]));
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.vitoria), (double)SaveGame.saveGame.stats[29]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.derrota), (double)SaveGame.saveGame.stats[30]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.nao_completado), (double)SaveGame.saveGame.stats[39]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.total), (double)(SaveGame.saveGame.stats[29]+SaveGame.saveGame.stats[30]+SaveGame.saveGame.stats[39]));
 
             statsGraph.make(false, true, true, 1f, 1f);
 
@@ -311,13 +311,13 @@ public class Stats {
         } else if (currentStatsSheet == MEDIA_PONTOS){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.pontos_stat_titulo));
-            MessagesHandler.messageStatDescricao.addText("Média de pontos conquistados por nível completado.", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_media_pontos_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Em vitórias", (double)SaveGame.saveGame.stats[40]/SaveGame.saveGame.stats[43]);
-            statsGraph.addData("Em derrotas", (double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]);
-            statsGraph.addData("Média total", ((double)SaveGame.saveGame.stats[40] + (double)SaveGame.saveGame.stats[41])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_vitorias), (double)SaveGame.saveGame.stats[40]/SaveGame.saveGame.stats[43]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_derrotas), (double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.media_total), ((double)SaveGame.saveGame.stats[40] + (double)SaveGame.saveGame.stats[41])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
 
             statsGraph.make(true, false, true, 1f, 1f);
 
@@ -326,12 +326,12 @@ public class Stats {
         } else if (currentStatsSheet == MEDIA_ESTRELAS){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.estrelas_titulo));
-            MessagesHandler.messageStatDescricao.addText("Média de estrelas conquistas em níveis finalizados com vitória.", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_media_estrelas_explicacao), corExplicacaoGrafico);
 
 
             StatsGraph statsGraph = new StatsGraph("statGraph", Game.resolutionX * 0.3f, graficoY, Game.resolutionX * 0.4f, graficoAltura);
 
-            statsGraph.addData("Média de estrelas", (double)SaveGame.saveGame.stats[42]/SaveGame.saveGame.stats[43]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.media_de_estrelas), (double)SaveGame.saveGame.stats[42]/SaveGame.saveGame.stats[43]);
 
             statsGraph.make(true, false, true, 1f, 1f);
 
@@ -340,13 +340,13 @@ public class Stats {
         } else if (currentStatsSheet == MEDIA_ALVOS){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.media_alvos));
-            MessagesHandler.messageStatDescricao.addText("Média de alvos abatidos por nível completado.", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_media_alvos_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Em vitórias", (double)SaveGame.saveGame.stats[45]/SaveGame.saveGame.stats[43]);
-            statsGraph.addData("Em derrotas", (double)SaveGame.saveGame.stats[46]/SaveGame.saveGame.stats[44]);
-            statsGraph.addData("Média total", ((double)SaveGame.saveGame.stats[45] + (double)SaveGame.saveGame.stats[46])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_vitorias), (double)SaveGame.saveGame.stats[45]/SaveGame.saveGame.stats[43]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_derrotas), (double)SaveGame.saveGame.stats[46]/SaveGame.saveGame.stats[44]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.media_total), ((double)SaveGame.saveGame.stats[45] + (double)SaveGame.saveGame.stats[46])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
 
             statsGraph.make(true, false, true, 1f, 1f);
 
@@ -355,14 +355,14 @@ public class Stats {
         } else if (currentStatsSheet == VELOCIDADE_ANGULO){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.statSheet1));
-            MessagesHandler.messageStatDescricao.addText("Número de vezes em que o ângulo e a velocidade da bola foi aumentada ou diminuída", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_velocidade_angulo_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Velocidade Aumentada", (float)SaveGame.saveGame.stats[2]);
-            statsGraph.addData("Velocidade Diminuída", (float)SaveGame.saveGame.stats[3]);
-            statsGraph.addData("Ângulo Aumentado", (float)SaveGame.saveGame.stats[0]);
-            statsGraph.addData("Ângulo Diminuído", (float)SaveGame.saveGame.stats[1]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_aumentada), (float)SaveGame.saveGame.stats[2]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_diminuida), (float)SaveGame.saveGame.stats[3]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.angulo_aumentado), (float)SaveGame.saveGame.stats[0]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.angulo_diminuido), (float)SaveGame.saveGame.stats[1]);
 
             statsGraph.make(true, false, true, 1f, 1f);
 
@@ -371,13 +371,13 @@ public class Stats {
         } else if (currentStatsSheet == VELOCIDADE){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.velocidade_titulo_stat));
-            MessagesHandler.messageStatDescricao.addText("Número de vezes em que a velocidade foi alterada ou permaneceu igual no contato com a barra", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_velocidade_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Velocidade Aumentada", (float)SaveGame.saveGame.stats[2]);
-            statsGraph.addData("Velocidade Diminuída", (float)SaveGame.saveGame.stats[3]);
-            statsGraph.addData("Velocidade Inalterada", (float)SaveGame.saveGame.stats[31]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_aumentada), (float)SaveGame.saveGame.stats[2]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_diminuida), (float)SaveGame.saveGame.stats[3]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_inalterada), (float)SaveGame.saveGame.stats[31]);
 
             statsGraph.make(true, false, true, 1f, 1f);
 
@@ -386,14 +386,14 @@ public class Stats {
         } else if (currentStatsSheet == TEMPO_VELOCIDADE){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.tempoVelocidade));
-            MessagesHandler.messageStatDescricao.addText("Tempo em que as bolas foram mantidas nas velocidades média, máxima ou mínima.", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_tempo_velocidade_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Velocidade mínima", (double)SaveGame.saveGame.stats[12]);
-            statsGraph.addData("Velocidade média baixa", (double)SaveGame.saveGame.stats[47]);
-            statsGraph.addData("Velocidade média alta", (double)SaveGame.saveGame.stats[49]);
-            statsGraph.addData("Velocidade máxima", (double)SaveGame.saveGame.stats[13]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_minima), (double)SaveGame.saveGame.stats[12]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_media_baixa), (double)SaveGame.saveGame.stats[47]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_media_alta), (double)SaveGame.saveGame.stats[49]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_maxima), (double)SaveGame.saveGame.stats[13]);
 
             statsGraph.make(false, true, true, 1f, 1f);
 
@@ -402,27 +402,27 @@ public class Stats {
         } else if (currentStatsSheet == ANGULO_AUMENTADO){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.statSheet2));
-            MessagesHandler.messageStatDescricao.addText("Número de vezes em que o ângulo foi aumentado, conforme tipo do movimento", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_angulo_aumentado_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph",  graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Qualquer movimento", (float)SaveGame.saveGame.stats[0]);
-            statsGraph.addData("Inclinação da barra", (float)SaveGame.saveGame.stats[4]);
-            statsGraph.addData("Movimento da barra", (float)SaveGame.saveGame.stats[6]);
-            statsGraph.addData("Inclinação e movimento", (float)SaveGame.saveGame.stats[8]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.qualquer_movimento), (float)SaveGame.saveGame.stats[0]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.inclinacao_da_barra), (float)SaveGame.saveGame.stats[4]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.movimento_da_barra), (float)SaveGame.saveGame.stats[6]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.inclinação_e_movimento), (float)SaveGame.saveGame.stats[8]);
             statsGraph.make(true, false, true, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
 
         } else if (currentStatsSheet == ANGULO_DIMINUIDO) {
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.statSheet3));
-            MessagesHandler.messageStatDescricao.addText("Número de vezes em que o ângulo foi diminuído, conforme tipo do movimento", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_angulo_diminuido_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph",  graficoX, graficoY, graficoComprimento, graficoAltura);
-            statsGraph.addData("Qualquer movimento", (float)SaveGame.saveGame.stats[1]);
-            statsGraph.addData("Inclinação da barra", (float)SaveGame.saveGame.stats[5]);
-            statsGraph.addData("Movimento da barra", (float)SaveGame.saveGame.stats[7]);
-            statsGraph.addData("Inclinação e movimento", (float)SaveGame.saveGame.stats[9]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.qualquer_movimento), (float)SaveGame.saveGame.stats[1]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.inclinacao_da_barra), (float)SaveGame.saveGame.stats[5]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.movimento_da_barra), (float)SaveGame.saveGame.stats[7]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.inclinação_e_movimento), (float)SaveGame.saveGame.stats[9]);
             statsGraph.make(true, false, true, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
 
@@ -430,14 +430,14 @@ public class Stats {
         } else if (currentStatsSheet == TEMPO_ANGULO){
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.tempoAngulo));
-            MessagesHandler.messageStatDescricao.addText("Tempo em que as bolas foram mantidas nos ângulos médio, máximo ou mínimo.", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_tempo_angulo_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
-            statsGraph.addData("Ângulo mínimo", (double)SaveGame.saveGame.stats[14]);
-            statsGraph.addData("Ângulo médio baixo", (double)SaveGame.saveGame.stats[48]);
-            statsGraph.addData("Ângulo médio alto", (double)SaveGame.saveGame.stats[50]);
-            statsGraph.addData("Ângulo máximo", (double)SaveGame.saveGame.stats[15]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.angulo_minimo), (double)SaveGame.saveGame.stats[14]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.angulo_medio_baixo), (double)SaveGame.saveGame.stats[48]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.angulo_medio_alto), (double)SaveGame.saveGame.stats[50]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.angulo_maximo), (double)SaveGame.saveGame.stats[15]);
 
             statsGraph.make(false, true, true, 1f, 1f);
 
@@ -446,14 +446,14 @@ public class Stats {
         } else if (currentStatsSheet == TEMPO_BOLAS) {
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.statSheet4));
-            MessagesHandler.messageStatDescricao.addText("Tempo que foram mantidas bolas vivas, conforme número de bolas", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_tempo_bolas_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph",  graficoX, graficoY, graficoComprimento, graficoAltura);
-            statsGraph.addData("1", (float)SaveGame.saveGame.stats[18]);
-            statsGraph.addData("2", (float)SaveGame.saveGame.stats[19]);
-            statsGraph.addData("3", (float)SaveGame.saveGame.stats[20]);
-            statsGraph.addData("4", (float)SaveGame.saveGame.stats[21]);
-            statsGraph.addData("5+", (float)(SaveGame.saveGame.stats[22] + SaveGame.saveGame.stats[23] + SaveGame.saveGame.stats[24] + SaveGame.saveGame.stats[25] + SaveGame.saveGame.stats[26] + SaveGame.saveGame.stats[27]));
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string._1), (float)SaveGame.saveGame.stats[18]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string._2), (float)SaveGame.saveGame.stats[19]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string._3), (float)SaveGame.saveGame.stats[20]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string._4), (float)SaveGame.saveGame.stats[21]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string._5_ou_mais), (float)(SaveGame.saveGame.stats[22] + SaveGame.saveGame.stats[23] + SaveGame.saveGame.stats[24] + SaveGame.saveGame.stats[25] + SaveGame.saveGame.stats[26] + SaveGame.saveGame.stats[27]));
             statsGraph.make(false, true, false, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
 
@@ -461,14 +461,14 @@ public class Stats {
         } else if (currentStatsSheet == ALVOS_ATINGIDOS) {
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.alvos_atingidos));
-            MessagesHandler.messageStatDescricao.addText("Número de alvos atingidos, de acordo com o tipo.", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_alvos_atingidos_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph",  graficoX, graficoY, graficoComprimento, graficoAltura);
-            statsGraph.addData("Pretos", (float)SaveGame.saveGame.stats[34]);
-            statsGraph.addData("Azuis", (float)SaveGame.saveGame.stats[33]);
-            statsGraph.addData("Verdes", (float)SaveGame.saveGame.stats[32]);
-            statsGraph.addData("Vermelhos", (float)SaveGame.saveGame.stats[36]);
-            statsGraph.addData("Fantasmas", (float)(SaveGame.saveGame.stats[35]));
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.pretos), (float)SaveGame.saveGame.stats[34]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.azuis), (float)SaveGame.saveGame.stats[33]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.verdes), (float)SaveGame.saveGame.stats[32]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.vermelhos), (float)SaveGame.saveGame.stats[36]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.fantasmas), (float)(SaveGame.saveGame.stats[35]));
 
             statsGraph.make(true, false, true, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
@@ -481,17 +481,17 @@ public class Stats {
             }
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.dados_diveros));
-            MessagesHandler.messageStatDescricao.addText("Outros dados diversos.", corExplicacaoGrafico);
+            MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_outros_dados_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph",  graficoX, graficoY, graficoComprimento, graficoAltura);
-            statsGraph.addData("Obstáculos atingidos", (float)SaveGame.saveGame.stats[37]);
-            statsGraph.addData("Colisão entre bolas", (float)SaveGame.saveGame.stats[38]);
-            statsGraph.addData("Bolas falsas atingidas", (float)SaveGame.saveGame.stats[28]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.obstaculos_atingidos), (float)SaveGame.saveGame.stats[37]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.colisao_entre_bolas), (float)SaveGame.saveGame.stats[38]);
+            statsGraph.addData(Game.mainActivity.getResources().getString(R.string.bolas_falsas_atingidas), (float)SaveGame.saveGame.stats[28]);
             statsGraph.make(true, false, true, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
 
 
-        } else if (currentStatsSheet == TODOS_DADOS) {
+        } /*else if (currentStatsSheet == TODOS_DADOS) {
 
             Game.showBlackFrameTransition(700);
 
@@ -557,9 +557,8 @@ public class Stats {
             MessagesHandler.statsTextView.addText(resources.getString(R.string.stat39)+ " " + Utils.getTimeTextFromMiliSeconds(SaveGame.saveGame.stats[39]), Color.cinza20);
 
             MessagesHandler.statsTextView.display();
-
-
         }
+        */
 
 
 
