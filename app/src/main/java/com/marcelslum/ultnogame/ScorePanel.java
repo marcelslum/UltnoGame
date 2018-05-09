@@ -1,8 +1,6 @@
 package com.marcelslum.ultnogame;
 
 
-import android.util.Log;
-
 /**
  * Created by marcel on 12/08/2016.
  */
@@ -48,8 +46,8 @@ public class ScorePanel extends Entity {
         setListener(new InteractionListener("listener" + name, this.x, y, size * 3, size, 5000, this, new InteractionListener.PressListener() {
             @Override
             public void onPress() {
-                if (Game.gameState == Game.GAME_STATE_JOGAR) {
-                    Game.setGameState(Game.GAME_STATE_VITORIA);
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_VITORIA_1);
                 }
             }
 

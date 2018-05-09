@@ -33,11 +33,9 @@ public class TextView extends Entity{
 		this.padding = padding;
 		texts = new ArrayList<>();
 
-		
 		final TextView innerTextView = this;
 		setListener(new InteractionListener(this.name, x, y, width, height, 5000, this));
-		
-		
+
 		listener.setPressListener(new InteractionListener.PressListener() {
 			@Override
 			public void onPress() {Log.e(TAG, "press");}

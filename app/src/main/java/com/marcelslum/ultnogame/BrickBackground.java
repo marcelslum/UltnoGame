@@ -1,7 +1,6 @@
 package com.marcelslum.ultnogame;
 
 import android.opengl.GLES20;
-import android.util.Log;
 
 public class BrickBackground extends Entity {
     float width;
@@ -152,7 +151,7 @@ public class BrickBackground extends Entity {
         //Log.e(TAG, " percentage "+percentage);
 
         float percentageGray = 0.999f;
-        if (Game.gameState == Game.GAME_STATE_VITORIA || Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
+        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_1 || GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_2){
             percentageGray = 0.99f;
         }
 

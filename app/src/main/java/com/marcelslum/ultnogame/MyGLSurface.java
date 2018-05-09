@@ -115,23 +115,23 @@ public class MyGLSurface extends GLSurfaceView {
 
 
 
-                if (Game.gameState == Game.GAME_STATE_MENU_PRINCIPAL){
-                    Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_INICIAL){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
                     Game.prepareAfterInterstitialFlag = false;
                     return;
                 }
 
                 if (Game.returningFromTraining) {
                     Game.returningFromTraining = false;
-                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
 
                 } else {
                     if (Game.prepareAfterInterstitialFlag) {
                         Game.prepareAfterInterstitialFlag = false;
                         LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
-                        Game.setGameState(Game.GAME_STATE_PREPARAR);
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PREPARAR);
                     } else {
-                        Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
                     }
                 }
 
@@ -150,7 +150,7 @@ public class MyGLSurface extends GLSurfaceView {
             public void run() {
 
                 if (MainActivity.saveGameFromCloud == null){
-                    Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.erro_ao_carregar), 4000);
 
                 } else {
@@ -196,7 +196,7 @@ public class MyGLSurface extends GLSurfaceView {
                             Game.getContext().getResources().getString(R.string.messageCarregarJogo6),
                             Color.cinza70);
 
-                    Game.setGameState(Game.GAME_STATE_MENU_CARREGAR_JOGO);
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_CARREGAR_JOGO_SALVO_NUVEM);
                 }
             }});
     }

@@ -59,6 +59,7 @@ public class GoogleAPI {
                     playerIconImage.setBitmap(playerIcon);
                 } else {
                     playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, playerIcon);
+                    Game.adicionarEntidadeFixa(playerIconImage);
                 }
 
                 playerIconImage.display();

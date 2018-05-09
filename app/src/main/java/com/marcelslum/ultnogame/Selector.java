@@ -237,7 +237,7 @@ public class Selector extends Entity{
         reduceAlphaAnim.start();
 
         ArrayList<float[]> valuesAnimation2 = new ArrayList<>();
-        valuesAnimation2.add(new float[]{0f,15f});
+        valuesAnimation2.add(new float[]{0f,0.15f});
         valuesAnimation2.add(new float[]{1f,1f});
         Animation increaseAlphaAnim = new Animation(this, "increaseAlphaAnim", "alpha", 500, valuesAnimation2, false, true);
         final Selector innerSelector = this;

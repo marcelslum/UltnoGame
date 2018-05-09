@@ -517,7 +517,7 @@ public class Splash {
         }
 
         MenuHandler.levelMenu.currentTranslateX = 0;
-        Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
     }
 
     static void verifySplashState() {

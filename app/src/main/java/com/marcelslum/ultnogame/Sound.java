@@ -425,7 +425,7 @@ public class Sound {
             return;
         }
 
-        if (Game.gameState == Game.GAME_STATE_JOGAR){
+        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR){
 
             boolean anyMediaPlaying = false;
 

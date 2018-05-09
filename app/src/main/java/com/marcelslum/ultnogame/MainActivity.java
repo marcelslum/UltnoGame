@@ -578,8 +578,8 @@ public class MainActivity extends FragmentActivity implements
             public void onSystemUiVisibilityChange(int visibility) {
                 if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
                     // TODO: The system bars are visible. Make any desired
-                    if (Game.gameState == Game.GAME_STATE_JOGAR) {
-                        Game.setGameState(Game.GAME_STATE_PAUSE);
+                    if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
                     }
                 } else {
                     // TODO: The system bars are NOT visible. Make any desired
@@ -884,7 +884,7 @@ public class MainActivity extends FragmentActivity implements
             mAdView.pause();
         }
 
-        if (Game.gameState == Game.GAME_STATE_PREPARAR){
+        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PREPARAR){
             Game.initPausedFlag = true;
         }
 
@@ -900,50 +900,50 @@ public class MainActivity extends FragmentActivity implements
 
         // TODO REVISAR E COMPLETAR
 
-        if (Game.gameState == Game.GAME_STATE_OPCOES_GAME) {
-            Game.setGameState(Game.GAME_STATE_PAUSE);
-        } else if (Game.gameState == Game.GAME_STATE_SOBRE){
-                    Game.setGameState(Game.GAME_STATE_OPCOES);
-	} else if (Game.gameState == Game.GAME_STATE_JOGAR) {
-            Game.setGameState(Game.GAME_STATE_PAUSE);
-        } else if (Game.gameState == Game.GAME_STATE_MENU_PRINCIPAL) {
+        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OPCOES) {
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SOBRE){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_OPCOES);
+	} else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_INICIAL) {
             onPause();
             moveTaskToBack(true);
-        } else if (Game.gameState == Game.GAME_STATE_PAUSE){
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE){
             Game.increaseAllGameEntitiesAlpha(500);
             MessagesHandler.messageInGame.reduceAlpha(500,0f);
-            MenuHandler.menuInGame.reduceAlpha(500,0f, new Animation.AnimationListener() {
+            MenuHandler.menuPause.reduceAlpha(500,0f, new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
-                    Game.setGameState(Game.GAME_STATE_PRE_JOGAR);
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PRE_JOGAR);
                 }
             });
-        } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
-            Game.setGameState(Game.GAME_STATE_PAUSE);
-        } else if (Game.gameState == Game.GAME_STATE_VITORIA){
-            Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
-        } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO){
-            Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
-        } else if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
-            Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
-        } else if (Game.gameState == Game.GAME_STATE_SELECAO_GRUPO) {
-            Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
-        }else if (Game.gameState == Game.GAME_STATE_PREPARAR){
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OBJETIVO){
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_1){
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_VITORIA_2);
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_2){
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_INTERSTITIAL);
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_LEVEL){
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_GRUPO) {
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+        }else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PREPARAR){
             Game.initPausedFlag = true;
-        }else if (Game.gameState == Game.GAME_STATE_DERROTA){
+        }else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_DERROTA){
             if (SaveGame.saveGame.currentLevelNumber < 1000){
-                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
             } else {
-                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
             }
-        } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MOSTRAR_OBJETIVOS){
             if (SaveGame.saveGame.currentLevelNumber < 1000){
-                Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
             } else {
-                Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
             }
-	    } else if (Game.gameState != Game.GAME_STATE_INTRO){
-            Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+	    } else if (GameStateHandler.gameState != GameStateHandler.GAME_STATE_INTRO){
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
 	    }
     }
 
@@ -994,9 +994,8 @@ public class MainActivity extends FragmentActivity implements
 
     public void hideAdView(){
         
-        if (Game.notConnectedTextView != null) {
-            Game.notConnectedTextView.clearDisplay();
-            Game.topFrame.clearDisplay();
+        if (MessagesHandler.notConnectedTextView != null) {
+            MessagesHandler.notConnectedTextView.clearDisplay();
         }
 
         runOnUiThread(new Runnable() {
@@ -1058,14 +1057,13 @@ public class MainActivity extends FragmentActivity implements
 
     public void showAdView(){
     
-    	if (Game.gameState == Game.GAME_STATE_JOGAR){
+    	if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR){
 			return;
 		}
 		
 		if (isBannerLoaded){
-			if (Game.notConnectedTextView != null) {
-				Game.notConnectedTextView.clearDisplay();
-				Game.topFrame.clearDisplay();
+			if (MessagesHandler.notConnectedTextView != null) {
+				MessagesHandler.notConnectedTextView.clearDisplay();
 			}
 
 			runOnUiThread(new Runnable() {
@@ -1084,16 +1082,14 @@ public class MainActivity extends FragmentActivity implements
             });
 
 			
-			if (Game.notConnectedTextView != null) {
+			if (MessagesHandler.notConnectedTextView != null) {
 			
 				ConnectionHandler.checkInternetConnection();
 			
 				if (ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_NOT_CONNECTED) {
-					Game.notConnectedTextView.display();
-					Game.topFrame.display();
+					MessagesHandler.notConnectedTextView.display();
 				} else {
-					Game.notConnectedTextView.clearDisplay();
-					Game.topFrame.clearDisplay();
+					MessagesHandler.notConnectedTextView.clearDisplay();
 				}
 				
 			} 

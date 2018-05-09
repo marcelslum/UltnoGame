@@ -229,7 +229,7 @@ public class Tutorial {
         if (currentFrame >= 0) {
             show(false);
         } else {
-            Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_TUTORIAL);
 
         }
     }
@@ -277,16 +277,8 @@ public class Tutorial {
             Game.sound.playTextBoxAppear();
 
         } else {
-
-            ButtonHandler.buttonContinue.clearDisplay();
-            ButtonHandler.buttonContinue.block();
-            ButtonHandler.buttonReturn.clearDisplay();
-            ButtonHandler.buttonReturn.block();
-            tutorialImage.clearDisplay();
-            tutorialTextBox.clearDisplay();
-            
             SaveGame.saveGame.tutorialsSeen[currentTutorial] = true;
-            Game.setGameState(Game.GAME_STATE_MENU_TUTORIAL);
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_TUTORIAL);
         }
     }
 

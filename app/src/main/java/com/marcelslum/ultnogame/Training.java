@@ -164,7 +164,7 @@ public class Training {
                 }
 
                 Game.stopAllGameEntities();
-                Game.setGameState(Game.GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
             } else {
 
                 if (MessagesHandler.messageTrainingState != null) {
@@ -180,9 +180,9 @@ public class Training {
                 Game.reduceAllGameEntitiesAlpha(500);
                 trainingNumber += 1;
                 if (trainingNumber <= 20) {
-                    Game.setGameState(Game.GAME_STATE_MENU_DURANTE_TREINAMENTO);
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_DURANTE_TREINAMENTO);
                 } else {
-                    Game.setGameState(Game.GAME_STATE_MENU_FINAL_TREINAMENTO);
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_FINAL_TREINAMENTO);
                 }
             }
         } else {
@@ -202,7 +202,7 @@ public class Training {
             }
 
 
-            Game.setGameState(Game.GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
 
 
 

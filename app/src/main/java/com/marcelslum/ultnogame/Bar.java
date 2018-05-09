@@ -313,7 +313,7 @@ public class Bar extends Rectangle{
         vx = 0f;
 
         if (elapsed > 0) {
-            if (Game.wind != null && Game.gameState == Game.GAME_STATE_JOGAR) {
+            if (Game.wind != null && GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
                 elapsedMoveByWind += elapsed;
                 Level.levelObject.levelGoalsObject.notifyBarMoveByWind(elapsedMoveByWind);
             }

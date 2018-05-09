@@ -55,10 +55,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     public void onPause() {
         //Log.e(TAG, "onPause");
-        if (Game.gameState == Game.GAME_STATE_JOGAR) {
-            Game.setGameState(Game.GAME_STATE_PAUSE);
-        } else if (Game.gameState == Game.GAME_STATE_PREPARAR || Game.gameState == Game.GAME_STATE_TUTORIAL) {
-            Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
+        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PREPARAR || GameStateHandler.gameState == GameStateHandler.GAME_STATE_TUTORIAL) {
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
         }
     }
 
@@ -223,7 +223,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Game.elapsedMiliTimeSinceLastFrame = Game.currentFrameMilliPrecision - mLastTime;
         Game.elapsedNanoTimeSinceLastFrame = Game.currentFrameNanoPrecision - mLastNanoTime;
 
-        if (Game.gameState == Game.GAME_STATE_INTRO){
+        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_INTRO){
             Game.verifyTouchBlock();
             Game.verifyListeners();
             Splash.render(matrixView, matrixProjection);
@@ -237,7 +237,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
             // verificações periódicas
             if (!Game.paraGravacaoVideo) {
-                if (Game.gameState != Game.GAME_STATE_JOGAR && Game.gameState != Game.GAME_STATE_VITORIA && Game.gameState != Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {
+                if (GameStateHandler.gameState != GameStateHandler.GAME_STATE_JOGAR && GameStateHandler.gameState != GameStateHandler.GAME_STATE_VITORIA_1 && GameStateHandler.gameState != GameStateHandler.GAME_STATE_VITORIA_2) {
                     if (Utils.getTimeMilliPrecision() - lastInternetCheck > 5000) {
                         //Log.e(TAG, "Verificando conexão");
                         ConnectionHandler.checkInternetConnection();
@@ -247,7 +247,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 
                     if (!Training.training) {
-                        if (Game.gameState == Game.GAME_STATE_JOGAR) {
+                        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
                             if (Utils.getTimeMilliPrecision() - lastInternetCheck > 1000) {
                                 if (TimeHandler.timeOfLevelPlay > 3000) {
                                     Sound.checkLoopPlaying();
@@ -304,7 +304,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
             }
 
-            if (Game.elapsedMiliTimeSinceLastFrame > (frameDuration*3) && Game.gameState == Game.GAME_STATE_JOGAR){
+            if (Game.elapsedMiliTimeSinceLastFrame > (frameDuration*3) && GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR){
                 Log.e("MyGLRenderer", "frame muito longo, reduzindo de " + Game.elapsedMiliTimeSinceLastFrame + " para " + (frameDuration*3));
                 Game.elapsedMiliTimeSinceLastFrame = (long)frameDuration*3;
             }

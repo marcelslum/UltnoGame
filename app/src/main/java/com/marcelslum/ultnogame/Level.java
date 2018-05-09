@@ -145,16 +145,16 @@ public class Level {
         gameAreaInteractionListener.setPressListener(new InteractionListener.PressListener() {
             @Override
             public void onPress() {
-                if (Game.gameState == Game.GAME_STATE_JOGAR){
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR){
                     //Log.e("level", "listener pause ativado");
                     Game.blockAndWaitTouchRelease();
                     Game.sound.playCounter();
                     //Sound.playSoundPool(Sound.soundCounter, 0.5f, 0.5f, 0);
 
                     if (Training.training){
-                        Game.setGameState(Game.GAME_STATE_MENU_DURANTE_TREINAMENTO);
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_DURANTE_TREINAMENTO);
                     } else {
-                        Game.setGameState(Game.GAME_STATE_PAUSE);
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
                     }
 
 

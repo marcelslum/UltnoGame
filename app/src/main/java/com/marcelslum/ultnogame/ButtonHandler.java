@@ -23,6 +23,8 @@ public class ButtonHandler {
         float framePadd = buttonSize*0.15f;
 
         buttonFinalTargetLeft = Game.buttonPool.get();
+        Game.adicionarEntidadeFixa(buttonFinalTargetLeft);
+
         buttonFinalTargetLeft.setData("buttonFinalTargetLeft", Game.resolutionX - buttonSize*1.5f,
                 Game.gameAreaResolutionY * 0.6f, buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_ID),
@@ -30,7 +32,7 @@ public class ButtonHandler {
         buttonFinalTargetLeft.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
-                if (Game.gameState == Game.GAME_STATE_JOGAR) {
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
 
                     if (!Game.abdicateAngle){
                         if (Game.ballDataPanel != null) {
@@ -85,6 +87,8 @@ public class ButtonHandler {
         //-------------------
 
         buttonFinalTargetRight = Game.buttonPool.get();
+        Game.adicionarEntidadeFixa(buttonFinalTargetRight);
+
         buttonFinalTargetRight.setData("buttonFinalTargetLeft", buttonSize*0.5f,
                 Game.gameAreaResolutionY * 0.6f, buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
@@ -92,7 +96,7 @@ public class ButtonHandler {
         buttonFinalTargetRight.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
-                if (Game.gameState == Game.GAME_STATE_JOGAR) {
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
 
                     if (!Game.abdicateAngle){
                         if (Game.ballDataPanel != null) {
@@ -128,6 +132,7 @@ public class ButtonHandler {
         ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
 
         buttonReturn = Game.buttonPool.get();
+        Game.adicionarEntidadeFixa(buttonReturn);
 
         buttonReturn.setData("buttonReturn", buttonSize*0.5f,
                 Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
@@ -139,51 +144,51 @@ public class ButtonHandler {
                 Game.vibrate(Game.VIBRATE_SMALL);
                 Game.sound.playPlayMenuBig();
                 //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
-                if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
-                    Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_LEVEL){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
 
-                } else if (Game.gameState == Game.GAME_STATE_SELECAO_GRUPO){
-                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_GRUPO){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
 
-                } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL){
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MOSTRAR_OBJETIVOS){
 
                     if (SaveGame.saveGame.currentLevelNumber < 1000){
-                        Game.setGameState(Game.GAME_STATE_SELECAO_LEVEL);
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
                     } else {
-                        Game.setGameState(Game.GAME_STATE_SELECAO_GRUPO);
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
                     }
 
-                } else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL) {
-                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_TUTORIAL) {
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
 
-                }else if (Game.gameState == Game.GAME_STATE_MENU_JOGAR){
-                        Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+                }else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_JOGAR){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
 
-                }else if (Game.gameState == Game.GAME_STATE_MENU_EXPLICACAO_TREINAMENTO){
-                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                }else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_EXPLICACAO_TREINAMENTO){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
 
-                } else if (Game.gameState == Game.GAME_STATE_MENU_TUTORIAL){
-                    Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_TUTORIAL){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
 
-                } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
-                    Game.setGameState(Game.GAME_STATE_PAUSE);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OBJETIVO){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
 
-                } else if (Game.gameState == Game.GAME_STATE_TUTORIAL){
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_TUTORIAL){
                     Tutorial.currentTutorialObject.previous();
 
-                } else if (Game.gameState == Game.GAME_STATE_SOBRE){
-                    Game.setGameState(Game.GAME_STATE_OPCOES);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SOBRE){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_OPCOES);
 
-                }  else if (Game.gameState == Game.GAME_STATE_OPCOES){
-                    Game.setGameState(Game.GAME_STATE_MENU_PRINCIPAL);
+                }  else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_OPCOES){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
 
-                } else if (Game.gameState == Game.GAME_STATE_OPCOES_JOGABILIDADE){
-                    MenuHandler.menuOptionsPlay.clearDisplay();
-                    MenuHandler.menuOptionsPlay.block();
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_OPCOES_JOGABILIDADE){
+                    MenuHandler.menuOpcoesJogabilidade.clearDisplay();
+                    MenuHandler.menuOpcoesJogabilidade.block();
                     SelectorHandler.backAllSelectors();
-                    Game.setGameState(Game.GAME_STATE_OPCOES);
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_OPCOES);
 
-                } else if (Game.gameState == Game.GAME_STATE_ESTATISTICAS) {
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_ESTATISTICAS) {
                     if (Stats.currentStatsSheet > 1){
 
                         if (Stats.currentStatsSheet == Stats.NUMBER_OF_STATS_SHEETS){
@@ -200,7 +205,7 @@ public class ButtonHandler {
 
                         Game.statsGraphs.clear();
 
-                        Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
                     }
 
                 }
@@ -208,6 +213,8 @@ public class ButtonHandler {
         });
 
         buttonContinue = Game.buttonPool.get();
+        Game.adicionarEntidadeFixa(buttonContinue);
+
         buttonContinue.setData("buttonContinue", Game.resolutionX - buttonSize*1.5f, Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_RIGHT_PRESS_ID));
@@ -218,17 +225,16 @@ public class ButtonHandler {
                 Game.vibrate(Game.VIBRATE_SMALL);
                 Game.sound.playPlayMenuBig();
                 //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
-                if (Game.gameState == Game.GAME_STATE_VITORIA) {
-                    Game.setGameState(Game.GAME_STATE_VITORIA_COMPLEMENTACAO);
-                } else if (Game.gameState == Game.GAME_STATE_VITORIA_COMPLEMENTACAO) {
-                    Sound.stopAndReleaseMusic();
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_1) {
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_VITORIA_2);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_2) {
                     Game.prepareAfterInterstitialFlag = false;
-                    Game.setGameState(Game.GAME_STATE_INTERSTITIAL);
-                } else if (Game.gameState == Game.GAME_STATE_OBJETIVO_LEVEL) {
-                    Game.setGameState(Game.GAME_STATE_PREPARAR);
-                } else if (Game.gameState == Game.GAME_STATE_TUTORIAL) {
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_INTERSTITIAL);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MOSTRAR_OBJETIVOS) {
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PREPARAR);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_TUTORIAL) {
                     Tutorial.currentTutorialObject.next();
-                } else if (Game.gameState == Game.GAME_STATE_ESTATISTICAS) {
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_ESTATISTICAS) {
                     if (Stats.currentStatsSheet < Stats.NUMBER_OF_STATS_SHEETS){
                         Stats.currentStatsSheet += 1;
                         Stats.showCurrentStat();
@@ -237,8 +243,22 @@ public class ButtonHandler {
                         MessagesHandler.messageStatDescricao.clearDisplay();
                         MessagesHandler.statsTextView.clearDisplay();
                         Game.statsGraphs.clear();
-                        Game.setGameState(Game.GAME_STATE_MENU_JOGAR);
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
                     }
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_EXPLICACAO_TREINAMENTO){
+                    Training.training = true;
+                    Training.trainingNumber = Training.TREINAMENTO_AUMENTAR_VELOCIDADE;
+                    Training.trainingBarCollisionInit = Long.MAX_VALUE;
+                    Training.tentativaCertaTreinamento = 0;
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PREPARAR_TREINAMENTO);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_FINAL_TREINAMENTO){
+
+                    Game.timesInterstitialOnGameOver = 0;
+                    Game.prepareAfterInterstitialFlag = false;
+                    Game.returningFromTraining = true;
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_INTERSTITIAL);
+
+
                 }
             }
         });
@@ -256,21 +276,18 @@ public class ButtonHandler {
         //-------------
 
         buttonReturnObjectivesPause = Game.buttonPool.get();
+        Game.adicionarEntidadeFixa(buttonReturnObjectivesPause);
+
         buttonReturnObjectivesPause.setData("buttonReturnObjectivesPause", buttonSize*0.5f, Game.gameAreaResolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));
         buttonReturnObjectivesPause.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
-
                 Game.vibrate(Game.VIBRATE_SMALL);
                 Game.sound.playPlayMenuBig();
-                //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
-                if (Game.gameState == Game.GAME_STATE_OBJETIVO_PAUSE){
-                    Game.setGameState(Game.GAME_STATE_PAUSE);
-                    MessagesHandler.messageBack.clearDisplay();
-                    MessagesHandler.messageBack.setY(MessagesHandler.yOfMessageBackAndContinue);
-                    MessagesHandler.messageBack.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OBJETIVO){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
                 }
             }
         });
@@ -285,6 +302,8 @@ public class ButtonHandler {
 
 
         buttonGroupLeaderboard = Game.buttonPool.get();
+        Game.adicionarEntidadeFixa(buttonGroupLeaderboard);
+
         buttonGroupLeaderboard.setData("buttonGroupLeaderboard", Game.resolutionX - buttonSize*1.5f,
                         Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize,
                         Texture.TEXTURES, 1.2f,
@@ -299,7 +318,7 @@ public class ButtonHandler {
                     Game.vibrate(Game.VIBRATE_SMALL);
                     Game.sound.playPlayMenuBig();
                     //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
-                    if (Game.gameState == Game.GAME_STATE_SELECAO_LEVEL){
+                    if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_LEVEL){
 
                         String id;
                         switch (Game.currentLevelsGroupDataSelected.number){
@@ -389,7 +408,6 @@ public class ButtonHandler {
         buttonContinue.addFrame(frame3);
 
     }
-
 
     public static void createGameButtons(int barsQuantity, boolean invertedButtons) {
         float y = Game.resolutionY * 0.86f;

@@ -31,14 +31,14 @@ class TextGroupDraw extends Entity{
     public void collectTextsForDraw(){
         textsForDraw.clear();
         int quantityOfMenus = 6;
-        Menu  menu = MenuHandler.menuMain;
+        Menu  menu = MenuHandler.menuInicial;
         for (int m = 0; m < quantityOfMenus; m++){
             switch (m){
                 case 0:
-                    menu = MenuHandler.menuMain;
+                    menu = MenuHandler.menuInicial;
                     break;
                 case 1:
-                    menu = MenuHandler.menuInGame;
+                    menu = MenuHandler.menuPause;
                     break;
                     
                 case 2:
@@ -54,7 +54,7 @@ class TextGroupDraw extends Entity{
                     break;
                     
                 case 5:
-                    menu = MenuHandler.menuInGameOptions;
+                    menu = MenuHandler.menuPauseOpcoes;
                     break;
             }
             if (menu.isVisible){
