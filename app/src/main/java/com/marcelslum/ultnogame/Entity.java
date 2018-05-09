@@ -24,6 +24,8 @@ public class Entity{
 
     protected int [] vbo;
     protected int [] ibo;
+    
+    
 
     final public static int TYPE_OTHER = 0;
     final public static int TYPE_BALL = 1;
@@ -54,7 +56,7 @@ public class Entity{
 
     public int weight;
 
-
+    public int layer = 1;
 
     public final static String TAG = "Entity";
     final public static int SHOW_POINTS_ON = 1;
