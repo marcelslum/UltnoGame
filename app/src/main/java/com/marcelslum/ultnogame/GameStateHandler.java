@@ -31,7 +31,8 @@ public class GameStateHandler{
     public final static int GAME_STATE_MENU_CARREGAR_JOGO_SALVO_NUVEM = 171; // vai para MENU_INICIAL
 
     public final static int GAME_STATE_ESTATISTICAS = 160; // vai para INTERSTITIAL
-    public final static int GAME_STATE_ESTATISTICAS_RANKING = 161; // vai para INTERSTITIAL
+    public final static int GAME_STATE_ESTATISTICAS_RANKING = 161; // vai para MENU_JOGAR
+    public final static int GAME_STATE_ESTATISTICAS_AJUDA = 162; // vai para GAME_STATE_ESTATISTICAS_RANKING
 
     public final static int GAME_STATE_SELECAO_TUTORIAL =  180; // vai para MENU_JOGAR
     public final static int GAME_STATE_TUTORIAL =  181; // vai para SELECAO_TUTORIAL
@@ -200,9 +201,19 @@ public class GameStateHandler{
             ButtonHandler.buttonContinue.blockAndClearDisplay();
             
         } else if (previousState == GAME_STATE_ESTATISTICAS_RANKING){
-            // vai para MENU_JOGAR
+            // vai para MENU_JOGAR, ESTATISTICAS_RANKING_AJUDA
             MenuHandler.menuRankingEstatisticos.blockAndClearDisplay();
-        
+            
+            if (newState == GAME_STATE_ESTATISTICAS_RANKING_AJUDA){
+                GoogleAPI.clearDisplayGoogleInfo();
+                Game.tittle.clearDisplay();
+                MessagesHandler.messageBack.clearDisplay(); 
+            }
+            
+        } else if (previousState == GAME_STATE_ESTATISTICAS_RANKING_AJUDA){
+            // vai para ESTATISTICAS_RANKING
+            MessageHandler.sobreRankingEstatisticosTextView.clearDisplay();
+      
         } else if (previousState == GAME_STATE_SELECAO_TUTORIAL){
             // vai para MENU_JOGAR, TUTORIAL
 
@@ -519,7 +530,16 @@ public class GameStateHandler{
         } else if (newState == GAME_STATE_ESTATISTICAS_RANKING){
 
             MenuHandler.menuRankingEstatisticos.unblockAndDisplay();
+            
+            if (previousState == GAME_STATE_ESTATISTICAS_RANKING_AJUDA){
+                // TODO exibir dados google ou titulo?   
+            }
+            
 
+        } else if (previousState == GAME_STATE_ESTATISTICAS_RANKING_AJUDA){
+            // vai para ESTATISTICAS_RANKING
+            MessageHandler.sobreRankingEstatisticosTextView.display();
+      
         } else if (newState == GAME_STATE_MOSTRAR_OBJETIVOS){
 
             Game.showBlackFrameTransition(500);
