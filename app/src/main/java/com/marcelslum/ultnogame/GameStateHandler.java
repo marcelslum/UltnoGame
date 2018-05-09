@@ -31,6 +31,7 @@ public class GameStateHandler{
     public final static int GAME_STATE_MENU_CARREGAR_JOGO_SALVO_NUVEM = 171; // vai para MENU_INICIAL
 
     public final static int GAME_STATE_ESTATISTICAS = 160; // vai para INTERSTITIAL
+    public final static int GAME_STATE_ESTATISTICAS_RANKING = 161; // vai para INTERSTITIAL
 
     public final static int GAME_STATE_SELECAO_TUTORIAL =  180; // vai para MENU_JOGAR
     public final static int GAME_STATE_TUTORIAL =  181; // vai para SELECAO_TUTORIAL
@@ -90,7 +91,6 @@ public class GameStateHandler{
                 }
             
         } else if (previousState == GAME_STATE_MENU_JOGAR) {
-
             // vai para MENU_INICIAL, ESTATISTICAS, SELECAO_TUTORIAL, SELECAO_GRUPO
 
             MenuHandler.menuPlay.clearDisplay();
@@ -98,16 +98,16 @@ public class GameStateHandler{
             if (newState == GAME_STATE_MENU_INICIAL) {
                 MessagesHandler.messageBack.clearDisplay();
                 ButtonHandler.buttonReturn.blockAndClearDisplay();
+            } if (newState == GAME_STATE_ESTATISTICA_RANKING) {
+                
             } else {
                 Game.tittle.clearDisplay();
                 MessagesHandler.messageGoogleLogged.clearDisplay();
                 if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.clearDisplay();
             }
 
-
         } else if (previousState == GAME_STATE_OPCOES){
             // vai para MENU_INICIAL, OPCOES_JOGABILIDADE, INTRO
-
 
             MenuHandler.menuOptions.blockAndClearDisplay();
 
@@ -198,7 +198,11 @@ public class GameStateHandler{
             MessagesHandler.messageStatTittle.clearDisplay();
             MessagesHandler.messageStatDescricao.clearDisplay();
             ButtonHandler.buttonContinue.blockAndClearDisplay();
-
+            
+        } else if (previousState == GAME_STATE_ESTATISTICAS_RANKING){
+            // vai para MENU_JOGAR
+            MenuHandler.menuRankingEstatisticos.blockAndClearDisplay();
+        
         } else if (previousState == GAME_STATE_SELECAO_TUTORIAL){
             // vai para MENU_JOGAR, TUTORIAL
 
@@ -505,12 +509,16 @@ public class GameStateHandler{
 
             MessagesHandler.aboutTextView.unblockAndDisplay();
             ButtonHandler.buttonReturn.unblockAndDisplay();
-        }
-        else if (newState == GAME_STATE_ESTATISTICAS){
+            
+        } else if (newState == GAME_STATE_ESTATISTICAS){
 
             Stats.currentStatsSheet = Stats.TEMPO_JOGO;
             Stats.showCurrentStat();
             ButtonHandler.buttonContinue.unblockAndDisplay();
+
+        } else if (newState == GAME_STATE_ESTATISTICAS_RANKING){
+
+            MenuHandler.menuRankingEstatisticos.unblockAndDisplay();
 
         } else if (newState == GAME_STATE_MOSTRAR_OBJETIVOS){
 
