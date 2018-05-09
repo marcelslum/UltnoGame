@@ -287,6 +287,14 @@ public class MenuIcon extends Entity{
             if (graph[i] != null) graph[i].clearDisplay();
         }
     }
+    
+    
+    @Override
+    public void blockAndClearDisplay() {
+        block();
+        clearDisplay();
+    }
+    
 
     public void addText(int position, int number, String name, String text, float textSize, float paddFromBottom, Color color, Color colorShadow){
 
