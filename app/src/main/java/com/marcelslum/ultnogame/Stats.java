@@ -8,6 +8,19 @@ public class Stats {
     public static int STATS_DATABASE_SIZE = 60;
 
     // DADOS ARMAZENADOS
+    
+    // rankings
+    // 1 - sem morte - porcentagem de tempo jogado terminando com vitoria versus derrota
+    // 2 - multitask - media ponderada do tempo em que é mantida uma ou mais bolas vivas
+    //      (tempo1Bola / tempoTotal) * 1
+    //      (tempo2Bolas / tempoTotal) * 9
+    //      (tempo3Bolas / tempoTotal) * 20
+    //      (tempo4Bolas / tempoTotal) * 30
+    //      (tempo5OuMaisBolas / tempoTotal) * 40
+   
+    // 3 - variacao
+    // numero de vezes que a velocidade aumenta ou diminui dividido por numero de vezes em que a velocidade não altera
+    
 
     static long anguloAumentado;
     static long anguloDiminuido;
