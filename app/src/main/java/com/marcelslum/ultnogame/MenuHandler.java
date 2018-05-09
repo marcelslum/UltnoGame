@@ -20,6 +20,7 @@ public class MenuHandler {
     static MenuIcon tutorialMenu;
     static Menu menuPlay;
     static Menu menuDuranteTreinamento;
+    static Menu menuGoogleGeral;
 
     public static String TAG = "MenuHandler";
 
@@ -94,7 +95,6 @@ public class MenuHandler {
         });
 
         // ----------------------------------------MENU JOGAR
-
         menuPlay = new Menu("menuPlay", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
         Game.adicionarEntidadeFixa(menuPlay);
         menuPlay.addMenuOption("jogar", Game.getContext().getResources().getString(R.string.jogar), new MenuOption.OnChoice() {
@@ -156,7 +156,6 @@ public class MenuHandler {
 
             }
         });
-
 
 
         // -------------------------------------------MENU OPTIONS PLAY
@@ -364,8 +363,6 @@ public class MenuHandler {
             }
         });
 
-
-
         // -------------------------------------------MENU CONECTAR
         menuConnect = new Menu(",menuConnect", Game.gameAreaResolutionX/2, Game.resolutionY*0.085f, fontSize*0.8f, Game.font);
         Game.adicionarEntidadeFixa(menuConnect);
@@ -390,7 +387,72 @@ public class MenuHandler {
                 GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_TUTORIAL);
             }
         });
+        
+        
+        // -------------------------------------------MENU GOOGLE_GERAL
+        menuGoogleGeral = new Menu("menuGoogleGeral", 
+                                   Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
+        Game.adicionarEntidadeFixa(menuGoogleGeral);
 
+        menuInicial.addMenuOption("conquistas", Game.getContext().getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mAchievementsClient == null){
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
+                } else {
+                    GoogleAPI.showAchievements();
+                }
+
+            }
+        });
+
+        menuInicial.addMenuOption("ranking", Game.getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
+                } else {
+                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
+                }
+            }
+        });
+
+        menuInicial.addMenuOption("salvar", Game.getContext().getResources().getString(R.string.salvar), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
+                } else {
+
+                    if (Game.sempreVerSaveMenu){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_SAVE_FIRST_TIME);
+                    } else {
+                        if (SaveGame.saveGame.saveMenuSeen) {
+                            GoogleAPI.showSnapshots();
+                        } else {
+                            SaveGame.saveGame.saveMenuSeen = true;
+                            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_SAVE_FIRST_TIME);
+                        }
+                    }
+                }
+            }
+        });
+        
+        menuOptions.addMenuOption("google", Game.getContext().getResources().getString(R.string.logarGoogle), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                if (Game.mainActivity.isSignedIn()){
+                    SaveGame.saveGame.googleOption = 0;
+                    Game.mainActivity.signOut();
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
+                } else {
+                    Splash.forSignin = true;
+                    SaveGame.saveGame.googleOption = 1;
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_INTRO);
+                }
+            }
+        });
+        
         // -------------------------------------------MENU MAIN
         menuInicial = new Menu("menuInicial", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
         Game.adicionarEntidadeFixa(menuInicial);
@@ -488,7 +550,7 @@ public class MenuHandler {
         });
 
 
-        // ----------------------------------------------------MENU IN GAME
+        // ----------------------------------------------------MENU_PAUSE
         menuPause = new Menu("menuPause",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
         Game.adicionarEntidadeFixa(menuPause);
 
