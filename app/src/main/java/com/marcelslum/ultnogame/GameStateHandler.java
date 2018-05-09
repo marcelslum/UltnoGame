@@ -84,7 +84,7 @@ public class GameStateHandler{
                 GoogleAPI.displayGoogleInfo();
 
 
-                if (newState != GAME_STATE_OPCOES){
+                if (newState != GAME_STATE_OPCOES || newState != GAME_STATE_MENU_JOGAR){
                     Game.tittle.clearDisplay();
                     if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.clearDisplay();
                 }
@@ -235,7 +235,11 @@ public class GameStateHandler{
                 MessagesHandler.starForMessage.clearDisplay();
                 MessagesHandler.messageConqueredStarsTotal.clearDisplay();
                 MenuHandler.menuTutorialUnvisited.blockAndClearDisplay();
-            }
+            } 
+            
+            
+                
+                
 
         } else if (previousState == GAME_STATE_SELECAO_LEVEL){
             // vai para MOSTRAR_OBJETIVOS, SELECAO_GRUPO
@@ -260,7 +264,8 @@ public class GameStateHandler{
             MessagesHandler.messageBack.clearDisplay();
 
             if (newState == GAME_STATE_PREPARAR){
-
+                MessagesHandler.messageMenu.clearDisplay();
+                MessagesHandler.messageSubMenu.clearDisplay();
                 ButtonHandler.buttonReturn.blockAndClearDisplay();
                 Game.mainActivity.hideAdView();
                 MessagesHandler.notConnectedTextView.clearDisplay();
@@ -376,6 +381,12 @@ public class GameStateHandler{
             if (newState == GAME_STATE_SELECAO_LEVEL) {
                 Game.eraseAllGameEntities();
             }
+            
+            if (newState == GAME_STATE_INTERSTITIAL || newState == GAME_STATE_PREPARAR){
+                Game.mainActivity.hideAddView();
+                MenuHandler.menuGameOver.blockAndClearDisplay();
+                MessagesHandler.messageGameOver.clearDisplay();
+            }
 
             MessageStar.messageStars.clearDisplay();
 
@@ -386,6 +397,7 @@ public class GameStateHandler{
             if (newState == GAME_STATE_JOGAR){
                 MenuHandler.menuPause.block();
                 Game.mainActivity.hideAdView();
+                MessagesHandler.messageInGame.clearDisplay();
                 Game.increaseAllGameEntitiesAlpha(500);
                 MessagesHandler.messageInGame.reduceAlpha(500, 0f, new Animation.AnimationListener() {
                     @Override
@@ -394,10 +406,12 @@ public class GameStateHandler{
                         MessagesHandler.messageInGame.alpha = 1f;
                     }
                 });
-            } else {
-                MenuHandler.menuPause.blockAndClearDisplay();
             }
-
+            if (newState == GAME_STATE_SELECAO_LEVEL){
+                MessagesHandler.messageInGame.clearDisplay();
+            }
+            
+            MenuHandler.menuPause.blockAndClearDisplay();
 
         } else if (previousState == GAME_STATE_PAUSE_OPCOES){
             // vai para PAUSE
@@ -581,6 +595,11 @@ public class GameStateHandler{
 
             MenuHandler.updateLevelMenu();
             MenuHandler.levelMenu.appear();
+            
+            MessagesHandler.messageMenu.display();
+            MessagesHandler.messageMenu.setText(Game.getContext().getResources().getString(R.string.messageMenuSelecaoLevel));
+            MessagesHandler.messageSubMenu.display();
+            MessagesHandler.messageSubMenu.setText(Game.currentLevelsGroupDataSelected.name);
 
             if (previousState == GAME_STATE_MOSTRAR_OBJETIVOS){
                 StarsHandler.updateConqueredStars();
@@ -595,12 +614,6 @@ public class GameStateHandler{
                 if (Tutorial.hasUnvisitedTutorial()){
                     MenuHandler.menuTutorialUnvisited.unblockAndDisplay();
                 }
-
-                MessagesHandler.messageMenu.display();
-                MessagesHandler.messageMenu.setText(Game.getContext().getResources().getString(R.string.messageMenuSelecaoLevel));
-                MessagesHandler.messageSubMenu.display();
-                MessagesHandler.messageSubMenu.setText(Game.currentLevelsGroupDataSelected.name);
-
             }
 
             ButtonHandler.buttonGroupLeaderboard.unblockAndDisplay();
