@@ -11,15 +11,26 @@ public class Stats {
     
     // rankings
     // 1 - sem morte - porcentagem de tempo jogado terminando com vitoria versus derrota
+    
     // 2 - multitask - media ponderada do tempo em que é mantida uma ou mais bolas vivas
-    //      (tempo1Bola / tempoTotal) * 1
-    //      (tempo2Bolas / tempoTotal) * 9
-    //      (tempo3Bolas / tempoTotal) * 20
-    //      (tempo4Bolas / tempoTotal) * 30
-    //      (tempo5OuMaisBolas / tempoTotal) * 40
+    //      (tempo1Bola / tempoTotal) * 10
+    //      (tempo2Bolas / tempoTotal) * 50
+    //      (tempo3Bolas / tempoTotal) * 100
+    //      (tempo4Bolas / tempoTotal) * 200
+    //      (tempo5OuMaisBolas / tempoTotal) * 500
    
-    // 3 - variacao
+    // 3 - variacao velocidade
     // numero de vezes que a velocidade aumenta ou diminui dividido por numero de vezes em que a velocidade não altera
+    
+    // 4 - rapidez
+    //      tempo da velocidade baixa * 10 
+    //      tempo velocidade media baixa * 20
+    //      tempo velocidade media alta * 30
+    //      tempo velocidade alta * 40
+    
+    // 5 - media de pontos obtidos em vitorias ou derrotas
+    
+    // 6 - media de pontos obtido em vitorias
     
 
     static long anguloAumentado;
