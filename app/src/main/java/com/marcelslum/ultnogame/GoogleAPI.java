@@ -51,13 +51,22 @@ public class GoogleAPI {
     }
 
 
+    public static void desconnectGoogle(){
+        Game.mainActivity.signOut();
+        GoogleAPI.playerIconImage.clearDisplay();
+        GoogleAPI.playerIconImage = null;
+        MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado));
+        MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
+    }
+
+
     public static void displayGoogleInfo(){
 
         MessagesHandler.messageGoogleLogged.display();
 
         //Log.e(TAG, "playerName "+playerName);
 
-        if (Game.mainActivity.isSignedIn()){
+        if (SaveGame.saveGame.googleOption == 1 && Game.mainActivity.isSignedIn()){
             Log.e(TAG, "mainActivity.isSignedIn()");
             if (playerIcon != null){
                 Log.e(TAG, "playerIcon != null");
@@ -71,23 +80,25 @@ public class GoogleAPI {
                             new InteractionListener.PressListener() {
                                 @Override
                                 public void onPress() {
-                                    if (!playerIconImage.isBlocked){
-
+                                    if (playerIconImage != null && !playerIconImage.isBlocked){
                                         playerIconImage.block();
-
                                         Animation anim = Utils.createAnimation3v(playerIconImage, "scaleX", "scaleX",
                                                 400, 0f,  1f, 0.07f, 0.85f, 1f, 1f, false, true);
                                         anim.setAnimationListener(new Animation.AnimationListener() {
                                             @Override
                                             public void onAnimationEnd() {
-                                                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_GOOGLE);
+                                                if (GameStateHandler.gameState != GameStateHandler.GAME_STATE_MENU_GOOGLE) {
+                                                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_GOOGLE);
+                                                }
+                                                playerIconImage.unblock();
                                             }
                                         });
                                         anim.start();
 
+                                        Game.sound.playPlayMenuBig();
+
                                         Utils.createAnimation3v(playerIconImage, "scaleY", "scaleY",
                                                 400, 0f,  1f, 0.07f, 0.85f, 1f, 1f, false, true).start();
-
                                     }
                                 }
 

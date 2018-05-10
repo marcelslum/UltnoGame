@@ -269,11 +269,6 @@ public class Tutorial {
             
             tutorialTextBox.animateMiniArrow(Game.resolutionX*1.5f, tutorialTextBox.size * 0.5f);
 
-            ButtonHandler.buttonContinue.display();
-            ButtonHandler.buttonContinue.unblock();
-            ButtonHandler.buttonReturn.display();
-            ButtonHandler.buttonReturn.unblock();
-
             Game.sound.playTextBoxAppear();
 
         } else {

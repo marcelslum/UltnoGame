@@ -220,12 +220,7 @@ public class ButtonHandler {
                     }
 
                 } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_RANKING){
-
-                    if (GameStateHandler.previousMenuRankingState == GameStateHandler.GAME_STATE_MENU_GOOGLE){
-                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_GOOGLE);
-                    } else if (GameStateHandler.previousMenuRankingState == GameStateHandler.GAME_STATE_MENU_INICIAL){
-                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
-                    }
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
                 } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_RANKING_AJUDA){
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
                 } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_OUTROS_RANKINGS){
@@ -264,7 +259,6 @@ public class ButtonHandler {
                     } else {
                         MessagesHandler.messageStatTittle.clearDisplay();
                         MessagesHandler.messageStatDescricao.clearDisplay();
-                        MessagesHandler.statsTextView.clearDisplay();
                         Game.statsGraphs.clear();
                         GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
                     }
@@ -309,7 +303,11 @@ public class ButtonHandler {
             public void onPress() {
                 Game.vibrate(Game.VIBRATE_SMALL);
                 Game.sound.playPlayMenuBig();
+
                 if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OBJETIVO){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OPCOES){
+                    SelectorHandler.backAllSelectors();
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
                 }
             }

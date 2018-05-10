@@ -277,6 +277,7 @@ public class MessagesHandler {
                     Color.azulMedio
             );
 
+        bottomTextBox.layer = Layers.LAYER9;
         Game.adicionarEntidadeFixa(bottomTextBox);
 
         /*
@@ -311,7 +312,7 @@ public class MessagesHandler {
         MessagesHandler.messageTrainingState = new Text("messageTrainingState",
                 Game.resolutionX*0.98f, Game.gameAreaResolutionY*0.745f, Game.resolutionY*0.051f,".", Game.font, new Color(0.35f, 0.35f, 0.35f, 1f), Text.TEXT_ALIGN_RIGHT);
         MessagesHandler.messageTrainingState.setAlpha(0.7f);
-        Game.adicionarEntidadeFixa(messageTrainingState2);
+        Game.adicionarEntidadeFixa(messageTrainingState);
 
 
         MessagesHandler.messageBack = new Text("messageBack",

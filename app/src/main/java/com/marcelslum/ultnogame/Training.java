@@ -145,6 +145,7 @@ public class Training {
         Game.resultadoTreinamentoAnotado = false;
 
         if (treinamentoSucesso){
+
             treinamentoSucesso = false;
 
             tentativaCertaTreinamento += 1;
@@ -165,6 +166,7 @@ public class Training {
 
                 Game.stopAllGameEntities();
                 GameStateHandler.setGameState(GameStateHandler.GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
+
             } else {
 
                 if (MessagesHandler.messageTrainingState != null) {
@@ -177,7 +179,7 @@ public class Training {
                 }
 
                 Game.stopAllGameEntities();
-                Game.reduceAllGameEntitiesAlpha(500);
+                //Game.reduceAllGameEntitiesAlpha(500);
                 trainingNumber += 1;
                 if (trainingNumber <= 20) {
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_DURANTE_TREINAMENTO);

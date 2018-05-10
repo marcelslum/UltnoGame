@@ -283,17 +283,14 @@ public class Stats {
     public static void showCurrentStat() {
 
         Game.statsGraphs.clear();
-
         MessagesHandler.messageStatTittle.display();
-
         MessagesHandler.messageStatDescricao = new TextView("messageStatDescricao", Game.resolutionX * 0.49f,
                 Game.resolutionY * 0.88f,
                 Game.resolutionX * 0.75f,
                 Game.resolutionY * 0.4f,
                 Game.gameAreaResolutionY*0.035f,
                 Game.font, Color.cinza20, Text.TEXT_ALIGN_CENTER, 0.4f);
-
-
+        Game.adicionarEntidadeFixa(MessagesHandler.messageStatDescricao);
         MessagesHandler.messageStatDescricao.display();
 
 
@@ -488,10 +485,6 @@ public class Stats {
 
 
         } else if (currentStatsSheet == OUTROS_DADOS) {
-
-            if (MessagesHandler.statsTextView != null) {
-                MessagesHandler.statsTextView.clearDisplay();
-            }
 
             MessagesHandler.messageStatTittle.setText(Game.mainActivity.getResources().getString(R.string.dados_diveros));
             MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_outros_dados_explicacao), corExplicacaoGrafico);

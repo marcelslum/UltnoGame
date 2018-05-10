@@ -53,7 +53,7 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 SaveGame.saveGame.saveMenuSeen = true;
-                GameStateHandler.setGameState(GameStateHandler.previousMenuSaveFirstTimeState);
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
                 GoogleAPI.showSnapshots();
             }
         });
@@ -61,7 +61,7 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 menuFirstSaveGame.blockAndClearDisplay();
-                GameStateHandler.setGameState(GameStateHandler.previousMenuSaveFirstTimeState);
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
                 GoogleAPI.showSnapshots();
             }
         });
@@ -200,8 +200,7 @@ public class MenuHandler {
             public void onChoice() {
 
                 if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_DURANTE_TREINAMENTO){
-                    Game.increaseAllGameEntitiesAlpha(500);
-
+                    Game.increaseAllGameEntitiesAlpha(300);
                     menuDuranteTreinamento.reduceAlpha(500,0f, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationEnd() {
@@ -406,7 +405,7 @@ public class MenuHandler {
             public void onChoice() {
                 if (Game.mainActivity.isSignedIn()){
                     SaveGame.saveGame.googleOption = 0;
-                    Game.mainActivity.signOut();
+                    GoogleAPI.desconnectGoogle();
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
                 } else {
                     Splash.forSignin = true;
@@ -458,56 +457,16 @@ public class MenuHandler {
         
         // -------------------------------------------MENU GOOGLE_GERAL
         menuGoogleGeral = new Menu("menuGoogleGeral", 
-                                   Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
+                                   Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.65f, fontSize, Game.font);
         Game.adicionarEntidadeFixa(menuGoogleGeral);
-
-        menuGoogleGeral.addMenuOption("conquistas", Game.getContext().getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mAchievementsClient == null){
-                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
-                } else {
-                    GoogleAPI.showAchievements();
-                }
-
-            }
-        });
-
-        menuGoogleGeral.addMenuOption("ranking", Game.getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
-            }
-        });
-
-        menuGoogleGeral.addMenuOption("salvar", Game.getContext().getResources().getString(R.string.salvar), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
-                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
-                } else {
-
-                    if (Game.sempreVerSaveMenu){
-                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_SAVE_FIRST_TIME);
-                    } else {
-                        if (SaveGame.saveGame.saveMenuSeen) {
-                            GoogleAPI.showSnapshots();
-                        } else {
-                            SaveGame.saveGame.saveMenuSeen = true;
-                            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_SAVE_FIRST_TIME);
-                        }
-                    }
-                }
-            }
-        });
 
         menuGoogleGeral.addMenuOption("google", Game.getContext().getResources().getString(R.string.logarGoogle), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 if (Game.mainActivity.isSignedIn()){
                     SaveGame.saveGame.googleOption = 0;
-                    Game.mainActivity.signOut();
-                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
+                    GoogleAPI.desconnectGoogle();
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
                 } else {
                     Splash.forSignin = true;
                     SaveGame.saveGame.googleOption = 1;
@@ -610,7 +569,7 @@ public class MenuHandler {
 
 
         // ----------------------------------------------------MENU_PAUSE
-        menuPause = new Menu("menuPause",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.4f, fontSize, Game.font);
+        menuPause = new Menu("menuPause",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
         Game.adicionarEntidadeFixa(menuPause);
 
         menuPause.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.continuarJogar), new MenuOption.OnChoice() {
@@ -691,8 +650,8 @@ public class MenuHandler {
         });
 
         // ----------------------------------------------------MENU IN GAME OPTIONS
-        menuPauseOpcoes = new Menu("menuPauseOpcoes",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.37f, fontSize, Game.font);
-        Game.adicionarEntidadeFixa(menuPause);
+        menuPauseOpcoes = new Menu("menuPauseOpcoes",Game.gameAreaResolutionX*0.5f, Game.gameAreaResolutionY*0.42f, fontSize, Game.font);
+        Game.adicionarEntidadeFixa(menuPauseOpcoes);
 
         menuPauseOpcoes.addMenuOption("difficulty", Game.getContext().getResources().getString(R.string.velocidade), new MenuOption.OnChoice() {
             @Override
@@ -719,14 +678,6 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 SelectorHandler.selectorVibration.fromMenu(menuPauseOpcoes);
-            }
-        });
-
-        menuPauseOpcoes.addMenuOption("retornar", Game.getContext().getResources().getString(R.string.retornar), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                SelectorHandler.backAllSelectors();
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
             }
         });
     }

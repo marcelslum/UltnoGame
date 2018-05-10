@@ -675,7 +675,7 @@ public class Game {
 
     public static void reduceAllGameEntitiesAlpha(int duration){
 
-        //Log.e(TAG, "reduceAllGameEntitiesAlpha");
+        Log.e(TAG, "reduceAllGameEntitiesAlpha");
 
         for (Entity e : collectAllGameEntities()){
             e.reduceAlpha(duration, 0.2f);
@@ -1724,6 +1724,13 @@ public class Game {
 
         if (!Game.paraGravacaoVideo) {
             if (messages != null) messages.prepareRender(matrixView, matrixProjection);
+        }
+
+
+        for (int i = 0; i < entidadesFixas.length; i++) {
+            if (entidadesFixas[i] != null && entidadesFixas[i].layer == Layers.LAYER9){
+                entidadesFixas[i].prepareRender(matrixView, matrixProjection);
+            }
         }
 
         for (int i = 0; i < entidadesFixas.length; i++) {
