@@ -207,8 +207,31 @@ public class ButtonHandler {
 
                         GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
                     }
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_GOOGLE){
 
+                    if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.unblock();
+
+                    if (GameStateHandler.previousMenuGoogleState == GameStateHandler.GAME_STATE_MENU_INICIAL){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+                    } else if (GameStateHandler.previousMenuGoogleState == GameStateHandler.GAME_STATE_OPCOES){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_OPCOES);
+                    } else if (GameStateHandler.previousMenuGoogleState == GameStateHandler.GAME_STATE_MENU_JOGAR){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
+                    }
+
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_RANKING){
+
+                    if (GameStateHandler.previousMenuRankingState == GameStateHandler.GAME_STATE_MENU_GOOGLE){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_GOOGLE);
+                    } else if (GameStateHandler.previousMenuRankingState == GameStateHandler.GAME_STATE_MENU_INICIAL){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+                    }
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_RANKING_AJUDA){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_OUTROS_RANKINGS){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
                 }
+
             }
         });
 

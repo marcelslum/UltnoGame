@@ -256,7 +256,7 @@ public class Game {
 
         frame = new Rectangle("topBlackFrame", 0f, 0f, Entity.TYPE_OTHER, Game.resolutionX, Game.resolutionY, -1, new Color(0f, 0f, 0f, 1f));
         adicionarEntidadeFixa(frame);
-        frame.layer = Layer.LAYER10;
+        frame.layer = Layers.LAYER10;
         frame.clearDisplay();
         frame.alpha = 0f;
         TextureData.getTextureData();
@@ -1688,7 +1688,7 @@ public class Game {
         if (Tutorial.tutorialTextBox != null) Tutorial.tutorialTextBox.prepareRender(matrixView, matrixProjection);
 
         for (int i = 0; i < entidadesFixas.length; i++) {
-            if (entidadesFixas[i] != null && entidadesFixas[i].layer == LAYER1){
+            if (entidadesFixas[i] != null && entidadesFixas[i].layer == Layers.LAYER1){
                 if (Game.paraGravacaoVideo){
                     if (entidadesFixas[i] != MessagesHandler.messageTime &&
                         entidadesFixas[i] != MessagesHandler.messageCurrentLevel &&
@@ -1727,7 +1727,7 @@ public class Game {
         }
 
         for (int i = 0; i < entidadesFixas.length; i++) {
-            if (entidadesFixas[i] != null && entidadesFixas[i].layer == LAYER10){
+            if (entidadesFixas[i] != null && entidadesFixas[i].layer == Layers.LAYER10){
                 entidadesFixas[i].prepareRender(matrixView, matrixProjection);
             }
         }

@@ -476,6 +476,14 @@
     <string name="messageMenuAbout">Sobre:</string>
 
 
+    <string name="sobreRankingEstatisticos1">SOBRE:</string>
+    <string name="sobreRankingEstatisticos2">SOBRE:</string>
+    <string name="sobreRankingEstatisticos3">SOBRE:</string>
+    <string name="sobreRankingEstatisticos4">SOBRE:</string>
+    <string name="sobreRankingEstatisticos5">SOBRE:</string>
+    <string name="sobreRankingEstatisticos6">SOBRE:</string>
+    <string name="sobreRankingEstatisticos7">SOBRE:</string>
+
 
     <string name="sobre1">SOBRE:</string>
     <string name="sobre1b">.</string>
@@ -745,6 +753,9 @@
     <string name="stat_angulo_aumentado_explicacao">Número de vezes em que o ângulo foi aumentado, conforme tipo do movimento</string>
     <string name="stat_tempo_velocidade_explicacao">Tempo em que as bolas foram mantidas nas velocidades média, máxima ou mínima.</string>
     <string name="stat_velocidade_explicacao">Número de vezes em que a velocidade foi alterada ou permaneceu igual no contato com a barra</string>
+    <string name="menu_ranking_ajuda">Sobre os rankings</string>
+    <string name="menu_ranking_1">Ranking Pontuação Total</string>
+    <string name="menu_ranking_2">Ranking Media Pontuação</string>
 
 
 </resources>

@@ -39,6 +39,7 @@ public class MessagesHandler {
     static Text messageStatTittle;
     static TextView messageStatDescricao;
     static TextView aboutTextView;
+    static TextView explicacaoRankingEstatisticosTextView;
     static TextView notConnectedTextView;
 
     static float yOfMessageBackAndContinue;
@@ -96,6 +97,18 @@ public class MessagesHandler {
         aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
         aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
 
+        explicacaoRankingEstatisticosTextView = new TextView("explicacaoRankingEstatisticosTextView", Game.resolutionX * 0.1f,
+                Game.resolutionY * 0.2f,
+                Game.resolutionX * 0.8f,
+                Game.resolutionY * 0.8f,
+                Game.gameAreaResolutionY*0.05f,
+                Game.font, new Color(0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT, 0.4f);
+        Game.adicionarEntidadeFixa(explicacaoRankingEstatisticosTextView);
+        explicacaoRankingEstatisticosTextView.addText(resources.getString(R.string.sobreRankingEstatisticos1), Color.azul, 1.5f);
+        explicacaoRankingEstatisticosTextView.addText(".", Color.transparente);
+        explicacaoRankingEstatisticosTextView.addText(resources.getString(R.string.sobreRankingEstatisticos2), Color.azul);
+        explicacaoRankingEstatisticosTextView.addText(resources.getString(R.string.sobreRankingEstatisticos3), Color.cinza20, 1.3f);
+        explicacaoRankingEstatisticosTextView.addText(resources.getString(R.string.sobreRankingEstatisticos4), Color.cinza40);
 
 
         float fontSize = Game.gameAreaResolutionY*0.08f;

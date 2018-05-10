@@ -1,3 +1,5 @@
+package com.marcelslum.ultnogame;
+
 public class Layers{
 
 public static final int LAYER1 = 1;

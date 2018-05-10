@@ -45,6 +45,12 @@ public class GoogleAPI {
     static ImageBitmap playerIconImage;
     static Bitmap playerIcon;
 
+    public static void hideGoogleInfo(){
+        MessagesHandler.messageGoogleLogged.clearDisplay();
+        if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.clearDisplay();
+    }
+
+
     public static void displayGoogleInfo(){
 
         MessagesHandler.messageGoogleLogged.display();
@@ -59,6 +65,38 @@ public class GoogleAPI {
                     playerIconImage.setBitmap(playerIcon);
                 } else {
                     playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, playerIcon);
+                    playerIconImage.setListener(new InteractionListener("listenerplayerIconImage",
+                            Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f,
+                            5000, playerIconImage,
+                            new InteractionListener.PressListener() {
+                                @Override
+                                public void onPress() {
+                                    if (!playerIconImage.isBlocked){
+
+                                        playerIconImage.block();
+
+                                        Animation anim = Utils.createAnimation3v(playerIconImage, "scaleX", "scaleX",
+                                                400, 0f,  1f, 0.07f, 0.85f, 1f, 1f, false, true);
+                                        anim.setAnimationListener(new Animation.AnimationListener() {
+                                            @Override
+                                            public void onAnimationEnd() {
+                                                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_GOOGLE);
+                                            }
+                                        });
+                                        anim.start();
+
+                                        Utils.createAnimation3v(playerIconImage, "scaleY", "scaleY",
+                                                400, 0f,  1f, 0.07f, 0.85f, 1f, 1f, false, true).start();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onUnpress() {
+
+                                }
+                            }
+                    ));
                     Game.adicionarEntidadeFixa(playerIconImage);
                 }
 
@@ -74,7 +112,6 @@ public class GoogleAPI {
 
 
     }
-
 
     public static class AchievementData{
         public String name;
@@ -185,7 +222,6 @@ public class GoogleAPI {
             });
         }
     }
-
 
     public static void loadAchievements(){
 

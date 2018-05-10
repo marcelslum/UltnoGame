@@ -21,7 +21,8 @@ public class MenuHandler {
     static Menu menuPlay;
     static Menu menuDuranteTreinamento;
     static Menu menuGoogleGeral;
-    static Menu menuRankingEstatisticos;
+    static Menu menuRanking;
+    static Menu menuOutrosRankings;
 
     public static String TAG = "MenuHandler";
 
@@ -52,7 +53,7 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 SaveGame.saveGame.saveMenuSeen = true;
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+                GameStateHandler.setGameState(GameStateHandler.previousMenuSaveFirstTimeState);
                 GoogleAPI.showSnapshots();
             }
         });
@@ -60,17 +61,32 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 menuFirstSaveGame.blockAndClearDisplay();
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+                GameStateHandler.setGameState(GameStateHandler.previousMenuSaveFirstTimeState);
                 GoogleAPI.showSnapshots();
             }
         });
         
-        // MENU RANKING ESTATISTICOS
+        // MENU RANKING
 
-        menuRankingEstatisticos = new Menu("menuRankingEstatisticos", 
+        menuRanking = new Menu("menuRanking",
                                            Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
-        Game.adicionarEntidadeFixa(menuRankingEstatisticos);
-        menuRankingEstatisticos.addMenuOption("ranking_estatistico_1", Game.getContext().getResources().getString(R.string.okEntendi), new MenuOption.OnChoice() {
+        Game.adicionarEntidadeFixa(menuRanking);
+
+
+        menuRanking.addMenuOption("menu_ranking_1 1", Game.getContext().getResources().getString(R.string.menu_ranking_1), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+
+                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
+                } else {
+                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
+                }
+
+            }
+        });
+        
+        menuRanking.addMenuOption("menu_ranking_2", Game.getContext().getResources().getString(R.string.menu_ranking_2), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
@@ -80,8 +96,20 @@ public class MenuHandler {
                 }
             }
         });
-        
-        menuRankingEstatisticos.addMenuOption("ranking_estatistico_2", Game.getContext().getResources().getString(R.string.okEntendi), new MenuOption.OnChoice() {
+
+        menuRanking.addMenuOption("menu_ranking_ajuda", Game.getContext().getResources().getString(R.string.menu_ranking_ajuda), new MenuOption.OnChoice() {
+            @Override
+            public void onChoice() {
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_RANKING_AJUDA);
+            }
+        });
+
+        // MENU OUTROS RANKINGS
+        menuOutrosRankings = new Menu("menuOutrosRankings",
+                Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.5f, fontSize, Game.font);
+        Game.adicionarEntidadeFixa(menuOutrosRankings);
+
+        menuOutrosRankings.addMenuOption("menu_ranking_1 1", Game.getContext().getResources().getString(R.string.menu_ranking_1), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
@@ -91,8 +119,8 @@ public class MenuHandler {
                 }
             }
         });
-        
-        menuRankingEstatisticos.addMenuOption("ranking_estatistico_3", Game.getContext().getResources().getString(R.string.okEntendi), new MenuOption.OnChoice() {
+
+        menuOutrosRankings.addMenuOption("menu_ranking_2", Game.getContext().getResources().getString(R.string.menu_ranking_2), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
@@ -100,35 +128,6 @@ public class MenuHandler {
                 } else {
                     GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
                 }
-            }
-        });
-        
-        menuRankingEstatisticos.addMenuOption("ranking_estatistico_4", Game.getContext().getResources().getString(R.string.okEntendi), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
-                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
-                } else {
-                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
-                }
-            }
-        });
-        
-        menuRankingEstatisticos.addMenuOption("ranking_estatistico_5", Game.getContext().getResources().getString(R.string.okEntendi), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
-                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
-                } else {
-                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
-                }
-            }
-        });
-        
-        menuRankingEstatisticos.addMenuOption("ranking_estatistico_ajuda", Game.getContext().getResources().getString(R.string.okEntendi), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                GameStateHandler.setGameState(GAME_STATE_ESTATISTICA_RANKING_AJUDA);
             }
         });
        
@@ -190,13 +189,6 @@ public class MenuHandler {
             @Override
             public void onChoice() {
                 GameStateHandler.setGameState(GameStateHandler.GAME_STATE_ESTATISTICAS);
-            }
-        });
-        
-         menuPlay.addMenuOption("estatisticas_ranking", Game.getContext().getResources().getString(R.string.estatisticas_ranking), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_ESTATISTICAS_RANKING);
             }
         });
 
@@ -469,7 +461,7 @@ public class MenuHandler {
                                    Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
         Game.adicionarEntidadeFixa(menuGoogleGeral);
 
-        menuInicial.addMenuOption("conquistas", Game.getContext().getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
+        menuGoogleGeral.addMenuOption("conquistas", Game.getContext().getResources().getString(R.string.conquistas), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 if (!Game.mainActivity.isSignedIn() || GoogleAPI.mAchievementsClient == null){
@@ -481,18 +473,14 @@ public class MenuHandler {
             }
         });
 
-        menuInicial.addMenuOption("ranking", Game.getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
+        menuGoogleGeral.addMenuOption("ranking", Game.getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
-                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
-                } else {
-                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
-                }
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
             }
         });
 
-        menuInicial.addMenuOption("salvar", Game.getContext().getResources().getString(R.string.salvar), new MenuOption.OnChoice() {
+        menuGoogleGeral.addMenuOption("salvar", Game.getContext().getResources().getString(R.string.salvar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
@@ -512,8 +500,8 @@ public class MenuHandler {
                 }
             }
         });
-        
-        menuOptions.addMenuOption("google", Game.getContext().getResources().getString(R.string.logarGoogle), new MenuOption.OnChoice() {
+
+        menuGoogleGeral.addMenuOption("google", Game.getContext().getResources().getString(R.string.logarGoogle), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
                 if (Game.mainActivity.isSignedIn()){
@@ -563,11 +551,7 @@ public class MenuHandler {
         menuInicial.addMenuOption("ranking", Game.getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
-                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
-                } else {
-                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
-                }
+                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
             }
         });
 
