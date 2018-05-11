@@ -59,6 +59,23 @@ Save this file as res/values/games-ids.xml in your project.
     <string name="achievement_teste9" translatable="false">CgkIjNyO58cTEAIQTA</string>
 
 
+
+        <!-- leaderboard Ranking Geral de Pontos -->
+        <string name="leaderboard_ranking_geral_de_pontos" translatable="false">CgkIjNyO58cTEAIQUw</string>
+        <!-- leaderboard Pontuação vitoriosa -->
+        <string name="leaderboard_pontuao_vitoriosa" translatable="false">CgkIjNyO58cTEAIQTg</string>
+        <!-- leaderboard Pontuação Vitórias e Derrotas -->
+        <string name="leaderboard_pontuao_vitrias_e_derrotas" translatable="false">CgkIjNyO58cTEAIQTw</string>
+        <!-- leaderboard Multitarefa -->
+        <string name="leaderboard_multitarefa" translatable="false">CgkIjNyO58cTEAIQUA</string>
+        <!-- leaderboard Tempo bem gasto -->
+        <string name="leaderboard_tempo_bem_gasto" translatable="false">CgkIjNyO58cTEAIQTQ</string>
+        <!-- leaderboard Alta velocidade -->
+        <string name="leaderboard_alta_velocidade" translatable="false">CgkIjNyO58cTEAIQUg</string>
+        <!-- leaderboard Variando a velocidade -->
+        <string name="leaderboard_variando_a_velocidade" translatable="false">CgkIjNyO58cTEAIQUQ</string>
+
+
         <!-- leaderboard Geral -->
         <string name="leaderboard_0" translatable="false">CgkIjNyO58cTEAIQMA</string>
         <!-- leaderboard Inicio -->

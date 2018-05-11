@@ -186,12 +186,20 @@ public class SaveGame {
         loaded = true;
     }
 
+
+    static String lastSavedGame;
+
+
     public void save(){
 
         if (Utils.getTimeMilliPrecision() - lastSave < MIN_TIME_BEFORE_RESAVE) {
             //Log.e(TAG, "Jogo não foi salvo porque foi salvo recentemente.");
             return;
         }
+
+        Stats.updateStatsRankings();
+
+
         //Log.e(TAG, "save()");
         AsyncTasks.save = new SaveAsyncTask().execute();
     }
@@ -204,12 +212,21 @@ public class SaveGame {
                 return -1;
             }
 
-            lastSave = Utils.getTimeMilliPrecision();
-
-
             Log.e(TAG, "-----------------------------------------Salvando SaveGame");
             log(SaveGame.saveGame);
 
+            String saveJSON = getJSONFromSaveGame(saveGame);
+
+            if (lastSavedGame == null){
+                lastSavedGame = saveJSON;
+            } else if (lastSavedGame.equals(saveJSON)){
+                Log.e(TAG, "Não salvando jogo, em razão de o última save ser igual ao atual");
+                return 1;
+            } else {
+                lastSavedGame = saveJSON;
+            }
+
+            lastSave = Utils.getTimeMilliPrecision();
 
             try {
                 DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
@@ -228,7 +245,7 @@ public class SaveGame {
         }
 
         protected void onPostExecute(Integer result) {
-            //Log.e(TAG, "Jogo salvo");
+            Log.e(TAG, "Terminou de salvar o jogo assincronizadamente");
         }
     }
 

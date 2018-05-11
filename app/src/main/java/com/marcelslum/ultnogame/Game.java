@@ -40,6 +40,8 @@ public class Game {
     public static boolean apagarEstatisticasNoInicio = false;
     public static boolean apagarEstatisticasNoMenu = false;
     public static boolean logNotificacaoLevelGoals = false;
+    public static boolean reiniciarPontuacaoRankings = true;
+
 
 
     public static MyGLSurface myGlSurface;

@@ -316,6 +316,8 @@ public class GoogleAPI {
 
     public static void submitScore(String id, long value){
 
+        Log.e(TAG, "submitScore " + id + " pontuação " + value);
+
         if (Game.mainActivity.isSignedIn()) {
             Log.e(TAG, "submitScore "+value);
             mLeaderboardsClient.submitScore(id, value);

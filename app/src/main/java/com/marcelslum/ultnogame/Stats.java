@@ -10,28 +10,120 @@ public class Stats {
     // DADOS ARMAZENADOS
     
     // rankings
-    // 1 - sem morte - porcentagem de tempo jogado terminando com vitoria versus derrota
+    // 1 - sem morte - porcentagem de tempo jogado terminando com vitoria versus derrota - leaderboard_tempo_bem_gasto
     
-    // 2 - multitask - media ponderada do tempo em que é mantida uma ou mais bolas vivas
+    // 2 - multitask - media ponderada do tempo em que é mantida uma ou mais bolas vivas - leaderboard_multitarefa
     //      (tempo1Bola / tempoTotal) * 10
     //      (tempo2Bolas / tempoTotal) * 50
     //      (tempo3Bolas / tempoTotal) * 100
     //      (tempo4Bolas / tempoTotal) * 200
     //      (tempo5OuMaisBolas / tempoTotal) * 500
    
-    // 3 - variacao velocidade
+    // 3 - variacao velocidade - leaderboard_variando_a_velocidade
     // numero de vezes que a velocidade aumenta ou diminui dividido por numero de vezes em que a velocidade não altera
     
-    // 4 - rapidez
+    // 4 - rapidez - leaderboard_alta_velocidade
     //      tempo da velocidade baixa * 10 
     //      tempo velocidade media baixa * 20
     //      tempo velocidade media alta * 30
-    //      tempo velocidade alta * 40
+    //      tempo velocidade alta * 50
     
-    // 5 - media de pontos obtidos em vitorias ou derrotas
+    // 5 - media de pontos obtidos em vitorias ou derrotas - leaderboard_pontuao_vitrias_e_derrotas
     
-    // 6 - media de pontos obtido em vitorias
-    
+    // 6 - media de pontos obtido em vitorias - leaderboard_pontuao_vitoriosa
+
+
+    public static boolean rankingsReiniciados = false;
+    static void updateStatsRankings(){
+
+
+        if (Game.reiniciarPontuacaoRankings && !rankingsReiniciados) {
+            rankingsReiniciados = true;
+
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_pontuao_vitoriosa), 0);
+
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_tempo_bem_gasto), 0);
+
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_pontuao_vitrias_e_derrotas), 0);
+
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_alta_velocidade),0);
+
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_alta_velocidade),0);
+
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_multitarefa),0);
+
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_0),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_1),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_2),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_3),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_4),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_5),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_6),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_7),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_8),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_9),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_10),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_11),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_12),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_13),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_14),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_15),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_16),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_17),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_18),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_19),0);
+            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_20),0);
+
+        }
+
+
+        if (SaveGame.saveGame.stats[43] != 0) {
+            GoogleAPI.submitScore(Game.mainActivity.getResources().getString(R.string.leaderboard_pontuao_vitoriosa),
+                    (long) (((double) SaveGame.saveGame.stats[40] / (double)SaveGame.saveGame.stats[43]) * 1000));
+        }
+
+        if (SaveGame.saveGame.stats[30] != 0) {
+            GoogleAPI.submitScore(Game.mainActivity.getResources().getString(R.string.leaderboard_tempo_bem_gasto),
+                    (long) (((double) SaveGame.saveGame.stats[29] / (double)SaveGame.saveGame.stats[30]) * 1000));
+        }
+
+        if (SaveGame.saveGame.stats[43] != 0 || SaveGame.saveGame.stats[44] != 0) {
+            GoogleAPI.submitScore(Game.mainActivity.getResources().getString(R.string.leaderboard_pontuao_vitrias_e_derrotas),
+                    (long) (((double) (SaveGame.saveGame.stats[40] + SaveGame.saveGame.stats[41]) /
+                            ((double)SaveGame.saveGame.stats[43] + (double)SaveGame.saveGame.stats[44]) * 1000)));
+        }
+
+        long tempoTotal = SaveGame.saveGame.stats[39] + SaveGame.saveGame.stats[30] + SaveGame.saveGame.stats[29];
+
+        if (SaveGame.saveGame.stats[49] != 0 || SaveGame.saveGame.stats[47] != 0) {
+            GoogleAPI.submitScore(Game.mainActivity.getResources().getString(R.string.leaderboard_alta_velocidade),
+                    (long) (((SaveGame.saveGame.stats[12] / (double) tempoTotal) * 10) +
+                            ((SaveGame.saveGame.stats[47] / (double) tempoTotal) * 20) +
+                            ((SaveGame.saveGame.stats[49] / (double) tempoTotal) * 30) +
+                            ((SaveGame.saveGame.stats[13] / (double) tempoTotal) * 50)));
+        }
+
+
+        if (SaveGame.saveGame.stats[31] != 0) {
+            GoogleAPI.submitScore(Game.mainActivity.getResources().getString(R.string.leaderboard_alta_velocidade),
+                    (long) (((SaveGame.saveGame.stats[3] + SaveGame.saveGame.stats[2]) / (double) SaveGame.saveGame.stats[31])) * 1000);
+        }
+
+        if (SaveGame.saveGame.stats[18] != 0) {
+            GoogleAPI.submitScore(Game.mainActivity.getResources().getString(R.string.leaderboard_multitarefa),
+                    (long) (((SaveGame.saveGame.stats[18] / (double) tempoTotal) * 10) +
+                            ((SaveGame.saveGame.stats[19] / (double) tempoTotal) * 20) +
+                            ((SaveGame.saveGame.stats[20] / (double) tempoTotal) * 35) +
+                            ((SaveGame.saveGame.stats[21] / (double) tempoTotal) * 60) +
+                            (((SaveGame.saveGame.stats[22] +
+                                    SaveGame.saveGame.stats[23] +
+                                    SaveGame.saveGame.stats[24] +
+                                    SaveGame.saveGame.stats[25] +
+                                    SaveGame.saveGame.stats[26] +
+                                    SaveGame.saveGame.stats[27]) / (double) tempoTotal) * 100)));
+        }
+
+    }
 
     static long anguloAumentado;
     static long anguloDiminuido;
