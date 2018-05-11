@@ -76,10 +76,10 @@ public class Stats {
 
         }
 
-
+        long pontuacaoVitoriosa = (long) (((double) SaveGame.saveGame.stats[40] / (double)SaveGame.saveGame.stats[43]));
+        Log.e(TAG, "pontuacaoVitoriosa " + pontuacaoVitoriosa);
         if (SaveGame.saveGame.stats[43] != 0) {
-            GoogleAPI.submitScore(Game.mainActivity.getResources().getString(R.string.leaderboard_pontuao_vitoriosa),
-                    (long) (((double) SaveGame.saveGame.stats[40] / (double)SaveGame.saveGame.stats[43]) * 1000));
+            GoogleAPI.submitScore(Game.mainActivity.getResources().getString(R.string.leaderboard_pontuao_vitoriosa), pontuacaoVitoriosa);
         }
 
         if (SaveGame.saveGame.stats[30] != 0) {
