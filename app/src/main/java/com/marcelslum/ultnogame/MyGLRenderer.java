@@ -17,7 +17,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     public static final String TAG = "MyGLRenderer";
-
+   
     // Our matrices
     private final float[] matrixProjection = new float[16];
     private final float[] matrixView = new float[16];
@@ -210,6 +210,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             Game.forBlueBallExplode = false;
             Game.myGlSurface.explodeBlueBall();
         }
+        
+        if (Game.backPressed){
+            Game.myGlSurface.onBackPressed();
+            Game.backPressed = false;
+        }
+        
+        
+        if (Game.forUpdateNamePlayer){
+            Game.myGlSurface.forUpdateNamePlayer();   
+            Game.forUpdateNamePlayer = false;
+        }
+        
 
 
         // Get the current time
