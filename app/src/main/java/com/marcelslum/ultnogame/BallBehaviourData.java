@@ -93,12 +93,12 @@ public class BallBehaviourData {
         }
 
         Game.ballDataPanel.previousAnglePercent = (initialAngle - minAngle) / (maxAngle - minAngle);
-        Log.e(TAG, "Game.ballDataPanel.previousAnglePercent "+ Game.ballDataPanel.previousAnglePercent);
+        //Log.e(TAG, "Game.ballDataPanel.previousAnglePercent "+ Game.ballDataPanel.previousAnglePercent);
         Game.ballDataPanel.previousVelocityPercent = (initialLen - minLen) / (maxLen - minLen);
-        Log.e(TAG, "Game.ballDataPanel.previousVelocityPercent "+ Game.ballDataPanel.previousVelocityPercent);
+        //Log.e(TAG, "Game.ballDataPanel.previousVelocityPercent "+ Game.ballDataPanel.previousVelocityPercent);
 
-        Log.e(TAG, "Game.ballDataPanel.newVelocityPercent "+ ((finalLen - minLen) / (maxLen - minLen)));
-        Log.e(TAG, "Game.ballDataPanel.newAnglePercent "+ ((finalAngle - minAngle) / (maxAngle - minAngle)));
+        //Log.e(TAG, "Game.ballDataPanel.newVelocityPercent "+ ((finalLen - minLen) / (maxLen - minLen)));
+        //Log.e(TAG, "Game.ballDataPanel.newAnglePercent "+ ((finalAngle - minAngle) / (maxAngle - minAngle)));
         Game.ballDataPanel.setData((finalLen - minLen) / (maxLen - minLen), (finalAngle - minAngle) / (maxAngle - minAngle), true);
 
         Game.ballDataPanel.ballAnimating = ball;

@@ -51,10 +51,13 @@ public class GoogleAPI {
     }
 
 
-    public static void desconnectGoogle(){
+    public static void disconnectGoogle(){
         Game.mainActivity.signOut();
-        GoogleAPI.playerIconImage.clearDisplay();
-        GoogleAPI.playerIconImage = null;
+        if (GoogleAPI.playerIconImage != null) {
+            GoogleAPI.playerIconImage.clearDisplay();
+            GoogleAPI.playerIconImage = null;
+        }
+
         MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado));
         MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
     }
@@ -62,14 +65,14 @@ public class GoogleAPI {
 
     public static void displayGoogleInfo(){
 
+        if (MessagesHandler.messageGoogleLogged == null) return;
+
         MessagesHandler.messageGoogleLogged.display();
 
-        //Log.e(TAG, "playerName "+playerName);
-
         if (SaveGame.saveGame.googleOption == 1 && Game.mainActivity.isSignedIn()){
-            Log.e(TAG, "mainActivity.isSignedIn()");
+            //Log.e(TAG, "mainActivity.isSignedIn()");
             if (playerIcon != null){
-                Log.e(TAG, "playerIcon != null");
+                //Log.e(TAG, "playerIcon != null");
                 if (playerIconImage != null){
                     playerIconImage.setBitmap(playerIcon);
                 } else {
@@ -113,11 +116,14 @@ public class GoogleAPI {
 
                 playerIconImage.display();
             } else {
-                Log.e(TAG, "playerIcon == null");
+                //Log.e(TAG, "playerIcon == null");
             }
 
             MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerName);
         } else {
+
+            //Log.e(TAG, "Exibindo mensagem não conectado");
+
             MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado));
         }
 
@@ -196,7 +202,7 @@ public class GoogleAPI {
                     ad = achievementsData.get(i);
                     ad.currentSteps += 1;
                     unlock = true;
-                    Log.e(TAG, "Conquista "+ad.name + " step "+ ad.currentSteps + " total " + ad.totalSteps);
+                    //Log.e(TAG, "Conquista "+ad.name + " step "+ ad.currentSteps + " total " + ad.totalSteps);
                     break;
                 }
             }
@@ -258,7 +264,7 @@ public class GoogleAPI {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "Não foi possível carregar os achievements do servidor");
+                //Log.e(TAG, "Não foi possível carregar os achievements do servidor");
                 achievementsData.clear();
             }
         });
@@ -278,7 +284,7 @@ public class GoogleAPI {
                 if (achievementsData.get(i).id.equals(id) && (achievementsData.get(i).currentSteps < achievementsData.get(i).totalSteps)){
                     ad = achievementsData.get(i);
                     ad.currentSteps += value;
-                    Log.e(TAG, "Conquista "+ad.name + " step "+ ad.currentSteps + " total " + ad.totalSteps);
+                    //Log.e(TAG, "Conquista "+ad.name + " step "+ ad.currentSteps + " total " + ad.totalSteps);
                     increment = true;
                     break;
                 }
@@ -316,10 +322,10 @@ public class GoogleAPI {
 
     public static void submitScore(String id, long value){
 
-        Log.e(TAG, "submitScore " + id + " pontuação " + value);
+        //Log.e(TAG, "submitScore " + id + " pontuação " + value);
 
         if (Game.mainActivity.isSignedIn()) {
-            Log.e(TAG, "submitScore "+value);
+           // Log.e(TAG, "submitScore "+value);
             mLeaderboardsClient.submitScore(id, value);
         }
 

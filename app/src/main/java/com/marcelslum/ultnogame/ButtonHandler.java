@@ -9,7 +9,7 @@ public class ButtonHandler {
     static Button buttonFinalTargetLeft;
     static Button buttonFinalTargetRight;
 
-    static Button buttonReturn;
+    static Button buttonBack;
     static Button buttonReturnObjectivesPause;
     static Button buttonContinue;
     static Button buttonGroupLeaderboard;
@@ -131,14 +131,14 @@ public class ButtonHandler {
         ButtonHandler.buttonFinalTargetLeft.blockAndClearDisplay();
         ButtonHandler.buttonFinalTargetRight.blockAndClearDisplay();
 
-        buttonReturn = Game.buttonPool.get();
-        Game.adicionarEntidadeFixa(buttonReturn);
+        buttonBack = Game.buttonPool.get();
+        Game.adicionarEntidadeFixa(buttonBack);
 
-        buttonReturn.setData("buttonReturn", buttonSize*0.5f,
+        buttonBack.setData("buttonBack", buttonSize*0.5f,
                 Game.resolutionY - (buttonSize*1.5f), buttonSize, buttonSize, Texture.TEXTURES, 1.2f,
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_ID),
                 TextureData.getTextureDataById(TextureData.TEXTURE_ARROW_LEFT_PRESS_ID));
-        buttonReturn.setOnPress(new Button.OnPress() {
+        buttonBack.setOnPress(new Button.OnPress() {
             @Override
             public void onPress() {
                 Game.vibrate(Game.VIBRATE_SMALL);
@@ -219,12 +219,6 @@ public class ButtonHandler {
                         GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
                     }
 
-                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_RANKING){
-                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
-                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_RANKING_AJUDA){
-                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
-                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_OUTROS_RANKINGS){
-                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
                 }
 
             }
@@ -287,7 +281,7 @@ public class ButtonHandler {
         frame1.addTopRectangle(0.9f, BallDataPanel.COLOR_BAR_GREEN_LIGHT.changeAlpha(0.1f), Color.zero, Color.zero, Color.zero,
                 0.05f, 0f, 1000f, Color.cinza40);
 
-        buttonReturn.addFrame(frame1);
+        buttonBack.addFrame(frame1);
 
 
         //-------------
@@ -336,8 +330,7 @@ public class ButtonHandler {
                 if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
                 } else {
-                    Game.vibrate(Game.VIBRATE_SMALL);
-                    Game.sound.playPlayMenuBig();
+
                     //Sound.playSoundPool(Sound.soundMenuSelectBig, 1, 1, 0);
                     if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_LEVEL){
 
@@ -409,6 +402,9 @@ public class ButtonHandler {
                         }
 
                         GoogleAPI.showLeaderboards(id);
+
+                        Game.vibrate(Game.VIBRATE_SMALL);
+                        Game.sound.playPlayMenuBig();
 
                     }
 

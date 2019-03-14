@@ -197,7 +197,7 @@ public class SaveGame {
             return;
         }
 
-        Stats.updateStatsRankings();
+        //Stats.updateStatsRankings();
 
 
         //Log.e(TAG, "save()");

@@ -39,42 +39,22 @@ Save this file as res/values/games-ids.xml in your project.
         <string name="achievement_inclinao_mxima" translatable="false">CgkIjNyO58cTEAIQLw</string>
 
 
-
-
-    <!-- achievement teste1 -->
-    <string name="achievement_teste1" translatable="false">CgkIjNyO58cTEAIQRQ</string>
-    <!-- achievement teste2 -->
-    <string name="achievement_teste2" translatable="false">CgkIjNyO58cTEAIQRg</string>
-    <!-- achievement teste3 -->
-    <string name="achievement_teste3" translatable="false">CgkIjNyO58cTEAIQRw</string>
-    <!-- achievement teste5 -->
-    <string name="achievement_teste5" translatable="false">CgkIjNyO58cTEAIQSA</string>
-    <!-- achievement teste6 -->
-    <string name="achievement_teste6" translatable="false">CgkIjNyO58cTEAIQSQ</string>
-    <!-- achievement teste7 -->
-    <string name="achievement_teste7" translatable="false">CgkIjNyO58cTEAIQSg</string>
-    <!-- achievement teste8 -->
-    <string name="achievement_teste8" translatable="false">CgkIjNyO58cTEAIQSw</string>
-    <!-- achievement teste9 -->
-    <string name="achievement_teste9" translatable="false">CgkIjNyO58cTEAIQTA</string>
-
-
-
-        <!-- leaderboard Ranking Geral de Pontos -->
-        <string name="leaderboard_ranking_geral_de_pontos" translatable="false">CgkIjNyO58cTEAIQUw</string>
-        <!-- leaderboard Pontuação vitoriosa -->
-        <string name="leaderboard_pontuao_vitoriosa" translatable="false">CgkIjNyO58cTEAIQTg</string>
-        <!-- leaderboard Pontuação Vitórias e Derrotas -->
-        <string name="leaderboard_pontuao_vitrias_e_derrotas" translatable="false">CgkIjNyO58cTEAIQTw</string>
-        <!-- leaderboard Multitarefa -->
-        <string name="leaderboard_multitarefa" translatable="false">CgkIjNyO58cTEAIQUA</string>
-        <!-- leaderboard Tempo bem gasto -->
-        <string name="leaderboard_tempo_bem_gasto" translatable="false">CgkIjNyO58cTEAIQTQ</string>
-        <!-- leaderboard Alta velocidade -->
-        <string name="leaderboard_alta_velocidade" translatable="false">CgkIjNyO58cTEAIQUg</string>
-        <!-- leaderboard Variando a velocidade -->
-        <string name="leaderboard_variando_a_velocidade" translatable="false">CgkIjNyO58cTEAIQUQ</string>
-
+        <!-- achievement teste1 -->
+        <string name="achievement_teste1" translatable="false">CgkIjNyO58cTEAIQRQ</string>
+        <!-- achievement teste2 -->
+        <string name="achievement_teste2" translatable="false">CgkIjNyO58cTEAIQRg</string>
+        <!-- achievement teste3 -->
+        <string name="achievement_teste3" translatable="false">CgkIjNyO58cTEAIQRw</string>
+        <!-- achievement teste5 -->
+        <string name="achievement_teste5" translatable="false">CgkIjNyO58cTEAIQSA</string>
+        <!-- achievement teste6 -->
+        <string name="achievement_teste6" translatable="false">CgkIjNyO58cTEAIQSQ</string>
+        <!-- achievement teste7 -->
+        <string name="achievement_teste7" translatable="false">CgkIjNyO58cTEAIQSg</string>
+        <!-- achievement teste8 -->
+        <string name="achievement_teste8" translatable="false">CgkIjNyO58cTEAIQSw</string>
+        <!-- achievement teste9 -->
+        <string name="achievement_teste9" translatable="false">CgkIjNyO58cTEAIQTA</string>
 
         <!-- leaderboard Geral -->
         <string name="leaderboard_0" translatable="false">CgkIjNyO58cTEAIQMA</string>

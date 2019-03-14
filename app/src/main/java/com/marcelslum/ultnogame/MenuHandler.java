@@ -21,8 +21,6 @@ public class MenuHandler {
     static Menu menuPlay;
     static Menu menuDuranteTreinamento;
     static Menu menuGoogleGeral;
-    static Menu menuRanking;
-    static Menu menuOutrosRankings;
 
     public static String TAG = "MenuHandler";
 
@@ -65,7 +63,8 @@ public class MenuHandler {
                 GoogleAPI.showSnapshots();
             }
         });
-        
+
+        /*
         // MENU RANKING
 
         menuRanking = new Menu("menuRanking",
@@ -130,6 +129,8 @@ public class MenuHandler {
                 }
             }
         });
+
+        */
        
 
         // MENU CARREGAR JOGO DA NUVEM
@@ -405,7 +406,7 @@ public class MenuHandler {
             public void onChoice() {
                 if (Game.mainActivity.isSignedIn()){
                     SaveGame.saveGame.googleOption = 0;
-                    GoogleAPI.desconnectGoogle();
+                    GoogleAPI.disconnectGoogle();
                     MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
                 } else {
                     Splash.forSignin = true;
@@ -465,7 +466,7 @@ public class MenuHandler {
             public void onChoice() {
                 if (Game.mainActivity.isSignedIn()){
                     SaveGame.saveGame.googleOption = 0;
-                    GoogleAPI.desconnectGoogle();
+                    GoogleAPI.disconnectGoogle();
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
                 } else {
                     Splash.forSignin = true;
@@ -510,7 +511,11 @@ public class MenuHandler {
         menuInicial.addMenuOption("ranking", Game.getContext().getResources().getString(R.string.ranking), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_RANKING);
+                if (!Game.mainActivity.isSignedIn() || GoogleAPI.mLeaderboardsClient == null){
+                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.precisa_google), 4000);
+                } else {
+                    GoogleAPI.showLeaderboards(Game.mainActivity.getResources().getString(R.string.leaderboard_0));
+                }
             }
         });
 

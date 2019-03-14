@@ -694,9 +694,23 @@ public class Sound {
     public static String getNextMusicFileName(){
 
 
+        int levelNumber = SaveGame.saveGame.currentLevelNumber;
+
+        int musicNumber = 2;
+        if (levelNumber % 2 == 1){
+            musicNumber = 1;
+        }
+
+        Log.e(TAG, "---- musica " + musicNumber);
+
         Log.e(TAG, "---- ANTES " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode);
 
         String nomeDoArquivo = "00-Intro.ogg";
+
+        if (musicNumber == 2){
+            nomeDoArquivo = "[Track02]-00-Intro.ogg";
+        }
+
 
         if (musicCurrentPart == MUSIC_PRE_INTRO){
             musicCurrentPart = MUSIC_INTRO;
@@ -704,7 +718,9 @@ public class Sound {
         }
 
         // se estiver na introdução, parteA, B ou C, deverá decidir qual será a próxima parte global
-        if (musicCurrentPart == MUSIC_INTRO || musicCurrentPart == MUSIC_PART_A || musicCurrentPart == MUSIC_PART_B || musicCurrentPart == MUSIC_PART_C || musicCurrentPart == MUSIC_PART_A_TO_PART_B || musicCurrentPart == MUSIC_PART_B_TO_PART_C) {
+        if (musicCurrentPart == MUSIC_INTRO || musicCurrentPart == MUSIC_PART_A || musicCurrentPart == MUSIC_PART_B || musicCurrentPart == MUSIC_PART_C) {
+            Log.e(TAG, "// se estiver na introdução, parteA, B ou C, deverá decidir qual será a próxima parte global");
+
             float percentageOfTargets = 1f;
             if (Game.numberOfTargets > 0) {
                 percentageOfTargets = (float) Game.numberOfTargetsAlives / (float) Game.numberOfTargets;
@@ -735,31 +751,63 @@ public class Sound {
             // CALCULA A PROXIMA SUBPARTE, RANDOMICAMENTE
             int nextSubPart = 0;
             float random = Utils.getRandonFloat(0f, 1f);
-            if (nextGlobalPart == MUSIC_GLOBAL_PART_A) {
-                if (random > 0.66f) {
-                    nextSubPart = MUSIC_SUB_PART_A_A1;
-                } else if (random > 0.33f) {
-                    nextSubPart = MUSIC_SUB_PART_A_A2;
-                } else {
-                    nextSubPart = MUSIC_SUB_PART_A_A3;
+
+            if (musicNumber == 1) {
+
+                if (nextGlobalPart == MUSIC_GLOBAL_PART_A) {
+
+                    if (random > 0.66f) {
+                        nextSubPart = MUSIC_SUB_PART_A_A1;
+                    } else if (random > 0.33f) {
+                        nextSubPart = MUSIC_SUB_PART_A_A2;
+                    } else {
+                        nextSubPart = MUSIC_SUB_PART_A_A3;
+                    }
+
+                } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B) {
+
+                    if (random > 0.66f) {
+                        nextSubPart = MUSIC_SUB_PART_B_A1;
+                    } else if (random > 0.33f) {
+                        nextSubPart = MUSIC_SUB_PART_B_A2;
+                    } else {
+                        nextSubPart = MUSIC_SUB_PART_B_A3;
+                    }
+
+                } else if (nextGlobalPart == MUSIC_GLOBAL_PART_C) {
+                    if (random > 0.66f) {
+                        nextSubPart = MUSIC_SUB_PART_C_A1;
+                    } else if (random > 0.33f) {
+                        nextSubPart = MUSIC_SUB_PART_C_A2;
+                    } else {
+                        nextSubPart = MUSIC_SUB_PART_C_A3;
+                    }
                 }
-            } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B) {
-                if (random > 0.66f) {
-                    nextSubPart = MUSIC_SUB_PART_B_A1;
-                } else if (random > 0.33f) {
-                    nextSubPart = MUSIC_SUB_PART_B_A2;
-                } else {
-                    nextSubPart = MUSIC_SUB_PART_B_A3;
+            } else {
+
+                if (nextGlobalPart == MUSIC_GLOBAL_PART_A) {
+                    if (random < 0.5f) {
+                        nextSubPart = MUSIC_SUB_PART_A_A1;
+                    } else {
+                        nextSubPart = MUSIC_SUB_PART_A_A2;
+                    }
+
+                } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B) {
+                    if (random < 0.5f) {
+                        nextSubPart = MUSIC_SUB_PART_B_A1;
+                    } else {
+                        nextSubPart = MUSIC_SUB_PART_B_A2;
+                    }
+                } else if (nextGlobalPart == MUSIC_GLOBAL_PART_C) {
+                    if (random < 0.5f) {
+                        nextSubPart = MUSIC_SUB_PART_C_A1;
+                    } else {
+                        nextSubPart = MUSIC_SUB_PART_C_A2;
+                    }
                 }
-            } else if (nextGlobalPart == MUSIC_GLOBAL_PART_C) {
-                if (random > 0.66f) {
-                    nextSubPart = MUSIC_SUB_PART_C_A1;
-                } else if (random > 0.33f) {
-                    nextSubPart = MUSIC_SUB_PART_C_A2;
-                } else {
-                    nextSubPart = MUSIC_SUB_PART_C_A3;
-                }
+
             }
+
 
             // DEFINE A VARIAVEL GLOBAL PART
             musicCurrentGlobalPart = nextGlobalPart;
@@ -767,7 +815,11 @@ public class Sound {
 
             // DEFINE A PROXIMA PARTE DE ACORDO COM OS DADOS CALCULADOS ACIMA
             if (musicCurrentPart == MUSIC_INTRO){
+                if (musicNumber == 1) {
                     musicCurrentPart = MUSIC_INTRO_TO_PART_A;
+                } else {
+                    musicCurrentPart = MUSIC_PART_A;
+                }
             } else if (musicCurrentPart == MUSIC_PART_A) {
                 if (nextGlobalPart == MUSIC_GLOBAL_PART_A){
                     musicCurrentPart = MUSIC_PART_A_TO_PART_A;
@@ -803,17 +855,17 @@ public class Sound {
                 // PARTE A PARA A
                 if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1){
                     if (nextSubPart == MUSIC_SUB_PART_A_A1){
-                        nomeDoArquivo = "01tr-Aa1-Aa1.ogg";
+                        nomeDoArquivo = musicNumber == 1 ? "01tr-Aa1-Aa1.ogg" : "[Track02]-01tr-Aa1-Aa1.ogg";
                     } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
-                        nomeDoArquivo = "01tr-Aa1-Aa2.ogg";
+                        nomeDoArquivo = musicNumber == 1 ? "01tr-Aa1-Aa2.ogg" : "[Track02]-01tr-Aa1-Aa2.ogg";
                     } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
                         nomeDoArquivo = "01tr-Aa1-Aa3.ogg";
                     }
                 } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2){
                     if (nextSubPart == MUSIC_SUB_PART_A_A1){
-                        nomeDoArquivo = "01tr-Aa2-Aa1.ogg";
+                        nomeDoArquivo = musicNumber == 1 ? "01tr-Aa2-Aa1.ogg" : "[Track02]-01tr-Aa2-Aa1.ogg";
                     } else if (nextSubPart == MUSIC_SUB_PART_A_A2){
-                        nomeDoArquivo = "01tr-Aa2-Aa2.ogg";
+                        nomeDoArquivo = musicNumber == 1 ? "01tr-Aa2-Aa2.ogg" : "[Track02]-01tr-Aa2-Aa2.ogg";
                     } else if (nextSubPart == MUSIC_SUB_PART_A_A3){
                         nomeDoArquivo = "01tr-Aa2-Aa3.ogg";
                     }
@@ -828,13 +880,31 @@ public class Sound {
                 }
 
             } else if (musicCurrentPart == MUSIC_PART_A_TO_PART_B) {
+
+                // SE FOR ENTRAR TRANSIÇÃO PARA PARTE A OU B, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY PARA O SEGUNDO TRACK
+                if (Utils.getRandonFloat(0f, 1f) < 0.6f){
+                    musicMelodyMode = false;
+                } else {
+                    musicMelodyMode = true;
+                }
+
                 // PARTE A PARA B
-                if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1) {
-                    nomeDoArquivo = "01z-Transition-Aa1-Ba1.ogg";
-                } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2) {
-                    nomeDoArquivo = "01z-Transition-Aa2-Ba1.ogg";
-                } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A3) {
-                    nomeDoArquivo = "01z-Transition-Aa3-Ba1.ogg";
+                if (musicMelodyMode) {
+                    if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1) {
+                        nomeDoArquivo = musicNumber == 1 ? "01z-Transition-Aa1-Ba1.ogg" : "[Track02]-01z_melody-Transition-Aa1-Ba1.ogg";
+                    } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2) {
+                        nomeDoArquivo = musicNumber == 1 ? "01z-Transition-Aa2-Ba1.ogg" : "[Track02]-01z_melody-Transition-Aa2-Ba1.ogg";
+                    } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A3) {
+                        nomeDoArquivo = "01z-Transition-Aa3-Ba1.ogg";
+                    }
+                } else {
+                    if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1) {
+                        nomeDoArquivo = musicNumber == 1 ? "01z-Transition-Aa1-Ba1.ogg" : "[Track02]-01z-Transition-Aa1-Ba1.ogg";
+                    } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2) {
+                        nomeDoArquivo = musicNumber == 1 ? "01z-Transition-Aa2-Ba1.ogg" : "[Track02]-01z-Transition-Aa2-Ba1.ogg";
+                    } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A3) {
+                        nomeDoArquivo = "01z-Transition-Aa3-Ba1.ogg";
+                    }
                 }
             } else if (musicCurrentPart == MUSIC_PART_B_TO_PART_B){
 
@@ -849,16 +919,16 @@ public class Sound {
                 if (musicCurrentSubPart == MUSIC_SUB_PART_B_A1){
                     if (nextSubPart == MUSIC_SUB_PART_B_A1){
                         if (musicMelodyMode){
-                            nomeDoArquivo = "02tr_melody-Ba1-Ba1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "02tr_melody-Ba1-Ba1.ogg" :"[Track02]-02tr_melody-Ba1-Ba1.ogg";
                         } else {
-                            nomeDoArquivo = "02tr-Ba1-Ba1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "02tr-Ba1-Ba1.ogg" : "[Track02]-02tr-Ba1-Ba1.ogg";
                         }
 
                     } else if (nextSubPart == MUSIC_SUB_PART_B_A2){
                         if (musicMelodyMode) {
-                            nomeDoArquivo = "02tr_melody-Ba1-Ba2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "02tr_melody-Ba1-Ba2.ogg" : "[Track02]-02tr_melody-Ba1-Ba2.ogg";
                         } else {
-                            nomeDoArquivo = "02tr-Ba1-Ba2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "02tr-Ba1-Ba2.ogg" : "[Track02]-02tr-Ba1-Ba2.ogg";
                         }
                     } else if (nextSubPart == MUSIC_SUB_PART_B_A3){
                         if (musicMelodyMode) {
@@ -871,16 +941,16 @@ public class Sound {
                 } else if (musicCurrentSubPart == MUSIC_SUB_PART_B_A2){
                     if (nextSubPart == MUSIC_SUB_PART_B_A1){
                         if (musicMelodyMode) {
-                            nomeDoArquivo = "02tr_melody-Ba2-Ba1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "02tr_melody-Ba2-Ba1.ogg" : "[Track02]-02tr_melody-Ba2-Ba1.ogg";
                         } else {
-                            nomeDoArquivo = "02tr-Ba2-Ba1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "02tr-Ba2-Ba1.ogg" : "[Track02]-02tr-Ba2-Ba1.ogg";
                         }
 
                     } else if (nextSubPart == MUSIC_SUB_PART_B_A2){
                         if (musicMelodyMode) {
-                            nomeDoArquivo = "02tr_melody-Ba2-Ba2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "02tr_melody-Ba2-Ba2.ogg" : "[Track02]-02tr_melody-Ba2-Ba2.ogg";
                         } else {
-                            nomeDoArquivo = "02tr-Ba2-Ba2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "02tr-Ba2-Ba2.ogg" : "[Track02]-02tr-Ba2-Ba2.ogg";
                         }
 
                     } else if (nextSubPart == MUSIC_SUB_PART_B_A3){
@@ -927,16 +997,16 @@ public class Sound {
 
                 if (musicCurrentSubPart == MUSIC_SUB_PART_B_A1) {
                     if (musicMelodyMode) {
-                        nomeDoArquivo = "02z_melody-Transition-Ba1-Ca1.ogg";
+                        nomeDoArquivo = musicNumber == 1 ? "02z_melody-Transition-Ba1-Ca1.ogg" : "[Track02]-02z_melody-Transition-Ba1-Ca1.ogg";
                     } else {
-                        nomeDoArquivo = "02z-Transition-Ba1-Ca1.ogg";
+                        nomeDoArquivo = musicNumber == 1 ? "02z-Transition-Ba1-Ca1.ogg" : "[Track02]-02z-Transition-Ba1-Ca1.ogg";
                     }
                     
                 } else if (musicCurrentSubPart == MUSIC_SUB_PART_B_A2) {
                     if (musicMelodyMode) {
-                        nomeDoArquivo = "02z_melody-Transition-Ba2-Ca1.ogg";
+                        nomeDoArquivo = musicNumber == 1 ? "02z_melody-Transition-Ba2-Ca1.ogg" : "[Track02]-02z_melody-Transition-Ba2-Ca1.ogg";
                     } else {
-                        nomeDoArquivo = "02z-Transition-Ba2-Ca1.ogg";
+                        nomeDoArquivo = musicNumber == 1 ? "02z-Transition-Ba2-Ca1.ogg" : "[Track02]-02z-Transition-Ba2-Ca1.ogg";
                     }
                     
                 } else if (musicCurrentSubPart == MUSIC_SUB_PART_B_A3) {
@@ -962,16 +1032,16 @@ public class Sound {
                 if (musicCurrentSubPart == MUSIC_SUB_PART_C_A1){
                     if (nextSubPart == MUSIC_SUB_PART_C_A1){
                         if (musicMelodyMode){
-                            nomeDoArquivo = "03tr_melody-Ca1-Ca1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "03tr_melody-Ca1-Ca1.ogg" : "[Track02]-03tr_melody-Ca1-Ca1.ogg";
                         } else {
-                            nomeDoArquivo = "03tr-Ca1-Ca1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "03tr-Ca1-Ca1.ogg" : "[Track02]-03tr-Ca1-Ca1.ogg";
                         }
 
                     } else if (nextSubPart == MUSIC_SUB_PART_C_A2){
                         if (musicMelodyMode) {
-                            nomeDoArquivo = "03tr_melody-Ca1-Ca2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "03tr_melody-Ca1-Ca2.ogg" : "[Track02]-03tr_melody-Ca1-Ca2.ogg";
                         } else {
-                            nomeDoArquivo = "03tr-Ca1-Ca2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "03tr-Ca1-Ca2.ogg" : "[Track02]-03tr-Ca1-Ca2.ogg";
                         }
                     } else if (nextSubPart == MUSIC_SUB_PART_C_A3){
                         if (musicMelodyMode) {
@@ -984,16 +1054,16 @@ public class Sound {
                 } else if (musicCurrentSubPart == MUSIC_SUB_PART_C_A2){
                     if (nextSubPart == MUSIC_SUB_PART_C_A1){
                         if (musicMelodyMode) {
-                            nomeDoArquivo = "03tr_melody-Ca2-Ca1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "03tr_melody-Ca2-Ca1.ogg" : "[Track02]-03tr_melody-Ca2-Ca1.ogg";
                         } else {
-                            nomeDoArquivo = "03tr-Ca2-Ca1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "03tr-Ca2-Ca1.ogg" : "[Track02]-03tr-Ca2-Ca1.ogg";
                         }
 
                     } else if (nextSubPart == MUSIC_SUB_PART_C_A2){
                         if (musicMelodyMode) {
-                            nomeDoArquivo = "03tr_melody-Ca2-Ca2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "03tr_melody-Ca2-Ca2.ogg" : "[Track02]-03tr_melody-Ca2-Ca2.ogg";
                         } else {
-                            nomeDoArquivo = "03tr-Ca2-Ca2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "03tr-Ca2-Ca2.ogg" : "[Track02]-03tr-Ca2-Ca2.ogg";
                         }
 
                     } else if (nextSubPart == MUSIC_SUB_PART_C_A3){
@@ -1030,10 +1100,25 @@ public class Sound {
             }
 
 
+            // para track02, como não tem transição da introdução para a parte A, pula direto para a parte A
+            if (musicCurrentPart == MUSIC_PART_A){
+                if (musicCurrentSubPart == MUSIC_SUB_PART_A_A1) {
+                    nextSubPart = MUSIC_SUB_PART_A_A1;
+                    nomeDoArquivo = "[Track02]-01-Aa1.ogg";
+                } else if (musicCurrentSubPart == MUSIC_SUB_PART_A_A2) {
+                    nextSubPart = MUSIC_SUB_PART_A_A2;
+                    nomeDoArquivo = "[Track02]-01-Aa2.ogg";
+                }
+            }
+
+
             // DEFINE A VARIAVEL CURRENT SUB PART
             musicCurrentSubPart = nextSubPart;
 
         } else {
+
+            Log.e(TAG, "// SE ESTIVER NUMA TRANSIÇÃO, PULA PARA A PROXIMA PARTE");
+
         // SE ESTIVER NUMA TRANSIÇÃO, PULA PARA A PROXIMA PARTE
 
             switch (musicCurrentPart){
@@ -1043,8 +1128,14 @@ public class Sound {
                 case MUSIC_PART_A_TO_PART_A:
                     musicCurrentPart = MUSIC_PART_A;
                     break;
+                case MUSIC_PART_A_TO_PART_B:
+                    musicCurrentPart = MUSIC_PART_B;
+                    break;
                 case MUSIC_PART_B_TO_PART_B:
                     musicCurrentPart = MUSIC_PART_B;
+                    break;
+                case MUSIC_PART_B_TO_PART_C:
+                    musicCurrentPart = MUSIC_PART_C;
                     break;
                 case MUSIC_PART_C_TO_PART_C:
                     musicCurrentPart = MUSIC_PART_C;
@@ -1055,10 +1146,10 @@ public class Sound {
                 case MUSIC_PART_A:
                     switch (musicCurrentSubPart){
                         case MUSIC_SUB_PART_A_A1:
-                            nomeDoArquivo = "01-Aa1.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "01-Aa1.ogg" : "[Track02]-01-Aa1.ogg";
                             break;
                         case MUSIC_SUB_PART_A_A2:
-                            nomeDoArquivo = "01-Aa2.ogg";
+                            nomeDoArquivo = musicNumber == 1 ? "01-Aa2.ogg" : "[Track02]-01-Aa2.ogg";
                             break;
                         case MUSIC_SUB_PART_A_A3:
                             nomeDoArquivo = "01-Aa3.ogg";
@@ -1069,17 +1160,17 @@ public class Sound {
                     switch (musicCurrentSubPart){
                         case MUSIC_SUB_PART_B_A1:
                             if (musicMelodyMode){
-                                nomeDoArquivo = "02melody-Ba1.ogg";
+                                nomeDoArquivo = musicNumber == 1 ? "02melody-Ba1.ogg" : "[Track02]-02melody-Ba1.ogg";
                             } else {
-                                nomeDoArquivo = "02-Ba1.ogg";
+                                nomeDoArquivo = musicNumber == 1 ? "02-Ba1.ogg" : "[Track02]-02-Ba1.ogg";
                             }
 
                             break;
                         case MUSIC_SUB_PART_B_A2:
                             if (musicMelodyMode){
-                                nomeDoArquivo = "02melody-Ba2.ogg";
+                                nomeDoArquivo = musicNumber == 1 ? "02melody-Ba2.ogg" : "[Track02]-02melody-Ba2.ogg";
                             } else {
-                                nomeDoArquivo = "02-Ba2.ogg";
+                                nomeDoArquivo = musicNumber == 1 ? "02-Ba2.ogg" : "[Track02]-02-Ba2.ogg";
                             }
 
                             break;
@@ -1097,17 +1188,17 @@ public class Sound {
                     switch (musicCurrentSubPart){
                         case MUSIC_SUB_PART_C_A1:
                             if (musicMelodyMode){
-                                nomeDoArquivo = "03melody-Ca1.ogg";
+                                nomeDoArquivo = musicNumber == 1 ? "03melody-Ca1.ogg" : "[Track02]-03melody-Ca1.ogg";
                             } else {
-                                nomeDoArquivo = "03-Ca1.ogg";
+                                nomeDoArquivo = musicNumber == 1 ? "03-Ca1.ogg" : "[Track02]-03-Ca1.ogg";
                             }
 
                             break;
                         case MUSIC_SUB_PART_C_A2:
                             if (musicMelodyMode){
-                                nomeDoArquivo = "03melody-Ca2.ogg";
+                                nomeDoArquivo = musicNumber == 1 ? "03melody-Ca2.ogg" : "[Track02]-03melody-Ca2.ogg";
                             } else {
-                                nomeDoArquivo = "03-Ca2.ogg";
+                                nomeDoArquivo = musicNumber == 1 ? "03-Ca2.ogg" : "[Track02]-03-Ca2.ogg";
                             }
 
                             break;

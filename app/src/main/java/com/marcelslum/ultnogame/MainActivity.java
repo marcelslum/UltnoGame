@@ -104,7 +104,7 @@ public class MainActivity extends FragmentActivity implements
 
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (requestCode == GoogleAPI.RC_SIGN_IN) {
+        if (requestCode == GoogleAPI.RC_SIGN_IN || requestCode == GoogleAPI.RC_LEADERBOARD_UI || requestCode == GoogleAPI.RC_ACHIEVEMENTS_UI) {
 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
 
@@ -145,9 +145,12 @@ public class MainActivity extends FragmentActivity implements
                 }
             }
         }
+
+
     }
 
-    @Override
+
+            @Override
     protected void onStop() {
         if (mLoadingDialog != null) {
             mLoadingDialog.dismiss();
@@ -660,10 +663,10 @@ public class MainActivity extends FragmentActivity implements
 
     public boolean isSignedIn() {
         if (GoogleSignIn.getLastSignedInAccount(this) != null && SaveGame.saveGame.googleOption == 1){
-            //Log.e(TAG, "isSignedIn true");
+            Log.e(TAG, "isSignedIn true");
             return true;
         } else {
-            //Log.e(TAG, "isSignedIn false");
+            Log.e(TAG, "isSignedIn false");
             return false;
         }
     }
@@ -768,7 +771,7 @@ public class MainActivity extends FragmentActivity implements
 
     private void onConnected(final GoogleSignInAccount googleSignInAccount) {
 
-        //Log.e(TAG, "onConnected");
+        Log.e(TAG, "onConnected");
 
         GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
         GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
@@ -782,7 +785,7 @@ public class MainActivity extends FragmentActivity implements
                     @Override
                     public void onComplete(@NonNull Task<Player> task) {
                         if (task.isSuccessful()) {
-                            //Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
+                            Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
                             GoogleAPI.playerName = task.getResult().getName()+"!";
 
                             Uri uri = task.getResult().getIconImageUri();
@@ -796,14 +799,23 @@ public class MainActivity extends FragmentActivity implements
                                     }, uri);
 
                             if (MessagesHandler.messageGoogleLogged != null) {
-                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + GoogleAPI.playerName);
+                                myGlSurface.queueEvent(new Runnable() {
+                                    public void run() {
+                                        MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + GoogleAPI.playerName);
+                                    }});
+
+
                             }
                         } else {
-                            //Log.e(TAG, "Não foi possível carregar o nome do jogador");
+                            Log.e(TAG, "Não foi possível carregar o nome do jogador");
                             GoogleAPI.playerName = ".";
                             signOut();
                             if (MessagesHandler.messageGoogleLogged != null) {
-                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
+
+                                myGlSurface.queueEvent(new Runnable() {
+                                    public void run() {
+                                        MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
+                                    }});
                             }
 
                         }
@@ -898,53 +910,7 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public void onBackPressed() {
 
-        // TODO REVISAR E COMPLETAR
-
-        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OPCOES) {
-            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SOBRE){
-                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_OPCOES);
-	} else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
-            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_INICIAL) {
-            onPause();
-            moveTaskToBack(true);
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE){
-            Game.increaseAllGameEntitiesAlpha(500);
-            MessagesHandler.messageInGame.reduceAlpha(500,0f);
-            MenuHandler.menuPause.reduceAlpha(500,0f, new Animation.AnimationListener() {
-                @Override
-                public void onAnimationEnd() {
-                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PRE_JOGAR);
-                }
-            });
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OBJETIVO){
-            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_1){
-            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_VITORIA_2);
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_2){
-            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_INTERSTITIAL);
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_LEVEL){
-            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_GRUPO) {
-            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
-        }else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PREPARAR){
-            Game.initPausedFlag = true;
-        }else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_DERROTA){
-            if (SaveGame.saveGame.currentLevelNumber < 1000){
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
-            } else {
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
-            }
-        } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MOSTRAR_OBJETIVOS){
-            if (SaveGame.saveGame.currentLevelNumber < 1000){
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
-            } else {
-                GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
-            }
-	    } else if (GameStateHandler.gameState != GameStateHandler.GAME_STATE_INTRO){
-            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
-	    }
+        Game.myGlSurface.onBackPressed();
     }
 
     @Override
@@ -1101,6 +1067,9 @@ public class MainActivity extends FragmentActivity implements
     public void showInterstitial() {
         runOnUiThread(new Runnable() {
             public void run() {
+
+                    Sound.stopAndReleaseMusic();
+
                     InterstitialAd interstitialAd;
 
                     if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {

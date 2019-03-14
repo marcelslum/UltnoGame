@@ -27,13 +27,7 @@ public class GameStateHandler{
     public final static int GAME_STATE_NOVA_TENTATIVA_TREINAMENTO = 153; // vai para JOGAR
     public final static int GAME_STATE_FINAL_TREINAMENTO = 154; // vai para INTERSTITIAL depois MENU_JOGAR
 
-
     public final static int GAME_STATE_ESTATISTICAS = 160; // vai para INTERSTITIAL
-    public final static int GAME_STATE_ESTATISTICAS_RANKING = 161; // vai para MENU_JOGAR
-
-    public final static int GAME_STATE_MENU_RANKING = 165; // vai para MENU_INICIAL
-    public final static int GAME_STATE_RANKING_AJUDA = 166; // vai para GAME_STATE_MENU_RANKING
-    public final static int GAME_STATE_OUTROS_RANKINGS = 167; // vai para GAME_STATE_MENU_RANKING
 
     public final static int GAME_STATE_MENU_SAVE_FIRST_TIME =  170; // vai para MENU_INICIAL
     public final static int GAME_STATE_MENU_CARREGAR_JOGO_SALVO_NUVEM = 171; // vai para MENU_INICIAL
@@ -97,7 +91,8 @@ public class GameStateHandler{
                     Game.tittle.clearDisplay();
                     GoogleAPI.hideGoogleInfo();
                 }
-            
+
+
         } else if (previousState == GAME_STATE_MENU_JOGAR) {
             // vai para MENU_INICIAL, ESTATISTICAS, SELECAO_TUTORIAL, SELECAO_GRUPO
 
@@ -105,9 +100,7 @@ public class GameStateHandler{
 
             if (newState == GAME_STATE_MENU_INICIAL) {
                 MessagesHandler.messageBack.clearDisplay();
-                ButtonHandler.buttonReturn.blockAndClearDisplay();
-            } if (newState == GAME_STATE_ESTATISTICAS_RANKING) {
-                
+                ButtonHandler.buttonBack.blockAndClearDisplay();
             } if (newState == GAME_STATE_ESTATISTICAS) {
                 Game.tittle.clearDisplay();
                 GoogleAPI.hideGoogleInfo();
@@ -129,13 +122,8 @@ public class GameStateHandler{
             MenuHandler.menuGoogleGeral.clearDisplay();
 
             if (newState == GAME_STATE_MENU_INICIAL){
-                ButtonHandler.buttonReturn.blockAndClearDisplay();
+                ButtonHandler.buttonBack.blockAndClearDisplay();
                 MessagesHandler.messageBack.clearDisplay();
-            }
-
-            if (newState == GAME_STATE_MENU_RANKING){
-                Game.tittle.clearDisplay();
-                GoogleAPI.hideGoogleInfo();
             }
 
         } else if (previousState == GAME_STATE_OPCOES){
@@ -151,19 +139,18 @@ public class GameStateHandler{
             if (newState == GAME_STATE_INTRO){
                 MessagesHandler.messageBack.clearDisplay();
                 Game.tittle.clearDisplay();
-                ButtonHandler.buttonReturn.blockAndClearDisplay();
+                ButtonHandler.buttonBack.blockAndClearDisplay();
                 if (GoogleAPI.playerIconImage != null)GoogleAPI.playerIconImage.clearDisplay();
             }
 
             if (newState == GAME_STATE_MENU_INICIAL){
-                ButtonHandler.buttonReturn.blockAndClearDisplay();
+                ButtonHandler.buttonBack.blockAndClearDisplay();
                 MessagesHandler.messageBack.clearDisplay();
             }
 
             if (newState == GAME_STATE_SOBRE){
                 GoogleAPI.hideGoogleInfo();
             }
-
 
         } else if (previousState == GAME_STATE_OPCOES_JOGABILIDADE){
             // vai para OPCOES
@@ -180,7 +167,7 @@ public class GameStateHandler{
             if (newState == GAME_STATE_PREPARAR_TREINAMENTO){
                 Game.mainActivity.hideAdView();
                 MessagesHandler.messageBack.clearDisplay();
-                ButtonHandler.buttonReturn.blockAndClearDisplay();
+                ButtonHandler.buttonBack.blockAndClearDisplay();
             }
 
         } else if (previousState == GAME_STATE_PREPARAR_TREINAMENTO){
@@ -236,21 +223,6 @@ public class GameStateHandler{
             MessagesHandler.messageStatDescricao.clearDisplay();
             ButtonHandler.buttonContinue.blockAndClearDisplay();
             
-        } else if (previousState == GAME_STATE_MENU_RANKING){
-            // vai para MENU_JOGAR, RANKING_AJUDA, OUTROS_RANKINGS
-
-            MenuHandler.menuRanking.blockAndClearDisplay();
-
-            if (newState == GAME_STATE_MENU_INICIAL){
-                ButtonHandler.buttonReturn.blockAndClearDisplay();
-                MessagesHandler.messageBack.clearDisplay();
-            }
-
-        } else if (previousState == GAME_STATE_RANKING_AJUDA){
-            // vai para ESTATISTICAS_RANKING
-
-            MessagesHandler.explicacaoRankingEstatisticosTextView.clearDisplay();
-      
         } else if (previousState == GAME_STATE_SELECAO_TUTORIAL){
             // vai para MENU_JOGAR, TUTORIAL
 
@@ -321,7 +293,7 @@ public class GameStateHandler{
             if (newState == GAME_STATE_PREPARAR){
                 MessagesHandler.messageMenu.clearDisplay();
                 MessagesHandler.messageSubMenu.clearDisplay();
-                ButtonHandler.buttonReturn.blockAndClearDisplay();
+                ButtonHandler.buttonBack.blockAndClearDisplay();
                 Game.mainActivity.hideAdView();
                 MessagesHandler.notConnectedTextView.clearDisplay();
             }
@@ -434,9 +406,10 @@ public class GameStateHandler{
             // vai para INTERSTITIAL
             Game.eraseAllGameEntities();
             MessageStarWin.messageStarsWin.clearDisplay();
+            MessagesHandler.messageInGame.clearDisplay();
+            MessagesHandler.messageGroupsUnblocked.clearDisplay();
             if (Game.groupsUnblocked != null) Game.groupsUnblocked.clear();
             if (Game.currentLevelIcon != null) Game.currentLevelIcon.clearDisplay();
-
 
         } else if (previousState == GAME_STATE_DERROTA){
             // vai para INTERSTITIAL, SELECAO_LEVEL, PREPARAR
@@ -451,6 +424,7 @@ public class GameStateHandler{
                 MessagesHandler.messageGameOver.clearDisplay();
             }
 
+            MessagesHandler.messageInGame.clearDisplay();
             MessageStar.messageStars.clearDisplay();
 
 
@@ -533,8 +507,7 @@ public class GameStateHandler{
 
             if (previousState != GAME_STATE_OPCOES &&
                 previousState != GAME_STATE_JOGAR &&
-                previousState != GAME_STATE_MENU_GOOGLE &&
-                previousState != GAME_STATE_MENU_RANKING) {
+                previousState != GAME_STATE_MENU_GOOGLE) {
                 Game.showBlackFrameTransition(500);
             }
 
@@ -548,6 +521,17 @@ public class GameStateHandler{
                 Game.bordaC.display();
                 Game.bordaB.display();
             }
+
+            MessagesHandler.messageBack.clearDisplay();
+            ButtonHandler.buttonBack.blockAndClearDisplay();
+
+            MessagesHandler.messageContinue.clearDisplay();
+            ButtonHandler.buttonContinue.blockAndClearDisplay();
+
+            MessagesHandler.messageMenu.clearDisplay();
+            MessagesHandler.messageSubMenu.clearDisplay();
+            MessagesHandler.starForMessage.clearDisplay();
+            MessagesHandler.messageConqueredStarsTotal.clearDisplay();
 
             Game.tittle.display();
 
@@ -576,7 +560,7 @@ public class GameStateHandler{
 
         } else if (newState == GAME_STATE_MENU_GOOGLE) {
 
-            if (previousState != GAME_STATE_MENU_RANKING && previousState != GAME_STATE_MENU_SAVE_FIRST_TIME && previousState != GAME_STATE_MENU_GOOGLE) {
+            if (previousState != GAME_STATE_MENU_SAVE_FIRST_TIME && previousState != GAME_STATE_MENU_GOOGLE) {
                 previousMenuGoogleState = previousState;
             }
 
@@ -586,38 +570,20 @@ public class GameStateHandler{
                 MenuHandler.menuGoogleGeral.getMenuOptionByName("google").setText(Game.getContext().getResources().getString(R.string.logarGoogle));
             }
 
-            ButtonHandler.buttonReturn.unblockAndDisplay();
+            ButtonHandler.buttonBack.unblockAndDisplay();
             MessagesHandler.messageBack.display();
             MenuHandler.menuGoogleGeral.unblockAndDisplay();
 
         } else if (newState == GAME_STATE_SOBRE) {
 
             MessagesHandler.aboutTextView.unblockAndDisplay();
-            ButtonHandler.buttonReturn.unblockAndDisplay();
+            ButtonHandler.buttonBack.unblockAndDisplay();
             
         } else if (newState == GAME_STATE_ESTATISTICAS){
 
             Stats.currentStatsSheet = Stats.TEMPO_JOGO;
             Stats.showCurrentStat();
             ButtonHandler.buttonContinue.unblockAndDisplay();
-
-        } else if (newState == GAME_STATE_MENU_RANKING){
-
-            MenuHandler.menuRanking.unblockAndDisplay();
-
-            ButtonHandler.buttonReturn.unblockAndDisplay();
-            MessagesHandler.messageBack.display();
-
-
-        } else if (newState == GAME_STATE_RANKING_AJUDA){
-            // vai para GAME_STATE_MENU_RANKING
-
-            MessagesHandler.explicacaoRankingEstatisticosTextView.display();
-      
-        } else if (newState == GAME_STATE_OUTROS_RANKINGS){
-            // vai para GAME_STATE_MENU_RANKING
-
-            MenuHandler.menuOutrosRankings.unblockAndDisplay();
 
         } else if (newState == GAME_STATE_MOSTRAR_OBJETIVOS){
 
@@ -694,8 +660,12 @@ public class GameStateHandler{
             MessagesHandler.messageSubMenu.display();
             MessagesHandler.messageSubMenu.setText(Game.currentLevelsGroupDataSelected.name);
 
-            ButtonHandler.buttonReturn.unblockAndDisplay();
+            ButtonHandler.buttonBack.unblockAndDisplay();
             MessagesHandler.messageBack.display();
+
+
+            MessagesHandler.messageContinue.clearDisplay();
+            ButtonHandler.buttonContinue.blockAndClearDisplay();
 
             if (previousState == GAME_STATE_MOSTRAR_OBJETIVOS){
                 StarsHandler.updateConqueredStars();
@@ -731,7 +701,7 @@ public class GameStateHandler{
             MenuHandler.updateTutorialMenu();
             MenuHandler.tutorialMenu.appear();
 
-            ButtonHandler.buttonReturn.unblockAndDisplay();
+            ButtonHandler.buttonBack.unblockAndDisplay();
             MessagesHandler.messageBack.display();
 
         } else if (newState == GAME_STATE_MENU_JOGAR){
@@ -747,7 +717,7 @@ public class GameStateHandler{
 
             MessagesHandler.messageBack.display();
             MenuHandler.menuPlay.unblockAndDisplay();
-            ButtonHandler.buttonReturn.unblockAndDisplay();
+            ButtonHandler.buttonBack.unblockAndDisplay();
 
         } else if (newState == GAME_STATE_EXPLICACAO_TREINAMENTO){
 
@@ -822,7 +792,7 @@ public class GameStateHandler{
             Sound.musicCurrentSubPart = Sound.MUSIC_SUB_PART_A_A1;
 
             Game.tittle.display();
-            ButtonHandler.buttonReturn.unblockAndDisplay();
+            ButtonHandler.buttonBack.unblockAndDisplay();
             MenuHandler.menuOptions.unblockAndDisplay();
 
             SelectorHandler.repositionSelectors(newState);
@@ -889,7 +859,6 @@ public class GameStateHandler{
             TimeHandler.timeOfLevelPlay = 0;
             TimeHandler.secondsOfLevelPlay = 0;
             TimeHandler.lastSeconds = 0;
-
 
             Level.levelObject.loadEntities();
 
@@ -971,7 +940,7 @@ public class GameStateHandler{
             Level.levelGoalsObject = new LevelGoals();
 
             ButtonHandler.buttonContinue.blockAndClearDisplay();
-            ButtonHandler.buttonReturn.blockAndClearDisplay();
+            ButtonHandler.buttonBack.blockAndClearDisplay();
 
             Level.levelObject.loadEntities();
 
@@ -1131,7 +1100,6 @@ public class GameStateHandler{
 
 
         } else if (newState == GAME_STATE_VITORIA_1){
-
 
             Level.levelObject.levelGoalsObject.setFinish(TimeHandler.stopTimeOfLevelPlay());
             SaveGame.addLevelPlayed();
@@ -1328,9 +1296,7 @@ public class GameStateHandler{
                         Game.groupsUnblocked.get(i).x = initX + (i * groupsUnblockedPadd) + (i * groupsUnblockedSize);
                     }
 
-
-                    float halfDifference = ((groupsUnblockedSize * 1.2f) - groupsUnblockedSize)/2f;
-
+                    //float halfDifference = ((groupsUnblockedSize * 1.2f) - groupsUnblockedSize)/2f;
 
                     for (int i = 0; i < numberOfGroupsUnblocked; i ++){
                         Image gu = Game.groupsUnblocked.get(i);

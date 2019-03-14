@@ -32,50 +32,8 @@ public class Stats {
     
     // 6 - media de pontos obtido em vitorias - leaderboard_pontuao_vitoriosa
 
-
-    public static boolean rankingsReiniciados = false;
     static void updateStatsRankings(){
-
-
-        if (Game.reiniciarPontuacaoRankings && !rankingsReiniciados) {
-            rankingsReiniciados = true;
-
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_pontuao_vitoriosa), 0);
-
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_tempo_bem_gasto), 0);
-
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_pontuao_vitrias_e_derrotas), 0);
-
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_alta_velocidade),0);
-
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_alta_velocidade),0);
-
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_multitarefa),0);
-
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_0),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_1),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_2),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_3),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_4),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_5),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_6),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_7),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_8),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_9),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_10),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_11),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_12),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_13),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_14),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_15),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_16),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_17),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_18),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_19),0);
-            GoogleAPI.submitScore( Game.mainActivity.getResources().getString(R.string.leaderboard_20),0);
-
-        }
-
+        /*
         long pontuacaoVitoriosa = (long) (((double) SaveGame.saveGame.stats[40] / (double)SaveGame.saveGame.stats[43]));
         Log.e(TAG, "pontuacaoVitoriosa " + pontuacaoVitoriosa);
         if (SaveGame.saveGame.stats[43] != 0) {
@@ -122,6 +80,7 @@ public class Stats {
                                     SaveGame.saveGame.stats[26] +
                                     SaveGame.saveGame.stats[27]) / (double) tempoTotal) * 100)));
         }
+        */
 
     }
 

@@ -26,7 +26,7 @@ public class Game {
     public static boolean forDebugDeleteDatabaseAndStorage = false;
     public static boolean ganharTodasAsEstrelas = false;
     public static boolean paraGravacaoVideo = false;
-    public static boolean ganharComMetadeDosAlvos = true;
+    public static boolean ganharComMetadeDosAlvos = false;
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
     public static boolean showMessageNotConnectedOnGoogle = false;
@@ -40,9 +40,6 @@ public class Game {
     public static boolean apagarEstatisticasNoInicio = false;
     public static boolean apagarEstatisticasNoMenu = false;
     public static boolean logNotificacaoLevelGoals = false;
-    public static boolean reiniciarPontuacaoRankings = true;
-
-
 
     public static MyGLSurface myGlSurface;
 
@@ -854,15 +851,15 @@ public class Game {
 
         //Log.e(TAG, "StarsHandler.conqueredStarsTotal "+StarsHandler.conqueredStarsTotal );
 
-        if (ButtonHandler.buttonReturn != null){
-            //Log.e(TAG, "buttonReturn ");
-            //Log.e(TAG, " " + ButtonHandler.buttonReturn.x);
-            //Log.e(TAG, " " + ButtonHandler.buttonReturn.y);
-            //Log.e(TAG, " " + ButtonHandler.buttonReturn.positionX);
-            //Log.e(TAG, " " + ButtonHandler.buttonReturn.positionY);
-            //Log.e(TAG, " " + ButtonHandler.buttonReturn.accumulatedTranslateX);
-            //Log.e(TAG, " " + ButtonHandler.buttonReturn.accumulatedTranslateY);
-            //Log.e(TAG, " " + ButtonHandler.buttonReturn.isVisible);
+        if (ButtonHandler.buttonBack != null){
+            //Log.e(TAG, "buttonBack ");
+            //Log.e(TAG, " " + ButtonHandler.buttonBack.x);
+            //Log.e(TAG, " " + ButtonHandler.buttonBack.y);
+            //Log.e(TAG, " " + ButtonHandler.buttonBack.positionX);
+            //Log.e(TAG, " " + ButtonHandler.buttonBack.positionY);
+            //Log.e(TAG, " " + ButtonHandler.buttonBack.accumulatedTranslateX);
+            //Log.e(TAG, " " + ButtonHandler.buttonBack.accumulatedTranslateY);
+            //Log.e(TAG, " " + ButtonHandler.buttonBack.isVisible);
         }
 
         // Before doing something that requires a lot of memory,
@@ -1798,7 +1795,7 @@ public class Game {
         list.add(levelGoalsPanel);
         list.add(Tutorial.tutorialImage);// TODO ????
         list.add(Tutorial.tutorialTextBox);// TODO ????
-        list.add(ButtonHandler.buttonReturn);
+        list.add(ButtonHandler.buttonBack);
         list.add(ButtonHandler.buttonReturnObjectivesPause);
         list.add(ButtonHandler.buttonContinue);
         list.add(ButtonHandler.buttonGroupLeaderboard);

@@ -138,6 +138,65 @@ public class MyGLSurface extends GLSurfaceView {
             }});
     }
 
+    public void onBackPressed(){
+
+        queueEvent(new Runnable() {
+            // This method will be called on the rendering
+            // thread:
+            public void run() {
+
+
+                if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OPCOES) {
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SOBRE){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_OPCOES);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_INICIAL) {
+                    Game.mainActivity.onPause();
+                    Game.mainActivity.moveTaskToBack(true);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE){
+                    Game.increaseAllGameEntitiesAlpha(500);
+                    MessagesHandler.messageInGame.reduceAlpha(500,0f);
+                    MenuHandler.menuPause.reduceAlpha(500,0f, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PRE_JOGAR);
+                        }
+                    });
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OBJETIVO){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_1){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_VITORIA_2);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_VITORIA_2){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_INTERSTITIAL);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_LEVEL){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_SELECAO_GRUPO) {
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+                }else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PREPARAR){
+                    Game.initPausedFlag = true;
+                }else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_DERROTA){
+                    if (SaveGame.saveGame.currentLevelNumber < 1000){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
+                    } else {
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
+                    }
+                } else if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MOSTRAR_OBJETIVOS){
+                    if (SaveGame.saveGame.currentLevelNumber < 1000){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
+                    } else {
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_GRUPO);
+                    }
+                } else if (GameStateHandler.gameState != GameStateHandler.GAME_STATE_INTRO){
+                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+                }
+
+            }});
+
+
+    }
+
     public void setScoreMessage(){
         queueEvent(new Runnable() {
             public void run() {
