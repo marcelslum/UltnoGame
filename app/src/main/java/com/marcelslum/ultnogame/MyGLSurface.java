@@ -137,6 +137,11 @@ public class MyGLSurface extends GLSurfaceView {
 
             }});
     }
+    
+    public forUpdateNamePlayer(){
+        MessagesHandler.messageGoogleLogged.setText(Game.namePlayer);   
+        
+    }
 
     public void onBackPressed(){
 
