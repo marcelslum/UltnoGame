@@ -799,23 +799,15 @@ public class MainActivity extends FragmentActivity implements
                                     }, uri);
 
                             if (MessagesHandler.messageGoogleLogged != null) {
-                                myGlSurface.queueEvent(new Runnable() {
-                                    public void run() {
-                                        MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + GoogleAPI.playerName);
-                                    }});
-
-
+			    	Game.forUpdateNamePlayer = true;
+				Game.namePlayer = getResources().getString(R.string.googleLogado) + "\u0020" + GoogleAPI.playerName;
                             }
                         } else {
                             Log.e(TAG, "Não foi possível carregar o nome do jogador");
                             GoogleAPI.playerName = ".";
                             signOut();
                             if (MessagesHandler.messageGoogleLogged != null) {
-
-                                myGlSurface.queueEvent(new Runnable() {
-                                    public void run() {
-                                        MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
-                                    }});
+                                 MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
                             }
 
                         }
@@ -910,7 +902,7 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public void onBackPressed() {
 
-        Game.myGlSurface.onBackPressed();
+        Game.backPressed = true;
     }
 
     @Override
