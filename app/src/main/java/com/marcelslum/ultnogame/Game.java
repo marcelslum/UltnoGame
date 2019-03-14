@@ -166,6 +166,11 @@ public class Game {
 
     static boolean initPausedFlag;
     public static int dpiClassification;
+    
+    
+    public static boolean backPressed = false;
+    public static String namePlayer;
+    public static boolean forUpdateNamePlayer = false;
     public static boolean returningFromInterstitialFlag = false;
     public static boolean settingMessageForScore = false;
     public static String messageForScore = ".";
