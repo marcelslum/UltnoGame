@@ -35,13 +35,14 @@ public class GoogleAPI {
     public static AchievementsClient mAchievementsClient;
     public static LeaderboardsClient mLeaderboardsClient;
     public static SnapshotsClient mSnapshotsClient;
-    public static EventsClient mEventsClient;
     public static PlayersClient mPlayersClient;
     public static GoogleSignInClient mGoogleSignInClient;
 
 
     public static ArrayList<AchievementData> achievementsData = new ArrayList<>();
     public static String playerName = "-";
+    public static String playerId;
+    public static boolean isConnected;
     static ImageBitmap playerIconImage;
     static Bitmap playerIcon;
 
@@ -65,14 +66,24 @@ public class GoogleAPI {
 
     public static void displayGoogleInfo(){
 
-        if (MessagesHandler.messageGoogleLogged == null) return;
+        if (MessagesHandler.messageGoogleLogged != null) MessagesHandler.messageGoogleLogged.display();
+        if (playerIconImage != null) playerIconImage.display();
 
-        MessagesHandler.messageGoogleLogged.display();
+    }
 
-        if (SaveGame.saveGame.googleOption == 1 && Game.mainActivity.isSignedIn()){
-            //Log.e(TAG, "mainActivity.isSignedIn()");
+    public static void configureGoogleInfo(MyVIewModel.PlayerData playerData) {
+
+        Log.e(TAG, "configureGoogleInfo2");
+
+
+        Log.e(TAG, "configureGoogleInfo3");
+        if (playerData != null){
+
+            playerIcon = Utils.drawableToBitmap(playerData.getIcon());
+
+            Log.e(TAG, "mainActivity.isSignedIn()");
             if (playerIcon != null){
-                //Log.e(TAG, "playerIcon != null");
+                Log.e(TAG, "playerIcon != null");
                 if (playerIconImage != null){
                     playerIconImage.setBitmap(playerIcon);
                 } else {
@@ -113,19 +124,23 @@ public class GoogleAPI {
                     ));
                     Game.adicionarEntidadeFixa(playerIconImage);
                 }
-
-                playerIconImage.display();
-            } else {
-                //Log.e(TAG, "playerIcon == null");
             }
 
-            MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerName);
+            Log.e(TAG, " MessagesHandler.messageGoogleLogged.setText(");
+
+            MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerData.getName());
         } else {
 
-            //Log.e(TAG, "Exibindo mensagem não conectado");
+            Log.e(TAG, " MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado)");
 
             MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado));
         }
+
+        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_INICIAL){
+            displayGoogleInfo();
+        }
+
+
 
 
     }

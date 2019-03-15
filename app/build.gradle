@@ -16,13 +16,13 @@ android {
         }
     }
 
-    compileSdkVersion 28
+    compileSdkVersion 26
     buildToolsVersion '28.0.3'
     apply plugin: 'com.android.application'
     defaultConfig {
         applicationId 'com.marcelslum.ultno'
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 26
         versionCode 12
         versionName "0.5-beta"
         signingConfig signingConfigs.config
@@ -48,10 +48,12 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.android.gms:play-services-games:16.0.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.google.android.gms:play-services-games:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
     implementation 'com.google.android.gms:play-services-drive:16.0.0'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    api "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

@@ -1,6 +1,13 @@
 package com.marcelslum.ultnogame;
 
 import android.content.res.Resources;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -31,88 +38,88 @@ public class MessagesHandler {
     static Text messageBeta;
     static Text messageGroupsUnblocked;
     static TextBox bottomTextBox;
-    static TextView messageMenuSaveNotSeen;
-    static TextView messageMenuCarregarJogo;
-    static TextView messageExplicacaoTreinamento;
-    static TextView messageExplicacaoDuranteTreinamento;
-    static TextView statsTextView;
+    static MyTextView messageMenuSaveNotSeen;
+    static MyTextView messageMenuCarregarJogo;
+    static MyTextView messageExplicacaoTreinamento;
+    static MyTextView messageExplicacaoDuranteTreinamento;
+    static MyTextView statsMyTextView;
     static Text messageStatTittle;
-    static TextView messageStatDescricao;
-    static TextView aboutTextView;
-    static TextView explicacaoRankingEstatisticosTextView;
-    static TextView notConnectedTextView;
+    static MyTextView messageStatDescricao;
+    static MyTextView aboutMyTextView;
+    static MyTextView explicacaoRankingEstatisticosMyTextView;
+    static MyTextView notConnectedMyTextView;
 
     static float yOfMessageBackAndContinue;
 
 
     public static void initMessages(){
 
-        aboutTextView = new TextView("aboutTextView", Game.resolutionX * 0.1f,
+        aboutMyTextView = new MyTextView("aboutMyTextView", Game.resolutionX * 0.1f,
                                           Game.resolutionY * 0.2f,
                                           Game.resolutionX * 0.8f,
                                           Game.resolutionY * 0.8f,
                                           Game.gameAreaResolutionY*0.05f,
                                           Game.font, new Color(0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT, 0.4f);
-        Game.adicionarEntidadeFixa(aboutTextView);
+        Game.adicionarEntidadeFixa(aboutMyTextView);
 
         Resources resources = Game.getContext().getResources();
 
-        aboutTextView.addText(resources.getString(R.string.sobre1), Color.azul, 1.5f);
-        aboutTextView.addText(resources.getString(R.string.sobre1b), Color.transparente);
-        aboutTextView.addText(resources.getString(R.string.sobre2), Color.azul);
-        aboutTextView.addText(resources.getString(R.string.sobre3), Color.cinza20, 1.3f);
-        aboutTextView.addText(resources.getString(R.string.sobre3b), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre4), Color.transparente);
-        aboutTextView.addText(resources.getString(R.string.sobre5), Color.azul);
-        aboutTextView.addText(resources.getString(R.string.sobre6), Color.cinza20, 1.3f);
-        aboutTextView.addText(resources.getString(R.string.sobre7), Color.transparente);
-        aboutTextView.addText(resources.getString(R.string.sobre8), Color.azul);
-        aboutTextView.addText(resources.getString(R.string.sobre9b), Color.cinza20);
-        aboutTextView.addText(resources.getString(R.string.sobre10), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre10a), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre11), Color.cinza20);
-        aboutTextView.addText(resources.getString(R.string.sobre11b),Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre12), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre12a), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre12b), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre13), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre14), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre15), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre16), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre17), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre18), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre19), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre20), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre21), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre22), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre23), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre24), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre25), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre26), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre27), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre28), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre29), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre30), Color.cinza40);
-        aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
-        aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
-        aboutTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
+        aboutMyTextView.addText(resources.getString(R.string.sobre1), Color.azul, 1.5f);
+        aboutMyTextView.addText(resources.getString(R.string.sobre1b), Color.transparente);
+        aboutMyTextView.addText(resources.getString(R.string.sobre2), Color.azul);
+        aboutMyTextView.addText(resources.getString(R.string.sobre3), Color.cinza20, 1.3f);
+        aboutMyTextView.addText(resources.getString(R.string.sobre3b), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre4), Color.transparente);
+        aboutMyTextView.addText(resources.getString(R.string.sobre5), Color.azul);
+        aboutMyTextView.addText(resources.getString(R.string.sobre6), Color.cinza20, 1.3f);
+        aboutMyTextView.addText(resources.getString(R.string.sobre7), Color.transparente);
+        aboutMyTextView.addText(resources.getString(R.string.sobre8), Color.azul);
+        aboutMyTextView.addText(resources.getString(R.string.sobre9b), Color.cinza20);
+        aboutMyTextView.addText(resources.getString(R.string.sobre10), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre10a), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre11), Color.cinza20);
+        aboutMyTextView.addText(resources.getString(R.string.sobre11b),Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre12), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre12a), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre12b), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre13), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre14), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre15), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre16), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre17), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre18), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre19), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre20), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre21), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre22), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre23), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre24), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre25), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre26), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre27), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre28), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre29), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre30), Color.cinza40);
+        aboutMyTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
+        aboutMyTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
+        aboutMyTextView.addText(resources.getString(R.string.sobre31), Color.transparente);
 
-        explicacaoRankingEstatisticosTextView = new TextView("explicacaoRankingEstatisticosTextView", Game.resolutionX * 0.1f,
+        explicacaoRankingEstatisticosMyTextView = new MyTextView("explicacaoRankingEstatisticosMyTextView", Game.resolutionX * 0.1f,
                 Game.resolutionY * 0.2f,
                 Game.resolutionX * 0.8f,
                 Game.resolutionY * 0.8f,
                 Game.gameAreaResolutionY*0.05f,
                 Game.font, new Color(0f, 0f, 0f, 1f), Text.TEXT_ALIGN_LEFT, 0.4f);
-        Game.adicionarEntidadeFixa(explicacaoRankingEstatisticosTextView);
-        explicacaoRankingEstatisticosTextView.addText(resources.getString(R.string.sobreRankingEstatisticos1), Color.azul, 1.5f);
-        explicacaoRankingEstatisticosTextView.addText(".", Color.transparente);
-        explicacaoRankingEstatisticosTextView.addText(resources.getString(R.string.sobreRankingEstatisticos2), Color.azul);
-        explicacaoRankingEstatisticosTextView.addText(resources.getString(R.string.sobreRankingEstatisticos3), Color.cinza20, 1.3f);
-        explicacaoRankingEstatisticosTextView.addText(resources.getString(R.string.sobreRankingEstatisticos4), Color.cinza40);
+        Game.adicionarEntidadeFixa(explicacaoRankingEstatisticosMyTextView);
+        explicacaoRankingEstatisticosMyTextView.addText(resources.getString(R.string.sobreRankingEstatisticos1), Color.azul, 1.5f);
+        explicacaoRankingEstatisticosMyTextView.addText(".", Color.transparente);
+        explicacaoRankingEstatisticosMyTextView.addText(resources.getString(R.string.sobreRankingEstatisticos2), Color.azul);
+        explicacaoRankingEstatisticosMyTextView.addText(resources.getString(R.string.sobreRankingEstatisticos3), Color.cinza20, 1.3f);
+        explicacaoRankingEstatisticosMyTextView.addText(resources.getString(R.string.sobreRankingEstatisticos4), Color.cinza40);
 
 
         float fontSize = Game.gameAreaResolutionY*0.08f;
-        messageMenuSaveNotSeen = new TextView("messageMenuSaveNotSeen", Game.resolutionX * 0.5f,
+        messageMenuSaveNotSeen = new MyTextView("messageMenuSaveNotSeen", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.125f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
@@ -128,7 +135,7 @@ public class MessagesHandler {
         messageMenuSaveNotSeen.addText(".", Color.transparente);
         messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen4), Color.cinza40);
 
-        messageExplicacaoTreinamento = new TextView("messageExplicacaoTreinamento", Game.resolutionX * 0.5f,
+        messageExplicacaoTreinamento = new MyTextView("messageExplicacaoTreinamento", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.15f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
@@ -149,7 +156,7 @@ public class MessagesHandler {
 
         messageExplicacaoTreinamento.clearDisplay();
 
-        messageExplicacaoDuranteTreinamento = new TextView("messageExplicacaoDuranteTreinamento", Game.resolutionX * 0.5f,
+        messageExplicacaoDuranteTreinamento = new MyTextView("messageExplicacaoDuranteTreinamento", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.12f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
@@ -158,7 +165,7 @@ public class MessagesHandler {
         Game.adicionarEntidadeFixa(messageExplicacaoDuranteTreinamento);
         messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoDuranteTreinamento1), Color.cinza40);
 
-        messageMenuCarregarJogo = new TextView("messageMenuCarregarJogo", Game.resolutionX * 0.5f,
+        messageMenuCarregarJogo = new MyTextView("messageMenuCarregarJogo", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.12f,
                 Game.resolutionX * 1f,
                 Game.resolutionY,
@@ -167,15 +174,15 @@ public class MessagesHandler {
         Game.adicionarEntidadeFixa(messageMenuCarregarJogo);
 
 
-        notConnectedTextView = new TextView("notConnectedTextView", Game.resolutionX * 0.5f,
+        notConnectedMyTextView = new MyTextView("notConnectedMyTextView", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.02f,
                 Game.resolutionX * 0.94f,
                 Game.resolutionY,
                 Game.gameAreaResolutionY*0.038f,
                 Game.font, new Color(0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_CENTER, 0.25f);
-        Game.adicionarEntidadeFixa(notConnectedTextView);
+        Game.adicionarEntidadeFixa(notConnectedMyTextView);
 
-        notConnectedTextView.addText(resources.getString(R.string.messageNaoConectado1), Color.cinza80);
+        notConnectedMyTextView.addText(resources.getString(R.string.messageNaoConectado1), Color.cinza80);
 
         yOfMessageBackAndContinue = Game.resolutionY*0.898f;
 
@@ -345,7 +352,37 @@ public class MessagesHandler {
 
     }
 
-    public static void setBottomMessage(String text, int duration){
+    public static void setBottomMessage(final String text, final int duration){
+
+
+        Game.mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (Game.mainActivity == null){
+                    return;
+                }
+                LayoutInflater inflater = Game.mainActivity.getLayoutInflater();
+                View layout = inflater.inflate(R.layout.custom_toast,
+                        (ViewGroup) Game.mainActivity.findViewById(R.id.custom_toast_container));
+
+
+                TextView textView = (TextView) layout.findViewById(R.id.text);
+                textView.setText(text);
+                Toast toast = new Toast(Game.mainActivity.getApplicationContext());
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+
+
+            }
+        });
+
+
+
+        // todo deletar variavel bottomTextBox
+
+        /*
 
         if (bottomTextBox == null) return;
 
@@ -381,6 +418,7 @@ public class MessagesHandler {
                 }
             }).start();
         }
+        */
     }
 
 }

@@ -218,7 +218,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         
         
         if (Game.forUpdateNamePlayer){
-            Game.myGlSurface.forUpdateNamePlayer();   
+            Log.e(TAG, "forUpdateNamePlayer");
+            Game.myGlSurface.forUpdateNamePlayer();
             Game.forUpdateNamePlayer = false;
         }
         

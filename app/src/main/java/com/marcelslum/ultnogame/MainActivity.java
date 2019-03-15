@@ -3,6 +3,8 @@ package com.marcelslum.ultnogame;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -19,11 +21,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -52,13 +60,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import android.os.Vibrator;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+
+
 import static com.marcelslum.ultnogame.GoogleAPI.mSnapshotsClient;
+
+
+// todo implementar proguard para remover bibliotecas não utilizadas
 
 public class MainActivity extends FragmentActivity implements
         SensorEventListener
@@ -80,7 +94,6 @@ public class MainActivity extends FragmentActivity implements
 
     AdView mAdView;
     boolean isBannerLoaded = false;
-    boolean isInterstitialLoaded = false;
     private final static String TAG = "MainActivity";
     public boolean isPaused = false;
 
@@ -94,7 +107,18 @@ public class MainActivity extends FragmentActivity implements
 
     static String mCurrentSaveName;
 
-    /*
+    private MyVIewModel model;
+    private TextView mTextViewMessageGooglePlay;
+    private ImageButton mImageButtonGooglePlay;
+    private TextView mTextViewMessagePoints;
+
+
+
+    public MyVIewModel getModel(){
+        return model;
+    }
+
+            /*
     * This callback will be triggered after you call startActivityForResult from the
     * showSavedGamesUI method.
     */
@@ -496,6 +520,15 @@ public class MainActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        model = ViewModelProviders.of(this).get(MyVIewModel.class);
+        model.playerData.observe(this, new Observer<MyVIewModel.PlayerData>() {
+            @Override
+            public void onChanged(MyVIewModel.PlayerData playerData) {
+                    GoogleAPI.configureGoogleInfo(playerData);
+                    Log.e(TAG, "PLAYER DATA LOADED");
+            }
+        });
+
          /*Inicia o hardware*/
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -559,8 +592,6 @@ public class MainActivity extends FragmentActivity implements
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
-
-
         // Create the client used to sign in to Google services.
 
         GoogleSignInOptions signInOption =
@@ -594,8 +625,8 @@ public class MainActivity extends FragmentActivity implements
         myGlSurface = new MyGLSurface(this);
         myGlSurface.setPreserveEGLContextOnPause(true);
         setContentView(R.layout.activity_main);
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.gamelayout);
-        RelativeLayout.LayoutParams glParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.gamelayout);
+        ConstraintLayout.LayoutParams glParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
         layout.addView(myGlSurface, glParams);
 
 	// INICIA O BANNER
@@ -621,7 +652,7 @@ public class MainActivity extends FragmentActivity implements
                 RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         layout.addView(mAdView, adParams);
-	
+
         // INICIA A PROPAGANDA INTERSTITIAL
         interstitialWithVideo = new InterstitialAd(MainActivity.this);
         interstitialWithVideo.setAdUnitId("ca-app-pub-2413920269734587/2998542956");
@@ -662,8 +693,7 @@ public class MainActivity extends FragmentActivity implements
     }
 
     public boolean isSignedIn() {
-        if (GoogleSignIn.getLastSignedInAccount(this) != null && SaveGame.saveGame.googleOption == 1){
-            Log.e(TAG, "isSignedIn true");
+        if (GoogleAPI.isConnected){
             return true;
         } else {
             Log.e(TAG, "isSignedIn false");
@@ -692,9 +722,11 @@ public class MainActivity extends FragmentActivity implements
                     public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
                         if (task.isSuccessful()) {
                             Log.e(TAG, "signInSilently(): success");
+                            GoogleAPI.isConnected = true;
                             onConnected(task.getResult());
                         } else {
                             Log.e(TAG, "signInSilently(): failure", task.getException());
+                            GoogleAPI.isConnected = false;
                             onDisconnected();
                         }
                     }
@@ -708,16 +740,12 @@ public class MainActivity extends FragmentActivity implements
     public void signOut() {
         Log.d(TAG, "signOut()");
 
-        if (MenuHandler.menuOptions != null){
-            MenuHandler.menuOptions.getMenuOptionByName("google").setText(getResources().getString(R.string.logarGoogle));
-        }
-
         if (!isSignedIn()) {
             Log.w(TAG, "signOut() called, but was not signed in!");
             return;
         }
 
-        GoogleAPI.mGoogleSignInClient.signOut().addOnCompleteListener(this,
+        GoogleAPI.mGoogleSignInClient.revokeAccess().addOnCompleteListener(this,
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -730,6 +758,8 @@ public class MainActivity extends FragmentActivity implements
 
 
     public void updatePlayerInfo(){
+
+        Log.e(TAG, "updatePlayerInfo");
 
         if (SaveGame.saveGame.googleOption != 1 && !isSignedIn()){
             return;
@@ -768,59 +798,26 @@ public class MainActivity extends FragmentActivity implements
     }
 
 
-
     private void onConnected(final GoogleSignInAccount googleSignInAccount) {
-
         Log.e(TAG, "onConnected");
-
         GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
         GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
-        mSnapshotsClient = Games.getSnapshotsClient(this, googleSignInAccount);
-        GoogleAPI.mEventsClient = Games.getEventsClient(this, googleSignInAccount);
+        GoogleAPI.mSnapshotsClient = Games.getSnapshotsClient(this, googleSignInAccount);
         GoogleAPI.mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
 
+        GoogleAPI.isConnected = true;
 
-        GoogleAPI.mPlayersClient.getCurrentPlayer()
-                .addOnCompleteListener(new OnCompleteListener<Player>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Player> task) {
-                        if (task.isSuccessful()) {
-                            Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
-                            GoogleAPI.playerName = task.getResult().getName()+"!";
+        GoogleAPI.loadAchievements();
 
-                            Uri uri = task.getResult().getIconImageUri();
-                            Log.e(TAG, "uri " + uri.getPath());
-                            ImageManager.create(Game.mainActivity)
-                                    .loadImage(new ImageManager.OnImageLoadedListener() {
-                                        @Override
-                                        public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {
-                                            GoogleAPI.playerIcon = Utils.drawableToBitmap(drawable);
-                                        }
-                                    }, uri);
-
-                            if (MessagesHandler.messageGoogleLogged != null) {
-			    	Game.forUpdateNamePlayer = true;
-				Game.namePlayer = getResources().getString(R.string.googleLogado) + "\u0020" + GoogleAPI.playerName;
-                            }
-                        } else {
-                            Log.e(TAG, "Não foi possível carregar o nome do jogador");
-                            GoogleAPI.playerName = ".";
-                            signOut();
-                            if (MessagesHandler.messageGoogleLogged != null) {
-                                 MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
-                            }
-
-                        }
-                    }
-                });
     }
 
+    /*
     public boolean checkGoogleConnection(){
-        //Log.e(TAG, "checkGoogleConnection");
+        Log.e(TAG, "checkGoogleConnection");
         if (isGooglePlayAvailable() && isSignedIn()){
-            //Log.e(TAG, "checking");
+            Log.e(TAG, "checking");
             if (GoogleAPI.playerName.equals(".") || GoogleAPI.playerName.equals("-")){
-                //Log.e(TAG, "possible not connected - erro");
+                Log.e(TAG, "possible not connected - erro");
                 signOut();
                 if (MessagesHandler.messageGoogleLogged != null) {
                     MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
@@ -830,14 +827,18 @@ public class MainActivity extends FragmentActivity implements
         }
         return true;
     }
+    */
 
     private void onDisconnected() {
 
-        Log.d(TAG, "onDisconnected()");
+        GoogleAPI.isConnected = false;
 
         GoogleAPI.mAchievementsClient = null;
         GoogleAPI.mLeaderboardsClient = null;
+        GoogleAPI.mSnapshotsClient = null;
         GoogleAPI.mPlayersClient = null;
+
+        model.playerData.setValue(null);
 
     }
 
@@ -908,17 +909,11 @@ public class MainActivity extends FragmentActivity implements
     @Override
     protected void onResume() {
 
-        //Log.e("MainActivity", "onResume()");
-
         super.onResume();
 
         isPaused = false;
 
         setFullScreen();
-
-        if (SaveGame.saveGame != null && SaveGame.saveGame.googleOption == 1) {
-            signInSilently();
-        }
 
         if (myGlSurface != null){
             myGlSurface.onResume();
@@ -952,8 +947,8 @@ public class MainActivity extends FragmentActivity implements
 
     public void hideAdView(){
         
-        if (MessagesHandler.notConnectedTextView != null) {
-            MessagesHandler.notConnectedTextView.clearDisplay();
+        if (MessagesHandler.notConnectedMyTextView != null) {
+            MessagesHandler.notConnectedMyTextView.clearDisplay();
         }
 
         runOnUiThread(new Runnable() {
@@ -1020,8 +1015,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 		
 		if (isBannerLoaded){
-			if (MessagesHandler.notConnectedTextView != null) {
-				MessagesHandler.notConnectedTextView.clearDisplay();
+			if (MessagesHandler.notConnectedMyTextView != null) {
+				MessagesHandler.notConnectedMyTextView.clearDisplay();
 			}
 
 			runOnUiThread(new Runnable() {
@@ -1040,14 +1035,14 @@ public class MainActivity extends FragmentActivity implements
             });
 
 			
-			if (MessagesHandler.notConnectedTextView != null) {
+			if (MessagesHandler.notConnectedMyTextView != null) {
 			
 				ConnectionHandler.checkInternetConnection();
 			
 				if (ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_NOT_CONNECTED) {
-					MessagesHandler.notConnectedTextView.display();
+					MessagesHandler.notConnectedMyTextView.display();
 				} else {
-					MessagesHandler.notConnectedTextView.clearDisplay();
+					MessagesHandler.notConnectedMyTextView.clearDisplay();
 				}
 				
 			} 

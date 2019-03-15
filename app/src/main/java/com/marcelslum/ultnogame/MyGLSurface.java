@@ -3,6 +3,7 @@ package com.marcelslum.ultnogame;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.text.NumberFormat;
@@ -138,9 +139,29 @@ public class MyGLSurface extends GLSurfaceView {
             }});
     }
     
-    public forUpdateNamePlayer(){
-        MessagesHandler.messageGoogleLogged.setText(Game.namePlayer);   
-        
+    public void forUpdateNamePlayer(){
+        queueEvent(new Runnable() {
+            // This method will be called on the rendering
+            // thread:
+            public void run() {
+
+                Log.e(TAG, "forUpdateNamePlayer");
+
+                MyVIewModel model = Game.mainActivity.getModel();
+
+                if (model != null) {
+
+                    Log.e(TAG, "forUpdateNamePlayer3");
+
+                    MyVIewModel.PlayerData playerData = model.playerData.getValue();
+                    GoogleAPI.configureGoogleInfo(playerData);
+
+                    if (MenuHandler.menuOptions != null){
+                        MenuHandler.menuOptions.getMenuOptionByName("google").setText(getResources().getString(R.string.logarGoogle));
+                    }
+
+                }
+            }});
     }
 
     public void onBackPressed(){

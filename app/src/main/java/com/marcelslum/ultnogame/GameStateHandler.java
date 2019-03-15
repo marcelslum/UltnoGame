@@ -245,7 +245,7 @@ public class GameStateHandler{
         } else if (previousState == GAME_STATE_SOBRE){
             // vai para MENU_OPCOES
 
-            MessagesHandler.aboutTextView.blockAndClearDisplay();
+            MessagesHandler.aboutMyTextView.blockAndClearDisplay();
 
         } else if (previousState == GAME_STATE_SELECAO_GRUPO){
             // vai para MENU_JOGAR, SELECAO_LEVEL
@@ -295,7 +295,7 @@ public class GameStateHandler{
                 MessagesHandler.messageSubMenu.clearDisplay();
                 ButtonHandler.buttonBack.blockAndClearDisplay();
                 Game.mainActivity.hideAdView();
-                MessagesHandler.notConnectedTextView.clearDisplay();
+                MessagesHandler.notConnectedMyTextView.clearDisplay();
             }
 
         } else if (previousState == GAME_STATE_PREPARAR){
@@ -544,7 +544,7 @@ public class GameStateHandler{
             MessagesHandler.messageMaxScoreTotal.display();
 
 
-            MessagesHandler.setBottomMessage("", 0);
+            //MessagesHandler.setBottomMessage("", 0);
 
             if (Game.showMessageNotConnectedOnGoogle){
                 Game.showMessageNotConnectedOnGoogle = false;
@@ -576,7 +576,7 @@ public class GameStateHandler{
 
         } else if (newState == GAME_STATE_SOBRE) {
 
-            MessagesHandler.aboutTextView.unblockAndDisplay();
+            MessagesHandler.aboutMyTextView.unblockAndDisplay();
             ButtonHandler.buttonBack.unblockAndDisplay();
             
         } else if (newState == GAME_STATE_ESTATISTICAS){

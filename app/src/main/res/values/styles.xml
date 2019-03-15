@@ -1,4 +1,15 @@
 <resources>
-    <style name="Ultno" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
+
+
+    <style name="Ultno" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fontFamily">@font/jetsetfont</item>
     </style>
+
+
 </resources>
+
+

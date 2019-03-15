@@ -1811,8 +1811,8 @@ public class Game {
         list.add(MenuHandler.menuPause);
         list.add(MenuHandler.menuGameOver);
         list.add(tittle);
-        list.add(MessagesHandler.aboutTextView);
-        list.add(MessagesHandler.notConnectedTextView);
+        list.add(MessagesHandler.aboutMyTextView);
+        list.add(MessagesHandler.notConnectedMyTextView);
         list.add(tipTextBox);
         list.add(MessagesHandler.messageGameOver);
         list.add(MessagesHandler.messagePreparation);

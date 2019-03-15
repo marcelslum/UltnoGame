@@ -2,7 +2,7 @@ package com.marcelslum.ultnogame;
 import android.util.Log;
 import java.util.ArrayList;
 
-public class TextView extends Entity{
+public class MyTextView extends Entity{
   
 	public ArrayList<Text> texts;
 	public float width;
@@ -16,12 +16,12 @@ public class TextView extends Entity{
     float lastMovement;
 	private boolean cancelNextPress;
 
-	private final String TAG = "TextView";
+	private final String TAG = "MyTextView";
 
 	float translateY = 0;
 	int alignment;
   
-	public TextView(String name, float x, float y, float width, float height, float size, Font font, Color color, int alignment, float padding){
+	public MyTextView(String name, float x, float y, float width, float height, float size, Font font, Color color, int alignment, float padding){
 		
 		super(name, x, y, Entity.TYPE_TEXT_VIEW);
 		this.width = width;
@@ -33,7 +33,7 @@ public class TextView extends Entity{
 		this.padding = padding;
 		texts = new ArrayList<>();
 
-		final TextView innerTextView = this;
+		final MyTextView innerMyTextView = this;
 		setListener(new InteractionListener(this.name, x, y, width, height, 5000, this));
 
 		listener.setPressListener(new InteractionListener.PressListener() {
@@ -49,9 +49,9 @@ public class TextView extends Entity{
 
 				Log.e(TAG, "moveDown");
 
-			    if (innerTextView.desacelerationActivated){
-				innerTextView.desacelerationActivated = false;
-				innerTextView.cancelNextPress = true;
+			    if (innerMyTextView.desacelerationActivated){
+				innerMyTextView.desacelerationActivated = false;
+				innerMyTextView.cancelNextPress = true;
 			    }
 			}
 
@@ -60,15 +60,15 @@ public class TextView extends Entity{
 
 				Log.e(TAG, "move");
 			    if (!isBlocked){
-				innerTextView.move(touch.y - touch.previousY, true);
-				innerTextView.lastMovement = touch.y - touch.previousY;
+				innerMyTextView.move(touch.y - touch.previousY, true);
+				innerMyTextView.lastMovement = touch.y - touch.previousY;
 			    }
 			}
 
 			@Override
 			public void onMoveUp(TouchEvent touch, long startTime) {
 				Log.e(TAG, "moveUp");
-			    innerTextView.desacelerationActivated = true;
+			    innerMyTextView.desacelerationActivated = true;
 			}
 		});
 	}

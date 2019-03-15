@@ -1011,7 +1011,7 @@ public class Entity{
             return;
         }
         if (this.getListener() != null) {
-            //if (name == "aboutTextView") {
+            //if (name == "aboutMyTextView") {
             //    //Log.e("listener", "verificando listener " + name);
             //}
             this.getListener().verify();

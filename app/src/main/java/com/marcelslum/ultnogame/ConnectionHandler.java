@@ -27,7 +27,6 @@ public class ConnectionHandler {
             if (internetState == INTERNET_STATE_NOT_CONNECTED){
                 Game.mainActivity.loadBannerAd();
                 Game.mainActivity.loadInterstitialAd();
-                GoogleAPI.loadAchievements();
             }
             internetState = INTERNET_STATE_CONNECTED;
         } else {

@@ -1,14 +1,6 @@
 package com.marcelslum.ultnogame;
 
 import android.app.Application;
-import android.graphics.Typeface;
-import android.os.Build;
-import android.util.Log;
-import android.util.SparseArray;
-
-import com.squareup.leakcanary.LeakCanary;
-
-import java.lang.reflect.Field;
 
 public final class MyApp extends Application {
 
@@ -16,36 +8,31 @@ public final class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            //return;
-        //}
-        //LeakCanary.install(this);
+
 
     }
 
 /*
     // Defining sans as the normal (default) typeface.
-    private static final String DEFAULT_NORMAL_BOLD_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_NORMAL_BOLD_ITALIC_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_NORMAL_ITALIC_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_NORMAL_NORMAL_FONT_FILENAME = "jetset.ttf";
+    private static final String DEFAULT_NORMAL_BOLD_FONT_FILENAME = "jetsetttf";
+    private static final String DEFAULT_NORMAL_BOLD_ITALIC_FONT_FILENAME = "jetsetttf";
+    private static final String DEFAULT_NORMAL_ITALIC_FONT_FILENAME = "jetset.ttf;
+    private static final String DEFAULT_NORMAL_NORMAL_FONT_FILENAME = "jetset.ttf;
 
-    private static final String DEFAULT_SANS_BOLD_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_SANS_BOLD_ITALIC_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_SANS_ITALIC_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_SANS_NORMAL_FONT_FILENAME = "jetset.ttf";
+    private static final String DEFAULT_SANS_BOLD_FONT_FILENAME = "jetsetttf";
+    private static final String DEFAULT_SANS_BOLD_ITALIC_FONT_FILENAME = "jetset.ttf;
+    private static final String DEFAULT_SANS_ITALIC_FONT_FILENAME = "jetsetttf";
+    private static final String DEFAULT_SANS_NORMAL_FONT_FILENAME = "jetset.ttf;
 
-    private static final String DEFAULT_SERIF_BOLD_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_SERIF_BOLD_ITALIC_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_SERIF_ITALIC_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_SERIF_NORMAL_FONT_FILENAME = "jetset.ttf";
+    private static final String DEFAULT_SERIF_BOLD_FONT_FILENAME = "jetsetttf";
+    private static final String DEFAULT_SERIF_BOLD_ITALIC_FONT_FILENAME = "jetset.ttf;
+    private static final String DEFAULT_SERIF_ITALIC_FONT_FILENAME = "jetsetttf";
+    private static final String DEFAULT_SERIF_NORMAL_FONT_FILENAME = "jetsetttf";
 
-    private static final String DEFAULT_MONOSPACE_BOLD_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_MONOSPACE_BOLD_ITALIC_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_MONOSPACE_ITALIC_FONT_FILENAME = "jetset.ttf";
-    private static final String DEFAULT_MONOSPACE_NORMAL_FONT_FILENAME = "jetset.ttf";
+    private static final String DEFAULT_MONOSPACE_BOLD_FONT_FILENAME = "jetsetttf";
+    private static final String DEFAULT_MONOSPACE_BOLD_ITALIC_FONT_FILENAME = "jetset.ttf;
+    private static final String DEFAULT_MONOSPACE_ITALIC_FONT_FILENAME = "jetsetttf";
+    private static final String DEFAULT_MONOSPACE_NORMAL_FONT_FILENAME = "jetset.ttf;
 
     // Constants found in the Android documentation
     // http://developer.android.com/reference/android/widget/TextView.html#attr_android:typeface
