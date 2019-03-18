@@ -144,7 +144,6 @@ public class GameStateHandler{
             // vai para MENU_JOGAR, PREPARAR_TREINAMENTO
 
             MessagesHandler.messageExplicacaoTreinamento.clearDisplay();
-            ButtonHandler.buttonContinue.blockAndClearDisplay();
 
             if (newState == GAME_STATE_PREPARAR_TREINAMENTO){
                 Game.mainActivity.hideAdView();
@@ -170,6 +169,7 @@ public class GameStateHandler{
             } else if (newState == GAME_STATE_INTERSTITIAL){
                 Training.training = false;
                 MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
+                MessagesHandler.messageExplicacaoTreinamento.clearDisplay();
                 MessagesHandler.messageExplicacaoDuranteTreinamento.clearDisplay();
             }
 
@@ -179,9 +179,9 @@ public class GameStateHandler{
         } else if (previousState == GAME_STATE_FINAL_TREINAMENTO){
             // vai para INTERSTITIAL depois MENU_JOGAR
 
-            MessagesHandler.messageExplicacaoDuranteTreinamento.clearDisplay();
-            ButtonHandler.buttonContinue.blockAndClearDisplay();
             Training.training = false;
+            MenuHandler.menuDuranteTreinamento.blockAndClearDisplay();
+            MessagesHandler.messageExplicacaoTreinamento.clearDisplay();
             MessagesHandler.messageExplicacaoDuranteTreinamento.clearDisplay();
 
         } else if (previousState == GAME_STATE_ESTATISTICAS){
@@ -346,6 +346,28 @@ public class GameStateHandler{
                     MessagesHandler.messageTrainingState.clearDisplay();
                 }
             }
+
+            if (newState == GAME_STATE_FINAL_TREINAMENTO){
+
+                if (ButtonHandler.button1Left != null) ButtonHandler.button1Left.blockAndClearDisplay();
+                if (ButtonHandler.button1Right != null) ButtonHandler.button1Right.blockAndClearDisplay();
+                if (ButtonHandler.button2Left != null) ButtonHandler.button2Left.blockAndClearDisplay();
+                if (ButtonHandler.button2Right != null) ButtonHandler.button2Right.blockAndClearDisplay();
+
+
+                if (MessagesHandler.messageTrainingState != null) {
+                    MessagesHandler.messageTrainingState.clearDisplay();
+                }
+                if (MessagesHandler.messageTrainingState2 != null) {
+                    MessagesHandler.messageTrainingState2.clearDisplay();
+                }
+
+            }
+
+
+
+
+
 
 
         } else if (previousState == GAME_STATE_VITORIA_1){
@@ -661,6 +683,8 @@ public class GameStateHandler{
             if (previousState != GAME_STATE_MENU_INICIAL){
                 Game.tittle.display();
             }
+
+            ButtonHandler.buttonContinue.blockAndClearDisplay();
 
             MenuHandler.menuPlay.unblockAndDisplay();
             ButtonHandler.buttonBack.unblockAndDisplay();

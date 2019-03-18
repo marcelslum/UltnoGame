@@ -1703,7 +1703,6 @@ public class Game {
         }
 
 
-
         if (currentLevelIcon != null) currentLevelIcon.prepareRender(matrixView, matrixProjection);
 
         if (groupsUnblocked != null) {
@@ -1718,6 +1717,12 @@ public class Game {
 
         if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.prepareRender(matrixView, matrixProjection);
         if (ballGoalsPanel != null) ballGoalsPanel.prepareRender(matrixView, matrixProjection);
+
+        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_FINAL_TREINAMENTO) {
+            if (ButtonHandler.buttonContinue != null)
+                ButtonHandler.buttonContinue.prepareRender(matrixView, matrixProjection);
+        }
+
 
         if (ButtonHandler.button1Left != null) ButtonHandler.button1Left.prepareRender(matrixView, matrixProjection);
         if (ButtonHandler.button1Right != null) ButtonHandler.button1Right.prepareRender(matrixView, matrixProjection);

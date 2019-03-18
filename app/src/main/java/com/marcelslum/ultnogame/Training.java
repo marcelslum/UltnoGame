@@ -150,7 +150,7 @@ public class Training {
 
             tentativaCertaTreinamento += 1;
 
-            if (tentativaCertaTreinamento < 3){
+            if (tentativaCertaTreinamento < 1){
 
                 if (MessagesHandler.messageTrainingState != null) {
                     MessagesHandler.messageTrainingState.clearDisplay();
@@ -181,7 +181,8 @@ public class Training {
                 Game.stopAllGameEntities();
                 //Game.reduceAllGameEntitiesAlpha(500);
                 trainingNumber += 1;
-                if (trainingNumber <= 20) {
+
+                if (trainingNumber <= 1) {//20
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_DURANTE_TREINAMENTO);
                 } else {
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_FINAL_TREINAMENTO);
@@ -200,7 +201,7 @@ public class Training {
                 */
             }
             if (MessagesHandler.messageTrainingState2 != null) {
-                MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (tentativaCertaTreinamento + 1) + " " + Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
+                MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (tentativaCertaTreinamento) + " " + Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
             }
 
 
