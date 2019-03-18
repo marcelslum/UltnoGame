@@ -1,13 +1,14 @@
 package com.marcelslum.ultnogame;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import static com.marcelslum.ultnogame.GoogleAPI.playerIconImage;
 
 public class MyGLSurface extends GLSurfaceView {
 
@@ -139,27 +140,102 @@ public class MyGLSurface extends GLSurfaceView {
             }});
     }
     
-    public void forUpdateNamePlayer(){
+    public void forUpdatePlayerData(){
         queueEvent(new Runnable() {
             // This method will be called on the rendering
             // thread:
             public void run() {
 
-                Log.e(TAG, "forUpdateNamePlayer");
+                Log.e(TAG, "forUpdatePlayerData");
 
                 MyVIewModel model = Game.mainActivity.getModel();
 
                 if (model != null) {
 
-                    Log.e(TAG, "forUpdateNamePlayer3");
-
                     MyVIewModel.PlayerData playerData = model.playerData.getValue();
-                    GoogleAPI.configureGoogleInfo(playerData);
 
-                    if (MenuHandler.menuOptions != null){
-                        MenuHandler.menuOptions.getMenuOptionByName("google").setText(getResources().getString(R.string.logarGoogle));
+                    if (playerData != null){
+
+                        if (playerIconImage == null) {
+                            Log.e(TAG, "criando novo playerIconImage1");
+                            playerIconImage = new ImageBitmap("playerIconImage1", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f,
+                                    Utils.drawableToBitmap(playerData.getIcon()));
+
+                            Utils.createAnimation4v(playerIconImage, "animScaleX", "animScaleX", 2000, 0f, 1f, 0.8f, 1f, 0.95f, 0.95f, 1f, 1f, true, true).start();
+                            Utils.createAnimation4v(playerIconImage, "animScaleY", "animScaleY", 2000, 0f, 1f, 0.8f, 1f, 0.95f, 0.95f, 1f, 1f, true, true).start();
+
+
+                        } else {
+                            playerIconImage.setBitmap(Utils.drawableToBitmap(playerData.getIcon()));
+                        }
+
+                        MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerData.getName());
+
+                        if (MenuHandler.menuGoogleGeral != null){
+                            MenuHandler.menuGoogleGeral.getMenuOptionByName("google").setText(getResources().getString(R.string.deslogarGoogle));
+                        }
+
+                    } else {
+
+                        if (playerIconImage == null) {
+                            Log.e(TAG, "criando novo playerIconImage2");
+                            playerIconImage = new ImageBitmap("playerIconImage2", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f,
+                                    Utils.drawableToBitmap(Game.mainActivity.getResources().getDrawable(R.drawable.games_controller_grey)));
+
+                            Utils.createAnimation4v(playerIconImage, "animScaleX", "animScaleX", 2000, 0f, 1f, 0.8f, 1f, 0.95f, 0.95f, 1f, 1f, true, true).start();
+                            Utils.createAnimation4v(playerIconImage, "animScaleY", "animScaleY", 2000, 0f, 1f, 0.8f, 1f, 0.95f, 0.95f, 1f, 1f, true, true).start();
+
+                        } else {
+                            playerIconImage.setBitmap(Utils.drawableToBitmap(Game.mainActivity.getResources().getDrawable(R.drawable.games_controller_grey)));
+                        }
+
+                        MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado));
+
+                        if (MenuHandler.menuGoogleGeral != null){
+                            MenuHandler.menuGoogleGeral.getMenuOptionByName("google").setText(getResources().getString(R.string.logarGoogle));
+                        }
+
                     }
 
+                    Splash.signinConclude = true;
+                    if (GoogleAPI.connecting || GoogleAPI.disconnecting){
+                        GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+                    }
+
+                    playerIconImage.setListener(new InteractionListener("listenerplayerIconImage",
+                            Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f,
+                            5000, playerIconImage,
+                            new InteractionListener.PressListener() {
+                                @Override
+                                public void onPress() {
+                                    if (playerIconImage != null && !playerIconImage.isBlocked){
+                                        playerIconImage.block();
+                                        Animation anim = Utils.createAnimation3v(playerIconImage, "scaleX", "scaleX",
+                                                400, 0f,  1f, 0.07f, 0.85f, 1f, 1f, false, true);
+                                        anim.setAnimationListener(new Animation.AnimationListener() {
+                                            @Override
+                                            public void onAnimationEnd() {
+                                                if (GameStateHandler.gameState != GameStateHandler.GAME_STATE_MENU_GOOGLE) {
+                                                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_GOOGLE);
+                                                }
+                                                playerIconImage.unblock();
+                                            }
+                                        });
+                                        anim.start();
+
+                                        Game.sound.playPlayMenuBig();
+
+                                        Utils.createAnimation3v(playerIconImage, "scaleY", "scaleY",
+                                                400, 0f,  1f, 0.07f, 0.85f, 1f, 1f, false, true).start();
+                                    }
+                                }
+
+                                @Override
+                                public void onUnpress() {
+
+                                }
+                            }
+                    ));
                 }
             }});
     }
@@ -167,10 +243,8 @@ public class MyGLSurface extends GLSurfaceView {
     public void onBackPressed(){
 
         queueEvent(new Runnable() {
-            // This method will be called on the rendering
-            // thread:
-            public void run() {
 
+            public void run() {
 
                 if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PAUSE_OPCOES) {
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PAUSE);
@@ -227,62 +301,6 @@ public class MyGLSurface extends GLSurfaceView {
         queueEvent(new Runnable() {
             public void run() {
                 ScoreHandler.scorePanel.showMessage(Game.messageForScore, 2000);
-            }});
-    }
-
-    public void setMenuCarregarMessage(){
-        queueEvent(new Runnable() {
-            public void run() {
-
-                if (MainActivity.saveGameFromCloud == null){
-                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
-                    MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.erro_ao_carregar), 4000);
-
-                } else {
-
-                    int localStars = SaveGame.getTotalStars(SaveGame.saveGame);
-
-                    int cloudStars = SaveGame.getTotalStars(MainActivity.saveGameFromCloud);
-
-                    int localPoints = SaveGame.getTotalPoints(SaveGame.saveGame);
-                    int cloudPoints = SaveGame.getTotalPoints(MainActivity.saveGameFromCloud);
-
-
-                    MessagesHandler.messageMenuCarregarJogo.clearTexts();
-
-                    MessagesHandler.messageMenuCarregarJogo.addText(
-                            Game.getContext().getResources().getString(R.string.messageCarregarJogo1), Color.azulClaro);
-                    MessagesHandler.messageMenuCarregarJogo.addText(
-                            NumberFormat.getInstance().format(cloudStars) + " " +
-                                    Game.getContext().getResources().getString(R.string.messageCarregarJogo2) +
-                                    " - " +
-                                    NumberFormat.getInstance().format(cloudPoints) + " " +
-                                    Game.getContext().getResources().getString(R.string.messageCarregarJogo3), Color.cinza50);
-
-
-                    MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
-
-
-                    MessagesHandler.messageMenuCarregarJogo.addText(
-                            Game.getContext().getResources().getString(R.string.messageCarregarJogo4), Color.azulClaro);
-                    MessagesHandler.messageMenuCarregarJogo.addText(
-                            NumberFormat.getInstance().format(localStars) + " " +
-                                    Game.getContext().getResources().getString(R.string.messageCarregarJogo2) +
-                                    " - " +
-                                    NumberFormat.getInstance().format(localPoints) + " " +
-                                    Game.getContext().getResources().getString(R.string.messageCarregarJogo3), Color.cinza50);
-                    MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
-
-                    MessagesHandler.messageMenuCarregarJogo.addText(
-                            Game.getContext().getResources().getString(R.string.messageCarregarJogo5),
-                            Color.pretoCheio);
-                    MessagesHandler.messageMenuCarregarJogo.addText(".", Color.transparente);
-                    MessagesHandler.messageMenuCarregarJogo.addText(
-                            Game.getContext().getResources().getString(R.string.messageCarregarJogo6),
-                            Color.cinza70);
-
-                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_CARREGAR_JOGO_SALVO_NUVEM);
-                }
             }});
     }
 

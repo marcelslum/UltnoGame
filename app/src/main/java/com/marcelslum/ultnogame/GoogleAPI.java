@@ -24,6 +24,12 @@ import java.util.ArrayList;
 /**
  * Created by marcel on 10/10/2016.
  */
+
+
+//g04537291955427667933 - MARCELSLUM
+// g10188873398780278626 - RAIDING
+
+
 public class GoogleAPI {
 
     public static final int RC_LEADERBOARD_UI = 9004;
@@ -43,106 +49,32 @@ public class GoogleAPI {
     public static String playerName = "-";
     public static String playerId;
     public static boolean isConnected;
-    static ImageBitmap playerIconImage;
-    static Bitmap playerIcon;
+    public static ImageBitmap playerIconImage = null;
+    public static boolean disconnecting = false;
+    public static boolean connecting = false;
 
     public static void hideGoogleInfo(){
-        MessagesHandler.messageGoogleLogged.clearDisplay();
-        if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.clearDisplay();
+        if (MessagesHandler.messageGoogleLogged != null) MessagesHandler.messageGoogleLogged.clearDisplay();
+        if (playerIconImage != null) playerIconImage.clearDisplay();
     }
 
+    public static void displayGoogleInfo(){
+        if (MessagesHandler.messageGoogleLogged != null) MessagesHandler.messageGoogleLogged.display();
+        if (playerIconImage != null) playerIconImage.display();
+    }
+
+    public static void connectGoogle(){
+        Game.mainActivity.startSignInIntent();
+    }
 
     public static void disconnectGoogle(){
         Game.mainActivity.signOut();
-        if (GoogleAPI.playerIconImage != null) {
-            GoogleAPI.playerIconImage.clearDisplay();
-            GoogleAPI.playerIconImage = null;
-        }
-
-        MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado));
         MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.message_google_desconectado), 4000);
     }
 
-
-    public static void displayGoogleInfo(){
-
-        if (MessagesHandler.messageGoogleLogged != null) MessagesHandler.messageGoogleLogged.display();
-        if (playerIconImage != null) playerIconImage.display();
-
-    }
-
     public static void configureGoogleInfo(MyVIewModel.PlayerData playerData) {
-
         Log.e(TAG, "configureGoogleInfo2");
-
-
-        Log.e(TAG, "configureGoogleInfo3");
-        if (playerData != null){
-
-            playerIcon = Utils.drawableToBitmap(playerData.getIcon());
-
-            Log.e(TAG, "mainActivity.isSignedIn()");
-            if (playerIcon != null){
-                Log.e(TAG, "playerIcon != null");
-                if (playerIconImage != null){
-                    playerIconImage.setBitmap(playerIcon);
-                } else {
-                    playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, playerIcon);
-                    playerIconImage.setListener(new InteractionListener("listenerplayerIconImage",
-                            Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f,
-                            5000, playerIconImage,
-                            new InteractionListener.PressListener() {
-                                @Override
-                                public void onPress() {
-                                    if (playerIconImage != null && !playerIconImage.isBlocked){
-                                        playerIconImage.block();
-                                        Animation anim = Utils.createAnimation3v(playerIconImage, "scaleX", "scaleX",
-                                                400, 0f,  1f, 0.07f, 0.85f, 1f, 1f, false, true);
-                                        anim.setAnimationListener(new Animation.AnimationListener() {
-                                            @Override
-                                            public void onAnimationEnd() {
-                                                if (GameStateHandler.gameState != GameStateHandler.GAME_STATE_MENU_GOOGLE) {
-                                                    GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_GOOGLE);
-                                                }
-                                                playerIconImage.unblock();
-                                            }
-                                        });
-                                        anim.start();
-
-                                        Game.sound.playPlayMenuBig();
-
-                                        Utils.createAnimation3v(playerIconImage, "scaleY", "scaleY",
-                                                400, 0f,  1f, 0.07f, 0.85f, 1f, 1f, false, true).start();
-                                    }
-                                }
-
-                                @Override
-                                public void onUnpress() {
-
-                                }
-                            }
-                    ));
-                    Game.adicionarEntidadeFixa(playerIconImage);
-                }
-            }
-
-            Log.e(TAG, " MessagesHandler.messageGoogleLogged.setText(");
-
-            MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleLogado) + "\u0020" + playerData.getName());
-        } else {
-
-            Log.e(TAG, " MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado)");
-
-            MessagesHandler.messageGoogleLogged.setText(Game.getContext().getResources().getString(R.string.googleNaoLogado));
-        }
-
-        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_INICIAL){
-            displayGoogleInfo();
-        }
-
-
-
-
+        Game.forUpdatePlayerData = true;
     }
 
     public static class AchievementData{

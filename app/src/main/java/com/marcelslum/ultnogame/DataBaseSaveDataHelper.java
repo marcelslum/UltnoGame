@@ -51,7 +51,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         };
 
         String selection =
-                DataBaseContract.DataLevels.COLUMN_NUMBER + " = " + l;
+                DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = " + Game.playerId;
 
         Cursor cursor = myDataBase.query(
                 DataBaseContract.DataLevels.TABLE_NAME,        // The table to query
@@ -63,16 +63,112 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                 null                                      // don't sort
         );
 
+
        cursor.moveToFirst();
 
        return cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS));
    }
 
+   public boolean saveGameExists(String playerId){
+
+       Log.e(TAG, "saveGameExists");
+       //logAllDatabase();
+
+       openDataBase();
+
+       String[] projection = {
+               DataBaseContract.DataLevels.COLUMN_POINTS
+       };
+
+       String selection =
+               DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = ?";
+
+       String[] selectionArgs = new String[]{playerId};
+
+       Cursor cursor = myDataBase.query(
+               DataBaseContract.DataLevels.TABLE_NAME,        // The table to query
+               projection,                               // The columns to return
+               selection,                                // The columns for the WHERE clause
+               selectionArgs,                            // The values for the WHERE clause
+               null,                                     // don't group the rows
+               null,                                     // don't filter by row groups
+               null                                      // don't sort
+       );
+
+       if (cursor.getCount() == 0){
+           Log.e(TAG, "saveGameExists = false " + cursor.getCount());
+
+           if (Storage.contains(Storage.STORAGE_SAVE_NAME+Game.playerId)){
+
+               Log.e(TAG, "Storage.contains(Storage.STORAGE_SAVE_NAME+Game.playerId)");
+
+               return true;
+           } else {
+
+               Log.e(TAG, "!Storage.contains(Storage.STORAGE_SAVE_NAME+Game.playerId)");
+
+               return false;
+           }
+
+       } else {
+           Log.e(TAG, "saveGameExists = true " + cursor.getCount());
+           return true;
+       }
+
+
+   }
+
+   public void logAllDatabase(){
+
+       openDataBase();
+
+       Log.e(TAG, "Log Database=================================");
+
+       String[] projection = {
+               DataBaseContract.DataLevels.COLUMN_PLAYER_ID,
+               DataBaseContract.DataLevels.COLUMN_NUMBER,
+               DataBaseContract.DataLevels.COLUMN_POINTS,
+               DataBaseContract.DataLevels.COLUMN_STARS,
+               DataBaseContract.DataLevels.COLUMN_UNLOCKED,
+               DataBaseContract.DataLevels.COLUMN_SEEN};
+
+               Cursor cursor = myDataBase.query(
+                       DataBaseContract.DataLevels.TABLE_NAME,        // The table to query
+                       projection,                               // The columns to return
+                       null,                                // The columns for the WHERE clause
+                       null,                            // The values for the WHERE clause
+                       null,                                     // don't group the rows
+                       null,                                     // don't filter by row groups
+                       null                                      // don't sort
+               );
+
+               int i = 0;
+               while(cursor.moveToNext()){
+
+                   Log.e(TAG, " player " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_PLAYER_ID)) +
+                           " number " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_NUMBER)) +
+                           " points " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_POINTS)) +
+                           " stars " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_STARS)) +
+                           " unlocked " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_UNLOCKED)) +
+                           " seen " + cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseContract.DataLevels.COLUMN_SEEN)));
+
+                   i += 1;
+               }
+
+       Log.e(TAG, "Log Database fim =================================");
+               close();
+
+   }
+
     public SaveGame getSaveGame(){
+
+        //logAllDatabase();
+
         openDataBase();
 
-        
         SaveGameBuilder saveGameBuilder = new SaveGameBuilder();
+
+        saveGameBuilder.setPlayerId(Game.playerId);
         
         // DADOS LEVELS ----------------------------------------------------
        String[] projection = {
@@ -83,15 +179,20 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                  DataBaseContract.DataLevels.COLUMN_SEEN,
              };
 
+        String selection = DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = ?";
+        String[] selectionArgs = new String[]{Game.playerId};
+
          Cursor cursor = myDataBase.query(
                  DataBaseContract.DataLevels.TABLE_NAME,        // The table to query
                  projection,                               // The columns to return
-                 null,                                // The columns for the WHERE clause
-                 null,                            // The values for the WHERE clause
+                 selection,                                // The columns for the WHERE clause
+                 selectionArgs,                            // The values for the WHERE clause
                  null,                                     // don't group the rows
                  null,                                     // don't filter by row groups
                  null                                      // don't sort
         );
+
+         Log.e(TAG, "cursor level save data size " + cursor.getCount());
        
 
         int[] levelsPoints = new int[Level.NUMBER_OF_LEVELS];
@@ -127,11 +228,12 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                  DataBaseContract.DataTutorials.COLUMN_SEEN
              };
 
+
             cursor = myDataBase.query(
                  DataBaseContract.DataTutorials.TABLE_NAME,        // The table to query
                  projection,                               // The columns to return
-                 null,                                // The columns for the WHERE clause
-                 null,                            // The values for the WHERE clause
+                    selection,                                // The columns for the WHERE clause
+                    selectionArgs,                            // The values for the WHERE clause
                  null,                                     // don't group the rows
                  null,                                     // don't filter by row groups
                  null                                      // don't sort
@@ -162,8 +264,8 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         cursor = myDataBase.query(
                 DataBaseContract.DataGroups.TABLE_NAME,        // The table to query
                 projection,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
                 null,                                     // don't group the rows
                 null,                                     // don't filter by row groups
                 null                                      // don't sort
@@ -204,15 +306,12 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             DataBaseContract.Data.COLUMN_BALL_VELOCITY,
             DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED
         };
-        
-        String selection =
-                     DataBaseContract.Targets._ID + " = 1";
 
          cursor = myDataBase.query(
                  DataBaseContract.Data.TABLE_NAME,          // The table to query
                  projection,                                // The columns to return
                  selection,                                 // The columns for the WHERE clause
-                 null,                                      // The values for the WHERE clause
+                 selectionArgs,                                      // The values for the WHERE clause
                  null,                                      // don't group the rows
                  null,                                      // don't filter by row groups
                  null                                       // don't sort
@@ -251,15 +350,14 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         projection = new String[]{
                 DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN
         };
-        selection =
-                DataBaseContract.Targets._ID + " = 1";
+
         try {
 
             cursor = myDataBase.query(
                     DataBaseContract.Data.TABLE_NAME,          // The table to query
                     projection,                                // The columns to return
                     selection,                                 // The columns for the WHERE clause
-                    null,                                      // The values for the WHERE clause
+                    selectionArgs,                                      // The values for the WHERE clause
                     null,                                      // don't group the rows
                     null,                                      // don't filter by row groups
                     null                                       // don't sort
@@ -286,15 +384,14 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         projection = new String[]{
                 DataBaseContract.Data.COLUMN_LAST_LEVEL_PLAYED
         };
-        selection =
-                DataBaseContract.Targets._ID + " = 1";
+
         try {
 
             cursor = myDataBase.query(
                     DataBaseContract.Data.TABLE_NAME,          // The table to query
                     projection,                                // The columns to return
                     selection,                                 // The columns for the WHERE clause
-                    null,                                      // The values for the WHERE clause
+                    selectionArgs,                                      // The values for the WHERE clause
                     null,                                      // don't group the rows
                     null,                                      // don't filter by row groups
                     null                                       // don't sort
@@ -316,6 +413,10 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
 
         // ---------------------STATS
+
+        long [] stats = new long [Stats.STATS_DATABASE_SIZE];
+
+
         projection = new String[]{
                 DataBaseContract.DataStats.STAT0,
                 DataBaseContract.DataStats.STAT1,
@@ -378,15 +479,18 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                 DataBaseContract.DataStats.STAT58,
                 DataBaseContract.DataStats.STAT60
         };
-        selection =
-                DataBaseContract.DataStats._ID + " = 1";
+
+
+        selection = DataBaseContract.DataStats.COLUMN_PLAYER_ID + " = ?";
+        selectionArgs = new String[]{Game.playerId};
+
         try {
 
             cursor = myDataBase.query(
                     DataBaseContract.DataStats.TABLE_NAME,          // The table to query
                     projection,                                // The columns to return
                     selection,                                 // The columns for the WHERE clause
-                    null,                                      // The values for the WHERE clause
+                    selectionArgs,                                      // The values for the WHERE clause
                     null,                                      // don't group the rows
                     null,                                      // don't filter by row groups
                     null                                       // don't sort
@@ -394,7 +498,6 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
             while (cursor.moveToNext()) {
                 try {
-                    long [] stats = new long [Stats.STATS_DATABASE_SIZE];
                     stats[0] = cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseContract.DataStats.STAT0));
                     stats[1] = cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseContract.DataStats.STAT1));
                     stats[2] = cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseContract.DataStats.STAT2));
@@ -455,7 +558,6 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                     stats[57] = cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseContract.DataStats.STAT57));
                     stats[58] = cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseContract.DataStats.STAT58));
                     stats[59] = cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseContract.DataStats.STAT60));
-
                     saveGameBuilder.setStats(stats);
                 } catch (Exception e) {
                     Log.e(TAG, "Erro ao buscar os dados da tabela STATS");
@@ -469,6 +571,8 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             Log.e(TAG, e.getMessage());
         }
 
+        saveGameBuilder.setStats(stats);
+
 
         close();
 
@@ -480,52 +584,61 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         myDataBase = getWritable();        
         ContentValues values = new ContentValues();
             values.put(DataBaseContract.DataLevels.COLUMN_POINTS, v);
-        String selection = DataBaseContract.DataLevels.COLUMN_NUMBER + " LIKE ?";
-        String[] selectionArgs = new String[]{Integer.toString(number)};
+
+        String selection = DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = ? AND " + DataBaseContract.DataLevels.COLUMN_NUMBER + " = ?";
+        String [] whereArgs = new String []{Game.playerId, String.valueOf(number)};
+
         myDataBase.update(
-            DataBaseContract.DataLevels.TABLE_NAME,
-            values,
-            selection,
-            selectionArgs);
+                DataBaseContract.DataLevels.TABLE_NAME,
+                values,
+                selection,
+                whereArgs);
     }
     
     public void setLevelStars(int number, int v){
         myDataBase = getWritable();        
         ContentValues values = new ContentValues();
             values.put(DataBaseContract.DataLevels.COLUMN_STARS, v);
-        String selection = DataBaseContract.DataLevels.COLUMN_NUMBER + " LIKE ?";
-        String[] selectionArgs = new String[]{Integer.toString(number)};
+
+        String selection = DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = ? AND " + DataBaseContract.DataLevels.COLUMN_NUMBER + " = ?";
+        String [] whereArgs = new String []{Game.playerId, String.valueOf(number)};
+
         myDataBase.update(
-            DataBaseContract.DataLevels.TABLE_NAME,
-            values,
-            selection,
-            selectionArgs);
+                DataBaseContract.DataLevels.TABLE_NAME,
+                values,
+                selection,
+                whereArgs);
     }
     
     public void setLevelUnlocked(int number, boolean v){
         myDataBase = getWritable();        
         ContentValues values = new ContentValues();
             values.put(DataBaseContract.DataLevels.COLUMN_UNLOCKED, v ? 1 : 0);
-        String selection = DataBaseContract.DataLevels.COLUMN_NUMBER + " LIKE ?";
-        String[] selectionArgs = new String[]{Integer.toString(number)};
+
+        String selection = DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = ? AND " + DataBaseContract.DataLevels.COLUMN_NUMBER + " = ?";
+        String [] whereArgs = new String []{Game.playerId, String.valueOf(number)};
+
         myDataBase.update(
-            DataBaseContract.DataLevels.TABLE_NAME,
-            values,
-            selection,
-            selectionArgs);
+                DataBaseContract.DataLevels.TABLE_NAME,
+                values,
+                selection,
+                whereArgs);
+
     }
     
     public void setLevelSeen(int number, boolean v){
         myDataBase = getWritable();        
         ContentValues values = new ContentValues();
             values.put(DataBaseContract.DataLevels.COLUMN_SEEN, v ? 1 : 0);
-        String selection = DataBaseContract.DataLevels.COLUMN_NUMBER + " LIKE ?";
-        String[] selectionArgs = new String[]{Integer.toString(number)};
+
+        String selection = DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = ? AND " + DataBaseContract.DataLevels.COLUMN_NUMBER + " = ?";
+        String [] whereArgs = new String []{Game.playerId, String.valueOf(number)};
+
         myDataBase.update(
-            DataBaseContract.DataLevels.TABLE_NAME,
-            values,
-            selection,
-            selectionArgs);
+                DataBaseContract.DataLevels.TABLE_NAME,
+                values,
+                selection,
+                whereArgs);
     }
     
     public void setTutorialSeen(int number, boolean v){
@@ -545,21 +658,40 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         myDataBase = getWritable();
         ContentValues values = new ContentValues();
         values.put(DataBaseContract.DataGroups.COLUMN_SEEN, v ? 1 : 0);
-        String selection = DataBaseContract.DataGroups.COLUMN_NUMBER + " LIKE ?";
-        String[] selectionArgs = new String[]{Integer.toString(number)};
+
+        String selection = DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = ? AND " + DataBaseContract.DataLevels.COLUMN_NUMBER + " = ?";
+        String [] whereArgs = new String []{Game.playerId, String.valueOf(number)};
+
         myDataBase.update(
-                DataBaseContract.DataGroups.TABLE_NAME,
+                DataBaseContract.DataLevels.TABLE_NAME,
                 values,
                 selection,
-                selectionArgs);
+                whereArgs);
     }
     
     public void saveDataFromSaveGame(SaveGame saveGame){
+
+        Log.e(TAG, "saveDataFromSaveGame");
+        //logAllDatabase();
+
+
+        if (!saveGameExists(Game.playerId)){
+            Log.e(TAG, "!saveGameExists(Game.playerId) ------ criando novo");
+            createNewSaveGame(saveGame);
+            return;
+        }
+
+
         myDataBase = getWritable();
 
         Log.e(TAG, "saveDataFromSaveGame");
 
         ContentValues values = new ContentValues();
+
+        String selection = DataBaseContract.Data.COLUMN_PLAYER_ID + " = ?";
+        String[] whereArgs = new String []{Game.playerId};
+
+        try{
             values.put(DataBaseContract.Data.COLUMN_DATE, saveGame.date);
             values.put(DataBaseContract.Data.COLUMN_CURRENT_LEVEL, saveGame.currentLevelNumber);
             values.put(DataBaseContract.Data.COLUMN_CURRENT_GROUP, saveGame.currentGroupNumber);
@@ -573,78 +705,63 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
             values.put(DataBaseContract.Data.COLUMN_TUTORIAL_MENU_TRANSLATE_X, saveGame.currentTutorialMenuTranslateX);
             values.put(DataBaseContract.Data.COLUMN_LAST_STARS, saveGame.lastStars);
             values.put(DataBaseContract.Data.COLUMN_LEVELS_PLAYED, saveGame.levelsPlayed);
+            values.put(DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED, saveGame.orientationInverted ? 1 : 0);
+            values.put(DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN, saveGame.saveMenuSeen ? 1 : 0);
+            values.put(DataBaseContract.Data.COLUMN_LAST_LEVEL_PLAYED, saveGame.lastLevelPlayed);
+        
+        selection = DataBaseContract.Data.COLUMN_PLAYER_ID + " = ?";
+        whereArgs = new String []{Game.playerId};
 
-        
-        String selection = DataBaseContract.Data._ID + " LIKE 1";
-        
+
         myDataBase.update(
             DataBaseContract.Data.TABLE_NAME,
             values,
             selection,
-            null);
+            whereArgs);
 
-        try{
-            values = new ContentValues();
-            values.put(DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED, saveGame.orientationInverted ? 1 : 0);
-            selection = DataBaseContract.Data._ID + " LIKE 1";
-            myDataBase.update(DataBaseContract.Data.TABLE_NAME,values, selection,null);
         }catch(SQLiteException e){
-            Log.e(TAG, "não foi possível salvar no banco de dados a opção orientationInverted");
+            Log.e(TAG, "não foi possível salvar no banco de dados os dados");
         }
-
-        try{
-            values = new ContentValues();
-            values.put(DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN, saveGame.saveMenuSeen ? 1 : 0);
-            selection = DataBaseContract.Data._ID + " LIKE 1";
-            myDataBase.update(DataBaseContract.Data.TABLE_NAME,values, selection,null);
-        }catch(SQLiteException e){
-            Log.e(TAG, "não foi possível salvar no banco de dados a opção saveMenuSeen");
-        }
-
-        try{
-            values = new ContentValues();
-            values.put(DataBaseContract.Data.COLUMN_LAST_LEVEL_PLAYED, saveGame.lastLevelPlayed);
-            selection = DataBaseContract.Data._ID + " LIKE 1";
-            myDataBase.update(DataBaseContract.Data.TABLE_NAME,values, selection,null);
-        }catch(SQLiteException e){
-            Log.e(TAG, "não foi possível salvar no banco de dados a opção lastLevelPlayed");
-        }
-
 
         for (int i = 0; i < saveGame.levelsPoints.length; i++){
+
             values = new ContentValues();
             values.put(DataBaseContract.DataLevels.COLUMN_POINTS, saveGame.levelsPoints[i]);
             values.put(DataBaseContract.DataLevels.COLUMN_STARS, saveGame.levelsStars[i]);
             values.put(DataBaseContract.DataLevels.COLUMN_SEEN, saveGame.levelsSeen[i]);
             values.put(DataBaseContract.DataLevels.COLUMN_UNLOCKED, saveGame.levelsUnlocked[i]);
-            selection = DataBaseContract.Data._ID + " LIKE " + String.valueOf(i + 1);
+            selection = DataBaseContract.Data.COLUMN_PLAYER_ID + " = ? AND " + DataBaseContract.DataLevels.COLUMN_NUMBER + " = ?";
+            whereArgs = new String []{Game.playerId, String.valueOf(i+1)};
+
             myDataBase.update(
                     DataBaseContract.DataLevels.TABLE_NAME,
                     values,
                     selection,
-                    null);
+                    whereArgs);
         }
 
         for (int i = 0; i < saveGame.tutorialsSeen.length; i++){
             values = new ContentValues();
             values.put(DataBaseContract.DataTutorials.COLUMN_SEEN, saveGame.tutorialsSeen[i]);
-            selection = DataBaseContract.Data._ID + " LIKE " + String.valueOf(i + 1);
+            selection = DataBaseContract.DataTutorials.COLUMN_PLAYER_ID + " = ? AND " + DataBaseContract.DataTutorials.COLUMN_NUMBER + " = ?";
+            whereArgs = new String []{Game.playerId, String.valueOf(i+1)};
             myDataBase.update(
                     DataBaseContract.DataTutorials.TABLE_NAME,
                     values,
                     selection,
-                    null);
+                    whereArgs);
         }
 
         for (int i = 0; i < saveGame.groupsSeen.length; i++){
             values = new ContentValues();
             values.put(DataBaseContract.DataGroups.COLUMN_SEEN, saveGame.groupsSeen[i]);
-            selection = DataBaseContract.Data._ID + " LIKE " + String.valueOf(i + 1);
+            selection = DataBaseContract.DataGroups.COLUMN_PLAYER_ID + " = ? AND " + DataBaseContract.DataGroups.COLUMN_NUMBER + " = ?";
+            whereArgs = new String []{Game.playerId, String.valueOf(i+1)};
             myDataBase.update(
                     DataBaseContract.DataGroups.TABLE_NAME,
                     values,
                     selection,
-                    null);
+                    whereArgs);
         }
 
         String query = "SELECT googleOption FROM data";
@@ -712,16 +829,294 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         values.put(DataBaseContract.DataStats.STAT57, saveGame.stats[57]);
         values.put(DataBaseContract.DataStats.STAT58, saveGame.stats[58]);
         values.put(DataBaseContract.DataStats.STAT59, saveGame.stats[59]);
+        values.put(DataBaseContract.DataStats.COLUMN_PLAYER_ID, saveGame.playerId);
 
-        selection = DataBaseContract.DataStats._ID + " LIKE 1";
+        selection = DataBaseContract.DataStats.COLUMN_PLAYER_ID + " = ?";
+        whereArgs = new String []{Game.playerId};
 
         myDataBase.update(
                 DataBaseContract.DataStats.TABLE_NAME,
                 values,
                 selection,
-                null);
+                whereArgs);
 
         close();
+
+        logAllDatabase();
     }
-   
+
+    public void createNewSaveGame(SaveGame saveGame) {
+
+        Log.e(TAG, "createNewSaveGame");
+        //logAllDatabase();
+
+        myDataBase = getWritable();
+
+        ContentValues values = new ContentValues();
+        values.put(DataBaseContract.Data.COLUMN_DATE, saveGame.date);
+        values.put(DataBaseContract.Data.COLUMN_CURRENT_LEVEL, saveGame.currentLevelNumber);
+        values.put(DataBaseContract.Data.COLUMN_CURRENT_GROUP, saveGame.currentGroupNumber);
+        values.put(DataBaseContract.Data.COLUMN_MUSIC, saveGame.music ? 1 : 0);
+        values.put(DataBaseContract.Data.COLUMN_SOUND, saveGame.sound ? 1 : 0);
+        values.put(DataBaseContract.Data.COLUMN_VIBRATION, saveGame.vibration ? 1 : 0);
+        values.put(DataBaseContract.Data.COLUMN_GOOGLE_OPTION, saveGame.googleOption);
+        values.put(DataBaseContract.Data.COLUMN_BALL_VELOCITY, saveGame.ballVelocity);
+        values.put(DataBaseContract.Data.COLUMN_GROUP_MENU_TRANSLATE_X, saveGame.currentGroupMenuTranslateX);
+        values.put(DataBaseContract.Data.COLUMN_LEVEL_MENU_TRANSLATE_X, saveGame.currentLevelMenuTranslateX);
+        values.put(DataBaseContract.Data.COLUMN_TUTORIAL_MENU_TRANSLATE_X, saveGame.currentTutorialMenuTranslateX);
+        values.put(DataBaseContract.Data.COLUMN_LAST_STARS, saveGame.lastStars);
+        values.put(DataBaseContract.Data.COLUMN_LEVELS_PLAYED, saveGame.levelsPlayed);
+        values.put(DataBaseContract.Data.COLUMN_PLAYER_ID, saveGame.playerId);
+        values.put(DataBaseContract.Data.COLUMN_ORIENTATION_INVERTED, saveGame.orientationInverted ? 1 : 0);
+        values.put(DataBaseContract.Data.COLUMN_SAVE_MENU_SEEN, saveGame.saveMenuSeen ? 1 : 0);
+        values.put(DataBaseContract.Data.COLUMN_LAST_LEVEL_PLAYED, saveGame.lastLevelPlayed);
+        myDataBase.insert(DataBaseContract.Data.TABLE_NAME, null, values);
+
+        for (int i = 0; i < saveGame.levelsPoints.length; i++){
+            values = new ContentValues();
+            values.put(DataBaseContract.DataLevels.COLUMN_POINTS, saveGame.levelsPoints[i]);
+            values.put(DataBaseContract.DataLevels.COLUMN_STARS, saveGame.levelsStars[i]);
+            values.put(DataBaseContract.DataLevels.COLUMN_SEEN, saveGame.levelsSeen[i]);
+            values.put(DataBaseContract.DataLevels.COLUMN_UNLOCKED, saveGame.levelsUnlocked[i]);
+            values.put(DataBaseContract.DataLevels.COLUMN_NUMBER, String.valueOf(i + 1));
+            values.put(DataBaseContract.DataLevels.COLUMN_PLAYER_ID, saveGame.playerId);
+            myDataBase.insert(DataBaseContract.DataLevels.TABLE_NAME, null, values);
+        }
+
+        for (int i = 0; i < saveGame.tutorialsSeen.length; i++){
+            values = new ContentValues();
+            values.put(DataBaseContract.DataTutorials.COLUMN_NUMBER, String.valueOf(i + 1));
+            values.put(DataBaseContract.DataTutorials.COLUMN_SEEN, saveGame.tutorialsSeen[i]);
+            values.put(DataBaseContract.DataTutorials.COLUMN_PLAYER_ID, saveGame.playerId);
+            myDataBase.insert(DataBaseContract.DataTutorials.TABLE_NAME, null, values);
+
+        }
+
+        for (int i = 0; i < saveGame.groupsSeen.length; i++){
+            values = new ContentValues();
+            values.put(DataBaseContract.DataGroups.COLUMN_NUMBER, String.valueOf(i + 1));
+            values.put(DataBaseContract.DataGroups.COLUMN_SEEN, saveGame.groupsSeen[i]);
+            values.put(DataBaseContract.DataTutorials.COLUMN_PLAYER_ID, saveGame.playerId);
+            myDataBase.insert(DataBaseContract.DataTutorials.TABLE_NAME, null, values);
+        }
+
+        values = new ContentValues();
+        values.put(DataBaseContract.DataStats.STAT0, saveGame.stats[0]);
+        values.put(DataBaseContract.DataStats.STAT1, saveGame.stats[1]);
+        values.put(DataBaseContract.DataStats.STAT2, saveGame.stats[2]);
+        values.put(DataBaseContract.DataStats.STAT3, saveGame.stats[3]);
+        values.put(DataBaseContract.DataStats.STAT4, saveGame.stats[4]);
+        values.put(DataBaseContract.DataStats.STAT5, saveGame.stats[5]);
+        values.put(DataBaseContract.DataStats.STAT6, saveGame.stats[6]);
+        values.put(DataBaseContract.DataStats.STAT7, saveGame.stats[7]);
+        values.put(DataBaseContract.DataStats.STAT8, saveGame.stats[8]);
+        values.put(DataBaseContract.DataStats.STAT9, saveGame.stats[9]);
+        values.put(DataBaseContract.DataStats.STAT10, saveGame.stats[10]);
+        values.put(DataBaseContract.DataStats.STAT11, saveGame.stats[11]);
+        values.put(DataBaseContract.DataStats.STAT12, saveGame.stats[12]);
+        values.put(DataBaseContract.DataStats.STAT13, saveGame.stats[13]);
+        values.put(DataBaseContract.DataStats.STAT14, saveGame.stats[14]);
+        values.put(DataBaseContract.DataStats.STAT15, saveGame.stats[15]);
+        values.put(DataBaseContract.DataStats.STAT16, saveGame.stats[16]);
+        values.put(DataBaseContract.DataStats.STAT17, saveGame.stats[17]);
+        values.put(DataBaseContract.DataStats.STAT18, saveGame.stats[18]);
+        values.put(DataBaseContract.DataStats.STAT19, saveGame.stats[19]);
+        values.put(DataBaseContract.DataStats.STAT20, saveGame.stats[20]);
+        values.put(DataBaseContract.DataStats.STAT21, saveGame.stats[21]);
+        values.put(DataBaseContract.DataStats.STAT22, saveGame.stats[22]);
+        values.put(DataBaseContract.DataStats.STAT23, saveGame.stats[23]);
+        values.put(DataBaseContract.DataStats.STAT24, saveGame.stats[24]);
+        values.put(DataBaseContract.DataStats.STAT25, saveGame.stats[25]);
+        values.put(DataBaseContract.DataStats.STAT26, saveGame.stats[26]);
+        values.put(DataBaseContract.DataStats.STAT27, saveGame.stats[27]);
+        values.put(DataBaseContract.DataStats.STAT28, saveGame.stats[28]);
+        values.put(DataBaseContract.DataStats.STAT29, saveGame.stats[29]);
+        values.put(DataBaseContract.DataStats.STAT30, saveGame.stats[30]);
+        values.put(DataBaseContract.DataStats.STAT31, saveGame.stats[31]);
+        values.put(DataBaseContract.DataStats.STAT32, saveGame.stats[32]);
+        values.put(DataBaseContract.DataStats.STAT33, saveGame.stats[33]);
+        values.put(DataBaseContract.DataStats.STAT34, saveGame.stats[34]);
+        values.put(DataBaseContract.DataStats.STAT35, saveGame.stats[35]);
+        values.put(DataBaseContract.DataStats.STAT36, saveGame.stats[36]);
+        values.put(DataBaseContract.DataStats.STAT37, saveGame.stats[37]);
+        values.put(DataBaseContract.DataStats.STAT38, saveGame.stats[38]);
+        values.put(DataBaseContract.DataStats.STAT39, saveGame.stats[39]);
+        values.put(DataBaseContract.DataStats.STAT40, saveGame.stats[40]);
+        values.put(DataBaseContract.DataStats.STAT41, saveGame.stats[41]);
+        values.put(DataBaseContract.DataStats.STAT42, saveGame.stats[42]);
+        values.put(DataBaseContract.DataStats.STAT43, saveGame.stats[43]);
+        values.put(DataBaseContract.DataStats.STAT44, saveGame.stats[44]);
+        values.put(DataBaseContract.DataStats.STAT45, saveGame.stats[45]);
+        values.put(DataBaseContract.DataStats.STAT46, saveGame.stats[46]);
+        values.put(DataBaseContract.DataStats.STAT47, saveGame.stats[47]);
+        values.put(DataBaseContract.DataStats.STAT48, saveGame.stats[48]);
+        values.put(DataBaseContract.DataStats.STAT49, saveGame.stats[49]);
+        values.put(DataBaseContract.DataStats.STAT50, saveGame.stats[50]);
+        values.put(DataBaseContract.DataStats.STAT51, saveGame.stats[51]);
+        values.put(DataBaseContract.DataStats.STAT52, saveGame.stats[52]);
+        values.put(DataBaseContract.DataStats.STAT53, saveGame.stats[53]);
+        values.put(DataBaseContract.DataStats.STAT54, saveGame.stats[54]);
+        values.put(DataBaseContract.DataStats.STAT55, saveGame.stats[55]);
+        values.put(DataBaseContract.DataStats.STAT56, saveGame.stats[56]);
+        values.put(DataBaseContract.DataStats.STAT57, saveGame.stats[57]);
+        values.put(DataBaseContract.DataStats.STAT58, saveGame.stats[58]);
+        values.put(DataBaseContract.DataStats.STAT59, saveGame.stats[59]);
+        values.put(DataBaseContract.DataStats.COLUMN_PLAYER_ID, saveGame.playerId);
+        myDataBase.insert(DataBaseContract.DataStats.TABLE_NAME, null, values);
+
+
+        close();
+
+        Log.e(TAG, "createNewSaveGame depois");
+        logAllDatabase();
+
+    }
+
+    public void updatePlayerId(String newPlayerId, String oldPlayerId, SaveGame saveGame) {
+
+        Log.e(TAG, "updatePlayerId");
+        //logAllDatabase();
+
+        myDataBase = getWritable();
+
+        ContentValues values = new ContentValues();
+
+        String selection = DataBaseContract.Data.COLUMN_PLAYER_ID + " = ?";
+        String[] whereArgs = new String []{Game.playerId};
+
+        try{
+            values.put(DataBaseContract.Data.COLUMN_PLAYER_ID, newPlayerId);
+            selection = DataBaseContract.Data.COLUMN_PLAYER_ID + " = ?";
+            whereArgs = new String []{oldPlayerId};
+
+            myDataBase.update(
+                    DataBaseContract.Data.TABLE_NAME,
+                    values,
+                    selection,
+                    whereArgs);
+
+        }catch(SQLiteException e){
+            Log.e(TAG, "não foi possível salvar no banco de dados os dados");
+        }
+
+
+        values = new ContentValues();
+        values.put(DataBaseContract.DataLevels.COLUMN_PLAYER_ID, newPlayerId);
+        selection = DataBaseContract.DataLevels.COLUMN_PLAYER_ID + " = ?";
+        whereArgs = new String []{oldPlayerId};
+
+        myDataBase.update(
+                DataBaseContract.DataLevels.TABLE_NAME,
+                values,
+                selection,
+                whereArgs);
+
+
+
+        values = new ContentValues();
+        values.put(DataBaseContract.DataTutorials.COLUMN_PLAYER_ID, newPlayerId);
+        selection = DataBaseContract.DataTutorials.COLUMN_PLAYER_ID + " = ?";
+        whereArgs = new String []{oldPlayerId};
+
+        myDataBase.update(
+                DataBaseContract.DataTutorials.TABLE_NAME,
+                values,
+                selection,
+                whereArgs);
+
+
+
+        values = new ContentValues();
+        values.put(DataBaseContract.DataGroups.COLUMN_PLAYER_ID, newPlayerId);
+        selection = DataBaseContract.DataGroups.COLUMN_PLAYER_ID + " = ?";
+        whereArgs = new String []{oldPlayerId};
+
+        myDataBase.update(
+                DataBaseContract.DataGroups.TABLE_NAME,
+                values,
+                selection,
+                whereArgs);
+
+
+
+        values = new ContentValues();
+        values.put(DataBaseContract.DataStats.STAT0, saveGame.stats[0]);
+        values.put(DataBaseContract.DataStats.STAT1, saveGame.stats[1]);
+        values.put(DataBaseContract.DataStats.STAT2, saveGame.stats[2]);
+        values.put(DataBaseContract.DataStats.STAT3, saveGame.stats[3]);
+        values.put(DataBaseContract.DataStats.STAT4, saveGame.stats[4]);
+        values.put(DataBaseContract.DataStats.STAT5, saveGame.stats[5]);
+        values.put(DataBaseContract.DataStats.STAT6, saveGame.stats[6]);
+        values.put(DataBaseContract.DataStats.STAT7, saveGame.stats[7]);
+        values.put(DataBaseContract.DataStats.STAT8, saveGame.stats[8]);
+        values.put(DataBaseContract.DataStats.STAT9, saveGame.stats[9]);
+        values.put(DataBaseContract.DataStats.STAT10, saveGame.stats[10]);
+        values.put(DataBaseContract.DataStats.STAT11, saveGame.stats[11]);
+        values.put(DataBaseContract.DataStats.STAT12, saveGame.stats[12]);
+        values.put(DataBaseContract.DataStats.STAT13, saveGame.stats[13]);
+        values.put(DataBaseContract.DataStats.STAT14, saveGame.stats[14]);
+        values.put(DataBaseContract.DataStats.STAT15, saveGame.stats[15]);
+        values.put(DataBaseContract.DataStats.STAT16, saveGame.stats[16]);
+        values.put(DataBaseContract.DataStats.STAT17, saveGame.stats[17]);
+        values.put(DataBaseContract.DataStats.STAT18, saveGame.stats[18]);
+        values.put(DataBaseContract.DataStats.STAT19, saveGame.stats[19]);
+        values.put(DataBaseContract.DataStats.STAT20, saveGame.stats[20]);
+        values.put(DataBaseContract.DataStats.STAT21, saveGame.stats[21]);
+        values.put(DataBaseContract.DataStats.STAT22, saveGame.stats[22]);
+        values.put(DataBaseContract.DataStats.STAT23, saveGame.stats[23]);
+        values.put(DataBaseContract.DataStats.STAT24, saveGame.stats[24]);
+        values.put(DataBaseContract.DataStats.STAT25, saveGame.stats[25]);
+        values.put(DataBaseContract.DataStats.STAT26, saveGame.stats[26]);
+        values.put(DataBaseContract.DataStats.STAT27, saveGame.stats[27]);
+        values.put(DataBaseContract.DataStats.STAT28, saveGame.stats[28]);
+        values.put(DataBaseContract.DataStats.STAT29, saveGame.stats[29]);
+        values.put(DataBaseContract.DataStats.STAT30, saveGame.stats[30]);
+        values.put(DataBaseContract.DataStats.STAT31, saveGame.stats[31]);
+        values.put(DataBaseContract.DataStats.STAT32, saveGame.stats[32]);
+        values.put(DataBaseContract.DataStats.STAT33, saveGame.stats[33]);
+        values.put(DataBaseContract.DataStats.STAT34, saveGame.stats[34]);
+        values.put(DataBaseContract.DataStats.STAT35, saveGame.stats[35]);
+        values.put(DataBaseContract.DataStats.STAT36, saveGame.stats[36]);
+        values.put(DataBaseContract.DataStats.STAT37, saveGame.stats[37]);
+        values.put(DataBaseContract.DataStats.STAT38, saveGame.stats[38]);
+        values.put(DataBaseContract.DataStats.STAT39, saveGame.stats[39]);
+        values.put(DataBaseContract.DataStats.STAT40, saveGame.stats[40]);
+        values.put(DataBaseContract.DataStats.STAT41, saveGame.stats[41]);
+        values.put(DataBaseContract.DataStats.STAT42, saveGame.stats[42]);
+        values.put(DataBaseContract.DataStats.STAT43, saveGame.stats[43]);
+        values.put(DataBaseContract.DataStats.STAT44, saveGame.stats[44]);
+        values.put(DataBaseContract.DataStats.STAT45, saveGame.stats[45]);
+        values.put(DataBaseContract.DataStats.STAT46, saveGame.stats[46]);
+        values.put(DataBaseContract.DataStats.STAT47, saveGame.stats[47]);
+        values.put(DataBaseContract.DataStats.STAT48, saveGame.stats[48]);
+        values.put(DataBaseContract.DataStats.STAT49, saveGame.stats[49]);
+        values.put(DataBaseContract.DataStats.STAT50, saveGame.stats[50]);
+        values.put(DataBaseContract.DataStats.STAT51, saveGame.stats[51]);
+        values.put(DataBaseContract.DataStats.STAT52, saveGame.stats[52]);
+        values.put(DataBaseContract.DataStats.STAT53, saveGame.stats[53]);
+        values.put(DataBaseContract.DataStats.STAT54, saveGame.stats[54]);
+        values.put(DataBaseContract.DataStats.STAT55, saveGame.stats[55]);
+        values.put(DataBaseContract.DataStats.STAT56, saveGame.stats[56]);
+        values.put(DataBaseContract.DataStats.STAT57, saveGame.stats[57]);
+        values.put(DataBaseContract.DataStats.STAT58, saveGame.stats[58]);
+        values.put(DataBaseContract.DataStats.STAT59, saveGame.stats[59]);
+        values.put(DataBaseContract.DataStats.COLUMN_PLAYER_ID, saveGame.playerId);
+
+        values.put(DataBaseContract.DataStats.COLUMN_PLAYER_ID, newPlayerId);
+        selection = DataBaseContract.DataStats.COLUMN_PLAYER_ID + " = ?";
+        whereArgs = new String []{oldPlayerId};
+
+        myDataBase.update(
+                DataBaseContract.DataStats.TABLE_NAME,
+                values,
+                selection,
+                whereArgs);
+
+        close();
+
+        Log.e(TAG, "updatePlayerId depois");
+        logAllDatabase();
+
+
+    }
 }

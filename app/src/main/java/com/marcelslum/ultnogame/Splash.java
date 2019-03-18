@@ -13,46 +13,37 @@ public class Splash {
     private final static String TAG = "Splash";
 
     static Text messageSplash1;
-    static Menu menuGoogle;
-    static Menu menuGoogle2;
     static Menu menuVelocity;
     static Selector selectorDifficultyInitMenu;
-    static MyTextView messageGoogle1;
-    static MyTextView messageGoogle2;
-
-    static MyTextView messageGoogle1_2;
-
-
     static MyTextView messageVelocity1;
     static MyTextView messageVelocity2;
-
-
     static Image tittle;
-
     static long timeInitIntro;
-    private static long timeInitConectando;
+
     private static long timeInitCarregando;
 
     private final static long INTRO_PARTIAL_DURATION = 2000;
-
     private static final int SPLASH_CARREGANDO = 33;
     private static final int SPLASH_CONECTANDO_INTERNET = 32;
-    private static final int SPLASH_CONECTANDO_GOOGLE = 34;
     private static final int SPLASH_CARREGANDO_SAVE_GAME = 35;
     private static final int SPLASH_FINISHED = 36;
-    private static final int SPLASH_MENU_GOOGLE = 37;
-    private static final int SPLASH_SIGNIN = 38;
     private static final int SPLASH_MENU_VELOCITY = 39;
-    private static final int SPLASH_MENU_GOOGLE_2 = 40;
+
 
     private static int state;
 
     static boolean loaderConclude = false;
 
-    public static boolean forSignin = false;
-    public static boolean forJumpGoogle = false;
+    static boolean loaderConclude2 = false;
+
+    static boolean signinConclude = false;
 
     static void configSplash(){
+
+        MessagesHandler.messageGoogleLogged = new Text("messageGoogleLogged",
+                Game.resolutionX*0.98f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
+                ".", Game.font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_RIGHT);
+        Game.adicionarEntidadeFixa(MessagesHandler.messageGoogleLogged);
 
         tittle = new Image("tittle",
                 Game.resolutionX * 0.2f, Game.resolutionY * 0.25f,
@@ -88,129 +79,7 @@ public class Splash {
 
         tittle.display();
 
-        // -------------------------------------------MENU CONECTAR GOOGLE
         float fontSize = Game.gameAreaResolutionY*0.08f;
-
-        menuGoogle = new Menu("menuGoogle", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.58f, fontSize, Game.font);
-        menuGoogle.addMenuOption("Sim", Game.getContext().getResources().getString(R.string.menuGoogleSim), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                timesGoogle = 0;
-                SaveGame.saveGame.googleOption = 1;
-                SaveGame.saveGame.save();
-                forSignin = true;
-                Log.e(TAG, "init2");
-                init();
-            }
-        });
-
-        menuGoogle.addMenuOption("Nao", Game.getContext().getResources().getString(R.string.menuGoogleNao), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                timesGoogle = 0;
-                SaveGame.saveGame.googleOption = 0;
-                forSignin = false;
-                SaveGame.saveGame.save();
-                Log.e(TAG, "init3");
-                init();
-            }
-        });
-
-        menuGoogle.addMenuOption("MaisTarde", Game.getContext().getResources().getString(R.string.menuGoogleMaisTarde), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                timesGoogle = 0;
-                SaveGame.saveGame.googleOption = -1;
-                forSignin = false;
-                SaveGame.saveGame.save();
-                forJumpGoogle = true;
-                Log.e(TAG, "init4");
-                init();
-            }
-        });
-
-        menuGoogle.blockAndClearDisplay();
-
-        messageGoogle1 = new MyTextView("messageGoogle1", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.15f,
-                Game.resolutionX * 1f,
-                Game.resolutionY,
-                fontSize * 0.75f,
-                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
-
-        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1), Color.cinza60);
-        messageGoogle1.addText(".", Color.transparente);
-        messageGoogle1.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b), Color.pretoCheio);
-
-        messageGoogle1.clearDisplay();
-
-        messageGoogle2 = new MyTextView("messageGoogle2", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.85f,
-                Game.resolutionX * 1f,
-                Game.resolutionY,
-                fontSize * 0.55f,
-                Game.font, Color.cinza60, Text.TEXT_ALIGN_CENTER, 0.2f);
-
-        messageGoogle2.addText(Game.getContext().getResources().getString(R.string.messageGoogle2), Color.cinza60);
-
-        messageGoogle2.clearDisplay();
-
-        // -------------------------------------------MENU CONECTAR GOOGLE 2
-
-        menuGoogle2 = new Menu("menuGoogle", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.45f, fontSize, Game.font);
-        menuGoogle2.addMenuOption("Sim", Game.getContext().getResources().getString(R.string.menuGoogleSim2), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                timesGoogle = 0;
-                SaveGame.saveGame.googleOption = 1;
-                SaveGame.saveGame.save();
-                forSignin = true;
-                Log.e(TAG, "init6");
-                init();
-
-            }
-        });
-
-        menuGoogle2.addMenuOption("Nao", Game.getContext().getResources().getString(R.string.menuGoogleNao2), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                timesGoogle = 0;
-                SaveGame.saveGame.googleOption = 0;
-                forSignin = false;
-                SaveGame.saveGame.save();
-                Log.e(TAG, "init7");
-                init();
-            }
-        });
-
-        menuGoogle2.addMenuOption("MaisTarde", Game.getContext().getResources().getString(R.string.menuGoogleMaisTarde2), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                timesGoogle = 0;
-                SaveGame.saveGame.googleOption = -1;
-                forSignin = false;
-                SaveGame.saveGame.save();
-                forJumpGoogle = true;
-                Log.e(TAG, "init8");
-                init();
-            }
-        });
-
-        menuGoogle2.blockAndClearDisplay();
-
-        messageGoogle1_2 = new MyTextView("messageGoogle1_2", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.15f,
-                Game.resolutionX * 1f,
-                Game.resolutionY,
-                fontSize * 0.75f,
-                Game.font, Color.zero, Text.TEXT_ALIGN_CENTER, 0.2f);
-
-        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1_2), Color.azulClaro);
-        messageGoogle1_2.addText(".", Color.transparente);
-        messageGoogle1_2.addText(Game.getContext().getResources().getString(R.string.messageGoogle1b_2), Color.pretoCheio);
-
-        messageGoogle1_2.clearDisplay();
-
 
         // -------------------------------------------MENU ALTERAR VELOCIDADE
 
@@ -305,18 +174,21 @@ public class Splash {
 
     static void init(){
 
-        Log.e(TAG, "init Splash");
-        if (forSignin) {
-            Log.e(TAG, "forSignin");
-            loaderConclude = false;
+
+        if (Sound.soundPool != null){
+            loaderConclude = true;
         } else {
-            Log.e(TAG, "not forSignin");
-            if (Sound.soundPool != null){
-                loaderConclude = true;
-            } else {
-                loaderConclude = false;
-            }
+            loaderConclude = false;
         }
+
+        if (ButtonHandler.buttonContinue != null){
+            loaderConclude2 = true;
+        } else {
+            loaderConclude2 = false;
+        }
+
+        signinConclude = false;
+
         Splash.timeInitIntro = Utils.getTimeMilliPrecision();
         configSplash();
         setSplashState(SPLASH_CARREGANDO);
@@ -354,94 +226,61 @@ public class Splash {
         animationMessageLoading.start();
     }
 
-    static void setMessageConectando(){
-        messageSplash1 = new Text("messageConnecting",
-                0f, Game.resolutionY * 0.8f, Game.resolutionY * 0.08f,
-                Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
-
-        float w = messageSplash1.width;
-
-        messageSplash1 = new Text("messageConnecting",
-                Game.resolutionX * 0.5f - (w / 2), Game.resolutionY * 0.8f, Game.resolutionY * 0.08f,
-                Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + "..", Game.font, new Color(0f, 0f, 0f, 0.6f), Text.TEXT_ALIGN_LEFT);
-
-        ArrayList<float[]> valuesAnimationMessageLoading = new ArrayList<>();
-        valuesAnimationMessageLoading.add(new float[]{0f, 1f});
-        valuesAnimationMessageLoading.add(new float[]{0.33f, 2f});
-        valuesAnimationMessageLoading.add(new float[]{0.66f, 3f});
-        Animation animationMessageLoading = new Animation(messageSplash1, "numberForAnimation", "numberForAnimation", 1200, valuesAnimationMessageLoading, true, false);
-        animationMessageLoading.setOnChangeNotFluid(new Animation.OnChange() {
-            @Override
-            public void onChange() {
-                if (messageSplash1.numberForAnimation == 1f) {
-                    messageSplash1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + ".");
-                } else if (messageSplash1.numberForAnimation == 2f) {
-                    messageSplash1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + "..");
-                } else if (messageSplash1.numberForAnimation == 3f) {
-                    messageSplash1.setText(Game.mainActivity.getApplicationContext().getResources().getString(R.string.splash_carregando) + "...");
-                }
-            }
-        });
-        animationMessageLoading.start();
-    }
-
     static void setSplashState(int id){
 
         //Log.e(TAG, "set State Splash"+id);
 
         state = id;
+
         if (id == SPLASH_CARREGANDO) {
 
-            if (!forSignin && loaderConclude == false) {
-                AsyncTasks.initLoader = new InitLoaderAsyncTask().execute();
-            } else {
-                loaderConclude = true;
-            }
+            if (loaderConclude == false) AsyncTasks.initLoader = new InitLoaderAsyncTask().execute();
             timeInitCarregando = Utils.getTimeMilliPrecision();
             setMessageCarregando();
             tittle.display();
             messageSplash1.display();
-            messageGoogle1.clearDisplay();
-            messageGoogle2.clearDisplay();
-            menuGoogle.blockAndClearDisplay();
-        } if (id == SPLASH_SIGNIN) {
-            tittle.display();
-            timeInitConectando = Utils.getTimeMilliPrecision();
-            messageSplash1.clearDisplay();
-            messageGoogle1.clearDisplay();
-            messageGoogle2.clearDisplay();
-            menuGoogle.blockAndClearDisplay();
-        } else if (id == SPLASH_CONECTANDO_INTERNET) {
-            ConnectionHandler.checkInternetConnection();
-            timeInitConectando = Utils.getTimeMilliPrecision();
 
+        } else if (id == SPLASH_CONECTANDO_INTERNET) {
+
+            Game.sound.playPlayMenuBigTest();
+
+            ConnectionHandler.checkInternetConnection();
+            timeInitCarregando = Utils.getTimeMilliPrecision();
             tittle.display();
             messageSplash1.display();
-        }
-         else if (id == SPLASH_MENU_VELOCITY) {
+
+            Game.mainActivity.signInSilently();
+
+            LevelDataLoader.initLevelsData();
+            MenuHandler.initMenus();
+            Game.initTittle();
+            MessagesHandler.initMessages();
+            Game.initEdges();
+            ButtonHandler.initButtons();
+
+            if (MenuHandler.groupMenu != null) {
+                MenuHandler.groupMenu.currentTranslateX =
+                        SaveGame.saveGame.currentGroupMenuTranslateX;
+            }
+
+            if (MenuHandler.tutorialMenu != null) {
+                MenuHandler.tutorialMenu.currentTranslateX =
+                        SaveGame.saveGame.currentTutorialMenuTranslateX;
+            }
+
+            MenuHandler.levelMenu.currentTranslateX = 0;
+
+            loaderConclude2 = true;
+
+        } else if (id == SPLASH_MENU_VELOCITY) {
+
             selectorDifficultyInitMenu.setSelectedValue(1);
             menuVelocity.appearAndUnblock(100);
             messageVelocity1.display();
             messageVelocity2.display();
             tittle.clearDisplay();
             messageSplash1.clearDisplay();
-        } else if (id == SPLASH_MENU_GOOGLE){
-            timeInitConectando = Utils.getTimeMilliPrecision();
-            menuGoogle.appearAndUnblock(100);
-            messageGoogle1.display();
-            messageGoogle2.display();
-            tittle.clearDisplay();
-            messageSplash1.clearDisplay();
-        } else if (id == SPLASH_MENU_GOOGLE_2){
-            timeInitConectando = Utils.getTimeMilliPrecision();
-            menuGoogle2.appearAndUnblock(100);
-            messageGoogle1_2.display();
-            tittle.clearDisplay();
-            messageSplash1.clearDisplay();
-        } else if (id == SPLASH_CONECTANDO_GOOGLE){
-            timeInitConectando = Utils.getTimeMilliPrecision();
-        } else if (id == SPLASH_CARREGANDO_SAVE_GAME) {
-            timeInitConectando = Utils.getTimeMilliPrecision();
+
         }
     }
 
@@ -449,10 +288,6 @@ public class Splash {
         if (tittle == null){
             return;
         }
-
-        if (menuGoogle != null) menuGoogle.checkTransformations(true);
-        if (messageGoogle1 != null) messageGoogle1.checkTransformations(true);
-        if (messageGoogle2 != null) messageGoogle2.checkTransformations(true);
 
         if (menuVelocity != null) menuVelocity.checkTransformations(true);
         if (messageVelocity1 != null) messageVelocity1.checkTransformations(true);
@@ -463,76 +298,26 @@ public class Splash {
             MessagesHandler.messageBeta.prepareRender(matrixView, matrixProjection);
         }
 
-        tittle.prepareRender(matrixView, matrixProjection);
-        messageSplash1.prepareRender(matrixView, matrixProjection);
-        menuGoogle.prepareRender(matrixView, matrixProjection);
-        messageGoogle1.prepareRender(matrixView, matrixProjection);
-        if (messageGoogle2 != null) messageGoogle2.prepareRender(matrixView, matrixProjection);
+        if (tittle != null) tittle.prepareRender(matrixView, matrixProjection);
+        if (messageSplash1 != null) messageSplash1.prepareRender(matrixView, matrixProjection);
 
-        menuVelocity.prepareRender(matrixView, matrixProjection);
-        messageVelocity1.prepareRender(matrixView, matrixProjection);
+        if (menuVelocity != null) menuVelocity.prepareRender(matrixView, matrixProjection);
+        if (messageVelocity1 != null) messageVelocity1.prepareRender(matrixView, matrixProjection);
         if (messageVelocity2 != null) messageVelocity2.prepareRender(matrixView, matrixProjection);
         if (selectorDifficultyInitMenu != null) selectorDifficultyInitMenu.prepareRender(matrixView, matrixProjection);
     }
 
-    static int timesGoogle = 0;
-
     static void finishSplashLoad() {
-
-        /*
-        if (SaveGame.saveGame.googleOption == 1) {
-            if (!Game.mainActivity.checkGoogleConnection()) {
-                timesGoogle += 1;
-                //Log.e(TAG, "timesGoogle "+timesGoogle);
-                if (timesGoogle < 3) {
-                    forSignin = true;
-                    Log.e(TAG, "init10");
-                    init();
-                } else {
-                    forSignin = false;
-                    SaveGame.saveGame.googleOption = -1;
-                    SaveGame.saveGame.save();
-                    Log.e(TAG, "init11");
-                    init();
-                }
-                setSplashState(SPLASH_CARREGANDO);
-            }
-        }
-        */
-
         state = SPLASH_FINISHED;
-        LevelDataLoader.initLevelsData();
-        MenuHandler.initMenus();
-        Game.initTittle();
-        MessagesHandler.initMessages();
-        Game.initEdges();
-        ButtonHandler.initButtons();
-
-        Game.mainActivity.signInSilently();
-
-
-        if (MenuHandler.groupMenu != null) {
-            MenuHandler.groupMenu.currentTranslateX =
-                    SaveGame.saveGame.currentGroupMenuTranslateX;
-        }
-
-        if (MenuHandler.tutorialMenu != null) {
-            MenuHandler.tutorialMenu.currentTranslateX =
-                    SaveGame.saveGame.currentTutorialMenuTranslateX;
-        }
-
-        MenuHandler.levelMenu.currentTranslateX = 0;
         GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
     }
 
     static void verifySplashState() {
 
-        //Log.e(TAG, "state "+ state);
-
         if (state == SPLASH_CARREGANDO) {
 
             if (Game.paraGravacaoVideo){
-                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION/3f && loaderConclude) {
+                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION*0.25F && loaderConclude) {
                     if (SaveGame.saveGame.ballVelocity < 0) {
                         if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION * 2f) {
                             setSplashState(SPLASH_MENU_VELOCITY);
@@ -540,13 +325,10 @@ public class Splash {
                     } else {
                         setSplashState(SPLASH_CONECTANDO_INTERNET);
                     }
-
-
-
                 }
 
             } else {
-                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION/3f && loaderConclude) {
+                if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION && loaderConclude) {
                     if (SaveGame.saveGame.ballVelocity < 0) {
                         if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION * 2f) {
                             setSplashState(SPLASH_MENU_VELOCITY);
@@ -557,72 +339,14 @@ public class Splash {
                 }
 
             }
-
-
-        } else if (state == SPLASH_CONECTANDO_INTERNET) {
-
-
-            setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
-
-            /*
-            if (forSignin){
-                Log.e(TAG, "forSignin startintent ");
-                forSignin = false;
-                Game.mainActivity.startSignInIntent();
-            } else if (Utils.getTimeMilliPrecision() - timeInitConectando > (INTRO_PARTIAL_DURATION / 2f)) {
-                Log.e(TAG, "GoogleOption "+ SaveGame.saveGame.googleOption);
-                int googlePlayOption = SaveGame.saveGame.googleOption;
-
-                //googlePlayOption = 1;
-
-                //Log.e(TAG, "googlePlayOption "+ googlePlayOption);
-                if (googlePlayOption == -1){
-                    if (!forJumpGoogle) {
-                        setSplashState(SPLASH_MENU_GOOGLE);
-                    } else {
-                        setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
-                    }
-                } else if (googlePlayOption == 1){
-                    if (!Game.mainActivity.isGooglePlayAvailable() || !Game.mainActivity.isSignedIn()){
-                        Game.mainActivity.startSignInIntent();
-                    }
-                    setSplashState(SPLASH_CONECTANDO_GOOGLE);
-                } else if (googlePlayOption == 0){
-                    setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
-                } else if (googlePlayOption == -2){
-                    setSplashState(SPLASH_MENU_GOOGLE_2);
-                }
-            }
-
-
-
-
-
-        } else if (state == SPLASH_CONECTANDO_GOOGLE) {
-            if (Game.mainActivity.isGooglePlayAvailable() && ((Game.mainActivity.isSignedIn()))) {
+        } else if (state == SPLASH_CONECTANDO_INTERNET){
+            if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION*0.25f && (signinConclude || Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION*10f) && loaderConclude2) {
+                signinConclude = false;
+                loaderConclude2 = true;
                 setSplashState(SPLASH_CARREGANDO_SAVE_GAME);
-            } else if (Utils.getTimeMilliPrecision() - timeInitConectando > INTRO_PARTIAL_DURATION * 2 && (!Game.mainActivity.isSignedIn()) || (!Game.mainActivity.isGooglePlayAvailable())){
-                    //timesGoogle += 1;
-                    //Log.e(TAG, "timesGoogle "+timesGoogle);
-                    //if (timesGoogle < 3) {
-                    //    forSignin = true;
-                    //    init();
-                    //} else {
-                
-                        // se não conseguiu conectar ao google, volta ao início
-                        forSignin = false;
-                        SaveGame.saveGame.googleOption = -2;
-                        SaveGame.saveGame.save();
-                        Log.e(TAG, "init13");
-                        init();
-                        setSplashState(SPLASH_CONECTANDO_INTERNET);
-                
-                    //}
             }
-
-            */
         } else if (state == SPLASH_CARREGANDO_SAVE_GAME){
-            if (Utils.getTimeMilliPrecision() - timeInitConectando > INTRO_PARTIAL_DURATION / 3f) {
+            if (Utils.getTimeMilliPrecision() - timeInitCarregando > INTRO_PARTIAL_DURATION && SaveGame.loaded) {
                 finishSplashLoad();
             }
         }

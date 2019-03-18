@@ -217,13 +217,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         }
         
         
-        if (Game.forUpdateNamePlayer){
-            Log.e(TAG, "forUpdateNamePlayer");
-            Game.myGlSurface.forUpdateNamePlayer();
-            Game.forUpdateNamePlayer = false;
+        if (Game.forUpdatePlayerData){
+            Log.e(TAG, "forUpdatePlayerData");
+            Game.myGlSurface.forUpdatePlayerData();
+            Game.forUpdatePlayerData = false;
         }
-        
-
 
         // Get the current time
         Game.currentFrameMilliPrecision = System.currentTimeMillis();
@@ -271,7 +269,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                             if (Utils.getTimeMilliPrecision() - lastInternetCheck > 300) {
                                 Sound.checkLoopPlaying();
                                 lastInternetCheck = Utils.getTimeMilliPrecision();
-                                Sound.setMusicVolume(Sound.musicVolume - 0.02f);
+                                Sound.setMusicVolume(Sound.getMusicVolume() - 0.025f);
                             }
                         }
                     }
@@ -314,7 +312,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                     frameDurations.clear();
                     longestFrame = 0;
                 }
-
             }
 
             if (Game.elapsedMiliTimeSinceLastFrame > (frameDuration*3) && GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR){

@@ -36,6 +36,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
         if (Game.forDebugDeleteDatabaseAndStorage) {
             myContext.deleteDatabase(myContext.getDatabasePath(DB_NAME).getAbsolutePath());
+
             return;
         }
 
@@ -144,9 +145,22 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
      }
 
     public boolean isNew() {
-        openDataBase();
-        String query = "SELECT isNew FROM dbVersion";
-        Cursor cursor = getWritable().rawQuery(query, null);
+
+
+        String[] projection = {
+                DataBaseContract.DbVersion.IS_NEW
+        };
+
+        Cursor cursor = myDataBase.query(
+                DataBaseContract.DbVersion.TABLE_NAME,        // The table to query
+                projection,                               // The columns to return
+                null,                                // The columns for the WHERE clause
+                null,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // don't sort
+        );
+
         cursor.moveToFirst();
         int v =  cursor.getInt(0);
 

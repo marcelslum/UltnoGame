@@ -8,6 +8,7 @@ public class AsyncTasks {
 
     public static AsyncTask initLoader;
     public static AsyncTask save;
+    public static AsyncTask updatePlayer;
 
     public static AsyncTask asyncPlaySucces1;
     public static AsyncTask asyncPlayGameOver;
@@ -20,6 +21,7 @@ public class AsyncTasks {
     public static AsyncTask asyncPlayMenuIconDrop;
     public static AsyncTask asyncPlayMenuSmall;
     public static AsyncTask asyncPlayMenuBig;
+    public static AsyncTask asyncPlayMenuBigTest;
     public static AsyncTask asyncPlayCounter;
     public static AsyncTask asyncPlayExplosion;
     public static AsyncTask asyncPlayAngleChange;

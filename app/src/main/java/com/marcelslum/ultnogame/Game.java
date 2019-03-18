@@ -29,10 +29,9 @@ public class Game {
     public static boolean ganharComMetadeDosAlvos = false;
     public static boolean sempreGanharTodasEstrelas = false;
     public static boolean forDebugClearAllLevelPoints = false;
-    public static boolean showMessageNotConnectedOnGoogle = false;
     public static boolean logFrame = false;
     public static boolean logDeTempoDeDuracaoDaChecagemDeColisao = false;
-    public static boolean versaoBeta = true;
+    public static boolean versaoBeta = false;
     public static boolean logInteractionListener = false;
     public static boolean logCollisionEscape = false;
     public static boolean logMenuIconMoveAndTranslateX = false;
@@ -40,6 +39,8 @@ public class Game {
     public static boolean apagarEstatisticasNoInicio = false;
     public static boolean apagarEstatisticasNoMenu = false;
     public static boolean logNotificacaoLevelGoals = false;
+
+    public static String playerId = "";
 
     public static MyGLSurface myGlSurface;
 
@@ -169,8 +170,7 @@ public class Game {
     
     
     public static boolean backPressed = false;
-    public static String namePlayer;
-    public static boolean forUpdateNamePlayer = false;
+    public static boolean forUpdatePlayerData = false;
     public static boolean returningFromInterstitialFlag = false;
     public static boolean settingMessageForScore = false;
     public static String messageForScore = ".";
@@ -196,6 +196,7 @@ public class Game {
         for (int i = 0; i < entidadesFixas.length; i++) {
             if (entidadesFixas[i] != null){
                 if (entity.name.equals(entidadesFixas[i].name)) {
+                    entidadesFixas[i] = null;
                     entidadesFixas[i] = entity;
                     return;
                 }
@@ -833,11 +834,6 @@ public class Game {
 
 
             }
-        }
-
-
-        if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_INICIAL && GoogleAPI.playerIconImage == null && GoogleAPI.playerIcon != null){
-            mainActivity.updatePlayerInfo();
         }
 
         if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_PRE_JOGAR) {
@@ -1716,6 +1712,8 @@ public class Game {
             }
         }
 
+        if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.prepareRender(matrixView, matrixProjection);
+
         if (ballDataPanel != null) ballDataPanel.prepareRender(matrixView, matrixProjection);
 
         if (ScoreHandler.scorePanel != null) ScoreHandler.scorePanel.prepareRender(matrixView, matrixProjection);
@@ -1742,7 +1740,10 @@ public class Game {
                 entidadesFixas[i].prepareRender(matrixView, matrixProjection);
             }
         }
-        
+
+
+
+
         //processSimulateDurationTest(2);
     }
 
@@ -1768,7 +1769,8 @@ public class Game {
             }
         }
 
-        if (Splash.menuGoogle != null) Splash.menuGoogle.verifyListener();
+        if (GoogleAPI.playerIconImage != null) GoogleAPI.playerIconImage.verifyListener();
+
         if (Splash.menuVelocity != null) Splash.menuVelocity.verifyListener();
         if (Splash.selectorDifficultyInitMenu != null) Splash.selectorDifficultyInitMenu.verifyListener();
 
@@ -1824,10 +1826,6 @@ public class Game {
         list.add(MessagesHandler.messageGoogleLogged);
         list.add(MessagesHandler.messageConqueredStarsTotal);
         list.add(MessagesHandler.starForMessage);
-        list.add(MessagesHandler.messageBack);
-        list.add(MessagesHandler.messageContinue);
-        list.add(MessagesHandler.bottomTextBox);
-        
         return list;
     }
 
@@ -1838,7 +1836,7 @@ public class Game {
     public static void esconderEntidadesFixas() {
         for (int i = 0; i < entidadesFixas.length; i++) {
             if (entidadesFixas[i] != null) {
-                Log.e(TAG, "escondendo " + entidadesFixas[i].name);
+                //Log.e(TAG, "escondendo " + entidadesFixas[i].name);
                 entidadesFixas[i].clearDisplay();
             }
         }

@@ -18,8 +18,13 @@ public class SaveGame {
 
     public static SaveGame saveGame;
 
+
+
     public static long lastSave;
     public static final int MIN_TIME_BEFORE_RESAVE = 2000;
+
+
+
 
     public int[] levelsPoints;
     public int[] levelsStars;
@@ -42,10 +47,12 @@ public class SaveGame {
     public int levelsPlayed;
     public boolean orientationInverted;
     public boolean saveMenuSeen;
+    public String playerId;
     public int lastLevelPlayed;
     public long[] stats;
 
     public static boolean loaded = false;
+    private static String lastSavedGame;
 
     public SaveGame(SaveGameBuilder builder) {
         levelsPoints = builder.levelsPoints;
@@ -69,6 +76,7 @@ public class SaveGame {
         levelsPlayed = builder.levelsPlayed;
         orientationInverted = builder.orientationInverted;
         saveMenuSeen = builder.saveMenuSeen;
+        playerId = builder.playerId;
         lastLevelPlayed = builder.lastLevelPlayed;
         stats = builder.stats;
     }
@@ -76,13 +84,9 @@ public class SaveGame {
     public static void load() {
         loaded = false;
 
-        if (!DataBaseSaveDataHelper.getInstance(Game.mainActivity).isNew()
-                || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(1) != 0
-                || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(2) != 0
-                || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(3) != 0
-                || DataBaseSaveDataHelper.getInstance(Game.mainActivity).getLevelPoints(4) != 0
-                ){
-            //Log.e(TAG, "Carregando Save Game");
+        if (DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveGameExists(Game.playerId)){
+
+            Log.e(TAG, "Carregando Save Game");
 
             SaveGame saveGame1 = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
 
@@ -90,15 +94,21 @@ public class SaveGame {
             log(saveGame1);
 
 
-            SaveGame saveGame2 = getSaveGameFromJson(Storage.getString(Storage.STORAGE_SAVE_NAME));
+            SaveGame saveGame2 = getSaveGameFromJson(Storage.getString(Storage.STORAGE_SAVE_NAME+Game.playerId));
+
+            if (saveGame2 == null){
+                saveGame2 = saveGame1;
+            }
 
             Log.e(TAG, "================================== log save storage");
             log(saveGame2);
+
 
             if (Game.forDebugClearAllLevelPoints) {
                 for (int i = 0; i < 100; i++) {
                     saveGame1.levelsPoints[i] = 0;
                 }
+
                 for (int i = 0; i < 100; i++) {
                     saveGame2.levelsPoints[i] = 0;
                 }
@@ -111,6 +121,9 @@ public class SaveGame {
                 }
             }
 
+            saveGame = saveGame1;
+
+
             if (saveGame1 == null){
                 saveGame = saveGame2;
             } else if (saveGame2 == null){
@@ -122,16 +135,20 @@ public class SaveGame {
             Log.e(TAG, "================================== log save mesclado");
             log(saveGame);
 
+
+
             if (Game.apagarEstatisticasNoInicio){
                 for (int i = 0; i < saveGame.stats.length; i++) {
                     saveGame.stats[i] = 0;
                 }
             }
-
-
             //log(saveGame);
+
         } else {
-            Log.e(TAG, "Não existe ainda nenhum Save Game, criando novo");
+
+
+            Log.e(TAG, "Não existe ainda nenhum Save Game para o playerId " + Game.playerId + ", criando novo");
+
             int[] _levelsPoints = new int[Level.NUMBER_OF_LEVELS];
             int[] _levelsStars = new int[Level.NUMBER_OF_LEVELS];
             boolean[] _levelsUnlocked = new boolean[Level.NUMBER_OF_LEVELS];
@@ -169,9 +186,12 @@ public class SaveGame {
                     .setOrientationInverted(false)
                     .setLastLevelPlayed(0)
                     .setStats(_stats)
+                    .setPlayerId(Game.playerId)
                     .build();
 
+            DataBaseSaveDataHelper.getInstance(Game.mainActivity).createNewSaveGame(saveGame);
 
+            Storage.setString(Storage.STORAGE_SAVE_NAME+Game.playerId, getJSONFromSaveGame(saveGame));
 
         }
 
@@ -186,10 +206,6 @@ public class SaveGame {
         loaded = true;
     }
 
-
-    static String lastSavedGame;
-
-
     public void save(){
 
         if (Utils.getTimeMilliPrecision() - lastSave < MIN_TIME_BEFORE_RESAVE) {
@@ -199,10 +215,51 @@ public class SaveGame {
 
         //Stats.updateStatsRankings();
 
-
         //Log.e(TAG, "save()");
         AsyncTasks.save = new SaveAsyncTask().execute();
     }
+
+    public void updatePlayerId(String newPlayerId, String oldPlayerId) {
+
+        playerId = newPlayerId;
+
+        AsyncTasks.updatePlayer = new UpdatePlayerIdAsyncTask().execute(newPlayerId, oldPlayerId);
+
+    }
+
+    private class UpdatePlayerIdAsyncTask extends AsyncTask<String, Integer, Integer> {
+        protected Integer doInBackground(String... i) {
+
+            if (SaveGame.saveGame == null){
+                return -1;
+            }
+
+            Log.e(TAG, "-----------------------------------------Atualizando nome do jogador para "+SaveGame.saveGame.playerId);
+
+
+            Storage.remove(Storage.STORAGE_SAVE_NAME+i[1]);
+            Storage.setString(Storage.STORAGE_SAVE_NAME+i[0], getJSONFromSaveGame(saveGame));
+
+            lastSave = Utils.getTimeMilliPrecision();
+
+            try {
+                DataBaseSaveDataHelper.getInstance(Game.mainActivity).updatePlayerId(i[0], i[1], SaveGame.saveGame);
+            } catch (Exception e) {
+                Log.e(TAG, "Erro ao salvar no banco   " + e);
+            }
+
+            return 1;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+
+        }
+
+        protected void onPostExecute(Integer result) {
+            Log.e(TAG, "Terminou de atualizar o name player assincronizadamente");
+        }
+    }
+
 
     private class SaveAsyncTask extends AsyncTask<Integer, Integer, Integer> {
         protected Integer doInBackground(Integer... i) {
@@ -215,27 +272,23 @@ public class SaveGame {
             Log.e(TAG, "-----------------------------------------Salvando SaveGame");
             log(SaveGame.saveGame);
 
-            String saveJSON = getJSONFromSaveGame(saveGame);
 
-            if (lastSavedGame == null){
-                lastSavedGame = saveJSON;
-            } else if (lastSavedGame.equals(saveJSON)){
-                Log.e(TAG, "Não salvando jogo, em razão de o última save ser igual ao atual");
+
+            if (Utils.getTimeMilliPrecision() - lastSave < 500){
+                lastSave = Utils.getTimeMilliPrecision();
+                Log.e(TAG, "Não salvando em razão do ultimo salvamento ter sido realizado a menos de 500 milisegundos " + Utils.getTimeMilliPrecision() + "    " +  lastSave);
                 return 1;
-            } else {
-                lastSavedGame = saveJSON;
             }
 
             lastSave = Utils.getTimeMilliPrecision();
+
+            Storage.setString(Storage.STORAGE_SAVE_NAME+Game.playerId, getJSONFromSaveGame(saveGame));
 
             try {
                 DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveDataFromSaveGame(saveGame);
             } catch (Exception e) {
                 Log.e(TAG, "Erro ao salvar no banco   " + e);
             }
-
-
-            Storage.setString(Storage.STORAGE_SAVE_NAME, getJSONFromSaveGame(saveGame));
 
             return 1;
         }
@@ -253,6 +306,9 @@ public class SaveGame {
 
     public static void log(SaveGame s){
         Log.e(TAG, "Log save game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        Log.e(TAG, "game playerId " + Game.playerId);
+
+        Log.e(TAG, "playerId " + s.playerId);
         Log.e(TAG, "pontos --------------- ");
         String log= " ";
 
@@ -349,9 +405,8 @@ public class SaveGame {
     }
 
 
-
-
     public static SaveGame mergeSaveGames(SaveGame saveGame1, SaveGame saveGame2) {
+
         int[] flevelsPoints;
         int[] flevelsStars;
         boolean[] flevelsUnlocked;
@@ -376,6 +431,19 @@ public class SaveGame {
         boolean fSaveMenuSeen;
         int flastLevelPlayed;
         long [] fstats = new long[Stats.STATS_DATABASE_SIZE];
+        String fPlayerId = "";
+
+
+        if (saveGame1.playerId.contains("provisorio") && !saveGame2.playerId.contains("provisorio")){
+            fPlayerId = saveGame2.playerId;
+        } else if (!saveGame1.playerId.contains("provisorio") && saveGame2.playerId.contains("provisorio")){
+            fPlayerId = saveGame1.playerId;
+        } else if (saveGame1.playerId.equals(saveGame2.playerId)){
+            fPlayerId = saveGame1.playerId;
+        } else{
+            fPlayerId = saveGame1.playerId;
+            Log.e(TAG, "Há um problema ao mesclar os save games, pois eles não tem a o mesmo player Id " + " playerId 1 " + saveGame1.playerId + " playerId 2 " + saveGame2.playerId);
+        }
 
         flevelsPoints = Utils.getHigher(saveGame1.levelsPoints, saveGame2.levelsPoints);
         flevelsStars = Utils.getHigher(saveGame1.levelsStars, saveGame2.levelsStars);
@@ -412,6 +480,7 @@ public class SaveGame {
         flevelsPlayed = Utils.getHigher(saveGame1.levelsPlayed, saveGame2.levelsPlayed);
 
         return new SaveGameBuilder()
+                .setPlayerId(fPlayerId)
                 .setLevelsPoints(flevelsPoints)
                 .setLevelsStars(flevelsStars)
                 .setLevelsUnlocked(flevelsUnlocked)
@@ -449,6 +518,12 @@ public class SaveGame {
 
             if (!format.equals(SERIAL_VERSION)) {
                 throw new RuntimeException("Unexpected loot format " + format);
+            }
+
+            try {
+                saveGameBuilder.setPlayerId(obj.getString("playerId"));
+            } catch(JSONException e) {
+                saveGameBuilder.setPlayerId(Game.playerId);
             }
 
             int[] flevelsPoints = new int[Level.NUMBER_OF_LEVELS];
@@ -627,6 +702,8 @@ public class SaveGame {
                 saveGameBuilder.setLastLevelPlayed(0);
             }
 
+
+
             long[] fstats = new long[Stats.STATS_DATABASE_SIZE];
             try {
                 JSONArray array = obj.getJSONArray("stats");
@@ -675,6 +752,7 @@ public class SaveGame {
 
         try {
             JSONObject obj = new JSONObject();
+            obj.put("playerId", saveGame.playerId);
             obj.put("version", SERIAL_VERSION);
             obj.put("levelsPoints", new JSONArray(saveGame.levelsPoints));
             obj.put("levelsStars", new JSONArray(saveGame.levelsStars));

@@ -27,8 +27,6 @@ public class MessagesHandler {
     static Text messagePreparation;
     static Text messageMaxScoreTotal;
     static Text messageGoogleLogged;
-    static Text messageContinue;
-    static Text messageBack;
     static Text messageConqueredStarsTotal;
     static Image starForMessage;
     static Text messageTime;
@@ -37,12 +35,8 @@ public class MessagesHandler {
     static Text messageCurrentLevel;
     static Text messageBeta;
     static Text messageGroupsUnblocked;
-    static TextBox bottomTextBox;
-    static MyTextView messageMenuSaveNotSeen;
-    static MyTextView messageMenuCarregarJogo;
     static MyTextView messageExplicacaoTreinamento;
     static MyTextView messageExplicacaoDuranteTreinamento;
-    static MyTextView statsMyTextView;
     static Text messageStatTittle;
     static MyTextView messageStatDescricao;
     static MyTextView aboutMyTextView;
@@ -119,21 +113,6 @@ public class MessagesHandler {
 
 
         float fontSize = Game.gameAreaResolutionY*0.08f;
-        messageMenuSaveNotSeen = new MyTextView("messageMenuSaveNotSeen", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.125f,
-                Game.resolutionX * 1f,
-                Game.resolutionY,
-                fontSize * 0.55f,
-                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
-        Game.adicionarEntidadeFixa(messageMenuSaveNotSeen);
-
-        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen1), Color.cinza40);
-        messageMenuSaveNotSeen.addText(".", Color.transparente);
-        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen2), Color.cinza40);
-        messageMenuSaveNotSeen.addText(".", Color.transparente);
-        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen3), Color.cinza40);
-        messageMenuSaveNotSeen.addText(".", Color.transparente);
-        messageMenuSaveNotSeen.addText(Game.getContext().getResources().getString(R.string.messageMenuSaveNotSeen4), Color.cinza40);
 
         messageExplicacaoTreinamento = new MyTextView("messageExplicacaoTreinamento", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.15f,
@@ -164,15 +143,6 @@ public class MessagesHandler {
                 Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
         Game.adicionarEntidadeFixa(messageExplicacaoDuranteTreinamento);
         messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoDuranteTreinamento1), Color.cinza40);
-
-        messageMenuCarregarJogo = new MyTextView("messageMenuCarregarJogo", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.12f,
-                Game.resolutionX * 1f,
-                Game.resolutionY,
-                fontSize * 0.6f,
-                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
-        Game.adicionarEntidadeFixa(messageMenuCarregarJogo);
-
 
         notConnectedMyTextView = new MyTextView("notConnectedMyTextView", Game.resolutionX * 0.5f,
                 Game.resolutionY * 0.02f,
@@ -246,11 +216,6 @@ public class MessagesHandler {
                 resources.getString(R.string.messageMaxScoreTotal) +"\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()), Game.font, new Color(0f, 0f, 0f, 0.5f));
         Game.adicionarEntidadeFixa(messageMaxScoreTotal);
 
-        messageGoogleLogged = new Text("messageGoogleLogged",
-                Game.resolutionX*0.98f, Game.resolutionY - (Game.resolutionY * 0.06f), Game.resolutionY*0.03f,
-                ".", Game.font, new Color(0f, 0f, 0f, 0.5f), Text.TEXT_ALIGN_RIGHT);
-        Game.adicionarEntidadeFixa(messageGoogleLogged);
-
         messageConqueredStarsTotal = new Text("messageConqueredStarsTotal",
                 Game.resolutionX*0.825f, Game.resolutionY*0.18f, Game.resolutionY*0.07f,
                 resources.getString(R.string.messageConqueredStarsTotal) +"\u0020"+ NumberFormat.getInstance().format(StarsHandler.conqueredStarsTotal), Game.font, Color.amareloCheio);
@@ -263,29 +228,6 @@ public class MessagesHandler {
         Game.adicionarEntidadeFixa(starForMessage);
         Utils.createAnimation2v(starForMessage, "rotate", "rotate", 10000, 0f, 0f, 1f, 360f, true, true).start();
         Utils.createAnimation2v(starForMessage, "translateX", "translateX", 10000, 0f, 0f, 1f, -Game.resolutionX*0.001f, true, true).start();
-
-        bottomTextBox = new TextBoxBuilder("bottomTextBox")
-                .position(Game.resolutionX*0.05f, Game.resolutionY*0.85f)
-                .width(Game.resolutionX*0.9f)
-                .size(Game.resolutionY*0.032f)
-                .text("...")
-                .withoutArrow()
-                .setTextColor(Color.branco)
-                .setShadowColor(Color.azul40)
-                .setBorderColor(Color.pretoCheio)
-                .isHaveFrame(true)
-                .isHaveArrowContinue(false)
-                .build();
-
-        bottomTextBox.setMultiColor(
-                    Color.azulMedio,
-                    Color.azulClaro,
-                    Color.azulMedio,
-                    Color.azulMedio
-            );
-
-        bottomTextBox.layer = Layers.LAYER9;
-        Game.adicionarEntidadeFixa(bottomTextBox);
 
         /*
 
@@ -322,19 +264,6 @@ public class MessagesHandler {
         Game.adicionarEntidadeFixa(messageTrainingState);
 
 
-        MessagesHandler.messageBack = new Text("messageBack",
-                Game.resolutionX*0.095f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,
-                resources.getString(R.string.voltar), Game.font, Color.cinza50, Text.TEXT_ALIGN_LEFT);
-        Game.adicionarEntidadeFixa(messageBack);
-        messageBack.addShadow(Color.cinza80.changeAlpha(0.5f));
-        Utils.createAnimation3v(messageBack, "alpha", "alpha", 3000, 0f, 0.3f, 0.5f, 0.6f, 1f, 0.3f, true, true ).start();
-
-        MessagesHandler.messageContinue = new Text("messageContinue",
-                Game.resolutionX*0.91f, yOfMessageBackAndContinue, Game.resolutionY*0.033f,
-                resources.getString(R.string.continuar), Game.font, Color.cinza50, Text.TEXT_ALIGN_RIGHT);
-        Game.adicionarEntidadeFixa(messageContinue);
-        messageContinue.addShadow(Color.cinza80.changeAlpha(0.5f));
-        Utils.createAnimation3v(messageContinue, "alpha", "alpha", 3000, 0f, 0.3f, 0.5f, 0.6f, 1f, 0.3f, true, true ).start();
 
 
     }
@@ -366,14 +295,12 @@ public class MessagesHandler {
                 View layout = inflater.inflate(R.layout.custom_toast,
                         (ViewGroup) Game.mainActivity.findViewById(R.id.custom_toast_container));
 
-
                 TextView textView = (TextView) layout.findViewById(R.id.text);
                 textView.setText(text);
                 Toast toast = new Toast(Game.mainActivity.getApplicationContext());
-                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
                 toast.show();
-
 
             }
         });

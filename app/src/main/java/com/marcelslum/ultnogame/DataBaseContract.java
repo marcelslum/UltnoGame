@@ -59,6 +59,7 @@ public final class DataBaseContract {
 
     public static class Data implements BaseColumns {
         public static final String TABLE_NAME = "data";
+        public static final String COLUMN_PLAYER_ID = "playerId";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_CURRENT_LEVEL = "current_level";
         public static final String COLUMN_CURRENT_GROUP = "current_group";
@@ -95,6 +96,7 @@ public final class DataBaseContract {
 
     public static class DataStats implements BaseColumns {
         public static final String TABLE_NAME = "stats";
+        public static final String COLUMN_PLAYER_ID = "playerId";
         public static final String STAT0 = "stat0";
         public static final String STAT1 = "stat1";
         public static final String STAT2 = "stat2";
@@ -160,6 +162,7 @@ public final class DataBaseContract {
 
     public static class DataLevels implements BaseColumns {
         public static final String TABLE_NAME = "levels";
+        public static final String COLUMN_PLAYER_ID = "playerId";
         public static final String COLUMN_NUMBER = "number";
         public static final String COLUMN_POINTS = "points";
         public static final String COLUMN_STARS = "stars";
@@ -169,14 +172,24 @@ public final class DataBaseContract {
 
     public static class DataTutorials implements BaseColumns {
         public static final String TABLE_NAME = "tutorials";
+        public static final String COLUMN_PLAYER_ID = "playerId";
         public static final String COLUMN_NUMBER = "number";
         public static final String COLUMN_SEEN = "seen";
     }
     
     public static class DataGroups implements BaseColumns { // TODO criar no banco de dados
         public static final String TABLE_NAME = "groups";
+        public static final String COLUMN_PLAYER_ID = "playerId";
         public static final String COLUMN_NUMBER = "number";
         public static final String COLUMN_SEEN = "seen";
     }
+
+    public static class DbVersion implements BaseColumns {
+        public static final String TABLE_NAME = "dbVersion";
+        public static final String VERSION = "version_id";
+        public static final String IS_NEW = "isNew";
+    }
+
+
   
 }

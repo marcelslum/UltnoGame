@@ -31,6 +31,7 @@ public class SaveGameBuilder {
     public boolean saveMenuSeen;
     public int lastLevelPlayed;
     public long[] stats;
+    public String playerId;
 
 
     public SaveGameBuilder(){
@@ -59,6 +60,11 @@ public class SaveGameBuilder {
 
     public SaveGameBuilder setLastStars(int lastStars) {
         this.lastStars = lastStars;
+        return this;
+    }
+
+    public SaveGameBuilder setPlayerId(String playerId) {
+        this.playerId = playerId;
         return this;
     }
 

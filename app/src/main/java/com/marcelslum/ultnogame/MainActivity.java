@@ -6,32 +6,30 @@ import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -45,10 +43,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Result;
-import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
-import com.google.android.gms.games.Player;
 import com.google.android.gms.games.SnapshotsClient;
 import com.google.android.gms.games.snapshot.Snapshot;
 import com.google.android.gms.games.snapshot.SnapshotMetadata;
@@ -58,10 +54,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-
 import android.os.Vibrator;
 import android.widget.TextView;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -77,10 +71,10 @@ import static com.marcelslum.ultnogame.GoogleAPI.mSnapshotsClient;
 public class MainActivity extends FragmentActivity implements
         SensorEventListener
         {
-            // Request code for saving the game to a snapshot.
-            private static final int RC_SAVE_SNAPSHOT = 9004;
+    // Request code for saving the game to a snapshot.
+    private static final int RC_SAVE_SNAPSHOT = 9004;
 
-            private static final int RC_LOAD_SNAPSHOT = 9005;
+    private static final int RC_LOAD_SNAPSHOT = 9005;
 
     public static SensorManager mSensorManager;
     public static Sensor mAccelerometer;
@@ -100,35 +94,23 @@ public class MainActivity extends FragmentActivity implements
     private boolean mResolvingError = false;
     private static final String STATE_RESOLVING_ERROR = "resolving_error";
 
-    // progress dialog we display while we're loading state from the cloud
     ProgressDialog mLoadingDialog = null;
-
-
 
     static String mCurrentSaveName;
 
     private MyVIewModel model;
-    private TextView mTextViewMessageGooglePlay;
-    private ImageButton mImageButtonGooglePlay;
-    private TextView mTextViewMessagePoints;
-
-
 
     public MyVIewModel getModel(){
         return model;
     }
 
-            /*
-    * This callback will be triggered after you call startActivityForResult from the
-    * showSavedGamesUI method.
-    */
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
 
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (requestCode == GoogleAPI.RC_SIGN_IN || requestCode == GoogleAPI.RC_LEADERBOARD_UI || requestCode == GoogleAPI.RC_ACHIEVEMENTS_UI) {
+        if (requestCode == GoogleAPI.RC_SIGN_IN) {
 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
 
@@ -138,14 +120,8 @@ public class MainActivity extends FragmentActivity implements
                 onConnected(account);
 
             } catch (ApiException apiException) {
-                String message = apiException.getMessage();
-                if (message == null || message.isEmpty()) {
-                    message = getString(R.string.signin_other_error);
-                }
-
+                MessagesHandler.setBottomMessage(Game.mainActivity.getApplicationContext().getResources().getString(R.string.googleErroLogar), 2000);
                 onDisconnected();
-
-                Game.showMessageNotConnectedOnGoogle = true;
             }
         }
 
@@ -187,7 +163,7 @@ public class MainActivity extends FragmentActivity implements
     void loadFromSnapshot(final SnapshotMetadata snapshotMetadata) {
         if (mLoadingDialog == null) {
             mLoadingDialog = new ProgressDialog(this);
-            mLoadingDialog.setMessage(getString(R.string.carregando_snapshot));
+            mLoadingDialog.setMessage(getResources().getString(R.string.aguarde));
         }
 
         mLoadingDialog.show();
@@ -228,17 +204,71 @@ public class MainActivity extends FragmentActivity implements
                 });
     }
 
-    static SaveGame saveGameFromCloud;
 
     private void readSavedGame(Snapshot snapshot) throws IOException {
 
-        Log.e(TAG, "read saveg game");
+        Log.e(TAG, "String carregado da nuvem:");
 
         String stringToSave = new String(snapshot.getSnapshotContents().readFully());
         Log.e(TAG, stringToSave);
-        saveGameFromCloud = SaveGame.getSaveGameFromJson(stringToSave);
+        final SaveGame saveGameFromCloud = SaveGame.getSaveGameFromJson(stringToSave);
 
-        Game.myGlSurface.setMenuCarregarMessage();
+        if (saveGameFromCloud == null) {
+            GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
+            MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.erro_ao_carregar), 4000);
+
+        } else {
+
+            int localStars = SaveGame.getTotalStars(SaveGame.saveGame);
+            int cloudStars = SaveGame.getTotalStars(saveGameFromCloud);
+            int localPoints = SaveGame.getTotalPoints(SaveGame.saveGame);
+            int cloudPoints = SaveGame.getTotalPoints(saveGameFromCloud);
+
+            final String message = Game.getContext().getResources().getString(R.string.messageCarregarJogo1) + " " +
+                    String.valueOf(cloudStars) + " " + Game.getContext().getResources().getString(R.string.messageCarregarJogo2) + "; " +
+                    String.valueOf(cloudPoints) + " " + Game.getContext().getResources().getString(R.string.messageCarregarJogo3) +
+                    Game.getContext().getResources().getString(R.string.linha) + Game.getContext().getResources().getString(R.string.linha) +
+                    Game.getContext().getResources().getString(R.string.messageCarregarJogo4) + " " +
+                    String.valueOf(localStars) + " " + Game.getContext().getResources().getString(R.string.messageCarregarJogo2) + "; " +
+                    String.valueOf(localPoints) + " " + Game.getContext().getResources().getString(R.string.messageCarregarJogo3) +
+                    Game.getContext().getResources().getString(R.string.linha) + Game.getContext().getResources().getString(R.string.linha) +
+                    Game.getContext().getResources().getString(R.string.messageCarregarJogo5);
+
+            final MainActivity m = Game.mainActivity;
+            if (m != null) {
+                m.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        m.createMessageDialogBuilder(m.getResources().getString(R.string.carregarDaNuvem),
+                                message)
+                                .setPositiveButton(R.string.carregar, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        SaveGame.saveGame = saveGameFromCloud;
+                                        SaveGame.saveGame.save();
+                                        MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.carregadoJogo), 4000);
+                                    }
+                                })
+                                .setNegativeButton(R.string.mesclar, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        SaveGame.saveGame = SaveGame.mergeSaveGames(SaveGame.saveGame, saveGameFromCloud);
+                                        SaveGame.saveGame.save();
+                                        MessagesHandler.setBottomMessage(Game.getContext().getResources().getString(R.string.mescladoJogos), 4000);
+                                    }
+                                })
+                                .setNeutralButton(R.string.botaoCancelar, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                    }
+                                })
+                                .show();
+
+                    }
+                });
+
+            }
+        }
     }
 
 
@@ -308,7 +338,7 @@ public class MainActivity extends FragmentActivity implements
 
         if (mLoadingDialog == null) {
             mLoadingDialog = new ProgressDialog(this);
-            mLoadingDialog.setMessage(getString(R.string.salvando_snapshot));
+            mLoadingDialog.setMessage(getResources().getString(R.string.salvando_snapshot));
         }
 
         mLoadingDialog.show();
@@ -368,7 +398,7 @@ public class MainActivity extends FragmentActivity implements
         Log.e(TAG, "lastLevelUnlockeced " + lastLevelUnlockeced);
 
 
-        LevelsGroupData gd = null;
+        LevelsGroupData gd = LevelsGroupData.levelsGroupData.get(0);
         for (int i = 0; i < LevelsGroupData.levelsGroupData.size(); i++) {
             if (lastLevelUnlockeced >= LevelsGroupData.levelsGroupData.get(i).firstLevel && lastLevelUnlockeced <= LevelsGroupData.levelsGroupData.get(i).finalLevel){
                 gd = LevelsGroupData.levelsGroupData.get(i);
@@ -381,7 +411,6 @@ public class MainActivity extends FragmentActivity implements
 
         TextureData td = TextureData.getTextureDataById(LevelDataLoader.getTextureData(levelNumber));
 
-
         Log.e(TAG, "x "+gd.textureData.x);
         Log.e(TAG, "y "+gd.textureData.y);
         Log.e(TAG, "w "+gd.textureData.w);
@@ -390,7 +419,6 @@ public class MainActivity extends FragmentActivity implements
         Log.e(TAG, "y "+(int) (gd.textureData.y * 2048f));
         Log.e(TAG, "w "+(int) ((gd.textureData.x + gd.textureData.w) * 2048f));
         Log.e(TAG, "h "+(int)  ((gd.textureData.h + gd.textureData.y) * 2048f));
-
 
 
         // First decode with inJustDecodeBounds=true to check dimensions
@@ -456,18 +484,23 @@ public class MainActivity extends FragmentActivity implements
      */
     private Task<SnapshotMetadata> writeSnapshot(Snapshot snapshot) {
         // Set the data payload for the snapshot.
+
+
+        String saveGameParaSalvarNaNUvem = SaveGame.getJSONFromSaveGame(SaveGame.saveGame);
+
+        Log.e(TAG, saveGameParaSalvarNaNUvem);
+
         snapshot.getSnapshotContents().
-
-                writeBytes(SaveGame.getJSONFromSaveGame(SaveGame.saveGame).getBytes());
-
+        writeBytes(saveGameParaSalvarNaNUvem.getBytes());
 
         DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-
 
         // Save the snapshot.
         SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
                 .setCoverImage(getScreenShot())
-                .setDescription(getResources().getString(R.string.conquistadas) + " " + SaveGame.getTotalStars(SaveGame.saveGame) + " " + getResources().getString(R.string.estrelas))
+                .setDescription(getResources().getString(R.string.conquistados) + " " + SaveGame.getTotalStars(SaveGame.saveGame) + " " + getResources().getString(R.string.estrelas) + " " +
+                                getResources().getString(R.string.e) + " " + SaveGame.getTotalPoints(SaveGame.saveGame) + " " + getResources().getString(R.string.pontos)+"."
+                        )
                 .build();
         return SnapshotCoordinator.getInstance().commitAndClose(mSnapshotsClient, snapshot, metadataChange);
     }
@@ -513,9 +546,6 @@ public class MainActivity extends FragmentActivity implements
                 });
     }
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -534,7 +564,15 @@ public class MainActivity extends FragmentActivity implements
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         Game.vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
-        Splash.timesGoogle = 0;
+        Storage.init(this);
+
+        if (!Storage.contains("playerId") || Storage.getString("playerId").equals("")){
+            String playerIdProvisorio = "provisorio/" + String.valueOf(Utils.getRandonFloat(0f, 100f)) +"/"+ String.valueOf(Utils.getRandonFloat(0f, 1000f));
+            Storage.setString("playerId", playerIdProvisorio);
+            Game.playerId = playerIdProvisorio;
+        } else {
+            Game.playerId = Storage.getString("playerId");
+        }
 
         /*Inicia o banco de Level Data*/
         try {
@@ -554,7 +592,7 @@ public class MainActivity extends FragmentActivity implements
             throw new Error("Unable to create database");
         }
 
-        Storage.init(this);
+
 
         if (Game.forDebugDeleteDatabaseAndStorage){
             Game.forDebugDeleteDatabaseAndStorage = false;
@@ -570,12 +608,14 @@ public class MainActivity extends FragmentActivity implements
 
         }
 
+
+
         SaveGame.load();
 
 
-        
 
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        //final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         //Log.e(TAG, "maxMemory "+maxMemory);
 
         mResolvingError = savedInstanceState != null
@@ -628,6 +668,8 @@ public class MainActivity extends FragmentActivity implements
         ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.gamelayout);
         ConstraintLayout.LayoutParams glParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
         layout.addView(myGlSurface, glParams);
+
+
 
 	// INICIA O BANNER
         mAdView = new AdView(this);
@@ -684,7 +726,33 @@ public class MainActivity extends FragmentActivity implements
         interstitialWithVideo.setAdListener(adListener);
         interstitialNoVideo.setAdListener(adListener);
 
+        createMessageDialogBuilder("titutlo", "esta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagesta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem esta é uma mensagem ");
+
     }
+
+    public AlertDialog.Builder createMessageDialogBuilder(String titulo, String mensagem){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_one_text, null);
+
+            TextView tittle = (TextView) dialogView.findViewById(R.id.tittle);
+            tittle.setText(titulo);
+
+            TextView message = (TextView) dialogView.findViewById(R.id.message);
+            message.setText(mensagem);
+
+            Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/jetset.ttf");
+
+            tittle.setTypeface(custom_font);
+            message.setTypeface(custom_font);
+
+            builder.setView(dialogView);
+
+            return builder;
+
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -713,6 +781,8 @@ public class MainActivity extends FragmentActivity implements
         return googlePlayStoreInstalled;
     }
 
+
+
     public void signInSilently() {
         Log.e(TAG, "signInSilently()");
 
@@ -722,11 +792,9 @@ public class MainActivity extends FragmentActivity implements
                     public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
                         if (task.isSuccessful()) {
                             Log.e(TAG, "signInSilently(): success");
-                            GoogleAPI.isConnected = true;
                             onConnected(task.getResult());
                         } else {
                             Log.e(TAG, "signInSilently(): failure", task.getException());
-                            GoogleAPI.isConnected = false;
                             onDisconnected();
                         }
                     }
@@ -741,7 +809,7 @@ public class MainActivity extends FragmentActivity implements
         Log.d(TAG, "signOut()");
 
         if (!isSignedIn()) {
-            Log.w(TAG, "signOut() called, but was not signed in!");
+            Log.e(TAG, "signOut() called, but was not signed in!");
             return;
         }
 
@@ -757,88 +825,43 @@ public class MainActivity extends FragmentActivity implements
     }
 
 
-    public void updatePlayerInfo(){
-
-        Log.e(TAG, "updatePlayerInfo");
-
-        if (SaveGame.saveGame.googleOption != 1 && !isSignedIn()){
-            return;
-        }
-
-        GoogleAPI.mPlayersClient.getCurrentPlayer()
-                .addOnCompleteListener(new OnCompleteListener<Player>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Player> task) {
-                        if (task.isSuccessful()) {
-                            GoogleAPI.playerName = task.getResult().getName()+"!";
-                            Uri uri = task.getResult().getIconImageUri();
-                            Log.e(TAG, "uri " + uri.getPath());
-                            ImageManager.create(Game.mainActivity)
-                                    .loadImage(new ImageManager.OnImageLoadedListener() {
-                                        @Override
-                                        public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {
-                                            GoogleAPI.playerIcon = Utils.drawableToBitmap(drawable);
-                                            GoogleAPI.playerIconImage = new ImageBitmap("playerIconImage", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f, GoogleAPI.playerIcon);
-                                        }
-                                    }, uri);
-
-                            if (MessagesHandler.messageGoogleLogged != null) {
-                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleLogado) + "\u0020" + GoogleAPI.playerName);
-                            }
-                        } else {
-                            GoogleAPI.playerName = ".";
-                            signOut();
-                            if (MessagesHandler.messageGoogleLogged != null) {
-                                MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
-                            }
-
-                        }
-                    }
-                });
-    }
-
-
-    private void onConnected(final GoogleSignInAccount googleSignInAccount) {
-        Log.e(TAG, "onConnected");
-        GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
-        GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
-        GoogleAPI.mSnapshotsClient = Games.getSnapshotsClient(this, googleSignInAccount);
-        GoogleAPI.mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
-
-        GoogleAPI.isConnected = true;
-
-        GoogleAPI.loadAchievements();
-
-    }
-
-    /*
     public boolean checkGoogleConnection(){
+
         Log.e(TAG, "checkGoogleConnection");
         if (isGooglePlayAvailable() && isSignedIn()){
             Log.e(TAG, "checking");
             if (GoogleAPI.playerName.equals(".") || GoogleAPI.playerName.equals("-")){
                 Log.e(TAG, "possible not connected - erro");
+
                 signOut();
-                if (MessagesHandler.messageGoogleLogged != null) {
-                    MessagesHandler.messageGoogleLogged.setText(getResources().getString(R.string.googleErroLogar));
-                }
+
                 return false;
             }
         }
         return true;
     }
-    */
+
+    private void onConnected(final GoogleSignInAccount googleSignInAccount) {
+
+        Log.e(TAG, "onConnected");
+        GoogleAPI.isConnected = true;
+        GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
+        GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
+        GoogleAPI.mSnapshotsClient = Games.getSnapshotsClient(this, googleSignInAccount);
+        GoogleAPI.mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
+        GoogleAPI.loadAchievements();
+        model.loadPlayerData(this);
+
+    }
 
     private void onDisconnected() {
 
         GoogleAPI.isConnected = false;
-
         GoogleAPI.mAchievementsClient = null;
         GoogleAPI.mLeaderboardsClient = null;
         GoogleAPI.mSnapshotsClient = null;
         GoogleAPI.mPlayersClient = null;
-
-        model.playerData.setValue(null);
+        model.loadPlayerData(this);
 
     }
 
@@ -896,7 +919,9 @@ public class MainActivity extends FragmentActivity implements
         mSensorManager.unregisterListener(this);
 
         Sound.pauseAll();
-	    AsyncTasks.cancelAll();
+
+        AsyncTasks.cancelAll();
+
         super.onPause();
     }
 
@@ -929,6 +954,8 @@ public class MainActivity extends FragmentActivity implements
         if (mAdView != null) {
             mAdView.destroy();
         }
+
+        AsyncTasks.cancelAll();
 
         Sound.releaseAll();
         super.onDestroy();

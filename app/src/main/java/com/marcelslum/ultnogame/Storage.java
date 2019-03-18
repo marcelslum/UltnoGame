@@ -29,6 +29,18 @@ public class Storage {
         editor.apply();
     }
 
+    public static void remove(String key){
+        SharedPreferences.Editor editor = storage.edit();
+        editor.remove(key);
+        editor.apply();
+    }
+
+    public static void removeAll(){
+
+        storage.edit().clear().commit();
+
+    }
+
     public static String getString(String key){
         return storage.getString(key, "");
     }
@@ -51,7 +63,7 @@ public class Storage {
         storage = context.getSharedPreferences(STORAGE_FILE_NAME, 0);
 
         if (Game.forDebugDeleteDatabaseAndStorage) {
-            setString(STORAGE_SAVE_NAME, "");
+            removeAll();
             return;
         }
 

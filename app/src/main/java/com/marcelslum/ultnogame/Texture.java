@@ -17,28 +17,14 @@ import java.util.ArrayList;
  */
 public class Texture {
 
-    //public final static int TEXTURE_BUTTONS_BALLS_STARS = 0;
-    //public final static int TEXTURE_FONT = 1;
-    //public final static int TEXTURE_TARGETS = 2;
-    //public final static int TEXTURE_BARS = 3;
+
     public final static int TEXTURE_BACKGROUND = 4;
-    //public final static int TEXTURE_NUMBERS_EXPLOSION = 5;
-    //public final static int TEXTURE_TITTLE = 6;
-    //public final static int TEXTURE_SPECIAL_BALL = 7;
-    //public final static int TEXTURE_LEVEL_ICONS = 8;
-    //////public final static int TEXTURE_TUTORIALS1 = 9;
-    //public final static int TEXTURE_TUTORIALS2 = 10;
-    //public final static int TEXTURE_TUTORIALS3 = 13;
-    ////public final static int TEXTURE_TUTORIALS4 = 14;
-    //public final static int TEXTURE_TUTORIAL_ICONS = 11;
-    //public final static int TEXTURE_GROUP_ICONS = 12;
+
 
     public final static int TEXTURES = 100;
     public final static int TEXTURE_ICONS_CHANGE_TUTORIALS = 101;
 
     public final static int TEXTURE_PLAYER_ICON = 102;
-
-    //public final static int TEXTURE_TUTORIALS = 102;
 
     public static int MAX_TEXTURES = 8;
 
@@ -52,10 +38,9 @@ public class Texture {
     public static boolean[] textureNamesUsed;
     String resoureIdentifier;
     int resoureIdentifierId;
-    Drawable drawable = null;
-    int textureUnit;
+    int textureUnit = -1;
     int id;
-    static Bitmap bitmap;
+    Bitmap bitmap;
     Bitmap persistentBitmap;
     boolean bounded = false;
     public static final String TAG = "Texture";
@@ -88,7 +73,7 @@ public class Texture {
 
     Texture(int id, Bitmap bitmap){
         this.id = id;
-        this.persistentBitmap = bitmap;
+        setNewBitmap(bitmap);
         bind();
     }
 
@@ -121,9 +106,9 @@ public class Texture {
     }
 
     public static int getFreeTextureUnit(){
-        //Log.e("texture", "getFreeTextureUnit");
+        Log.e("texture", "getFreeTextureUnit");
         for (int i = 0; i < MAX_TEXTURES; i++){
-            //Log.e("texture", "used "+i+" "+textureNamesUsed[i]);
+            Log.e("texture", "used "+i+" "+textureNamesUsed[i]);
             if (!textureNamesUsed[i]){
                 textureNamesUsed[i] = true;
                 return i;
@@ -135,7 +120,7 @@ public class Texture {
             lastTextureUsed = 0;
         }
 
-        //Log.e("texture", "lastTextureUsed "+lastTextureUsed);
+        Log.e("texture", "lastTextureUsed "+lastTextureUsed);
 
         getTextureByTextureUnit(lastTextureUsed).bounded = false;
         getTextureByTextureUnit(lastTextureUsed).textureUnit = -1;
@@ -220,8 +205,8 @@ public class Texture {
             int[] maxTextureSize = new int[1];
             GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_SIZE, maxTextureSize, 0);
 
-            //Log.e("texture", "max texture units "+maxTextureUnits[0]);
-            //Log.e("texture", "max texture size "+maxTextureSize[0]);
+            Log.e("texture", "max texture units "+maxTextureUnits[0]);
+            Log.e("texture", "max texture size "+maxTextureSize[0]);
 
             MAX_TEXTURES = maxTextureUnits[0];
             if (MAX_TEXTURES > 8){
@@ -237,19 +222,19 @@ public class Texture {
             return textureUnit;
         }
 
-        if (bitmap.isRecycled() || bitmap == null){
+        if (bitmap == null || bitmap.isRecycled()){
             try {
                 if (persistentBitmap == null) {
                     bitmap = BitmapFactory.decodeResource(Game.mainActivity.getApplicationContext().getResources(), resoureIdentifierId);
                 }
             }
             catch (Exception e) {
-                //Log.e(TAG, "Erro ao criar a textura", e);
+                Log.e(TAG, "Erro ao criar a textura", e);
             }
         }
 
         textureUnit = getFreeTextureUnit();
-        //Log.e("texture", "texture id "+id +" novo textureId "+textureUnit);
+        Log.e("texture", "texture id "+id +" novo textureId "+textureUnit);
 
         bounded = true;
 
@@ -281,5 +266,16 @@ public class Texture {
     }
 
 
+    public void setNewBitmap(Bitmap newBitmap) {
 
+        if (textureUnit >= 0){
+            textureNamesUsed[textureUnit] = false;
+        }
+        persistentBitmap = newBitmap;
+        bitmap = null;
+        bounded = false;
+        bind();
+
+
+    }
 }

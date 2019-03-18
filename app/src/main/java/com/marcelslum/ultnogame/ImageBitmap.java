@@ -18,18 +18,14 @@ public class ImageBitmap extends Entity{
         this.bitmap = bitmap;
         program = Game.imageProgram;
         textureId = Texture.TEXTURE_PLAYER_ICON;
-
         Texture.textures.add(new Texture(textureId, bitmap));
         textureData = new TextureData(99999, "textureData"+name, 0f, 0f, 1f, 1f);
         setDrawInfo();
     }
 
-    public void setBitmap(Bitmap bitmap){
-        if (this.bitmap.equals(bitmap)){
-            Log.e(TAG, "this.bitmap.equals(bitmap)");
-            return;
-        }
-        this.bitmap = bitmap;
+    public void setBitmap(Bitmap newBitmap){
+        this.bitmap = newBitmap;
+        Texture.getTextureById(textureId).setNewBitmap(newBitmap);
     }
 
     @Override

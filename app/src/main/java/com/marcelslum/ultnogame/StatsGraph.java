@@ -52,6 +52,8 @@ public class StatsGraph extends Entity{
 
     public void make(boolean exibirNomeLinhas, boolean valoresEmTempo, boolean exibirValoresEmInteger, float variacaoTamanhoTextoColuna, float variacaoPosicaoTextoColuna){
 
+
+
         double maiorValorDouble = 0;
         if (valoresDouble.size() > 0) {
             for (int i = 0; i < valoresDouble.size(); i++) {

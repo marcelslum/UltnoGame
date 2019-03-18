@@ -39,6 +39,7 @@ public class Sound {
     static AudioData adMenuIconDrop;
     static AudioData adMenuSmall;
     static AudioData adMenuBig2;
+    static AudioData adMenuBigTest;
     static AudioData adCounter;
     static AudioData adExplosion;
     static AudioData adAngleChange;
@@ -50,7 +51,7 @@ public class Sound {
 
     //public static LoopMediaPlayer loop;
 
-    public static MediaPlayer [] mediaPlayer = new MediaPlayer[3];
+    public static MediaPlayer [] mediaPlayer = new MediaPlayer[6];
 
     public static AudioTrack mAudioTrack1;
     public static AudioTrack mAudioTrack2;
@@ -61,15 +62,11 @@ public class Sound {
     public static AudioTrack mAudioTrack14;
     public static AudioTrack mAudioTrack15;
 
-    static int musicState;
-    static final int MUSICA_INICIO = 0;
-    static final int MUSICA_MEIO = 1;
-    static final int MUSICA_FIM = 2;
-
     static int duplicateBallId = -1;
     static int barSizeId = -1;
 
     public Sound(){
+
     }
 
     public static void init(){
@@ -87,6 +84,7 @@ public class Sound {
 
         adMenuSmall = new AudioData("menuselectsmall.wav", 0.4f,3);
         adMenuBig2 = new AudioData("menuselectbig1.wav", 0.3f,3);
+        adMenuBigTest = new AudioData("menuselectbig1.wav", 0f,3);
         adStarsUp = new AudioData("starsup.wav", 0.45f,3);
         adAngleChange = new AudioData("anglePlus.wav", 0.2f,3);
 
@@ -102,8 +100,6 @@ public class Sound {
         adBallFall =  new AudioData("ballfall.wav", 0.4f,0);
         adDestroyTarget =  new AudioData("destroy_target.wav", 0.4f,0);
 
-
-
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -115,6 +111,27 @@ public class Sound {
         soundBarSize = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.bar, 1);
         soundWind = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.wind, 1);
         soundDuplicateBall = soundPool.load(Game.mainActivity.getApplicationContext(), R.raw.duplicateball, 1);
+    }
+
+    public static void setMusicCurrentPart(int i) {
+
+        musicCurrentPart = i;
+    }
+
+    public static void setMusicCurrentGlobalPart(int i) {
+
+        musicCurrentGlobalPart = i;
+
+    }
+
+    public static void setMusicCurrentSubPart(int i) {
+
+        musicCurrentSubPart = i;
+    }
+
+    public static float getMusicVolume() {
+
+        return musicVolume;
     }
 
     public void playSuccess1(){
@@ -243,6 +260,18 @@ public class Sound {
         adMenuBig2.musicPartNumber = 0;
         if (AsyncTasks.asyncPlayMenuBig == null || AsyncTasks.asyncPlayMenuBig.getStatus() == AsyncTask.Status.FINISHED){
             AsyncTasks.asyncPlayMenuBig = new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, adMenuBig2);
+        }
+
+    }
+
+    public void playPlayMenuBigTest(){
+        if (!SaveGame.saveGame.sound){
+            return;
+        }
+
+        adMenuBigTest.musicPartNumber = 0;
+        if (AsyncTasks.asyncPlayMenuBigTest == null || AsyncTasks.asyncPlayMenuBigTest.getStatus() == AsyncTask.Status.FINISHED){
+            AsyncTasks.asyncPlayMenuBigTest = new PlayAudio().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, adMenuBigTest);
         }
 
     }
@@ -391,8 +420,15 @@ public class Sound {
         if (soundPool != null) {
             soundPool.autoPause();
         }
+
         pauseMusic();
 
+    }
+
+    public static void pauseMusic(){
+        if (mediaPlayer[currentMediaNumber] != null) {
+            mediaPlayer[currentMediaNumber].pause();
+        }
     }
 
     public static void stopAndReleaseTrack(AudioTrack at){
@@ -429,16 +465,34 @@ public class Sound {
 
             boolean anyMediaPlaying = false;
 
-            if (mediaPlayer[0] != null && mediaPlayer[0].isPlaying()){
-                anyMediaPlaying = true;
-            }
+            try {
 
-            if (mediaPlayer[1] != null && mediaPlayer[1].isPlaying()){
-                anyMediaPlaying = true;
-            }
+                if (mediaPlayer[0] != null && mediaPlayer[0].isPlaying()){
+                    anyMediaPlaying = true;
+                }
 
-            if (mediaPlayer[2] != null && mediaPlayer[2].isPlaying()){
-                anyMediaPlaying = true;
+                if (mediaPlayer[1] != null && mediaPlayer[1].isPlaying()){
+                    anyMediaPlaying = true;
+                }
+
+                if (mediaPlayer[2] != null && mediaPlayer[2].isPlaying()){
+                    anyMediaPlaying = true;
+                }
+
+                if (mediaPlayer[3] != null && mediaPlayer[3].isPlaying()){
+                    anyMediaPlaying = true;
+                }
+
+                if (mediaPlayer[4] != null && mediaPlayer[4].isPlaying()){
+                    anyMediaPlaying = true;
+                }
+
+                if (mediaPlayer[5] != null && mediaPlayer[5].isPlaying()){
+                    anyMediaPlaying = true;
+                }
+
+            } catch (Exception e){
+                Log.e(TAG, "error on check loop playing " + e.getMessage());
             }
 
             if (!anyMediaPlaying){
@@ -446,14 +500,10 @@ public class Sound {
                 stopAndReleaseMusic();
                 mediaPlayer[currentMediaNumber] = null;
                 Game.sound.playMusic();
-            } else {
-                //Log.e(TAG, "check loop playing: media playing");
             }
         }
 
-
-
-        /*
+        /* retirar -------------
         if (Game.gameState == Game.GAME_STATE_JOGAR){
             //Log.e(TAG, "check loop playing");
             if (loop == null){
@@ -480,13 +530,16 @@ public class Sound {
             }
         }
         */
+
+
     }
 
     public static int currentMediaNumber = 0;
 
-    public static float musicVolume = 1f;
+    private static float musicVolume = 1f;
 
     public static void setMusicVolume(float volume){
+
         musicVolume = volume;
 
         if (volume <= 0f){
@@ -503,11 +556,8 @@ public class Sound {
 
     }
 
-    public void playMusic(){
 
-        if (!SaveGame.saveGame.music){
-            return;
-        }
+    public void playMusic(){
 
         /*
 
@@ -521,6 +571,7 @@ public class Sound {
         */
 
         //Log.e(TAG, "playMusic");
+
 
         if (mediaPlayer[currentMediaNumber] != null) {
             mediaPlayer[currentMediaNumber].start();
@@ -548,22 +599,32 @@ public class Sound {
 
         }
 
-
     }
 
     public static int getNextMediaPlayer(){
-        return currentMediaNumber != 2 ? currentMediaNumber + 1 : 0;
+        return currentMediaNumber != 5 ? currentMediaNumber + 1 : 0;
     }
 
-    public static int getLastMediaPlayer(){
-        return currentMediaNumber != 0 ? currentMediaNumber - 1 : 2;
-    }
+    public static int getLastMediaPlayerForRelease(){
 
-    public static void pauseMusic(){
-        if (mediaPlayer[currentMediaNumber] != null) {
-            mediaPlayer[currentMediaNumber].pause();
+        if (currentMediaNumber == 0){
+            return 4;
+        } else if (currentMediaNumber == 1){
+            return 5;
+        } else if (currentMediaNumber == 2){
+            return 0;
+        } else if (currentMediaNumber == 3){
+            return 1;
+        } else if (currentMediaNumber == 4){
+            return 2;
+        } else if (currentMediaNumber == 5){
+            return 3;
         }
+
+        return 0;
+
     }
+
 
     public static void stopAndReleaseMusic(){
 
@@ -596,6 +657,39 @@ public class Sound {
             }
         } catch (Exception e) {
         }
+
+
+        try {
+            if (mediaPlayer[3] != null){
+                mediaPlayer[3].stop();
+                mediaPlayer[3].reset();
+                mediaPlayer[3].release();
+                mediaPlayer[3] = null;
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (mediaPlayer[4] != null){
+                mediaPlayer[4].stop();
+                mediaPlayer[4].reset();
+                mediaPlayer[4].release();
+                mediaPlayer[4] = null;
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (mediaPlayer[5] != null){
+                mediaPlayer[5].stop();
+                mediaPlayer[5].reset();
+                mediaPlayer[5].release();
+                mediaPlayer[5] = null;
+            }
+        } catch (Exception e) {
+        }
+
+
     }
 
     public void createNextMediaPlayer(){
@@ -614,21 +708,23 @@ public class Sound {
 
         */
 
-        //Log.e(TAG, "criando proximo media player: " + getNextMediaPlayer());
+        Log.e(TAG, "criando proximo media player: " + getNextMediaPlayer());
 
-        if (mediaPlayer[getLastMediaPlayer()] != null){
-            //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayer());
-            mediaPlayer[getLastMediaPlayer()].reset();
-            mediaPlayer[getLastMediaPlayer()].release();
-            mediaPlayer[getLastMediaPlayer()] = null;
+        if (mediaPlayer[getLastMediaPlayerForRelease()] != null){
+            //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayerForRelease());
+            mediaPlayer[getLastMediaPlayerForRelease()].reset();
+            mediaPlayer[getLastMediaPlayerForRelease()].release();
+            mediaPlayer[getLastMediaPlayerForRelease()] = null;
         }
 
-        mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
+        if (mediaPlayer[getNextMediaPlayer()] == null) {
+            mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
+        }
         AssetFileDescriptor afd;
         try {
             afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
             mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-            mediaPlayer[getNextMediaPlayer()].prepare();
+            mediaPlayer[getNextMediaPlayer()].prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -653,10 +749,7 @@ public class Sound {
 
             }
         });
-
-
     }
-
 
     public static int musicCurrentPart;
     public static final int MUSIC_PRE_INTRO = 9;
@@ -671,12 +764,10 @@ public class Sound {
     public static final int MUSIC_PART_B_TO_PART_C = 18;
     public static final int MUSIC_PART_C_TO_PART_C = 19;
 
-
     public static int musicCurrentGlobalPart;
     public static final int MUSIC_GLOBAL_PART_A = 50;
     public static final int MUSIC_GLOBAL_PART_B = 51;
     public static final int MUSIC_GLOBAL_PART_C = 52;
-
 
     public static int musicCurrentSubPart;
     public static final int MUSIC_SUB_PART_A_A1 = 20;
@@ -693,7 +784,6 @@ public class Sound {
 
     public static String getNextMusicFileName(){
 
-
         int levelNumber = SaveGame.saveGame.currentLevelNumber;
 
         int musicNumber = 2;
@@ -701,9 +791,7 @@ public class Sound {
             musicNumber = 1;
         }
 
-        Log.e(TAG, "---- musica " + musicNumber);
-
-        Log.e(TAG, "---- ANTES " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode);
+        Log.e(TAG, "---- ANTES " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode + "; musica " + musicNumber);
 
         String nomeDoArquivo = "00-Intro.ogg";
 
@@ -747,9 +835,12 @@ public class Sound {
                 }
             }
 
+            Log.e(TAG, "nextGlobalPart " + nextGlobalPart);
+
 
             // CALCULA A PROXIMA SUBPARTE, RANDOMICAMENTE
             int nextSubPart = 0;
+
             float random = Utils.getRandonFloat(0f, 1f);
 
             if (musicNumber == 1) {
@@ -765,7 +856,6 @@ public class Sound {
                     }
 
                 } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B) {
-
                     if (random > 0.66f) {
                         nextSubPart = MUSIC_SUB_PART_B_A1;
                     } else if (random > 0.33f) {
@@ -808,6 +898,8 @@ public class Sound {
 
             }
 
+            Log.e(TAG, "nextSubPart " + nextSubPart);
+
 
             // DEFINE A VARIAVEL GLOBAL PART
             musicCurrentGlobalPart = nextGlobalPart;
@@ -825,16 +917,28 @@ public class Sound {
                     musicCurrentPart = MUSIC_PART_A_TO_PART_A;
                 } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B){
                     musicCurrentPart = MUSIC_PART_A_TO_PART_B;
+                    if (nextSubPart == MUSIC_SUB_PART_B_A2 || nextSubPart == MUSIC_SUB_PART_B_A3){
+                        Log.e(TAG, "ajeitando sub parte na transição para variacao A1");
+                        nextSubPart = MUSIC_SUB_PART_B_A1;
+                    }
                 }
             } else if (musicCurrentPart == MUSIC_PART_B || musicCurrentPart == MUSIC_PART_A_TO_PART_B) {
                 if (nextGlobalPart == MUSIC_GLOBAL_PART_B){
                     musicCurrentPart = MUSIC_PART_B_TO_PART_B;
                 } else if (nextGlobalPart == MUSIC_GLOBAL_PART_C){
                     musicCurrentPart = MUSIC_PART_B_TO_PART_C;
+
+                    if (nextSubPart == MUSIC_SUB_PART_C_A2 || nextSubPart == MUSIC_SUB_PART_C_A3){
+                        Log.e(TAG, "ajeitando sub parte na transição para variacao A1");
+                        nextSubPart = MUSIC_SUB_PART_C_A1;
+                    }
+
                 }
             } else if (musicCurrentPart == MUSIC_PART_C || musicCurrentPart == MUSIC_PART_B_TO_PART_C) {
                     musicCurrentPart = MUSIC_PART_C_TO_PART_C;
             }
+
+            Log.e(TAG, "musicCurrentPart " + musicCurrentPart);
 
             // DEFINE O ARQUIVO DE ACORDO COM A SITUAÇÃO DEFINIDA ACIMA
             // DEFINE TAMBÉM A SUBPARTE
@@ -882,7 +986,13 @@ public class Sound {
             } else if (musicCurrentPart == MUSIC_PART_A_TO_PART_B) {
 
                 // SE FOR ENTRAR TRANSIÇÃO PARA PARTE A OU B, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY PARA O SEGUNDO TRACK
-                if (Utils.getRandonFloat(0f, 1f) < 0.6f){
+
+
+                float melodyVariation = 0.3f - (0.3f * ((float)levelNumber / 100f));
+
+                Log.e(TAG, "melodyVariation " + melodyVariation);
+
+                if (Utils.getRandonFloat(0f, 1f) < (0.6f + melodyVariation)){
                     musicMelodyMode = false;
                 } else {
                     musicMelodyMode = true;
@@ -909,11 +1019,18 @@ public class Sound {
             } else if (musicCurrentPart == MUSIC_PART_B_TO_PART_B){
 
                 // SE FOR ENTRAR TRANSIÇÃO PARA PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
-                if (Utils.getRandonFloat(0f, 1f) < 0.5f){
-                    musicMelodyMode = false;
-                } else {
-                    musicMelodyMode = true;
+
+                if (!musicMelodyMode) {
+                    float melodyVariation = 0.3f - (0.3f * ((float) levelNumber / 100f));
+                    Log.e(TAG, "melodyVariation " + melodyVariation);
+
+                    if (Utils.getRandonFloat(0f, 1f) < 0.6f) {
+                        musicMelodyMode = false;
+                    } else {
+                        musicMelodyMode = true;
+                    }
                 }
+
 
                 // PARTE B PARA B
                 if (musicCurrentSubPart == MUSIC_SUB_PART_B_A1){
@@ -989,10 +1106,17 @@ public class Sound {
                 // PARTE B PARA C
 
                 // SE FOR ENTRAR TRANSIÇÃO PARA PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
-                if (Utils.getRandonFloat(0f, 1f) < 0.5f){
-                    musicMelodyMode = false;
-                } else {
-                    musicMelodyMode = true;
+
+
+                if (!musicMelodyMode) {
+                    float melodyVariation = 0.3f - (0.3f * ((float) levelNumber / 100f));
+                    Log.e(TAG, "melodyVariation " + melodyVariation);
+
+                    if (Utils.getRandonFloat(0f, 1f) < 0.55f) {
+                        musicMelodyMode = false;
+                    } else {
+                        musicMelodyMode = true;
+                    }
                 }
 
                 if (musicCurrentSubPart == MUSIC_SUB_PART_B_A1) {
@@ -1023,10 +1147,15 @@ public class Sound {
 
 
                 // SE FOR ENTRAR TRANSIÇÃO PARA PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
-                if (Utils.getRandonFloat(0f, 1f) < 0.5f){
-                    musicMelodyMode = false;
-                } else {
-                    musicMelodyMode = true;
+                if (!musicMelodyMode) {
+                    float melodyVariation = 0.3f - (0.3f * ((float) levelNumber / 100f));
+                    Log.e(TAG, "melodyVariation " + melodyVariation);
+
+                    if (Utils.getRandonFloat(0f, 1f) < 0.4f) {
+                        musicMelodyMode = false;
+                    } else {
+                        musicMelodyMode = true;
+                    }
                 }
 
                 if (musicCurrentSubPart == MUSIC_SUB_PART_C_A1){
@@ -1222,8 +1351,37 @@ public class Sound {
 
     }
 
-    public static void loadMusic(){
+    private static class AudioData{
+        public String fileName;
+        public float volume;
+        public byte[] music;
+        public AudioTrack audioTrack;
+        public int musicPartNumber = 0;
+        public int audioTrackNumber = -1;
 
+        public AudioData(String fileName, float volume, int audioTrackNumber) {
+            this.fileName = fileName;
+            this.volume = volume;
+            this.audioTrack = null;
+            this.audioTrackNumber = audioTrackNumber;
+
+            ByteBuffer pcm;
+            InputStream input = null;
+            try {
+                input = Game.getContext().getAssets().open(fileName);
+                WavToPCM.WavInfo info = WavToPCM.readHeader(input);
+                pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
+                music = pcm.array();
+            } catch (IOException e) {
+                Log.e(TAG, "Erro ao abrir o arquivo "+ fileName);
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    public static void loadMusic(){
 
         currentMediaNumber = 0;
         mediaPlayer[currentMediaNumber] = new MediaPlayer();
@@ -1297,33 +1455,8 @@ public class Sound {
         */
     }
 
-    private static class AudioData{
-        public String fileName;
-        public float volume;
-        public byte[] music;
-        public AudioTrack audioTrack;
-        public int musicPartNumber = 0;
-        public int audioTrackNumber = -1;
+    /*
 
-        public AudioData(String fileName, float volume, int audioTrackNumber) {
-            this.fileName = fileName;
-            this.volume = volume;
-            this.audioTrack = null;
-            this.audioTrackNumber = audioTrackNumber;
-
-            ByteBuffer pcm;
-            InputStream input = null;
-            try {
-                input = Game.getContext().getAssets().open(fileName);
-                WavToPCM.WavInfo info = WavToPCM.readHeader(input);
-                pcm = ByteBuffer.wrap(WavToPCM.readWavPcm(info, input));
-                music = pcm.array();
-            } catch (IOException e) {
-                Log.e(TAG, "Erro ao abrir o arquivo "+ fileName);
-                e.printStackTrace();
-            }
-        }
-    }
 
     private class PlayMusic extends AsyncTask<Void, Integer, Integer> {
 
@@ -1388,11 +1521,11 @@ public class Sound {
 
         protected Integer doInBackground(Void... data) {
 
-            if (mediaPlayer[getLastMediaPlayer()] != null){
-                //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayer());
-                mediaPlayer[getLastMediaPlayer()].reset();
-                mediaPlayer[getLastMediaPlayer()].release();
-                mediaPlayer[getLastMediaPlayer()] = null;
+            if (mediaPlayer[getLastMediaPlayerForRelease()] != null){
+                //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayerForRelease());
+                mediaPlayer[getLastMediaPlayerForRelease()].reset();
+                mediaPlayer[getLastMediaPlayerForRelease()].release();
+                mediaPlayer[getLastMediaPlayerForRelease()] = null;
             }
 
             mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
@@ -1445,6 +1578,8 @@ public class Sound {
             stopAndReleaseMusic();
         }
     }
+
+    */
 
     private class PlayAudio extends AsyncTask<AudioData, Integer, Integer> {
         byte[] musicPart = new byte[1024];

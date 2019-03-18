@@ -286,6 +286,19 @@ public class Button extends Entity implements Poolable<Button>{
     }
 
     @Override
+    public int checkAnimations(){
+
+        for (int i = 0; i < animations.size(); i++) {
+            if (animations.get(i).started) {
+
+                animations.get(i).doAnimation();
+            }
+        }
+        return 0;
+
+    }
+
+    @Override
     public void prepareRender(float[] matrixView, float[] matrixProjection) {
 
         if (!isVisible) return;

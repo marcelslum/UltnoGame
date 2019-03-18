@@ -390,7 +390,7 @@ public class Stats {
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_derrotas), (double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.media_total), ((double)SaveGame.saveGame.stats[40] + (double)SaveGame.saveGame.stats[41])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
 
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
 
             Game.statsGraphs.add(statsGraph);
 
@@ -404,7 +404,7 @@ public class Stats {
 
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.media_de_estrelas), (double)SaveGame.saveGame.stats[42]/SaveGame.saveGame.stats[43]);
 
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
 
             Game.statsGraphs.add(statsGraph);
 
@@ -419,7 +419,7 @@ public class Stats {
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_derrotas), (double)SaveGame.saveGame.stats[46]/SaveGame.saveGame.stats[44]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.media_total), ((double)SaveGame.saveGame.stats[45] + (double)SaveGame.saveGame.stats[46])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
 
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
 
             Game.statsGraphs.add(statsGraph);
 
@@ -435,7 +435,7 @@ public class Stats {
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.angulo_aumentado), (float)SaveGame.saveGame.stats[0]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.angulo_diminuido), (float)SaveGame.saveGame.stats[1]);
 
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
 
             Game.statsGraphs.add(statsGraph);
 
@@ -450,7 +450,7 @@ public class Stats {
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_diminuida), (float)SaveGame.saveGame.stats[3]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.velocidade_inalterada), (float)SaveGame.saveGame.stats[31]);
 
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
 
             Game.statsGraphs.add(statsGraph);
 
@@ -481,7 +481,7 @@ public class Stats {
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.inclinacao_da_barra), (float)SaveGame.saveGame.stats[4]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.movimento_da_barra), (float)SaveGame.saveGame.stats[6]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.inclinação_e_movimento), (float)SaveGame.saveGame.stats[8]);
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
 
         } else if (currentStatsSheet == ANGULO_DIMINUIDO) {
@@ -494,7 +494,7 @@ public class Stats {
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.inclinacao_da_barra), (float)SaveGame.saveGame.stats[5]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.movimento_da_barra), (float)SaveGame.saveGame.stats[7]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.inclinação_e_movimento), (float)SaveGame.saveGame.stats[9]);
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
 
 
@@ -541,7 +541,7 @@ public class Stats {
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.vermelhos), (float)SaveGame.saveGame.stats[36]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.fantasmas), (float)(SaveGame.saveGame.stats[35]));
 
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
 
 
@@ -554,7 +554,7 @@ public class Stats {
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.obstaculos_atingidos), (float)SaveGame.saveGame.stats[37]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.colisao_entre_bolas), (float)SaveGame.saveGame.stats[38]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.bolas_falsas_atingidas), (float)SaveGame.saveGame.stats[28]);
-            statsGraph.make(true, false, true, 1f, 1f);
+            statsGraph.make(false, false, true, 1f, 1f);
             Game.statsGraphs.add(statsGraph);
 
 

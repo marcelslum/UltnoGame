@@ -153,7 +153,6 @@ public class Entity{
 
     public Program program;
     public int textureId = -1;
-    public int special;
 
     public void setProgram(Program program){
         this.program = program;
@@ -735,6 +734,7 @@ public class Entity{
                             //currentBoundedTextureId = textureId;
                             // Get handle to textures locations
                             int us_textureHandle = GLES20.glGetUniformLocation(this.program.get(), "us_texture");
+
                             GLES20.glUniform1i(us_textureHandle, Texture.getTextureById(textureId).bind());
                         //}
                     }

@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import java.util.ArrayList;
+
 /**
  * Created by marcel on 26/01/2017.
  */
@@ -218,11 +220,12 @@ public class ButtonHandler {
                     } else if (GameStateHandler.previousMenuGoogleState == GameStateHandler.GAME_STATE_MENU_JOGAR){
                         GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_JOGAR);
                     }
-
                 }
-
             }
         });
+
+        Utils.createAnimation4v(buttonBack, "animScaleX", "animScaleX", 2000, 0f, 1f, 0.8f, 1f, 0.95f, 0.95f, 1f, 1f, true, true).start();
+        Utils.createAnimation4v(buttonBack, "animScaleY", "animScaleY", 2000, 0f, 1f, 0.8f, 1f, 0.95f, 0.95f, 1f, 1f, true, true).start();
 
         buttonContinue = Game.buttonPool.get();
         Game.adicionarEntidadeFixa(buttonContinue);
@@ -273,6 +276,9 @@ public class ButtonHandler {
                 }
             }
         });
+
+        Utils.createAnimation4v(buttonContinue, "animScaleX", "animScaleX", 2000, 0f, 1f, 0.8f, 1f, 0.95f, 0.95f, 1f, 1f, true, true).start();
+        Utils.createAnimation4v(buttonContinue, "animScaleY", "animScaleY", 2000, 0f, 1f, 0.8f, 1f, 0.95f, 0.95f, 1f, 1f, true, true).start();
 
 
         Rectangle frame1 = new Rectangle("frameButtonReturn", buttonSize*0.5f - framePadd,
