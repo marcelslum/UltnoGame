@@ -150,7 +150,7 @@ public class Training {
 
             tentativaCertaTreinamento += 1;
 
-            if (tentativaCertaTreinamento < 1){
+            if (tentativaCertaTreinamento < 3){
 
                 if (MessagesHandler.messageTrainingState != null) {
                     MessagesHandler.messageTrainingState.clearDisplay();
@@ -182,7 +182,7 @@ public class Training {
                 //Game.reduceAllGameEntitiesAlpha(500);
                 trainingNumber += 1;
 
-                if (trainingNumber <= 1) {//20
+                if (trainingNumber <= 20) {//20
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_DURANTE_TREINAMENTO);
                 } else {
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_FINAL_TREINAMENTO);
