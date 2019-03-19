@@ -204,10 +204,7 @@ public class Training {
                 MessagesHandler.messageTrainingState2.setText(Game.getContext().getResources().getString(R.string.tentativa) + " " + (tentativaCertaTreinamento) + " " + Game.getContext().getResources().getString(R.string.de_como_em_1_de_3) + " " + 3);
             }
 
-
             GameStateHandler.setGameState(GameStateHandler.GAME_STATE_NOVA_TENTATIVA_TREINAMENTO);
-
-
 
         }
     }

@@ -304,6 +304,16 @@ public class MyGLSurface extends GLSurfaceView {
             }});
     }
 
+    public void setMessageScoreTotal(final String message){
+        queueEvent(new Runnable() {
+            public void run() {
+
+                MessagesHandler.messageMaxScoreTotal.setText(message);
+                MessagesHandler.messageMaxScoreTotal.display();
+
+            }});
+    }
+
     public void showMessage(final String message){
         queueEvent(new Runnable() {
             public void run() {

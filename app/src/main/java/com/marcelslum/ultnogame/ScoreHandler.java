@@ -1,5 +1,7 @@
 package com.marcelslum.ultnogame;
 
+import android.util.Log;
+
 /**
  * Created by marcel on 26/01/2017.
  */

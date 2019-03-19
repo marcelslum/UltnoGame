@@ -3,12 +3,19 @@ package com.marcelslum.ultnogame;
 
 import android.util.Log;
 
+import com.google.android.gms.games.AnnotatedData;
+import com.google.android.gms.games.leaderboard.LeaderboardScore;
+import com.google.android.gms.games.leaderboard.LeaderboardVariant;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameStateHandler{
+
+    public final static String TAG =  "GameStateHandler";
 
     public final static int GAME_STATE_INTRO =  100; // vai para MENU_INICIAL
 
@@ -528,9 +535,30 @@ public class GameStateHandler{
 
             GoogleAPI.displayGoogleInfo();
 
-            MessagesHandler.messageMaxScoreTotal.setText(
-                    Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+ NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
-            MessagesHandler.messageMaxScoreTotal.display();
+            if (GoogleAPI.mLeaderboardsClient != null && !GoogleAPI.disconnecting) {
+                MessagesHandler.messageMaxScoreTotal.clearDisplay();
+                GoogleAPI.mLeaderboardsClient.loadCurrentPlayerLeaderboardScore(Game.mainActivity.getResources().getString(R.string.leaderboard_0),
+                        LeaderboardVariant.TIME_SPAN_ALL_TIME, LeaderboardVariant.COLLECTION_PUBLIC).addOnSuccessListener(new OnSuccessListener<AnnotatedData<LeaderboardScore>>() {
+                        @Override
+                        public void onSuccess(AnnotatedData<LeaderboardScore> leaderboardScoreAnnotatedData) {
+                            Log.e(TAG, "atingiu score " + leaderboardScoreAnnotatedData.get().getDisplayRank());
+
+                            Game.forUpdateMessageScoreTotal = true;
+                            Game.messageScoreTotal =
+                                    Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+
+                                            NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()) +
+                                            " - " + Game.getContext().getResources().getString(R.string.ranking) + ": " + leaderboardScoreAnnotatedData.get().getDisplayRank();
+                        }
+                });
+            } else {
+                MessagesHandler.messageMaxScoreTotal.setText(
+                        Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+
+                                NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()));
+                MessagesHandler.messageMaxScoreTotal.display();
+            }
+
+
+
 
 
             if (Game.versaoBeta) {
@@ -981,6 +1009,8 @@ public class GameStateHandler{
             Stats.saveData();
             //^
 
+
+            Log.e(TAG, "ScoreHandler.scorePanel.value " + ScoreHandler.scorePanel.value);
 
             if (ScoreHandler.scorePanel.value > 0) {
                 ScoreHandler.scorePanel.showMessage("-50%", 1000);

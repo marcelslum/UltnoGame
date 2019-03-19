@@ -280,6 +280,10 @@ public class Stats {
             SaveGame.saveGame.stats[48] += Utils.converterMilisegundosEmSegundos(tempoAnguloMedioBaixo);
             SaveGame.saveGame.stats[49] += Utils.converterMilisegundosEmSegundos(tempoVelocidadeMediaAlta);
             SaveGame.saveGame.stats[50] += Utils.converterMilisegundosEmSegundos(tempoAnguloMedioAlto);
+
+
+
+
         }
 
         clearData();
@@ -385,6 +389,11 @@ public class Stats {
             MessagesHandler.messageStatDescricao.addText(Game.mainActivity.getResources().getString(R.string.stat_media_pontos_explicacao), corExplicacaoGrafico);
 
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
+
+
+            Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[40]/SaveGame.saveGame.stats[43]));
+            Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]));
+            Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[40] + (double)SaveGame.saveGame.stats[41])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
 
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_vitorias), (double)SaveGame.saveGame.stats[40]/SaveGame.saveGame.stats[43]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_derrotas), (double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]);

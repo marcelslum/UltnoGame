@@ -845,6 +845,7 @@ public class MainActivity extends FragmentActivity implements
 
         Log.e(TAG, "onConnected");
         GoogleAPI.isConnected = true;
+
         GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
         GoogleAPI.mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
         GoogleAPI.mSnapshotsClient = Games.getSnapshotsClient(this, googleSignInAccount);

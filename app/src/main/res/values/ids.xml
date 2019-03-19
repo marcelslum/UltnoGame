@@ -40,21 +40,21 @@ Save this file as res/values/games-ids.xml in your project.
 
 
         <!-- achievement teste1 -->
-        <string name="achievement_teste1" translatable="false">CgkIjNyO58cTEAIQRQ</string>
+        <!--string name="achievement_teste1" translatable="false">CgkIjNyO58cTEAIQRQ</string-->
         <!-- achievement teste2 -->
-        <string name="achievement_teste2" translatable="false">CgkIjNyO58cTEAIQRg</string>
+        <!--string name="achievement_teste2" translatable="false">CgkIjNyO58cTEAIQRg</string-->
         <!-- achievement teste3 -->
-        <string name="achievement_teste3" translatable="false">CgkIjNyO58cTEAIQRw</string>
+        <!--string name="achievement_teste3" translatable="false">CgkIjNyO58cTEAIQRw</string-->
         <!-- achievement teste5 -->
-        <string name="achievement_teste5" translatable="false">CgkIjNyO58cTEAIQSA</string>
+        <!--string name="achievement_teste5" translatable="false">CgkIjNyO58cTEAIQSA</string-->
         <!-- achievement teste6 -->
-        <string name="achievement_teste6" translatable="false">CgkIjNyO58cTEAIQSQ</string>
+        <!--string name="achievement_teste6" translatable="false">CgkIjNyO58cTEAIQSQ</string-->
         <!-- achievement teste7 -->
-        <string name="achievement_teste7" translatable="false">CgkIjNyO58cTEAIQSg</string>
+        <!--string name="achievement_teste7" translatable="false">CgkIjNyO58cTEAIQSg</string-->
         <!-- achievement teste8 -->
-        <string name="achievement_teste8" translatable="false">CgkIjNyO58cTEAIQSw</string>
+        <!--string name="achievement_teste8" translatable="false">CgkIjNyO58cTEAIQSw</string-->
         <!-- achievement teste9 -->
-        <string name="achievement_teste9" translatable="false">CgkIjNyO58cTEAIQTA</string>
+        <!--string name="achievement_teste9" translatable="false">CgkIjNyO58cTEAIQTA</string-->
 
         <!-- leaderboard Geral -->
         <string name="leaderboard_0" translatable="false">CgkIjNyO58cTEAIQMA</string>

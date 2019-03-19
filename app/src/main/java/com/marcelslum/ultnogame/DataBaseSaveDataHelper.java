@@ -119,7 +119,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
    }
 
    public void logAllDatabase(){
-
+        /*
        openDataBase();
 
        Log.e(TAG, "Log Database=================================");
@@ -156,7 +156,8 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                }
 
        Log.e(TAG, "Log Database fim =================================");
-               close();
+       close();
+       */
 
    }
 

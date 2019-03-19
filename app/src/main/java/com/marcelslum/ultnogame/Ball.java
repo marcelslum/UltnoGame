@@ -1520,7 +1520,6 @@ public class Ball extends Circle{
             final_vy = possibleVelocityRotateY;
             if (notifyBehaviour) {
                 if (ballBehaviourData != null) {
-                    ballBehaviourData.notifyNotMinOrMaxAngleReached();
                     ballBehaviourData.setFinalAngle(testAngle);
                 }
             }

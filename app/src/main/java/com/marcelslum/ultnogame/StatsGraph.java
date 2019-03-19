@@ -113,9 +113,9 @@ public class StatsGraph extends Entity{
                     maiorValorDouble = maiorValorDouble;
                 }
             } else if (exibirValoresEmInteger){
-                valorASerConsiderado = Math.floor(valorASerConsiderado);
+                valorASerConsiderado = Math.round(valorASerConsiderado);
                 if (maiorValorDouble != 0) {
-                    maiorValorDouble = Math.floor(maiorValorDouble);
+                    maiorValorDouble = Math.round(maiorValorDouble);
                 }
             }
 
@@ -238,10 +238,10 @@ public class StatsGraph extends Entity{
             String textoAExibir = valoresDouble.get(i).toString();
 
             if (valoresEmTempo){
-                textoAExibir = Utils.getTimeTextFromSeconds((long)(Math.floor(valoresDouble.get(i))));
+                textoAExibir = Utils.getTimeTextFromSeconds((long)(Math.round(valoresDouble.get(i))));
                 //textoAExibir = Utils.getTimeTextFromMiliSeconds((long)(Math.floor(valoresDouble.get(i))));
             } else if (exibirValoresEmInteger){
-                textoAExibir = String.valueOf((int)(Math.floor(valoresDouble.get(i))));
+                textoAExibir = String.valueOf((int)(Math.round(valoresDouble.get(i))));
             }
 
 

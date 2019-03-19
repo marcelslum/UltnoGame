@@ -839,9 +839,9 @@ public class LevelGoals {
             return;
         }
 
-        //GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_acelerar),1);
+        GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_acelerar),1);
 
-        GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_teste8),1);
+        //GoogleAPI.increment(Game.getContext().getResources().getString(R.string.achievement_teste8),1);
         //GoogleAPI.unlockAchievement(Game.getContext().getResources().getString(R.string.achievement_teste5));
 
         if (Game.ballDataPanel != null){

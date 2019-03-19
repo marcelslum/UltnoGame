@@ -19,12 +19,12 @@
     <string name="nivel">Nível: </string>
     <string name="messageMaxScoreTotal">Pontuação total: </string>
     <string name="googleLogado">Bem vindo(a) </string>
-    <string name="googleNaoLogado">Não conectado ao Google Play Games.</string>
-    <string name="googleErroLogar">Você está desconectado do Google Play Games. Alguns recursos não funcionarão.</string>
+    <string name="googleNaoLogado">Não conectado ao Google Play Jogos.</string>
+    <string name="googleErroLogar">Você está desconectado do Google Play Jogos. Alguns recursos não funcionarão.</string>
     <string name="messageCurrentLevel">Nível</string>
     <string name="messageGameOver">GAME OVER</string>
     <string name="messageNaoConectado1">Este jogo é totalmente gratuito. Apoie o desenvolvedor conectando-se à internet para exibir propagandas.</string>
-    <string name="messageGoogle1">Este jogo utiliza serviços do Google Play Games para exibir rankings/conquistas e realizar o salvamento do progresso na nuvem.</string>
+    <string name="messageGoogle1">Este jogo utiliza serviços do Google Play Jogos para exibir rankings/conquistas e realizar o salvamento do progresso na nuvem.</string>
     <string name="messageGoogle1b">Deseja utilizar esse serviço?</string>
     <string name="messageGoogle2">(Você pode alterar essa opção a qualquer momento no menu opções do jogo)</string>
 
@@ -295,7 +295,7 @@
 
     <string name="conquistas">Conquistas</string>
     <string name="ligado">Ligado</string>
-    <string name="precisa_google">É necessário estar conectado ao Google Play Games para acessar esse recurso.</string>
+    <string name="precisa_google">É necessário estar conectado ao Google Play Jogos para acessar esse recurso.</string>
     <string name="desligado">Deslig.</string>
     <string name="v0">90%</string>
     <string name="v1">100%</string>
@@ -320,8 +320,8 @@
     <string name="retornarAoMenuPrincipal">Voltar</string>
     <string name="messageMenuTutorial">Tutoriais disponíveis:</string>
     <string name="message_sem_estrelas">Grupo bloqueado. Sem estrelas suficientes</string>
-    <string name="message_google_desconectado">Você está desconectado do Google Play Games neste jogo. Alguns recursos não estarão disponíveis.</string>
-    <string name="message_google_conectado">Conexão realizada com sucesso ao Google Play Games.</string>
+    <string name="message_google_desconectado">Você está desconectado do Google Play Jogos neste jogo. Alguns recursos não estarão disponíveis.</string>
+    <string name="message_google_conectado">Conexão realizada com sucesso ao Google Play Jogos.</string>
     <string name="tenha">Tenha</string>
     <string name="estrelas">estrelas</string>
     <string name="levelGoal0">Finalize o nível</string>
@@ -471,8 +471,8 @@
     <string name="voltar">VOLTAR</string>
     <string name="continuar">CONTINUAR</string>
     <string name="lerSobre">Sobre</string>
-    <string name="logarGoogle">Conectar-se ao Google</string>
-    <string name="deslogarGoogle">Desconectar-se do Google</string>
+    <string name="logarGoogle">Conectar-se ao Google Play Jogos</string>
+    <string name="deslogarGoogle">Desconectar-se do Google Play Jogos</string>
     <string name="messageMenuAbout">Sobre:</string>
 
 
@@ -533,6 +533,7 @@
     <string name="sobre32">Testadores/Apoiadores:</string>
     <string name="orientation">Girar tela</string>
     <string name="conquistaDesbloqueada">Conquista:</string>
+    <string name="exclamacao_tripla">!!!</string>
     <string name="nao_conectado_google">Não conectado ao Google. </string>
     <string name="menuVelocityContinuar">Continuar</string>
     <string name="menuVelocityAlterar">Alterar velocidade</string>
@@ -550,7 +551,7 @@
     <string name="okEntendi">Ok, entendi.</string>
     <string name="salvando_snapshot">Salvando jogo na nuvem!</string>
     <string name="salvarNuvemTitulo">Salvar jogo</string>
-    <string name="salvarNuvemMensagem">Nesta opção é possível salvar ou carregar um jogo salvo na nuvem.\n\nTenha em mente que seu progresso no jogo é automaticamente salvo localmente.\n\nO salvamento na nuvem, portanto, não é obrigatório, mas pode servir para manter um backup do seu progresso para ser utilizado posteriormente em caso de troca de aparelho, necessidade de reinstalação do jogo ou situação semelhante.\n\nLembre-se que o salvamento na nuvem é associado à conta do Google Play Games atualmente conectada.\n\n\n</string>
+    <string name="salvarNuvemMensagem">Nesta opção é possível salvar ou carregar um jogo salvo na nuvem.\n\nTenha em mente que seu progresso no jogo é automaticamente salvo localmente.\n\nO salvamento na nuvem, portanto, não é obrigatório, mas pode servir para manter um backup do seu progresso para ser utilizado posteriormente em caso de troca de aparelho, necessidade de reinstalação do jogo ou situação semelhante.\n\nLembre-se que o salvamento na nuvem é associado à conta do Google Play Jogos atualmente conectada.\n\n\n</string>
 
     <string name="linha">\n</string>
     <string name="carregarDaNuvem">Carregar jogo da nuvem</string>
@@ -764,6 +765,7 @@
     <string name="carregar">Carregar</string>
     <string name="mesclar">Mesclar</string>
     <string name="e">e</string>
+    <string name="posicao">pos.:</string>
 
 
 </resources>

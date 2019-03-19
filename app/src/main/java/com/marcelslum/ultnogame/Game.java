@@ -61,6 +61,8 @@ public class Game {
     public static long timeOfPrePlay = 0;
 
     public static ArrayList<String> messagesToDisplay = new ArrayList<>();
+    public static boolean forUpdateMessageScoreTotal = false;
+    public static String messageScoreTotal;
     static Vibrator vibrator;
 
     static final String TAG = "Game";

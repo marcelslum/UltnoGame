@@ -210,6 +210,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             Game.forBlueBallExplode = false;
             Game.myGlSurface.explodeBlueBall();
         }
+
+        if (Game.forUpdateMessageScoreTotal){
+            Game.forUpdateMessageScoreTotal = false;
+            Game.myGlSurface.setMessageScoreTotal(Game.messageScoreTotal);
+        }
         
         if (Game.backPressed){
             Game.myGlSurface.onBackPressed();
