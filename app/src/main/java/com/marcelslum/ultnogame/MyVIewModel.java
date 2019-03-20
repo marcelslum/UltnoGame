@@ -33,12 +33,12 @@ public class MyVIewModel extends ViewModel {
 
     public void loadPlayerData(final Context context){
 
-        Log.e(TAG, "LoadPlayerData");
+        //Log.e(TAG, "LoadPlayerData");
 
         onImageLoadedListener = new ImageManager.OnImageLoadedListener() {
             @Override
             public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {
-                Log.e(TAG, "onImageLoaded ");
+                //Log.e(TAG, "onImageLoaded ");
                 playerData.setValue(new PlayerData(GoogleAPI.playerName, GoogleAPI.playerId, drawable));
             }
         };
@@ -52,7 +52,7 @@ public class MyVIewModel extends ViewModel {
                         public void onComplete(@NonNull Task<Player> task) {
                             if (task.isSuccessful()) {
 
-                                Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
+                               // Log.e(TAG, "player name atualizado para " + task.getResult().getDisplayName());
 
                                 String oldPlayerName = GoogleAPI.playerName;
 
@@ -62,7 +62,7 @@ public class MyVIewModel extends ViewModel {
                                 String oldPlayerId = Storage.getString("playerId");
 
                                 if (oldPlayerId.contains("provisorio")) {
-                                    Log.e(TAG, "currentPlayerId.contains(provisorio)");
+                                   // Log.e(TAG, "currentPlayerId.contains(provisorio)");
                                     String oldName = Game.playerId;
                                     Game.playerId = GoogleAPI.playerId;
                                     Storage.setString("playerId", GoogleAPI.playerId);
@@ -91,7 +91,7 @@ public class MyVIewModel extends ViewModel {
                                 }
 
                                 Uri uri = task.getResult().getIconImageUri();
-                                Log.e(TAG, "uri " + uri.getPath());
+                                //Log.e(TAG, "uri " + uri.getPath());
                                 im.loadImage(onImageLoadedListener, uri);
                             } else {
                                 playerData.setValue(null);

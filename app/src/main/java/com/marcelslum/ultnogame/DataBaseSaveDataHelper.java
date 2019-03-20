@@ -766,7 +766,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
         }
 
         String query = "SELECT googleOption FROM data";
-        Cursor cursor = getWritable().rawQuery(query, null);
+        Cursor cursor = myDataBase.rawQuery(query, null);
         cursor.moveToFirst();
 
         values = new ContentValues();

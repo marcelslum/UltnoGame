@@ -539,10 +539,18 @@ public class GameStateHandler{
                            // Log.e(TAG, "atingiu score " + leaderboardScoreAnnotatedData.get().getDisplayRank());
 
                             Game.forUpdateMessageScoreTotal = true;
-                            Game.messageScoreTotal =
-                                    Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) +"\u0020\u0020"+
-                                            NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()) +
-                                            " - " + Game.getContext().getResources().getString(R.string.ranking) + ": " + leaderboardScoreAnnotatedData.get().getDisplayRank();
+
+                            if (leaderboardScoreAnnotatedData != null && leaderboardScoreAnnotatedData.get() != null) {
+                                Game.messageScoreTotal =
+                                        Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) + "\u0020\u0020" +
+                                                NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal()) +
+                                                " - " + Game.getContext().getResources().getString(R.string.ranking) + ": " + leaderboardScoreAnnotatedData.get().getDisplayRank();
+                            } else {
+
+                                Game.messageScoreTotal =
+                                        Game.getContext().getResources().getString(R.string.messageMaxScoreTotal) + "\u0020\u0020" +
+                                                NumberFormat.getInstance().format(ScoreHandler.getMaxScoreTotal());
+                            }
                         }
                 });
             } else {

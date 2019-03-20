@@ -787,7 +787,7 @@ public class MainActivity extends FragmentActivity implements
 
 
     public void signInSilently() {
-        Log.e(TAG, "signInSilently()");
+        //Log.e(TAG, "signInSilently()");
 
         GoogleAPI.mGoogleSignInClient.silentSignIn().addOnCompleteListener(this,
                 new OnCompleteListener<GoogleSignInAccount>() {

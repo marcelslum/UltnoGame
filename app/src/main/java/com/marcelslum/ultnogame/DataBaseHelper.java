@@ -17,7 +17,7 @@ import java.io.OutputStream;
 
 public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
-    private final static String TAG = "DataBaseLevelDataHelper";
+    private final static String TAG = "DataBaseHelper";
     protected String DB_PATH;
     protected String DB_NAME;
     protected SQLiteDatabase myDataBase;
@@ -42,7 +42,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
         boolean dbExist = checkDataBase();
 
-        Log.e(TAG, "dbExist" + dbExist);
+        //Log.e(TAG, "dbExist" + dbExist);
 
         SQLiteDatabase db_Read;
         if(dbExist){
