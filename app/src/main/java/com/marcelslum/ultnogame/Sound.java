@@ -71,7 +71,7 @@ public class Sound {
 
     public static void init(){
 
-        Log.e(TAG, "init sounds");
+        //Log.e(TAG, "init sounds");
 
         adCounter = new AudioData("counter_mono.wav", 0.4f,1);
         adExplosion = new AudioData("explosion_mono.wav", 0.4f,1);
@@ -343,7 +343,7 @@ public class Sound {
         }
 
         if (at.getState() == AudioTrack.STATE_UNINITIALIZED || at.getState() == AudioTrack.STATE_NO_STATIC_DATA){
-            Log.e(TAG, "Audio não inicializado.");
+            //Log.e(TAG, "Audio não inicializado.");
 
         } else {
             at.stop();
@@ -406,11 +406,11 @@ public class Sound {
                     //Log.e(TAG, "Tocando o som " + id + "volume " + left + " ; "+ right);
                         return soundPool.play(id, left * 1f, right * 1f, 0, loop, 1);
                 } else {
-                    Log.e(TAG, "Não tocando o som. SoundPool nulo.");
+                    //Log.e(TAG, "Não tocando o som. SoundPool nulo.");
                     return -1;
                 }
         } else {
-            Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
+            //Log.e(TAG, "Não tocando o som. SaveGame.saveGame.sound = false.");
             return -1;
         }
 
@@ -455,6 +455,10 @@ public class Sound {
         stopAndReleaseTrack(mAudioTrack15);
     }
 
+
+    public static int returningFromPause = 6;
+
+
     public static void checkLoopPlaying(){
 
         if (!SaveGame.saveGame.music){
@@ -462,6 +466,13 @@ public class Sound {
         }
 
         if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR){
+
+
+            if (returningFromPause <= 5){
+                //Log.e(TAG, "escapando da verificar do looping " + returningFromPause);
+                returningFromPause +=1;
+                return;
+            }
 
             boolean anyMediaPlaying = false;
 
@@ -496,7 +507,7 @@ public class Sound {
             }
 
             if (!anyMediaPlaying){
-                Log.e(TAG, "check loop playing: media not playing - criando novo");
+                //Log.e(TAG, "check loop playing: media not playing - criando novo");
                 stopAndReleaseMusic();
                 mediaPlayer[currentMediaNumber] = null;
                 Game.sound.playMusic();
@@ -574,8 +585,12 @@ public class Sound {
 
 
         if (mediaPlayer[currentMediaNumber] != null) {
+
+            //Log.e(TAG, "currentMedia nol null");
             mediaPlayer[currentMediaNumber].start();
+
         } else {
+
             currentMediaNumber = 0;
             mediaPlayer[currentMediaNumber] = new MediaPlayer();
             AssetFileDescriptor afd;
@@ -603,6 +618,13 @@ public class Sound {
 
     public static int getNextMediaPlayer(){
         return currentMediaNumber != 5 ? currentMediaNumber + 1 : 0;
+    }
+
+    public static int getNextNextMediaPlayer(){
+
+        if (currentMediaNumber == 5) return 1;
+        if (currentMediaNumber == 4) return 0;
+        return currentMediaNumber + 2;
     }
 
     public static int getLastMediaPlayerForRelease(){
@@ -694,21 +716,7 @@ public class Sound {
 
     public void createNextMediaPlayer(){
 
-        //Log.e(TAG, "createNextMediaPlayer");
-
-        /*
-
-        if (AsyncTasks.asyncCreateNextMediaPlayer != null && AsyncTasks.asyncPlayExplosion.getStatus() != AsyncTask.Status.FINISHED){
-            AsyncTasks.asyncCreateNextMediaPlayer.cancel(true);
-        }
-
-        AsyncTasks.asyncCreateNextMediaPlayer = null;
-        AsyncTasks.asyncCreateNextMediaPlayer = new CreateNextMediaPlayer().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-
-        */
-
-        Log.e(TAG, "criando proximo media player: " + getNextMediaPlayer());
+        //Log.e(TAG, "criando proximo media player: " + getNextMediaPlayer());
 
         if (mediaPlayer[getLastMediaPlayerForRelease()] != null){
             //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayerForRelease());
@@ -718,37 +726,81 @@ public class Sound {
         }
 
         if (mediaPlayer[getNextMediaPlayer()] == null) {
+
+            //Log.e(TAG, "next = null criando");
+
             mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
-        }
-        AssetFileDescriptor afd;
-        try {
-            afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
-            mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-            mediaPlayer[getNextMediaPlayer()].prepareAsync();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                //Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
-                if (mediaPlayer[currentMediaNumber] != null && mediaPlayer[currentMediaNumber].isPlaying()) {
-                    mediaPlayer[getNextMediaPlayer()].setVolume(musicVolume, musicVolume);
-                    mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+            AssetFileDescriptor afd;
+            try {
+                afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                mediaPlayer[getNextMediaPlayer()].prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    //Log.e(TAG, "setando proximo next : " + getNextMediaPlayer());
+                    if (mediaPlayer[currentMediaNumber] != null && mediaPlayer[currentMediaNumber].isPlaying()) {
+                        mediaPlayer[getNextMediaPlayer()].setVolume(musicVolume, musicVolume);
+                        mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+                    }
                 }
-            }
-        });
+            });
 
-        mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                //Log.e(TAG, "media completado ");
-                currentMediaNumber = getNextMediaPlayer();
-                createNextMediaPlayer();
+            mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    //Log.e(TAG, "media completado ");
+                    currentMediaNumber = getNextMediaPlayer();
+                }
+            });
 
+        }
+
+
+        if (mediaPlayer[getNextNextMediaPlayer()] == null) {
+
+            //Log.e(TAG, "nextnext = null criando");
+
+            mediaPlayer[getNextNextMediaPlayer()] = new MediaPlayer();
+
+            AssetFileDescriptor afd;
+            try {
+                afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                mediaPlayer[getNextNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                mediaPlayer[getNextNextMediaPlayer()].prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
+
+            mediaPlayer[getNextNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    //Log.e(TAG, "setando proximo (next next : " + getNextNextMediaPlayer());
+                    if (mediaPlayer[getNextMediaPlayer()] != null) {
+                        mediaPlayer[getNextNextMediaPlayer()].setVolume(musicVolume, musicVolume);
+                        mediaPlayer[getNextMediaPlayer()].setNextMediaPlayer(mediaPlayer[getNextNextMediaPlayer()]);
+                    }
+                }
+            });
+
+            mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    //Log.e(TAG, "next next completado ");
+                    currentMediaNumber = getNextMediaPlayer();
+                    createNextMediaPlayer();
+
+                }
+            });
+
+        }
+
+
     }
 
     public static int musicCurrentPart;
@@ -791,7 +843,7 @@ public class Sound {
             musicNumber = 1;
         }
 
-        Log.e(TAG, "---- ANTES " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode + "; musica " + musicNumber);
+        //Log.e(TAG, "---- ANTES " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode + "; musica " + musicNumber);
 
         String nomeDoArquivo = "00-Intro.ogg";
 
@@ -807,7 +859,7 @@ public class Sound {
 
         // se estiver na introdução, parteA, B ou C, deverá decidir qual será a próxima parte global
         if (musicCurrentPart == MUSIC_INTRO || musicCurrentPart == MUSIC_PART_A || musicCurrentPart == MUSIC_PART_B || musicCurrentPart == MUSIC_PART_C) {
-            Log.e(TAG, "// se estiver na introdução, parteA, B ou C, deverá decidir qual será a próxima parte global");
+            //Log.e(TAG, "// se estiver na introdução, parteA, B ou C, deverá decidir qual será a próxima parte global");
 
             float percentageOfTargets = 1f;
             if (Game.numberOfTargets > 0) {
@@ -835,7 +887,7 @@ public class Sound {
                 }
             }
 
-            Log.e(TAG, "nextGlobalPart " + nextGlobalPart);
+            //Log.e(TAG, "nextGlobalPart " + nextGlobalPart);
 
 
             // CALCULA A PROXIMA SUBPARTE, RANDOMICAMENTE
@@ -898,7 +950,7 @@ public class Sound {
 
             }
 
-            Log.e(TAG, "nextSubPart " + nextSubPart);
+           // Log.e(TAG, "nextSubPart " + nextSubPart);
 
 
             // DEFINE A VARIAVEL GLOBAL PART
@@ -918,7 +970,7 @@ public class Sound {
                 } else if (nextGlobalPart == MUSIC_GLOBAL_PART_B){
                     musicCurrentPart = MUSIC_PART_A_TO_PART_B;
                     if (nextSubPart == MUSIC_SUB_PART_B_A2 || nextSubPart == MUSIC_SUB_PART_B_A3){
-                        Log.e(TAG, "ajeitando sub parte na transição para variacao A1");
+                        //Log.e(TAG, "ajeitando sub parte na transição para variacao A1");
                         nextSubPart = MUSIC_SUB_PART_B_A1;
                     }
                 }
@@ -929,7 +981,7 @@ public class Sound {
                     musicCurrentPart = MUSIC_PART_B_TO_PART_C;
 
                     if (nextSubPart == MUSIC_SUB_PART_C_A2 || nextSubPart == MUSIC_SUB_PART_C_A3){
-                        Log.e(TAG, "ajeitando sub parte na transição para variacao A1");
+                       // Log.e(TAG, "ajeitando sub parte na transição para variacao A1");
                         nextSubPart = MUSIC_SUB_PART_C_A1;
                     }
 
@@ -938,7 +990,7 @@ public class Sound {
                     musicCurrentPart = MUSIC_PART_C_TO_PART_C;
             }
 
-            Log.e(TAG, "musicCurrentPart " + musicCurrentPart);
+            //Log.e(TAG, "musicCurrentPart " + musicCurrentPart);
 
             // DEFINE O ARQUIVO DE ACORDO COM A SITUAÇÃO DEFINIDA ACIMA
             // DEFINE TAMBÉM A SUBPARTE
@@ -990,7 +1042,7 @@ public class Sound {
 
                 float melodyVariation = 0.3f - (0.3f * ((float)levelNumber / 100f));
 
-                Log.e(TAG, "melodyVariation " + melodyVariation);
+                //Log.e(TAG, "melodyVariation " + melodyVariation);
 
                 if (Utils.getRandonFloat(0f, 1f) < (0.6f + melodyVariation)){
                     musicMelodyMode = false;
@@ -1022,7 +1074,7 @@ public class Sound {
 
                 if (!musicMelodyMode) {
                     float melodyVariation = 0.3f - (0.3f * ((float) levelNumber / 100f));
-                    Log.e(TAG, "melodyVariation " + melodyVariation);
+                    //Log.e(TAG, "melodyVariation " + melodyVariation);
 
                     if (Utils.getRandonFloat(0f, 1f) < 0.6f) {
                         musicMelodyMode = false;
@@ -1110,7 +1162,7 @@ public class Sound {
 
                 if (!musicMelodyMode) {
                     float melodyVariation = 0.3f - (0.3f * ((float) levelNumber / 100f));
-                    Log.e(TAG, "melodyVariation " + melodyVariation);
+                    //Log.e(TAG, "melodyVariation " + melodyVariation);
 
                     if (Utils.getRandonFloat(0f, 1f) < 0.55f) {
                         musicMelodyMode = false;
@@ -1149,7 +1201,7 @@ public class Sound {
                 // SE FOR ENTRAR TRANSIÇÃO PARA PARTE B OU C, DECIDE SE VAI ENTRAR A VARIAÇÃO MELODY
                 if (!musicMelodyMode) {
                     float melodyVariation = 0.3f - (0.3f * ((float) levelNumber / 100f));
-                    Log.e(TAG, "melodyVariation " + melodyVariation);
+                    //Log.e(TAG, "melodyVariation " + melodyVariation);
 
                     if (Utils.getRandonFloat(0f, 1f) < 0.4f) {
                         musicMelodyMode = false;
@@ -1246,7 +1298,7 @@ public class Sound {
 
         } else {
 
-            Log.e(TAG, "// SE ESTIVER NUMA TRANSIÇÃO, PULA PARA A PROXIMA PARTE");
+            //Log.e(TAG, "// SE ESTIVER NUMA TRANSIÇÃO, PULA PARA A PROXIMA PARTE");
 
         // SE ESTIVER NUMA TRANSIÇÃO, PULA PARA A PROXIMA PARTE
 
@@ -1344,8 +1396,8 @@ public class Sound {
             }
         }
 
-        Log.e(TAG, "---- DEPOIS " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode);
-        Log.e(TAG, "nomeDoPróximoArquivo " + nomeDoArquivo);
+        //Log.e(TAG, "---- DEPOIS " + "GlobalPart " + musicCurrentGlobalPart + "; SubPart " + musicCurrentSubPart + "; Part " + musicCurrentPart + "; melody " + musicMelodyMode);
+        //Log.e(TAG, "nomeDoPróximoArquivo " + nomeDoArquivo);
 
         return nomeDoArquivo;
 
@@ -1378,208 +1430,6 @@ public class Sound {
             }
         }
     }
-
-
-
-    public static void loadMusic(){
-
-        currentMediaNumber = 0;
-        mediaPlayer[currentMediaNumber] = new MediaPlayer();
-        AssetFileDescriptor afd;
-        try {
-            afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
-            mediaPlayer[currentMediaNumber].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-            mediaPlayer[currentMediaNumber].prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                //Log.e(TAG + "loadMusic", "onPrepared ");
-                mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
-                AssetFileDescriptor afd;
-                try {
-                    afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
-                    mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-                    mediaPlayer[getNextMediaPlayer()].prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        //Log.e(TAG + "loadMusic", "setOnCompletionListener ");
-                        currentMediaNumber = getNextMediaPlayer();
-                        Game.sound.createNextMediaPlayer();
-
-                    }
-                });
-
-                mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        //Log.e(TAG + "loadMusic", "getNextMediaPlayer onPrepared");
-                        mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
-                    }
-                });
-            }
-        });
-
-
-
-        /*
-
-        if (loop != null){
-            loop.stopAndRelease();
-        }
-
-        int loopChoose = (SaveGame.saveGame.currentLevelNumber-1) % 3;
-        switch (loopChoose){
-            case 0:
-                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
-                break;
-            case 1:
-                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m2_hypnotic_puzzle3, R.raw.m4_hypnotic_puzzle, 0.8f);
-                break;
-            case 2:
-                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m10_mellow_puzzler, 0.8f);
-                break;
-            default:
-                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
-                break;
-        }
-
-        */
-    }
-
-    /*
-
-
-    private class PlayMusic extends AsyncTask<Void, Integer, Integer> {
-
-        AssetFileDescriptor afd;
-
-        protected Integer doInBackground(Void... data) {
-
-            if (!SaveGame.saveGame.music) {
-                return 0;
-            }
-
-            if (mediaPlayer[currentMediaNumber] != null) {
-                mediaPlayer[currentMediaNumber].start();
-            } else {
-                currentMediaNumber = 0;
-                mediaPlayer[currentMediaNumber] = new MediaPlayer();
-                try {
-                    afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
-                    mediaPlayer[currentMediaNumber].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                    mediaPlayer[currentMediaNumber].prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        //Log.e(TAG, "onPrepared ");
-                        mp.start();
-                        createNextMediaPlayer();
-                    }
-                });
-
-            }
-            return 0;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-        }
-
-        protected void onPostExecute(Integer result) {
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-            try {
-                if (afd != null) {
-                    afd.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            stopAndReleaseMusic();
-        }
-    }
-
-    private class CreateNextMediaPlayer extends AsyncTask<Void, Integer, Integer> {
-
-        AssetFileDescriptor afd;
-
-        protected Integer doInBackground(Void... data) {
-
-            if (mediaPlayer[getLastMediaPlayerForRelease()] != null){
-                //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayerForRelease());
-                mediaPlayer[getLastMediaPlayerForRelease()].reset();
-                mediaPlayer[getLastMediaPlayerForRelease()].release();
-                mediaPlayer[getLastMediaPlayerForRelease()] = null;
-            }
-
-            mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
-            try {
-                afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
-                mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-                mediaPlayer[getNextMediaPlayer()].prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    //Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
-                    if (mediaPlayer[currentMediaNumber] != null && mediaPlayer[currentMediaNumber].isPlaying()) {
-                        mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
-                    }
-                }
-            });
-
-            mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    //Log.e(TAG, "media completado ");
-                    currentMediaNumber = getNextMediaPlayer();
-                    createNextMediaPlayer();
-
-                }
-            });
-            return 0;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-        }
-
-        protected void onPostExecute(Integer result) {
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-            try {
-                if (afd != null) {
-                    afd.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            stopAndReleaseMusic();
-        }
-    }
-
-    */
 
     private class PlayAudio extends AsyncTask<AudioData, Integer, Integer> {
         byte[] musicPart = new byte[1024];
@@ -1944,5 +1794,204 @@ public class Sound {
             }
         }
     }
+
+    public static void loadMusic(){
+
+        currentMediaNumber = 0;
+        mediaPlayer[currentMediaNumber] = new MediaPlayer();
+        AssetFileDescriptor afd;
+        try {
+            afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+            mediaPlayer[currentMediaNumber].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+            mediaPlayer[currentMediaNumber].prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                //Log.e(TAG + "loadMusic", "onPrepared ");
+                mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
+                AssetFileDescriptor afd;
+                try {
+                    afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                    mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                    mediaPlayer[getNextMediaPlayer()].prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        //Log.e(TAG + "loadMusic", "setOnCompletionListener ");
+                        currentMediaNumber = getNextMediaPlayer();
+                        Game.sound.createNextMediaPlayer();
+
+                    }
+                });
+
+                mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        //Log.e(TAG + "loadMusic", "getNextMediaPlayer onPrepared");
+                        mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+                    }
+                });
+            }
+        });
+
+
+
+        /*
+
+        if (loop != null){
+            loop.stopAndRelease();
+        }
+
+        int loopChoose = (SaveGame.saveGame.currentLevelNumber-1) % 3;
+        switch (loopChoose){
+            case 0:
+                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
+                break;
+            case 1:
+                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m2_hypnotic_puzzle3, R.raw.m4_hypnotic_puzzle, 0.8f);
+                break;
+            case 2:
+                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m10_mellow_puzzler, 0.8f);
+                break;
+            default:
+                Sound.loop = LoopMediaPlayer.create(Game.mainActivity, R.raw.m1_hypnotic_puzzle2, R.raw.m3_hypnotic_puzzle4, 0.8f);
+                break;
+        }
+
+        */
+    }
+
+    /*
+
+    private class PlayMusic extends AsyncTask<Void, Integer, Integer> {
+
+        AssetFileDescriptor afd;
+
+        protected Integer doInBackground(Void... data) {
+
+            if (!SaveGame.saveGame.music) {
+                return 0;
+            }
+
+            if (mediaPlayer[currentMediaNumber] != null) {
+                mediaPlayer[currentMediaNumber].start();
+            } else {
+                currentMediaNumber = 0;
+                mediaPlayer[currentMediaNumber] = new MediaPlayer();
+                try {
+                    afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                    mediaPlayer[currentMediaNumber].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    mediaPlayer[currentMediaNumber].prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                mediaPlayer[currentMediaNumber].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        //Log.e(TAG, "onPrepared ");
+                        mp.start();
+                        createNextMediaPlayer();
+                    }
+                });
+
+            }
+            return 0;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(Integer result) {
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            try {
+                if (afd != null) {
+                    afd.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stopAndReleaseMusic();
+        }
+    }
+
+    private class CreateNextMediaPlayer extends AsyncTask<Void, Integer, Integer> {
+
+        AssetFileDescriptor afd;
+
+        protected Integer doInBackground(Void... data) {
+
+            if (mediaPlayer[getLastMediaPlayerForRelease()] != null){
+                //Log.e(TAG, "apagando media player anterior : " + getLastMediaPlayerForRelease());
+                mediaPlayer[getLastMediaPlayerForRelease()].reset();
+                mediaPlayer[getLastMediaPlayerForRelease()].release();
+                mediaPlayer[getLastMediaPlayerForRelease()] = null;
+            }
+
+            mediaPlayer[getNextMediaPlayer()] = new MediaPlayer();
+            try {
+                afd = Game.mainActivity.getAssets().openFd(getNextMusicFileName());
+                mediaPlayer[getNextMediaPlayer()].setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                mediaPlayer[getNextMediaPlayer()].prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            mediaPlayer[getNextMediaPlayer()].setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    //Log.e(TAG, "setando proximo : " + getNextMediaPlayer());
+                    if (mediaPlayer[currentMediaNumber] != null && mediaPlayer[currentMediaNumber].isPlaying()) {
+                        mediaPlayer[currentMediaNumber].setNextMediaPlayer(mediaPlayer[getNextMediaPlayer()]);
+                    }
+                }
+            });
+
+            mediaPlayer[currentMediaNumber].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    //Log.e(TAG, "media completado ");
+                    currentMediaNumber = getNextMediaPlayer();
+                    createNextMediaPlayer();
+
+                }
+            });
+            return 0;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(Integer result) {
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            try {
+                if (afd != null) {
+                    afd.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stopAndReleaseMusic();
+        }
+    }
+
+    */
 
 }

@@ -223,7 +223,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         
         
         if (Game.forUpdatePlayerData){
-            Log.e(TAG, "forUpdatePlayerData");
+            ///Log.e(TAG, "forUpdatePlayerData");
             Game.myGlSurface.forUpdatePlayerData();
             Game.forUpdatePlayerData = false;
         }
@@ -264,7 +264,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
                     if (!Training.training) {
                         if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
-                            if (Utils.getTimeMilliPrecision() - lastInternetCheck > 1000) {
+                            if (Utils.getTimeMilliPrecision() - lastInternetCheck > 300) {
                                 if (TimeHandler.timeOfLevelPlay > 3000) {
                                     Sound.checkLoopPlaying();
                                 }
@@ -272,7 +272,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                             }
                         } else {
                             if (Utils.getTimeMilliPrecision() - lastInternetCheck > 300) {
-                                Sound.checkLoopPlaying();
                                 lastInternetCheck = Utils.getTimeMilliPrecision();
                                 Sound.setMusicVolume(Sound.getMusicVolume() - 0.025f);
                             }
@@ -312,8 +311,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                     for (int i = 0; i < frameDurations.size(); i++) {
                         soma += frameDurations.get(i);
                     }
-                    Log.e("MyGLRenderer"," frame duration: "+(soma / frameDurations.size()));
-                    Log.e("MyGLRenderer"," longestFrame: "+longestFrame);
+                    //Log.e("MyGLRenderer"," frame duration: "+(soma / frameDurations.size()));
+                    //Log.e("MyGLRenderer"," longestFrame: "+longestFrame);
                     frameDurations.clear();
                     longestFrame = 0;
                 }

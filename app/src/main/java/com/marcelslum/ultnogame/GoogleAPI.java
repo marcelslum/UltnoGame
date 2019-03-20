@@ -74,7 +74,7 @@ public class GoogleAPI {
     }
 
     public static void configureGoogleInfo(MyVIewModel.PlayerData playerData) {
-        Log.e(TAG, "configureGoogleInfo2");
+        //Log.e(TAG, "configureGoogleInfo2");
         Game.forUpdatePlayerData = true;
     }
 
@@ -203,7 +203,7 @@ public class GoogleAPI {
                 for (int i = 0; i < ab.getCount(); i++) {
                     if (ab.get(i).getType() == Achievement.TYPE_INCREMENTAL) {
 
-                        Log.e(TAG, "carregando achievement " + ab.get(i).getName() + " current steps: " + ab.get(i).getCurrentSteps() + " total steps: " + ab.get(i).getTotalSteps() + " ");
+                       // Log.e(TAG, "carregando achievement " + ab.get(i).getName() + " current steps: " + ab.get(i).getCurrentSteps() + " total steps: " + ab.get(i).getTotalSteps() + " ");
 
                         achievementsData.add(new AchievementData(ab.get(i).getName(), ab.get(i).getAchievementId(), ab.get(i).getCurrentSteps(), ab.get(i).getTotalSteps(), AchievementData.TYPE_INCREMENTAL));
                     } else {
@@ -235,7 +235,7 @@ public class GoogleAPI {
                     mAchievementsClient.increment(innerId, innerValue);
                     if (ad.currentSteps >= ad.totalSteps) {
                         Game.messagesToDisplay.add(Game.getContext().getResources().getString(R.string.conquistaDesbloqueada) + " " + ad.name+Game.getContext().getResources().getString(R.string.exclamacao_tripla));
-                        Log.e(TAG, "conquistado achievement " + innerId);
+                       // Log.e(TAG, "conquistado achievement " + innerId);
                     }
                     break;
                 }
@@ -245,14 +245,14 @@ public class GoogleAPI {
 
     public static void submitScore(final String id, long value){
 
-        Log.e(TAG, "submitScore " + id + " pontuação " + value);
+       // Log.e(TAG, "submitScore " + id + " pontuação " + value);
 
         if (Game.mainActivity.isSignedIn() && mLeaderboardsClient != null) {
-           Log.e(TAG, "Game.mainActivity.isSignedIn() && mLeaderboardsClient != null submitScore "+value);
+           //Log.e(TAG, "Game.mainActivity.isSignedIn() && mLeaderboardsClient != null submitScore "+value);
            mLeaderboardsClient.submitScoreImmediate(id, value).addOnSuccessListener(new OnSuccessListener<ScoreSubmissionData>() {
                @Override
                public void onSuccess(ScoreSubmissionData scoreSubmissionData) {
-                   Log.e(TAG, "Score carregado");
+                   //Log.e(TAG, "Score carregado");
                }
            });
 

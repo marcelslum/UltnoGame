@@ -50,20 +50,20 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
            int currentDBVersion = getVersionId();
 
-           Log.e(TAG, DB_NAME + " -- banco de dados já existe");
-           Log.e(TAG, DB_NAME + " -- currentDBVersion "+currentDBVersion);
-           Log.e(TAG, DB_NAME + " -- version "+version);
-           Log.e(TAG, DB_NAME + " -- comparação "+((this.version > currentDBVersion)));
+           //Log.e(TAG, DB_NAME + " -- banco de dados já existe");
+           //Log.e(TAG, DB_NAME + " -- currentDBVersion "+currentDBVersion);
+           //Log.e(TAG, DB_NAME + " -- version "+version);
+           //Log.e(TAG, DB_NAME + " -- comparação "+((this.version > currentDBVersion)));
               if (this.version > currentDBVersion) {
                   close();
-                  Log.e(TAG, DB_NAME + " Database version is higher than old.");
+                  //Log.e(TAG, DB_NAME + " Database version is higher than old.");
                   upgradeVersion();
               }
         }else{
             db_Read = getReadableDatabase();
             db_Read.close();
             try {
-                Log.e(TAG, DB_NAME + " database não existe ainda - copiando database");
+                //Log.e(TAG, DB_NAME + " database não existe ainda - copiando database");
                 copyDataBase();
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
@@ -88,7 +88,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
             //Log.e(TAG, DB_NAME + " verificando se existe o banco de dados na pasta ");
             checkDB = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
         }catch(SQLiteException e){
-            Log.e(TAG, DB_NAME + " banco de dados não existe ainda ");
+            //Log.e(TAG, DB_NAME + " banco de dados não existe ainda ");
         }
         if(checkDB != null){
             //Log.e(TAG, DB_NAME + " banco de dados já existe ");

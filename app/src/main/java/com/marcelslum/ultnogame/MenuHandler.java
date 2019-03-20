@@ -371,7 +371,7 @@ public class MenuHandler {
         menuConnect.addMenuOption("conectar", Game.getContext().getResources().getString(R.string.menuConectar), new MenuOption.OnChoice() {
             @Override
             public void onChoice() {
-                Log.e(TAG, "setGameState(Game.GAME_STATE_INTRO)3");
+                //Log.e(TAG, "setGameState(Game.GAME_STATE_INTRO)3");
                 GameStateHandler.setGameState(GameStateHandler.GAME_STATE_INTRO);
             }
         });
@@ -749,7 +749,7 @@ public class MenuHandler {
 
             //Log.e(TAG, "ld.number "+ ld.number);
             if (ld.textureData == null){
-                Log.e(TAG, "ld.textureData nulo");
+                //Log.e(TAG, "ld.textureData nulo");
             }
             levelMenu.addOption(i, i, ld.textureUnit, ld.textureData, new Animation.AnimationListener() {
                 @Override

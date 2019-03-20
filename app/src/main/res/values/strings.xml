@@ -7,8 +7,8 @@
     <string name="app_name">Ultno</string>
     <string name="menuTutorialExibirTutorial">Exibir o tutorial</string>
     <string name="menuTutorialPularTutorial">Pular o tutorial</string>
-    <string name="menuGoogleSim">Sim</string>
-    <string name="menuGoogleNao">Não</string>
+    <string name="menuGoogleSim">Yes</string>
+    <string name="menuGoogleNao">No</string>
     <string name="menuGoogleMaisTarde">Lembrar-me depois</string>
     <string name="menuGoogleSim2">Sim, tentar novamente</string>
     <string name="menuGoogleNao2">Não se conectar mais ao Google</string>
@@ -277,7 +277,7 @@
     <string name="t19t2">Essa grade se mexerá a uma velocidade constante durante o nível.</string>
     <string name="t19t3">A grade não influenciará o jogo, ou seja, não tera nenhum efeito na bola, na barra ou nos alvos.</string>
     
-    <string name="options">Opções</string>
+    <string name="options">Options</string>
     <string name="dificuldade">Dificuldade</string>
     <string name="musica">Música</string>
     <string name="velocidade">Velocidade da bola</string>
@@ -491,7 +491,7 @@
     <string name="sobre2">Criação e desenvolvimento:</string>
     <string name="sobre2b">.</string>
     <string name="sobre3">Marcel Sluminsky</string>
-    <string name="sobre3b">Copyright © 2017</string>
+    <string name="sobre3b">Copyright © 2019</string>
     <string name="sobre4">.</string>
     <string name="sobre4b">.</string>
     <string name="sobre5">Música:</string>

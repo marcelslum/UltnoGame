@@ -31,7 +31,7 @@ public class Messages extends Entity {
 
     private Text getUnusedText(){
         for (int i = 0; i < texts.length; i++) {
-            Log.e(TAG, "text " + i + " isVisible " + texts[i].isVisible);
+            //Log.e(TAG, "text " + i + " isVisible " + texts[i].isVisible);
             if (!texts[i].isVisible){
                 return texts[i];
             }

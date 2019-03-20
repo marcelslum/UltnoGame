@@ -240,7 +240,7 @@ public class Game {
 
     public static void init(){
 
-        Log.e(TAG, "init");
+        //Log.e(TAG, "init");
 
         entidadesFixas = new Entity[NUMBERO_DE_ENTIDADES_FIXAS];
 
@@ -268,7 +268,7 @@ public class Game {
         frame.alpha = 0f;
         TextureData.getTextureData();
 
-        Log.e(TAG, "setGameState(Game.GAME_STATE_INTRO)1");
+        //Log.e(TAG, "setGameState(Game.GAME_STATE_INTRO)1");
         GameStateHandler.setGameState(GameStateHandler.GAME_STATE_INTRO);
 
     }
@@ -682,7 +682,7 @@ public class Game {
 
     public static void reduceAllGameEntitiesAlpha(int duration){
 
-        Log.e(TAG, "reduceAllGameEntitiesAlpha");
+        //Log.e(TAG, "reduceAllGameEntitiesAlpha");
 
         for (Entity e : collectAllGameEntities()){
             e.reduceAlpha(duration, 0.2f);
@@ -1104,7 +1104,7 @@ public class Game {
                     for (int i = 0; i < timesOfCollisionCheck.length; i++) {
                         soma += timesOfCollisionCheck[i];
                     }
-                    Log.e(TAG, "checkCollisionTime " + (soma / (long)50));
+                    //Log.e(TAG, "checkCollisionTime " + (soma / (long)50));
                     lastCollisiontDebugCheck = 0;
                 } else {
                     lastCollisiontDebugCheck += 1;

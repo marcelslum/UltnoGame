@@ -177,7 +177,7 @@ public class Stats {
             return;
         }
 
-        Log.e(TAG, "coletando dados da bola");
+       // Log.e(TAG, "coletando dados da bola");
 
         if (ball.initTempoVelocidadeMediaAlta != -1) {
             ball.tempoVelocidadeMediaAlta += (TimeHandler.timeOfLevelPlay - ball.initTempoVelocidadeMediaAlta);
@@ -204,7 +204,7 @@ public class Stats {
         }
 
         if (ball.initTempoAnguloMedioBaixo != -1) {
-            Log.e(TAG, "tempoAnguloMedioBaixo adicionando " + (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedioBaixo));
+            //Log.e(TAG, "tempoAnguloMedioBaixo adicionando " + (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedioBaixo));
             ball.tempoAnguloMedioBaixo += (TimeHandler.timeOfLevelPlay - ball.initTempoAnguloMedioBaixo);
 
         }
@@ -391,9 +391,9 @@ public class Stats {
             StatsGraph statsGraph = new StatsGraph("statGraph", graficoX, graficoY, graficoComprimento, graficoAltura);
 
 
-            Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[40]/SaveGame.saveGame.stats[43]));
-            Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]));
-            Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[40] + (double)SaveGame.saveGame.stats[41])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
+           // Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[40]/SaveGame.saveGame.stats[43]));
+           // Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]));
+           // Log.e(TAG, "" + ((double)SaveGame.saveGame.stats[40] + (double)SaveGame.saveGame.stats[41])/(SaveGame.saveGame.stats[43]+SaveGame.saveGame.stats[44]));
 
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_vitorias), (double)SaveGame.saveGame.stats[40]/SaveGame.saveGame.stats[43]);
             statsGraph.addData(Game.mainActivity.getResources().getString(R.string.em_derrotas), (double)SaveGame.saveGame.stats[41]/SaveGame.saveGame.stats[44]);

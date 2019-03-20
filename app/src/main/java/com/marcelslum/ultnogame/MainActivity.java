@@ -162,8 +162,11 @@ public class MainActivity extends FragmentActivity implements
 
     void loadFromSnapshot(final SnapshotMetadata snapshotMetadata) {
         if (mLoadingDialog == null) {
-            mLoadingDialog = new ProgressDialog(this);
-            mLoadingDialog.setMessage(getResources().getString(R.string.aguarde));
+            mLoadingDialog = Utils.createProgressDialog(this);
+
+
+
+
         }
 
         mLoadingDialog.show();
@@ -337,8 +340,8 @@ public class MainActivity extends FragmentActivity implements
     void saveSnapshot(final SnapshotMetadata snapshotMetadata) {
 
         if (mLoadingDialog == null) {
-            mLoadingDialog = new ProgressDialog(this);
-            mLoadingDialog.setMessage(getResources().getString(R.string.salvando_snapshot));
+            mLoadingDialog = Utils.createProgressDialog(this);
+
         }
 
         mLoadingDialog.show();
@@ -362,10 +365,10 @@ public class MainActivity extends FragmentActivity implements
                                     public void onComplete(@NonNull Task<SnapshotMetadata> task) {
                                         if (task.isSuccessful()) {
                                             Game.myGlSurface.showBottomMessage(Game.getContext().getResources().getString(R.string.jogo_salvo), 4000);
-                                            Log.e(TAG, "Snapshot saved!");
+                                            //Log.e(TAG, "Snapshot saved!");
                                         } else {
                                             Game.myGlSurface.showBottomMessage(Game.getContext().getResources().getString(R.string.erro_ao_salvar), 4000);
-                                            Log.e(TAG, "Houve um erro");
+                                            //Log.e(TAG, "Houve um erro");
                                         }
 
                                         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
@@ -395,7 +398,7 @@ public class MainActivity extends FragmentActivity implements
             }
         }
 
-        Log.e(TAG, "lastLevelUnlockeced " + lastLevelUnlockeced);
+       // Log.e(TAG, "lastLevelUnlockeced " + lastLevelUnlockeced);
 
 
         LevelsGroupData gd = LevelsGroupData.levelsGroupData.get(0);
@@ -405,20 +408,20 @@ public class MainActivity extends FragmentActivity implements
             }
         }
 
-        Log.e(TAG, "gd " + gd.number);
+        //Log.e(TAG, "gd " + gd.number);
 
         int levelNumber = (SaveGame.saveGame.lastLevelPlayed >= 1 && SaveGame.saveGame.lastLevelPlayed <= 100) ? SaveGame.saveGame.lastLevelPlayed : 1;
 
         TextureData td = TextureData.getTextureDataById(LevelDataLoader.getTextureData(levelNumber));
 
-        Log.e(TAG, "x "+gd.textureData.x);
-        Log.e(TAG, "y "+gd.textureData.y);
-        Log.e(TAG, "w "+gd.textureData.w);
-        Log.e(TAG, "h "+gd.textureData.h);
-        Log.e(TAG, "x "+(int) (gd.textureData.x * 2048f));
-        Log.e(TAG, "y "+(int) (gd.textureData.y * 2048f));
-        Log.e(TAG, "w "+(int) ((gd.textureData.x + gd.textureData.w) * 2048f));
-        Log.e(TAG, "h "+(int)  ((gd.textureData.h + gd.textureData.y) * 2048f));
+        //Log.e(TAG, "x "+gd.textureData.x);
+        //Log.e(TAG, "y "+gd.textureData.y);
+        //Log.e(TAG, "w "+gd.textureData.w);
+        //Log.e(TAG, "h "+gd.textureData.h);
+        //Log.e(TAG, "x "+(int) (gd.textureData.x * 2048f));
+        //Log.e(TAG, "y "+(int) (gd.textureData.y * 2048f));
+        //Log.e(TAG, "w "+(int) ((gd.textureData.x + gd.textureData.w) * 2048f));
+        //Log.e(TAG, "h "+(int)  ((gd.textureData.h + gd.textureData.y) * 2048f));
 
 
         // First decode with inJustDecodeBounds=true to check dimensions
@@ -488,7 +491,7 @@ public class MainActivity extends FragmentActivity implements
 
         String saveGameParaSalvarNaNUvem = SaveGame.getJSONFromSaveGame(SaveGame.saveGame);
 
-        Log.e(TAG, saveGameParaSalvarNaNUvem);
+        //Log.e(TAG, saveGameParaSalvarNaNUvem);
 
         snapshot.getSnapshotContents().
         writeBytes(saveGameParaSalvarNaNUvem.getBytes());
@@ -522,7 +525,7 @@ public class MainActivity extends FragmentActivity implements
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "Não foi possível salvar. There was a problem waiting for the file to close!");
+                       // Log.e(TAG, "Não foi possível salvar. There was a problem waiting for the file to close!");
                     }
                 })
                 .continueWithTask(new Continuation<Result, Task<SnapshotsClient.DataOrConflict<Snapshot>>>() {
@@ -536,9 +539,9 @@ public class MainActivity extends FragmentActivity implements
                             public void onFailure(@NonNull Exception e) {
 
                                 if (useMetadata){
-                                    Log.e(TAG, "Não foi possível salvar. R.string.error_opening_metadata");
+                                    //Log.e(TAG, "Não foi possível salvar. R.string.error_opening_metadata");
                                 } else {
-                                    Log.e(TAG, "Não foi possível salvar. R.string.error_opening_filename");
+                                    //Log.e(TAG, "Não foi possível salvar. R.string.error_opening_filename");
                                 }
                             }
                         });
@@ -555,7 +558,7 @@ public class MainActivity extends FragmentActivity implements
             @Override
             public void onChanged(MyVIewModel.PlayerData playerData) {
                     GoogleAPI.configureGoogleInfo(playerData);
-                    Log.e(TAG, "PLAYER DATA LOADED");
+                    //Log.e(TAG, "PLAYER DATA LOADED");
             }
         });
 
@@ -764,7 +767,7 @@ public class MainActivity extends FragmentActivity implements
         if (GoogleAPI.isConnected){
             return true;
         } else {
-            Log.e(TAG, "isSignedIn false");
+            //Log.e(TAG, "isSignedIn false");
             return false;
         }
     }
@@ -791,10 +794,10 @@ public class MainActivity extends FragmentActivity implements
                     @Override
                     public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
                         if (task.isSuccessful()) {
-                            Log.e(TAG, "signInSilently(): success");
+                            //Log.e(TAG, "signInSilently(): success");
                             onConnected(task.getResult());
                         } else {
-                            Log.e(TAG, "signInSilently(): failure", task.getException());
+                           // Log.e(TAG, "signInSilently(): failure", task.getException());
                             onDisconnected();
                         }
                     }
@@ -809,7 +812,7 @@ public class MainActivity extends FragmentActivity implements
         Log.d(TAG, "signOut()");
 
         if (!isSignedIn()) {
-            Log.e(TAG, "signOut() called, but was not signed in!");
+            //Log.e(TAG, "signOut() called, but was not signed in!");
             return;
         }
 
@@ -827,11 +830,11 @@ public class MainActivity extends FragmentActivity implements
 
     public boolean checkGoogleConnection(){
 
-        Log.e(TAG, "checkGoogleConnection");
+        //Log.e(TAG, "checkGoogleConnection");
         if (isGooglePlayAvailable() && isSignedIn()){
-            Log.e(TAG, "checking");
+            //Log.e(TAG, "checking");
             if (GoogleAPI.playerName.equals(".") || GoogleAPI.playerName.equals("-")){
-                Log.e(TAG, "possible not connected - erro");
+               // Log.e(TAG, "possible not connected - erro");
 
                 signOut();
 
@@ -843,7 +846,7 @@ public class MainActivity extends FragmentActivity implements
 
     private void onConnected(final GoogleSignInAccount googleSignInAccount) {
 
-        Log.e(TAG, "onConnected");
+        //Log.e(TAG, "onConnected");
         GoogleAPI.isConnected = true;
 
         GoogleAPI.mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
@@ -1107,7 +1110,7 @@ public class MainActivity extends FragmentActivity implements
                     if (interstitialAd.isLoaded()) {
                         interstitialAd.show();
                     } else {
-                        Log.e(getLocalClassName(), "Propaganda não carregada");
+                        //Log.e(getLocalClassName(), "Propaganda não carregada");
                         hideAdView();
                         isBannerLoaded = false;
                         Game.returningFromInterstitialFlag = true;

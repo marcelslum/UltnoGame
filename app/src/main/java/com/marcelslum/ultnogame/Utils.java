@@ -1,11 +1,14 @@
 package com.marcelslum.ultnogame;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.WindowManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -156,15 +159,15 @@ public abstract class Utils {
 
     public static Bitmap drawableToBitmap (Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
-            Log.e(TAG, "drawable instanceof BitmapDrawable");
+            //Log.e(TAG, "drawable instanceof BitmapDrawable");
             return ((BitmapDrawable)drawable).getBitmap();
         }
 
         int width = drawable.getIntrinsicWidth();
-        Log.e(TAG, "width " + width);
+        //Log.e(TAG, "width " + width);
         width = width > 0 ? width : 1;
         int height = drawable.getIntrinsicHeight();
-        Log.e(TAG, "height " + height);
+        //Log.e(TAG, "height " + height);
         height = height > 0 ? height : 1;
 
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -306,7 +309,7 @@ public abstract class Utils {
 
     public static void insertRectangleVerticesDataAndLog(float[] array, int startIndex, float x1, float x2, float y1, float y2, float z){
 
-        Log.e(TAG, x1 + "; " + x2 + "; " + y1 + "; " + y2);
+        //Log.e(TAG, x1 + "; " + x2 + "; " + y1 + "; " + y2);
 
 
         array[startIndex] = x1;
@@ -709,4 +712,20 @@ public abstract class Utils {
             return value2;
         }
     }
+
+    public static ProgressDialog createProgressDialog(Context context) {
+        ProgressDialog dialog = new ProgressDialog(context);
+        try {
+            dialog.show();
+        } catch (WindowManager.BadTokenException e) {
+
+        }
+        dialog.setCancelable(false);
+        dialog.getWindow()
+                .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.progressdialog);
+        // dialog.setMessage(Message);
+        return dialog;
+    }
+
 }

@@ -31,7 +31,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
     @Override
     public void upgradeVersion() {
-        Log.e(TAG, "Upgrade version");
+        //Log.e(TAG, "Upgrade version");
         SaveGame saveGame = getSaveGame();
         deleteDataBase();
         try {
@@ -71,7 +71,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
    public boolean saveGameExists(String playerId){
 
-       Log.e(TAG, "saveGameExists");
+       //Log.e(TAG, "saveGameExists");
        //logAllDatabase();
 
        openDataBase();
@@ -96,22 +96,22 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
        );
 
        if (cursor.getCount() == 0){
-           Log.e(TAG, "saveGameExists = false " + cursor.getCount());
+          // Log.e(TAG, "saveGameExists = false " + cursor.getCount());
 
            if (Storage.contains(Storage.STORAGE_SAVE_NAME+Game.playerId)){
 
-               Log.e(TAG, "Storage.contains(Storage.STORAGE_SAVE_NAME+Game.playerId)");
+              // Log.e(TAG, "Storage.contains(Storage.STORAGE_SAVE_NAME+Game.playerId)");
 
                return true;
            } else {
 
-               Log.e(TAG, "!Storage.contains(Storage.STORAGE_SAVE_NAME+Game.playerId)");
+               //Log.e(TAG, "!Storage.contains(Storage.STORAGE_SAVE_NAME+Game.playerId)");
 
                return false;
            }
 
        } else {
-           Log.e(TAG, "saveGameExists = true " + cursor.getCount());
+           //Log.e(TAG, "saveGameExists = true " + cursor.getCount());
            return true;
        }
 
@@ -193,7 +193,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
                  null                                      // don't sort
         );
 
-         Log.e(TAG, "cursor level save data size " + cursor.getCount());
+         //Log.e(TAG, "cursor level save data size " + cursor.getCount());
        
 
         int[] levelsPoints = new int[Level.NUMBER_OF_LEVELS];
@@ -672,12 +672,12 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
     
     public void saveDataFromSaveGame(SaveGame saveGame){
 
-        Log.e(TAG, "saveDataFromSaveGame");
+        //Log.e(TAG, "saveDataFromSaveGame");
         //logAllDatabase();
 
 
         if (!saveGameExists(Game.playerId)){
-            Log.e(TAG, "!saveGameExists(Game.playerId) ------ criando novo");
+            //Log.e(TAG, "!saveGameExists(Game.playerId) ------ criando novo");
             createNewSaveGame(saveGame);
             return;
         }
@@ -685,7 +685,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
         myDataBase = getWritable();
 
-        Log.e(TAG, "saveDataFromSaveGame");
+        //Log.e(TAG, "saveDataFromSaveGame");
 
         ContentValues values = new ContentValues();
 
@@ -848,7 +848,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
     public void createNewSaveGame(SaveGame saveGame) {
 
-        Log.e(TAG, "createNewSaveGame");
+        //Log.e(TAG, "createNewSaveGame");
         //logAllDatabase();
 
         myDataBase = getWritable();
@@ -968,14 +968,14 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
         close();
 
-        Log.e(TAG, "createNewSaveGame depois");
+        //Log.e(TAG, "createNewSaveGame depois");
         logAllDatabase();
 
     }
 
     public void updatePlayerId(String newPlayerId, String oldPlayerId, SaveGame saveGame) {
 
-        Log.e(TAG, "updatePlayerId");
+        //Log.e(TAG, "updatePlayerId");
         //logAllDatabase();
 
         myDataBase = getWritable();
@@ -1115,7 +1115,7 @@ public class DataBaseSaveDataHelper extends DataBaseHelper {
 
         close();
 
-        Log.e(TAG, "updatePlayerId depois");
+        //Log.e(TAG, "updatePlayerId depois");
         logAllDatabase();
 
 

@@ -86,12 +86,12 @@ public class SaveGame {
 
         if (DataBaseSaveDataHelper.getInstance(Game.mainActivity).saveGameExists(Game.playerId)){
 
-            Log.e(TAG, "Carregando Save Game");
+            //Log.e(TAG, "Carregando Save Game");
 
             SaveGame saveGame1 = DataBaseSaveDataHelper.getInstance(Game.mainActivity).getSaveGame();
 
-            Log.e(TAG, "================================== log save do banco de dados");
-            log(saveGame1);
+            //Log.e(TAG, "================================== log save do banco de dados");
+            //log(saveGame1);
 
 
             SaveGame saveGame2 = getSaveGameFromJson(Storage.getString(Storage.STORAGE_SAVE_NAME+Game.playerId));
@@ -100,8 +100,8 @@ public class SaveGame {
                 saveGame2 = saveGame1;
             }
 
-            Log.e(TAG, "================================== log save storage");
-            log(saveGame2);
+            //Log.e(TAG, "================================== log save storage");
+            //log(saveGame2);
 
 
             if (Game.forDebugClearAllLevelPoints) {
@@ -132,8 +132,8 @@ public class SaveGame {
                 saveGame = mergeSaveGames(saveGame1, saveGame2);
             }
 
-            Log.e(TAG, "================================== log save mesclado");
-            log(saveGame);
+            //Log.e(TAG, "================================== log save mesclado");
+            //log(saveGame);
 
 
 
@@ -147,7 +147,7 @@ public class SaveGame {
         } else {
 
 
-            Log.e(TAG, "Não existe ainda nenhum Save Game para o playerId " + Game.playerId + ", criando novo");
+            //Log.e(TAG, "Não existe ainda nenhum Save Game para o playerId " + Game.playerId + ", criando novo");
 
             int[] _levelsPoints = new int[Level.NUMBER_OF_LEVELS];
             int[] _levelsStars = new int[Level.NUMBER_OF_LEVELS];
@@ -234,7 +234,7 @@ public class SaveGame {
                 return -1;
             }
 
-            Log.e(TAG, "-----------------------------------------Atualizando nome do jogador para "+SaveGame.saveGame.playerId);
+            //Log.e(TAG, "-----------------------------------------Atualizando nome do jogador para "+SaveGame.saveGame.playerId);
 
 
             Storage.remove(Storage.STORAGE_SAVE_NAME+i[1]);
@@ -245,7 +245,7 @@ public class SaveGame {
             try {
                 DataBaseSaveDataHelper.getInstance(Game.mainActivity).updatePlayerId(i[0], i[1], SaveGame.saveGame);
             } catch (Exception e) {
-                Log.e(TAG, "Erro ao salvar no banco   " + e);
+                //Log.e(TAG, "Erro ao salvar no banco   " + e);
             }
 
             return 1;
@@ -256,7 +256,7 @@ public class SaveGame {
         }
 
         protected void onPostExecute(Integer result) {
-            Log.e(TAG, "Terminou de atualizar o name player assincronizadamente");
+           // Log.e(TAG, "Terminou de atualizar o name player assincronizadamente");
         }
     }
 
@@ -269,14 +269,14 @@ public class SaveGame {
                 return -1;
             }
 
-            Log.e(TAG, "-----------------------------------------Salvando SaveGame");
-            log(SaveGame.saveGame);
+            //Log.e(TAG, "-----------------------------------------Salvando SaveGame");
+            //log(SaveGame.saveGame);
 
 
 
             if (Utils.getTimeMilliPrecision() - lastSave < 500){
                 lastSave = Utils.getTimeMilliPrecision();
-                Log.e(TAG, "Não salvando em razão do ultimo salvamento ter sido realizado a menos de 500 milisegundos " + Utils.getTimeMilliPrecision() + "    " +  lastSave);
+                //Log.e(TAG, "Não salvando em razão do ultimo salvamento ter sido realizado a menos de 500 milisegundos " + Utils.getTimeMilliPrecision() + "    " +  lastSave);
                 return 1;
             }
 
@@ -298,7 +298,7 @@ public class SaveGame {
         }
 
         protected void onPostExecute(Integer result) {
-            Log.e(TAG, "Terminou de salvar o jogo assincronizadamente");
+            //Log.e(TAG, "Terminou de salvar o jogo assincronizadamente");
         }
     }
 

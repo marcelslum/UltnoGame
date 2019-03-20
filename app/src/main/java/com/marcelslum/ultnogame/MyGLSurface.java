@@ -146,7 +146,7 @@ public class MyGLSurface extends GLSurfaceView {
             // thread:
             public void run() {
 
-                Log.e(TAG, "forUpdatePlayerData");
+                //Log.e(TAG, "forUpdatePlayerData");
 
                 MyVIewModel model = Game.mainActivity.getModel();
 
@@ -157,7 +157,7 @@ public class MyGLSurface extends GLSurfaceView {
                     if (playerData != null){
 
                         if (playerIconImage == null) {
-                            Log.e(TAG, "criando novo playerIconImage1");
+                            //Log.e(TAG, "criando novo playerIconImage1");
                             playerIconImage = new ImageBitmap("playerIconImage1", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f,
                                     Utils.drawableToBitmap(playerData.getIcon()));
 
@@ -178,7 +178,7 @@ public class MyGLSurface extends GLSurfaceView {
                     } else {
 
                         if (playerIconImage == null) {
-                            Log.e(TAG, "criando novo playerIconImage2");
+                            //Log.e(TAG, "criando novo playerIconImage2");
                             playerIconImage = new ImageBitmap("playerIconImage2", Game.resolutionX * 0.862f, Game.resolutionY * 0.75f, Game.resolutionX * 0.12f, Game.resolutionX * 0.12f,
                                     Utils.drawableToBitmap(Game.mainActivity.getResources().getDrawable(R.drawable.games_controller_grey)));
 

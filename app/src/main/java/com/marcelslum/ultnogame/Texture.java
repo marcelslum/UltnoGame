@@ -106,9 +106,9 @@ public class Texture {
     }
 
     public static int getFreeTextureUnit(){
-        Log.e("texture", "getFreeTextureUnit");
+        //Log.e("texture", "getFreeTextureUnit");
         for (int i = 0; i < MAX_TEXTURES; i++){
-            Log.e("texture", "used "+i+" "+textureNamesUsed[i]);
+            //Log.e("texture", "used "+i+" "+textureNamesUsed[i]);
             if (!textureNamesUsed[i]){
                 textureNamesUsed[i] = true;
                 return i;
@@ -120,7 +120,7 @@ public class Texture {
             lastTextureUsed = 0;
         }
 
-        Log.e("texture", "lastTextureUsed "+lastTextureUsed);
+        //Log.e("texture", "lastTextureUsed "+lastTextureUsed);
 
         getTextureByTextureUnit(lastTextureUsed).bounded = false;
         getTextureByTextureUnit(lastTextureUsed).textureUnit = -1;
@@ -205,8 +205,8 @@ public class Texture {
             int[] maxTextureSize = new int[1];
             GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_SIZE, maxTextureSize, 0);
 
-            Log.e("texture", "max texture units "+maxTextureUnits[0]);
-            Log.e("texture", "max texture size "+maxTextureSize[0]);
+            //Log.e("texture", "max texture units "+maxTextureUnits[0]);
+            //Log.e("texture", "max texture size "+maxTextureSize[0]);
 
             MAX_TEXTURES = maxTextureUnits[0];
             if (MAX_TEXTURES > 8){
@@ -234,7 +234,7 @@ public class Texture {
         }
 
         textureUnit = getFreeTextureUnit();
-        Log.e("texture", "texture id "+id +" novo textureId "+textureUnit);
+        //Log.e("texture", "texture id "+id +" novo textureId "+textureUnit);
 
         bounded = true;
 

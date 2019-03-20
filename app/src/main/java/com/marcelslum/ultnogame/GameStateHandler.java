@@ -372,11 +372,6 @@ public class GameStateHandler{
             }
 
 
-
-
-
-
-
         } else if (previousState == GAME_STATE_VITORIA_1){
             // vai para VITORIA_2
             Game.clearAllGameEntities();
@@ -474,7 +469,7 @@ public class GameStateHandler{
 
     public static void setGameState(int newState){
 
-        Log.e("game", "set game state "+newState);
+        //Log.e("game", "set game state "+newState);
 
         makeTransitionBetweenStates(gameState, newState);
 
@@ -541,7 +536,7 @@ public class GameStateHandler{
                         LeaderboardVariant.TIME_SPAN_ALL_TIME, LeaderboardVariant.COLLECTION_PUBLIC).addOnSuccessListener(new OnSuccessListener<AnnotatedData<LeaderboardScore>>() {
                         @Override
                         public void onSuccess(AnnotatedData<LeaderboardScore> leaderboardScoreAnnotatedData) {
-                            Log.e(TAG, "atingiu score " + leaderboardScoreAnnotatedData.get().getDisplayRank());
+                           // Log.e(TAG, "atingiu score " + leaderboardScoreAnnotatedData.get().getDisplayRank());
 
                             Game.forUpdateMessageScoreTotal = true;
                             Game.messageScoreTotal =
@@ -764,7 +759,7 @@ public class GameStateHandler{
         }  else if (newState == GAME_STATE_INTRO) {
 
             Game.mainActivity.hideAdView();
-            Log.e(Game.TAG, "init1");
+            //Log.e(Game.TAG, "init1");
 
 
             /* teste de conversão de milisegundos para tempo formatado
@@ -1010,7 +1005,7 @@ public class GameStateHandler{
             //^
 
 
-            Log.e(TAG, "ScoreHandler.scorePanel.value " + ScoreHandler.scorePanel.value);
+            //Log.e(TAG, "ScoreHandler.scorePanel.value " + ScoreHandler.scorePanel.value);
 
             if (ScoreHandler.scorePanel.value > 0) {
                 ScoreHandler.scorePanel.showMessage("-50%", 1000);
@@ -1024,6 +1019,9 @@ public class GameStateHandler{
             SaveGame.saveGame.save();
 
         } else if (newState == GAME_STATE_PAUSE){
+
+
+            Sound.returningFromPause = 0;
 
             if (previousState == GAME_STATE_JOGAR) {
 

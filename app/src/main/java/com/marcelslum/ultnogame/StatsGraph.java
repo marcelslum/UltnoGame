@@ -57,7 +57,7 @@ public class StatsGraph extends Entity{
         double maiorValorDouble = 0;
         if (valoresDouble.size() > 0) {
             for (int i = 0; i < valoresDouble.size(); i++) {
-                Log.e(TAG, "valor " + valoresDouble.get(i));
+                //Log.e(TAG, "valor " + valoresDouble.get(i));
                 if (valoresDouble.get(i) > maiorValorDouble) maiorValorDouble = valoresDouble.get(i);
             }
         }
@@ -263,7 +263,7 @@ public class StatsGraph extends Entity{
         }
 
 
-        Log.e(TAG, "maiorValorDouble "+maiorValorDouble);
+        //Log.e(TAG, "maiorValorDouble "+maiorValorDouble);
 
         if (maiorValorDouble != 0d) {
 

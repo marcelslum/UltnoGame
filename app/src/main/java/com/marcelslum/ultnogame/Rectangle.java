@@ -50,7 +50,7 @@ public class Rectangle extends PhysicalObject {
 
 
         if (percentageOfBorder <= 0f){
-            Log.e(TAG, "Não é possível criar borda igual a zero");
+            //Log.e(TAG, "Não é possível criar borda igual a zero");
             return;
         }
 
