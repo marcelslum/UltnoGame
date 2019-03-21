@@ -24,18 +24,6 @@
     <string name="messageCurrentLevel">Nível</string>
     <string name="messageGameOver">GAME OVER</string>
     <string name="messageNaoConectado1">Este jogo é totalmente gratuito. Apoie o desenvolvedor conectando-se à internet para exibir propagandas.</string>
-    <string name="messageGoogle1">Este jogo utiliza serviços do Google Play Jogos para exibir rankings/conquistas e realizar o salvamento do progresso na nuvem.</string>
-    <string name="messageGoogle1b">Deseja utilizar esse serviço?</string>
-    <string name="messageGoogle2">(Você pode alterar essa opção a qualquer momento no menu opções do jogo)</string>
-
-
-    <string name="messageGoogle1_2">Não foi possível se conectar ao GooglePlay.</string>
-    <string name="messageGoogle1b_2">Deseja tentar novamente?</string>
-
-
-    <string name="messageVelocity1">É possível ajustar a velocidade global da bola, tornando mais fácil ou mais difícil o jogo.</string>
-    <string name="messageVelocity1b">Deseja alterar a velocidade padrão?</string>
-    <string name="messageVelocity2">(Você pode alterar essa opção a qualquer momento no menu opções do jogo)</string>
 
     <string name="score">score</string>
     <string name="pause">PAUSE</string>
