@@ -24,7 +24,7 @@ public class Game {
     public static Sound sound = new Sound();
 
     public static boolean forDebugDeleteDatabaseAndStorage = false;
-    public static boolean ganharTodasAsEstrelas = false;
+    public static boolean ganharTodasAsEstrelas = true;
     public static boolean paraGravacaoVideo = false;
     public static boolean ganharComMetadeDosAlvos = false;
     public static boolean sempreGanharTodasEstrelas = false;
@@ -174,6 +174,7 @@ public class Game {
     public static boolean backPressed = false;
     public static boolean forUpdatePlayerData = false;
     public static boolean returningFromInterstitialFlag = false;
+    public static boolean forDisplayFrame = false;
     public static boolean settingMessageForScore = false;
     public static String messageForScore = ".";
     public static boolean forBlueBallExplode = false;
@@ -286,6 +287,17 @@ public class Game {
         });
         anim.start();
     }
+
+    public static void displayFrame(){
+        frame.clearDisplay();
+        frame.alpha = 1f;
+    }
+
+    public static void hideFrame(){
+        frame.display();
+        frame.alpha = 1f;
+    }
+
 
     public static void initData(){
         targets = new ArrayList<>();
@@ -480,6 +492,8 @@ public class Game {
                         Color.verde40
                 );
 
+
+
                 tipTextBox.frame.addTopRectangle(
                         0.9f,
                         Color.cinza20.changeAlpha(0.4f),
@@ -533,6 +547,7 @@ public class Game {
                 );
             }
 
+            tipTextBox.frame.alpha = 0.25f;
 
             tipTextBox.animTranslateX = Game.resolutionX * 2f;
 
@@ -555,8 +570,8 @@ public class Game {
             Game.sound.playTextBoxAppear();
 
 
-            Animation anim1 = Utils.createAnimation4v(tipTextBox, "translateX", "translateX", 5000,
-                    0f, Game.resolutionX * 2, 0.05f, 0f, 0.85f, 0f, 1f, 0, false, true);
+            Animation anim1 = Utils.createAnimation4v(tipTextBox, "translateX", "translateX", 8000,
+                    0f, Game.resolutionX * 2, 0.03f, 0f, 0.85f, 0f, 1f, 0, false, true);
             anim1.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationEnd() {
@@ -1689,6 +1704,8 @@ public class Game {
         if (Tutorial.tutorialImage != null) Tutorial.tutorialImage.prepareRender(matrixView, matrixProjection);
         if (Tutorial.tutorialTextBox != null) Tutorial.tutorialTextBox.prepareRender(matrixView, matrixProjection);
 
+        if (tipTextBox != null) tipTextBox.prepareRender(matrixView, matrixProjection);
+
         for (int i = 0; i < entidadesFixas.length; i++) {
             if (entidadesFixas[i] != null && entidadesFixas[i].layer == Layers.LAYER1){
                 if (Game.paraGravacaoVideo){
@@ -1734,6 +1751,9 @@ public class Game {
         if (!Game.paraGravacaoVideo) {
             if (messages != null) messages.prepareRender(matrixView, matrixProjection);
         }
+
+
+
 
 
         for (int i = 0; i < entidadesFixas.length; i++) {
@@ -1786,6 +1806,8 @@ public class Game {
         if (ButtonHandler.button2Left != null) ButtonHandler.button2Left.verifyListener();
         if (ButtonHandler.button2Right != null) ButtonHandler.button2Right.verifyListener();
 
+        if (tipTextBox != null) tipTextBox.verifyListener();
+
         // elimina os touchevents que tiverem o UP ativado,
         // ou seja, que já foram considerados nesta passagem
         if (touchEvents != null) {
@@ -1821,7 +1843,6 @@ public class Game {
         list.add(MenuHandler.menuGameOver);
         list.add(tittle);
         list.add(MessagesHandler.aboutMyTextView);
-        list.add(MessagesHandler.notConnectedMyTextView);
         list.add(tipTextBox);
         list.add(MessagesHandler.messageGameOver);
         list.add(MessagesHandler.messagePreparation);

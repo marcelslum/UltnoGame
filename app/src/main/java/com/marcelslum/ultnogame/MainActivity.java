@@ -110,6 +110,21 @@ public class MainActivity extends FragmentActivity implements
 
         super.onActivityResult(requestCode, resultCode, intent);
 
+        if (requestCode == GoogleAPI.RC_SIGN_IN_PROPOSITAL) {
+
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+
+            try {
+
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                onConnected(account);
+
+            } catch (ApiException apiException) {
+                MessagesHandler.setBottomMessage(Game.mainActivity.getApplicationContext().getResources().getString(R.string.googleNaoFoiPossivelLogar), 2000);
+                onDisconnected();
+            }
+        } else
+
         if (requestCode == GoogleAPI.RC_SIGN_IN) {
 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
@@ -123,7 +138,7 @@ public class MainActivity extends FragmentActivity implements
                 MessagesHandler.setBottomMessage(Game.mainActivity.getApplicationContext().getResources().getString(R.string.googleErroLogar), 2000);
                 onDisconnected();
             }
-        }
+        } else
 
         if (requestCode == GoogleAPI.RC_SAVED_GAMES) {
 
@@ -805,7 +820,7 @@ public class MainActivity extends FragmentActivity implements
     }
 
     public void startSignInIntent() {
-        startActivityForResult(GoogleAPI.mGoogleSignInClient.getSignInIntent(), GoogleAPI.RC_SIGN_IN);
+        startActivityForResult(GoogleAPI.mGoogleSignInClient.getSignInIntent(), GoogleAPI.RC_SIGN_IN_PROPOSITAL);
     }
 
     public void signOut() {
@@ -977,10 +992,6 @@ public class MainActivity extends FragmentActivity implements
     }
 
     public void hideAdView(){
-        
-        if (MessagesHandler.notConnectedMyTextView != null) {
-            MessagesHandler.notConnectedMyTextView.clearDisplay();
-        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -1032,7 +1043,7 @@ public class MainActivity extends FragmentActivity implements
 
                 } else {
                     //Log.e(TAG, "Não conectado ao Wifi - carregando interstitialNoVideo");
-                    interstitialActualMode = INTERSTITIAL_MODE_NO_VIDEO;
+                    interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
                     interstitialNoVideo.loadAd(adRequest);
                 }
             }
@@ -1046,10 +1057,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 		
 		if (isBannerLoaded){
-			if (MessagesHandler.notConnectedMyTextView != null) {
-				MessagesHandler.notConnectedMyTextView.clearDisplay();
-			}
-
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
@@ -1065,57 +1072,50 @@ public class MainActivity extends FragmentActivity implements
                 }
             });
 
-			
-			if (MessagesHandler.notConnectedMyTextView != null) {
-			
-				ConnectionHandler.checkInternetConnection();
-			
-				if (ConnectionHandler.internetState == ConnectionHandler.INTERNET_STATE_NOT_CONNECTED) {
-					MessagesHandler.notConnectedMyTextView.display();
-				} else {
-					MessagesHandler.notConnectedMyTextView.clearDisplay();
-				}
-				
-			} 
 			// como não esta carregado, faz um nova tentativa de carregar, para mostrar na próxima vez
 			loadBannerAd();
 		}
     }
 
     public void showInterstitial() {
+
         runOnUiThread(new Runnable() {
             public void run() {
 
-                    Sound.stopAndReleaseMusic();
+                final InterstitialAd interstitialAd;
+                if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {
+                    //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
+                    interstitialAd = interstitialWithVideo;
+                } else if (interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO){
+                    //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
+                    interstitialAd = interstitialNoVideo;
+                } else {
+                    interstitialAd = interstitialNoVideo;
+                }
 
-                    InterstitialAd interstitialAd;
+                Sound.stopAndReleaseMusic();
 
-                    if (interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO) {
-                        //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_WITH_VIDEO");
-                        interstitialAd = interstitialWithVideo;
-                    } else if (interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO){
-                        //Log.e("MainActivity", "interstitialActualMode == INTERSTITIAL_MODE_NO_VIDEO");
-                        interstitialAd = interstitialNoVideo;
-                    } else {
-                        interstitialAd = interstitialNoVideo;
-                    }
+                // se é nulo vai para o menu de seleção de nível
+                if (interstitialAd == null){
+                    Game.returningFromInterstitialFlag = true;
+                    return;
+                }
 
-                    // se é nulo vai para o menu de seleção de nível
-                    if (interstitialAd == null){
-                        Game.returningFromInterstitialFlag = true;
-                        return;
-                    }
+                if (interstitialAd.isLoaded()){
+                    Game.forDisplayFrame = true;
+                }
 
-                    // verifica se está carregada
-                    if (interstitialAd.isLoaded()) {
-                        interstitialAd.show();
-                    } else {
-                        //Log.e(getLocalClassName(), "Propaganda não carregada");
-                        hideAdView();
-                        isBannerLoaded = false;
-                        Game.returningFromInterstitialFlag = true;
-                        loadInterstitialAd();
-                    }
+
+                // verifica se está carregada
+                if (interstitialAd.isLoaded()) {
+                    interstitialAd.show();
+                } else {
+                    //Log.e(getLocalClassName(), "Propaganda não carregada");
+                    hideAdView();
+                    isBannerLoaded = false;
+                    Game.returningFromInterstitialFlag = true;
+                    loadInterstitialAd();
+                }
 
                 }
         });

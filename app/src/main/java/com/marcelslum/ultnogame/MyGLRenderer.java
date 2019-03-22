@@ -194,6 +194,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             Game.myGlSurface.onCloseAd();
         }
 
+        if (Game.forDisplayFrame) {
+            Game.forDisplayFrame = false;
+            Game.myGlSurface.displayFrame();
+        }
+
         if (Game.settingMessageForScore) {
             Game.settingMessageForScore = false;
             Game.myGlSurface.setScoreMessage();
@@ -260,11 +265,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                         lastInternetCheck = Game.currentFrameMilliPrecision;
                     }
                 } else {
-
-
                     if (!Training.training) {
                         if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_JOGAR) {
-                            if (Utils.getTimeMilliPrecision() - lastInternetCheck > 300) {
+                            if (Utils.getTimeMilliPrecision() - lastInternetCheck > 1000) {
                                 if (TimeHandler.timeOfLevelPlay > 3000) {
                                     Sound.checkLoopPlaying();
                                 }

@@ -105,6 +105,17 @@ public class MyGLSurface extends GLSurfaceView {
         return true;
     }
 
+    public void displayFrame(){
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                Game.displayFrame();
+            }
+        });
+
+
+    }
+
     public void onCloseAd(){
         queueEvent(new Runnable() {
             // This method will be called on the rendering
@@ -114,8 +125,6 @@ public class MyGLSurface extends GLSurfaceView {
 
                 Game.eraseAllGameEntities();
                 Game.eraseAllHudEntities();
-
-
 
                 if (GameStateHandler.gameState == GameStateHandler.GAME_STATE_MENU_INICIAL){
                     GameStateHandler.setGameState(GameStateHandler.GAME_STATE_MENU_INICIAL);
@@ -132,8 +141,10 @@ public class MyGLSurface extends GLSurfaceView {
                         Game.prepareAfterInterstitialFlag = false;
                         LevelLoader.loadLevel(SaveGame.saveGame.currentLevelNumber);
                         GameStateHandler.setGameState(GameStateHandler.GAME_STATE_PREPARAR);
+                        Game.hideFrame();
                     } else {
                         GameStateHandler.setGameState(GameStateHandler.GAME_STATE_SELECAO_LEVEL);
+                        Game.hideFrame();
                     }
                 }
 
@@ -308,7 +319,11 @@ public class MyGLSurface extends GLSurfaceView {
         queueEvent(new Runnable() {
             public void run() {
 
-                MessagesHandler.messageMaxScoreTotal.setText(message);
+                if (message.length() <= 0){
+                    MessagesHandler.messageMaxScoreTotal.setText(".");
+                } else {
+                    MessagesHandler.messageMaxScoreTotal.setText(message);
+                }
                 MessagesHandler.messageMaxScoreTotal.display();
 
             }});

@@ -268,7 +268,6 @@ public class GameStateHandler{
                 MessagesHandler.messageSubMenu.clearDisplay();
                 ButtonHandler.buttonBack.blockAndClearDisplay();
                 Game.mainActivity.hideAdView();
-                MessagesHandler.notConnectedMyTextView.clearDisplay();
             }
 
         } else if (previousState == GAME_STATE_PREPARAR){
@@ -507,13 +506,14 @@ public class GameStateHandler{
             if (previousState == GAME_STATE_INTRO){
                 Game.initTittle();
                 GoogleAPI.loadAchievements();
-                Game.mainActivity.showAdView();
                 Game.esconderEntidadesFixas();
                 Game.bordaE.display();
                 Game.bordaD.display();
                 Game.bordaC.display();
                 Game.bordaB.display();
             }
+
+            Game.mainActivity.showAdView();
 
             ButtonHandler.buttonBack.blockAndClearDisplay();
 
@@ -570,6 +570,8 @@ public class GameStateHandler{
 
         } else if (newState == GAME_STATE_MENU_GOOGLE) {
 
+            Game.mainActivity.showAdView();
+
             if (previousState != GAME_STATE_MENU_GOOGLE) {
                 previousMenuGoogleState = previousState;
             }
@@ -585,16 +587,22 @@ public class GameStateHandler{
 
         } else if (newState == GAME_STATE_SOBRE) {
 
+            Game.mainActivity.showAdView();
+
             MessagesHandler.aboutMyTextView.unblockAndDisplay();
             ButtonHandler.buttonBack.unblockAndDisplay();
             
         } else if (newState == GAME_STATE_ESTATISTICAS){
+
+            Game.mainActivity.showAdView();
 
             Stats.currentStatsSheet = Stats.TEMPO_JOGO;
             Stats.showCurrentStat();
             ButtonHandler.buttonContinue.unblockAndDisplay();
 
         } else if (newState == GAME_STATE_MOSTRAR_OBJETIVOS){
+
+            Game.mainActivity.showAdView();
 
             Game.showBlackFrameTransition(500);
 
@@ -617,6 +625,8 @@ public class GameStateHandler{
             ButtonHandler.buttonContinue.unblockAndDisplay();
 
         } else if (newState == GAME_STATE_SELECAO_GRUPO) {
+
+            Game.mainActivity.showAdView();
 
             Game.showBlackFrameTransition(500);
 
@@ -645,6 +655,8 @@ public class GameStateHandler{
             }
 
         } else if (newState == GAME_STATE_SELECAO_LEVEL) {
+
+            Game.mainActivity.showAdView();
 
             if (Game.apagarEstatisticasNoMenu){
                 for (int i = 0; i < SaveGame.saveGame.stats.length; i++) {
@@ -688,11 +700,11 @@ public class GameStateHandler{
 
         } else if (newState == GAME_STATE_SELECAO_TUTORIAL){
 
+            Game.mainActivity.showAdView();
+
             Game.showBlackFrameTransition(500);
 
-            if (previousState == GAME_STATE_TUTORIAL){
-                Game.mainActivity.showAdView();
-            }
+            Game.mainActivity.showAdView();
 
             Game.sound.playMenuIconDrop();
 
@@ -706,6 +718,8 @@ public class GameStateHandler{
             ButtonHandler.buttonBack.unblockAndDisplay();
 
         } else if (newState == GAME_STATE_MENU_JOGAR){
+
+            Game.mainActivity.showAdView();
 
             if (!sameState) {
                 Game.showBlackFrameTransition(500);
@@ -721,6 +735,8 @@ public class GameStateHandler{
             ButtonHandler.buttonBack.unblockAndDisplay();
 
         } else if (newState == GAME_STATE_EXPLICACAO_TREINAMENTO){
+
+            Game.mainActivity.showAdView();
 
             Game.showBlackFrameTransition(500);
             MessagesHandler.messageExplicacaoTreinamento.display();
@@ -784,6 +800,8 @@ public class GameStateHandler{
 
         } else if (newState == GAME_STATE_OPCOES){
 
+            Game.mainActivity.showAdView();
+
             Sound.setMusicCurrentPart(Sound.MUSIC_PRE_INTRO);
             Sound.setMusicCurrentGlobalPart(Sound.MUSIC_GLOBAL_PART_A);
             Sound.setMusicCurrentSubPart(Sound.MUSIC_SUB_PART_A_A1);
@@ -795,6 +813,8 @@ public class GameStateHandler{
             SelectorHandler.repositionSelectors(newState);
 
         } else if (newState == GAME_STATE_OPCOES_JOGABILIDADE){
+
+            Game.mainActivity.showAdView();
 
             SelectorHandler.repositionSelectors(newState);
             MenuHandler.menuOpcoesJogabilidade.unblockAndDisplay();

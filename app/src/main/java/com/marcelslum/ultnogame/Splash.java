@@ -79,97 +79,6 @@ public class Splash {
 
         tittle.display();
 
-        float fontSize = Game.gameAreaResolutionY*0.08f;
-
-        // -------------------------------------------MENU ALTERAR VELOCIDADE
-
-
-        // SELETOR DIFICULDADE
-        selectorDifficultyInitMenu = new Selector("Game.selectorDifficultyInitMenu", 0f,0f, fontSize, "",
-                new String[]{
-                        Game.getContext().getResources().getString(R.string.v0),
-                        Game.getContext().getResources().getString(R.string.v1),
-                        Game.getContext().getResources().getString(R.string.v2),
-                        Game.getContext().getResources().getString(R.string.v3),
-                        Game.getContext().getResources().getString(R.string.v4),
-                        Game.getContext().getResources().getString(R.string.v5),
-                        Game.getContext().getResources().getString(R.string.v6)
-                },
-                Game.font);
-
-        selectorDifficultyInitMenu.setOnChange(new Selector.OnChange() {
-            @Override
-            public void onChange() {
-                if (selectorDifficultyInitMenu.selectedValue == 0) {
-                    SaveGame.saveGame.ballVelocity = 90;
-                } else if (selectorDifficultyInitMenu.selectedValue == 1) {
-                    SaveGame.saveGame.ballVelocity = 100;
-                } else if (selectorDifficultyInitMenu.selectedValue == 2) {
-                    SaveGame.saveGame.ballVelocity = 110;
-                } else if (selectorDifficultyInitMenu.selectedValue == 3) {
-                    SaveGame.saveGame.ballVelocity = 120;
-                } else if (selectorDifficultyInitMenu.selectedValue == 4) {
-                    SaveGame.saveGame.ballVelocity = 130;
-                } else if (selectorDifficultyInitMenu.selectedValue == 5) {
-                    SaveGame.saveGame.ballVelocity = 140;
-                } else if (selectorDifficultyInitMenu.selectedValue == 6) {
-                    SaveGame.saveGame.ballVelocity = 150;
-                }
-            }
-        });
-
-        menuVelocity = new Menu("menuVelocity", Game.gameAreaResolutionX/2, Game.gameAreaResolutionY*0.65f, fontSize, Game.font);
-        menuVelocity.addMenuOption("Alterar", Game.getContext().getResources().getString(R.string.menuVelocityAlterar), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-                selectorDifficultyInitMenu.fromMenu(menuVelocity);
-            }
-        });
-
-        MenuOption menuOptionBallVelocity = menuVelocity.getMenuOptionByName("Alterar");
-        selectorDifficultyInitMenu.setPosition(menuOptionBallVelocity.x + (menuOptionBallVelocity.width*0.9f), menuOptionBallVelocity.y);
-
-        menuVelocity.addMenuOption("Continuar", Game.getContext().getResources().getString(R.string.menuVelocityContinuar), new MenuOption.OnChoice() {
-            @Override
-            public void onChoice() {
-
-                if (SaveGame.saveGame.ballVelocity < 0){
-                    SaveGame.saveGame.ballVelocity = 100;
-                }
-
-                menuVelocity.blockAndClearDisplay();
-                messageVelocity1.clearDisplay();
-                messageVelocity2.clearDisplay();
-                setSplashState(SPLASH_CONECTANDO_INTERNET);
-            }
-        });
-
-        menuVelocity.blockAndClearDisplay();
-
-        messageVelocity1 = new MyTextView("messageVelocity1", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.17f,
-                Game.resolutionX * 1f,
-                Game.resolutionY,
-                fontSize * 0.75f,
-                Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
-
-        messageVelocity1.addText(Game.getContext().getResources().getString(R.string.messageVelocity1), Color.cinza60);
-        messageVelocity1.addText(".", Color.transparente);
-        messageVelocity1.addText(Game.getContext().getResources().getString(R.string.messageVelocity1b), Color.pretoCheio);
-
-        messageVelocity1.clearDisplay();
-
-        messageVelocity2 = new MyTextView("messageVelocity2", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.85f,
-                Game.resolutionX * 1f,
-                Game.resolutionY,
-                fontSize * 0.55f,
-                Game.font, new Color(0.6f, 0.6f, 0.7f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
-
-        messageVelocity2.addText(Game.getContext().getResources().getString(R.string.messageVelocity2), Color.cinza60);
-
-        messageVelocity2.clearDisplay();
-
     }
 
     static void init(){
@@ -249,12 +158,13 @@ public class Splash {
             tittle.display();
             messageSplash1.display();
 
+            MessagesHandler.initMessages();
+
             Game.mainActivity.signInSilently();
 
             LevelDataLoader.initLevelsData();
             MenuHandler.initMenus();
             Game.initTittle();
-            MessagesHandler.initMessages();
             Game.initEdges();
             ButtonHandler.initButtons();
 

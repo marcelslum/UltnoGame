@@ -41,7 +41,6 @@ public class MessagesHandler {
     static MyTextView messageStatDescricao;
     static MyTextView aboutMyTextView;
     static MyTextView explicacaoRankingEstatisticosMyTextView;
-    static MyTextView notConnectedMyTextView;
 
     static float yOfMessageBackAndContinue;
 
@@ -143,16 +142,6 @@ public class MessagesHandler {
                 Game.font, new Color(0.3f, 0.3f, 1f, 1f), Text.TEXT_ALIGN_CENTER, 0.2f);
         Game.adicionarEntidadeFixa(messageExplicacaoDuranteTreinamento);
         messageExplicacaoDuranteTreinamento.addText(Game.getContext().getResources().getString(R.string.explicacaoDuranteTreinamento1), Color.cinza40);
-
-        notConnectedMyTextView = new MyTextView("notConnectedMyTextView", Game.resolutionX * 0.5f,
-                Game.resolutionY * 0.02f,
-                Game.resolutionX * 0.94f,
-                Game.resolutionY,
-                Game.gameAreaResolutionY*0.038f,
-                Game.font, new Color(0.85f, 0.85f, 0.85f, 1f), Text.TEXT_ALIGN_CENTER, 0.25f);
-        Game.adicionarEntidadeFixa(notConnectedMyTextView);
-
-        notConnectedMyTextView.addText(resources.getString(R.string.messageNaoConectado1), Color.cinza80);
 
         yOfMessageBackAndContinue = Game.resolutionY*0.898f;
 

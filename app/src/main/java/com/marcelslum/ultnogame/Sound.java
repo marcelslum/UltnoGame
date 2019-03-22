@@ -93,7 +93,7 @@ public class Sound {
         adWin2 = new AudioData("win1_powerup16_mono.wav", 0.4f,4);
         //adSuccess2 = new AudioData("success2.wav", 0.5f,-1);
 
-        adTextBoxAppear = new AudioData("textboxappear_mono.wav", 0.3f,5);
+        adTextBoxAppear = new AudioData("textboxappear_mono.wav", 0.2f,5);
 
 
         adBallHit =  new AudioData("ballhit1stereo.wav", 0.4f,0);

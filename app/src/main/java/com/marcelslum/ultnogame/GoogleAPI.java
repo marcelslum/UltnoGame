@@ -36,6 +36,7 @@ public class GoogleAPI {
     public static final int RC_LEADERBOARD_UI = 9004;
     public static final int RC_ACHIEVEMENTS_UI = 9005;
     public static final int RC_SIGN_IN = 9001;
+    public static final int RC_SIGN_IN_PROPOSITAL = 9008;
     public static final int RC_SAVED_GAMES = 9009;
     public static final String TAG = "GoogleApi";
 

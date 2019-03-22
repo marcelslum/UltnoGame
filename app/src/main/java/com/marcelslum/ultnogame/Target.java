@@ -230,7 +230,7 @@ public class Target extends Rectangle {
     }
 
     public void setType(){
-        if (currentState == -1){
+        if (currentState <= -1){
             return;
         }
 

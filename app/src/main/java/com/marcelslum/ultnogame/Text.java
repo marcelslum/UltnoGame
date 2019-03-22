@@ -139,6 +139,11 @@ public class Text extends Entity implements Poolable<Text>{
     }
 
     public void setText(String text){
+
+        if (text.length() <= 0){
+            text = ".";
+        }
+
         this.text = text;
         if (shadowText != null) {
             shadowText.setText(text);

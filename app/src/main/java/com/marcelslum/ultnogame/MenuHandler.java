@@ -181,15 +181,16 @@ public class MenuHandler {
         Game.adicionarEntidadeFixa(menuOpcoesJogabilidade);
         // SELETOR DIFICULDADE
         SelectorHandler.selectorDifficulty = new Selector("selectorDifficulty", 0f,0f, fontSize, "",
-                new String[]{   //Game.getContext().getResources().getString(R.string.v0),
-                        //Game.getContext().getResources().getString(R.string.v1),
+                new String[]{
                         Game.getContext().getResources().getString(R.string.v0),
                         Game.getContext().getResources().getString(R.string.v1),
                         Game.getContext().getResources().getString(R.string.v2),
                         Game.getContext().getResources().getString(R.string.v3),
                         Game.getContext().getResources().getString(R.string.v4),
                         Game.getContext().getResources().getString(R.string.v5),
-                        Game.getContext().getResources().getString(R.string.v6)
+                        Game.getContext().getResources().getString(R.string.v6),
+                        Game.getContext().getResources().getString(R.string.v7),
+                        Game.getContext().getResources().getString(R.string.v8)
                 },
                 Game.font);
         Game.adicionarEntidadeFixa(SelectorHandler.selectorDifficulty);
@@ -201,38 +202,46 @@ public class MenuHandler {
             }
         });
 
-        if (SaveGame.saveGame.ballVelocity == 90) {
+        if (SaveGame.saveGame.ballVelocity == 70) {
             SelectorHandler.selectorDifficulty.setSelectedValue(0);
-        } else if (SaveGame.saveGame.ballVelocity == 100) {
+        } else if (SaveGame.saveGame.ballVelocity == 80) {
             SelectorHandler.selectorDifficulty.setSelectedValue(1);
-        } else if (SaveGame.saveGame.ballVelocity == 110) {
+        } else if (SaveGame.saveGame.ballVelocity == 90) {
             SelectorHandler.selectorDifficulty.setSelectedValue(2);
-        } else if (SaveGame.saveGame.ballVelocity == 120) {
+        } else if (SaveGame.saveGame.ballVelocity == 100) {
             SelectorHandler.selectorDifficulty.setSelectedValue(3);
-        } else if (SaveGame.saveGame.ballVelocity == 130) {
+        } else if (SaveGame.saveGame.ballVelocity == 110) {
             SelectorHandler.selectorDifficulty.setSelectedValue(4);
-        } else if (SaveGame.saveGame.ballVelocity == 140) {
+        } else if (SaveGame.saveGame.ballVelocity == 120) {
             SelectorHandler.selectorDifficulty.setSelectedValue(5);
-        }  else if (SaveGame.saveGame.ballVelocity == 150) {
+        } else if (SaveGame.saveGame.ballVelocity == 130) {
             SelectorHandler.selectorDifficulty.setSelectedValue(6);
+        } else if (SaveGame.saveGame.ballVelocity == 140) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(7);
+        }  else if (SaveGame.saveGame.ballVelocity == 150) {
+            SelectorHandler.selectorDifficulty.setSelectedValue(8);
         }
 
         SelectorHandler.selectorDifficulty.setOnChange(new Selector.OnChange() {
             @Override
             public void onChange() {
                 if (SelectorHandler.selectorDifficulty.selectedValue == 0) {
-                    SaveGame.saveGame.ballVelocity = 90;
+                    SaveGame.saveGame.ballVelocity = 70;
                 } else if (SelectorHandler.selectorDifficulty.selectedValue == 1) {
-                    SaveGame.saveGame.ballVelocity = 100;
+                    SaveGame.saveGame.ballVelocity = 80;
                 } else if (SelectorHandler.selectorDifficulty.selectedValue == 2) {
-                    SaveGame.saveGame.ballVelocity = 110;
+                    SaveGame.saveGame.ballVelocity = 90;
                 } else if (SelectorHandler.selectorDifficulty.selectedValue == 3) {
-                    SaveGame.saveGame.ballVelocity = 120;
+                    SaveGame.saveGame.ballVelocity = 100;
                 } else if (SelectorHandler.selectorDifficulty.selectedValue == 4) {
-                    SaveGame.saveGame.ballVelocity = 130;
+                    SaveGame.saveGame.ballVelocity = 110;
                 } else if (SelectorHandler.selectorDifficulty.selectedValue == 5) {
-                    SaveGame.saveGame.ballVelocity = 140;
+                    SaveGame.saveGame.ballVelocity = 120;
                 } else if (SelectorHandler.selectorDifficulty.selectedValue == 6) {
+                    SaveGame.saveGame.ballVelocity = 130;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 7) {
+                    SaveGame.saveGame.ballVelocity = 140;
+                } else if (SelectorHandler.selectorDifficulty.selectedValue == 8) {
                     SaveGame.saveGame.ballVelocity = 150;
                 }
 

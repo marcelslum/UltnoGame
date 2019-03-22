@@ -32,6 +32,8 @@ public class ConnectionHandler {
         } else {
             internetState = INTERNET_STATE_NOT_CONNECTED;
         }
+
+        //Log.e("ConnectionHandler","checkInternetConnection " + internetState);
     }
 
     public static boolean isConnectionWifi(){
