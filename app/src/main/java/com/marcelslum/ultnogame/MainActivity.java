@@ -1043,7 +1043,7 @@ public class MainActivity extends FragmentActivity implements
 
                 } else {
                     //Log.e(TAG, "Não conectado ao Wifi - carregando interstitialNoVideo");
-                    interstitialActualMode = INTERSTITIAL_MODE_WITH_VIDEO;
+                    interstitialActualMode = INTERSTITIAL_MODE_NO_VIDEO;
                     interstitialNoVideo.loadAd(adRequest);
                 }
             }

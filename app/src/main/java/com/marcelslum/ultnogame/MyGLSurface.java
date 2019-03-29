@@ -319,12 +319,15 @@ public class MyGLSurface extends GLSurfaceView {
         queueEvent(new Runnable() {
             public void run() {
 
-                if (message.length() <= 0){
+                if (message != null && message.length() <= 0){
                     MessagesHandler.messageMaxScoreTotal.setText(".");
-                } else {
+                } else if (message != null){
                     MessagesHandler.messageMaxScoreTotal.setText(message);
                 }
-                MessagesHandler.messageMaxScoreTotal.display();
+                if (message != null) {
+                    MessagesHandler.messageMaxScoreTotal.display();
+                }
+
 
             }});
     }

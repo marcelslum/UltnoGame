@@ -425,6 +425,7 @@ public class GameStateHandler{
                 Game.mainActivity.hideAdView();
                 MessagesHandler.messageInGame.clearDisplay();
                 Game.increaseAllGameEntitiesAlpha(500);
+                Game.sound.playMusic();
                 MessagesHandler.messageInGame.reduceAlpha(500, 0f, new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
